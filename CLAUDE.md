@@ -118,6 +118,7 @@ Mezihodnoty mimo tuto řadu nepoužívat.
 
 ## 5. Layout
 
+- **Full-bleed vzorec (závazné):** stránka nikdy nemá vnější padding ani `max-width` na kořenovém prvku — kořen je `width:100%`, `margin:0`, `padding:0`, bez `border-radius`, nese jen `background: surface.page #F7F9FB`. Sekce jdou přes celou šířku viewportu (topbar a patička `#142F56`, zbytek `surface.page`); omezený je až vnitřní obal každé sekce: `max-width:1560px; margin:0 auto; padding:0 32px` na desktopu a `0 16px` pod 900 px. `html` a `body` mají `margin:0; padding:0`. Platí i pro hlavičku a patičku.
 - Container max-width **1560 px**. Page padding 32 px desktop / 16 px mobil.
 - Produktový grid: **4 sloupce na desktopu, 2 na mobilu**, gap 12 px, `auto-fill, minmax(min(46%,270px),1fr)`.
 - Karta 280–300 px. Grid kategorií `auto-fit, minmax(280px,1fr)`, gap 12.

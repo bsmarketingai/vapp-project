@@ -23,6 +23,9 @@
   .vapp-led{border-radius:999px;animation:vapp-led 1.8s ease-out infinite;}
   @media (max-width:900px){ .dt{display:none !important;} .pg-h1{font-size:26px !important;} }
   @media (min-width:901px){ .mb{display:none !important;} }
+.vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
+.vp-bleed{margin-left:-32px;margin-right:-32px;padding-left:32px;padding-right:32px;}
+@media (max-width:900px){ .vp-in{padding-left:16px;padding-right:16px;} .vp-bleed{margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px;} }
 </style>
 <script>
 (function(){
@@ -49,7 +52,7 @@
   <dc-import name="Hlavicka" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" hint-size="100%,150px"></dc-import>
 
   <!-- CONTENT -->
-  <div style="max-width:1560px;margin:0 auto;padding:14px 16px 40px;">
+  <div class="vp-in" style="padding-top:14px;padding-bottom:40px;">
 
     <!-- breadcrumb + title -->
     <div style="font-size:13px;color:#7A828C;margin:4px 0 6px;">Úvod <span style="color:#B4CEEC;">›</span> <span style="font-weight:700;color:#173C70;">Náhradní díly</span></div>
@@ -92,7 +95,7 @@
     </sc-if>
 
     <!-- ===== TOOLBAR (sticky) ===== -->
-    <div style="position:sticky;top:0;z-index:40;background:#F7F9FB;margin:14px -16px 0;padding:10px 16px;border-bottom:1px solid #F2F4F7;">
+    <div class="vp-bleed" style="position:sticky;top:0;z-index:40;background:#F7F9FB;margin-top:14px;padding-top:10px;padding-bottom:10px;border-bottom:1px solid #F2F4F7;">
       <div style="display:flex;gap:8px;max-width:1560px;margin:0 auto;">
         <span onClick="{{ openFilter }}" style="flex:1;max-width:220px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;font-size:13.5px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;cursor:pointer;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>Filtry<sc-if value="{{ filterCount }}" hint-placeholder-val=""><span style="background:#C5232B;border-radius:999px;font-size:13px;padding:2px 8px;">{{ filterCount }}</span></sc-if></span>
         <span onClick="{{ toggleStock }}" style="{{ stockBtnStyle }}"><span style="{{ stockBoxStyle }}">{{ stockCheck }}</span>Skladem</span>
@@ -135,7 +138,7 @@
     </sc-if>
   </div>
 
-  <div style="max-width:1560px;margin:10px auto 0;padding:0 16px;">
+  <div style="margin-top:10px;">
     <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
   </div>
 
