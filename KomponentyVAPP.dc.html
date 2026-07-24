@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:#F7F9FB;}
+  a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
+</style>
+</helmet>
+<div data-screen-label="Komponenty VAPP" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;padding:56px 32px 120px;">
+  <div style="max-width:1560px;margin:0 auto;display:flex;flex-direction:column;gap:56px;">
+
+    <div>
+      <img src="./vapp-logo.svg" alt="VAPP" style="height:36px;display:block;margin-bottom:20px;">
+      <h1 style="margin:0;font-size:36px;font-weight:700;letter-spacing:-0.02em;">Komponenty</h1>
+      <p style="margin:10px 0 0;font-size:18px;line-height:1.6;color:#5A626C;max-width:820px;">Katalog UI prvků. Každá komponenta žije ve vlastním souboru a sem se pouze importuje přes <span style="font-family:'JetBrains Mono',monospace;font-size:14px;">dc-import</span> — ladí se výhradně ve svém souboru a změna se propíše všude. Základy (barvy, typografie, spacing) žijí v <a href="./DesignSystemVAPP.dc.html" style="text-decoration:underline;">Design systému</a>.</p>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div>
+        <h2 style="margin:0 0 4px;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Produktová karta</h2>
+        <p style="margin:0;font-size:15px;line-height:1.55;color:#5A626C;"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;">ProduktovaKarta.dc.html</span> — jediný zdroj vzhledu karty, importuje se s daty přes prop <span style="font-family:'JetBrains Mono',monospace;font-size:13px;">p</span>.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;">
+        <sc-for list="{{ cards }}" as="c" hint-placeholder-count="4">
+          <dc-import name="ProduktovaKarta" p="{{ c }}" hint-size="100%,470px"></dc-import>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div><h2 style="margin:0 0 4px;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Tlačítka</h2><p style="margin:0;font-size:15px;line-height:1.55;color:#5A626C;"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;">Tlacitko.dc.html</span> — typy, velikosti 36/44/52, ikony a stavy.</p></div>
+      <dc-import name="Tlacitko" hint-size="100%,460px"></dc-import>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div><h2 style="margin:0 0 4px;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Kvantifikátor</h2><p style="margin:0;font-size:15px;line-height:1.55;color:#5A626C;"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;">Kvantifikator.dc.html</span> — Standard 44 a Compact 36.</p></div>
+      <dc-import name="Kvantifikator" hint-size="100%,220px"></dc-import>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div><h2 style="margin:0 0 4px;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Vyhledávání s našeptáváním</h2><p style="margin:0;font-size:15px;line-height:1.55;color:#5A626C;"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;">Vyhledavani.dc.html</span> — pole s dropdownem. Zkuste psát „brzd", „kolo", „led".</p></div>
+      <dc-import name="Vyhledavani" hint-size="100%,500px"></dc-import>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div><h2 style="margin:0 0 4px;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Formulářové prvky</h2><p style="margin:0;font-size:15px;line-height:1.55;color:#5A626C;"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;">FormularovePrvky.dc.html</span> — input, select, checkbox, textarea.</p></div>
+      <dc-import name="FormularovePrvky" hint-size="100%,420px"></dc-import>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div><h2 style="margin:0 0 4px;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Badge</h2><p style="margin:0;font-size:15px;line-height:1.55;color:#5A626C;"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;">Badge.dc.html</span> — sleva, novinka, doprava zdarma.</p></div>
+      <dc-import name="Badge" hint-size="100%,180px"></dc-import>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div><h2 style="margin:0 0 4px;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Chip</h2><p style="margin:0;font-size:15px;line-height:1.55;color:#5A626C;"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;">Chip.dc.html</span> — filtrační (aktivní/neaktivní) a značkový.</p></div>
+      <dc-import name="Chip" hint-size="100%,300px"></dc-import>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div><h2 style="margin:0 0 4px;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Skladovost</h2><p style="margin:0;font-size:15px;line-height:1.55;color:#5A626C;"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;">Skladovost.dc.html</span> — skladem / není skladem / na dotaz, ikony 18×18.</p></div>
+      <dc-import name="Skladovost" hint-size="100%,180px"></dc-import>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div><h2 style="margin:0 0 4px;font-size:24px;font-weight:700;letter-spacing:-0.01em;">LED indikátor</h2><p style="margin:0;font-size:15px;line-height:1.55;color:#5A626C;"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;">LedIndikator.dc.html</span> — status otevírací doby na světlém i tmavém podkladu.</p></div>
+      <dc-import name="LedIndikator" hint-size="100%,280px"></dc-import>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div><h2 style="margin:0 0 4px;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Poradenský blok</h2><p style="margin:0;font-size:15px;line-height:1.55;color:#5A626C;"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;">PoradenskyBlok.dc.html</span> — pobídka k poradenství.</p></div>
+      <dc-import name="PoradenskyBlok" hint-size="100%,220px"></dc-import>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div><h2 style="margin:0 0 4px;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Kategorická dlaždice</h2><p style="margin:0;font-size:15px;line-height:1.55;color:#5A626C;"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;">KategorickaDlazdice.dc.html</span> — rozcestník kategorií s podkategoriemi.</p></div>
+      <dc-import name="KategorickaDlazdice" hint-size="100%,340px"></dc-import>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div><h2 style="margin:0 0 4px;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Hlavička</h2><p style="margin:0;font-size:15px;line-height:1.55;color:#5A626C;"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;">Hlavicka.dc.html</span> — topbar s LED statusem a menu se záložkami.</p></div>
+      <dc-import name="Hlavicka" hint-size="100%,220px"></dc-import>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div><h2 style="margin:0 0 4px;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Breadcrumb</h2><p style="margin:0;font-size:15px;line-height:1.55;color:#5A626C;"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;">Breadcrumb.dc.html</span> — drobečková navigace.</p></div>
+      <dc-import name="Breadcrumb" hint-size="100%,150px"></dc-import>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div><h2 style="margin:0 0 4px;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Patička</h2><p style="margin:0;font-size:15px;line-height:1.55;color:#5A626C;"><span style="font-family:'JetBrains Mono',monospace;font-size:13px;">Paticka.dc.html</span> — max. šíře 1560 px, kontaktní blok a socials.</p></div>
+      <dc-import name="Paticka" hint-size="100%,560px"></dc-import>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:1600}}">
+class Component extends DCLogic {
+  renderVals(){
+    const base = { starsOn:'★★★★', starsOff:'★', reviews:23, availStyle:'display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:#0B6937;', availIn:true, availOut:false, avail:'Skladem > 15 ks', qty:1, cmp:false, cmpBox:'flex:none;width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1.5px solid #C4CAD2;background:#fff;', dot1:'display:none;', dot2:'display:none;', noImg:false, phStyle:'', imgLabel:'' };
+    const withImg = (f)=>({ img:f, imgBgStyle:'aspect-ratio:4/3;background:#fff url("./'+f+'") center/contain no-repeat;background-origin:content-box;padding:18px 12px;' });
+    const badge = (text,bg)=>({ badge:text, badgeStyle:'position:absolute;top:8px;left:8px;font-size:13px;font-weight:700;border-radius:6px;padding:4px 9px;color:'+(bg==='#E9F8EF'?'#0B6937':'#fff')+';background:'+bg+';' });
+    const cards = [
+      { ...base, ...withImg('uploads/kolecko-operne-dtr-prum-48-150-kg.jpg'), name:'Opěrné kolečko ⌀48 mm, nosnost 150 kg', priceNet:'365 Kč', price:'442 Kč', objNum:'404815', badge:'', badgeStyle:'' },
+      { ...base, ...withImg('uploads/celisti-brzdove-knott-200x50-mala-sada-na-2-kola.jpg'), ...badge('−15 %','#C5232B'), name:'Brzdové čelisti KNOTT 200×50, sada na 2 kola', priceNet:'1 041 Kč', price:'1 260 Kč', objNum:'302005' },
+      { ...base, ...withImg('uploads/pneu-165-r13-c-96n-710-kg-kenda-m-s.jpg'), ...badge('Doprava zdarma','#E9F8EF'), name:'Pneumatika 165 R13 C 96N, 710 kg Kenda M+S', priceNet:'1 190 Kč', price:'1 440 Kč', objNum:'401653' },
+      { ...base, name:'Blatník plastový jednoosý 200 mm', priceNet:'479 Kč', price:'580 Kč', objNum:'603200', badge:'', badgeStyle:'', img:'', imgBgStyle:'', noImg:true, phStyle:'aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;color:#9AA1AB;font-size:13px;font-weight:600;background:repeating-linear-gradient(45deg,#F2F4F7,#F2F4F7 11px,#E9ECEF 11px,#E9ECEF 22px);', imgLabel:'FOTO', availStyle:'display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:#8A919C;', availIn:false, availOut:true, avail:'Na dotaz' },
+    ];
+    const sections = [
+      { title:'Tlačítka', name:'Tlacitko', file:'Tlacitko.dc.html', size:'100%,460px', note:' — typy, velikosti 36/44/52, ikony a stavy.' },
+      { title:'Kvantifikátor', name:'Kvantifikator', file:'Kvantifikator.dc.html', size:'100%,220px', note:' — Standard 44 a Compact 36.' },
+      { title:'Vyhledávání s našeptáváním', name:'Vyhledavani', file:'Vyhledavani.dc.html', size:'100%,500px', note:' — pole s dropdownem. Zkuste psát „brzd", „kolo", „led".' },
+      { title:'Formulářové prvky', name:'FormularovePrvky', file:'FormularovePrvky.dc.html', size:'100%,420px', note:' — input, select, checkbox, textarea.' },
+      { title:'Badge', name:'Badge', file:'Badge.dc.html', size:'100%,180px', note:' — sleva, novinka, doprava zdarma.' },
+      { title:'Chip', name:'Chip', file:'Chip.dc.html', size:'100%,300px', note:' — filtrační (aktivní/neaktivní) a značkový.' },
+      { title:'Skladovost', name:'Skladovost', file:'Skladovost.dc.html', size:'100%,180px', note:' — skladem / není skladem / na dotaz, ikony 18×18.' },
+      { title:'LED indikátor', name:'LedIndikator', file:'LedIndikator.dc.html', size:'100%,280px', note:' — status otevírací doby na světlém i tmavém podkladu.' },
+      { title:'Poradenský blok', name:'PoradenskyBlok', file:'PoradenskyBlok.dc.html', size:'100%,220px', note:' — pobídka k poradenství.' },
+      { title:'Kategorická dlaždice', name:'KategorickaDlazdice', file:'KategorickaDlazdice.dc.html', size:'100%,340px', note:' — rozcestník kategorií s podkategoriemi.' },
+      { title:'Hlavička', name:'Hlavicka', file:'Hlavicka.dc.html', size:'100%,220px', note:' — topbar s LED statusem a menu se záložkami.' },
+      { title:'Breadcrumb', name:'Breadcrumb', file:'Breadcrumb.dc.html', size:'100%,150px', note:' — drobečková navigace.' },
+      { title:'Patička', name:'Paticka', file:'Paticka.dc.html', size:'100%,560px', note:' — max. šíře 1560 px, kontaktní blok a socials.' },
+    ];
+    return { cards, sections };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Architects+Daughter&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:#E4E6E9;}
+  .wf-img{background:repeating-linear-gradient(45deg,#E9ECEF,#E9ECEF 11px,#E3E6EA 11px,#E3E6EA 22px);}
+  .wf-img2{background:repeating-linear-gradient(-45deg,#DEE8F2,#DEE8F2 11px,#D6E2EF 11px,#D6E2EF 22px);}
+</style>
+</helmet>
+<div data-screen-label="Wireframe Výpis produktů VAPP" style="font-family:'Hanken Grotesk',sans-serif;color:#2B3036;background:#E4E6E9;width:max-content;min-width:100%;min-height:100vh;padding:36px 48px 90px;display:flex;flex-direction:column;gap:26px;">
+
+  <!-- TOOLBAR -->
+  <div style="align-self:flex-start;display:flex;align-items:center;gap:20px;flex-wrap:wrap;background:#fff;border:1px solid #D7DADF;border-radius:12px;padding:14px 20px;box-shadow:0 1px 3px rgba(0,0,0,.06);">
+    <div style="display:flex;align-items:baseline;gap:10px;">
+      <span style="font-family:'Architects Daughter',cursive;font-size:21px;color:#1A1D21;">Wireframe — Výpis produktů</span>
+      <span style="font-size:14px;font-weight:700;color:#1E5AA8;letter-spacing:.04em;">VAPP.CZ</span>
+      <span style="font-size:12px;color:#9099A3;font-weight:600;">kategorie Přívěsy · lo-fi</span>
+    </div>
+    <div style="width:1px;height:24px;background:#E2E5E9;"></div>
+    <button onClick="{{ toggleNotesBtn.onClick }}" style="{{ toggleNotesBtn.style }}">{{ toggleNotesBtn.label }}</button>
+    <div style="display:flex;align-items:center;gap:14px;">
+      <span style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:#5A626C;"><span style="width:12px;height:12px;border-radius:4px;background:#1E5AA8;"></span>Poznámka agentury</span>
+      <span style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:#5A626C;"><span style="width:12px;height:12px;border-radius:4px;background:#6D28D9;"></span>UX vylepšení</span>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:54px;align-items:flex-start;">
+
+    <!-- ============ DESKTOP ============ -->
+    <div style="flex:none;width:1080px;">
+      <div style="font-family:'Architects Daughter',cursive;font-size:16px;color:#5A626C;margin-bottom:10px;">Desktop · výpis kategorie Přívěsy</div>
+      <div style="background:#fff;border-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,.10);overflow:hidden;border:1px solid #DDE0E4;">
+
+        <!-- HEADER (finální z HP) -->
+        <div style="background:#ECEEF1;border-bottom:1px solid #E0E3E7;display:flex;align-items:center;justify-content:space-between;padding:8px 26px;">
+          <div style="display:flex;align-items:center;gap:8px;"><span style="width:9px;height:9px;border-radius:50%;background:#2EAA6A;box-shadow:0 0 0 3px rgba(46,170,106,.18);"></span><span style="font-size:12.5px;font-weight:600;color:#4A525B;">Po–Pá 8–16 · <span style="color:#1F8A5B;font-weight:700;">Právě otevřeno</span></span></div>
+          <div style="display:flex;align-items:center;gap:18px;"><span style="font-size:12.5px;color:#6B727C;">Doprava a platba</span><span style="font-size:12.5px;color:#6B727C;">Obchodní podmínky</span><span style="font-size:12.5px;color:#6B727C;">O nás</span><span style="font-size:12.5px;color:#6B727C;">Kontakty</span><span style="font-size:12.5px;font-weight:700;color:#3A424C;text-decoration:underline;">☎ 323 605 314</span><span style="font-size:12.5px;font-weight:700;color:#3A424C;text-decoration:underline;">✉ obchod<span>&#64;</span>vapp.cz</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:24px;padding:18px 26px;border-bottom:1px solid #EEF0F2;">
+          <div style="flex:none;width:128px;height:46px;border:1.5px solid #C7CBD1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;letter-spacing:.06em;color:#3A424C;">VAPP</div>
+          <div style="flex:1;display:flex;align-items:center;height:46px;border:1.5px dashed #BFC4CB;border-radius:9px;overflow:hidden;"><span style="flex:1;padding:0 16px;font-size:14px;color:#9099A3;">Hledat díly, přívěsy, příslušenství…</span><div style="width:54px;height:100%;background:#E4E7EB;display:flex;align-items:center;justify-content:center;font-size:16px;color:#6B727C;">⌕</div></div>
+          <div style="flex:none;display:flex;align-items:center;gap:18px;">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:26px;height:26px;border:1.5px solid #C7CBD1;border-radius:6px;"></div><span style="font-size:11px;color:#6B727C;font-weight:600;">Přihlásit</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:26px;height:26px;border:1.5px solid #C7CBD1;border-radius:6px;"></div><span style="font-size:11px;color:#6B727C;font-weight:600;">Porovnat</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:26px;height:26px;border:1.5px solid #C7CBD1;border-radius:6px;"></div><span style="font-size:11px;color:#6B727C;font-weight:600;">Košík</span></div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:12px 26px;background:#F7F8F9;border-bottom:1px solid #EAECEF;">
+          <span style="font-size:14px;font-weight:700;color:#fff;padding:7px 14px;background:#2B3036;border-radius:7px;">Přívěsy ▾</span>
+          <span style="font-size:14px;font-weight:700;color:#2B3036;padding:7px 14px;background:#E4E7EB;border-radius:7px;">Náhradní díly ▾</span>
+          <span style="font-size:14px;font-weight:700;color:#2B3036;padding:7px 14px;background:#E4E7EB;border-radius:7px;">Příslušenství ▾</span>
+          <span style="font-size:14px;font-weight:700;color:#2B3036;padding:7px 14px;background:#E4E7EB;border-radius:7px;">Servis</span>
+          <span style="font-size:14px;font-weight:700;color:#2B3036;padding:7px 14px;background:#E4E7EB;border-radius:7px;">Půjčovna</span>
+          <div style="margin-left:auto;display:flex;align-items:center;gap:12px;">
+            <span style="font-size:13px;font-weight:700;color:#5A626C;padding:8px 15px;border:1.5px solid #C7CBD1;border-radius:7px;">Poradna</span>
+            <span style="font-size:13.5px;font-weight:800;color:#fff;background:#A21B22;padding:9px 17px;border-radius:7px;">Akce a slevy</span>
+          </div>
+        </div>
+
+        <!-- BREADCRUMB + TITLE -->
+        <div style="padding:16px 26px 0;">
+          <div style="font-size:12.5px;color:#8A909A;margin-bottom:8px;">Úvod <span style="color:#C4CAD2;">›</span> <span style="font-weight:700;color:#3A424C;">Přívěsy</span></div>
+          <h1 style="margin:0 0 4px;font-size:26px;font-weight:800;color:#1A1D21;">Přívěsy <span style="font-size:15px;font-weight:600;color:#9099A3;">124 produktů</span></h1>
+        </div>
+
+        <!-- SEO POPIS -->
+        <div style="padding:6px 26px 0;max-width:760px;">
+          <p style="margin:0;font-size:13.5px;line-height:1.55;color:#5A626C;">Vyrábíme a prodáváme přívěsy za osobní automobily — valníky, sklopné přívěsy i přepravníky aut, strojů, lodí a zvířat. Vlastní výroba VAPP od roku 1991, značky Agados, STEMA a UNSINN skladem.<sc-if value="{{ descOpen }}" hint-placeholder-val=""> Všechny přívěsy mají robustní žárově zinkované rámy a kvalitní nápravy AL-KO nebo KNOTT. Poradíme s výběrem podle nosnosti, rozměrů ložné plochy i způsobu použití — od hobby přívěsů po profesionální autotransportéry s certifikací VDI 2700. Zajistíme také servis, náhradní díly a zapůjčení.</sc-if>
+          <span onClick="{{ toggleDesc }}" style="font-size:13px;font-weight:700;color:#1E5AA8;cursor:pointer;text-decoration:underline;margin-left:6px;">{{ descToggleLabel }}</span></p>
+        </div>
+        <sc-if value="{{ showNotes }}" hint-placeholder-val=""><div style="display:flex;flex-wrap:wrap;gap:8px;padding:11px 26px 0;"><sc-for list="{{ notes.desc }}" as="n" hint-placeholder-count="1"><div style="{{ n.box }}"><span style="{{ n.badge }}">{{ n.label }}</span><span style="font-size:12px;line-height:1.45;color:#4A5159;">{{ n.text }}</span></div></sc-for></div></sc-if>
+
+        <!-- KATEGORIE -->
+        <div style="padding:18px 26px 0;">
+          <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+            <sc-for list="{{ catChips }}" as="c" hint-placeholder-count="8"><span style="{{ c.style }}">{{ c.t }} <span style="{{ c.cntStyle }}">{{ c.cnt }}</span></span></sc-for>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px;">
+            <span style="font-size:11px;font-weight:800;color:#8A909A;text-transform:uppercase;letter-spacing:.07em;margin-right:2px;">Značky</span>
+            <sc-for list="{{ brandChips }}" as="b" hint-placeholder-count="5"><span style="{{ b.style }}">{{ b.t }} <span style="{{ b.cntStyle }}">{{ b.cnt }}</span></span></sc-for>
+          </div>
+        </div>
+        <sc-if value="{{ showNotes }}" hint-placeholder-val=""><div style="display:flex;flex-wrap:wrap;gap:8px;padding:11px 26px 0;"><sc-for list="{{ notes.cats }}" as="n" hint-placeholder-count="2"><div style="{{ n.box }}"><span style="{{ n.badge }}">{{ n.label }}</span><span style="font-size:12px;line-height:1.45;color:#4A5159;">{{ n.text }}</span></div></sc-for></div></sc-if>
+
+        <!-- TOOLBAR: filtr + řazení -->
+        <div style="display:flex;align-items:center;gap:12px;padding:18px 26px 0;">
+          <span style="display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;color:#fff;background:#3A3F46;border-radius:8px;padding:10px 18px;cursor:pointer;">☰ Filtry <span style="background:#1E5AA8;border-radius:999px;font-size:11px;padding:2px 8px;">2</span></span>
+          <span style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:#1F8A5B;border:1.5px solid #BFE6D0;background:#E7F6EE;border-radius:999px;padding:8px 14px;cursor:pointer;">✓ Pouze skladem</span>
+          <span style="font-size:12.5px;color:#8A909A;">Aktivní: <span style="font-weight:700;color:#3A424C;">brzdy: ano ✕</span> · <span style="font-weight:700;color:#3A424C;">VAPP ✕</span></span>
+          <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+            <span style="font-size:12.5px;color:#8A909A;font-weight:600;">Řadit:</span>
+            <span style="display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;color:#2B3036;border:1.5px solid #C7CBD1;border-radius:8px;padding:9px 14px;cursor:pointer;">Nejoblíbenější ▾</span>
+          </div>
+        </div>
+        <sc-if value="{{ showNotes }}" hint-placeholder-val=""><div style="display:flex;flex-wrap:wrap;gap:8px;padding:11px 26px 0;"><sc-for list="{{ notes.toolbar }}" as="n" hint-placeholder-count="2"><div style="{{ n.box }}"><span style="{{ n.badge }}">{{ n.label }}</span><span style="font-size:12px;line-height:1.45;color:#4A5159;">{{ n.text }}</span></div></sc-for></div></sc-if>
+
+        <!-- KARTY PRODUKTŮ -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:18px 26px;">
+          <sc-for list="{{ products }}" as="p" hint-placeholder-count="6">
+            <div style="{{ p.cardStyle }}">
+              <div style="position:relative;">
+                <div class="{{ p.imgClass }}" style="height:148px;display:flex;align-items:center;justify-content:center;color:#9099A3;font-size:11.5px;font-weight:600;">{{ p.imgLabel }}</div>
+                <span style="position:absolute;top:8px;left:8px;display:flex;gap:4px;"><span style="{{ p.dot1 }}"></span><span style="{{ p.dot2 }}"></span></span>
+                <sc-if value="{{ p.hoverBadge }}" hint-placeholder-val=""><span style="position:absolute;bottom:8px;right:8px;font-size:10px;font-weight:700;color:#1E5AA8;background:rgba(255,255,255,.9);border-radius:5px;padding:3px 7px;">stav: hover</span></sc-if>
+              </div>
+              <div style="padding:12px 14px 14px;display:flex;flex-direction:column;gap:9px;">
+                <div style="font-size:14.5px;font-weight:800;color:#23282D;line-height:1.25;">{{ p.name }}</div>
+                <div style="display:flex;flex-direction:column;gap:4px;">
+                  <div style="display:flex;justify-content:space-between;font-size:12px;"><span style="color:#8A909A;">Délka ložné plochy</span><span style="font-weight:700;color:#3A424C;">{{ p.len }}</span></div>
+                  <div style="display:flex;justify-content:space-between;font-size:12px;"><span style="color:#8A909A;">Šířka ložné plochy</span><span style="font-weight:700;color:#3A424C;">{{ p.wid }}</span></div>
+                  <div style="display:flex;justify-content:space-between;font-size:12px;"><span style="color:#8A909A;">Celková hmotnost</span><span style="font-weight:700;color:#3A424C;">{{ p.wgt }}</span></div>
+                </div>
+                <div style="display:flex;align-items:flex-end;justify-content:space-between;">
+                  <div><div style="font-size:11.5px;color:#8A909A;">od {{ p.priceNet }} bez DPH</div><div style="font-size:16.5px;font-weight:800;color:#23282D;">od {{ p.price }}</div></div>
+                  <span style="{{ p.availStyle }}">{{ p.avail }}</span>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid #EEF0F2;padding-top:10px;">
+                  <span style="display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:#5A626C;cursor:pointer;"><span style="{{ p.cmpBox }}"><sc-if value="{{ p.cmp }}" hint-placeholder-val=""><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg></sc-if></span>Porovnat</span>
+                  <span style="font-size:12.5px;font-weight:700;color:#1E5AA8;">Detail →</span>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ showNotes }}" hint-placeholder-val=""><div style="display:flex;flex-wrap:wrap;gap:8px;padding:0 26px 6px;"><sc-for list="{{ notes.cards }}" as="n" hint-placeholder-count="3"><div style="{{ n.box }}"><span style="{{ n.badge }}">{{ n.label }}</span><span style="font-size:12px;line-height:1.45;color:#4A5159;">{{ n.text }}</span></div></sc-for></div></sc-if>
+
+        <!-- PODPORA -->
+        <div style="margin:6px 26px 0;display:flex;align-items:center;gap:18px;background:#EDF3FB;border:1px solid #D5E3F4;border-radius:12px;padding:18px 22px;">
+          <div style="flex:none;width:44px;height:44px;border:1.5px solid #9FB8D6;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;color:#1E5AA8;">☎</div>
+          <div style="flex:1;"><div style="font-size:15px;font-weight:800;color:#1A1D21;">Nevíte si rady s výběrem přívěsu?</div><div style="font-size:13px;color:#5A626C;margin-top:2px;">Zkušení obchodníci vám poradí po telefonu i e-mailu · Po–Pá 8–16</div></div>
+          <div style="display:flex;gap:10px;"><span style="font-size:14px;font-weight:800;color:#fff;background:#1E5AA8;border-radius:8px;padding:11px 18px;">☎ 323 605 314</span><span style="font-size:14px;font-weight:700;color:#1E5AA8;border:1.5px solid #9FB8D6;border-radius:8px;padding:11px 18px;">Napsat e-mail</span></div>
+        </div>
+        <sc-if value="{{ showNotes }}" hint-placeholder-val=""><div style="display:flex;flex-wrap:wrap;gap:8px;padding:11px 26px 0;"><sc-for list="{{ notes.support }}" as="n" hint-placeholder-count="1"><div style="{{ n.box }}"><span style="{{ n.badge }}">{{ n.label }}</span><span style="font-size:12px;line-height:1.45;color:#4A5159;">{{ n.text }}</span></div></sc-for></div></sc-if>
+
+        <!-- STRÁNKOVÁNÍ -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:12px;padding:24px 26px 30px;">
+          <span style="font-size:12.5px;color:#8A909A;">Zobrazeno <b style="color:#3A424C;">24</b> ze 124 produktů</span>
+          <div style="width:280px;height:5px;background:#EAEDF0;border-radius:999px;overflow:hidden;"><div style="width:19%;height:100%;background:#1E5AA8;border-radius:999px;"></div></div>
+          <span style="display:flex;align-items:center;justify-content:center;min-height:46px;padding:0 34px;font-size:14px;font-weight:800;color:#2B3036;border:1.5px solid #C7CBD1;border-radius:9px;cursor:pointer;">Načíst dalších 24 produktů</span>
+        </div>
+        <sc-if value="{{ showNotes }}" hint-placeholder-val=""><div style="display:flex;flex-wrap:wrap;gap:8px;padding:0 26px 18px;"><sc-for list="{{ notes.paging }}" as="n" hint-placeholder-count="1"><div style="{{ n.box }}"><span style="{{ n.badge }}">{{ n.label }}</span><span style="font-size:12px;line-height:1.45;color:#4A5159;">{{ n.text }}</span></div></sc-for></div></sc-if>
+
+        <!-- FOOTER (finální z HP) -->
+        <div style="background:#2F343B;padding:30px 26px 0;">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr) 1.3fr;gap:24px;padding-bottom:24px;border-bottom:1px solid #41474F;">
+            <sc-for list="{{ footerCols }}" as="col" hint-placeholder-count="4">
+              <div><div style="font-size:13px;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;">{{ col.h }}</div><div style="display:flex;flex-direction:column;gap:9px;"><sc-for list="{{ col.items }}" as="it" hint-placeholder-count="4"><span style="font-size:13px;color:#AEB5BD;">{{ it }}</span></sc-for></div></div>
+            </sc-for>
+            <div>
+              <div style="font-size:13px;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;">Kontakt</div>
+              <div style="display:flex;flex-direction:column;gap:7px;font-size:13px;color:#AEB5BD;line-height:1.5;">
+                <span style="color:#fff;font-weight:700;">VAPP s.r.o.</span>
+                <span>Popovičky 50, 251 01 Říčany</span>
+                <span>Pobočka: Mladá Boleslav — Židněves</span>
+                <span style="color:#fff;font-weight:700;text-decoration:underline;">☎ 323 605 314</span>
+                <span style="color:#fff;font-weight:700;text-decoration:underline;">✉ obchod<span>&#64;</span>vapp.cz</span>
+                <span style="display:inline-flex;align-items:center;gap:7px;"><span style="width:9px;height:9px;border-radius:50%;background:#2EAA6A;"></span>Po–Pá 8–16 · právě otevřeno</span>
+                <span style="font-size:13px;font-weight:700;color:#fff;text-decoration:underline;">Všechny kontakty (obchod, servis, půjčovna…) →</span>
+                <span style="color:#888F97;font-size:12px;">IČO 12345678 · DIČ CZ12345678</span>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:40px;flex-wrap:wrap;padding:20px 0;border-bottom:1px solid #41474F;">
+            <div><div style="font-size:11px;font-weight:800;color:#9098A1;text-transform:uppercase;letter-spacing:.06em;margin-bottom:9px;">Platba</div><div style="display:flex;gap:8px;flex-wrap:wrap;"><sc-for list="{{ pays }}" as="p" hint-placeholder-count="4"><div style="width:62px;height:34px;border:1.5px dashed #5A616A;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;color:#AEB5BD;text-align:center;line-height:1.1;padding:0 3px;">{{ p }}</div></sc-for></div></div>
+            <div><div style="font-size:11px;font-weight:800;color:#9098A1;text-transform:uppercase;letter-spacing:.06em;margin-bottom:9px;">Doprava</div><div style="display:flex;gap:8px;flex-wrap:wrap;"><sc-for list="{{ ships }}" as="s" hint-placeholder-count="3"><div style="width:62px;height:34px;border:1.5px dashed #5A616A;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;color:#AEB5BD;text-align:center;line-height:1.1;padding:0 3px;">{{ s }}</div></sc-for></div></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0;flex-wrap:wrap;gap:12px;">
+            <span style="font-size:12.5px;color:#888F97;">© 2026 VAPP s.r.o. · Ochrana osobních údajů · <span style="text-decoration:underline;">Nastavení cookies</span></span>
+            <div style="display:flex;gap:8px;"><div style="width:30px;height:30px;border:1px solid #565C64;border-radius:50%;"></div><div style="width:30px;height:30px;border:1px solid #565C64;border-radius:50%;"></div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============ FILTR PANEL ============ -->
+    <div style="flex:none;width:380px;">
+      <div style="font-family:'Architects Daughter',cursive;font-size:16px;color:#5A626C;margin-bottom:10px;">Vyjížděcí panel filtrů (překryv zprava)</div>
+      <div style="background:#fff;border-radius:12px;box-shadow:0 8px 30px rgba(20,30,45,.16);border:1px solid #DDE0E4;overflow:hidden;">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid #EAECEF;"><span style="font-size:16px;font-weight:800;color:#1A1D21;">Filtry</span><span style="font-size:18px;color:#6B727C;cursor:pointer;">✕</span></div>
+        <div style="padding:4px 18px;">
+          <sc-for list="{{ filterAcc }}" as="f" hint-placeholder-count="6">
+            <div style="border-bottom:1px solid #F1F3F5;">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 0;cursor:pointer;"><span style="font-size:13.5px;font-weight:700;color:#23282D;">{{ f.h }}<sc-if value="{{ f.active }}" hint-placeholder-val=""><span style="margin-left:7px;font-size:10.5px;font-weight:800;color:#1E5AA8;background:#EDF3FB;border-radius:5px;padding:2px 6px;">{{ f.activeLabel }}</span></sc-if></span><span style="font-size:14px;color:#9AA1AB;">{{ f.chev }}</span></div>
+              <sc-if value="{{ f.open }}" hint-placeholder-val="">
+                <div style="padding:0 0 14px;">
+                  <sc-if value="{{ f.isRange }}" hint-placeholder-val="">
+                    <div style="display:flex;align-items:center;gap:10px;"><div style="flex:1;height:38px;border:1.5px solid #C7CBD1;border-radius:7px;display:flex;align-items:center;padding:0 11px;font-size:12.5px;color:#3A424C;font-weight:600;">{{ f.from }}</div><span style="color:#9AA1AB;">–</span><div style="flex:1;height:38px;border:1.5px solid #C7CBD1;border-radius:7px;display:flex;align-items:center;padding:0 11px;font-size:12.5px;color:#3A424C;font-weight:600;">{{ f.to }}</div></div>
+                    <div style="position:relative;height:22px;margin-top:10px;"><div style="position:absolute;top:9px;left:0;right:0;height:4px;background:#E4E7EB;border-radius:2px;"></div><div style="position:absolute;top:9px;left:15%;right:30%;height:4px;background:#1E5AA8;border-radius:2px;"></div><div style="position:absolute;top:3px;left:15%;width:16px;height:16px;border-radius:50%;background:#fff;border:2.5px solid #1E5AA8;"></div><div style="position:absolute;top:3px;right:30%;width:16px;height:16px;border-radius:50%;background:#fff;border:2.5px solid #1E5AA8;"></div></div>
+                  </sc-if>
+                  <sc-if value="{{ f.isChecks }}" hint-placeholder-val="">
+                    <div style="display:flex;flex-direction:column;gap:9px;">
+                      <sc-for list="{{ f.opts }}" as="o" hint-placeholder-count="3"><span style="display:flex;align-items:center;gap:9px;font-size:13px;color:#3A424C;"><span style="{{ o.box }}"><sc-if value="{{ o.on }}" hint-placeholder-val=""><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg></sc-if></span>{{ o.t }} <span style="color:#9AA1AB;font-size:12px;">{{ o.c }}</span></span></sc-for>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;gap:10px;padding:16px 18px;border-top:1px solid #EAECEF;background:#F9FAFB;">
+          <span style="flex:none;font-size:13px;font-weight:700;color:#5A626C;border:1.5px solid #C7CBD1;border-radius:8px;padding:12px 16px;cursor:pointer;">Zrušit vše</span>
+          <span style="flex:1;text-align:center;font-size:13.5px;font-weight:800;color:#fff;background:#1E5AA8;border-radius:8px;padding:12px;cursor:pointer;">Zobrazit 37 produktů</span>
+        </div>
+      </div>
+      <sc-if value="{{ showNotes }}" hint-placeholder-val=""><div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;"><sc-for list="{{ notes.filter }}" as="n" hint-placeholder-count="3"><div style="{{ n.box }}"><span style="{{ n.badge }}">{{ n.label }}</span><span style="font-size:12px;line-height:1.45;color:#4A5159;">{{ n.text }}</span></div></sc-for></div></sc-if>
+    </div>
+
+    <!-- ============ TABLET ============ -->
+    <div style="flex:none;width:740px;">
+      <div style="font-family:'Architects Daughter',cursive;font-size:16px;color:#5A626C;margin-bottom:10px;">Tablet (~768 px) · menu v hamburgeru, karty 2/řádek</div>
+      <div style="background:#fff;border-radius:14px;box-shadow:0 1px 4px rgba(0,0,0,.10);border:1px solid #DDE0E4;overflow:hidden;">
+        <div style="display:flex;align-items:center;gap:7px;padding:7px 20px;background:#F4F6F8;border-bottom:1px solid #EAECEF;"><span style="width:8px;height:8px;border-radius:50%;background:#2EAA6A;"></span><span style="font-size:12px;font-weight:600;color:#4A525B;">Po–Pá 8–16 · otevřeno · ☎ 323 605 314</span></div>
+        <div style="display:flex;align-items:center;gap:14px;padding:14px 20px;border-bottom:1px solid #EEF0F2;">
+          <div style="flex:none;width:92px;height:38px;border:1.5px solid #C7CBD1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#3A424C;">VAPP</div>
+          <div style="flex:1;height:40px;border:1.5px dashed #BFC4CB;border-radius:8px;display:flex;align-items:center;padding:0 13px;color:#9099A3;font-size:13px;">⌕ &nbsp;Hledat díly, přívěsy…</div>
+          <div style="flex:none;display:flex;flex-direction:column;align-items:center;gap:2px;"><div style="width:30px;height:30px;border:1.5px solid #C7CBD1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#6B727C;">⇄</div><span style="font-size:9px;color:#6B727C;font-weight:600;">Porovnat</span></div>
+          <div style="flex:none;display:flex;flex-direction:column;align-items:center;gap:2px;"><div style="width:30px;height:30px;border:1.5px solid #C7CBD1;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#6B727C;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B727C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1.5"/><circle cx="19" cy="21" r="1.5"/><path d="M2 3h3l2.6 12.5a1 1 0 0 0 1 .8h9.7a1 1 0 0 0 1-.8L21.5 7H6"/></svg></div><span style="font-size:9px;color:#6B727C;font-weight:600;">Košík</span></div>
+          <div style="flex:none;width:38px;height:34px;border:1.5px solid #C7CBD1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#3A424C;">☰</div>
+        </div>
+        <div style="padding:14px 20px 0;">
+          <div style="font-size:12px;color:#8A909A;margin-bottom:6px;">Úvod › <b style="color:#3A424C;">Přívěsy</b></div>
+          <h2 style="margin:0;font-size:21px;font-weight:800;color:#1A1D21;">Přívěsy <span style="font-size:13px;font-weight:600;color:#9099A3;">124 produktů</span></h2>
+          <p style="margin:6px 0 0;font-size:12.5px;line-height:1.5;color:#5A626C;">Valníky, sklopné přívěsy i přepravníky — výroba VAPP od 1991… <span style="font-weight:700;color:#1E5AA8;text-decoration:underline;">Celý popis</span></p>
+        </div>
+        <div style="display:flex;gap:7px;overflow:hidden;padding:13px 20px 0;">
+          <sc-for list="{{ catChipsTablet }}" as="c" hint-placeholder-count="5"><span style="flex:none;font-size:12px;font-weight:700;color:#3A4651;background:#EEF1F4;border:1px solid #E0E4E8;border-radius:999px;padding:8px 13px;white-space:nowrap;">{{ c }}</span></sc-for>
+          <span style="flex:none;font-size:12px;font-weight:700;color:#1E5AA8;border:1.5px dashed #9FB8D6;border-radius:999px;padding:8px 13px;white-space:nowrap;">Všechny ▾</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:13px 20px 0;">
+          <span style="display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:#fff;background:#3A3F46;border-radius:8px;padding:9px 15px;">☰ Filtry <span style="background:#1E5AA8;border-radius:999px;font-size:10px;padding:1px 7px;">2</span></span>
+          <span style="margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:#2B3036;border:1.5px solid #C7CBD1;border-radius:8px;padding:8px 13px;">Nejoblíbenější ▾</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:13px;padding:14px 20px 20px;">
+          <sc-for list="{{ productsTablet }}" as="p" hint-placeholder-count="4">
+            <div style="border:1.5px solid #DFE2E6;border-radius:10px;overflow:hidden;">
+              <div class="wf-img" style="height:118px;display:flex;align-items:center;justify-content:center;color:#9099A3;font-size:10.5px;font-weight:600;">FOTO</div>
+              <div style="padding:11px 12px 12px;display:flex;flex-direction:column;gap:7px;">
+                <div style="font-size:13px;font-weight:800;color:#23282D;line-height:1.25;">{{ p.name }}</div>
+                <div style="display:flex;flex-direction:column;gap:3px;">
+                  <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:#8A909A;">Délka ložné plochy</span><span style="font-weight:700;color:#3A424C;">{{ p.len }}</span></div>
+                  <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:#8A909A;">Šířka ložné plochy</span><span style="font-weight:700;color:#3A424C;">{{ p.wid }}</span></div>
+                  <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:#8A909A;">Celková hmotnost</span><span style="font-weight:700;color:#3A424C;">{{ p.wgt }}</span></div>
+                </div>
+                <div style="display:flex;align-items:flex-end;justify-content:space-between;"><div><div style="font-size:10.5px;color:#8A909A;">od {{ p.priceNet }} bez DPH</div><div style="font-size:14.5px;font-weight:800;color:#23282D;">od {{ p.price }}</div></div><span style="{{ p.availStyle }}">{{ p.avail }}</span></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid #EEF0F2;padding-top:8px;"><span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#5A626C;"><span style="width:16px;height:16px;border:1.5px solid #C4CAD2;border-radius:4px;"></span>Porovnat</span><span style="font-size:11.5px;font-weight:700;color:#1E5AA8;">Detail →</span></div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <sc-if value="{{ showNotes }}" hint-placeholder-val=""><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;"><sc-for list="{{ notes.tablet }}" as="n" hint-placeholder-count="1"><div style="{{ n.box }}"><span style="{{ n.badge }}">{{ n.label }}</span><span style="font-size:12px;line-height:1.45;color:#4A5159;">{{ n.text }}</span></div></sc-for></div></sc-if>
+    </div>
+
+    <!-- ============ MOBIL ============ -->
+    <div style="flex:none;width:360px;">
+      <div style="font-family:'Architects Daughter',cursive;font-size:16px;color:#5A626C;margin-bottom:10px;">Mobil · výpis kategorie</div>
+      <div style="background:#fff;border-radius:26px;box-shadow:0 1px 4px rgba(0,0,0,.10);border:1px solid #DDE0E4;overflow:hidden;">
+        <div style="height:30px;background:#ECEEF1;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:11px;color:#6B727C;font-weight:600;"><span>9:41</span><span>▦ ▦ ▮</span></div>
+        <div style="display:flex;align-items:center;gap:7px;padding:7px 16px;background:#F4F6F8;border-bottom:1px solid #EAECEF;"><span style="width:8px;height:8px;border-radius:50%;background:#2EAA6A;"></span><span style="font-size:11.5px;font-weight:600;color:#4A525B;">Po–Pá 8–16 · otevřeno · ☎ 323 605 314</span></div>
+        <div style="display:flex;align-items:center;gap:12px;padding:13px 16px;">
+          <div style="flex:none;width:74px;height:32px;border:1.5px solid #C7CBD1;border-radius:5px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#3A424C;">VAPP</div>
+          <div style="flex:1;"></div>
+          <div style="flex:none;display:flex;flex-direction:column;align-items:center;gap:2px;"><div style="width:30px;height:30px;border:1.5px solid #C7CBD1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#6B727C;">⇄</div><span style="font-size:9px;color:#6B727C;font-weight:600;">Porovnat</span></div>
+          <div style="flex:none;display:flex;flex-direction:column;align-items:center;gap:2px;"><div style="width:30px;height:30px;border:1.5px solid #C7CBD1;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#6B727C;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B727C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1.5"/><circle cx="19" cy="21" r="1.5"/><path d="M2 3h3l2.6 12.5a1 1 0 0 0 1 .8h9.7a1 1 0 0 0 1-.8L21.5 7H6"/></svg></div><span style="font-size:9px;color:#6B727C;font-weight:600;">Košík</span></div>
+          <div style="flex:none;width:34px;height:30px;border:1.5px solid #C7CBD1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;color:#3A424C;">☰</div>
+        </div>
+        <div style="padding:0 16px 13px;"><div style="height:40px;border:1.5px dashed #BFC4CB;border-radius:9px;display:flex;align-items:center;padding:0 13px;color:#9099A3;font-size:13px;">⌕ &nbsp;Hledat díly, přívěsy…</div></div>
+        <div style="padding:10px 16px 0;border-top:1px solid #EAECEF;">
+          <div style="font-size:11.5px;color:#8A909A;margin-bottom:5px;">Úvod › <b style="color:#3A424C;">Přívěsy</b></div>
+          <h2 style="margin:0;font-size:19px;font-weight:800;color:#1A1D21;">Přívěsy <span style="font-size:12px;font-weight:600;color:#9099A3;">124</span></h2>
+          <p style="margin:5px 0 0;font-size:12px;line-height:1.5;color:#5A626C;">Valníky, sklopné přívěsy i přepravníky — výroba VAPP od 1991… <span style="font-weight:700;color:#1E5AA8;text-decoration:underline;">Celý popis</span></p>
+        </div>
+        <div style="display:flex;gap:6px;overflow:hidden;padding:11px 16px 0;">
+          <sc-for list="{{ catChipsMobile }}" as="c" hint-placeholder-count="3"><span style="flex:none;display:flex;align-items:center;min-height:38px;font-size:11.5px;font-weight:700;color:#3A4651;background:#EEF1F4;border:1px solid #E0E4E8;border-radius:999px;padding:0 13px;white-space:nowrap;">{{ c }}</span></sc-for>
+          <span style="flex:none;display:flex;align-items:center;min-height:38px;font-size:11.5px;font-weight:700;color:#1E5AA8;border:1.5px dashed #9FB8D6;border-radius:999px;padding:0 13px;white-space:nowrap;">Vše ▾</span>
+        </div>
+        <!-- sticky toolbar -->
+        <div style="display:flex;gap:8px;padding:11px 16px;border-bottom:1px solid #EAECEF;position:relative;">
+          <span style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;min-height:42px;font-size:12.5px;font-weight:700;color:#fff;background:#3A3F46;border-radius:8px;">☰ Filtry <span style="background:#1E5AA8;border-radius:999px;font-size:10px;padding:1px 7px;">2</span></span>
+          <span style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;min-height:42px;font-size:12.5px;font-weight:700;color:#2B3036;border:1.5px solid #C7CBD1;border-radius:8px;">Nejoblíbenější ▾</span>
+          <span style="position:absolute;right:14px;top:-9px;font-size:9.5px;font-weight:700;color:#7E858D;background:#fff;border:1px solid #E0E3E7;border-radius:5px;padding:2px 7px;">sticky při scrollu</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:13px 16px;">
+          <sc-for list="{{ productsMobile }}" as="p" hint-placeholder-count="4">
+            <div style="border:1.5px solid #DFE2E6;border-radius:9px;overflow:hidden;">
+              <div class="wf-img" style="height:82px;display:flex;align-items:center;justify-content:center;color:#9099A3;font-size:10px;font-weight:600;">FOTO</div>
+              <div style="padding:9px 10px 10px;display:flex;flex-direction:column;gap:6px;">
+                <div style="font-size:12px;font-weight:800;color:#23282D;line-height:1.25;">{{ p.name }}</div>
+                <div style="font-size:10.5px;color:#6B727C;line-height:1.45;font-weight:600;">{{ p.len }}<br>{{ p.wid }}<br>{{ p.wgt }}</div>
+                <div><div style="font-size:9.5px;color:#8A909A;">od {{ p.priceNet }} bez DPH</div><div style="font-size:13px;font-weight:800;color:#23282D;">od {{ p.price }}</div></div>
+                <span style="{{ p.availStyle }}">{{ p.avail }}</span>
+                <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid #EEF0F2;padding-top:7px;"><span style="display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:600;color:#5A626C;"><span style="width:18px;height:18px;border:1.5px solid #C4CAD2;border-radius:4px;"></span>Porovnat</span><span style="font-size:12px;font-weight:700;color:#1E5AA8;">→</span></div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="margin:2px 16px 14px;display:flex;align-items:center;gap:11px;background:#EDF3FB;border:1px solid #D5E3F4;border-radius:10px;padding:12px 13px;">
+          <div style="flex:none;width:34px;height:34px;border:1.5px solid #9FB8D6;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#1E5AA8;">☎</div>
+          <div style="flex:1;"><div style="font-size:12px;font-weight:800;color:#1A1D21;">Poradíme s výběrem</div><div style="font-size:10.5px;color:#5A626C;">Po–Pá 8–16 · po telefonu i e-mailu</div></div>
+          <span style="font-size:11.5px;font-weight:800;color:#fff;background:#1E5AA8;border-radius:7px;padding:9px 11px;">Zavolat</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:2px 16px 20px;">
+          <span style="font-size:11.5px;color:#8A909A;">Zobrazeno <b style="color:#3A424C;">24</b> ze 124</span>
+          <div style="width:180px;height:4px;background:#EAEDF0;border-radius:999px;overflow:hidden;"><div style="width:19%;height:100%;background:#1E5AA8;border-radius:999px;"></div></div>
+          <span style="display:flex;align-items:center;justify-content:center;width:100%;min-height:44px;font-size:13px;font-weight:800;color:#2B3036;border:1.5px solid #C7CBD1;border-radius:9px;">Načíst dalších 24</span>
+        </div>
+      </div>
+      <sc-if value="{{ showNotes }}" hint-placeholder-val=""><div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;"><sc-for list="{{ notes.mobile }}" as="n" hint-placeholder-count="2"><div style="{{ n.box }}"><span style="{{ n.badge }}">{{ n.label }}</span><span style="font-size:12px;line-height:1.45;color:#4A5159;">{{ n.text }}</span></div></sc-for></div></sc-if>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showNotes&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { showNotes: false, descOpen: false };
+
+  productData(){ return [
+    { name:'Přívěs VAPP PROFI', len:'2100–3530 mm', wid:'1280–1530 mm', wgt:'750–1800 kg', priceNet:'25 762 Kč', price:'31 172 Kč s DPH', stock:5 },
+    { name:'Přívěs VAPP PROFI sklopný', len:'2100–3530 mm', wid:'1280–1530 mm', wgt:'750–1800 kg', priceNet:'27 059 Kč', price:'32 741 Kč s DPH', stock:4, hover:true },
+    { name:'Přívěs VAPP PRAKTIK 2', len:'2040 mm', wid:'1110 mm', wgt:'750 kg', priceNet:'14 868 Kč', price:'17 990 Kč s DPH', stock:4 },
+    { name:'Přívěs VAPP UNI nebrzděný', len:'2100–3030 mm', wid:'1280–1530 mm', wgt:'750 kg', priceNet:'22 893 Kč', price:'27 701 Kč s DPH', stock:0, cmp:true },
+    { name:'Přívěs VAPP UNI brzděný', len:'2100–3530 mm', wid:'1280–1530 mm', wgt:'750–1000 kg', priceNet:'34 481 Kč', price:'41 722 Kč s DPH', stock:0, cmp:true },
+    { name:'Přívěs VAPP UNI sklopný nebrzděný', len:'2100–3030 mm', wid:'1280–1530 mm', wgt:'750 kg', priceNet:'24 190 Kč', price:'29 270 Kč s DPH', stock:0 },
+    { name:'Přívěs VAPP PVV', len:'3100–6600 mm', wid:'1760–2460 mm', wgt:'2000–3500 kg', priceNet:'85 112 Kč', price:'102 986 Kč s DPH', stock:0 },
+    { name:'Přívěs VAPP PV', len:'4000–4200 mm', wid:'1810–1910 mm', wgt:'2000–2700 kg', priceNet:'75 950 Kč', price:'91 900 Kč s DPH', stock:0 },
+    { name:'Přívěs VAPP PAV2 (VDI 2700)', len:'7700–8500 mm', wid:'1960–2200 mm', wgt:'3500 kg', priceNet:'159 800 Kč', price:'193 358 Kč s DPH', stock:0 },
+  ]; }
+
+  catChipData(){ return [
+    ['Jednoosé valníky',31],['Dvouosé valníky',24],['Tříosé valníky',4],['Sklopné přívěsy',49],
+    ['Přepravníky automobilů',14],['Přepravníky motocyklů',9],['Přepravníky strojů',11],
+    ['Přepravníky lodí a skútrů',8],['Přepravníky zvířat',5],['Skříňové přívěsy',7],['Chladírenské přívěsy',3],
+  ]; }
+
+  brandChipData(){ return [['Agados',49],['STEMA',19],['UNSINN',18],['VAPP',26],['Výprodej',12]]; }
+
+  filterAccData(){
+    const box=(on)=>'flex:none;width:19px;height:19px;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid '+(on?'#1E5AA8':'#C4CAD2')+';background:'+(on?'#1E5AA8':'#fff')+';';
+    return [
+      { h:'Délka ložné plochy', open:true, isRange:true, from:'1 000 mm', to:'5 000 mm', chev:'▴' },
+      { h:'Šířka ložné plochy', isRange:true, chev:'▾' },
+      { h:'Celková hmotnost', open:true, isChecks:true, chev:'▴', opts:[
+        { t:'750 kg', c:'(58)', box:box(false) }, { t:'1 300 kg', c:'(30)', box:box(false) }, { t:'2 700 kg', c:'(28)', box:box(false) }, { t:'3 500 kg', c:'(24)', box:box(false) } ] },
+      { h:'Nosnost', isRange:true, chev:'▾' },
+      { h:'Brzdy', open:true, isChecks:true, chev:'▴', active:true, activeLabel:'1', opts:[
+        { t:'ano', c:'(81)', on:true, box:box(true) }, { t:'ne', c:'(61)', box:box(false) } ] },
+      { h:'Sklápění', isChecks:true, chev:'▾' },
+      { h:'Počet náprav', isChecks:true, chev:'▾' },
+      { h:'Umístění kol', isChecks:true, chev:'▾' },
+      { h:'Výrobce', open:true, isChecks:true, chev:'▴', active:true, activeLabel:'1', opts:[
+        { t:'VAPP', c:'(26)', on:true, box:box(true) }, { t:'Agados', c:'(49)', box:box(false) }, { t:'STEMA', c:'(19)', box:box(false) }, { t:'UNSINN', c:'(18)', box:box(false) } ] },
+      { h:'Cena', isRange:true, chev:'▾' },
+    ];
+  }
+
+  footerCols(){ return [
+    { h:'Sortiment', items:['Přívěsy','Náhradní díly','Příslušenství','Akce a slevy'] },
+    { h:'Služby', items:['Servis','Půjčovna','Poradna'] },
+    { h:'O firmě', items:['O nás','Náš příběh','Reference','Kariéra'] },
+    { h:'Zákazník', items:['Obchodní podmínky','Doprava a platba','Reklamace','Podmínky půjčovny','Cookies'] },
+  ]; }
+
+  notesRaw(){ return {
+    desc: [
+      ['ux','Krátký popis kategorie (2 věty) + „Zobrazit celý popis" — SEO text zůstává v DOM, ale nevytlačuje produkty pod fold.'],
+    ],
+    cats: [
+      ['ag','Levé vertikální menu odstraněno — duplikovalo výpis kategorií (bod analýzy). Jediná navigace = chips nad produkty.'],
+      ['ux','16 podkategorií zvládnuto dvěma řádky: druhy přívěsů (řazené dle počtu produktů) + oddělený řádek Značky — stejná logika jako dropdown v menu. Chips jsou kompaktnější než dlaždice a nevytlačují produkty.'],
+    ],
+    toolbar: [
+      ['ux','Řazení jako dropdown, ne záložky: 4+ možností se záložkami nevejde na mobil, dropdown je standard a škáluje. Výchozí „Nejoblíbenější" dle backlogu (bod analýzy).'],
+      ['ux','Aktivní filtry viditelné jako odstranitelné štítky vedle tlačítka Filtry — uživatel vidí, co má zapnuto, aniž by otevíral panel. „Pouze skladem" jako rychlý přepínač mimo panel — nejčastější filtr.'],
+    ],
+    cards: [
+      ['ux','Klasické karty 3/řádek místo dnešních celořádkových karet se 4 fotkami — na obrazovku se vejde 6–9 produktů místo 2, snadné skenování. Standard u Agados i německých výrobců.'],
+      ['ux','Hover na fotce přepne na 2. fotku z galerie (indikátor tečkami vlevo nahoře) — zachová „více fotek na výpisu" bez prokliku, ale bez 4 miniatur. Karta č. 2 ukazuje hover stav.'],
+      ['ux','Zachovány: 3 klíčové parametry strukturovaně, obě ceny (od X bez DPH / od X s DPH), skladovost (zeleně s počtem ks / šedě Na dotaz). Popis vypuštěn — rozhodování řeší parametry + Porovnat.'],
+      ['ag','Nedostupné produkty (Na dotaz) řazeny na konec výpisu — bod analýzy. Checkbox Porovnat na každé kartě navazuje na položku Porovnat v hlavičce.'],
+    ],
+    support: [
+      ['ux','Blok telefonické podpory mezi produkty a stránkováním — zachytí uživatele, který prošel výpis a nevybral. Využívá USP „odborná zákaznická podpora".'],
+    ],
+    paging: [
+      ['ux','Stránkování formou „Načíst dalších 24" (bez přechodu na stránku 2) + progress bar „24 ze 124" pro orientaci. Po 24 produktech (dělitelné 2, 3 i 4 sloupci). Pro SEO crawlery zůstávají stránkované URL (?page=2) v kódu — tlačítko je jen navrstvené chování.'],
+    ],
+    filter: [
+      ['ux','Filtrace ve vyjížděcím panelu zprava (overlay) — dnešní levý sloupec s ~10 parametry a stovkami hodnot zabírá čtvrtinu obrazovky. Panel se otevře jen když je potřeba.'],
+      ['ux','Parametry jako akordeony — otevřené jen aktivní/nejdůležitější. Rozsahové hodnoty (délka, šířka, nosnost, cena) jako slider s inputy místo dnešního výčtu desítek hodnot; výčtové (brzdy, výrobce…) jako checkboxy s počty.'],
+      ['ux','Sticky patička panelu s živým počtem výsledků („Zobrazit 37 produktů") — okamžitá zpětná vazba, bez přenačítání stránky.'],
+    ],
+    tablet: [
+      ['ux','Tablet (~768 px): navigace v hamburgeru (dle analýzy menu horizontální jen do ~1000 px), karty 2/řádek, kategorie jako horizontální scroll chips, filtry stejným panelem přes celou pravou stranu.'],
+    ],
+    mobile: [
+      ['ux','Mobil: karty 2/řádek s kondenzovanými parametry, řádek Filtry + Řazení je sticky při scrollu — u 124 produktů musí být filtrace dosažitelná kdykoli. Filtr panel jede zespoda jako sheet.'],
+      ['ux','Kategorie jako horizontální scroll chips (38 px tap targety). Stránkování: „Načíst dalších 24" + progress bar. Parametry na kartě: všechny 3 hodnoty bez názvů (délka × šířka × hmotnost) — úspora místa při zachování informace.'],
+    ],
+  }; }
+
+  chip(kind, text){
+    const ag = kind==='ag';
+    return {
+      label: ag ? 'AGENTURA' : 'UX +', text,
+      box: 'display:flex;align-items:flex-start;gap:8px;max-width:328px;background:'+(ag?'#EDF3FB':'#F3EFFC')+';border:1px solid '+(ag?'#D5E3F4':'#E4DBF6')+';border-left:3px solid '+(ag?'#1E5AA8':'#6D28D9')+';border-radius:7px;padding:7px 10px;',
+      badge: 'flex:none;font-size:9.5px;font-weight:800;letter-spacing:.04em;color:#fff;background:'+(ag?'#1E5AA8':'#6D28D9')+';padding:2px 6px;border-radius:4px;margin-top:1px;',
+    };
+  }
+
+  renderVals(){
+    const showNotes = this.state.showNotes;
+    const descOpen = this.state.descOpen;
+
+    const raw = this.notesRaw();
+    const notes = {};
+    Object.keys(raw).forEach(k=>{ notes[k] = raw[k].map(([kind,text])=> this.chip(kind, text)); });
+
+    const availStyle=(stock,sz)=> 'flex:none;font-size:'+sz+'px;font-weight:700;border-radius:6px;padding:4px 8px;'+(stock>0?'color:#1F8A5B;background:#E7F6EE;':'color:#7E858D;background:#EEF0F2;');
+    const products = this.productData().map(p=>({
+      name:p.name, len:p.len, wid:p.wid, wgt:p.wgt, priceNet:p.priceNet, price:p.price,
+      avail: p.stock>0 ? 'Skladem '+p.stock+' ks' : 'Na dotaz',
+      availStyle: availStyle(p.stock,11.5),
+      cmp: !!p.cmp,
+      cmpBox: 'flex:none;width:19px;height:19px;border-radius:5px;display:flex;align-items:center;justify-content:center;border:1.5px solid '+(p.cmp?'#1E5AA8':'#C4CAD2')+';background:'+(p.cmp?'#1E5AA8':'#fff')+';',
+      hoverBadge: !!p.hover,
+      imgClass: p.hover ? 'wf-img2' : 'wf-img',
+      imgLabel: p.hover ? 'FOTO 2 (hover)' : 'FOTO 1',
+      dot1: 'width:6px;height:6px;border-radius:50%;background:'+(p.hover?'#C9D4E2':'#1E5AA8')+';',
+      dot2: 'width:6px;height:6px;border-radius:50%;background:'+(p.hover?'#1E5AA8':'#C9D4E2')+';',
+      cardStyle: 'border:1.5px solid '+(p.hover?'#9FB8D6':'#DFE2E6')+';border-radius:10px;overflow:hidden;background:#fff;cursor:pointer;'+(p.hover?'box-shadow:0 6px 18px rgba(30,90,168,.14);transform:translateY(-2px);':''),
+    }));
+
+    const sm = this.productData().slice(0,4).map(p=>({
+      name:p.name.replace('Přívěs ',''), len:p.len, wid:p.wid, wgt:p.wgt, priceNet:p.priceNet, price:p.price,
+      avail: p.stock>0 ? 'Skladem '+p.stock+' ks' : 'Na dotaz',
+      availStyle: 'align-self:flex-start;'+availStyle(p.stock,10),
+    }));
+
+    const chipS='display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:700;color:#3A4651;background:#EEF1F4;border:1px solid #E0E4E8;border-radius:999px;padding:8px 14px;cursor:pointer;';
+    const cnt='font-weight:600;color:#9AA1AB;font-size:11.5px;';
+    const catChips = this.catChipData().map(([t,c])=>({ t, cnt:'('+c+')', style:chipS, cntStyle:cnt }));
+    const brandChips = this.brandChipData().map(([t,c],i)=>({ t, cnt:'('+c+')', cntStyle:cnt,
+      style: t==='Výprodej' ? chipS.replace('#3A4651','#A21B22').replace('#EEF1F4','#FBEAEB').replace('#E0E4E8','#F0CDCF') : chipS }));
+
+    return {
+      showNotes, descOpen,
+      toggleDesc: ()=> this.setState({ descOpen: !descOpen }),
+      descToggleLabel: descOpen ? 'Skrýt celý popis' : 'Zobrazit celý popis',
+      toggleNotesBtn: {
+        label: showNotes ? 'Skrýt poznámky' : 'Zobrazit poznámky',
+        onClick: ()=> this.setState({ showNotes: !showNotes }),
+        style: 'padding:8px 14px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;border:1px solid '+(showNotes?'#3A3F46':'#C7CBD1')+';background:'+(showNotes?'#3A3F46':'#fff')+';color:'+(showNotes?'#fff':'#3A424C')+';',
+      },
+      notes, products, productsTablet: sm, productsMobile: sm,
+      catChips, brandChips,
+      catChipsTablet: ['Jednoosé valníky','Dvouosé valníky','Sklopné přívěsy','Přepravníky aut'],
+      catChipsMobile: ['Jednoosé valníky','Dvouosé valníky','Sklopné'],
+      filterAcc: this.filterAccData(),
+      footerCols: this.footerCols(),
+      pays: ['Apple Pay','Visa','Google Pay','Comgate'],
+      ships: ['PPL','DPD','Parcel Shop'],
+    };
+  }
+}
+</script>
+</body>
+</html>

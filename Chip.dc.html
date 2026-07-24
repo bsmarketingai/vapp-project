@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  body{padding:24px;}
+  .c-brand{transition:box-shadow .12s;} .c-brand:hover{box-shadow:inset 0 0 0 1.5px #84AEDF !important;}
+  .c-inactive{transition:box-shadow .12s;} .c-inactive:hover{box-shadow:inset 0 0 0 1.5px #84AEDF !important;}
+</style>
+</helmet>
+<sc-if value="{{ single }}" hint-placeholder-val="">
+  <span class="{{ chipClass }}" style="{{ chipStyle }}">{{ label }}<sc-if value="{{ showCount }}" hint-placeholder-val=""><span style="{{ countStyle }}">({{ count }})</span></sc-if><sc-if value="{{ showX }}" hint-placeholder-val=""><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></sc-if></span>
+</sc-if>
+<sc-if value="{{ gallery }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-direction:column;gap:16px;max-width:760px;">
+  <div style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:24px;">
+    <div>
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#8A919C;margin-bottom:14px;">Filtrační chip</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <span style="display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:999px;padding:9px 16px;cursor:pointer;">Nájezdové brzdy <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></span>
+        <span class="c-inactive" style="display:inline-flex;align-items:center;font-size:14px;font-weight:600;color:#3A424C;background:#F2F4F7;border-radius:999px;padding:9px 16px;cursor:pointer;">Brzdové čelisti</span>
+        <span class="c-inactive" style="display:inline-flex;align-items:center;font-size:14px;font-weight:600;color:#3A424C;background:#F2F4F7;border-radius:999px;padding:9px 16px;cursor:pointer;">Nápravy</span>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#8A919C;margin-bottom:14px;">Značkový chip</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <span class="c-brand" style="display:inline-flex;align-items:center;font-size:14px;font-weight:600;color:#3A424C;background:#fff;box-shadow:inset 0 0 0 1.5px #D5DAE0;border-radius:999px;padding:9px 16px;cursor:pointer;">KNOTT <span style="color:#8A919C;margin-left:6px;">(486)</span></span>
+        <span class="c-brand" style="display:inline-flex;align-items:center;font-size:14px;font-weight:600;color:#3A424C;background:#fff;box-shadow:inset 0 0 0 1.5px #D5DAE0;border-radius:999px;padding:9px 16px;cursor:pointer;">AL-KO <span style="color:#8A919C;margin-left:6px;">(312)</span></span>
+        <span class="c-brand" style="display:inline-flex;align-items:center;font-size:14px;font-weight:600;color:#3A424C;background:#fff;box-shadow:inset 0 0 0 1.5px #D5DAE0;border-radius:999px;padding:9px 16px;cursor:pointer;">Kenda <span style="color:#8A919C;margin-left:6px;">(97)</span></span>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:5px;padding:2px 4px;">
+    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> pill radius 999. Aktivní filtr = plný modrý s ✕, neaktivní = #F2F4F7. Značkový = bílý s linkou, hover modrá 300.</div>
+    <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nemíchat s hranatými bloky; ✕ jen na aktivním filtru.</div>
+  </div>
+</div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:760,&quot;height&quot;:300},&quot;kind&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;filter&quot;,&quot;brand&quot;],&quot;default&quot;:&quot;filter&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;active&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Nájezdové brzdy&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;count&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:486,&quot;tsType&quot;:&quot;number&quot;}}">
+class Component extends DCLogic {
+  renderVals(){
+    const P = this.props;
+    const single = !!P.kind;
+    if (single){
+      if (P.kind === 'brand'){
+        return { single:true, gallery:false, chipClass:'c-brand', label:P.label||'KNOTT',
+          chipStyle:'display:inline-flex;align-items:center;font-size:14px;font-weight:600;color:#3A424C;background:#fff;box-shadow:inset 0 0 0 1.5px #D5DAE0;border-radius:999px;padding:9px 16px;cursor:pointer;',
+          showCount: P.count!=null, count:P.count, countStyle:'color:#8A919C;margin-left:6px;', showX:false };
+      }
+      const active = !!P.active;
+      return { single:true, gallery:false, chipClass: active?'':'c-inactive', label:P.label||'Filtr',
+        chipStyle: active
+          ? 'display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:999px;padding:9px 16px;cursor:pointer;'
+          : 'display:inline-flex;align-items:center;font-size:14px;font-weight:600;color:#3A424C;background:#F2F4F7;border-radius:999px;padding:9px 16px;cursor:pointer;',
+        showCount:false, showX: active };
+    }
+    return { single:false, gallery:true };
+  }
+}
+</script>
+</body>
+</html>

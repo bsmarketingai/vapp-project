@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
+<Styles>
+<Style ss:ID="h"><Font ss:Bold="1" ss:Size="12" ss:Color="#FFFFFF"/><Interior ss:Color="#142F56" ss:Pattern="Solid"/></Style>
+<Style ss:ID="g"><Font ss:Bold="1" ss:Size="11" ss:Color="#142F56"/><Interior ss:Color="#D8E6F6" ss:Pattern="Solid"/></Style>
+<Style ss:ID="s"><Font ss:Size="10"/></Style>
+<Style ss:ID="m"><Font ss:Size="10" ss:Color="#C5232B" ss:Bold="1"/></Style>
+<Style ss:ID="n"><Font ss:Size="10" ss:Italic="1" ss:Color="#5A626C"/></Style>
+</Styles>
+<Worksheet ss:Name="Strom kategorií">
+<Table>
+<Column ss:Width="220"/><Column ss:Width="320"/><Column ss:Width="360"/>
+<Row><Cell ss:StyleID="h"><Data ss:Type="String">Hlavní kategorie (úroveň 1)</Data></Cell><Cell ss:StyleID="h"><Data ss:Type="String">Podkategorie (úroveň 2)</Data></Cell><Cell ss:StyleID="h"><Data ss:Type="String">Poznámka / důvod zařazení</Data></Cell></Row>
+
+<Row><Cell ss:StyleID="g"><Data ss:Type="String">1. Nápravy a brzdy</Data></Cell><Cell ss:StyleID="g"><Data ss:Type="String"></Data></Cell><Cell ss:StyleID="n"><Data ss:Type="String">Nejdražší servisní celek — zákazník řeší „nebrzdí / vyje ložisko" jako jeden problém</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Nápravy kompletní (nebrzděné, brzděné dle nosnosti, ramena polonáprav)</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">původní „Nápravy kompletní"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Díly náprav (bubny, čelisti, štíty, náboje, ložiska, gufera, lanovody, vahadla, listové pružiny, tlumiče, kolové jednotky)</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">původní „Díly náprav"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Nájezdové brzdy a díly (brzdy na V/jekl. oje, tlumiče, tažné trubky, pouzdra, manžety, pojistná lanka)</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">původní „Nájezdové brzdy a díly"</Data></Cell></Row>
+
+<Row><Cell ss:StyleID="g"><Data ss:Type="String">2. Spojovací zařízení a podpěry</Data></Cell><Cell ss:StyleID="g"><Data ss:Type="String"></Data></Cell><Cell ss:StyleID="n"><Data ss:Type="String">Vše u oje — spojka, zámek i kolečko jsou fyzicky vedle sebe a kupují se spolu</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Tažné kulové spojky, tažná oka, tažné koule</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">ze „Spojovací zařízení a zámky"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Stabilizátory</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">ze „Spojovací zařízení a zámky"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Zámky a zabezpečení přívěsu</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">ze „Spojovací zařízení a zámky"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Opěrná kolečka, nohy, držáky a klemy</Data></Cell><Cell ss:StyleID="m"><Data ss:Type="String">PŘESUN ze samostatné kategorie — funkčně patří k oji</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Příslušenství a krytky spojovacích zařízení</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">ze „Spojovací zařízení a zámky"</Data></Cell></Row>
+
+<Row><Cell ss:StyleID="g"><Data ss:Type="String">3. Elektro a osvětlení</Data></Cell><Cell ss:StyleID="g"><Data ss:Type="String"></Data></Cell><Cell ss:StyleID="n"><Data ss:Type="String">Beze změny — už dnes ucelená kategorie</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Sdružená zadní světla, obrysovky, blinkry, couvačky a mlhovky</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">z „Elektro, svítilny, odrazky"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Zásuvky, zástrčky, konektory, kabeláž</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">z „Elektro, svítilny, odrazky"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Odrazky a odrazové desky, osvětlení SPZ</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">z „Elektro, svítilny, odrazky"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Žárovky a LED moduly, náhradní skla svítilen</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">z „Elektro, svítilny, odrazky"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Majáky, pracovní světlomety, vnitřní osvětlení, baterie a nabíječky</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">z „Elektro, svítilny, odrazky"</Data></Cell></Row>
+
+<Row><Cell ss:StyleID="g"><Data ss:Type="String">4. Kola a pneumatiky</Data></Cell><Cell ss:StyleID="g"><Data ss:Type="String"></Data></Cell><Cell ss:StyleID="n"><Data ss:Type="String">Zákazník hledá podle palců — členění dle velikostí zůstává</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Kompletní kola / disky / pneu 8"–15"+</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">z „Pneu, kola, disky"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Kolové šrouby, matice, štefty</Data></Cell><Cell ss:StyleID="m"><Data ss:Type="String">PŘESUN z „Díly náprav" — hledají se u kol</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Držáky rezervního kola</Data></Cell><Cell ss:StyleID="m"><Data ss:Type="String">PŘESUN z „Konstrukční díly" — souvisí s kolem, ne s rámem</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Příslušenství kol a pneumatik</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">z „Pneu, kola, disky"</Data></Cell></Row>
+
+<Row><Cell ss:StyleID="g"><Data ss:Type="String">5. Karoserie a konstrukce</Data></Cell><Cell ss:StyleID="g"><Data ss:Type="String"></Data></Cell><Cell ss:StyleID="n"><Data ss:Type="String">Vše, z čeho je přívěs postaven — „stavím / opravuji korbu"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Blatníky a zástěrky, držáky blatníků</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">původní „Blatníky a zástěrky"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Bočnice, sloupky, uzávěry, panty, lemování</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">původní „Bočnice, uzávěry, panty"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Překližky a podlahy, pojezdové plechy</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">z „Konstrukční díly"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Oje a díly rámů (vč. výškově stavitelných, díly rámů VAPP dle modelů)</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">z „Konstrukční díly"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Plachty a plachtové konstrukce</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">původní „Plachty a příslušenství"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Plynové vzpěry, koncovky a konzoly</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">původní „Plynové vzpěry a příslušenství"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Hydraulika sklápění</Data></Cell><Cell ss:StyleID="m"><Data ss:Type="String">PŘESUN — ovládá konstrukci; Agados řadí obdobně</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Rolny a opěry pro lodě</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">z „Konstrukční díly"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Spojovací materiál (šrouby, matice, třmeny)</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">z „Konstrukční díly"</Data></Cell></Row>
+
+<Row><Cell ss:StyleID="g"><Data ss:Type="String">6. Upínání, nakládání a doplňky</Data></Cell><Cell ss:StyleID="g"><Data ss:Type="String"></Data></Cell><Cell ss:StyleID="n"><Data ss:Type="String">Spotřební „měkké" zboží a vše k naložení nákladu</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Upínací pásy, soupravy, sítě, upínací oka a misky, ochrany popruhů</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">původní „Zabezpečení nákladu"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Navijáky (ruční, elektrické), lana, popruhy, držáky</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">původní „Navijáky a příslušenství"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Nájezdy (hliníkové, ocelové) a příslušenství</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">původní „Nájezdy"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Klíny a držáky (zakládací, na ložnou plochu)</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">původní „Klíny a držáky"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Boxy na nářadí a držáky boxů</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">původní „Boxy na nářadí"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Doplňky k přívěsům (samolepky, podložky SPZ, výrobní štítky)</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">původní „Doplňky k přívěsům"</Data></Cell></Row>
+<Row><Cell/><Cell ss:StyleID="s"><Data ss:Type="String">Pomůcky pro údržbu (maziva, spreje, elektroinstalační materiál)</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">původní „Pomůcky pro údržbu"</Data></Cell></Row>
+
+<Row><Cell ss:StyleID="g"><Data ss:Type="String">Akce a slevy</Data></Cell><Cell ss:StyleID="s"><Data ss:Type="String">—</Data></Cell><Cell ss:StyleID="m"><Data ss:Type="String">Průřezový banner/filtr, ne kategorie — akční zboží zůstává ve své věcné kategorii</Data></Cell></Row>
+</Table>
+</Worksheet>
+</Workbook>

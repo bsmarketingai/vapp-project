@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:#F4F6F8;}
+</style>
+</helmet>
+<div data-screen-label="ARCHIV — Barevná paleta VAPP" style="font-family:'Hanken Grotesk',sans-serif;color:#15181C;background:#F4F6F8;min-height:100vh;padding:48px 28px 100px;">
+  <div style="max-width:1020px;margin:0 auto;">
+
+    <div style="display:flex;align-items:flex-start;gap:14px;background:#C5232B;color:#fff;border-radius:8px;padding:18px 20px;margin-bottom:32px;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px;"><path d="M21 8v13H3V8"></path><path d="M1 3h22v5H1z"></path><path d="M10 12h4"></path></svg>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:18px;font-weight:800;line-height:1.3;letter-spacing:.01em;">ARCHIV — nepoužívat</div>
+        <div style="font-size:15px;line-height:1.55;color:#FAD9DA;margin-top:4px;">Nahrazeno sekcí 1 v <a href="./DesignSystemVAPP.dc.html" style="color:#fff;text-decoration:underline;font-weight:700;">Design systém VAPP</a>. Obsahuje starý styl (Hanken Grotesk, borders, rádiusy 11–14).</div>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px;">
+      <h1 style="margin:0;font-size:32px;font-weight:800;letter-spacing:-0.02em;">Barevná paleta</h1>
+      <span style="font-size:16px;font-weight:700;color:#1E5AA8;letter-spacing:.04em;">VAPP.CZ</span>
+    </div>
+    <p style="margin:0 0 14px;font-size:15px;line-height:1.55;color:#5A626C;max-width:680px;">Tři škály po deseti odstínech (50–900) vycházející ze stávající barevnosti VAPP. Klikni na libovolný odstín pro zkopírování HEX kódu. Tučně orámovaný odstín je <strong style="color:#15181C;">brand kotva</strong> — výchozí hodnota dané barvy.</p>
+
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:34px;flex-wrap:wrap;">
+      <button onClick="{{ copyAllBtn.onClick }}" style="{{ copyAllBtn.style }}">{{ copyAllBtn.label }}</button>
+      <span style="font-size:13px;color:#9099A3;">Formát: <span style="font-family:'JetBrains Mono',monospace;font-weight:600;color:#5A626C;">#RRGGBB</span></span>
+    </div>
+
+    <sc-for list="{{ ramps }}" as="ramp" hint-placeholder-count="3">
+      <div style="margin-bottom:42px;">
+        <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:16px;">
+          <div style="{{ ramp.dotStyle }}"></div>
+          <div style="flex:1;min-width:0;">
+            <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;">
+              <h2 style="margin:0;font-size:20px;font-weight:800;letter-spacing:-0.01em;">{{ ramp.name }}</h2>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:#9099A3;">{{ ramp.anchorHex }} · {{ ramp.anchorLabel }}</span>
+            </div>
+            <p style="margin:4px 0 0;font-size:14px;line-height:1.5;color:#6B727C;max-width:720px;">{{ ramp.desc }}</p>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(10,1fr);gap:8px;">
+          <sc-for list="{{ ramp.swatches }}" as="sw" hint-placeholder-count="10">
+            <div onClick="{{ sw.onCopy }}" style="{{ sw.cardStyle }}">
+              <div style="{{ sw.chipStyle }}">
+                <sc-if value="{{ sw.copied }}" hint-placeholder-val="">
+                  <span style="{{ sw.copiedBadge }}">Zkopírováno</span>
+                </sc-if>
+              </div>
+              <div style="padding:7px 4px 9px;text-align:center;">
+                <div style="font-size:13px;font-weight:800;line-height:1;{{ sw.stepColor }}">{{ sw.step }}</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;margin-top:4px;color:#7A828C;letter-spacing:-0.01em;">{{ sw.hex }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+          <sc-for list="{{ ramp.usage }}" as="u" hint-placeholder-count="3">
+            <span style="display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:#5A626C;background:#fff;border:1px solid #E4E7EC;border-radius:8px;padding:6px 11px;">
+              <span style="{{ u.swatch }}"></span>{{ u.text }}
+            </span>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+
+    <div style="margin-top:8px;padding:22px 24px;background:#fff;border:1px solid #E4E7EC;border-radius:14px;">
+      <h3 style="margin:0 0 14px;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#3A424C;">Logika použití</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px;">
+        <sc-for list="{{ legend }}" as="l" hint-placeholder-count="3">
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+              <span style="{{ l.dot }}"></span>
+              <span style="font-size:14px;font-weight:700;color:#15181C;">{{ l.title }}</span>
+            </div>
+            <p style="margin:0;font-size:13px;line-height:1.55;color:#6B727C;">{{ l.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+      <div style="margin-top:18px;padding-top:16px;border-top:1px solid #EEF0F3;font-size:13px;line-height:1.6;color:#6B727C;">
+        <strong style="color:#3A424C;">Konvence škály:</strong> 50–100 = pozadí a jemné výplně · 200–300 = okraje, oddělovače, disabled · 400 = ikony, sekundární prvky · 500–600 = hlavní akce a plochy (brand) · 700 = hover / active · 800–900 = text na světlém pozadí a vysoký kontrast.
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1080,&quot;height&quot;:1280}}">
+class Component extends DCLogic {
+  state = { copied:null };
+
+  RAMPS = [
+    {
+      key:'primary', name:'Primární', anchor:600, anchorLabel:'Brand modrá',
+      desc:'Korporátní modř VAPP. Navigace, odkazy, hlavní plochy, klíčové prvky rozhraní a budování důvěry.',
+      desktopUsage:[
+        {step:600,text:'Tlačítka, odkazy'},
+        {step:50,text:'Pozadí sekcí'},
+        {step:800,text:'Nadpisy / text'}
+      ],
+      shades:{50:'#EFF4FB',100:'#D8E6F6',200:'#B4CEEC',300:'#84AEDF',400:'#5189CC',500:'#2C6BB8',600:'#1E5AA8',700:'#1A4A8A',800:'#173C70',900:'#142F56'}
+    },
+    {
+      key:'secondary', name:'Sekundární', anchor:600, anchorLabel:'Brand červená',
+      desc:'Akcentová červeň z loga VAPP. Zvýraznění, slevy a akce, štítky, upozornění a doplněk k modré.',
+      desktopUsage:[
+        {step:600,text:'Akce / slevy'},
+        {step:50,text:'Jemné výplně'},
+        {step:700,text:'Hover stav'}
+      ],
+      shades:{50:'#FDF1F1',100:'#FAD9DA',200:'#F3B4B6',300:'#EB8488',400:'#E0545A',500:'#D52F36',600:'#C5232B',700:'#A21B22',800:'#80181D',900:'#681619'}
+    },
+    {
+      key:'conversion', name:'Konverzní', anchor:600, anchorLabel:'Akční zelená',
+      desc:'Zelená vyhrazená pro konverzi: „Do košíku“, „Koupit“, „Rezervovat“ a stav skladem. Záměrně odlišná od modré i červené, aby CTA vždy vyniklo.',
+      desktopUsage:[
+        {step:600,text:'Tlačítko Koupit'},
+        {step:700,text:'Hover stav'},
+        {step:100,text:'Štítek skladem'}
+      ],
+      shades:{50:'#E9F8EF',100:'#C9EDD8',200:'#97DBB4',300:'#5FC58D',400:'#2EAA6A',500:'#159150',600:'#0E7F43',700:'#0B6937',800:'#0A542D',900:'#084324'}
+    }
+  ];
+
+  steps(){ return [50,100,200,300,400,500,600,700,800,900]; }
+
+  hexOf(key,step){ return this.RAMPS.find(r=>r.key===key).shades[step]; }
+
+  copy(text, tag){
+    try{
+      if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text); }
+      else {
+        const ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0';
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+      }
+    }catch(e){}
+    this.setState({ copied: tag });
+    clearTimeout(this._t);
+    this._t = setTimeout(()=>this.setState({ copied:null }), 1100);
+  }
+
+  textOn(step){ return step <= 400 ? '#15181C' : '#fff'; }
+
+  renderVals(){
+    const steps = this.steps();
+    const ramps = this.RAMPS.map(r=>{
+      const anchorHex = r.shades[r.anchor];
+      const swatches = steps.map(step=>{
+        const hex = r.shades[step];
+        const tag = r.key+'-'+step;
+        const isAnchor = step===r.anchor;
+        const onLight = this.textOn(step)==='#15181C';
+        return {
+          step:String(step), hex,
+          copied: this.state.copied===tag,
+          onCopy: ()=>this.copy(hex, tag),
+          stepColor: 'color:'+(step>=500?'#15181C':'#3A424C')+';',
+          cardStyle:'cursor:pointer;border-radius:11px;overflow:hidden;background:#fff;border:1px solid #E7EAEE;transition:transform .1s, box-shadow .12s;',
+          chipStyle:'position:relative;height:62px;background:'+hex+';display:flex;align-items:center;justify-content:center;'+(isAnchor?'box-shadow:inset 0 0 0 3px #15181C, inset 0 0 0 5px #fff;':''),
+          copiedBadge:'font-size:10px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:'+(onLight?'#15181C':'#fff')+';background:'+(onLight?'rgba(255,255,255,.7)':'rgba(0,0,0,.28)')+';padding:3px 7px;border-radius:5px;'
+        };
+      });
+      const usage = r.desktopUsage.map(u=>({
+        text:u.text,
+        swatch:'flex:none;width:13px;height:13px;border-radius:4px;background:'+r.shades[u.step]+';box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);'
+      }));
+      return {
+        key:r.key, name:r.name, desc:r.desc, anchorHex, anchorLabel:r.anchorLabel,
+        dotStyle:'flex:none;width:30px;height:30px;border-radius:9px;margin-top:3px;background:'+anchorHex+';box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);',
+        swatches, usage
+      };
+    });
+
+    const allCopied = this.state.copied==='all';
+    const copyAllBtn = {
+      label: allCopied ? 'Zkopírováno ✓' : 'Kopírovat vše (HEX)',
+      onClick: ()=>{
+        let out='';
+        this.RAMPS.forEach(r=>{
+          out += '/* '+r.name+' */\n';
+          steps.forEach(s=>{ out += '--'+r.key+'-'+s+': '+r.shades[s]+';\n'; });
+          out += '\n';
+        });
+        this.copy(out.trim(), 'all');
+      },
+      style:'padding:9px 17px;border-radius:10px;font-weight:700;font-size:13.5px;cursor:pointer;border:1px solid '+(allCopied?'#0E7F43':'#1E5AA8')+';background:'+(allCopied?'#0E7F43':'#1E5AA8')+';color:#fff;transition:all .12s;'
+    };
+
+    const legend = [
+      { title:'Primární — Modrá', body:'Identita a důvěra. Hlavní navigace, odkazy, informační plochy a primární tlačítka mimo nákupní akce.',
+        dot:'flex:none;width:14px;height:14px;border-radius:5px;background:#1E5AA8;' },
+      { title:'Sekundární — Červená', body:'Pozornost a akcent. Slevy, novinky, štítky a stavy chyb. Doplňuje modrou, nepřebíjí konverzi.',
+        dot:'flex:none;width:14px;height:14px;border-radius:5px;background:#C5232B;' },
+      { title:'Konverzní — Zelená', body:'Pouze pro akce vedoucí k nákupu a dostupnost skladem. Drží se jen pro CTA, aby zůstala výjimečná.',
+        dot:'flex:none;width:14px;height:14px;border-radius:5px;background:#0E7F43;' }
+    ];
+
+    return { ramps, copyAllBtn, legend };
+  }
+}
+</script>
+</body>
+</html>

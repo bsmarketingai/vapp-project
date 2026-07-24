@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:#F7F9FB;}
+  a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
+  .hvx1{transition:box-shadow .12s;} .hvx1:hover{box-shadow:0 6px 20px rgba(20,47,86,.10) !important;}
+  .swx{transition:transform .1s, box-shadow .12s;} .swx:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(20,47,86,.10) !important;}
+</style>
+</helmet>
+
+<div data-screen-label="Design systém VAPP" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;padding:56px 32px 120px;">
+  <div style="max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:64px;">
+
+    <!-- HLAVIČKA -->
+    <div>
+      <img src="./vapp-logo.svg" alt="VAPP" style="height:36px;display:block;margin-bottom:20px;">
+      <h1 style="margin:0;font-size:36px;font-weight:700;letter-spacing:-0.02em;line-height:1.15;">Design systém VAPP</h1>
+      <p style="margin:10px 0 0;font-size:18px;line-height:1.6;color:#5A626C;max-width:760px;">Centrální zdroj základů e-shopu VAPP.cz — barvy, typografie, spacing, rádiusy, elevace, layout a stavy. Vzdušný, čistý a světlý styl, písmo Exo&nbsp;2. Klikni na token pro zkopírování hodnoty.</p>
+      <p style="margin:12px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">UI prvky (tlačítka, karta, formuláře, menu, patička) žijí v <a href="./KomponentyVAPP.dc.html" style="text-decoration:underline;">Komponentách VAPP</a>. Produktová karta má vlastní zdroj v <a href="./ProduktovaKarta.dc.html" style="text-decoration:underline;">Produktové kartě VAPP</a>.</p>
+      <div style="margin-top:20px;display:flex;gap:8px;flex-wrap:wrap;">
+        <sc-for list="{{ metaChips }}" as="c" hint-placeholder-count="5">
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#EFF4FB;color:#1E5AA8;border-radius:999px;padding:7px 14px;font-size:13px;font-weight:700;">{{ c }}</span>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- 1. BAREVNÉ ŠKÁLY -->
+    <div>
+      <h2 style="margin:0 0 6px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">1 · Barevné škály</h2>
+      <p style="margin:0 0 24px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Tři brandové škály po deseti krocích (50–900). Kotva každé škály je krok <strong>600</strong>. Zelená je vyhrazená pouze pro konverzi (Koupit) a stav skladem — nepoužívá se dekorativně.</p>
+      <div style="display:flex;flex-direction:column;gap:28px;">
+        <sc-for list="{{ scales }}" as="s" hint-placeholder-count="3">
+          <div style="background:#fff;border-radius:8px;padding:20px 22px 22px;">
+            <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:4px;">
+              <span style="font-size:18px;font-weight:700;">{{ s.name }}</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#8A919C;">{{ s.prefix }}</span>
+            </div>
+            <p style="margin:0 0 16px;font-size:14px;font-weight:500;line-height:1.5;color:#5A626C;">{{ s.note }}</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;">
+              <sc-for list="{{ s.steps }}" as="t" hint-placeholder-count="10">
+                <div onClick="{{ t.onCopy }}" class="swx" style="cursor:pointer;">
+                  <span style="{{ t.chip }}"></span>
+                  <span style="display:block;font-size:13px;font-weight:700;margin-top:7px;">{{ t.step }}</span>
+                  <span style="display:block;font-family:'JetBrains Mono',monospace;font-size:13px;color:#8A919C;">{{ t.hex }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- 2. NEUTRÁLNÍ -->
+    <div>
+      <h2 style="margin:0 0 6px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">2 · Neutrální škála</h2>
+      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Sjednocení dřívějších roztroušených šedých do jedné pojmenované škály. Hodnoty zůstávají reálné — nic se nepřebarvovalo. Odstíny <span style="font-family:'JetBrains Mono',monospace;">#9099A3</span>, <span style="font-family:'JetBrains Mono',monospace;">#6B727C</span> a <span style="font-family:'JetBrains Mono',monospace;">#6E88AE</span> se dále nepoužívají — mapují se na nejbližší krok.</p>
+      <div style="background:#fff;border-radius:8px;padding:20px 22px 22px;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;">
+          <sc-for list="{{ neutrals }}" as="t" hint-placeholder-count="11">
+            <div onClick="{{ t.onCopy }}" class="swx" style="cursor:pointer;">
+              <span style="{{ t.chip }}"></span>
+              <span style="display:block;font-size:13px;font-weight:700;margin-top:7px;">{{ t.step }}</span>
+              <span style="display:block;font-family:'JetBrains Mono',monospace;font-size:13px;color:#8A919C;">{{ t.hex }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. SÉMANTICKÉ TOKENY -->
+    <div>
+      <h2 style="margin:0 0 6px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">3 · Sémantické tokeny</h2>
+      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Významová vrstva nad škálami. V návrzích i kódu se pracuje s těmito názvy, ne s přímými hexy. Logo má vlastní červenou <span style="font-family:'JetBrains Mono',monospace;font-weight:600;">#E41D32</span>, která se nikdy nemíchá s UI červenou.</p>
+      <div style="display:flex;flex-direction:column;gap:22px;">
+        <sc-for list="{{ semanticGroups }}" as="g" hint-placeholder-count="5">
+          <div>
+            <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#8A919C;margin-bottom:10px;">{{ g.title }}</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;">
+              <sc-for list="{{ g.items }}" as="t" hint-placeholder-count="6">
+                <div onClick="{{ t.onCopy }}" class="hvx1" style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:8px;padding:12px 14px;cursor:pointer;">
+                  <span style="{{ t.chip }}"></span>
+                  <span style="flex:1;min-width:0;">
+                    <span style="display:block;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;">{{ t.token }}</span>
+                    <span style="display:block;font-size:13px;color:#8A919C;margin-top:2px;">{{ t.desc }}</span>
+                  </span>
+                  <span style="flex:none;font-family:'JetBrains Mono',monospace;font-size:13px;color:#5A626C;">{{ t.hex }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- 4. TYPOGRAFIE -->
+    <div>
+      <h2 style="margin:0 0 6px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">4 · Typografie</h2>
+      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Exo&nbsp;2 (400–700), fallback <span style="font-family:'JetBrains Mono',monospace;">'Helvetica Neue', Arial, sans-serif</span>. Základní text <strong>16&nbsp;px</strong>, minimum <strong>13&nbsp;px</strong>, maximální tučnost <strong>700</strong>. Nadpisy mají stažený proklad, běžný text řádkování 1,6.</p>
+      <div style="background:#fff;border-radius:8px;padding:8px 28px;margin-bottom:24px;">
+        <sc-for list="{{ typeScale }}" as="t" hint-placeholder-count="9">
+          <div onClick="{{ t.onCopy }}" style="display:flex;align-items:baseline;gap:24px;padding:18px 0;border-bottom:1px solid #F2F4F7;cursor:pointer;">
+            <span style="flex:none;width:170px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:#8A919C;">{{ t.name }}</span>
+            <span style="flex:1;min-width:0;{{ t.style }}">{{ t.sample }}</span>
+            <span style="flex:none;font-family:'JetBrains Mono',monospace;font-size:13px;color:#8A919C;white-space:nowrap;">{{ t.spec }}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <h3 style="margin:0 0 6px;font-size:22px;font-weight:700;line-height:1.25;">Mobilní kroky (pod 900&nbsp;px)</h3>
+      <p style="margin:0 0 16px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Doplněná chybějící mobilní škála. Nahrazuje jednorázový <span style="font-family:'JetBrains Mono',monospace;">clamp(26px,4vw,36px)</span> z prototypu — velikosti se přepínají skokem na breakpointu, ne fluidně.</p>
+      <div style="background:#fff;border-radius:8px;padding:8px 28px;margin-bottom:24px;">
+        <sc-for list="{{ typeMobile }}" as="t" hint-placeholder-count="6">
+          <div style="display:flex;align-items:baseline;gap:24px;padding:14px 0;border-bottom:1px solid #F2F4F7;">
+            <span style="flex:none;width:170px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:#8A919C;">{{ t.name }}</span>
+            <span style="flex:1;min-width:0;font-size:14px;font-weight:500;color:#5A626C;">{{ t.note }}</span>
+            <span style="flex:none;font-family:'JetBrains Mono',monospace;font-size:13px;color:#5A626C;white-space:nowrap;">{{ t.spec }}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <h3 style="margin:0 0 6px;font-size:22px;font-weight:700;line-height:1.25;">Commerce typografie</h3>
+      <p style="margin:0 0 16px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Speciální kroky pro ceny, skladovost a produktové názvy. Cena bez DPH je vždy primární a bez popisku.</p>
+      <div style="background:#fff;border-radius:8px;padding:8px 28px;">
+        <sc-for list="{{ typeCommerce }}" as="t" hint-placeholder-count="6">
+          <div style="display:flex;align-items:baseline;gap:24px;padding:14px 0;border-bottom:1px solid #F2F4F7;">
+            <span style="flex:none;width:170px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:#8A919C;">{{ t.name }}</span>
+            <span style="flex:1;min-width:0;{{ t.style }}">{{ t.sample }}</span>
+            <span style="flex:none;font-family:'JetBrains Mono',monospace;font-size:13px;color:#8A919C;white-space:nowrap;">{{ t.spec }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- 5. SPACING -->
+    <div>
+      <h2 style="margin:0 0 6px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">5 · Spacing</h2>
+      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Systém na <strong>4px gridu</strong>. Doplněny mezikroky, které se v návrzích reálně objevovaly (20, 28, 36, 40, 56) — místo aby zůstávaly jako neevidované výjimky.</p>
+      <div style="background:#fff;border-radius:8px;padding:20px 24px 24px;">
+        <sc-for list="{{ spacing }}" as="s" hint-placeholder-count="13">
+          <div onClick="{{ s.onCopy }}" style="display:flex;align-items:center;gap:20px;padding:9px 0;border-bottom:1px solid #F2F4F7;cursor:pointer;">
+            <span style="flex:none;width:100px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;">{{ s.name }}</span>
+            <span style="flex:none;width:56px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#5A626C;">{{ s.px }}</span>
+            <span style="flex:none;{{ s.bar }}"></span>
+            <span style="flex:1;min-width:0;font-size:14px;font-weight:500;color:#5A626C;text-align:right;">{{ s.use }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- 6. RADIUS -->
+    <div>
+      <h2 style="margin:0 0 6px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">6 · Rádiusy</h2>
+      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Jemné zaoblení, tři hodnoty. Starší rádiusy 11 a 14&nbsp;px se nepoužívají. Checkbox používá 6&nbsp;px (dříve 5).</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;">
+        <sc-for list="{{ radii }}" as="r" hint-placeholder-count="3">
+          <div onClick="{{ r.onCopy }}" class="hvx1" style="background:#fff;border-radius:8px;padding:18px 20px;cursor:pointer;">
+            <span style="{{ r.demo }}"></span>
+            <span style="display:block;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;margin-top:14px;">{{ r.name }}</span>
+            <span style="display:block;font-size:14px;font-weight:500;color:#5A626C;margin-top:3px;">{{ r.use }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- 7. ELEVACE -->
+    <div>
+      <h2 style="margin:0 0 6px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">7 · Elevace a focus</h2>
+      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Karty a bloky jsou <strong>bez okrajů</strong>. V klidovém stavu žádný stín — objevuje se až při hoveru. Overlay vrstvy (dropdown, našeptávač) mají vlastní hlubší stín.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;">
+        <sc-for list="{{ shadows }}" as="s" hint-placeholder-count="4">
+          <div onClick="{{ s.onCopy }}" style="background:#fff;border-radius:8px;padding:20px;cursor:pointer;{{ s.box }}">
+            <span style="display:block;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;">{{ s.name }}</span>
+            <span style="display:block;font-size:14px;font-weight:500;color:#5A626C;margin-top:4px;">{{ s.use }}</span>
+            <span style="display:block;font-family:'JetBrains Mono',monospace;font-size:13px;color:#8A919C;margin-top:10px;word-break:break-all;">{{ s.value }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- 8. LAYOUT -->
+    <div>
+      <h2 style="margin:0 0 6px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">8 · Layout, grid a breakpointy</h2>
+      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Výchozí šířka webu je <strong>1560&nbsp;px</strong>. Klíčový zlom je <strong>900&nbsp;px</strong> — přepíná desktopové a mobilní chování. Ostatní breakpointy jsou doplněné pro jemné dolaďování.</p>
+      <div style="background:#fff;border-radius:8px;padding:20px 24px 24px;">
+        <sc-for list="{{ layout }}" as="l" hint-placeholder-count="12">
+          <div style="display:flex;align-items:baseline;gap:20px;padding:11px 0;border-bottom:1px solid #F2F4F7;">
+            <span style="flex:none;width:210px;font-size:14px;font-weight:700;">{{ l.name }}</span>
+            <span style="flex:none;width:220px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#15181C;">{{ l.value }}</span>
+            <span style="flex:1;min-width:0;font-size:14px;font-weight:500;color:#5A626C;">{{ l.note }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- 9. IKONY -->
+    <div>
+      <h2 style="margin:0 0 6px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">9 · Ikony a obrazovost</h2>
+      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Inline SVG, <span style="font-family:'JetBrains Mono',monospace;">viewBox 0 0 24 24</span>, stroke-width 2, barva přes <span style="font-family:'JetBrains Mono',monospace;">currentColor</span>. Bez výplní, jen tahy.</p>
+      <div style="background:#fff;border-radius:8px;padding:20px 24px 24px;">
+        <sc-for list="{{ media }}" as="m" hint-placeholder-count="8">
+          <div style="display:flex;align-items:baseline;gap:20px;padding:11px 0;border-bottom:1px solid #F2F4F7;">
+            <span style="flex:none;width:210px;font-size:14px;font-weight:700;">{{ m.name }}</span>
+            <span style="flex:none;width:220px;font-family:'JetBrains Mono',monospace;font-size:13px;">{{ m.value }}</span>
+            <span style="flex:1;min-width:0;font-size:14px;font-weight:500;color:#5A626C;">{{ m.note }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- 10. STAVY A MOTION -->
+    <div>
+      <h2 style="margin:0 0 6px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">10 · Interaktivní stavy a motion</h2>
+      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Přechody jsou krátké a nenápadné. Doplněny chybějící stavy <span style="font-family:'JetBrains Mono',monospace;">:active</span> a klávesnicový focus, které dosud definované nebyly.</p>
+      <div style="background:#fff;border-radius:8px;padding:20px 24px 24px;margin-bottom:20px;">
+        <sc-for list="{{ states }}" as="s" hint-placeholder-count="14">
+          <div style="display:flex;align-items:baseline;gap:20px;padding:10px 0;border-bottom:1px solid #F2F4F7;">
+            <span style="flex:none;width:250px;font-size:14px;font-weight:700;">{{ s.name }}</span>
+            <span style="flex:1;min-width:0;font-family:'JetBrains Mono',monospace;font-size:13px;color:#5A626C;">{{ s.value }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="background:#fff;border-radius:8px;padding:20px 24px 24px;">
+        <sc-for list="{{ motion }}" as="s" hint-placeholder-count="5">
+          <div style="display:flex;align-items:baseline;gap:20px;padding:10px 0;border-bottom:1px solid #F2F4F7;">
+            <span style="flex:none;width:250px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;">{{ s.name }}</span>
+            <span style="flex:none;width:110px;font-family:'JetBrains Mono',monospace;font-size:13px;">{{ s.value }}</span>
+            <span style="flex:1;min-width:0;font-size:14px;font-weight:500;color:#5A626C;">{{ s.use }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- 11. ROZHODNUTÍ -->
+    <div>
+      <h2 style="margin:0 0 6px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">11 · Vyřešené konflikty a otevřené body</h2>
+      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Záznam rozhodnutí proti staršímu stavu projektu. Body označené <strong style="color:#C5232B;">k potvrzení</strong> je potřeba odsouhlasit — zbytek už je v tomto dokumentu zafixovaný.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <sc-for list="{{ decisions }}" as="d" hint-placeholder-count="12">
+          <div style="background:#fff;border-radius:8px;padding:16px 18px;display:flex;gap:14px;align-items:flex-start;">
+            <span style="{{ d.dot }}"></span>
+            <span style="flex:1;min-width:0;">
+              <span style="display:block;font-size:16px;font-weight:700;">{{ d.title }}</span>
+              <span style="display:block;font-size:14px;font-weight:500;line-height:1.5;color:#5A626C;margin-top:4px;">{{ d.body }}</span>
+            </span>
+            <span style="{{ d.tagStyle }}">{{ d.tag }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- 12. STRUKTURA -->
+    <div>
+      <h2 style="margin:0 0 6px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">12 · Struktura design systému</h2>
+      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Kde co žije. Každá hodnota má jedno místo — pokud se něco mění, mění se tam a nikde jinde.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;">
+        <sc-for list="{{ structure }}" as="f" hint-placeholder-count="5">
+          <div style="background:#fff;border-radius:8px;padding:18px 20px;">
+            <span style="display:block;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:#1E5AA8;">{{ f.file }}</span>
+            <span style="display:block;font-size:16px;font-weight:700;margin-top:6px;">{{ f.role }}</span>
+            <span style="display:block;font-size:14px;font-weight:500;line-height:1.5;color:#5A626C;margin-top:5px;">{{ f.note }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+  </div>
+
+  <sc-if value="{{ toast }}" hint-placeholder-val="">
+    <div style="position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#15181C;color:#fff;font-size:14px;font-weight:700;border-radius:8px;padding:12px 20px;z-index:99;">{{ toast }}</div>
+  </sc-if>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1140,&quot;height&quot;:1200}}">
+class Component extends DCLogic {
+  state = { toast:null };
+
+  copy(text){
+    try{
+      if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text);
+    }catch(e){}
+    this.setState({ toast:'Zkopírováno: '+text });
+    clearTimeout(this._t);
+    this._t = setTimeout(()=>this.setState({toast:null}), 1400);
+  }
+
+  renderVals(){
+    const cp = (v)=>()=>this.copy(v);
+    const ring = 'box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);';
+    const sw  = (bg,r)=>'display:block;width:100%;height:52px;border-radius:6px;background:'+bg+';'+(r?ring:'');
+    const chip= (bg,r)=>'flex:none;width:34px;height:34px;border-radius:6px;background:'+bg+';'+(r?ring:'');
+
+    const metaChips = ['Exo 2 · 400–700','Jen světlý režim','Šířka 1560 px','Breakpoint 900 px','4px grid'];
+
+    /* ---------- 1. ŠKÁLY ---------- */
+    const mkScale = (name, prefix, note, steps)=>({
+      name, prefix, note,
+      steps: steps.map(([step,hex,light])=>({ step, hex, chip:sw(hex,light), onCopy:cp(hex) }))
+    });
+
+    const scales = [
+      mkScale('Primární — modrá','color.brand.blue.*','Akce, odkazy, aktivní navigace, ceny a nadpisy. Krok 900 nese tmavé plochy — topbar a patičku.',[
+        ['50','#EFF4FB',1],['100','#D8E6F6',1],['200','#B4CEEC',1],['300','#84AEDF',1],['400','#5189CC'],
+        ['500','#2C6BB8'],['600','#1E5AA8'],['700','#1A4A8A'],['800','#173C70'],['900','#142F56'],
+      ]),
+      mkScale('Sekundární — červená','color.brand.red.*','Slevy, akce, chybové a negativní stavy. Nezaměňovat s logo červenou #E41D32.',[
+        ['50','#FDF1F1',1],['100','#FAD9DA',1],['200','#F3B4B6',1],['300','#EB8488'],['400','#E0545A'],
+        ['500','#D52F36'],['600','#C5232B'],['700','#A21B22'],['800','#80181D'],['900','#681619'],
+      ]),
+      mkScale('Konverzní — zelená','color.brand.green.*','Vyhrazená pro konverzi a dostupnost. Tlačítko Koupit, stav skladem, LED indikátor otevírací doby.',[
+        ['50','#E9F8EF',1],['100','#C9EDD8',1],['200','#97DBB4',1],['300','#5FC58D'],['400','#2EAA6A'],
+        ['500','#159150'],['600','#0E7F43'],['700','#0B6937'],['800','#0A542D'],['900','#084324'],
+      ]),
+    ];
+
+    /* ---------- 2. NEUTRÁLNÍ ---------- */
+    const neutrals = [
+      ['0','#FFFFFF',1],['50','#F7F9FB',1],['100','#F2F4F7',1],['200','#D5DAE0',1],['300','#C4CAD2',1],
+      ['400','#9AA1AB'],['500','#8A919C'],['600','#7A828C'],['700','#5A626C'],['800','#3A424C'],['900','#15181C'],
+    ].map(([step,hex,light])=>({ step, hex, chip:sw(hex,light), onCopy:cp(hex) }));
+
+    /* ---------- 3. SÉMANTIKA ---------- */
+    const mkItems = (arr)=>arr.map(([token,hex,desc,light])=>({
+      token, hex, desc, chip:chip(hex,light), onCopy:cp(hex)
+    }));
+
+    const semanticGroups = [
+      { title:'Text', items: mkItems([
+        ['text.primary','#15181C','Nadpisy, názvy, cena bez DPH'],
+        ['text.secondary','#5A626C','Perex, popisky, neaktivní menu'],
+        ['text.muted','#7A828C','Cena s DPH, počet recenzí'],
+        ['text.tertiary','#9AA1AB','Obj. č., meta, disabled text'],
+        ['text.onDark','#FFFFFF','Text na tmavých plochách',1],
+        ['text.onDarkMuted','#B4CEEC','Odkazy v patičce',1],
+      ])},
+      { title:'Plochy a okraje', items: mkItems([
+        ['surface.page','#F7F9FB','Pozadí stránky',1],
+        ['surface.card','#FFFFFF','Karty a bloky',1],
+        ['surface.subtle','#F2F4F7','Inputy, chipy, kvantifikátor',1],
+        ['surface.brandDark','#142F56','Topbar, patička'],
+        ['border.subtle','#F2F4F7','Oddělovače a linky',1],
+        ['border.control','#C4CAD2','Nezaškrtnutý checkbox',1],
+      ])},
+      { title:'Akce', items: mkItems([
+        ['action.primary.bg','#1E5AA8','Primární tlačítko'],
+        ['action.primary.hover','#1A4A8A','Hover primárního'],
+        ['action.secondary.bg','#EFF4FB','Sekundární tlačítko',1],
+        ['action.secondary.hover','#D8E6F6','Hover sekundárního',1],
+        ['action.buy.bg','#0E7F43','Tlačítko Koupit'],
+        ['action.buy.hover','#0B6937','Hover Koupit'],
+        ['action.danger.bg','#C5232B','Akce a slevy'],
+        ['action.danger.hover','#A21B22','Hover Akce a slevy'],
+        ['action.disabled.bg','#F2F4F7','Neaktivní tlačítko',1],
+      ])},
+      { title:'Stavy a commerce', items: mkItems([
+        ['status.inStock','#0B6937','Text „Skladem > 15 ks"'],
+        ['status.outOfStock','#C5232B','Není skladem'],
+        ['status.onRequest','#8A919C','Na dotaz'],
+        ['status.open','#2EAA6A','LED otevřeno'],
+        ['status.closed','#C5232B','LED zavřeno'],
+        ['commerce.priceNet','#15181C','Cena bez DPH'],
+        ['commerce.priceGross','#7A828C','Cena s DPH'],
+        ['commerce.discountBadge','#C5232B','Badge slevy'],
+        ['commerce.freeShipping','#0B6937','Doprava zdarma — text na bg green.50'],
+        ['rating.star','#F5A623','Aktivní hvězdička'],
+        ['rating.starEmpty','#D5DAE0','Prázdná hvězdička',1],
+      ])},
+      { title:'Brand', items: mkItems([
+        ['brand.logoRed','#E41D32','Výhradně logo — nikdy v UI'],
+      ])},
+    ];
+
+    /* ---------- 4. TYPOGRAFIE ---------- */
+    const typeScale = [
+      ['heading.h1','Náhradní díly','font-size:36px;font-weight:700;letter-spacing:-0.02em;line-height:1.15;','36 / 700 / 1.15'],
+      ['heading.h2','Nápravy a brzdy','font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;','28 / 700 / 1.2'],
+      ['heading.h3','Nejprodávanější díly','font-size:22px;font-weight:700;line-height:1.25;','22 / 700 / 1.25'],
+      ['heading.h4','Doprava a platba','font-size:18px;font-weight:700;line-height:1.35;','18 / 700 / 1.35'],
+      ['body.large','Tisíce dílů skladem s expedicí do 24 hodin.','font-size:18px;font-weight:400;line-height:1.6;color:#5A626C;','18 / 400 / 1.6'],
+      ['body.medium','Vybírejte podle výrobce nápravy, průměru brzdy nebo čísla dílu.','font-size:16px;font-weight:400;line-height:1.6;','16 / 400 / 1.6'],
+      ['label.small','Zkušení obchodníci poradí po telefonu i e-mailu.','font-size:14px;font-weight:500;line-height:1.5;color:#5A626C;','14 / 500 / 1.5'],
+      ['caption','Obj. č.: 404815 · minimum 13 px','font-size:13px;font-weight:500;line-height:1.4;color:#9AA1AB;','13 / 500 / 1.4'],
+      ['overline','SORTIMENT','font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#8A919C;','13 / 700 / .06em'],
+    ].map(([name,sample,style,spec])=>({ name, sample, style, spec, onCopy:cp(spec.split(' ')[0]+'px') }));
+
+    const typeMobile = [
+      ['heading.h1','Název stránky','26 / 700 / 1.2'],
+      ['heading.h2','Sekce','22 / 700 / 1.25'],
+      ['heading.h3','Blok','18 / 700 / 1.3'],
+      ['heading.h4','Podblok','16 / 700 / 1.35'],
+      ['body.large','Perex — o krok níž než na desktopu','16 / 400 / 1.6'],
+      ['body.medium','Beze změny — 16 px zůstává základ','16 / 400 / 1.6'],
+    ].map(([name,note,spec])=>({ name, note, spec }));
+
+    const typeCommerce = [
+      ['price.primary','1 249 Kč','font-size:17px;font-weight:700;','17 / 700'],
+      ['price.gross','1 511 Kč s DPH','font-size:13px;font-weight:400;color:#7A828C;','13 / 400'],
+      ['product.title','Ložisko do bubnu Knott 200×50','font-size:16px;font-weight:700;line-height:1.3;','16 / 700 · min-h 42'],
+      ['stock','Skladem > 15 ks','font-size:13px;font-weight:700;color:#0B6937;','13 / 700'],
+      ['orderNo','Obj. č. 404815','font-size:13px;font-weight:400;color:#9AA1AB;','13 / 400'],
+      ['rating','★★★★★','font-size:13px;letter-spacing:1.5px;color:#F5A623;','13 / ls 1.5'],
+    ].map(([name,sample,style,spec])=>({ name, sample, style, spec }));
+
+    /* ---------- 5. SPACING ---------- */
+    const spacing = [
+      ['space-1',4,'Ikona–text, vnitřek chipu'],
+      ['space-2',8,'Mezery v řádku, gap tlačítek'],
+      ['space-3',12,'Gap produktového gridu'],
+      ['space-4',16,'Padding karty, okraje mobilu'],
+      ['space-5',20,'Padding dlaždic'],
+      ['space-6',24,'Mezi bloky uvnitř sekce'],
+      ['space-7',28,'Padding větších karet'],
+      ['space-8',32,'Padding ploch, okraje desktopu'],
+      ['space-9',36,'Sloupce patičky'],
+      ['space-10',40,'Volnější vertikální rytmus'],
+      ['space-11',48,'Mezi podsekcemi'],
+      ['space-12',56,'Horní odsazení stránky'],
+      ['space-13',64,'Mezi sekcemi stránky'],
+    ].map(([name,px,use])=>({
+      name, px:px+' px', use,
+      bar:'display:block;height:12px;border-radius:3px;background:#84AEDF;width:'+px+'px;',
+      onCopy:cp(px+'px')
+    }));
+
+    /* ---------- 6. RADIUS ---------- */
+    const radii = [
+      ['radius.sm','6 px','Inputy, badge, kvantifikátor, checkbox'],
+      ['radius.md','8 px','Karty, tlačítka, bloky, dropdown'],
+      ['radius.pill','999 px','Chipy, čítače, sociální kolečka'],
+    ].map(([name,val,use])=>({
+      name:name+' — '+val, use,
+      demo:'display:block;height:56px;background:#EFF4FB;border-radius:'+(val==='999 px'?'999px':val)+';',
+      onCopy:cp(val)
+    }));
+
+    /* ---------- 7. STÍNY ---------- */
+    const shadows = [
+      ['shadow.none','Klidový stav karet — bez okraje, bez stínu','none',''],
+      ['shadow.cardHover','Hover karet a dlaždic','0 6px 20px rgba(20,47,86,.10)','box-shadow:0 6px 20px rgba(20,47,86,.10);'],
+      ['shadow.overlay','Dropdown, našeptávač, mobilní drawer','0 10px 30px rgba(20,30,45,.14)','box-shadow:0 10px 30px rgba(20,30,45,.14);'],
+      ['focus.ring','Focus inputů a interaktivních prvků','inset 0 0 0 2px #1E5AA8','box-shadow:inset 0 0 0 2px #1E5AA8;'],
+    ].map(([name,use,value,box])=>({ name, use, value, box, onCopy:cp(value) }));
+
+    /* ---------- 8. LAYOUT ---------- */
+    const layout = [
+      ['Container max-width','1560 px','Výchozí šířka webu'],
+      ['Page padding — desktop','32 px','Boční odsazení obsahu'],
+      ['Page padding — mobil','16 px','Boční odsazení obsahu'],
+      ['Produktový grid','4 sloupce / 2 na mobilu','auto-fill, minmax(min(46%,270px),1fr)'],
+      ['Gap produktového gridu','12 px','space-3'],
+      ['Šířka produktové karty','280–300 px','min / max'],
+      ['Grid kategorií','minmax(280px,1fr)','auto-fit, gap 12'],
+      ['bp.mobile','< 600 px','Jednosloupcové rozvržení, kompaktní hlavička'],
+      ['bp.tablet','600–899 px','2sloupcový produktový grid, mobilní navigace'],
+      ['bp.desktop','≥ 900 px','Hlavní zlom — desktopová navigace a layout'],
+      ['bp.wide','≥ 1280 px','Plný 4sloupcový grid'],
+      ['bp.max','≥ 1560 px','Container se přestává roztahovat'],
+    ].map(([name,value,note])=>({ name, value, note }));
+
+    /* ---------- 9. IKONY ---------- */
+    const media = [
+      ['Ikona — standard','24 × 24 px','viewBox 0 0 24 24, stroke-width 2, currentColor'],
+      ['Ikona — skladovost','18 × 18 px','Jediná výjimka ze standardu'],
+      ['Hlavní menu — desktop','18 px','Velikost textu záložek'],
+      ['Ikona v kruhu','44 × 44 px','Kategorické dlaždice, poradenský blok'],
+      ['Sociální kolečko','40 × 40 px','Patička'],
+      ['Produktová fotka','poměr 4:3','object-fit: contain, bez ořezu, centrovaná'],
+      ['Thumbnail v našeptávači','40 × 40 px','Položky dropdownu'],
+      ['Logo','vapp-logo.svg','Křivky, #E41D32; na tmavém brightness(0) invert(1)'],
+    ].map(([name,value,note])=>({ name, value, note }));
+
+    /* ---------- 10. STAVY ---------- */
+    const states = [
+      ['Hover — karta / dlaždice','box-shadow: shadow.cardHover'],
+      ['Hover — primární tlačítko','background: blue.600 → blue.700'],
+      ['Hover — sekundární tlačítko','background: blue.50 → blue.100'],
+      ['Hover — Koupit','background: green.600 → green.700'],
+      ['Hover — Akce a slevy','background: red.600 → red.700'],
+      ['Hover — záložka menu','color: blue.600'],
+      ['Hover — chip značky','border-color: blue.300'],
+      ['Active (stisk) — tlačítka','transform: translateY(1px) + o krok tmavší pozadí'],
+      ['Focus — input','box-shadow: focus.ring'],
+      ['Focus-visible — vše ostatní','outline: 2px solid blue.600, offset 2px'],
+      ['Aktivní — záložka menu','color: blue.600 + underline 3px blue.600'],
+      ['Aktivní — filter chip','pill blue.600, bílý text, ✕'],
+      ['Disabled','bg neutral.100, text neutral.400, cursor: not-allowed'],
+      ['Navštívený odkaz','beze změny — barva zůstává blue.600'],
+    ].map(([name,value])=>({ name, value }));
+
+    const motion = [
+      ['motion.fast','60 ms','Stisk tlačítka (transform)'],
+      ['motion.base','120 ms','Barvy, pozadí, okraje'],
+      ['motion.slow','150 ms','Stíny a elevace karet'],
+      ['motion.led','1800 ms','Pulz LED indikátoru otevírací doby'],
+      ['motion.easing','ease','Výchozí křivka pro všechny přechody'],
+    ].map(([name,value,use])=>({ name, value, use }));
+
+    /* ---------- 11. ROZHODNUTÍ ---------- */
+    const dotS = (c)=>'flex:none;width:10px;height:10px;border-radius:999px;margin-top:6px;background:'+c+';';
+    const tagS = (bg,col)=>'flex:none;font-size:13px;font-weight:700;border-radius:6px;padding:5px 10px;background:'+bg+';color:'+col+';white-space:nowrap;';
+    const OK   = ['Vyřešeno', tagS('#E9F8EF','#0B6937'), dotS('#0E7F43')];
+    const TODO = ['K potvrzení', tagS('#FDF1F1','#C5232B'), dotS('#C5232B')];
+
+    const decisions = [
+      ['Písmo','Hanken Grotesk ze staré palety nahrazeno Exo 2 v celém systému. Strop tučnosti 700.',OK],
+      ['Pozadí stránky','Sjednoceno na #F7F9FB. Starší #F4F6F8 se nepoužívá.',OK],
+      ['Okraje karet','Karty bez borderů. Starší okraje #E4E7EC / #E7EAEE / #EEF0F3 zrušeny, nahrazuje je hover stín.',OK],
+      ['Rádiusy','Sjednoceno na 6 / 8 / 999. Starší 11 a 14 px zrušeny, checkbox z 5 na 6 px.',OK],
+      ['Text „Skladem"','Zelená 700 (#0B6937) v kartě i katalogu. Dřívější #0E7F43 pro text zrušeno.',OK],
+      ['Neutrální šedé','Šest blízkých odstínů sloučeno do jedné pojmenované škály 0–900 se zachovanými hodnotami.',OK],
+      ['Tmavý režim','Záměrně se nedělá. Systém je pouze světlý.',OK],
+      ['LED indikátor otevřeno','Jednorázové #22C55E nahrazeno systémovou zelenou 400 (#2EAA6A), která je součástí škály.',OK],
+      ['Cena bez DPH','Sjednoceno na 17 / 700 podle reálné produktové karty. Ukázka 18 px v původním DS byla nekonzistentní.',OK],
+      ['Mobilní typografie','Doplněna samostatná škála místo jednorázového clamp(26px,4vw,36px) v prototypu.',TODO],
+      ['Breakpointy','Doplněny 600 / 1280 / 1560 nad rámec hlavního zlomu 900 px.',TODO],
+      ['Stavy :active a focus-visible','Nově definovány — dosud v systému chyběly.',TODO],
+    ].map(([title,body,t])=>({ title, body, tag:t[0], tagStyle:t[1], dot:t[2] }));
+
+    /* ---------- 12. STRUKTURA ---------- */
+    const structure = [
+      ['DesignSystemVAPP.dc.html','Základy','Tento dokument. Barvy, typografie, spacing, rádiusy, elevace, layout, stavy. Jediný zdroj tokenů.'],
+      ['KomponentyVAPP.dc.html','Katalog komponent','Tlačítka, kvantifikátor, formuláře, badge, skladovost, menu, breadcrumb, patička. Jediné místo ladění UI prvků.'],
+      ['ProduktovaKarta.dc.html','Sdílená komponenta','Jediný zdroj vzhledu karty. Prototyp i katalog ji přebírají přes dc-import.'],
+      ['ArchivBarevnaPaletaVAPP.dc.html','Archiv','Nahrazeno sekcí 1 tohoto dokumentu. Nepoužívat jako referenci — starý styl (Hanken Grotesk, borders).'],
+      ['CLAUDE.md','Trvalá pravidla','Závazné konvence projektu. Při změně tokenu aktualizovat i zde.'],
+    ].map(([file,role,note])=>({ file, role, note }));
+
+    return {
+      metaChips, scales, neutrals, semanticGroups,
+      typeScale, typeMobile, typeCommerce,
+      spacing, radii, shadows, layout, media,
+      states, motion, decisions, structure,
+      toast:this.state.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  body{padding:24px;}
+</style>
+</helmet>
+<sc-if value="{{ single }}" hint-placeholder-val="">
+  <span style="{{ badgeStyle }}">{{ text }}</span>
+</sc-if>
+<sc-if value="{{ gallery }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-direction:column;gap:16px;max-width:720px;">
+  <div style="background:#fff;border-radius:8px;padding:28px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+    <span style="display:inline-flex;align-items:center;font-size:13px;font-weight:700;color:#fff;background:#C5232B;border-radius:6px;padding:5px 10px;">−20 %</span>
+    <span style="display:inline-flex;align-items:center;font-size:13px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:6px;padding:5px 10px;">Novinka</span>
+    <span style="display:inline-flex;align-items:center;font-size:13px;font-weight:700;color:#0B6937;background:#E9F8EF;border-radius:6px;padding:5px 10px;">Doprava zdarma</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:5px;padding:2px 4px;">
+    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> vlevo nahoře na fotce karty. Sleva = červená, novinka = modrá, doprava zdarma = zelený text na světle zeleném podkladu. Radius 6, weight 700.</div>
+    <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nekombinovat víc badge na jedné kartě; zelenou nepoužívat jinde než pro dopravu zdarma.</div>
+  </div>
+</div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:720,&quot;height&quot;:180},&quot;type&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;sale&quot;,&quot;new&quot;,&quot;freeship&quot;],&quot;default&quot;:&quot;sale&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;text&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;−20 %&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals(){
+    const P = this.props;
+    const single = !!P.type;
+    if (single){
+      const map = {
+        sale:{bg:'#C5232B',fg:'#fff',def:'−20 %'},
+        new:{bg:'#1E5AA8',fg:'#fff',def:'Novinka'},
+        freeship:{bg:'#E9F8EF',fg:'#0B6937',def:'Doprava zdarma'},
+      };
+      const v = map[P.type] || map.new;
+      return { single:true, gallery:false,
+        text: P.text || v.def,
+        badgeStyle:'display:inline-flex;align-items:center;font-size:13px;font-weight:700;color:'+v.fg+';background:'+v.bg+';border-radius:6px;padding:5px 10px;' };
+    }
+    return { single:false, gallery:true };
+  }
+}
+</script>
+</body>
+</html>

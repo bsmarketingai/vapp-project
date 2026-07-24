@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:#F7F9FB;}
+  a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
+  .wf-img{background:repeating-linear-gradient(45deg,#E9ECEF,#E9ECEF 11px,#E3E6EA 11px,#E3E6EA 22px);}
+  .wf-img2{background:repeating-linear-gradient(-45deg,#D8E6F6,#D8E6F6 11px,#CFDFF2 11px,#CFDFF2 22px);}
+  @keyframes vapp-led{0%{box-shadow:0 0 0 0 var(--led);}70%{box-shadow:0 0 0 7px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
+  .vapp-led{border-radius:999px;animation:vapp-led 1.8s ease-out infinite;}
+  @media (max-width:900px){ .dt{display:none !important;} .pg-h1{font-size:26px !important;} }
+  @media (min-width:901px){ .mb{display:none !important;} }
+</style>
+<script>
+(function(){
+  if(window.__vappHover) return; window.__vappHover=1;
+  function decls(s){return s.split(';').map(function(d){return d.trim();}).filter(Boolean).map(function(d){var i=d.indexOf(':');return [d.slice(0,i).trim(),d.slice(i+1).trim()];});}
+  document.addEventListener('mouseover',function(e){var el=e.target.closest&&e.target.closest('[style-hover]');if(!el||el.__hv)return;el.__hv=decls(el.getAttribute('style-hover')).map(function(kv){var old=el.style.getPropertyValue(kv[0]);el.style.setProperty(kv[0],kv[1],'important');return [kv[0],old];});});
+  document.addEventListener('mouseout',function(e){var el=e.target.closest&&e.target.closest('[style-hover]');if(!el||!el.__hv)return;if(el.contains(e.relatedTarget))return;el.__hv.forEach(function(kv){kv[1]?el.style.setProperty(kv[0],kv[1]):el.style.removeProperty(kv[0]);});el.__hv=null;});
+})();
+</script>
+<style>
+.hvx1{transition:background .12s;} .hvx1:hover{background:#F2F4F7 !important;}
+.hvx2{transition:color .12s;} .hvx2:hover{color:#1E5AA8 !important;}
+.hvx3{transition:background .12s;} .hvx3:hover{background:#D8E6F6 !important;}
+.hvx4{transition:background .12s;} .hvx4:hover{background:#A21B22 !important;}
+.hvx5{transition:box-shadow .12s;} .hvx5:hover{box-shadow:0 6px 20px rgba(20,47,86,.10) !important;}
+.hvx6{transition:color .12s,text-decoration .12s;} .hvx6:hover{color:#1E5AA8 !important;text-decoration:underline !important;}
+.hvx7{transition:background .12s;} .hvx7:hover{background:rgba(255,255,255,.2) !important;}
+.hvx8{transition:color .12s,border-color .12s;} .hvx8:hover{color:#fff !important;border-color:#fff !important;}
+.hvx9{transition:color .12s;} .hvx9:hover{color:#fff !important;}
+</style>
+</helmet>
+<div data-screen-label="Prototyp Náhradní díly VAPP" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;">
+
+  <dc-import name="Hlavicka" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" hint-size="100%,150px"></dc-import>
+
+  <!-- CONTENT -->
+  <div style="max-width:1560px;margin:0 auto;padding:14px 16px 40px;">
+
+    <!-- breadcrumb + title -->
+    <div style="font-size:13px;color:#7A828C;margin:4px 0 6px;">Úvod <span style="color:#B4CEEC;">›</span> <span style="font-weight:700;color:#173C70;">Náhradní díly</span></div>
+    <h1 class="pg-h1" style="margin:0;font-size:36px;font-weight:700;letter-spacing:-0.02em;color:#142F56;">Náhradní díly <span style="font-size:14px;font-weight:600;color:#7A828C;">2 418 produktů</span></h1>
+    <p style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Náhradní díly na přívěsy všech značek — KNOTT, AL-KO, BPW, Jokon i Winterhoff. Tisíce dílů skladem s expedicí do 24 hodin.<sc-if value="{{ descOpen }}" hint-placeholder-val=""> Vybírejte podle výrobce nápravy, průměru brzdy nebo čísla dílu. Nabízíme kompletní sortiment od nájezdových brzd a brzdových čelistí přes ložiska, náboje a spojovací zařízení až po osvětlení, blatníky, kola a plachty. Nevíte si rady? Zkušení obchodníci vám poradí s výběrem správného dílu po telefonu i e-mailu.</sc-if>
+    <span onClick="{{ toggleDesc }}" style="font-size:16px;font-weight:700;color:#1E5AA8;cursor:pointer;text-decoration:underline;margin-left:6px;white-space:nowrap;">{{ descLabel }}</span></p>
+
+    <!-- ===== KATEGORIE (Datart/Alza drill-down) ===== -->
+    <div style="margin-top:16px;">
+      <sc-if value="{{ inGroups }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">
+          <sc-for list="{{ groups }}" as="g" hint-placeholder-count="6">
+            <dc-import name="KategorickaDlazdice" cat="{{ g }}" hint-size="100%,240px"></dc-import>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ inSubcats }}" hint-placeholder-val="">
+        <div style="background:#fff;border-radius:8px;overflow:hidden;">
+          <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid #F2F4F7;background:#EFF4FB;">
+            <span onClick="{{ backToGroups }}" style="display:inline-flex;align-items:center;gap:6px;min-height:34px;font-size:13px;font-weight:700;color:#1E5AA8;cursor:pointer;padding:0 10px 0 4px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>Zpět</span>
+            <span style="font-size:14.5px;font-weight:700;color:#142F56;">{{ activeGroupName }}</span>
+            <span style="font-size:13px;color:#7A828C;">{{ activeGroupCount }} produktů</span>
+          </div>
+          <sc-for list="{{ subcats }}" as="s" hint-placeholder-count="5">
+            <div onClick="{{ s.onPick }}" style="{{ s.style }}">
+              <span style="{{ s.nameStyle }}">{{ s.name }}</span>
+              <span style="display:flex;align-items:center;gap:8px;"><span style="font-size:13px;color:#7A828C;">{{ s.count }}</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#84AEDF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+
+    <!-- aktivní podkategorie chip -->
+    <sc-if value="{{ activeSubcat }}" hint-placeholder-val="">
+      <div style="display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap;">
+        <span style="font-size:13px;color:#7A828C;font-weight:600;">Zobrazeno:</span>
+        <span onClick="{{ clearSubcat }}" style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:999px;padding:8px 14px;cursor:pointer;">{{ activeSubcat }} ✕</span>
+      </div>
+    </sc-if>
+
+    <!-- ===== TOOLBAR (sticky) ===== -->
+    <div style="position:sticky;top:0;z-index:40;background:#F7F9FB;margin:14px -16px 0;padding:10px 16px;border-bottom:1px solid #F2F4F7;">
+      <div style="display:flex;gap:8px;max-width:1560px;margin:0 auto;">
+        <span onClick="{{ openFilter }}" style="flex:1;max-width:220px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;font-size:13.5px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;cursor:pointer;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>Filtry<sc-if value="{{ filterCount }}" hint-placeholder-val=""><span style="background:#C5232B;border-radius:999px;font-size:13px;padding:2px 8px;">{{ filterCount }}</span></sc-if></span>
+        <span onClick="{{ toggleStock }}" style="{{ stockBtnStyle }}"><span style="{{ stockBoxStyle }}">{{ stockCheck }}</span>Skladem</span>
+        <div style="position:relative;flex:1;max-width:260px;margin-left:auto;">
+          <span onClick="{{ toggleSort }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;font-size:13.5px;font-weight:700;color:#15181C;background:#F2F4F7;border-radius:6px;cursor:pointer;padding:0 14px;">{{ sortLabel }} <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#84AEDF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span>
+          <sc-if value="{{ sortOpen }}" hint-placeholder-val="">
+            <div style="position:absolute;top:calc(100% + 6px);right:0;left:0;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);overflow:hidden;z-index:50;">
+              <sc-for list="{{ sortOpts }}" as="o" hint-placeholder-count="4"><div onClick="{{ o.onPick }}" style="{{ o.style }}">{{ o.t }}</div></sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PRODUKTY ===== -->
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin:16px 0 10px;">
+      <span style="font-size:13px;color:#5A626C;font-weight:600;">{{ resultCount }} produktů</span>
+      <sc-if value="{{ anyFilter }}" hint-placeholder-val=""><span onClick="{{ clearFilters }}" style="font-size:13px;font-weight:700;color:#C5232B;cursor:pointer;text-decoration:underline;">Zrušit filtry</span></sc-if>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(46%,270px),1fr));gap:12px;">
+      <sc-for list="{{ products }}" as="p" hint-placeholder-count="8">
+        <dc-import name="ProduktovaKarta" p="{{ p }}" hint-size="100%,470px"></dc-import>
+      </sc-for>
+    </div>
+
+    <!-- load more -->
+    <sc-if value="{{ hasMore }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:10px;padding:22px 0 6px;">
+        <span style="font-size:13px;color:#7A828C;">Zobrazeno <b style="color:#3A424C;">{{ shownCount }}</b> z {{ resultCount }} produktů</span>
+        <div style="width:min(280px,70%);height:5px;background:#D8E6F6;border-radius:999px;overflow:hidden;"><div style="{{ progressStyle }}"></div></div>
+        <span onClick="{{ loadMore }}" style="display:flex;align-items:center;justify-content:center;min-height:46px;padding:0 30px;font-size:14px;font-weight:700;color:#1E5AA8;border-radius:8px;cursor:pointer;background:#EFF4FB;" class="hvx3">Načíst dalších {{ nextBatch }}</span>
+      </div>
+    </sc-if>
+
+    <!-- support -->
+    <sc-if value="{{ showConsultancy }}" hint-placeholder-val="{{ true }}">
+    <div style="margin-top:22px;">
+      <dc-import name="PoradenskyBlok" variant="compact" hint-size="100%,90px"></dc-import>
+    </div>
+    </sc-if>
+  </div>
+
+  <div style="max-width:1560px;margin:10px auto 0;padding:0 16px;">
+    <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
+  </div>
+
+  <!-- COMPARE BAR -->
+  <sc-if value="{{ cmpCount }}" hint-placeholder-val="">
+    <div style="position:fixed;left:0;right:0;bottom:0;z-index:60;background:#142F56;box-shadow:0 -6px 24px rgba(20,47,86,.25);">
+      <div style="max-width:1560px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:12px 16px;">
+        <span style="font-size:13.5px;font-weight:700;color:#fff;flex:1;">{{ cmpLabel }}</span>
+        <span onClick="{{ clearCompare }}" style="font-size:13px;font-weight:700;color:#B4CEEC;cursor:pointer;text-decoration:underline;">Zrušit</span>
+        <span style="display:inline-flex;align-items:center;min-height:44px;font-size:13.5px;font-weight:700;color:#fff;background:#0E7F43;border-radius:8px;padding:0 22px;cursor:pointer;gap:8px;">Porovnat <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 4 7l4 4"></path><path d="M4 7h16"></path><path d="m16 21 4-4-4-4"></path><path d="M20 17H4"></path></svg></span>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- FILTER PANEL -->
+  <sc-if value="{{ filterOpen }}" hint-placeholder-val="">
+    <div onClick="{{ closeFilter }}" style="position:fixed;inset:0;background:rgba(20,30,45,.45);z-index:80;"></div>
+    <div style="position:fixed;top:0;right:0;bottom:0;width:min(400px,92vw);background:#fff;z-index:90;display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(20,30,45,.2);">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid #F2F4F7;">
+        <span style="font-size:16px;font-weight:700;color:#142F56;">Filtry</span>
+        <span onClick="{{ closeFilter }}" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:#5A626C;cursor:pointer;background:#F2F4F7;border-radius:8px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></span>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:2px 18px;">
+        <sc-for list="{{ filterAcc }}" as="f" hint-placeholder-count="5">
+          <div style="border-bottom:1px solid #F2F4F7;">
+            <div onClick="{{ f.onToggle }}" style="display:flex;align-items:center;justify-content:space-between;min-height:50px;cursor:pointer;">
+              <span style="font-size:14px;font-weight:700;color:#15181C;">{{ f.h }}<sc-if value="{{ f.activeN }}" hint-placeholder-val=""><span style="margin-left:8px;font-size:13px;font-weight:700;color:#1E5AA8;background:#D8E6F6;border-radius:6px;padding:2px 7px;">{{ f.activeN }}</span></sc-if></span>
+              <span style="font-size:14px;color:#84AEDF;">{{ f.chev }}</span>
+            </div>
+            <sc-if value="{{ f.open }}" hint-placeholder-val="">
+              <div style="padding:0 0 14px;display:flex;flex-direction:column;gap:4px;">
+                <sc-for list="{{ f.opts }}" as="o" hint-placeholder-count="4">
+                  <span onClick="{{ o.onToggle }}" style="display:flex;align-items:center;gap:10px;font-size:13.5px;color:#3A424C;min-height:40px;cursor:pointer;">
+                    <span style="{{ o.box }}"><sc-if value="{{ o.on }}" hint-placeholder-val=""><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg></sc-if></span>{{ o.t }} <span style="color:#9AA1AB;font-size:13px;">{{ o.c }}</span>
+                  </span>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;gap:10px;padding:14px 18px;border-top:1px solid #F2F4F7;background:#F7F9FB;">
+        <span onClick="{{ clearFilters }}" style="flex:none;display:flex;align-items:center;min-height:48px;font-size:13px;font-weight:700;color:#5A626C;border-radius:8px;padding:0 16px;cursor:pointer;background:#F2F4F7;">Zrušit vše</span>
+        <span onClick="{{ closeFilter }}" style="flex:1;display:flex;align-items:center;justify-content:center;min-height:48px;font-size:14px;font-weight:700;color:#fff;background:#0E7F43;border-radius:8px;cursor:pointer;">Zobrazit {{ resultCount }} produktů</span>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:844},&quot;freeShippingThreshold&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1500,&quot;min&quot;:0,&quot;max&quot;:5000,&quot;step&quot;:100,&quot;unit&quot;:&quot;Kč&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;defaultOnlyStock&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;defaultSort&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;pop&quot;,&quot;cheap&quot;,&quot;exp&quot;,&quot;az&quot;],&quot;default&quot;:&quot;pop&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;showConsultancy&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;}}">
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this.state = {
+      menuOpen:false, descOpen:false, filterOpen:false, sortOpen:false,
+      view:'groups', subcat:null, onlyStock: props.defaultOnlyStock ?? false, sort: props.defaultSort ?? 'pop',
+      brands:{}, params:{}, accOpen:{ 'Výrobce':true }, compare:{}, qty:{}, shown:15, hoverCard:null,
+      searchQ:'', searchFocus:false
+    };
+  }
+
+  SEARCH = [
+    { name:'Nápravy a brzdy', meta:'Kategorie · 612 produktů', cat:true, kw:'brzda brzdy naprava napravy naprav' },
+    { name:'Kola a pneumatiky', meta:'Kategorie · 296 produktů', cat:true, kw:'kolo kola pneu pneumatika disk' },
+    { name:'Elektro a osvětlení', meta:'Kategorie · 474 produktů', cat:true, kw:'led elektro svetlo osvetleni zarovka kabel' },
+    { name:'Nájezdová brzda KNOTT KF13', meta:'Obj. č. 901301 · Skladem', kw:'brzda knott najezdova' },
+    { name:'Brzdové čelisti KNOTT 200×50', meta:'Obj. č. 302005 · Skladem', kw:'brzda celisti knott' },
+    { name:'Opěrné kolečko ⌀48 mm', meta:'Obj. č. 404815 · Skladem', kw:'kolo kolecko operne' },
+    { name:'Pneumatika 165 R13 C Kenda', meta:'Obj. č. 401653 · Skladem', kw:'pneu pneumatika kolo kenda' },
+    { name:'Svítilna Fristom FT-001 B LED', meta:'Obj. č. 501224 · Skladem', kw:'led svetlo svitilna fristom' },
+    { name:'Žárovka P21/5W 12 V BAY15d', meta:'Obj. č. 502155 · Skladem', kw:'led zarovka svetlo' },
+  ];
+
+  norm(x){ return x.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+
+  GROUPS = [
+    { key:'napravy', name:'Nápravy a brzdy', preview:'Nájezdové brzdy, čelisti…', count:612, subs:[['Nájezdové brzdy',94],['Brzdové čelisti a obložení',188],['Nápravy',76],['Náboje kol',102],['Ložiska a gufera',152]] },
+    { key:'spojovaci', name:'Spojovací zařízení', preview:'Kulové spojky, oje…', count:388, subs:[['Kulové spojky',121],['Kloubové spojky',44],['Oje a příčníky',59],['Zabezpečení proti krádeži',86],['Opěrná kolečka',78]] },
+    { key:'elektro', name:'Elektro a osvětlení', preview:'Světla, kabeláž, zástrčky…', count:474, subs:[['Zadní světla',146],['Poziční a obrysová světla',98],['Kabeláž a zásuvky',114],['Odrazky',66],['Osvětlení SPZ',50]] },
+    { key:'kola', name:'Kola a pneumatiky', preview:'Pneu, disky, šrouby…', count:296, subs:[['Pneumatiky s diskem',108],['Samostatné disky',64],['Pneumatiky',82],['Šrouby a matice kol',42]] },
+    { key:'karoserie', name:'Blatníky a karoserie', preview:'Blatníky, bočnice, podlahy…', count:412, subs:[['Blatníky',134],['Bočnice a sloupky',88],['Podlahy',52],['Plachty a konstrukce',96],['Panty a zámky bočnic',42]] },
+    { key:'upinani', name:'Upínání a doplňky', preview:'Navijáky, pásy, podpěry…', count:236, subs:[['Navijáky a kladky',58],['Upínací pásy',72],['Podpěrné nohy',48],['Plynové vzpěry',58]] },
+  ];
+
+  PRODUCTS = [
+    { name:'Nájezdová brzda KNOTT KF13', g:'napravy', brand:'KNOTT', p:[['Pro hmotnost','750–1350 kg'],['Oj','čtyřhran 70 mm'],['Kód','90-1301']], net:'4 876 Kč', gross:'5 900 Kč', stock:12 },
+    { name:'Manžeta gumová KNOTT KF/KR 7,5 až 27', g:'napravy', brand:'KNOTT', p:[['Pro brzdy','KF/KR 7,5–27'],['Materiál','pryž'],['Kód','90-7527']], net:'157 Kč', gross:'190 Kč', stock:44, img:'uploads/manzeta-gumova-knott-kf-kr-7-5-az-27.jpg' },
+    { name:'Brzdové čelisti KNOTT 200×50 — malá sada na 2 kola', g:'napravy', brand:'KNOTT', p:[['Průměr bubnu','200 mm'],['Šířka','50 mm'],['Kód','20-2050']], net:'405 Kč', gross:'490 Kč', stock:46, sale:15, img:'uploads/celisti-brzdove-knott-200x50-mala-sada-na-2-kola.jpg' },
+    { name:'Náboj kola KNOTT 112×5', g:'napravy', brand:'KNOTT', p:[['Rozteč','112×5 mm'],['Ložisko','kompaktní'],['Kód','30-1125']], net:'1 397 Kč', gross:'1 690 Kč', stock:8 },
+    { name:'Krytka náboje KNOTT ⌀64,2 mm pro buben 200×50', g:'napravy', brand:'KNOTT', p:[['Průměr','64,2 mm'],['Pro buben','200×50'],['Kód','30-6420']], net:'62 Kč', gross:'75 Kč', stock:120, img:'uploads/krytka-naboje-knott-pr-64-2-mm-pro-buben-200x50.jpg' },
+    { name:'Klín zakládací plastový Jokon-Tripus', g:'upinani', brand:'Jokon', p:[['Materiál','plast'],['Homologace','E'],['Kód','70-0100']], net:'157 Kč', gross:'190 Kč', stock:64, sale:20, img:'uploads/jokon-tripus-klin-zakladaci-plastovy.jpg' },
+    { name:'Matice samojistná M8-8 ZN DIN 985', g:'napravy', brand:'KNOTT', p:[['Závit','M8'],['Norma','DIN 985'],['Kód','30-0885']], net:'4 Kč', gross:'5 Kč', stock:500, img:'uploads/matice-samojistna-m8-8-zn-din-985.jpg' },
+    { name:'Matice M8 kulová ZN', g:'napravy', brand:'VAPP', p:[['Závit','M8'],['Povrch','zinek'],['Kód','30-0899']], net:'12 Kč', gross:'15 Kč', stock:340, img:'uploads/matice-m8-kulova-zn.jpg' },
+    { name:'Zámek ALBE Safety Box XL-K rozvírací', g:'spojovaci', brand:'AL-KO', p:[['Typ','Safety Box XL-K'],['Certifikace','SCM'],['Kód','40-3001']], net:'1 240 Kč', gross:'1 500 Kč', stock:9, img:'uploads/zamek-albe-safety-box-xl-k-rozviraci.jpg' },
+    { name:'Kulová spojka Winterhoff WW 8', g:'spojovaci', brand:'Winterhoff', p:[['Pro hmotnost','do 800 kg'],['Oj','kulatá 60 mm'],['Kód','40-0860']], net:'645 Kč', gross:'780 Kč', stock:21 },
+    { name:'Zadní sdružené světlo Jokon BBSK 550 s bajonetovým konektorem', g:'elektro', brand:'Jokon', p:[['Funkce','5 komor'],['Připojení','bajonet'],['Kód','50-5501']], net:'810 Kč', gross:'980 Kč', stock:17 },
+    { name:'Blatník plastový jednoosý 750', g:'karoserie', brand:'VAPP', p:[['Pro kola','13"'],['Šířka','200 mm'],['Kód','10-2240']], net:'405 Kč', gross:'490 Kč', stock:34 },
+    { name:'Ložisko do bubnu KNOTT 200×50, 64×34×37 mm originál', g:'napravy', brand:'KNOTT', p:[['Rozměr','64×34×37 mm'],['Typ','do bubnu'],['Kód','30-6434']], net:'950 Kč', gross:'1 150 Kč', stock:0, img:'uploads/lozisko-do-bubnu-knott-200x50-64x34-h37-original.jpg' },
+    { name:'Držák opěrného kolečka 48 mm KLE 48, plech', g:'spojovaci', brand:'KNOTT', p:[['Pro trubku','48 mm'],['Materiál','plech, zinek'],['Kód','40-4848']], net:'240 Kč', gross:'290 Kč', stock:37, img:'uploads/drzak-operneho-kolecka-48-mm-kle-48-plech.jpg' },
+    { name:'Opěrné kolečko ⌀48 mm, nosnost 150 kg', g:'spojovaci', brand:'AL-KO', p:[['Trubka','48 mm'],['Nosnost','150 kg'],['Kód','40-4815']], net:'397 Kč', gross:'480 Kč', stock:52, img:'uploads/kolecko-operne-dtr-prum-48-150-kg.jpg' },
+    { name:'Kolečko samostatné Winterhoff K ST 48, 200×50, ocelový disk', g:'spojovaci', brand:'Winterhoff', p:[['Rozměr','200×50 mm'],['Disk','ocelový'],['Kód','40-2051']], net:'314 Kč', gross:'380 Kč', stock:22, sale:10, img:'uploads/kolecko-samostatne-winterhoff-k-st-48-200-vb-200x50-ocelovy-disk.jpg' },
+    { name:'Pneumatika 165 R13 C 96N (710 kg) Kenda M+S', g:'kola', brand:'VAPP', p:[['Rozměr','165 R13 C'],['Nosnost','710 kg'],['Kód','60-1653']], net:'1 645 Kč', gross:'1 990 Kč', stock:14, img:'uploads/pneu-165-r13-c-96n-710-kg-kenda-m-s.jpg' },
+    { name:'Kabel 7×1 sedmibarevný — metráž', g:'elektro', brand:'VAPP', p:[['Průřez','7×1 mm²'],['Prodej','po metrech'],['Kód','50-0701']], net:'57 Kč', gross:'69 Kč', stock:200, img:'uploads/kabel-7x1-sedmibarevny-metraz.jpg' },
+    { name:'Naviják ruční 900 kg s pásem', g:'upinani', brand:'AL-KO', p:[['Tažná síla','900 kg'],['Pás','7 m'],['Kód','70-0900']], net:'1 810 Kč', gross:'2 190 Kč', stock:6 },
+    { name:'Držák boxu univerzální na V-oj — sada pro 1 box', g:'upinani', brand:'VAPP', p:[['Montáž','V-oj'],['Sada','pro 1 box'],['Kód','70-1001']], net:'570 Kč', gross:'690 Kč', stock:16, img:'uploads/drzak-boxu-univerzalni-na-v-oj-sada-pro-1-box.jpg' },
+    { name:'Lanko bezpečnostní záchytné s karabinou KNOTT 750 kg', g:'spojovaci', brand:'KNOTT', p:[['Nosnost','750 kg'],['Zakončení','karabina'],['Kód','40-0750']], net:'96 Kč', gross:'116 Kč', stock:73, img:'uploads/lanko-bezpecnostni-zachytne-s-karabinou-knott-750-kg.jpg' },
+    { name:'Lanko pojistné AL-KO 1005 mm pro 60S/90S/161S/251S', g:'napravy', brand:'AL-KO', p:[['Délka','1005 mm'],['Zakončení','hák'],['Kód','20-1005']], net:'240 Kč', gross:'290 Kč', stock:63, img:'uploads/lanko-pojistne-al-ko-1005-mm-pro-60s-90s-161s-251s.jpg' },
+    { name:'Svítilna přední obrysová Fristom FT-001 B LED', g:'elektro', brand:'Fristom', p:[['Zdroj','LED 12/24 V'],['Odrazka','integrovaná'],['Kód','50-1224']], net:'157 Kč', gross:'190 Kč', stock:88, img:'uploads/fristom-ft-001-b-led-svitilna-predni-obrysova.jpg' },
+    { name:'Odrazka oranžová ⌀61 mm s otvorem (VAPP PAV, PA)', g:'elektro', brand:'VAPP', p:[['Průměr','61 mm'],['Uchycení','otvor'],['Kód','50-0610']], net:'21 Kč', gross:'25 Kč', stock:600, img:'uploads/odrazka-oranzova-pr-61-mm-s-otvorem-vapp-pav-pa.jpg' },
+    { name:'Žárovka P21/5W 12 V, patice BAY15d, dvouvláknová', g:'elektro', brand:'Jokon', p:[['Patice','BAY15d'],['Napětí','12 V'],['Kód','50-2155']], net:'17 Kč', gross:'21 Kč', stock:800, img:'uploads/zarovka-p21-5w-12-v-s-patici-bay15d-dvouvlaknova.jpg' },
+    { name:'Zástrčka (vidlice) 7pól 12 V kovová JAEGER', g:'elektro', brand:'JAEGER', p:[['Póly','7'],['Materiál','kov'],['Kód','50-0712']], net:'236 Kč', gross:'285 Kč', stock:28, img:'uploads/zastrcka-vidlice-7-pol-12v-kovova-jaeger.jpg' },
+    { name:'Upínací pás 2 t s ráčnou 6 m', g:'upinani', brand:'VAPP', p:[['Nosnost','2 000 kg'],['Délka','6 m'],['Kód','70-2006']], net:'236 Kč', gross:'285 Kč', stock:41 },
+    { name:'Plynová vzpěra 500 N', g:'upinani', brand:'STEMA', p:[['Síla','500 N'],['Zdvih','195 mm'],['Kód','70-0500']], net:'314 Kč', gross:'380 Kč', stock:0 },
+    { name:'Blatník pozink dvouosý 2700', g:'karoserie', brand:'VAPP', p:[['Pro kola','14"'],['Šířka','220 mm'],['Kód','10-2700']], net:'1 066 Kč', gross:'1 290 Kč', stock:5 },
+    { name:'Disk 13" 112×5 stříbrný', g:'kola', brand:'VAPP', p:[['Rozměr','4.5J×13'],['Rozteč','112×5'],['Kód','60-1345']], net:'736 Kč', gross:'890 Kč', stock:19 },
+  ];
+
+  BRANDS = [['KNOTT',486],['AL-KO',612],['BPW',248],['Fristom',182],['JAEGER',16],['Jokon',196],['Winterhoff',124],['VAPP',384],['STEMA',88]];
+
+  priceNum(p){ return parseInt(p.gross.replace(/\s/g,''),10); }
+
+  filtered(){
+    const s = this.state;
+    let list = this.PRODUCTS.slice();
+    if(s.view!=='groups' && !s.subcat) list = list.filter(p=>p.g===s.view);
+    if(s.subcat) list = list.filter(p=>p.g===s.subcatGroup);
+    if(s.onlyStock) list = list.filter(p=>p.stock>0);
+    const activeBrands = Object.keys(s.brands).filter(b=>s.brands[b]);
+    if(activeBrands.length) list = list.filter(p=>activeBrands.indexOf(p.brand)>=0);
+    if(s.sort==='cheap') list.sort((a,b)=>this.priceNum(a)-this.priceNum(b));
+    else if(s.sort==='exp') list.sort((a,b)=>this.priceNum(b)-this.priceNum(a));
+    else if(s.sort==='az') list.sort((a,b)=>a.name.localeCompare(b.name,'cs'));
+    return list;
+  }
+
+  renderVals(){
+    const s = this.state;
+    const filteredAll = this.filtered();
+    const freeShip = this.props.freeShippingThreshold ?? 1500;
+    const factor = 134; // prototyp reprezentuje větší katalog
+    const resultCount = s.subcat || s.view!=='groups' || s.onlyStock || Object.keys(s.brands).some(b=>s.brands[b])
+      ? filteredAll.length * 12 : 2418;
+    const visible = filteredAll.slice(0, s.shown);
+
+    const products = visible.map((p,i)=>{
+      const hov = s.hoverCard===p.name;
+      const cmp = !!s.compare[p.name];
+      return {
+        name:p.name,
+        p1l:p.p[0][0], p1v:p.p[0][1], p2l:p.p[1][0], p2v:p.p[1][1], p3l:p.p[2][0], p3v:p.p[2][1],
+        priceNet:p.net, price:p.gross,
+        avail: p.stock>=15 ? 'Skladem > 15 ks' : (p.stock>0 ? 'Skladem '+p.stock+' ks' : 'Na dotaz'),
+        availStyle:'display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:'+(p.stock>0?'#0B6937;':'#8A919C;'),
+        availIn:p.stock>0, availOut:!p.stock,
+        starsOn:'★'.repeat(4+((p.name.length)%2)), starsOff:'★'.repeat(1-((p.name.length)%2)),
+        reviews:(p.name.length*13)%38+3,
+        objNum:p.p[2][1].replace('-',''),
+        qty:(s.qty&&s.qty[p.name])||1,
+        onMinus:()=>{ const q=Object.assign({},s.qty); q[p.name]=Math.max(1,((q[p.name]||1)-1)); this.setState({qty:q}); },
+        onPlus:()=>{ const q=Object.assign({},s.qty); q[p.name]=(q[p.name]||1)+1; this.setState({qty:q}); },
+        img:p.img||'', noImg:!p.img,
+        badge: p.sale ? '−'+p.sale+' %' : (this.priceNum(p)>=freeShip ? 'Doprava zdarma' : ''),
+        badgeStyle:'position:absolute;top:8px;left:8px;font-size:13px;font-weight:700;border-radius:6px;padding:4px 9px;'+(p.sale?'color:#fff;background:#C5232B;':'color:#0B6937;background:#E9F8EF;'),
+        imgBgStyle:'aspect-ratio:4/3;background:#fff url("./'+(p.img||'')+'") center/contain no-repeat;background-origin:content-box;padding:18px 12px;',
+        phStyle:'aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;color:#9AA1AB;font-size:13px;font-weight:600;background:repeating-linear-gradient('+(hov?'-45deg,#D8E6F6,#D8E6F6 11px,#CFDFF2 11px,#CFDFF2 22px':'45deg,#E9ECEF,#E9ECEF 11px,#E3E6EA 11px,#E3E6EA 22px')+');',
+        imgLabel: hov ? 'FOTO 2' : 'FOTO 1',
+        dot1:(p.img?'display:none;':'')+'width:6px;height:6px;border-radius:50%;background:'+(hov?'#B4CEEC':'#1E5AA8')+';',
+        dot2:(p.img?'display:none;':'')+'width:6px;height:6px;border-radius:50%;background:'+(hov?'#1E5AA8':'#B4CEEC')+';',
+        onEnter:()=>{ if(window.matchMedia('(min-width:901px)').matches) this.setState({ hoverCard:p.name }); },
+        onLeave:()=>{ if(s.hoverCard===p.name) this.setState({ hoverCard:null }); },
+        cmp,
+        cmpBox:'flex:none;width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1.5px solid '+(cmp?'#1E5AA8':'#C4CAD2')+';background:'+(cmp?'#1E5AA8':'#fff')+';',
+        onCmp:()=>{ const c=Object.assign({},s.compare); if(c[p.name]) delete c[p.name]; else c[p.name]=true; this.setState({compare:c}); },
+      };
+    });
+
+    const groups = this.GROUPS.map(g=>({
+      name:g.name, count:g.count, preview:g.preview,
+      subs: g.subs.slice(0,4).map(([n])=>({ name:n, onPick:()=>this.setState({ view:g.key, subcat:n, subcatGroup:g.key, shown:15 }) })),
+      onOpen:()=>this.setState({ view:g.key, subcat:null, shown:15 }),
+    }));
+
+    const ag = this.GROUPS.find(g=>g.key===s.view);
+    const subcats = ag ? ag.subs.map(([n,c])=>{
+      const on = s.subcat===n;
+      return {
+        name:n, count:c,
+        onPick:()=>this.setState({ subcat:on?null:n, subcatGroup:g_key(ag), shown:15 }),
+        style:'display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:0 16px;border-bottom:1px solid #F2F4F7;cursor:pointer;'+(on?'background:#EFF4FB;':''),
+        nameStyle:'font-size:13.5px;font-weight:'+(on?'700':'600')+';color:'+(on?'#1E5AA8':'#15181C')+';',
+      };
+    }) : [];
+    function g_key(g){ return g.key; }
+
+    const activeBrandN = Object.keys(s.brands).filter(b=>s.brands[b]).length;
+    const filterCount = activeBrandN + (s.onlyStock?1:0);
+    const box=(on)=>'flex:none;width:21px;height:21px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1.5px solid '+(on?'#1E5AA8':'#C4CAD2')+';background:'+(on?'#1E5AA8':'#fff')+';';
+    const mkAcc=(h, opts, extra)=>({
+      h, chev:s.accOpen[h]?'▴':'▾', open:!!s.accOpen[h], activeN: extra||0,
+      onToggle:()=>{ const a=Object.assign({},s.accOpen); a[h]=!a[h]; this.setState({accOpen:a}); },
+      opts,
+    });
+    const filterAcc = [
+      mkAcc('Výrobce', this.BRANDS.map(([b,c])=>({ t:b, c:'('+c+')', on:!!s.brands[b], box:box(!!s.brands[b]),
+        onToggle:()=>{ const br=Object.assign({},s.brands); br[b]=!br[b]; this.setState({brands:br, shown:15}); } })), activeBrandN||''),
+      mkAcc('Dostupnost', [{ t:'Pouze skladem', c:'', on:s.onlyStock, box:box(s.onlyStock), onToggle:()=>this.setState({onlyStock:!s.onlyStock, shown:15}) }], s.onlyStock?'1':''),
+      mkAcc('Průměr brzdy', [['160 mm','(74)'],['200 mm','(112)'],['230 mm','(96)'],['250 mm','(58)']].map(([t,c])=>({ t, c, on:false, box:box(false), onToggle:()=>{} }))),
+      mkAcc('Rozteč kol', [['100×4','(52)'],['112×5','(140)'],['140×5','(66)']].map(([t,c])=>({ t, c, on:false, box:box(false), onToggle:()=>{} }))),
+      mkAcc('Cena', [['do 500 Kč','(680)'],['500–2 000 Kč','(1 114)'],['nad 2 000 Kč','(624)']].map(([t,c])=>({ t, c, on:false, box:box(false), onToggle:()=>{} }))),
+    ];
+
+    const sortMap = { pop:'Nejoblíbenější', cheap:'Od nejlevnějšího', exp:'Od nejdražšího', az:'Podle názvu A–Z' };
+    const sortOpts = Object.keys(sortMap).map(k=>({
+      t:sortMap[k],
+      onPick:()=>this.setState({ sort:k, sortOpen:false }),
+      style:'display:flex;align-items:center;min-height:44px;padding:0 14px;font-size:13.5px;cursor:pointer;font-weight:'+(s.sort===k?'700':'600')+';color:'+(s.sort===k?'#1E5AA8':'#3A424C')+';'+(s.sort===k?'background:#EFF4FB;':''),
+    }));
+
+    const cmpCount = Object.keys(s.compare).length;
+    const pct = Math.min(100, Math.round(visible.length/Math.max(filteredAll.length,1)*100));
+
+    const nq = this.norm(s.searchQ.trim());
+    const sMatches = nq ? this.SEARCH.filter(it=> this.norm(it.name).indexOf(nq)>=0 || it.kw.indexOf(nq)>=0 ) : this.SEARCH.slice(0,4);
+    const thumbCat = 'flex:none;width:40px;height:40px;border-radius:8px;background:#EFF4FB;';
+    const thumbProd = 'flex:none;width:40px;height:40px;border-radius:8px;background:repeating-linear-gradient(45deg,#EEF1F4,#EEF1F4 7px,#E6EAEE 7px,#E6EAEE 14px);';
+    const search = {
+      q:s.searchQ, hasQ:!!s.searchQ,
+      ring: s.searchFocus ? 'inset 0 0 0 2px #1E5AA8' : 'inset 0 0 0 0 transparent',
+      onInput:(e)=>this.setState({ searchQ:e.target.value }),
+      onFocus:()=>this.setState({ searchFocus:true }),
+      onBlur:()=>this.setState({ searchFocus:false }),
+      clear:()=>this.setState({ searchQ:'' }),
+      show: s.searchFocus,
+      heading: nq ? 'Výsledky' : 'Populární dotazy',
+      items: sMatches.map(it=>({ name:it.name, meta:it.meta, thumb: it.cat?thumbCat:thumbProd, onPick:()=>this.setState({ searchQ:it.name, searchFocus:false }) })),
+      noResults: nq && sMatches.length===0,
+    };
+
+    return {
+      showConsultancy: this.props.showConsultancy ?? true,
+      menuOpen:s.menuOpen, toggleMenu:()=>this.setState({menuOpen:!s.menuOpen}),
+      search,
+      menuClosed: !s.menuOpen,
+      mobileNav: [
+        { t:'Přívěsy', style:'font-size:14.5px;font-weight:700;color:#15181C;' },
+        { t:'Náhradní díly', style:'font-size:14.5px;font-weight:700;color:#1E5AA8;' },
+        { t:'Příslušenství', style:'font-size:14.5px;font-weight:700;color:#15181C;' },
+        { t:'Servis', style:'font-size:14.5px;font-weight:700;color:#15181C;' },
+        { t:'Půjčovna', style:'font-size:14.5px;font-weight:700;color:#15181C;' },
+      ],
+      descOpen:s.descOpen, toggleDesc:()=>this.setState({descOpen:!s.descOpen}),
+      descLabel: s.descOpen ? 'Skrýt celý popis' : 'Zobrazit celý popis',
+      inGroups: s.view==='groups', inSubcats: s.view!=='groups',
+      groups, subcats,
+      activeGroupName: ag?ag.name:'', activeGroupCount: ag?ag.count:'',
+      backToGroups:()=>this.setState({ view:'groups', subcat:null, shown:15 }),
+      activeSubcat: s.subcat, clearSubcat:()=>this.setState({ subcat:null, shown:15 }),
+      filterOpen:s.filterOpen, openFilter:()=>this.setState({filterOpen:true}), closeFilter:()=>this.setState({filterOpen:false}),
+      filterCount: filterCount||'',
+      anyFilter: filterCount>0,
+      clearFilters:()=>this.setState({ brands:{}, onlyStock:false, shown:15 }),
+      toggleStock:()=>this.setState({onlyStock:!s.onlyStock, shown:15}),
+      stockBtnStyle:'display:flex;align-items:center;gap:9px;min-height:44px;padding:0 6px;font-size:13px;font-weight:700;cursor:pointer;user-select:none;color:'+(s.onlyStock?'#0B6937;':'#3A424C;'),
+      stockBoxStyle:'flex:none;width:21px;height:21px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;'+(s.onlyStock?'background:#0E7F43;color:#fff;border:1.5px solid #0E7F43;':'background:#fff;color:transparent;border:1.5px solid #C4CAD2;'),
+      stockCheck: s.onlyStock ? '✓' : '',
+      sortOpen:s.sortOpen, toggleSort:()=>this.setState({sortOpen:!s.sortOpen}),
+      sortLabel: sortMap[s.sort], sortOpts,
+      products,
+      resultCount: resultCount.toLocaleString('cs-CZ'),
+      shownCount: visible.length,
+      hasMore: visible.length < filteredAll.length,
+      nextBatch: Math.min(8, filteredAll.length - visible.length),
+      loadMore:()=>this.setState({ shown:s.shown+8 }),
+      progressStyle:'width:'+pct+'%;height:100%;background:#1E5AA8;border-radius:999px;transition:width .3s;',
+      cmpCount: cmpCount||'', cmpCountNum: cmpCount, headerSearch: s.searchQ, onHeaderSearch:(v)=>this.setState({ searchQ:v }), cmpLabel: cmpCount+' '+(cmpCount===1?'produkt':(cmpCount<5?'produkty':'produktů'))+' k porovnání',
+      clearCompare:()=>this.setState({compare:{}}),
+      openCompare:()=>{},
+      filterAcc,
+      footerCols: [
+        { h:'Sortiment', items:['Přívěsy','Náhradní díly','Příslušenství','Akce a slevy'] },
+        { h:'Služby', items:['Servis','Půjčovna','Poradna'] },
+        { h:'O firmě', items:['O nás','Náš příběh','Reference','Kariéra'] },
+        { h:'Zákazník', items:['Obchodní podmínky','Doprava a platba','Reklamace','Podmínky půjčovny','Cookies'] },
+      ],
+      pays:['Apple Pay','Visa','Google Pay','Comgate'],
+      ships:['PPL','DPD','Parcel Shop'],
+    };
+  }
+}
+</script>
+</body>
+</html>

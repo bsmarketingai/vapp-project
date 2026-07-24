@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  body{padding:24px;}
+  @keyframes vapp-led{0%{box-shadow:0 0 0 0 var(--led);}70%{box-shadow:0 0 0 7px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
+  .vapp-led{border-radius:999px;animation:vapp-led 1.8s ease-out infinite;}
+  .ft-link{transition:color .12s;} .ft-link:hover{color:#fff !important;}
+  .ft-dark{transition:background .12s;} .ft-dark:hover{background:rgba(255,255,255,.2) !important;}
+  .ft-social{transition:color .12s,border-color .12s;} .ft-social:hover{color:#fff !important;border-color:#fff !important;}
+</style>
+</helmet>
+<div style="display:flex;flex-direction:column;gap:16px;width:100%;max-width:1560px;">
+  <div style="background:#142F56;color:#fff;border-radius:8px;padding:40px 36px;display:flex;flex-direction:column;gap:32px;">
+    <div style="display:flex;gap:36px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:300px;order:1;display:flex;flex-direction:column;gap:28px;">
+        <div style="display:flex;gap:36px;flex-wrap:wrap;">
+          <sc-for list="{{ footerCols }}" as="col" hint-placeholder-count="4">
+            <div style="display:flex;flex-direction:column;gap:14px;min-width:140px;">
+              <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#84AEDF;">{{ col.title }}</span>
+              <sc-for list="{{ col.links }}" as="l" hint-placeholder-count="4">
+                <span class="ft-link" style="font-size:15px;color:#B4CEEC;cursor:pointer;">{{ l }}</span>
+              </sc-for>
+            </div>
+          </sc-for>
+        </div>
+        <div style="height:1px;background:rgba(255,255,255,.10);"></div>
+        <div style="display:flex;gap:56px;flex-wrap:wrap;">
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#84AEDF;">Platba</span>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <sc-for list="{{ payMethods }}" as="m" hint-placeholder-count="4">
+                <span style="display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 18px;font-size:13px;font-weight:600;color:#B4CEEC;border:1px dashed rgba(180,206,236,.45);border-radius:8px;">{{ m }}</span>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#84AEDF;">Doprava</span>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <sc-for list="{{ shipMethods }}" as="m" hint-placeholder-count="3">
+                <span style="display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 18px;font-size:13px;font-weight:600;color:#B4CEEC;border:1px dashed rgba(180,206,236,.45);border-radius:8px;">{{ m }}</span>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="order:-1;flex:1 1 260px;display:flex;flex-direction:column;gap:12px;min-width:min(260px,100%);background:rgba(255,255,255,.06);border-radius:8px;padding:24px;">
+        <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#84AEDF;">Kontakt</span>
+        <span style="font-size:15px;font-weight:700;color:#fff;">VAPP s.r.o.</span>
+        <span style="font-size:15px;color:#B4CEEC;line-height:1.5;">Popovičky 50, 251 01 Říčany</span>
+        <span style="font-size:15px;color:#B4CEEC;line-height:1.5;">Pobočka: Mladá Boleslav — Židněves</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#fff;text-decoration:underline;cursor:pointer;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>323 605 314</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#fff;text-decoration:underline;cursor:pointer;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-10 6L2 7"></path></svg>obchod@vapp.cz</span>
+        <span style="display:inline-flex;align-items:center;gap:9px;font-size:15px;color:#B4CEEC;"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:9px;height:9px;background:#2EAA6A;flex:none;"></span>Po–Pá 8–16 · právě otevřeno</span>
+        <div style="height:1px;background:rgba(255,255,255,.12);margin:4px 0;"></div>
+        <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#84AEDF;">Všechny kontakty</span>
+        <span class="ft-dark" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;font-size:15px;font-weight:700;color:#fff;background:rgba(255,255,255,.12);border-radius:8px;cursor:pointer;line-height:1.3;text-align:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Obchod, servis, půjčovna…</span>
+        <span style="font-size:13px;color:#84AEDF;margin-top:2px;">IČO 12345678 · DIČ CZ12345678</span>
+        <div style="height:1px;background:rgba(255,255,255,.12);margin:4px 0;"></div>
+        <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#84AEDF;">Sledujte nás</span>
+        <div style="display:flex;gap:12px;">
+          <span title="Facebook" class="ft-social" style="width:40px;height:40px;border-radius:999px;border:1px solid rgba(180,206,236,.45);display:flex;align-items:center;justify-content:center;color:#B4CEEC;cursor:pointer;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></span>
+          <span title="Instagram" class="ft-social" style="width:40px;height:40px;border-radius:999px;border:1px solid rgba(180,206,236,.45);display:flex;align-items:center;justify-content:center;color:#B4CEEC;cursor:pointer;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg></span>
+          <span title="YouTube" class="ft-social" style="width:40px;height:40px;border-radius:999px;border:1px solid rgba(180,206,236,.45);display:flex;align-items:center;justify-content:center;color:#B4CEEC;cursor:pointer;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.5 6.9a2.8 2.8 0 0 0-1.95-2C18.8 4.5 12 4.5 12 4.5s-6.8 0-8.55.4a2.8 2.8 0 0 0-1.95 2A29 29 0 0 0 1.5 12a29 29 0 0 0 .4 5.1 2.8 2.8 0 0 0 1.95 2c1.75.4 8.55.4 8.55.4s6.8 0 8.55-.4a2.8 2.8 0 0 0 1.95-2 29 29 0 0 0 .4-5.1 29 29 0 0 0-.4-5.1z"></path><path d="M10 15.5v-7l6 3.5z"></path></svg></span>
+        </div>
+      </div>
+    </div>
+    <div style="height:1px;background:rgba(255,255,255,.10);"></div>
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+      <span style="font-size:14px;color:#84AEDF;">© 2026 VAPP s.r.o. · <span style="cursor:pointer;">Ochrana osobních údajů</span> · <span style="text-decoration:underline;cursor:pointer;">Nastavení cookies</span></span>
+    </div>
+  </div>
+  <sc-if value="{{ showNote }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;flex-direction:column;gap:5px;padding:2px 4px;">
+      <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> pata webu, max. šíře 1560. Podklad #142F56, nadpisy sloupců blue.300, odkazy blue.200, kontaktní blok jako první na mobilu. Ikony 24×24, sociální kolečka 40×40.</div>
+      <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nepoužívat brand červenou v UI patičky; zelená jen u LED.</div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:540},&quot;bare&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  renderVals(){
+    return {
+      showNote: !this.props.bare,
+      footerCols: [
+        { title:'Sortiment', links:['Přívěsy','Náhradní díly','Příslušenství','Akce a slevy'] },
+        { title:'Služby', links:['Servis','Půjčovna','Poradna'] },
+        { title:'O firmě', links:['O nás','Náš příběh','Reference','Kariéra'] },
+        { title:'Zákazník', links:['Obchodní podmínky','Doprava a platba','Reklamace','Podmínky půjčovny','Cookies'] },
+      ],
+      payMethods: ['Apple Pay','Visa','Google Pay','Comgate'],
+      shipMethods: ['PPL','DPD','Parcel Shop'],
+    };
+  }
+}
+</script>
+</body>
+</html>

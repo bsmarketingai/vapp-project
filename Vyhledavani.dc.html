@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  body{padding:24px;}
+  .s-go{transition:background .12s;} .s-go:hover{background:#1A4A8A !important;}
+  .s-row{transition:background .12s;} .s-row:hover{background:#F2F4F7 !important;}
+</style>
+</helmet>
+<div style="{{ rootStyle }}">
+  <div style="{{ cardStyle }}">
+    <div style="position:relative;{{ fieldMaxW }}">
+      <div style="display:flex;align-items:center;height:{{ fieldH }}px;border-radius:8px;overflow:hidden;background:#F2F4F7;box-shadow:{{ searchRing }};transition:box-shadow .15s;">
+        <span style="width:{{ fieldH }}px;display:flex;align-items:center;justify-content:center;color:#8A919C;flex:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.35-4.35"></path></svg></span>
+        <input value="{{ q }}" onInput="{{ onSearch }}" onFocus="{{ onFocus }}" onBlur="{{ onBlur }}" placeholder="{{ placeholder }}" style="flex:1;min-width:0;border:none;outline:none;background:transparent;font-size:15px;font-family:inherit;color:#15181C;padding:0 8px;">
+        <sc-if value="{{ hasQ }}" hint-placeholder-val=""><span onMouseDown="{{ clearSearch }}" style="width:44px;display:flex;align-items:center;justify-content:center;color:#8A919C;cursor:pointer;flex:none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></span></sc-if>
+        <span class="s-go" style="width:56px;height:100%;background:#1E5AA8;display:flex;align-items:center;justify-content:center;color:#fff;flex:none;cursor:pointer;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.35-4.35"></path></svg></span>
+      </div>
+      <sc-if value="{{ showSuggest }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;top:calc(100% + 8px);left:0;right:0;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);overflow:hidden;z-index:20;">
+          <div style="padding:10px 16px 6px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#8A919C;">{{ suggestHeading }}</div>
+          <sc-for list="{{ suggestions }}" as="sg" hint-placeholder-count="4">
+            <div onMouseDown="{{ sg.onPick }}" class="s-row" style="display:flex;align-items:center;gap:12px;min-height:52px;padding:6px 16px;cursor:pointer;">
+              <span style="{{ sg.thumb }}"></span>
+              <span style="flex:1;min-width:0;">
+                <span style="display:block;font-size:15px;font-weight:600;color:#15181C;line-height:1.3;">{{ sg.name }}</span>
+                <span style="display:block;font-size:13px;color:#8A919C;">{{ sg.meta }}</span>
+              </span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B4CEEC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg>
+            </div>
+          </sc-for>
+          <sc-if value="{{ noResults }}" hint-placeholder-val=""><div style="padding:16px;font-size:14px;color:#8A919C;">Nic nenalezeno — zkuste jiný výraz nebo objednací číslo.</div></sc-if>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+  <sc-if value="{{ showNote }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;flex-direction:column;gap:5px;padding:2px 4px;">
+      <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> fulltext s okamžitým našeptáváním kategorií a produktů. Pole 48 px, dropdown overlay se stínem, hit-areas ≥ 44 px. Zkuste psát „brzd", „kolo", „led".</div>
+      <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nezobrazovat dropdown natrvalo na webu — otevírá se po fokusu; bez výsledku ukázat prázdný stav.</div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:620,&quot;height&quot;:480},&quot;value&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;bare&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;height&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:48,&quot;tsType&quot;:&quot;number&quot;},&quot;placeholder&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { q:'', focus:false };
+  SEARCH = [
+    { name:'Nápravy a brzdy', meta:'Kategorie · 612 produktů', cat:true, kw:'brzda brzdy naprava napravy naprav' },
+    { name:'Kola a pneumatiky', meta:'Kategorie · 296 produktů', cat:true, kw:'kolo kola pneu pneumatika disk' },
+    { name:'Elektro a osvětlení', meta:'Kategorie · 474 produktů', cat:true, kw:'led elektro svetlo osvetleni zarovka kabel' },
+    { name:'Nájezdová brzda KNOTT KF13', meta:'Obj. č. 901301 · Skladem', kw:'brzda knott najezdova' },
+    { name:'Brzdové čelisti KNOTT 200×50', meta:'Obj. č. 302005 · Skladem', kw:'brzda celisti knott' },
+    { name:'Opěrné kolečko ⌀48 mm', meta:'Obj. č. 404815 · Skladem', kw:'kolo kolecko operne' },
+    { name:'Pneumatika 165 R13 C Kenda', meta:'Obj. č. 401653 · Skladem', kw:'pneu pneumatika kolo kenda' },
+    { name:'Svítilna Fristom FT-001 B LED', meta:'Obj. č. 501224 · Skladem', kw:'led svetlo svitilna fristom' },
+    { name:'Žárovka P21/5W 12 V BAY15d', meta:'Obj. č. 502155 · Skladem', kw:'led zarovka svetlo' },
+  ];
+  norm(s){ return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+  renderVals(){
+    const P = this.props, s = this.state;
+    const bare = !!P.bare;
+    const controlled = P.value !== undefined && typeof P.onChange === 'function';
+    const q = controlled ? (P.value || '') : s.q;
+    const setQ = (v)=> controlled ? P.onChange(v) : this.setState({ q:v });
+    const nq = this.norm(String(q).trim());
+    let matches = nq ? this.SEARCH.filter(it=> this.norm(it.name).indexOf(nq)>=0 || it.kw.indexOf(nq)>=0 ) : this.SEARCH.slice(0,4);
+    const thumbCat = 'flex:none;width:40px;height:40px;border-radius:8px;background:#EFF4FB;';
+    const thumbProd = 'flex:none;width:40px;height:40px;border-radius:8px;background:repeating-linear-gradient(45deg,#EEF1F4,#EEF1F4 7px,#E6EAEE 7px,#E6EAEE 14px);';
+    const suggestions = matches.map(it=>({ name:it.name, meta:it.meta, thumb: it.cat?thumbCat:thumbProd, onPick:()=>{ setQ(it.name); this.setState({ focus:false }); } }));
+    return {
+      rootStyle: bare ? 'position:relative;' : 'display:flex;flex-direction:column;gap:16px;',
+      cardStyle: bare ? '' : 'background:#fff;border-radius:8px;padding:28px;min-height:420px;',
+      fieldMaxW: bare ? '' : 'max-width:560px;',
+      fieldH: P.height || (bare ? 44 : 48),
+      placeholder: P.placeholder || 'Hledat díly podle názvu, čísla nebo modelu…',
+      showNote: !bare,
+      q, hasQ: !!q,
+      searchRing: s.focus ? 'inset 0 0 0 2px #1E5AA8' : 'inset 0 0 0 0 transparent',
+      onSearch:(e)=>setQ(e.target.value),
+      onFocus:()=>this.setState({ focus:true }),
+      onBlur:()=>this.setState({ focus:false }),
+      clearSearch:()=>setQ(''),
+      showSuggest: s.focus,
+      suggestHeading: nq ? 'Výsledky' : 'Populární dotazy',
+      suggestions,
+      noResults: nq && matches.length===0,
+    };
+  }
+}
+</script>
+</body>
+</html>

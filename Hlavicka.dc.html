@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  @keyframes vapp-led{0%{box-shadow:0 0 0 0 var(--led);}70%{box-shadow:0 0 0 7px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
+  .vapp-led{border-radius:999px;animation:vapp-led 1.8s ease-out infinite;}
+  .hd-top{transition:color .12s;} .hd-top:hover{color:#fff !important;}
+  .hd-tab{transition:color .12s;} .hd-tab:hover{color:#1E5AA8 !important;}
+  .hd-support{transition:background .12s;} .hd-support:hover{background:#D8E6F6 !important;}
+  .hd-sale{transition:background .12s;} .hd-sale:hover{background:#A21B22 !important;}
+  @media (max-width:900px){ .hd-dt{display:none !important;} }
+  @media (min-width:901px){ .hd-mb{display:none !important;} }
+</style>
+</helmet>
+<div style="background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;">
+  <div style="background:#142F56;color:#fff;">
+    <div style="max-width:1560px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 16px;">
+      <span style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;"><span class="vapp-led" style="--led:rgba(46,170,106,.6);width:8px;height:8px;background:#2EAA6A;flex:none;"></span>Po–Pá 8–16 · <span style="color:#97DBB4;font-weight:700;">právě otevřeno</span></span>
+      <div class="hd-dt" style="display:flex;align-items:center;gap:16px;font-size:13px;color:#B4CEEC;">
+        <span class="hd-top" style="cursor:pointer;">Doprava a platba</span>
+        <span class="hd-top" style="cursor:pointer;">Obchodní podmínky</span>
+        <span class="hd-top" style="cursor:pointer;">O nás</span>
+        <span class="hd-top" style="cursor:pointer;">Kontakty</span>
+        <span style="display:inline-flex;align-items:center;gap:7px;color:#fff;font-weight:700;text-decoration:underline;cursor:pointer;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>323 605 314</span>
+      </div>
+      <span class="hd-mb" style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;text-decoration:underline;cursor:pointer;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>323 605 314</span>
+    </div>
+  </div>
+
+  <div style="background:#fff;border-bottom:1px solid #F2F4F7;">
+    <div style="max-width:1560px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:12px 16px;flex-wrap:wrap;">
+      <img src="./vapp-logo.svg" alt="VAPP" style="height:30px;flex:none;">
+      <div class="hd-dt" style="flex:1;min-width:200px;">
+        <dc-import name="Vyhledavani" bare="true" height="44" value="{{ searchValue }}" on-change="{{ onSearchChange }}" placeholder="Hledat díly podle názvu, čísla nebo modelu…" hint-size="100%,44px"></dc-import>
+      </div>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:14px;">
+        <div class="hd-dt" style="display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;"><div style="width:32px;height:32px;border:1.5px solid #84AEDF;border-radius:6px;"></div><span style="font-size:13px;color:#5A626C;font-weight:600;">Přihlásit</span></div>
+        <div onClick="{{ onCompare }}" style="position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;">
+          <div style="width:32px;height:32px;border:1.5px solid #84AEDF;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#1E5AA8;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 4 7l4 4"></path><path d="M4 7h16"></path><path d="m16 21 4-4-4-4"></path><path d="M20 17H4"></path></svg></div>
+          <span style="font-size:13px;color:#5A626C;font-weight:600;">Porovnat</span>
+          <sc-if value="{{ showCompare }}" hint-placeholder-val=""><span style="position:absolute;top:-6px;right:-8px;min-width:20px;height:20px;border-radius:999px;background:#C5232B;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;">{{ compareCount }}</span></sc-if>
+        </div>
+        <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;">
+          <div style="width:32px;height:32px;border:1.5px solid #84AEDF;border-radius:6px;display:flex;align-items:center;justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1E5AA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1.5"/><circle cx="19" cy="21" r="1.5"/><path d="M2 3h3l2.6 12.5a1 1 0 0 0 1 .8h9.7a1 1 0 0 0 1-.8L21.5 7H6"/></svg></div>
+          <span style="font-size:13px;color:#5A626C;font-weight:600;">Košík</span>
+          <sc-if value="{{ showCart }}" hint-placeholder-val=""><span style="position:absolute;top:-6px;right:-8px;min-width:20px;height:20px;border-radius:999px;background:#C5232B;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;">{{ cartCount }}</span></sc-if>
+        </div>
+        <div class="hd-mb" onClick="{{ toggleMenu }}" style="width:40px;height:40px;border:1.5px solid #84AEDF;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#1E5AA8;cursor:pointer;"><sc-if value="{{ menuOpen }}" hint-placeholder-val=""><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></sc-if><sc-if value="{{ menuClosed }}" hint-placeholder-val="{{ true }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"></path></svg></sc-if></div>
+      </div>
+      <div class="hd-mb" style="flex-basis:100%;">
+        <dc-import name="Vyhledavani" bare="true" height="42" value="{{ searchValue }}" on-change="{{ onSearchChange }}" placeholder="Hledat díly, přívěsy…" hint-size="100%,42px"></dc-import>
+      </div>
+    </div>
+    <div class="hd-dt" style="border-top:1px solid #F2F4F7;">
+      <div style="max-width:1560px;margin:0 auto;display:flex;align-items:center;gap:26px;padding:0 16px;">
+        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+          <span class="{{ t.cls }}" style="{{ t.style }}">{{ t.label }}<sc-if value="{{ t.chevron }}" hint-placeholder-val=""><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:2px;"><path d="m6 9 6 6 6-6"></path></svg></sc-if></span>
+        </sc-for>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:12px;padding:7px 0;">
+          <span class="hd-support" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;font-size:15px;font-weight:700;color:#1E5AA8;background:#EFF4FB;border-radius:8px;cursor:pointer;">Podpora</span>
+          <span class="hd-sale" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#fff;background:#C5232B;border-radius:8px;cursor:pointer;">Akce a slevy</span>
+        </div>
+      </div>
+    </div>
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="">
+      <div class="hd-mb" style="border-top:1px solid #F2F4F7;background:#fff;">
+        <div style="padding:4px 16px;">
+          <sc-for list="{{ mobileNav }}" as="m" hint-placeholder-count="5">
+            <div style="display:flex;align-items:center;justify-content:space-between;min-height:46px;border-bottom:1px solid #F2F4F7;"><span style="{{ m.style }}">{{ m.t }}</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#84AEDF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></div>
+          </sc-for>
+        </div>
+        <div style="padding:12px 16px 16px;display:flex;flex-direction:column;gap:8px;">
+          <span style="display:flex;align-items:center;justify-content:center;min-height:44px;font-size:13.5px;font-weight:700;color:#fff;background:#C5232B;border-radius:8px;">Akce a slevy</span>
+          <span style="display:flex;align-items:center;justify-content:center;min-height:44px;font-size:13.5px;font-weight:700;color:#5A626C;background:#F2F4F7;border-radius:8px;">Poradna</span>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:220},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;cartCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;tsType&quot;:&quot;number&quot;},&quot;compareCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;tsType&quot;:&quot;number&quot;},&quot;tabs&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;searchValue&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;,&quot;default&quot;:null},&quot;onSearchChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCompare&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null}}">
+class Component extends DCLogic {
+  state = { menuOpen:false };
+  renderVals(){
+    const P = this.props;
+    const active = P.active || 'Náhradní díly';
+    const labels = P.tabs || ['Přívěsy','Náhradní díly','Příslušenství','Servis','Půjčovna'];
+    const chevSet = { 'Přívěsy':true, 'Náhradní díly':true, 'Příslušenství':true };
+    const tabs = labels.map(label=>{
+      const on = label === active;
+      return { label, chevron: !!chevSet[label], cls: on ? '' : 'hd-tab',
+        style:'display:flex;align-items:center;font-size:18px;font-weight:700;padding:13px 2px;cursor:pointer;border-bottom:3px solid '+(on?'#1E5AA8':'transparent')+';color:'+(on?'#1E5AA8':'#3A424C')+';' };
+    });
+    const cartCount = P.cartCount || 0;
+    const compareCount = P.compareCount || 0;
+    return {
+      searchValue: P.searchValue, onSearchChange: P.onSearchChange,
+      onCompare: P.onCompare || (()=>{}),
+      cartCount, compareCount, showCart: cartCount>0, showCompare: compareCount>0,
+      tabs,
+      menuOpen: this.state.menuOpen, menuClosed: !this.state.menuOpen,
+      toggleMenu:()=>this.setState({ menuOpen:!this.state.menuOpen }),
+      mobileNav: labels.map(t=>({ t, style:'font-size:14.5px;font-weight:700;color:'+(t===active?'#1E5AA8':'#15181C')+';' })),
+    };
+  }
+}
+</script>
+</body>
+</html>
