@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
+  .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
+  @media (max-width:900px){ .vp-in{padding-left:16px;padding-right:16px;} }
+  .chip{transition:background .12s,box-shadow .12s;cursor:pointer;}
+  .chip-off:hover{box-shadow:inset 0 0 0 1.5px #84AEDF;}
+  .a-card{transition:box-shadow .15s;} .a-card:hover{box-shadow:0 6px 20px rgba(20,47,86,.10);}
+</style>
+</helmet>
+<div data-screen-label="Audit komponent VAPP" style="width:100%;min-height:100vh;background:#F7F9FB;">
+
+  <div style="background:#142F56;color:#fff;">
+    <div class="vp-in" style="padding-top:40px;padding-bottom:40px;display:flex;flex-direction:column;gap:16px;">
+      <h1 style="margin:0;font-size:36px;font-weight:700;letter-spacing:-0.02em;line-height:1.15;">Audit komponent VAPP</h1>
+      <p style="margin:0;font-size:18px;line-height:1.6;color:#B4CEEC;max-width:900px;">Stav k 24. 7. 2026 — záznam vychází ze zdrojového kódu komponent v repozitáři, ne z vyrenderovaného vzhledu.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;">
+        <span style="display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#fff;background:rgba(255,255,255,.10);border-radius:999px;padding:8px 16px;"><span style="width:9px;height:9px;border-radius:999px;background:#C5232B;"></span>5 × problém</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#fff;background:rgba(255,255,255,.10);border-radius:999px;padding:8px 16px;"><span style="width:9px;height:9px;border-radius:999px;background:#9AA1AB;"></span>7 × drobnosti</span>
+        <span style="display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#fff;background:rgba(255,255,255,.10);border-radius:999px;padding:8px 16px;"><span style="width:9px;height:9px;border-radius:999px;background:#2EAA6A;"></span>2 × OK</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="vp-in" style="padding-top:24px;padding-bottom:8px;display:flex;flex-direction:column;gap:12px;">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+      <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#8A919C;margin-right:6px;">Stav</span>
+      <sc-for list="{{ statusChips }}" as="c" hint-placeholder-count="4"><span onClick="{{ c.onClick }}" class="{{ c.cls }}" style="{{ c.style }}">{{ c.label }}</span></sc-for>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+      <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#8A919C;margin-right:6px;">Typ</span>
+      <sc-for list="{{ typeChips }}" as="c" hint-placeholder-count="6"><span onClick="{{ c.onClick }}" class="{{ c.cls }}" style="{{ c.style }}">{{ c.label }}</span></sc-for>
+    </div>
+  </div>
+
+  <div class="vp-in" style="padding-top:16px;padding-bottom:24px;">
+    <h2 style="margin:0 0 4px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">1 · Komponenty</h2>
+    <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;">Jedna karta na komponentu; každý nález má typový štítek a text.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,440px),1fr));gap:16px;">
+      <sc-for list="{{ cards }}" as="k" hint-placeholder-count="6">
+        <div class="a-card" style="background:#fff;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+            <span style="font-size:18px;font-weight:700;line-height:1.35;">{{ k.name }}</span>
+            <span style="{{ k.statusStyle }}">{{ k.statusLabel }}</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <sc-for list="{{ k.findings }}" as="f" hint-placeholder-count="4">
+              <div style="display:flex;align-items:flex-start;gap:10px;">
+                <span style="{{ f.tagStyle }}">{{ f.type }}</span>
+                <span style="font-size:14px;line-height:1.5;color:#3A424C;">{{ f.text }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <sc-if value="{{ noResults }}" hint-placeholder-val=""><p style="margin:8px 0 0;font-size:15px;color:#8A919C;">Žádná komponenta neodpovídá zvolenému filtru.</p></sc-if>
+  </div>
+
+  <div class="vp-in" style="padding-top:16px;padding-bottom:24px;">
+    <h2 style="margin:0 0 12px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">2 · Co řešit první</h2>
+    <sc-if value="{{ hasPriorities }}" hint-placeholder-val="{{ true }}"><div style="display:flex;flex-direction:column;gap:12px;">
+      <sc-for list="{{ priorities }}" as="p" hint-placeholder-count="4">
+        <div style="background:#fff;border-radius:8px;padding:20px 24px;display:flex;gap:16px;align-items:flex-start;">
+          <span style="flex:none;width:32px;height:32px;border-radius:999px;background:#EFF4FB;color:#1E5AA8;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;">{{ p.n }}</span>
+          <div><div style="font-size:16px;font-weight:700;line-height:1.35;">{{ p.title }}</div><div style="font-size:14px;line-height:1.55;color:#5A626C;margin-top:4px;">{{ p.why }}</div></div>
+        </div>
+      </sc-for>
+    </div></sc-if>
+    <sc-if value="{{ empty }}" hint-placeholder-val=""><p style="margin:0;font-size:15px;color:#8A919C;">Data se doplní.</p></sc-if>
+  </div>
+
+  <div class="vp-in" style="padding-top:16px;padding-bottom:24px;">
+    <h2 style="margin:0 0 12px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">3 · Co v systému chybí úplně</h2>
+    <sc-if value="{{ empty }}" hint-placeholder-val=""><p style="margin:0;font-size:15px;color:#8A919C;">Data se doplní (blokující / ostatní).</p></sc-if>
+    <sc-if value="{{ hasMissing }}" hint-placeholder-val="">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px;">
+        <div style="background:#fff;border-radius:8px;padding:24px;">
+          <div style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#C5232B;background:#FDF1F1;border-radius:6px;padding:5px 10px;margin-bottom:14px;">Blokující</div>
+          <div style="display:flex;flex-direction:column;gap:8px;"><sc-for list="{{ missingBlocking }}" as="m" hint-placeholder-count="4"><span style="font-size:14px;line-height:1.5;color:#3A424C;">{{ m }}</span></sc-for></div>
+        </div>
+        <div style="background:#fff;border-radius:8px;padding:24px;">
+          <div style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#5A626C;background:#F2F4F7;border-radius:6px;padding:5px 10px;margin-bottom:14px;">Ostatní</div>
+          <div style="display:flex;flex-direction:column;gap:8px;"><sc-for list="{{ missingOther }}" as="m" hint-placeholder-count="6"><span style="font-size:14px;line-height:1.5;color:#3A424C;">{{ m }}</span></sc-for></div>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+
+  <div class="vp-in" style="padding-top:16px;padding-bottom:80px;">
+    <h2 style="margin:0 0 12px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">4 · Přehlédnuté systémové věci</h2>
+    <sc-if value="{{ empty }}" hint-placeholder-val=""><p style="margin:0;font-size:15px;color:#8A919C;">Data se doplní (5 bodů).</p></sc-if>
+    <sc-if value="{{ hasOverlooked }}" hint-placeholder-val=""><div style="display:flex;flex-direction:column;gap:12px;">
+      <sc-for list="{{ overlooked }}" as="o" hint-placeholder-count="5">
+        <div style="background:#fff;border-radius:8px;padding:20px 24px;display:flex;gap:16px;align-items:flex-start;">
+          <span style="flex:none;width:32px;height:32px;border-radius:999px;background:#F2F4F7;color:#5A626C;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;">{{ o.n }}</span>
+          <span style="font-size:14px;line-height:1.6;color:#3A424C;">{{ o.text }}</span>
+        </div>
+      </sc-for>
+    </div></sc-if>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { statusF:'all', typeF:'all' };
+  renderVals(){
+    const s = this.state;
+    const chipOn = 'font-size:14px;font-weight:700;border-radius:999px;padding:8px 16px;background:#1E5AA8;color:#fff;';
+    const chipOff = 'font-size:14px;font-weight:700;border-radius:999px;padding:8px 16px;background:#F2F4F7;color:#5A626C;';
+    const mkChips = (defs, cur, setter)=> defs.map(([key,label])=>{
+      const on = cur===key;
+      return { label, cls: on?'chip':'chip chip-off', style: on?chipOn:chipOff, onClick:()=>setter(key) };
+    });
+    const statusChips = mkChips([['all','Vše'],['problem','Problém'],['minor','Drobnosti'],['ok','OK']], s.statusF, (k)=>this.setState({statusF:k}));
+    const typeChips = mkChips([['all','Vše'],['stavy','Stavy'],['tokeny','Tokeny'],['props','Props'],['duplicita','Duplicita'],['varianty','Varianty']], s.typeF, (k)=>this.setState({typeF:k}));
+
+    const statusMeta = {
+      problem:{label:'Problém', style:'flex:none;font-size:13px;font-weight:700;border-radius:6px;padding:5px 10px;color:#C5232B;background:#FDF1F1;'},
+      minor:{label:'Drobnosti', style:'flex:none;font-size:13px;font-weight:700;border-radius:6px;padding:5px 10px;color:#5A626C;background:#F2F4F7;'},
+      ok:{label:'OK', style:'flex:none;font-size:13px;font-weight:700;border-radius:6px;padding:5px 10px;color:#0B6937;background:#E9F8EF;'},
+    };
+    const tagStyle = 'flex:none;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;border-radius:6px;padding:3px 8px;color:#5A626C;background:#F2F4F7;white-space:nowrap;';
+    const typeLabel = { stavy:'Stavy', tokeny:'Tokeny', props:'Props', duplicita:'Duplicita', varianty:'Varianty' };
+
+    const raw = [
+      { name:'TLACITKO', status:'minor', findings:[
+        ['stavy','Jediná komponenta s kompletní sadou hover/active/focus-visible/disabled.'],
+        ['stavy','Prvek je <span> bez tabindex — focus-visible se nikdy nespustí.'],
+        ['tokeny','Galerie kreslí padding 22 px, logika 20 px — rozjezd uvnitř komponenty.'],
+        ['tokeny','Paddingy 14 / 20 / 26 px mimo 4px grid.'],
+        ['props','Chybí onClick, plná šířka, loading stav.'],
+        ['varianty','Varianty ghost a text nejsou v CLAUDE.md — systém umí víc než pravidla.'],
+      ]},
+      { name:'KVANTIFIKATOR', status:'problem', findings:[
+        ['stavy','Nula stavů — žádný hover, active, focus ani disabled.'],
+        ['stavy','Mínus při množství 1 tiše nic nedělá, vizuálně beze změny.'],
+        ['varianty','Chybí strop podle skladové zásoby.'],
+        ['props','Nemá onChange — stránka hodnotu nepřečte, komponenta je slepá.'],
+        ['tokeny','Standard má min-width 34 px, CLAUDE.md říká 28 px.'],
+        ['duplicita','ProduktovaKarta si kvantifikátor kreslí lokálně místo importu.'],
+      ]},
+      { name:'FORMULAROVEPRVKY', status:'problem', findings:[
+        ['props','Není to komponenta — nemá single režim ani jediný prop, importovat na stránku ji nelze. Je to dokumentační galerie.'],
+        ['tokeny','Focus je 0 0 0 2px (vnější), CLAUDE.md i DS definují inset.'],
+        ['varianty','Chybí label, chybový stav a hláška, helper text, povinné pole, radio, skutečný select (dnes nefunkční <span>), hover inputu.'],
+        ['duplicita','Checkbox 21×21, ProduktovaKarta má 20×20 s radiusem 5 — dvě různé definice téhož prvku.'],
+      ]},
+      { name:'BADGE', status:'minor', findings:[
+        ['stavy','Interaktivní stavy nepotřebuje.'],
+        ['varianty','Varianta „Novinka“ (modrá) není v CLAUDE.md.'],
+        ['tokeny','Padding 5 / 10 px mimo grid.'],
+        ['duplicita','ProduktovaKarta kreslí badge lokálně s paddingem 4 / 9 px.'],
+      ]},
+      { name:'SKLADOVOST', status:'ok', findings:[
+        ['stavy','Interaktivní stavy nepotřebuje, tři stavy sedí s tokeny.'],
+        ['tokeny','Gap 7 px mimo grid.'],
+        ['varianty','Chybí varianta s dodací lhůtou („Do 3 dnů“, „U dodavatele“).'],
+        ['duplicita','ProduktovaKarta si skladovost kreslí sama.'],
+      ]},
+      { name:'CHIP', status:'minor', findings:[
+        ['stavy','Aktivní filtrační chip nemá hover; nikdo nemá focus-visible ani disabled.'],
+        ['tokeny','Značkový chip má linku #D5DAE0, border.control je #C4CAD2.'],
+        ['tokeny','Padding 9 / 16 px mimo grid.'],
+        ['props','Bez onClick a onRemove — nedá se napojit na filtr.'],
+        ['varianty','Chybí chip „Zrušit vše“ a chování přetékající řady.'],
+      ]},
+      { name:'VYHLEDAVANI', status:'minor', findings:[
+        ['stavy','Focus ring i hover řádků v pořádku; chybí klávesová navigace ve výsledcích (šipky, Enter, Esc) a focus-visible na tlačítku lupy.'],
+        ['tokeny','Off-token hexy #EEF1F4 a #E6EAEE v placeholderu náhledu.'],
+        ['tokeny','Pole má radius 8, input token je 6. Výška se liší podle místa (48/44/42).'],
+        ['tokeny','Overline má letter-spacing .05em místo .06em.'],
+        ['props','Katalog našeptávače je natvrdo uvnitř komponenty — stránka nemůže dodat vlastní data.'],
+      ]},
+      { name:'KATEGORICKADLAZDICE', status:'minor', findings:[
+        ['stavy','Hover ano, focus-visible a active ne.'],
+        ['props','Ikona je natvrdo — všechny dlaždice mají stejný terčík, chybí icon prop.'],
+        ['duplicita','„Zobrazit vše“ je lokálně nakreslené tlačítko (44 / fs 14 / pad 18), neodpovídá žádné velikosti z Tlacitko.'],
+        ['tokeny','Padding 18 px, gapy 6 a 13 px mimo grid.'],
+      ]},
+      { name:'HLAVICKA', status:'problem', findings:[
+        ['stavy','Full-bleed vzorec (vp-in) je hotový — topbar i hlavní pruh.'],
+        ['props','Záložky ani logo nemají handler — navigaci nelze napojit.'],
+        ['varianty','Chevron u záložek slibuje rozbalovací menu, které neexistuje.'],
+        ['varianty','Chybí sticky varianta.'],
+        ['stavy','Bez focus-visible. Ikonové boxy 32×32 jsou pod minimem 44 px.'],
+        ['tokeny','Rám ikon 1.5px #84AEDF mimo tokeny; #97DBB4 jako text na tmavém nemá sémantický token a má slabý kontrast.'],
+        ['tokeny','font-size 13.5 a 14.5 px mimo škálu; gapy 26 / 13 / 7 / 3 px mimo grid.'],
+        ['duplicita','LED i obě tlačítka (Podpora, Akce a slevy) nakreslené lokálně místo importu LedIndikator a Tlacitko.'],
+        ['varianty','„Přihlásit“ má prázdný box bez ikony.'],
+      ]},
+      { name:'BREADCRUMB', status:'problem', findings:[
+        ['props','Nemá bare — vždy vykreslí bílou kartu a DS poznámku. Na stránce se dá použít jen s výjimkou.'],
+        ['props','Položky nemají handlery.'],
+        ['tokeny','Poslední úroveň #173C70 bez tokenu.'],
+        ['varianty','Bez zkracování dlouhých cest a bez mobilní varianty „zpět“.'],
+      ]},
+      { name:'PATICKA', status:'minor', findings:[
+        ['stavy','Full-bleed, bare i hover v pořádku. Bez focus-visible.'],
+        ['props','Obsah (adresy, IČO, telefon, sloupce odkazů) je natvrdo v komponentě — porušuje konvenci „obsah patří stránce“.'],
+        ['tokeny','Překryvné barvy rgba(255,255,255,.06/.10/.12/.2) a rgba(180,206,236,.45) nemají tokeny.'],
+        ['duplicita','LED nakreslený lokálně.'],
+        ['varianty','Loga plateb a dopravců jsou dashed placeholdery; chybí newsletter.'],
+      ]},
+      { name:'PORADENSKYBLOK', status:'minor', findings:[
+        ['stavy','Varianty standard a compact v pořádku. Bez focus-visible.'],
+        ['props','Telefon a texty natvrdo, bez props.'],
+        ['duplicita','Tlačítka nakreslená lokálně — přidávají do systému další dvě velikosti (44 / pad 18 / fs 14 a 42 / pad 16 / fs 13).'],
+        ['duplicita','LED nakreslený lokálně.'],
+      ]},
+      { name:'LEDINDIKATOR', status:'ok', findings:[
+        ['stavy','Stavy open a closed, onDark, velikost i label v pořádku.'],
+        ['duplicita','Tři komponenty (Hlavicka, Paticka, PoradenskyBlok) ji neimportují a kopírují si keyframes — tečka je pokaždé jinak velká (8 / 9 / 11 px).'],
+        ['varianty','Chybí respekt k prefers-reduced-motion.'],
+        ['props','PlaygroundVAPP ji jako jedinou z 14 neimportuje.'],
+      ]},
+      { name:'PRODUKTOVAKARTA', status:'problem', findings:[
+        ['tokeny','font-size 13.5 px na dvou místech — pod minimem 13 px i mimo škálu.'],
+        ['tokeny','Checkbox „Porovnat“ má radius 5, který CLAUDE.md výslovně ruší, a rozměr 20×20 proti 21×21 ve FormularovePrvky.'],
+        ['tokeny','Tlačítko Koupit má 42 px — mimo škálu 36 / 44 / 52.'],
+        ['duplicita','Badge, skladovost i kvantifikátor nakreslené lokálně místo importu.'],
+        ['varianty','Chybí varianta „není skladem“ — Koupit zůstává zeleně aktivní.'],
+        ['varianty','Chybí varianta karty přívěsu s parametry, kterou CLAUDE.md §8 předpokládá.'],
+        ['props','Bez onClick na detail, přestože celá karta má cursor: pointer.'],
+        ['stavy','Bez focus-visible. V kódu zbytky dot1 a dot2 (display:none).'],
+      ]},
+    ];
+
+    const cards = raw
+      .filter(c=> s.statusF==='all' || c.status===s.statusF)
+      .map(c=>({
+        name:c.name,
+        statusLabel:statusMeta[c.status].label,
+        statusStyle:statusMeta[c.status].style,
+        findings: c.findings.filter(([t])=> s.typeF==='all' || t===s.typeF).map(([t,text])=>({ type:typeLabel[t]||t, tagStyle, text })),
+      }))
+      .filter(c=> c.findings.length>0);
+    const noResults = cards.length===0;
+
+    const priorities = [
+      { n:1, title:'Tlacitko jako kanonický zdroj.', why:'Šest míst si dnes kreslí vlastní tlačítko a každé přidalo novou velikost (42, 44/pad18, 44/pad20, 44/pad22) — dokud tlačítko nemá jedno místo, každá další stránka vymyslí sedmou.' },
+      { n:2, title:'ProduktovaKarta a její tři vnitřní duplikáty (Badge, Skladovost, Kvantifikator).', why:'Karta je na každé stránce a je největším zdrojem rozjezdu; výměna za importy zároveň donutí ty tři komponenty dostat props a stavy.' },
+      { n:3, title:'FormularovePrvky rozdělit na Input, Checkbox a Select s reálnými props.', why:'Dokud je to galerie, nepostaví se z komponent žádný filtr ani formulář.' },
+      { n:4, title:'Hlavicka — navigační props.', why:'Bez handlerů na záložkách se wireframy nedají propojit, ať se importuje cokoli.' },
+    ];
+
+    const missingBlocking = ['paginace / „Načíst další“', 'panel filtrů a mobilní filtrační drawer', 'prázdný stav výsledků', 'skeleton karty při načítání'];
+    const missingOther = ['cena jako komponenta (bez DPH / s DPH / přeškrtnutá původní)', 'hodnocení (hvězdičky dnes kreslí karta)', 'toast', 'modal a drawer', 'mini-košík', 'řádková varianta karty a přepínač mřížka/seznam', 'rozbalovací mega-menu', 'accordion a FAQ', 'cookie lišta', 'formulář poptávky s validací'];
+
+    const overlooked = [
+      { n:1, text:'Přístupnost je v systému fiktivní — :focus-visible je definovaný v CLAUDE.md, DS ho ukazuje a Tlacitko ho má nastylovaný, ale všechny interaktivní prvky jsou <span> bez tabindex, takže se nikdy nespustí. K rozhodnutí: zavést pravidlo „interaktivní prvek = <button> / <a>“, nebo to přiznat jako prototypové zjednodušení.' },
+      { n:2, text:'Obsah sedí uvnitř komponent (Paticka, PoradenskyBlok, Vyhledavani, ikona dlaždice) — porušení vlastní konvence a skrytý blocker pro wireframy.' },
+      { n:3, text:'Chybí registr ikon. CLAUDE.md říká 24×24 / stroke 2, ale nikde není soupis. Ikona telefonu existuje ve třech kopiích, LED keyframes ve čtyřech.' },
+      { n:4, text:'Není pravidlo pro minimální dotykový cíl. Komponenty ho většinou drží na 44 px, hlavička ne (32×32).' },
+      { n:5, text:'Systém má víc variant než pravidel — ghost a text tlačítko, badge „Novinka“. Doplnit do CLAUDE.md, nebo zrušit.' },
+    ];
+
+    return {
+      statusChips, typeChips,
+      cards, empty:false, noResults,
+      hasPriorities:true, priorities,
+      hasMissing:true, missingBlocking, missingOther,
+      hasOverlooked:true, overlooked,
+    };
+  }
+}
+</script>
+</body>
+</html>
