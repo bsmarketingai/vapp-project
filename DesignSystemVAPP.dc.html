@@ -209,7 +209,7 @@
     <!-- 9. IKONY -->
     <div>
       <h2 style="margin:0 0 6px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">9 · Ikony a obrazovost</h2>
-      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Inline SVG, <span style="font-family:'JetBrains Mono',monospace;">viewBox 0 0 24 24</span>, stroke-width 2, barva přes <span style="font-family:'JetBrains Mono',monospace;">currentColor</span>. Bez výplní, jen tahy.</p>
+      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Inline SVG, <span style="font-family:'JetBrains Mono',monospace;">viewBox 0 0 24 24</span>, stroke-width 2, barva přes <span style="font-family:'JetBrains Mono',monospace;">currentColor</span>. Bez výplní, jen tahy. Kompletní registr ikon žije v <a href="./Ikony.dc.html" style="text-decoration:underline;">Ikony.dc.html</a> (sada Tabler) — komponenty ikony nekreslí inline, vkládají je odtud.</p>
       <div style="background:#fff;border-radius:8px;padding:20px 24px 24px;">
         <sc-for list="{{ media }}" as="m" hint-placeholder-count="8">
           <div style="display:flex;align-items:baseline;gap:20px;padding:11px 0;border-bottom:1px solid #F2F4F7;">
@@ -535,6 +535,7 @@ class Component extends DCLogic {
       ['DesignSystemVAPP.dc.html','Základy','Tento dokument. Barvy, typografie, spacing, rádiusy, elevace, layout, stavy. Jediný zdroj tokenů.'],
       ['KomponentyVAPP.dc.html','Katalog komponent','Tlačítka, kvantifikátor, formuláře, badge, skladovost, menu, breadcrumb, patička. Jediné místo ladění UI prvků.'],
       ['ProduktovaKarta.dc.html','Sdílená komponenta','Jediný zdroj vzhledu karty. Prototyp i katalog ji přebírají přes dc-import.'],
+      ['Ikony.dc.html','Registr ikon','Jediný zdroj ikon (sada Tabler). Komponenty ikony nekreslí inline, vkládají přes dc-import name="Ikony".'],
       ['ArchivBarevnaPaletaVAPP.dc.html','Archiv','Nahrazeno sekcí 1 tohoto dokumentu. Nepoužívat jako referenci — starý styl (Hanken Grotesk, borders).'],
       ['CLAUDE.md','Trvalá pravidla','Závazné konvence projektu. Při změně tokenu aktualizovat i zde.'],
     ].map(([file,role,note])=>({ file, role, note }));

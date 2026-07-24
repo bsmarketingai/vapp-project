@@ -129,6 +129,7 @@ Mezihodnoty mimo tuto řadu nepoužívat.
 ## 6. Ikony a obrazovost
 
 - Inline SVG, **24 × 24 px** (`viewBox 0 0 24 24`), `stroke-width 2`, barva přes `currentColor`, bez výplní.
+- **Zdroj ikon:** všechny ikony pocházejí z `Ikony.dc.html` (sada **Tabler**) — jediný registr. Komponenty ikony **nekreslí inline**, vkládají je přes `dc-import name="Ikony"` (prop `iconName` + `size`; v tlačítkách přes props `icon` / `iconTrailing` / `iconOnly`). Kontrakt 24×24 / stroke 2 / `currentColor` platí beze změny.
 - Výjimka: ikony skladovosti **18 × 18**. Hlavní menu na desktopu 18 px.
 - Ikona v kruhu 44 × 44 (kategorické dlaždice, poradenský blok). Sociální kolečko 40 × 40.
 - Produktové fotky: poměr **4:3**, `object-fit: contain`, bez ořezu, centrované, s paddingem.
@@ -159,7 +160,7 @@ Mezihodnoty mimo tuto řadu nepoužívat.
 - Produktové karty **náhradních dílů** NEobsahují výpis klíčových vlastností/parametrů. Ty se vypisují pouze na kartách **přívěsů**.
 - **Anatomie karty náhradního dílu:** fotka 4:3 → název (`product.title`) → hvězdičky + počet → řádek: skladovost vlevo / ceny vpravo pod sebou (bez DPH primárně a bez popisku, pod ní menší „X Kč s DPH") → kvantifikátor + tlačítko Koupit → řádek: checkbox Porovnat + Obj. č. (6místné, terciální). Badge (sleva / Doprava zdarma) vlevo nahoře na fotce. Celá karta je klikací na detail.
 - **Hlavní menu:** záložky s underline (aktivní podtržená), **ne** tlačítka.
-- **Tlačítka:** velikosti Standard `min-height 36` / fs 14 · Medium `44` / fs 15 · Large `52` / fs 16. Rádius 8, weight 700.
+- **Tlačítka:** jediný zdroj je `Tlacitko.dc.html`. Varianty: `primary`, `secondary`, `buy`, `danger`, `ghost`, `text`. Velikosti Standard `min-height 36` / fs 14 · Medium `44` / fs 15 · Large `52` / fs 16, horizontální padding `16 / 20 / 24`. Rádius 8, weight 700. Interaktivní tlačítko je vždy `<button>`, nikdy `<span>` (jinak se nespustí `:focus-visible`). Icon-only tlačítko musí mít `ariaLabel`.
 - **Kvantifikátor:** Standard 44 px, Compact 36 px. Bg `surface.subtle`, rádius 6, střední pole bílé, min-width 28 + padding (pojme 3 číslice).
 - **Inputy:** výška 44, bg `surface.subtle`, rádius 6, fs 15.
 - **Skladovost:** ikony 18 × 18, text bez podbarvení.

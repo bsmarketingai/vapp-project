@@ -17,7 +17,6 @@
   html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
   .k-tile{transition:box-shadow .15s;} .k-tile:hover{box-shadow:0 6px 20px rgba(20,47,86,.10) !important;}
   .k-sub{transition:color .12s;} .k-sub:hover{color:#1E5AA8 !important;text-decoration:underline;}
-  .k-all{transition:background .12s;} .k-all:hover{background:#D8E6F6 !important;}
 </style>
 </helmet>
 <sc-if value="{{ single }}" hint-placeholder-val="">
@@ -34,7 +33,7 @@
         <span onClick="{{ sub.onPick }}" class="k-sub" style="font-size:14px;font-weight:600;color:#3A424C;cursor:pointer;">{{ sub.name }}</span>
       </sc-for>
     </div>
-    <span class="k-all" style="margin-top:auto;display:inline-flex;align-items:center;justify-content:center;gap:6px;align-self:flex-start;min-height:44px;padding:0 18px;font-size:14px;font-weight:700;color:#1E5AA8;background:#EFF4FB;border-radius:8px;cursor:pointer;">Zobrazit vše<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></span>
+    <dc-import name="Tlacitko" variant="secondary" size="medium" label="Zobrazit vše" icon-trailing="chevron-right" style="margin-top:auto;align-self:flex-start;" hint-size="150px,44px"></dc-import>
   </div>
 </sc-if>
 <sc-if value="{{ gallery }}" hint-placeholder-val="{{ true }}">
@@ -54,7 +53,7 @@
             <span class="k-sub" style="font-size:14px;font-weight:600;color:#3A424C;cursor:pointer;">{{ sub.name }}</span>
           </sc-for>
         </div>
-        <span class="k-all" style="margin-top:auto;display:inline-flex;align-items:center;justify-content:center;gap:6px;align-self:flex-start;min-height:44px;padding:0 18px;font-size:14px;font-weight:700;color:#1E5AA8;background:#EFF4FB;border-radius:8px;cursor:pointer;">Zobrazit vše<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></span>
+        <dc-import name="Tlacitko" variant="secondary" size="medium" label="Zobrazit vše" icon-trailing="chevron-right" style="margin-top:auto;align-self:flex-start;" hint-size="150px,44px"></dc-import>
       </div>
     </sc-for>
   </div>

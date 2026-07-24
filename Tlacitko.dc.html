@@ -28,9 +28,7 @@
 </style>
 </helmet>
 <sc-if value="{{ single }}" hint-placeholder-val="">
-  <span class="{{ btnClass }}" style="{{ btnStyle }}">
-    <sc-if value="{{ showCart }}" hint-placeholder-val=""><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1.5"></circle><circle cx="19" cy="21" r="1.5"></circle><path d="M2 3h3l2.6 12.5a1 1 0 0 0 1 .8h9.7a1 1 0 0 0 1-.8L21.5 7H6"></path></svg></sc-if>{{ label }}<sc-if value="{{ trailChevron }}" hint-placeholder-val=""><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></sc-if>
-  </span>
+  <button type="button" onClick="{{ onClick }}" disabled="{{ isDisabled }}" aria-label="{{ ariaLabel }}" class="{{ btnClass }}" style="{{ btnStyle }}"><sc-if value="{{ hasLead }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="{{ leadIcon }}" size="{{ iconSize }}" hint-size="24px,24px"></dc-import></sc-if><sc-if value="{{ hasLabel }}" hint-placeholder-val="{{ true }}">{{ label }}</sc-if><sc-if value="{{ hasTrail }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="{{ trailIcon }}" size="{{ iconSize }}" hint-size="24px,24px"></dc-import></sc-if></button>
 </sc-if>
 <sc-if value="{{ gallery }}" hint-placeholder-val="{{ true }}">
 <div style="display:flex;flex-direction:column;gap:16px;max-width:920px;">
@@ -38,12 +36,12 @@
     <div>
       <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#8A919C;margin-bottom:14px;">Typy — Medium 44</div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-        <span class="b-buy" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 22px;font-size:15px;font-weight:700;color:#fff;background:#0E7F43;border-radius:8px;cursor:pointer;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1.5"></circle><circle cx="19" cy="21" r="1.5"></circle><path d="M2 3h3l2.6 12.5a1 1 0 0 0 1 .8h9.7a1 1 0 0 0 1-.8L21.5 7H6"></path></svg>Koupit</span>
-        <span class="b-primary" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 22px;font-size:15px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;cursor:pointer;">Primární akce</span>
-        <span class="b-secondary" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 22px;font-size:15px;font-weight:700;color:#1E5AA8;background:#EFF4FB;border-radius:8px;cursor:pointer;">Sekundární</span>
-        <span class="b-danger" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 22px;font-size:15px;font-weight:700;color:#fff;background:#C5232B;border-radius:8px;cursor:pointer;">Akce a slevy</span>
-        <span class="b-ghost" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 22px;font-size:15px;font-weight:700;color:#1E5AA8;background:transparent;border-radius:8px;cursor:pointer;">Ghost</span>
-        <span class="b-text" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 4px;font-size:15px;font-weight:700;color:#1E5AA8;background:transparent;cursor:pointer;text-decoration:underline;">Text</span>
+        <button type="button" class="b-buy" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#fff;background:#0E7F43;border-radius:8px;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;"><dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import>Koupit</button>
+        <button type="button" class="b-primary" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;">Primární akce</button>
+        <button type="button" class="b-secondary" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#1E5AA8;background:#EFF4FB;border-radius:8px;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;">Sekundární</button>
+        <button type="button" class="b-danger" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#fff;background:#C5232B;border-radius:8px;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;">Akce a slevy</button>
+        <button type="button" class="b-ghost" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#1E5AA8;background:transparent;border-radius:8px;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;">Ghost</button>
+        <button type="button" class="b-text" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 4px;font-size:15px;font-weight:700;color:#1E5AA8;background:transparent;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;text-decoration:underline;">Text</button>
       </div>
     </div>
     <div>
@@ -52,39 +50,49 @@
         <sc-for list="{{ btnSizes }}" as="b" hint-placeholder-count="3">
           <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
             <span style="flex:none;width:80px;font-size:13px;font-weight:700;color:#8A919C;">{{ b.label }}</span>
-            <span class="b-primary" style="{{ b.leadStyle }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1.5"></circle><circle cx="19" cy="21" r="1.5"></circle><path d="M2 3h3l2.6 12.5a1 1 0 0 0 1 .8h9.7a1 1 0 0 0 1-.8L21.5 7H6"></path></svg>Leading</span>
-            <span class="b-primary" style="{{ b.trailStyle }}">Trailing<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></span>
-            <span class="b-primary" style="{{ b.iconStyle }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1.5"></circle><circle cx="19" cy="21" r="1.5"></circle><path d="M2 3h3l2.6 12.5a1 1 0 0 0 1 .8h9.7a1 1 0 0 0 1-.8L21.5 7H6"></path></svg></span>
-            <span class="b-ghost" style="{{ b.ghostStyle }}">Ghost</span>
-            <span class="b-text" style="{{ b.textStyle }}">Text</span>
+            <button type="button" class="b-primary" style="{{ b.leadStyle }}"><dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import>Leading</button>
+            <button type="button" class="b-primary" style="{{ b.trailStyle }}">Trailing<dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></button>
+            <button type="button" class="b-primary" aria-label="Do košíku" style="{{ b.iconStyle }}"><dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import></button>
+            <button type="button" class="b-ghost" style="{{ b.ghostStyle }}">Ghost</button>
+            <button type="button" class="b-text" style="{{ b.textStyle }}">Text</button>
           </div>
         </sc-for>
       </div>
+      <div style="font-size:13px;line-height:1.5;color:#5A626C;margin-top:12px;max-width:760px;">Ukázka „Trailing" používá <span style="font-family:'JetBrains Mono',monospace;font-size:12px;">chevron-right</span> jako <strong style="color:#C5232B;">dočasnou náhradu</strong> za <span style="font-family:'JetBrains Mono',monospace;font-size:12px;">arrow-right</span>, který v sadě Tabler zatím chybí (doplní se samostatně).</div>
     </div>
     <div>
       <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#8A919C;margin-bottom:14px;">Stavy</div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-        <span class="b-primary" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 22px;font-size:15px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;cursor:pointer;">Klidový + hover</span>
-        <span style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 22px;font-size:15px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;outline:2px solid #1E5AA8;outline-offset:2px;">Focus-visible</span>
-        <span style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 22px;font-size:15px;font-weight:700;color:#fff;background:#1A4A8A;border-radius:8px;transform:translateY(1px);">Active</span>
-        <span style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 22px;font-size:15px;font-weight:700;color:#9AA1AB;background:#F2F4F7;border-radius:8px;cursor:not-allowed;">Disabled</span>
+        <button type="button" class="b-primary" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;">Klidový + hover</button>
+        <button type="button" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;outline:2px solid #1E5AA8;outline-offset:2px;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;cursor:pointer;">Focus-visible</button>
+        <button type="button" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#fff;background:#1A4A8A;border-radius:8px;transform:translateY(1px);border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;cursor:pointer;">Active</button>
+        <button type="button" disabled style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#9AA1AB;background:#F2F4F7;border-radius:8px;cursor:not-allowed;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;">Disabled</button>
       </div>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#8A919C;margin-bottom:14px;">Ghost / Text</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <button type="button" class="b-ghost" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#1E5AA8;background:transparent;border-radius:8px;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;">Ghost</button>
+        <button type="button" class="b-text" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 4px;font-size:15px;font-weight:700;color:#1E5AA8;background:transparent;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;text-decoration:underline;">Text</button>
+      </div>
+      <div style="font-size:13px;line-height:1.5;color:#5A626C;margin-top:10px;max-width:760px;"><strong style="color:#3A424C;">Kdy:</strong> Ghost = terciární akce bez plné plochy — v hutných místech nebo vedle silnějšího tlačítka (např. „Podpora" u „Akce a slevy"). Text = odkazová akce v textovém toku či jako méně důležitá volba. Nikdy ne pro hlavní konverzi (Koupit).</div>
     </div>
   </div>
   <div style="display:flex;flex-direction:column;gap:5px;padding:2px 4px;">
-    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> zelená jen pro Koupit, modrá pro primární akce, červená pro akce a slevy. Ikony 24×24, weight 700, radius 8.</div>
-    <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nepoužívat zelenou dekorativně ani mimo konverzi; hlavní menu jsou záložky, ne tlačítka.</div>
+    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> zelená jen pro Koupit, modrá pro primární akce, červená pro akce a slevy. Ikony přes <span style="font-family:'JetBrains Mono',monospace;font-size:12px;">Ikony.dc.html</span> (24×24), weight 700, radius 8. Horizontální padding 16 / 20 / 24 (Standard / Medium / Large).</div>
+    <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nekreslit ikonu inline — vždy přes registr; nepoužívat zelenou dekorativně ani mimo konverzi; hlavní menu jsou záložky, ne tlačítka; icon-only vždy s ariaLabel.</div>
   </div>
 </div>
 </sc-if>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:920,&quot;height&quot;:460},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;buy&quot;,&quot;primary&quot;,&quot;secondary&quot;,&quot;danger&quot;,&quot;ghost&quot;,&quot;text&quot;],&quot;default&quot;:&quot;primary&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;standard&quot;,&quot;medium&quot;,&quot;large&quot;],&quot;default&quot;:&quot;medium&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Tlačítko&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;trailChevron&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;disabled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:920,&quot;height&quot;:540},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;buy&quot;,&quot;primary&quot;,&quot;secondary&quot;,&quot;danger&quot;,&quot;ghost&quot;,&quot;text&quot;],&quot;default&quot;:&quot;primary&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;standard&quot;,&quot;medium&quot;,&quot;large&quot;],&quot;default&quot;:&quot;medium&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Tlačítko&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;icon&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;iconTrailing&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;iconOnly&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;trailChevron&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;disabled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;fullWidth&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;ariaLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
   renderVals(){
     const P = this.props;
     const single = !!P.variant;
+    const reset = 'border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;';
     if (single){
-      const dims = { standard:[36,14,14], medium:[44,15,20], large:[52,16,26] }[P.size||'medium'] || [44,15,20];
+      const dims = { standard:[36,14,16], medium:[44,15,20], large:[52,16,24] }[P.size||'medium'] || [44,15,20];
       const [mh,fs,pad] = dims;
       const V = {
         buy:{bg:'#0E7F43',fg:'#fff',cls:'b-buy'},
@@ -95,20 +103,42 @@ class Component extends DCLogic {
         text:{bg:'transparent',fg:'#1E5AA8',cls:'b-text'},
       }[P.variant] || {bg:'#1E5AA8',fg:'#fff',cls:'b-primary'};
       const disabled = !!P.disabled;
+      const iconOnly = !!P.iconOnly;
       const bg = disabled ? '#F2F4F7' : V.bg;
       const fg = disabled ? '#9AA1AB' : V.fg;
-      const btnStyle = 'display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:'+mh+'px;padding:0 '+pad+'px;font-size:'+fs+'px;font-weight:700;color:'+fg+';background:'+bg+';border-radius:8px;cursor:'+(disabled?'not-allowed':'pointer')+';'+(P.variant==='text'?'text-decoration:underline;padding:0 4px;':'');
-      return { single:true, gallery:false, btnStyle, btnClass: disabled?'':V.cls, label: P.label||'Tlačítko', showCart: P.variant==='buy', trailChevron: !!P.trailChevron };
+      // zpětná kompatibilita: buy => košík, trailChevron => chevron-right
+      const leadIcon = P.icon || (P.variant==='buy' ? 'shopping-cart' : '');
+      const trailIcon = iconOnly ? '' : (P.iconTrailing || (P.trailChevron ? 'chevron-right' : ''));
+      if (iconOnly && !P.ariaLabel) console.warn('Tlacitko: icon-only tlačítko vyžaduje ariaLabel (icon="'+(P.icon||'')+'").');
+      let btnStyle;
+      if (iconOnly){
+        btnStyle = 'display:inline-flex;align-items:center;justify-content:center;width:'+mh+'px;height:'+mh+'px;font-weight:700;color:'+fg+';background:'+bg+';border-radius:8px;cursor:'+(disabled?'not-allowed':'pointer')+';'+reset+(P.fullWidth?'width:100%;':'');
+      } else {
+        btnStyle = 'display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:'+mh+'px;padding:0 '+pad+'px;font-size:'+fs+'px;font-weight:700;color:'+fg+';background:'+bg+';border-radius:8px;cursor:'+(disabled?'not-allowed':'pointer')+';'+reset+(P.fullWidth?'width:100%;':'')+(P.variant==='text'?'text-decoration:underline;padding:0 4px;':'');
+      }
+      return {
+        single:true, gallery:false, btnStyle,
+        btnClass: disabled ? '' : V.cls,
+        label: P.label||'Tlačítko',
+        ariaLabel: P.ariaLabel || P.label || 'Tlačítko',
+        iconSize: 24,
+        leadIcon, trailIcon,
+        hasLead: iconOnly ? !!leadIcon : !!leadIcon,
+        hasTrail: !!trailIcon,
+        hasLabel: !iconOnly,
+        isDisabled: disabled,
+        onClick: disabled ? (()=>{}) : (P.onClick || (()=>{})),
+      };
     }
     const btn = (label,mh,fs,pad)=>({
       label,
-      leadStyle:'display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:'+mh+'px;padding:0 '+pad+'px;font-size:'+fs+'px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;cursor:pointer;',
-      trailStyle:'display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:'+mh+'px;padding:0 '+pad+'px;font-size:'+fs+'px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;cursor:pointer;',
-      iconStyle:'display:inline-flex;align-items:center;justify-content:center;width:'+mh+'px;height:'+mh+'px;color:#fff;background:#1E5AA8;border-radius:8px;cursor:pointer;',
-      ghostStyle:'display:inline-flex;align-items:center;justify-content:center;min-height:'+mh+'px;padding:0 '+pad+'px;font-size:'+fs+'px;font-weight:700;color:#1E5AA8;background:transparent;border-radius:8px;cursor:pointer;',
-      textStyle:'display:inline-flex;align-items:center;justify-content:center;min-height:'+mh+'px;padding:0 4px;font-size:'+fs+'px;font-weight:700;color:#1E5AA8;background:transparent;cursor:pointer;text-decoration:underline;',
+      leadStyle:'display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:'+mh+'px;padding:0 '+pad+'px;font-size:'+fs+'px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;cursor:pointer;'+reset,
+      trailStyle:'display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:'+mh+'px;padding:0 '+pad+'px;font-size:'+fs+'px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;cursor:pointer;'+reset,
+      iconStyle:'display:inline-flex;align-items:center;justify-content:center;width:'+mh+'px;height:'+mh+'px;color:#fff;background:#1E5AA8;border-radius:8px;cursor:pointer;'+reset,
+      ghostStyle:'display:inline-flex;align-items:center;justify-content:center;min-height:'+mh+'px;padding:0 '+pad+'px;font-size:'+fs+'px;font-weight:700;color:#1E5AA8;background:transparent;border-radius:8px;cursor:pointer;'+reset,
+      textStyle:'display:inline-flex;align-items:center;justify-content:center;min-height:'+mh+'px;padding:0 4px;font-size:'+fs+'px;font-weight:700;color:#1E5AA8;background:transparent;cursor:pointer;text-decoration:underline;'+reset,
     });
-    return { single:false, gallery:true, btnSizes:[ btn('Standard',36,14,14), btn('Medium',44,15,20), btn('Large',52,16,26) ] };
+    return { single:false, gallery:true, btnSizes:[ btn('Standard',36,14,16), btn('Medium',44,15,20), btn('Large',52,16,24) ] };
   }
 }
 </script>
