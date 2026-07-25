@@ -94,7 +94,7 @@
       availIn: availDemo, availOut: !availDemo, avail: availDemo ? 'Skladem > 15 ks' : 'Není skladem',
       priceNet:'397 Kč', price:'480 Kč', objNum:'404815',
       qty:this.state.qty, cmp,
-      cmpBox:'flex:none;width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1.5px solid '+(cmp?'#1E5AA8':'#C4CAD2')+';background:'+(cmp?'#1E5AA8':'#fff')+';',
+      cmpBox:'flex:none;width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1px solid '+(cmp?'#1E5AA8':'#C4CAD2')+';background:'+(cmp?'#1E5AA8':'#fff')+';',
       onMinus:()=>this.setState(s=>({qty:Math.max(1,s.qty-1)})),
       onPlus:()=>this.setState(s=>({qty:s.qty+1})),
       onCmp:()=>this.setState(s=>({cmp:!s.cmp})),

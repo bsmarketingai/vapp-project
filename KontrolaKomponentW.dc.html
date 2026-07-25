@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#F7F9FB;}
+  a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
+</style>
+</helmet>
+<div style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;width:100%;margin:0;padding:0;">
+  <div style="max-width:1560px;margin:0 auto;padding:32px;display:flex;flex-direction:column;gap:20px;">
+    <h1 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.01em;color:#142F56;">Kontrola skupiny Q + kvantifikátor</h1>
+
+    <div style="background:#fff;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:12px;">
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7A828C;">Vyhledavani — pole radius 6, našeptávač</div>
+      <dc-import name="Vyhledavani" value="{{ q }}" bare="{{ yes }}" hint-size="620px,320px"></dc-import>
+    </div>
+
+    <div style="background:#fff;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:12px;">
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7A828C;">KategorickaDlazdice — padding 16, gap 8</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">
+        <dc-import name="KategorickaDlazdice" cat="{{ cat1 }}" hint-size="100%,240px"></dc-import>
+        <dc-import name="KategorickaDlazdice" cat="{{ cat2 }}" hint-size="100%,240px"></dc-import>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;">
+      <div style="background:#fff;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7A828C;">Breadcrumb — bare true</div>
+        <dc-import name="Breadcrumb" items="{{ crumbs }}" bare="{{ yes }}" hint-size="100%,40px"></dc-import>
+        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7A828C;">Breadcrumb — bare false (s DS poznámkou)</div>
+        <dc-import name="Breadcrumb" items="{{ crumbs }}" bare="{{ no }}" hint-size="100%,120px"></dc-import>
+      </div>
+      <div style="background:#fff;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7A828C;">Skladovost — gap 8, tři stavy</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <dc-import name="Skladovost" state="in" text="Skladem > 15 ks" hint-size="180px,20px"></dc-import>
+          <dc-import name="Skladovost" state="out" text="Není skladem" hint-size="180px,20px"></dc-import>
+          <dc-import name="Skladovost" state="request" text="Na dotaz" hint-size="180px,20px"></dc-import>
+        </div>
+        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7A828C;">Badge — padding 4/8</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <dc-import name="Badge" type="sale" text="−20 %" hint-size="70px,26px"></dc-import>
+          <dc-import name="Badge" type="freeship" text="Doprava zdarma" hint-size="140px,26px"></dc-import>
+          <dc-import name="Badge" type="new" text="Novinka" hint-size="90px,26px"></dc-import>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#fff;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:12px;">
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7A828C;">Kvantifikator — hranice min 1 / max 99</div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center;">
+        <div style="display:flex;flex-direction:column;gap:6px;"><span style="font-size:13px;color:#7A828C;">value 1 (minus disabled)</span><dc-import name="Kvantifikator" value="{{ n1 }}" min="{{ n1 }}" max="{{ n99 }}" on-change="{{ noop }}" hint-size="120px,44px"></dc-import></div>
+        <div style="display:flex;flex-direction:column;gap:6px;"><span style="font-size:13px;color:#7A828C;">value 99 (plus disabled)</span><dc-import name="Kvantifikator" value="{{ n99 }}" min="{{ n1 }}" max="{{ n99 }}" on-change="{{ noop }}" hint-size="120px,44px"></dc-import></div>
+        <div style="display:flex;flex-direction:column;gap:6px;"><span style="font-size:13px;color:#7A828C;">value 5 (oba aktivní)</span><dc-import name="Kvantifikator" value="{{ n5 }}" min="{{ n1 }}" max="{{ n99 }}" on-change="{{ noop }}" hint-size="120px,44px"></dc-import></div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:1200}}">
+class Component extends DCLogic {
+  renderVals(){
+    return {
+      yes:true, no:false, n1:1, n5:5, n99:99, noop:()=>{}, q:'brzd',
+      crumbs:['Úvod','Náhradní díly','Nápravy a brzdy'],
+      cat1:{ name:'Nápravy a brzdy', count:612, subs:['Nájezdové brzdy','Brzdové čelisti a obložení','Nápravy','Náboje kol'], onPick:()=>{} },
+      cat2:{ name:'Spojovací zařízení', count:388, subs:['Kulové spojky','Kloubové spojky','Oje a příčníky','Zabezpečení proti krádeži'], onPick:()=>{} }
+    };
+  }
+}
+</script>
+</body>
+</html>

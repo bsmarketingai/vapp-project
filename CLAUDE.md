@@ -30,7 +30,7 @@
 ### Neutrální (`neutral`)
 `0 #FFFFFF` · `50 #F7F9FB` · `100 #F2F4F7` · `200 #D5DAE0` · `300 #C4CAD2` · `400 #9AA1AB` · `500 #8A919C` · `600 #7A828C` · `700 #5A626C` · `800 #3A424C` · `900 #15181C`
 
-> Odstíny `#9099A3`, `#6B727C`, `#6E88AE` a `#22C55E` jsou **zrušené** — mapuj na nejbližší krok škály.
+> Šířka okraje není token — všude 1 px. Odstíny `#9099A3`, `#6B727C`, `#6E88AE` a `#22C55E` jsou **zrušené** — mapuj na nejbližší krok škály.
 
 ### Sémantické tokeny
 
@@ -57,6 +57,7 @@
 | `status.outOfStock` | `#C5232B` | není skladem |
 | `status.onRequest` | `#8A919C` | na dotaz |
 | `status.open` | `#2EAA6A` | LED otevřeno |
+| `status.openOnDark` | `#97DBB4` | text „právě otevřeno" na tmavém pruhu (green.200) |
 | `status.closed` | `#C5232B` | LED zavřeno |
 | `commerce.priceNet` | `#15181C` | cena bez DPH |
 | `commerce.priceGross` | `#7A828C` | cena s DPH |

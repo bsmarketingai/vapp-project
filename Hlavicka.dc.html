@@ -7,6 +7,7 @@
 </head>
 <body>
 <x-dc>
+<!-- barva #97DBB4 u textu „právě otevřeno" = token status.openOnDark (green.200) -->
 <helmet>
 <meta name="robots" content="noindex, nofollow, noarchive">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -112,7 +113,7 @@ class Component extends DCLogic {
       tabs,
       menuOpen: this.state.menuOpen, menuClosed: !this.state.menuOpen,
       toggleMenu:()=>this.setState({ menuOpen:!this.state.menuOpen }),
-      mobileNav: labels.map(t=>({ t, onClick:()=>{ if(onTab) onTab(t); }, style:'font-size:14.5px;font-weight:700;color:'+(t===active?'#1E5AA8':'#15181C')+';' })),
+      mobileNav: labels.map(t=>({ t, onClick:()=>{ if(onTab) onTab(t); }, style:'font-size:14px;font-weight:700;color:'+(t===active?'#1E5AA8':'#15181C')+';' })),
     };
   }
 }

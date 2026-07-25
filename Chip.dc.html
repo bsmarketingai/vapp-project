@@ -15,8 +15,8 @@
 <style>
   *{box-sizing:border-box;}
   html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
-  .c-brand{transition:box-shadow .12s;} .c-brand:hover{box-shadow:inset 0 0 0 1.5px #84AEDF !important;}
-  .c-inactive{transition:box-shadow .12s;} .c-inactive:hover{box-shadow:inset 0 0 0 1.5px #84AEDF !important;}
+  .c-brand{transition:box-shadow .12s;} .c-brand:hover{box-shadow:inset 0 0 0 1px #84AEDF !important;}
+  .c-inactive{transition:box-shadow .12s;} .c-inactive:hover{box-shadow:inset 0 0 0 1px #84AEDF !important;}
   .c-active{transition:background .12s;} .c-active:hover{background:#1A4A8A !important;}
 </style>
 </helmet>
@@ -37,9 +37,9 @@
     <div>
       <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#8A919C;margin-bottom:14px;">Značkový chip</div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-        <span class="c-brand" style="display:inline-flex;align-items:center;font-size:14px;font-weight:600;color:#3A424C;background:#fff;box-shadow:inset 0 0 0 1.5px #C4CAD2;border-radius:999px;padding:8px 16px;cursor:pointer;">KNOTT <span style="color:#8A919C;margin-left:6px;">(486)</span></span>
-        <span class="c-brand" style="display:inline-flex;align-items:center;font-size:14px;font-weight:600;color:#3A424C;background:#fff;box-shadow:inset 0 0 0 1.5px #C4CAD2;border-radius:999px;padding:8px 16px;cursor:pointer;">AL-KO <span style="color:#8A919C;margin-left:6px;">(312)</span></span>
-        <span class="c-brand" style="display:inline-flex;align-items:center;font-size:14px;font-weight:600;color:#3A424C;background:#fff;box-shadow:inset 0 0 0 1.5px #C4CAD2;border-radius:999px;padding:8px 16px;cursor:pointer;">Kenda <span style="color:#8A919C;margin-left:6px;">(97)</span></span>
+        <span class="c-brand" style="display:inline-flex;align-items:center;font-size:14px;font-weight:600;color:#3A424C;background:#fff;box-shadow:inset 0 0 0 1px #C4CAD2;border-radius:999px;padding:8px 16px;cursor:pointer;">KNOTT <span style="color:#8A919C;margin-left:6px;">(486)</span></span>
+        <span class="c-brand" style="display:inline-flex;align-items:center;font-size:14px;font-weight:600;color:#3A424C;background:#fff;box-shadow:inset 0 0 0 1px #C4CAD2;border-radius:999px;padding:8px 16px;cursor:pointer;">AL-KO <span style="color:#8A919C;margin-left:6px;">(312)</span></span>
+        <span class="c-brand" style="display:inline-flex;align-items:center;font-size:14px;font-weight:600;color:#3A424C;background:#fff;box-shadow:inset 0 0 0 1px #C4CAD2;border-radius:999px;padding:8px 16px;cursor:pointer;">Kenda <span style="color:#8A919C;margin-left:6px;">(97)</span></span>
       </div>
     </div>
   </div>
@@ -58,7 +58,7 @@ class Component extends DCLogic {
     if (single){
       if (P.kind === 'brand'){
         return { single:true, gallery:false, chipClass:'c-brand', label:P.label||'KNOTT',
-          chipStyle:'display:inline-flex;align-items:center;font-size:14px;font-weight:600;color:#3A424C;background:#fff;box-shadow:inset 0 0 0 1.5px #C4CAD2;border-radius:999px;padding:8px 16px;cursor:pointer;',
+          chipStyle:'display:inline-flex;align-items:center;font-size:14px;font-weight:600;color:#3A424C;background:#fff;box-shadow:inset 0 0 0 1px #C4CAD2;border-radius:999px;padding:8px 16px;cursor:pointer;',
           showCount: P.count!=null, count:P.count, countStyle:'color:#8A919C;margin-left:6px;', showX:false, onClick: P.onClick || (()=>{}), onRemove: P.onRemove || (()=>{}) };
       }
       const active = !!P.active;
@@ -67,7 +67,8 @@ class Component extends DCLogic {
         chipStyle: active
           ? 'display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:999px;padding:8px 16px;cursor:pointer;'
           : 'display:inline-flex;align-items:center;font-size:14px;font-weight:600;color:#3A424C;background:#F2F4F7;border-radius:999px;padding:8px 16px;cursor:pointer;',
-        showCount:false, showX: active };
+        // ✕ jen když je chip aktivní A je předán onRemove (bez handleru by nic nedělal)
+        showCount:false, showX: active && !!P.onRemove };
     }
     return { single:false, gallery:true };
   }

@@ -122,6 +122,41 @@ Nový soubor KontrolaKomponentT.dc.html (testovací stránka, není součástí 
 - Zpětná kompatibilita: bez props se karta chová jako dřív (KAPTURA v prototypu).
 - Obě varianty jsou v KontrolaKomponentT.dc.html; available je i v Tweaks (boolean editor).
 
+## Blok V — Off-token dluh (25. 7. 2026, rozhodnuto uživatelem)
+| co | soubor | stará → nová |
+|---|---|---|
+| status.openOnDark | CLAUDE.md §1, DesignSystemVAPP „Stavy a commerce" | nový token #97DBB4 (green.200) |
+| „právě otevřeno" | Hlavicka | hex zůstává + komentář odkazující na status.openOnDark |
+| mobilní nav | Hlavicka | 14.5px → 14px (label.small) |
+| toolbar Filtry/řazení | Prototyp | 13.5px → 14px (label.small) |
+| linka chipu | Prototyp, Chip | inset 1.5px → 1px |
+| border checkboxu Porovnat | ProduktovaKarta | 1.5px → 1px |
+CLAUDE.md §1 dostal větu „Šířka okraje není token — všude 1 px."
+Ověřeno KAPTUROU: hlavička (14px nav, LED text) i toolbar prototypu (14px, 1px linky).
+Ikona kategorie natvrdo v KategorickaDlazdice — NECHÁNA, viz otevřené otázky (icon prop).
+
+## Blok W — Skupina Q kapturou (25. 7. 2026)
+Nový soubor KontrolaKomponentW.dc.html (testovací stránka, není součástí návrhu).
+| komponenta | co | stav |
+|---|---|---|
+| Vyhledavani | pole radius 6, tlačítko lupy | HOTOVO / KAPTURA |
+| Vyhledavani | našeptávač + thumbnail #F2F4F7, overline ls .06 | ROZDĚLANÉ / DOM — dropdown se otevírá na focus, programový focus se v kaptuře neprojevil |
+| KategorickaDlazdice | padding 16, gap subs 8 | HOTOVO / KAPTURA |
+| Breadcrumb | bare=true bez poznámky, bare=false s poznámkou | HOTOVO / KAPTURA |
+| Skladovost | gap 8, tři stavy, ikony 18 | HOTOVO / KAPTURA |
+| Badge | padding 4/8, tři typy | HOTOVO / KAPTURA |
+Vedlejší nález (NEOPRAVENO): Vyhledavani ignoruje prop value, když není předán
+on-search-change — v poli zůstal placeholder. Zapsáno jako dluh, nezasahováno.
+
+## Blok X — Zbytky DOM/JEN-ZÁPIS (25. 7. 2026)
+- Kvantifikator: KAPTURA hranic — value 1 minus zesvětlený, value 99 plus zesvětlený,
+  value 5 oba aktivní. cursor:not-allowed je v kódu (DOM), kaptura kurzor nekreslí.
+- ProduktovaKarta onDetail: DOM — řádek Koupit+kvantifikátor a řádek Porovnat/Obj. č.
+  mají onClick={stop} se stopPropagation, klik na kartu jinde volá onCard. Klik NEOVĚŘEN.
+- Chip: OPRAVENO — ✕ se dřív kreslil u každého aktivního chipu i bez handleru;
+  nově showX = active && !!onRemove. ✕ volá onRemove (DOM). Aktivní chip s onRemove
+  ověřen KAPTUROU; hover NEOVĚŘEN (kaptura hover nekreslí).
+
 ## Otevřené otázky / dluh (skupina 3 + ostatní)
 - Přístupnost: span→button napříč systémem (pak focus-visible reálně funguje).
 - Obsah v props: Paticka adresy/IČO, PoradenskyBlok telefon, Vyhledavani katalog — natvrdo.
@@ -136,7 +171,8 @@ Nový soubor KontrolaKomponentT.dc.html (testovací stránka, není součástí 
 ## H4 — Off-token NEOPRAVENO
 - Hlavicka: #97DBB4 (text „právě otevřeno" na tmavém). Návrh token: status.openOnDark ~ green.200 #97DBB4.
 - Hlavicka: 14.5px mobilní nav. Návrh: label.small 14 nebo body.medium 16 (skok na breakpointu).
-- Ikona kategorie v KategorickaDlazdice natvrdo (terč) — chce icon prop.
+- Ikona kategorie v KategorickaDlazdice natvrdo (terč) — chce icon prop (rozhodnuto: samostatný krok).
+- Vyhledavani: prop value se neprojeví bez on-search-change (řízená vs. neřízená komponenta).
 
 ## Ikony k doexportu
 - star-half (půlhvězda) — obejito klipem, není nutné; jinak nic nechybí.
