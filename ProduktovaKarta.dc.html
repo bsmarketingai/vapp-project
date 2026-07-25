@@ -18,10 +18,13 @@
   .h-card{transition:box-shadow .15s;} .h-card:hover{box-shadow:0 6px 20px rgba(20,47,86,.10) !important;}
   .h-buy:hover{background:#0B6937 !important;}
   .pk-fluid{width:100% !important;min-width:0 !important;max-width:none !important;}
+  /* Řádek skladovosti: styl přichází jako prop (nelze doplnit inline), proto class —
+     min-width:0 dovolí zalomení textu na 2 řádky místo odstřižení. */
+  .pk-av{min-width:0 !important;flex-wrap:nowrap;} .pk-av > span{min-width:0 !important;}
   @container (max-width:380px){ .pk-buyrow{flex-direction:column;} }
 </style>
 </helmet>
-<div class="h-card {{ sizeClass }}" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;background:#fff;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .15s;cursor:pointer;height:100%;min-width:280px;max-width:300px;container-type:inline-size;" style-hover="box-shadow:0 6px 20px rgba(20,47,86,.10);">
+<div class="h-card {{ sizeClass }}" onClick="{{ onCard }}" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;background:#fff;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .15s;cursor:pointer;height:100%;min-width:280px;max-width:300px;container-type:inline-size;" style-hover="box-shadow:0 6px 20px rgba(20,47,86,.10);">
   <div onMouseEnter="{{ p.onEnter }}" onMouseLeave="{{ p.onLeave }}" style="position:relative;cursor:pointer;">
     <sc-if value="{{ p.img }}" hint-placeholder-val=""><div role="img" aria-label="{{ p.name }}" style="{{ p.imgBgStyle }}"></div></sc-if>
     <sc-if value="{{ p.noImg }}" hint-placeholder-val=""><div style="{{ p.phStyle }}">{{ p.imgLabel }}</div></sc-if>
@@ -32,22 +35,22 @@
       <div style="font-size:16px;font-weight:700;color:#15181C;line-height:1.3;min-height:42px;">{{ p.name }}</div>
       <dc-import name="Hodnoceni" value="{{ ratingValue }}" count="{{ reviews }}" hint-size="140px,18px"></dc-import>
     </div>
-    <div style="margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;min-height:40px;">
-      <span style="{{ p.availStyle }}"><sc-if value="{{ p.availIn }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="circle-check" size="18" hint-size="18px,18px"></dc-import></sc-if><sc-if value="{{ p.availOut }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="circle-x" size="18" hint-size="18px,18px"></dc-import></sc-if>{{ p.avail }}</span>
+    <div style="margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;height:40px;overflow:hidden;">
+      <span class="pk-av" style="{{ p.availStyle }}"><sc-if value="{{ p.availIn }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="circle-check" size="18" hint-size="18px,18px"></dc-import></sc-if><sc-if value="{{ p.availOut }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="circle-x" size="18" hint-size="18px,18px"></dc-import></sc-if><span style="min-width:0;">{{ p.avail }}</span></span>
       <dc-import name="Cena" price-net="{{ netNum }}" price-gross="{{ grossNum }}" original="{{ originalNum }}" hint-size="120px,48px"></dc-import>
     </div>
-    <div class="pk-buyrow" style="display:flex;align-items:stretch;gap:8px;">
+    <div class="pk-buyrow" onClick="{{ stop }}" style="display:flex;align-items:stretch;gap:8px;">
       <div style="flex:none;"><dc-import name="Kvantifikator" value="{{ qtyVal }}" on-change="{{ onQty }}" hint-size="120px,44px"></dc-import></div>
-      <div style="flex:1;display:flex;"><dc-import name="Tlacitko" variant="buy" size="medium" label="Koupit" full-width="true" on-click="{{ p.onBuy }}" style="width:100%;" hint-size="100%,44px"></dc-import></div>
+      <div style="flex:1;display:flex;"><dc-import name="Tlacitko" variant="buy" size="medium" label="Koupit" full-width="true" disabled="{{ buyDisabled }}" on-click="{{ p.onBuy }}" style="width:100%;" hint-size="100%,44px"></dc-import></div>
     </div>
-    <div style="display:flex;align-items:center;justify-content:space-between;padding-top:2px;">
+    <div onClick="{{ stop }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;height:26px;padding-top:2px;">
       <span onClick="{{ p.onCmp }}" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#5A626C;cursor:pointer;min-height:24px;white-space:nowrap;"><span style="{{ p.cmpBox }}"><sc-if value="{{ p.cmp }}" hint-placeholder-val=""><svg width="9" height="9" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#fff" stroke-width="2.8" stroke-linecap="round"></path></svg></sc-if></span>Porovnat</span>
       <span style="flex:none;white-space:nowrap;font-size:13px;color:#9AA1AB;">Obj. č. {{ p.objNum }}</span>
     </div>
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:300,&quot;height&quot;:560},&quot;p&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;object&quot;,&quot;default&quot;:null}}">class Component extends DCLogic {
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:300,&quot;height&quot;:560},&quot;p&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;object&quot;,&quot;default&quot;:null},&quot;available&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Varianty&quot;},&quot;onDetail&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;,&quot;default&quot;:null}}">class Component extends DCLogic {
   state = { qty:1, cmp:false };
   stars(filled){
     const n = Math.max(0, Math.min(5, Math.round(filled||0)));
@@ -55,18 +58,31 @@
   }
   renderVals(){
     const parseKc = (s)=> typeof s==='number' ? s : (parseInt(String(s||'').replace(/[^0-9]/g,''),10)||0);
+    const stop = (e)=>{ if(e && e.stopPropagation) e.stopPropagation(); };
+    // Řádek skladovosti má v šabloně pevnou výšku 40 px, takže i zalomení na 2 řádky
+    // nerozhodí zarovnání karet v gridu; text se proto nezkracuje ellipsis.
+    const OUT = 'display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:#C5232B;min-width:0;';
+    const oneLine = (s)=> (s||'') + 'min-width:0;';
     if (this.props.p){
       const p = Object.assign({}, this.props.p);
       const filled = (p.rating!==undefined) ? p.rating : (typeof p.starsOn==='string' ? (p.starsOn.match(/★/g)||[]).length : 4);
       p.starList = this.stars(filled);
-      return { p, sizeClass:'pk-fluid',
+      const avail = (p.available!==undefined) ? !!p.available : ((this.props.available!==undefined) ? !!this.props.available : true);
+      if (!avail){ p.availIn=false; p.availOut=true; p.avail='Není skladem'; p.availStyle=OUT; }
+      else { p.availStyle = oneLine(p.availStyle); }
+      const detail = p.onDetail || this.props.onDetail;
+      return { p, sizeClass:'pk-fluid', stop,
+        buyDisabled: !avail,
+        onCard: detail || (()=>{}),
         ratingValue: filled, reviews: p.reviews,
         netNum: parseKc(p.priceNet), grossNum: parseKc(p.price), originalNum: parseKc(p.original),
         qtyVal: p.qty || 1, onQty: p.onQty || (()=>{}) };
     }
+    const availDemo = (this.props.available!==undefined) ? !!this.props.available : true;
     const cmp = this.state.cmp;
     // Ukázková data pro samostatný náhled komponenty
-    return { sizeClass:'', ratingValue:4, reviews:23, netNum:397, grossNum:480, originalNum:0,
+    return { sizeClass:'', ratingValue:4, reviews:23, netNum:397, grossNum:480, originalNum:0, stop,
+      buyDisabled: !availDemo, onCard: this.props.onDetail || (()=>{}),
       qtyVal:this.state.qty, onQty:(v)=>this.setState({qty:v}), p: {
       name:'Opěrné kolečko ⌀48 mm, nosnost 150 kg', starList:this.stars(4), reviews:23,
       img:'uploads/kolecko-operne-dtr-prum-48-150-kg.jpg',
@@ -74,7 +90,8 @@
       noImg:false, phStyle:'', imgLabel:'',
       badge:'−15 %', badgeStyle:'position:absolute;top:8px;left:8px;font-size:13px;font-weight:700;border-radius:6px;padding:4px 9px;color:#fff;background:#C5232B;',
       dot1:'display:none;', dot2:'display:none;',
-      availStyle:'display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:#0B6937;', availIn:true, availOut:false, avail:'Skladem > 15 ks',
+      availStyle: availDemo ? oneLine('display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:#0B6937;') : OUT,
+      availIn: availDemo, availOut: !availDemo, avail: availDemo ? 'Skladem > 15 ks' : 'Není skladem',
       priceNet:'397 Kč', price:'480 Kč', objNum:'404815',
       qty:this.state.qty, cmp,
       cmpBox:'flex:none;width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1.5px solid '+(cmp?'#1E5AA8':'#C4CAD2')+';background:'+(cmp?'#1E5AA8':'#fff')+';',

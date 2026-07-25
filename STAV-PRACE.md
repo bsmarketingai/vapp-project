@@ -47,10 +47,11 @@ patička, karta i matchMedia na 900/901, takže při 900 px byl 4sloupcový grid
 hlavičkou. Sjednoceno na max-width:899 / min-width:900 (CLAUDE §5: ≥900 = desktop)
 v Hlavicka, Paticka, ProduktovaKarta, PrototypNahradniDilyVAPP, AuditKomponentVAPP.
 
-Nálezy k dořešení (NEOPRAVENO):
-- 480–1024: „Skladem X ks" se láme na 2 řádky → řádky karet (kvantifikátor, Koupit,
-  Porovnat) se napříč gridem nezarovnají. Chce pevné řádky v ProduktovaKarta.
-- „Obj. č.: 907527" se láme na 2 řádky, když je vedle delšího „Porovnat".
+Opraveno po měření (KAPTURA při 900 a 480 px, ProduktovaKarta.dc.html):
+- řádek skladovost+cena dostal min-height:40px → kvantifikátor, Koupit i spodní řádek
+  se napříč gridem zarovnají i když se „Skladem X ks" láme na 2 řádky;
+- „Obj. č." a „Porovnat" mají white-space:nowrap, obj. č. flex:none, label bez dvojtečky,
+  řádek gap 8px (gap zapsán, kaptura po něm neproběhla → JEN-ZÁPIS).
 - Sticky toolbar NELZE ověřit kapturou: kapturovací engine překresluje DOM a
   sticky/fixed prvek vykreslí ve statické pozici, ne v přišpendlené. Blok L zůstává DOM.
 
@@ -81,6 +82,45 @@ Nálezy k dořešení (NEOPRAVENO):
 - HOTOVO/KAPTURA: I, J, K, O (Cena, Hodnoceni), M.
 - ROZDĚLANÉ: L (sticky jen DOM), N, O-Toast, P, Q — vše JEN-ZÁPIS nebo DOM.
 - NESAHÁNO: G (čeká rozhodnutí a/b), audit skupina 3 (čeká go/no-go).
+
+## Blok R — Zarovnání řádků karty (25. 7. 2026)
+Soubor ProduktovaKarta.dc.html. Řádek skladovost+cena má pevnou výšku 40 px
+(overflow:hidden), spodní řádek Porovnat/Obj. č. 26 px. Text skladovosti se zalomí
+na 2 řádky uvnitř karty, ale výška řádku se nemění → Koupit je u všech karet v gridu
+ve stejné výšce. Obj. č. má white-space:nowrap a flex:none (netlačí Porovnat).
+Prop-styl skladovosti nešel doplnit inline, proto class .pk-av (min-width:0,
+flex-wrap:nowrap) v helmetu karty — ikona zůstává na řádku s textem.
+Cesty, které NEFUNGOVALY (zaznamenáno, aby se neopakovaly):
+- ellipsis na skladovosti odstřihl text („Sklade", „Skladem 12") — zrušeno;
+- flex-wrap:wrap poslal ikonu na vlastní řádek — zrušeno;
+- min-width:0 zapsané z logiky se na instanci v prototypu neprojevilo
+  (computed min-width zůstalo auto) → řešeno class v helmetu.
+Ověřeno KAPTUROU při 480 / 500 / 768 / 1024 px: všechny čtyři OK.
+
+## Blok S — Ověření dříve nespuštěných bloků (25. 7. 2026)
+- P skeleton: KAPTURA — po přepnutí „Skladem" 4 skeleton karty + „Zrušit filtry".
+- P prázdný stav: KAPTURA — package-off, „Žádné díly neodpovídají filtru",
+  tlačítko „Zrušit filtry" (secondary). Vyvoláno: podkategorie Náboje kol + značka Jokon.
+- Q Chip: KAPTURA aktivního (blue.600 pill s ✕) i neaktivního filtračního a značkového
+  chipu na testovací stránce. Hover a skutečné odebrání NEOVĚŘENO (kaptura hover nekreslí).
+- O Toast: KAPTURA tří variant (success / info / danger). Do prototypu nenapojen (dle pokynu).
+- L sticky filtr: zůstává DOM — kaptura sticky prvek kreslí staticky.
+
+## Blok T — Komponenty proti props (25. 7. 2026)
+Nový soubor KontrolaKomponentT.dc.html (testovací stránka, není součástí návrhu).
+- Cena s original 6 900 → přeškrtnutá původní + dopočet −29 %, 4 876 Kč, 5 900 s DPH. KAPTURA.
+- Cena bez original → jen 397 Kč a 480 Kč s DPH. KAPTURA.
+- Hodnoceni value 3,5 → 3,5 hvězdy (půlhvězda klipem); value 5 → 5 plných. KAPTURA.
+- Kosik count 0 → jen „Košík"; count 12 + total → pill 12 a 18 430 Kč. KAPTURA.
+- Žádná z komponent se s předanými props nechovala špatně → nic se neopravovalo.
+
+## Blok U — Varianty karty (25. 7. 2026)
+- Nový prop available (boolean, default true). false → skladovost circle-x „Není skladem"
+  (#C5232B) a Koupit disabled (bg neutral.100, text neutral.400). KAPTURA.
+- Nový prop onDetail (funkce) → klik na kartu; Koupit, kvantifikátor i Porovnat mají
+  stopPropagation, detail nespouštějí. Struktura DOM ověřena, klik NEOVĚŘENO (bez interakce).
+- Zpětná kompatibilita: bez props se karta chová jako dřív (KAPTURA v prototypu).
+- Obě varianty jsou v KontrolaKomponentT.dc.html; available je i v Tweaks (boolean editor).
 
 ## Otevřené otázky / dluh (skupina 3 + ostatní)
 - Přístupnost: span→button napříč systémem (pak focus-visible reálně funguje).

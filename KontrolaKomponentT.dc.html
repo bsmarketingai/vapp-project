@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;padding:0;background:#F7F9FB;}
+  a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
+</style>
+</helmet>
+<div style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;width:100%;margin:0;padding:0;">
+  <div style="max-width:1560px;margin:0 auto;padding:32px;display:flex;flex-direction:column;gap:24px;">
+    <h1 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.01em;color:#142F56;">Kontrola komponent s předanými props</h1>
+    <p style="margin:0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Testovací stránka — ověřuje, že props fungují i mimo galerii komponenty. Není součástí návrhu.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">
+      <div style="background:#fff;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7A828C;">Cena — s original 5 900</div>
+        <dc-import name="Cena" price-net="{{ n4876 }}" price-gross="{{ n5900 }}" original="{{ n6900 }}" hint-size="200px,64px"></dc-import>
+      </div>
+      <div style="background:#fff;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7A828C;">Cena — bez original</div>
+        <dc-import name="Cena" price-net="{{ n397 }}" price-gross="{{ n480 }}" original="{{ n0 }}" hint-size="200px,64px"></dc-import>
+      </div>
+      <div style="background:#fff;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7A828C;">Hodnoceni — value 3,5</div>
+        <dc-import name="Hodnoceni" value="{{ n35 }}" count="{{ n37 }}" hint-size="160px,20px"></dc-import>
+        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7A828C;">Hodnoceni — value 5</div>
+        <dc-import name="Hodnoceni" value="{{ n5 }}" count="{{ n120 }}" hint-size="160px,20px"></dc-import>
+      </div>
+      <div style="background:#fff;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7A828C;">Kosik — count 0</div>
+        <dc-import name="Kosik" count="{{ n0 }}" total="{{ n0 }}" hint-size="140px,60px"></dc-import>
+        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7A828C;">Kosik — count 12, total 18 430</div>
+        <dc-import name="Kosik" count="{{ n12 }}" total="{{ n18430 }}" hint-size="180px,60px"></dc-import>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;">
+      <div style="background:#fff;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:10px;">
+        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7A828C;">Toast — tři varianty</div>
+        <dc-import name="Toast" message="Přidáno do košíku" variant="success" visible="{{ yes }}" hint-size="320px,52px"></dc-import>
+        <dc-import name="Toast" message="Filtry zrušeny" variant="info" visible="{{ yes }}" hint-size="320px,52px"></dc-import>
+        <dc-import name="Toast" message="Díl není skladem" variant="danger" visible="{{ yes }}" hint-size="320px,52px"></dc-import>
+      </div>
+      <div style="background:#fff;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:10px;">
+        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7A828C;">Chip — aktivní / neaktivní</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <dc-import name="Chip" kind="filter" active="{{ yes }}" label="{{ chipLabel }}" on-remove="{{ noop }}" hint-size="180px,36px"></dc-import>
+          <dc-import name="Chip" kind="filter" active="{{ no }}" label="Nájezdové brzdy" count="{{ n486 }}" on-click="{{ noop }}" hint-size="180px,36px"></dc-import>
+          <dc-import name="Chip" kind="brand" active="{{ no }}" label="KNOTT" count="{{ n312 }}" on-click="{{ noop }}" hint-size="140px,36px"></dc-import>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:12px;">
+      <div style="background:#fff;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7A828C;">ProduktovaKarta — available false</div>
+        <div style="width:300px;"><dc-import name="ProduktovaKarta" p="{{ pOut }}" hint-size="300px,470px"></dc-import></div>
+      </div>
+      <div style="background:#fff;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#7A828C;">ProduktovaKarta — skladem + onDetail</div>
+        <div style="width:300px;"><dc-import name="ProduktovaKarta" p="{{ pIn }}" hint-size="300px,470px"></dc-import></div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { detailHits:0 };
+  renderVals(){
+    const base = {
+      name:'Náboj kola KNOTT 112×5', reviews:23, rating:4,
+      noImg:true, phStyle:'aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;background:#F2F4F7;color:#9AA1AB;font-size:13px;font-weight:700;', imgLabel:'FOTO',
+      badge:'', badgeStyle:'', dot1:'display:none;', dot2:'display:none;',
+      availStyle:'display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:#0B6937;',
+      availIn:true, availOut:false, avail:'Skladem 8 ks',
+      priceNet:'1 397 Kč', price:'1 690 Kč', objNum:'301125',
+      cmpBox:'flex:none;width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1.5px solid #C4CAD2;background:#fff;',
+      cmp:false, qty:1, onQty:()=>{}, onBuy:()=>{}, onCmp:()=>{}, onEnter:()=>{}, onLeave:()=>{}
+    };
+    return {
+      n0:0, n35:3.5, n5:5, n37:37, n120:120, n12:12, n397:397, n480:480,
+      n4876:4876, n5900:5900, n6900:6900, n18430:18430, n486:486, n312:312,
+      yes:true, no:false, noop:()=>{}, chipLabel:'Nápravy a brzdy',
+      pOut: Object.assign({}, base, { available:false, name:'Brzdové čelisti KNOTT 200×50' }),
+      pIn: Object.assign({}, base, { onDetail:()=>this.setState(s=>({detailHits:s.detailHits+1})) })
+    };
+  }
+}
+</script>
+</body>
+</html>
