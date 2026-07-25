@@ -18,24 +18,26 @@
   .bc-link{transition:color .12s;} .bc-link:hover{color:#1E5AA8 !important;}
 </style>
 </helmet>
-<div style="display:flex;flex-direction:column;gap:16px;max-width:820px;">
-  <div style="background:#fff;border-radius:8px;padding:16px 24px;">
+<div style="{{ rootStyle }}">
+  <div style="{{ barStyle }}">
     <div style="font-size:13px;color:#8A919C;display:flex;align-items:center;gap:7px;flex-wrap:wrap;">
       <sc-for list="{{ crumbs }}" as="c" hint-placeholder-count="3">
-        <sc-if value="{{ c.sep }}" hint-placeholder-val=""><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B4CEEC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></sc-if>
+        <sc-if value="{{ c.sep }}" hint-placeholder-val=""><span style="color:#B4CEEC;display:inline-flex;"><dc-import name="Ikony" icon-name="chevron-right" size="18" hint-size="18px,18px"></dc-import></span></sc-if>
         <span class="{{ c.cls }}" style="{{ c.style }}">{{ c.label }}</span>
       </sc-for>
     </div>
   </div>
+  <sc-if value="{{ showNote }}" hint-placeholder-val="{{ true }}">
   <div style="display:flex;flex-direction:column;gap:5px;padding:2px 4px;">
     <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> pod hlavičkou. Odkazy terciální šedé s modrým hoverem, oddělovač šipka #B4CEEC, poslední úroveň tučná tmavě modrá bez odkazu.</div>
-    <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> poslední položku nedělat odkazem; nepřekračovat 4–5 úrovní.</div>
   </div>
+  </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:820,&quot;height&quot;:150},&quot;items&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:820,&quot;height&quot;:150},&quot;items&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;bare&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
 class Component extends DCLogic {
   renderVals(){
+    const bare = this.props.bare === true;
     const items = this.props.items || ['Úvod','Náhradní díly','Nápravy a brzdy'];
     const crumbs = [];
     items.forEach((label,i)=>{
@@ -46,7 +48,9 @@ class Component extends DCLogic {
           ? 'font-weight:700;color:#173C70;cursor:default;'
           : 'color:#8A919C;cursor:pointer;' });
     });
-    return { crumbs };
+    return { crumbs, showNote: !bare,
+      rootStyle: bare ? '' : 'display:flex;flex-direction:column;gap:16px;max-width:820px;',
+      barStyle: bare ? '' : 'background:#fff;border-radius:8px;padding:16px 24px;' };
   }
 }
 </script>

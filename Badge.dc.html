@@ -23,9 +23,9 @@
 <sc-if value="{{ gallery }}" hint-placeholder-val="{{ true }}">
 <div style="display:flex;flex-direction:column;gap:16px;max-width:720px;">
   <div style="background:#fff;border-radius:8px;padding:28px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-    <span style="display:inline-flex;align-items:center;font-size:13px;font-weight:700;color:#fff;background:#C5232B;border-radius:6px;padding:5px 10px;">−20 %</span>
-    <span style="display:inline-flex;align-items:center;font-size:13px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:6px;padding:5px 10px;">Novinka</span>
-    <span style="display:inline-flex;align-items:center;font-size:13px;font-weight:700;color:#0B6937;background:#E9F8EF;border-radius:6px;padding:5px 10px;">Doprava zdarma</span>
+    <span style="display:inline-flex;align-items:center;font-size:13px;font-weight:700;color:#fff;background:#C5232B;border-radius:6px;padding:4px 8px;">−20 %</span>
+    <span style="display:inline-flex;align-items:center;font-size:13px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:6px;padding:4px 8px;">Novinka</span>
+    <span style="display:inline-flex;align-items:center;font-size:13px;font-weight:700;color:#0B6937;background:#E9F8EF;border-radius:6px;padding:4px 8px;">Doprava zdarma</span>
   </div>
   <div style="display:flex;flex-direction:column;gap:5px;padding:2px 4px;">
     <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> vlevo nahoře na fotce karty. Sleva = červená, novinka = modrá, doprava zdarma = zelený text na světle zeleném podkladu. Radius 6, weight 700.</div>
@@ -48,7 +48,7 @@ class Component extends DCLogic {
       const v = map[P.type] || map.new;
       return { single:true, gallery:false,
         text: P.text || v.def,
-        badgeStyle:'display:inline-flex;align-items:center;font-size:13px;font-weight:700;color:'+v.fg+';background:'+v.bg+';border-radius:6px;padding:5px 10px;' };
+        badgeStyle:'display:inline-flex;align-items:center;font-size:13px;font-weight:700;color:'+v.fg+';background:'+v.bg+';border-radius:6px;padding:4px 8px;' };
     }
     return { single:false, gallery:true };
   }

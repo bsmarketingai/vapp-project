@@ -10,6 +10,7 @@
   - `BarevnaPaletaVAPP.dc.html` — **archiv, nepoužívat.** Obsahuje starý styl (Hanken Grotesk, borders, rádiusy 11–14).
 - **Znovupoužitelné komponenty** = samostatné `.dc.html` soubory importované přes `dc-import`. Návrhové stránky komponenty nikdy nekopírují, vždy importují.
 - Při změně tokenu aktualizuj tento soubor i `DesignSystemVAPP.dc.html`.
+- **`dc-import` a prop `name`:** `dc-import` obsazuje atribut `name` pro výběr souboru a předává ho dítěti i jako prop — komponenta, která potřebuje vlastní prop `name`, musí použít alias. U `Ikony.dc.html` je proto kanonický prop `iconName`; `name` funguje jen ve standalone náhledu.
 
 ---
 
@@ -122,6 +123,7 @@ Mezihodnoty mimo tuto řadu nepoužívat.
 - Container max-width **1560 px**. Page padding 32 px desktop / 16 px mobil.
 - Produktový grid: **4 sloupce na desktopu, 2 na mobilu**, gap 12 px, `auto-fill, minmax(min(46%,270px),1fr)`.
 - Karta 280–300 px. Grid kategorií `auto-fit, minmax(280px,1fr)`, gap 12.
+- Rozměry karty 280–300 px platí jen pro samostatný náhled; v produktovém gridu je karta tekutá (`width:100%`, `min-width:0`, `max-width:none`).
 - **Breakpointy:** `< 600` mobil · `600–899` tablet · **`≥ 900` hlavní zlom** (desktopová navigace a layout) · `≥ 1280` plný 4sloupcový grid · `≥ 1560` container se přestává roztahovat.
 
 ---

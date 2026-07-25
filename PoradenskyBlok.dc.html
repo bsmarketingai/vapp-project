@@ -22,27 +22,27 @@
 <div style="display:flex;flex-direction:column;gap:20px;max-width:900px;">
   <sc-if value="{{ showStd }}" hint-placeholder-val="{{ true }}">
     <div style="display:flex;align-items:center;gap:16px;background:#EFF4FB;border-radius:8px;padding:16px;flex-wrap:wrap;">
-      <div style="flex:none;width:44px;height:44px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#1E5AA8;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div>
+      <div style="flex:none;width:44px;height:44px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#1E5AA8;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import></div>
       <div style="flex:1;min-width:200px;">
         <div style="font-size:16px;font-weight:700;color:#142F56;">Nevíte, který díl je ten správný?</div>
         <div style="display:inline-flex;align-items:center;gap:8px;font-size:14px;color:#5A626C;margin-top:2px;"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:9px;height:9px;background:#2EAA6A;flex:none;"></span>Zkušení obchodníci poradí po telefonu i e-mailu · Po–Pá 8–16</div>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <dc-import name="Tlacitko" variant="primary" size="medium" label="323 605 314" icon="phone" hint-size="180px,44px"></dc-import>
-        <dc-import name="Tlacitko" variant="secondary" size="medium" label="Napsat e-mail" hint-size="160px,44px"></dc-import>
+        <dc-import name="Tlacitko" variant="ontint" size="medium" label="Napsat e-mail" hint-size="160px,44px"></dc-import>
       </div>
     </div>
   </sc-if>
   <sc-if value="{{ showCompact }}" hint-placeholder-val="">
     <div style="display:flex;align-items:center;gap:14px;background:#EFF4FB;border-radius:8px;padding:16px;flex-wrap:wrap;">
-      <div style="flex:none;width:40px;height:40px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#1E5AA8;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div>
+      <div style="flex:none;width:40px;height:40px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#1E5AA8;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import></div>
       <div style="flex:1;min-width:180px;">
         <div style="font-size:14px;font-weight:700;color:#142F56;">Nevíte, který díl je ten správný?</div>
         <div style="display:inline-flex;align-items:center;gap:8px;font-size:13px;color:#5A626C;margin-top:1px;"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:9px;height:9px;background:#2EAA6A;flex:none;"></span>Zkušení obchodníci poradí po telefonu i e-mailu · Po–Pá 8–16</div>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <dc-import name="Tlacitko" variant="primary" size="medium" label="323 605 314" icon="phone" hint-size="180px,44px"></dc-import>
-        <dc-import name="Tlacitko" variant="secondary" size="medium" label="Napsat e-mail" hint-size="160px,44px"></dc-import>
+        <dc-import name="Tlacitko" variant="ontint" size="medium" label="Napsat e-mail" hint-size="160px,44px"></dc-import>
       </div>
     </div>
   </sc-if>

@@ -20,7 +20,7 @@
 </style>
 </helmet>
 <sc-if value="{{ single }}" hint-placeholder-val="">
-  <div onClick="{{ cat.onOpen }}" class="k-tile" style="background:#fff;border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:12px;height:100%;cursor:pointer;">
+  <div onClick="{{ cat.onOpen }}" class="k-tile" style="background:#fff;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:12px;height:100%;cursor:pointer;">
     <div style="display:flex;align-items:center;gap:12px;">
       <span style="flex:none;width:44px;height:44px;border-radius:8px;background:#EFF4FB;display:flex;align-items:center;justify-content:center;color:#1E5AA8;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3"></circle></svg></span>
       <span style="flex:1;min-width:0;">
@@ -28,7 +28,7 @@
         <span style="display:block;font-size:13px;color:#8A919C;margin-top:1px;">{{ cat.count }} produktů</span>
       </span>
     </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px;">
+    <div style="display:flex;flex-direction:column;align-items:flex-start;gap:8px;">
       <sc-for list="{{ cat.subs }}" as="sub" hint-placeholder-count="4">
         <span onClick="{{ sub.onPick }}" class="k-sub" style="font-size:14px;font-weight:600;color:#3A424C;cursor:pointer;">{{ sub.name }}</span>
       </sc-for>
@@ -40,7 +40,7 @@
 <div style="display:flex;flex-direction:column;gap:16px;">
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">
     <sc-for list="{{ cats }}" as="k" hint-placeholder-count="3">
-      <div class="k-tile" style="background:#fff;border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:12px;height:100%;cursor:pointer;">
+      <div class="k-tile" style="background:#fff;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:12px;height:100%;cursor:pointer;">
         <div style="display:flex;align-items:center;gap:12px;">
           <span style="flex:none;width:44px;height:44px;border-radius:8px;background:#EFF4FB;display:flex;align-items:center;justify-content:center;color:#1E5AA8;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3"></circle></svg></span>
           <span style="flex:1;min-width:0;">
@@ -48,7 +48,7 @@
             <span style="display:block;font-size:13px;color:#8A919C;margin-top:1px;">{{ k.count }} produktů</span>
           </span>
         </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px;">
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:8px;">
           <sc-for list="{{ k.subs }}" as="sub" hint-placeholder-count="4">
             <span class="k-sub" style="font-size:14px;font-weight:600;color:#3A424C;cursor:pointer;">{{ sub.name }}</span>
           </sc-for>

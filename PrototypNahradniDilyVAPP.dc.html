@@ -21,11 +21,15 @@
   .wf-img2{background:repeating-linear-gradient(-45deg,#D8E6F6,#D8E6F6 11px,#CFDFF2 11px,#CFDFF2 22px);}
   @keyframes vapp-led{0%{box-shadow:0 0 0 0 var(--led);}70%{box-shadow:0 0 0 7px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
   .vapp-led{border-radius:999px;animation:vapp-led 1.8s ease-out infinite;}
-  @media (max-width:900px){ .dt{display:none !important;} .pg-h1{font-size:26px !important;} }
-  @media (min-width:901px){ .mb{display:none !important;} }
+  @media (max-width:899px){ .dt{display:none !important;} .pg-h1{font-size:26px !important;} }
+  @media (min-width:900px){ .mb{display:none !important;} }
 .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
 .vp-bleed{margin-left:-32px;margin-right:-32px;padding-left:32px;padding-right:32px;}
-@media (max-width:900px){ .vp-in{padding-left:16px;padding-right:16px;} .vp-bleed{margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px;} }
+@media (max-width:899px){ .vp-in{padding-left:16px;padding-right:16px;} .vp-bleed{margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px;} }
+.p-grid{display:grid;gap:12px;grid-template-columns:repeat(4,1fr);}
+@media (max-width:899px){ .p-grid{grid-template-columns:repeat(2,1fr);} .p-sticky{position:static !important;} }
+@media (max-width:479px){ .p-grid{grid-template-columns:1fr;} }
+.sk{background:#F2F4F7;border-radius:6px;}
 </style>
 <script>
 (function(){
@@ -47,7 +51,7 @@
 .hvx9{transition:color .12s;} .hvx9:hover{color:#fff !important;}
 </style>
 </helmet>
-<div data-screen-label="Prototyp Náhradní díly VAPP" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;">
+<div data-screen-label="Prototyp Náhradní díly VAPP" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
 
   <dc-import name="Hlavicka" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" hint-size="100%,150px"></dc-import>
 
@@ -95,7 +99,7 @@
     </sc-if>
 
     <!-- ===== TOOLBAR (sticky) ===== -->
-    <div class="vp-bleed" style="position:sticky;top:0;z-index:40;background:#F7F9FB;margin-top:14px;padding-top:10px;padding-bottom:10px;border-bottom:1px solid #F2F4F7;">
+    <div class="vp-bleed p-sticky" style="position:sticky;top:0;z-index:40;background:#F7F9FB;margin-top:14px;padding-top:10px;padding-bottom:10px;border-bottom:1px solid #F2F4F7;">
       <div style="display:flex;gap:8px;max-width:1560px;margin:0 auto;">
         <span onClick="{{ openFilter }}" style="flex:1;max-width:220px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;font-size:13.5px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;cursor:pointer;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>Filtry<sc-if value="{{ filterCount }}" hint-placeholder-val=""><span style="background:#C5232B;border-radius:999px;font-size:13px;padding:2px 8px;">{{ filterCount }}</span></sc-if></span>
         <span onClick="{{ toggleStock }}" style="{{ stockBtnStyle }}"><span style="{{ stockBoxStyle }}">{{ stockCheck }}</span>Skladem</span>
@@ -115,11 +119,36 @@
       <span style="font-size:13px;color:#5A626C;font-weight:600;">{{ resultCount }} produktů</span>
       <sc-if value="{{ anyFilter }}" hint-placeholder-val=""><span onClick="{{ clearFilters }}" style="font-size:13px;font-weight:700;color:#C5232B;cursor:pointer;text-decoration:underline;">Zrušit filtry</span></sc-if>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(46%,270px),1fr));gap:12px;">
+    <sc-if value="{{ loading }}" hint-placeholder-val="">
+      <div class="p-grid">
+        <sc-for list="{{ skeletons }}" as="k" hint-placeholder-count="4">
+          <div style="background:#fff;border-radius:8px;overflow:hidden;padding-bottom:16px;">
+            <div class="sk" style="aspect-ratio:4/3;border-radius:0;"></div>
+            <div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px;">
+              <div class="sk" style="height:14px;width:90%;"></div>
+              <div class="sk" style="height:14px;width:55%;"></div>
+              <div class="sk" style="height:36px;width:100%;margin-top:8px;"></div>
+              <div class="sk" style="height:44px;width:100%;"></div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ showEmpty }}" hint-placeholder-val="">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:56px 20px;text-align:center;">
+        <span style="color:#9AA1AB;display:inline-flex;"><dc-import name="Ikony" icon-name="package-off" size="24" hint-size="24px,24px"></dc-import></span>
+        <div style="font-size:16px;font-weight:700;color:#15181C;">Žádné díly neodpovídají filtru</div>
+        <div style="font-size:14px;color:#5A626C;max-width:360px;">Zkuste zrušit některý filtr nebo rozšířit výběr značek.</div>
+        <dc-import name="Tlacitko" variant="secondary" size="medium" label="Zrušit filtry" on-click="{{ clearFilters }}" hint-size="150px,44px"></dc-import>
+      </div>
+    </sc-if>
+    <sc-if value="{{ showGrid }}" hint-placeholder-val="{{ true }}">
+    <div class="p-grid">
       <sc-for list="{{ products }}" as="p" hint-placeholder-count="8">
         <dc-import name="ProduktovaKarta" p="{{ p }}" hint-size="100%,470px"></dc-import>
       </sc-for>
     </div>
+    </sc-if>
 
     <!-- load more -->
     <sc-if value="{{ hasMore }}" hint-placeholder-val="{{ true }}">
@@ -141,17 +170,6 @@
   <div style="margin-top:10px;">
     <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
   </div>
-
-  <!-- COMPARE BAR -->
-  <sc-if value="{{ cmpCount }}" hint-placeholder-val="">
-    <div style="position:fixed;left:0;right:0;bottom:0;z-index:60;background:#142F56;box-shadow:0 -6px 24px rgba(20,47,86,.25);">
-      <div style="max-width:1560px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:12px 16px;">
-        <span style="font-size:13.5px;font-weight:700;color:#fff;flex:1;">{{ cmpLabel }}</span>
-        <span onClick="{{ clearCompare }}" style="font-size:13px;font-weight:700;color:#B4CEEC;cursor:pointer;text-decoration:underline;">Zrušit</span>
-        <span style="display:inline-flex;align-items:center;min-height:44px;font-size:13.5px;font-weight:700;color:#fff;background:#0E7F43;border-radius:8px;padding:0 22px;cursor:pointer;gap:8px;">Porovnat <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3 4 7l4 4"></path><path d="M4 7h16"></path><path d="m16 21 4-4-4-4"></path><path d="M20 17H4"></path></svg></span>
-      </div>
-    </div>
-  </sc-if>
 
   <!-- FILTER PANEL -->
   <sc-if value="{{ filterOpen }}" hint-placeholder-val="">
@@ -197,9 +215,11 @@ class Component extends DCLogic {
       menuOpen:false, descOpen:false, filterOpen:false, sortOpen:false,
       view:'groups', subcat:null, onlyStock: props.defaultOnlyStock ?? false, sort: props.defaultSort ?? 'pop',
       brands:{}, params:{}, accOpen:{ 'Výrobce':true }, compare:{}, qty:{}, shown:15, hoverCard:null,
-      searchQ:'', searchFocus:false
+      searchQ:'', searchFocus:false, loading:false
     };
   }
+
+  reload(patch){ this.setState(Object.assign({ loading:true }, patch||{})); clearTimeout(this._rt); this._rt=setTimeout(()=>this.setState({ loading:false }), 400); }
 
   SEARCH = [
     { name:'Nápravy a brzdy', meta:'Kategorie · 612 produktů', cat:true, kw:'brzda brzdy naprava napravy naprav' },
@@ -300,6 +320,7 @@ class Component extends DCLogic {
         qty:(s.qty&&s.qty[p.name])||1,
         onMinus:()=>{ const q=Object.assign({},s.qty); q[p.name]=Math.max(1,((q[p.name]||1)-1)); this.setState({qty:q}); },
         onPlus:()=>{ const q=Object.assign({},s.qty); q[p.name]=(q[p.name]||1)+1; this.setState({qty:q}); },
+        onQty:(v)=>{ const q=Object.assign({},s.qty); q[p.name]=Math.max(1,v); this.setState({qty:q}); },
         img:p.img||'', noImg:!p.img,
         badge: p.sale ? '−'+p.sale+' %' : (this.priceNum(p)>=freeShip ? 'Doprava zdarma' : ''),
         badgeStyle:'position:absolute;top:8px;left:8px;font-size:13px;font-weight:700;border-radius:6px;padding:4px 9px;'+(p.sale?'color:#fff;background:#C5232B;':'color:#0B6937;background:#E9F8EF;'),
@@ -308,7 +329,7 @@ class Component extends DCLogic {
         imgLabel: hov ? 'FOTO 2' : 'FOTO 1',
         dot1:(p.img?'display:none;':'')+'width:6px;height:6px;border-radius:50%;background:'+(hov?'#B4CEEC':'#1E5AA8')+';',
         dot2:(p.img?'display:none;':'')+'width:6px;height:6px;border-radius:50%;background:'+(hov?'#1E5AA8':'#B4CEEC')+';',
-        onEnter:()=>{ if(window.matchMedia('(min-width:901px)').matches) this.setState({ hoverCard:p.name }); },
+        onEnter:()=>{ if(window.matchMedia('(min-width:900px)').matches) this.setState({ hoverCard:p.name }); },
         onLeave:()=>{ if(s.hoverCard===p.name) this.setState({ hoverCard:null }); },
         cmp,
         cmpBox:'flex:none;width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1.5px solid '+(cmp?'#1E5AA8':'#C4CAD2')+';background:'+(cmp?'#1E5AA8':'#fff')+';',
@@ -344,8 +365,8 @@ class Component extends DCLogic {
     });
     const filterAcc = [
       mkAcc('Výrobce', this.BRANDS.map(([b,c])=>({ t:b, c:'('+c+')', on:!!s.brands[b], box:box(!!s.brands[b]),
-        onToggle:()=>{ const br=Object.assign({},s.brands); br[b]=!br[b]; this.setState({brands:br, shown:15}); } })), activeBrandN||''),
-      mkAcc('Dostupnost', [{ t:'Pouze skladem', c:'', on:s.onlyStock, box:box(s.onlyStock), onToggle:()=>this.setState({onlyStock:!s.onlyStock, shown:15}) }], s.onlyStock?'1':''),
+        onToggle:()=>{ const br=Object.assign({},s.brands); br[b]=!br[b]; this.reload({brands:br, shown:15}); } })), activeBrandN||''),
+      mkAcc('Dostupnost', [{ t:'Pouze skladem', c:'', on:s.onlyStock, box:box(s.onlyStock), onToggle:()=>this.reload({onlyStock:!s.onlyStock, shown:15}) }], s.onlyStock?'1':''),
       mkAcc('Průměr brzdy', [['160 mm','(74)'],['200 mm','(112)'],['230 mm','(96)'],['250 mm','(58)']].map(([t,c])=>({ t, c, on:false, box:box(false), onToggle:()=>{} }))),
       mkAcc('Rozteč kol', [['100×4','(52)'],['112×5','(140)'],['140×5','(66)']].map(([t,c])=>({ t, c, on:false, box:box(false), onToggle:()=>{} }))),
       mkAcc('Cena', [['do 500 Kč','(680)'],['500–2 000 Kč','(1 114)'],['nad 2 000 Kč','(624)']].map(([t,c])=>({ t, c, on:false, box:box(false), onToggle:()=>{} }))),
@@ -354,7 +375,7 @@ class Component extends DCLogic {
     const sortMap = { pop:'Nejoblíbenější', cheap:'Od nejlevnějšího', exp:'Od nejdražšího', az:'Podle názvu A–Z' };
     const sortOpts = Object.keys(sortMap).map(k=>({
       t:sortMap[k],
-      onPick:()=>this.setState({ sort:k, sortOpen:false }),
+      onPick:()=>this.reload({ sort:k, sortOpen:false }),
       style:'display:flex;align-items:center;min-height:44px;padding:0 14px;font-size:13.5px;cursor:pointer;font-weight:'+(s.sort===k?'700':'600')+';color:'+(s.sort===k?'#1E5AA8':'#3A424C')+';'+(s.sort===k?'background:#EFF4FB;':''),
     }));
 
@@ -400,22 +421,25 @@ class Component extends DCLogic {
       filterOpen:s.filterOpen, openFilter:()=>this.setState({filterOpen:true}), closeFilter:()=>this.setState({filterOpen:false}),
       filterCount: filterCount||'',
       anyFilter: filterCount>0,
-      clearFilters:()=>this.setState({ brands:{}, onlyStock:false, shown:15 }),
-      toggleStock:()=>this.setState({onlyStock:!s.onlyStock, shown:15}),
+      clearFilters:()=>this.reload({ brands:{}, onlyStock:false, shown:15 }),
+      toggleStock:()=>this.reload({onlyStock:!s.onlyStock, shown:15}),
       stockBtnStyle:'display:flex;align-items:center;gap:9px;min-height:44px;padding:0 6px;font-size:13px;font-weight:700;cursor:pointer;user-select:none;color:'+(s.onlyStock?'#0B6937;':'#3A424C;'),
       stockBoxStyle:'flex:none;width:21px;height:21px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;'+(s.onlyStock?'background:#0E7F43;color:#fff;border:1.5px solid #0E7F43;':'background:#fff;color:transparent;border:1.5px solid #C4CAD2;'),
       stockCheck: s.onlyStock ? '✓' : '',
       sortOpen:s.sortOpen, toggleSort:()=>this.setState({sortOpen:!s.sortOpen}),
       sortLabel: sortMap[s.sort], sortOpts,
       products,
+      loading: s.loading,
+      showGrid: !s.loading && visible.length>0,
+      showEmpty: !s.loading && visible.length===0,
+      skeletons: [1,2,3,4],
       resultCount: resultCount.toLocaleString('cs-CZ'),
       shownCount: visible.length,
       hasMore: visible.length < filteredAll.length,
       nextBatch: Math.min(8, filteredAll.length - visible.length),
       loadMore:()=>this.setState({ shown:s.shown+8 }),
       progressStyle:'width:'+pct+'%;height:100%;background:#1E5AA8;border-radius:999px;transition:width .3s;',
-      cmpCount: cmpCount||'', cmpCountNum: cmpCount, headerSearch: s.searchQ, onHeaderSearch:(v)=>this.setState({ searchQ:v }), cmpLabel: cmpCount+' '+(cmpCount===1?'produkt':(cmpCount<5?'produkty':'produktů'))+' k porovnání',
-      clearCompare:()=>this.setState({compare:{}}),
+      cmpCountNum: cmpCount, headerSearch: s.searchQ, onHeaderSearch:(v)=>this.setState({ searchQ:v }),
       openCompare:()=>{},
       filterAcc,
       footerCols: [

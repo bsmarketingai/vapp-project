@@ -25,6 +25,14 @@
   .b-text{transition:text-decoration-thickness .12s;}
   .b-text:hover{text-decoration-thickness:2px;}
   .b-buy:focus-visible,.b-primary:focus-visible,.b-secondary:focus-visible,.b-danger:focus-visible,.b-ghost:focus-visible,.b-text:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .b-ontint{transition:background .12s,transform .06s;}
+  .b-ontint:hover{background:#EFF4FB !important;}
+  .b-ontint:active{transform:translateY(1px);}
+  .b-ontint:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .b-ondark{transition:background .12s,transform .06s;}
+  .b-ondark:hover{background:rgba(255,255,255,.20) !important;}
+  .b-ondark:active{transform:translateY(1px);}
+  .b-ondark:focus-visible{outline:2px solid #fff;outline-offset:2px;}
 </style>
 </helmet>
 <sc-if value="{{ single }}" hint-placeholder-val="">
@@ -51,14 +59,13 @@
           <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
             <span style="flex:none;width:80px;font-size:13px;font-weight:700;color:#8A919C;">{{ b.label }}</span>
             <button type="button" class="b-primary" style="{{ b.leadStyle }}"><dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import>Leading</button>
-            <button type="button" class="b-primary" style="{{ b.trailStyle }}">Trailing<dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></button>
+            <button type="button" class="b-primary" style="{{ b.trailStyle }}">Trailing<dc-import name="Ikony" icon-name="arrow-right" size="24" hint-size="24px,24px"></dc-import></button>
             <button type="button" class="b-primary" aria-label="Do košíku" style="{{ b.iconStyle }}"><dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import></button>
             <button type="button" class="b-ghost" style="{{ b.ghostStyle }}">Ghost</button>
             <button type="button" class="b-text" style="{{ b.textStyle }}">Text</button>
           </div>
         </sc-for>
       </div>
-      <div style="font-size:13px;line-height:1.5;color:#5A626C;margin-top:12px;max-width:760px;">Ukázka „Trailing" používá <span style="font-family:'JetBrains Mono',monospace;font-size:12px;">chevron-right</span> jako <strong style="color:#C5232B;">dočasnou náhradu</strong> za <span style="font-family:'JetBrains Mono',monospace;font-size:12px;">arrow-right</span>, který v sadě Tabler zatím chybí (doplní se samostatně).</div>
     </div>
     <div>
       <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#8A919C;margin-bottom:14px;">Stavy</div>
@@ -78,6 +85,21 @@
       <div style="font-size:13px;line-height:1.5;color:#5A626C;margin-top:10px;max-width:760px;"><strong style="color:#3A424C;">Kdy:</strong> Ghost = terciární akce bez plné plochy — v hutných místech nebo vedle silnějšího tlačítka (např. „Podpora" u „Akce a slevy"). Text = odkazová akce v textovém toku či jako méně důležitá volba. Nikdy ne pro hlavní konverzi (Koupit).</div>
     </div>
   </div>
+  <div style="background:#EFF4FB;border-radius:8px;padding:28px;">
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#8A919C;margin-bottom:14px;">onTint — na barevné ploše (#EFF4FB)</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+      <button type="button" class="b-ontint" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#1E5AA8;background:#fff;border-radius:8px;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;">Napsat e-mail</button>
+      <button type="button" class="b-secondary" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#1E5AA8;background:#EFF4FB;border-radius:8px;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;">Sekundární (splývá)</button>
+    </div>
+    <div style="font-size:13px;line-height:1.5;color:#5A626C;margin-top:10px;max-width:760px;"><strong style="color:#3A424C;">Kdy:</strong> onTint místo secondary, když tlačítko leží na barevné ploše (např. #EFF4FB blok poradny) — bílé pozadí ho odliší tam, kde by secondary splynulo.</div>
+  </div>
+  <div style="background:#142F56;border-radius:8px;padding:28px;">
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#B4CEEC;margin-bottom:14px;">onDark — na tmavé ploše (#142F56)</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+      <button type="button" class="b-ondark" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#fff;background:rgba(255,255,255,.12);border-radius:8px;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;">Všechny kontakty</button>
+    </div>
+    <div style="font-size:13px;line-height:1.5;color:#B4CEEC;margin-top:10px;max-width:760px;"><strong style="color:#fff;">Kdy:</strong> onDark na tmavém podkladu (patička #142F56, topbar) — poloprůhledná bílá plocha drží kontrast tam, kde by secondary i primary buď splynuly, nebo křičely.</div>
+  </div>
   <div style="display:flex;flex-direction:column;gap:5px;padding:2px 4px;">
     <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> zelená jen pro Koupit, modrá pro primární akce, červená pro akce a slevy. Ikony přes <span style="font-family:'JetBrains Mono',monospace;font-size:12px;">Ikony.dc.html</span> (24×24), weight 700, radius 8. Horizontální padding 16 / 20 / 24 (Standard / Medium / Large).</div>
     <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nekreslit ikonu inline — vždy přes registr; nepoužívat zelenou dekorativně ani mimo konverzi; hlavní menu jsou záložky, ne tlačítka; icon-only vždy s ariaLabel.</div>
@@ -85,7 +107,7 @@
 </div>
 </sc-if>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:920,&quot;height&quot;:540},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;buy&quot;,&quot;primary&quot;,&quot;secondary&quot;,&quot;danger&quot;,&quot;ghost&quot;,&quot;text&quot;],&quot;default&quot;:&quot;primary&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;standard&quot;,&quot;medium&quot;,&quot;large&quot;],&quot;default&quot;:&quot;medium&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Tlačítko&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;icon&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;iconTrailing&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;iconOnly&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;trailChevron&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;disabled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;fullWidth&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;ariaLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:920,&quot;height&quot;:540},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;buy&quot;,&quot;primary&quot;,&quot;secondary&quot;,&quot;danger&quot;,&quot;ghost&quot;,&quot;text&quot;,&quot;ontint&quot;,&quot;ondark&quot;],&quot;default&quot;:&quot;primary&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;standard&quot;,&quot;medium&quot;,&quot;large&quot;],&quot;default&quot;:&quot;medium&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Tlačítko&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;icon&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;iconTrailing&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;iconOnly&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;trailChevron&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;disabled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;fullWidth&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;ariaLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
   renderVals(){
     const P = this.props;
@@ -96,6 +118,8 @@ class Component extends DCLogic {
       const [mh,fs,pad] = dims;
       const V = {
         buy:{bg:'#0E7F43',fg:'#fff',cls:'b-buy'},
+        ontint:{bg:'#fff',fg:'#1E5AA8',cls:'b-ontint'},
+        ondark:{bg:'rgba(255,255,255,.12)',fg:'#fff',cls:'b-ondark'},
         primary:{bg:'#1E5AA8',fg:'#fff',cls:'b-primary'},
         secondary:{bg:'#EFF4FB',fg:'#1E5AA8',cls:'b-secondary'},
         danger:{bg:'#C5232B',fg:'#fff',cls:'b-danger'},

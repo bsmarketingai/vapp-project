@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>Blok M — meridlo sirek</title>
+<style>
+  html,body{margin:0;padding:0;background:#15181C;font-family:'Exo 2',Arial,sans-serif;}
+  #bar{color:#fff;font:700 14px Arial;padding:8px 12px;}
+  #wrap{transform-origin:top left;}
+  iframe{border:0;display:block;background:#fff;}
+</style>
+</head>
+<body>
+<div id="bar">w = <span id="lbl">360</span> px</div>
+<div id="wrap"><iframe id="fr" src="PrototypNahradniDilyVAPP.dc.html" width="360" height="2200"></iframe></div>
+<script>
+  window.setW = function(w, h){
+    h = h || 2200;
+    var fr = document.getElementById('fr');
+    fr.width = w; fr.height = h;
+    document.getElementById('lbl').textContent = w;
+    var avail = 1180;
+    var s = Math.min(1, avail / w);
+    document.getElementById('wrap').style.transform = 'scale(' + s + ')';
+    fr.contentWindow.location.reload();
+  };
+  window.setW(360);
+</script>
+</body>
+</html>

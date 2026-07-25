@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  body{padding:24px;}
+  .ks-hit{transition:background .12s;} .ks-hit:hover{background:#F2F4F7 !important;}
+</style>
+</helmet>
+<sc-if value="{{ single }}" hint-placeholder-val="">
+  <div onClick="{{ onClick }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;">
+    <div class="ks-hit" style="position:relative;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:#1E5AA8;">
+      <dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import>
+      <sc-if value="{{ showCount }}" hint-placeholder-val=""><span style="position:absolute;top:-2px;right:-2px;min-width:20px;height:20px;border-radius:999px;background:#C5232B;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;">{{ count }}</span></sc-if>
+    </div>
+    <span style="{{ labelStyle }}">{{ label }}</span>
+  </div>
+</sc-if>
+<sc-if value="{{ gallery }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-direction:column;gap:16px;max-width:520px;">
+  <div style="background:#fff;border-radius:8px;padding:28px;display:flex;gap:48px;flex-wrap:wrap;align-items:flex-start;">
+    <sc-for list="{{ states }}" as="it" hint-placeholder-count="3">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <div class="ks-hit" style="position:relative;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:#1E5AA8;">
+          <dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import>
+          <sc-if value="{{ it.showCount }}" hint-placeholder-val=""><span style="position:absolute;top:-2px;right:-2px;min-width:20px;height:20px;border-radius:999px;background:#C5232B;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px;">{{ it.count }}</span></sc-if>
+        </div>
+        <span style="{{ it.labelStyle }}">{{ it.label }}</span>
+      </div>
+    </sc-for>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:5px;padding:2px 4px;">
+    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> v hlavičce jako vstup do košíku. Prázdný stav popisek „Košík"; s položkami částka bez DPH (13/700), čítač jako červený pill jen když počet &gt; 0. Dotyková plocha 44×44, bez rámečku, hover #F2F4F7.</div>
+    <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nepřidávat rámeček ani pozadí v klidu; nezobrazovat cenu s DPH ani popisek „s DPH"; čítač neukazovat při nule.</div>
+  </div>
+</div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:520,&quot;height&quot;:190},&quot;count&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;tsType&quot;:&quot;number&quot;},&quot;total&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;tsType&quot;:&quot;number&quot;},&quot;onClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null}}">
+class Component extends DCLogic {
+  fmt(n){ return String(Math.round(n||0)).replace(/\B(?=(\d{3})+(?!\d))/g,'\u00A0') + ' Kč'; }
+  cell(count,total){
+    return { count, showCount: count>0,
+      label: count>0 ? this.fmt(total) : 'Košík',
+      labelStyle: count>0 ? 'font-size:13px;font-weight:700;color:#15181C;' : 'font-size:13px;font-weight:600;color:#5A626C;' };
+  }
+  renderVals(){
+    const P = this.props;
+    const embedded = P.count!==undefined || P.total!==undefined || typeof P.onClick==='function';
+    if (embedded){
+      const count = parseInt(P.count,10)||0;
+      const total = parseInt(P.total,10)||0;
+      const c = this.cell(count,total);
+      return { single:true, gallery:false, count:c.count, showCount:c.showCount, label:c.label, labelStyle:c.labelStyle, onClick:P.onClick||(()=>{}) };
+    }
+    return { single:false, gallery:true, states:[ this.cell(0,0), this.cell(1,397), this.cell(12,14990) ] };
+  }
+}
+</script>
+</body>
+</html>

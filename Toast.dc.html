@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+</style>
+</helmet>
+<sc-if value="{{ single }}" hint-placeholder-val="">
+  <sc-if value="{{ isVisible }}" hint-placeholder-val="{{ true }}">
+    <div style="{{ toastStyle }}"><span style="{{ iconWrap }}"><dc-import name="Ikony" icon-name="{{ icon }}" size="24" hint-size="24px,24px"></dc-import></span><span style="font-size:14px;font-weight:700;line-height:1.35;">{{ message }}</span></div>
+  </sc-if>
+</sc-if>
+<sc-if value="{{ gallery }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-direction:column;gap:16px;max-width:560px;">
+  <div style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:14px;align-items:flex-start;">
+    <div style="display:inline-flex;align-items:center;gap:12px;background:#fff;border-radius:8px;padding:14px 18px;box-shadow:0 10px 30px rgba(20,30,45,.14);"><span style="display:inline-flex;color:#0B6937;"><dc-import name="Ikony" icon-name="circle-check" size="24" hint-size="24px,24px"></dc-import></span><span style="font-size:14px;font-weight:700;color:#15181C;">Přidáno do košíku</span></div>
+    <div style="display:inline-flex;align-items:center;gap:12px;background:#fff;border-radius:8px;padding:14px 18px;box-shadow:0 10px 30px rgba(20,30,45,.14);"><span style="display:inline-flex;color:#1E5AA8;"><dc-import name="Ikony" icon-name="info-circle" size="24" hint-size="24px,24px"></dc-import></span><span style="font-size:14px;font-weight:700;color:#15181C;">Košík byl aktualizován</span></div>
+    <div style="display:inline-flex;align-items:center;gap:12px;background:#fff;border-radius:8px;padding:14px 18px;box-shadow:0 10px 30px rgba(20,30,45,.14);"><span style="display:inline-flex;color:#C5232B;"><dc-import name="Ikony" icon-name="alert-circle" size="24" hint-size="24px,24px"></dc-import></span><span style="font-size:14px;font-weight:700;color:#15181C;">Poslední kus — sklad vyčerpán</span></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:5px;padding:2px 4px;">
+    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> krátká potvrzovací hláška (přidáno do košíku, aktualizace). Overlay stín, radius 8, ikona podle variantu (success/info/danger). Auto-zmizení řídí stránka přes prop visible.</div>
+    <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nepoužívat na chyby vyžadující akci (to je dialog); nenechávat trvale viditelné; nevkládat do něj tlačítka.</div>
+  </div>
+</div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:560,&quot;height&quot;:260},&quot;message&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Přidáno do košíku&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;success&quot;,&quot;info&quot;,&quot;danger&quot;],&quot;default&quot;:&quot;success&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;visible&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  renderVals(){
+    const P = this.props;
+    const single = P.message !== undefined;
+    if (single){
+      const map = { success:{icon:'circle-check',fg:'#0B6937'}, info:{icon:'info-circle',fg:'#1E5AA8'}, danger:{icon:'alert-circle',fg:'#C5232B'} };
+      const v = map[P.variant] || map.success;
+      return { single:true, gallery:false,
+        isVisible: P.visible !== false,
+        message: P.message, icon: v.icon,
+        iconWrap:'display:inline-flex;color:'+v.fg+';',
+        toastStyle:'display:inline-flex;align-items:center;gap:12px;background:#fff;border-radius:8px;padding:14px 18px;box-shadow:0 10px 30px rgba(20,30,45,.14);color:#15181C;' };
+    }
+    return { single:false, gallery:true };
+  }
+}
+</script>
+</body>
+</html>

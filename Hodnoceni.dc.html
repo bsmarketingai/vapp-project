@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+</style>
+</helmet>
+<sc-if value="{{ single }}" hint-placeholder-val="">
+  <span style="display:inline-flex;align-items:center;gap:6px;">
+    <span style="display:inline-flex;align-items:center;gap:1px;">
+      <sc-for list="{{ stars }}" as="st" hint-placeholder-count="5">
+        <sc-if value="{{ st.half }}" hint-placeholder-val="">
+          <span style="position:relative;display:inline-flex;width:{{ size }}px;height:{{ size }}px;">
+            <span style="color:#D5DAE0;display:inline-flex;position:absolute;inset:0;"><dc-import name="Ikony" icon-name="star-filled" size="{{ size }}" hint-size="14px,14px"></dc-import></span>
+            <span style="color:#F5A623;display:inline-flex;position:absolute;inset:0;width:50%;overflow:hidden;"><dc-import name="Ikony" icon-name="star-filled" size="{{ size }}" hint-size="14px,14px"></dc-import></span>
+          </span>
+        </sc-if>
+        <sc-if value="{{ st.solid }}" hint-placeholder-val=""><span style="{{ st.style }}"><dc-import name="Ikony" icon-name="{{ st.icon }}" size="{{ size }}" hint-size="14px,14px"></dc-import></span></sc-if>
+      </sc-for>
+    </span>
+    <sc-if value="{{ hasCount }}" hint-placeholder-val=""><span style="font-size:13px;color:#7A828C;">({{ count }})</span></sc-if>
+  </span>
+</sc-if>
+<sc-if value="{{ gallery }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-direction:column;gap:16px;max-width:720px;">
+  <div style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:16px;">
+    <sc-for list="{{ demo }}" as="d" hint-placeholder-count="4">
+      <div style="display:flex;align-items:center;gap:14px;"><span style="display:inline-flex;align-items:center;gap:1px;"><sc-for list="{{ d.stars }}" as="st" hint-placeholder-count="5"><sc-if value="{{ st.half }}" hint-placeholder-val=""><span style="position:relative;display:inline-flex;width:16px;height:16px;"><span style="color:#D5DAE0;display:inline-flex;position:absolute;inset:0;"><dc-import name="Ikony" icon-name="star-filled" size="16" hint-size="16px,16px"></dc-import></span><span style="color:#F5A623;display:inline-flex;position:absolute;inset:0;width:50%;overflow:hidden;"><dc-import name="Ikony" icon-name="star-filled" size="16" hint-size="16px,16px"></dc-import></span></span></sc-if><sc-if value="{{ st.solid }}" hint-placeholder-val=""><span style="{{ st.style16 }}"><dc-import name="Ikony" icon-name="{{ st.icon }}" size="16" hint-size="16px,16px"></dc-import></span></sc-if></sc-for></span><span style="font-size:13px;color:#7A828C;">{{ d.label }}</span></div>
+    </sc-for>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:5px;padding:2px 4px;">
+    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> hvězdy z registru (star / star-filled), plné rating.star #F5A623, prázdné #D5DAE0. Půlhvězda přes klip. Za nimi volitelně počet recenzí (13, text.muted).</div>
+    <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nekreslit hvězdy znakem ★; nebarvit jinak než rating tokeny.</div>
+  </div>
+</div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:720,&quot;height&quot;:220},&quot;value&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:4.5,&quot;tsType&quot;:&quot;number&quot;},&quot;count&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:23,&quot;tsType&quot;:&quot;number&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:14,&quot;tsType&quot;:&quot;number&quot;}}">
+class Component extends DCLogic {
+  build(value){
+    const out = [];
+    for (let i=0;i<5;i++){
+      const d = value - i;
+      if (d >= 1) out.push({ solid:true, half:false, icon:'star-filled', style:'color:#F5A623;display:inline-flex;', style16:'color:#F5A623;display:inline-flex;' });
+      else if (d >= 0.5) out.push({ solid:false, half:true });
+      else out.push({ solid:true, half:false, icon:'star', style:'color:#D5DAE0;display:inline-flex;', style16:'color:#D5DAE0;display:inline-flex;' });
+    }
+    return out;
+  }
+  renderVals(){
+    const P = this.props;
+    const single = P.value !== undefined;
+    if (single){
+      const v = Math.max(0, Math.min(5, P.value||0));
+      return { single:true, gallery:false, stars:this.build(v), size:P.size||14,
+        hasCount: P.count!=null, count:P.count };
+    }
+    return { single:false, gallery:true, demo:[
+      { stars:this.build(5), label:'5,0' }, { stars:this.build(4.5), label:'4,5 · půlhvězda' },
+      { stars:this.build(4), label:'4,0' }, { stars:this.build(3.5), label:'3,5' },
+    ] };
+  }
+}
+</script>
+</body>
+</html>
