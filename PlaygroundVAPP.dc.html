@@ -15,16 +15,18 @@
 <style>
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
+  .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
+  @media (max-width:899px){ .vp-in{padding-left:16px;padding-right:16px;} }
   body{background:#F7F9FB;}
   a{color:#1E5AA8;text-decoration:none;} a:hover{color:#1A4A8A;}
   .pg-nav{transition:background .12s;} .pg-nav:hover{background:#D8E6F6 !important;}
   .pg-tgl{transition:background .12s,color .12s;}
 </style>
 </helmet>
-<div style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;">
+<div style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
 
   <div style="position:sticky;top:0;z-index:50;background:rgba(247,249,251,.92);backdrop-filter:blur(8px);border-bottom:1px solid #F2F4F7;">
-    <div style="max-width:1560px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+    <div class="vp-in" style="padding-top:14px;padding-bottom:14px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
       <img src="./vapp-logo.svg" alt="VAPP" style="height:28px;display:block;">
       <span style="font-size:15px;font-weight:700;color:#15181C;">Playground</span>
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-left:8px;">
@@ -42,7 +44,7 @@
     </div>
   </div>
 
-  <div style="max-width:1560px;margin:0 auto;padding:48px 32px 140px;display:flex;flex-direction:column;gap:64px;">
+  <div class="vp-in" style="padding-top:48px;padding-bottom:140px;display:flex;flex-direction:column;gap:64px;">
 
     <div>
       <h1 style="margin:0;font-size:36px;font-weight:700;letter-spacing:-0.02em;">Design systém pohromadě</h1>

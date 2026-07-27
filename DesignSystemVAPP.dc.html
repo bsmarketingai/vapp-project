@@ -15,6 +15,8 @@
 <style>
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
+  .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
+  @media (max-width:899px){ .vp-in{padding-left:16px;padding-right:16px;} }
   body{background:#F7F9FB;}
   a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
   .hvx1{transition:box-shadow .12s;} .hvx1:hover{box-shadow:0 6px 20px rgba(20,47,86,.10) !important;}
@@ -22,8 +24,8 @@
 </style>
 </helmet>
 
-<div data-screen-label="Design systém VAPP" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;padding:56px 32px 120px;">
-  <div style="max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:64px;">
+<div data-screen-label="Design systém VAPP" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
+  <div class="vp-in" style="max-width:1080px;padding-top:56px;padding-bottom:120px;display:flex;flex-direction:column;gap:64px;">
 
     <!-- HLAVIČKA -->
     <div>

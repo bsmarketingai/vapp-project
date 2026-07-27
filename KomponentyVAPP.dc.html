@@ -16,12 +16,14 @@
 <style>
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
+  .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
+  @media (max-width:899px){ .vp-in{padding-left:16px;padding-right:16px;} }
   body{background:#F7F9FB;}
   a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
 </style>
 </helmet>
-<div data-screen-label="Komponenty VAPP" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;padding:56px 32px 120px;">
-  <div style="max-width:1560px;margin:0 auto;display:flex;flex-direction:column;gap:56px;">
+<div data-screen-label="Komponenty VAPP" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
+  <div class="vp-in" style="padding-top:56px;padding-bottom:120px;display:flex;flex-direction:column;gap:56px;">
 
     <div>
       <img src="./vapp-logo.svg" alt="VAPP" style="height:36px;display:block;margin-bottom:20px;">

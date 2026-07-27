@@ -1,178 +1,85 @@
-# STAV PRÁCE — VAPP (noční běh I–Q)
+# STAV PRÁCE — VAPP
 
-Aktualizováno po bloku Q. Platí SOUBORY, ne tento zápis, když se rozcházejí.
-GitHub není v sezení připojen — „commity" jsou zaznamenané zprávy, ne skutečný push.
+Předávací stav k 25. 7. 2026. Platí SOUBORY, ne tento zápis, když se rozcházejí.
+GitHub se neřeší — tento soubor je jediný předávací kanál.
 
-## Hotové bloky
+Rozlišení ověření: **KAPTURA** = viděný vyrenderovaný výsledek · **DOM** = ověřeno
+ve struktuře/kódu, ne vizuálně · **JEN-ZÁPIS** = napsáno, nespuštěno.
 
-### I — Full-bleed
-- Prototyp root: width:100%, margin:0, padding:0, jen background surface.page.
-- Hlavicka root: width:100% (topbar i hlavní pruh už full-bleed přes .vp-in).
-- Paticka: full-bleed pruh #142F56, .vp-in obal.
-- CLAUDE.md §5 věta o full-bleed už přítomná (nezdvojeno).
+---
 
-### J — Porovnání jen čítač
-- compare-bar (fixed dole) v prototypu ODSTRANĚN i s vals (cmpCount/cmpLabel/clearCompare).
-- Počet zaškrtnutých „Porovnat" jde do Hlavicka compareCount (pill u ikony). ~14 řádků ubylo.
+## Hotové a použitelné
 
-### K — Kvantifikator
-- Příčina placatosti: karta kreslila kvantifikátor LOKÁLNĚ (tenké 30px ovládání), po Koupit→Tlacitko se výšky řádku rozešly.
-- Kvantifikator dostal props value/onChange/min(1)/max(99); minus/plus se na hranicích zablokují (disabled, not-allowed); <button> + hover + focus-visible; střední pole min-width 34→28.
-- Napojen v ProduktovaKarta (value=qty, onChange=onQty), množství drží karta.
+Komponenty jsou samostatné `.dc.html` soubory, do návrhových stránek se vkládají
+přes `dc-import` (nikdy nekopírovat obsah).
 
-### L — Sticky filtr
-- Toolbar .p-sticky: sticky top:0 (hlavička není sticky, takže 0 je správně), z-index 40 pod overlay.
-- <900 px sticky vypnut (position:static).
-
-### M — Mobil (25. 7. 2026, ODMĚŘENO KAPTUROU)
-Metoda: prototyp renderován v jednom dokumentu, šířka vynucena na html/body + všechny
-@media pravidla (i v dětských komponentách) přepnuta na all / not all podle měřené šířky,
-body scale kvůli vejití do panelu. Kaptury v screens/.
-
-| šířka | sloupce gridu | hlavička | poznámka |
-|---|---|---|---|
-| 360 | 1 | mobilní (hamburger + Košík, hledání na celý řádek) | topbar se láme na 2 řádky |
-| 390 | 1 | mobilní | OK |
-| 480 | 2 | mobilní | „Skladem 12 ks" a „Obj. č." se lámou na 2 řádky |
-| 600 | 2 | mobilní | OK, řádky karet se rozcházejí |
-| 768 | 2 | mobilní | OK |
-| 899 | 2 | mobilní | OK (potvrzeno po opravě zlomu) |
-| 900 | 4 | DESKTOPOVÁ | potvrzeno po opravě zlomu |
-| 1024 | 4 | desktopová | „Obj. č." se láme u dlouhých názvů |
-| 1280 | 4 | desktopová | OK |
-| 1440 | 4 | desktopová | OK |
-
-Opraveno při měření: zlom byl nekonzistentní — grid přepínal na 899/900, ale hlavička,
-patička, karta i matchMedia na 900/901, takže při 900 px byl 4sloupcový grid s mobilní
-hlavičkou. Sjednoceno na max-width:899 / min-width:900 (CLAUDE §5: ≥900 = desktop)
-v Hlavicka, Paticka, ProduktovaKarta, PrototypNahradniDilyVAPP, AuditKomponentVAPP.
-
-Opraveno po měření (KAPTURA při 900 a 480 px, ProduktovaKarta.dc.html):
-- řádek skladovost+cena dostal min-height:40px → kvantifikátor, Koupit i spodní řádek
-  se napříč gridem zarovnají i když se „Skladem X ks" láme na 2 řádky;
-- „Obj. č." a „Porovnat" mají white-space:nowrap, obj. č. flex:none, label bez dvojtečky,
-  řádek gap 8px (gap zapsán, kaptura po něm neproběhla → JEN-ZÁPIS).
-- Sticky toolbar NELZE ověřit kapturou: kapturovací engine překresluje DOM a
-  sticky/fixed prvek vykreslí ve statické pozici, ne v přišpendlené. Blok L zůstává DOM.
-
-### N — Drobný dluh
-- Hamburger v Hlavičce už bez rámečku (plocha 44, hover surface.subtle) — bylo hotové z bloku A.
-- Checkbox „Porovnat" v kartě: radius 5→6 (standalone i prototyp mají 6).
-- #97DBB4 a 14.5px NECHÁNY → H4.
-
-### O — Nové komponenty
-- Cena.dc.html (priceNet/priceGross/original/size; sleva dopočet; formát mezerou). Napojena v kartě.
-- Hodnoceni.dc.html (value 0–5 vč. půlhvězd přes klip, count; star/star-filled z registru). Napojena v kartě.
-- Toast.dc.html (message/variant/visible) — jen komponenta + galerie, do prototypu NEnapojena.
-
-### P — Prázdný + načítací stav
-- Prázdný: package-off + text + Tlacitko „Zrušit filtry" (showEmpty).
-- Skeleton: 4 karty (sk plochy), ~400 ms přes reload() na filtr/sort/značky/dostupnost.
-
-### Q — Audit skupina 2 (bezpečné)
-- Chip: aktivní filtr hover (.c-active), onClick/onRemove props (bez nich beze změny), padding 9/16→8/16, značková linka #D5DAE0→#C4CAD2.
-- Vyhledavani: thumbProd #EEF1F4/#E6EAEE→#F2F4F7; overline ls .05→.06; radius pole 8→6.
-- KategorickaDlazdice: padding 18→16, gap subs 6→8.
-- Breadcrumb: prop bare (skryje DS poznámku i kartu), default poznámky zap; poslední úroveň #173C70 = blue.800 (token, beze změny).
-- Skladovost: gap 7→8. Badge: padding 5/10→4/8.
-- focus-visible (Kateg/Paticka/PoradenskyBlok) PŘESUNUTO do skupiny 3 (span→button).
-
-## Report 25. 7. 2026 (blok M)
-- GitHub se dál neřeší (rozhodnutí uživatele). Předávací kanál = tento soubor.
-- HOTOVO/KAPTURA: I, J, K, O (Cena, Hodnoceni), M.
-- ROZDĚLANÉ: L (sticky jen DOM), N, O-Toast, P, Q — vše JEN-ZÁPIS nebo DOM.
-- NESAHÁNO: G (čeká rozhodnutí a/b), audit skupina 3 (čeká go/no-go).
-
-## Blok R — Zarovnání řádků karty (25. 7. 2026)
-Soubor ProduktovaKarta.dc.html. Řádek skladovost+cena má pevnou výšku 40 px
-(overflow:hidden), spodní řádek Porovnat/Obj. č. 26 px. Text skladovosti se zalomí
-na 2 řádky uvnitř karty, ale výška řádku se nemění → Koupit je u všech karet v gridu
-ve stejné výšce. Obj. č. má white-space:nowrap a flex:none (netlačí Porovnat).
-Prop-styl skladovosti nešel doplnit inline, proto class .pk-av (min-width:0,
-flex-wrap:nowrap) v helmetu karty — ikona zůstává na řádku s textem.
-Cesty, které NEFUNGOVALY (zaznamenáno, aby se neopakovaly):
-- ellipsis na skladovosti odstřihl text („Sklade", „Skladem 12") — zrušeno;
-- flex-wrap:wrap poslal ikonu na vlastní řádek — zrušeno;
-- min-width:0 zapsané z logiky se na instanci v prototypu neprojevilo
-  (computed min-width zůstalo auto) → řešeno class v helmetu.
-Ověřeno KAPTUROU při 480 / 500 / 768 / 1024 px: všechny čtyři OK.
-
-## Blok S — Ověření dříve nespuštěných bloků (25. 7. 2026)
-- P skeleton: KAPTURA — po přepnutí „Skladem" 4 skeleton karty + „Zrušit filtry".
-- P prázdný stav: KAPTURA — package-off, „Žádné díly neodpovídají filtru",
-  tlačítko „Zrušit filtry" (secondary). Vyvoláno: podkategorie Náboje kol + značka Jokon.
-- Q Chip: KAPTURA aktivního (blue.600 pill s ✕) i neaktivního filtračního a značkového
-  chipu na testovací stránce. Hover a skutečné odebrání NEOVĚŘENO (kaptura hover nekreslí).
-- O Toast: KAPTURA tří variant (success / info / danger). Do prototypu nenapojen (dle pokynu).
-- L sticky filtr: zůstává DOM — kaptura sticky prvek kreslí staticky.
-
-## Blok T — Komponenty proti props (25. 7. 2026)
-Nový soubor KontrolaKomponentT.dc.html (testovací stránka, není součástí návrhu).
-- Cena s original 6 900 → přeškrtnutá původní + dopočet −29 %, 4 876 Kč, 5 900 s DPH. KAPTURA.
-- Cena bez original → jen 397 Kč a 480 Kč s DPH. KAPTURA.
-- Hodnoceni value 3,5 → 3,5 hvězdy (půlhvězda klipem); value 5 → 5 plných. KAPTURA.
-- Kosik count 0 → jen „Košík"; count 12 + total → pill 12 a 18 430 Kč. KAPTURA.
-- Žádná z komponent se s předanými props nechovala špatně → nic se neopravovalo.
-
-## Blok U — Varianty karty (25. 7. 2026)
-- Nový prop available (boolean, default true). false → skladovost circle-x „Není skladem"
-  (#C5232B) a Koupit disabled (bg neutral.100, text neutral.400). KAPTURA.
-- Nový prop onDetail (funkce) → klik na kartu; Koupit, kvantifikátor i Porovnat mají
-  stopPropagation, detail nespouštějí. Struktura DOM ověřena, klik NEOVĚŘENO (bez interakce).
-- Zpětná kompatibilita: bez props se karta chová jako dřív (KAPTURA v prototypu).
-- Obě varianty jsou v KontrolaKomponentT.dc.html; available je i v Tweaks (boolean editor).
-
-## Blok V — Off-token dluh (25. 7. 2026, rozhodnuto uživatelem)
-| co | soubor | stará → nová |
+| komponenta | co umí | hlavní props |
 |---|---|---|
-| status.openOnDark | CLAUDE.md §1, DesignSystemVAPP „Stavy a commerce" | nový token #97DBB4 (green.200) |
-| „právě otevřeno" | Hlavicka | hex zůstává + komentář odkazující na status.openOnDark |
-| mobilní nav | Hlavicka | 14.5px → 14px (label.small) |
-| toolbar Filtry/řazení | Prototyp | 13.5px → 14px (label.small) |
-| linka chipu | Prototyp, Chip | inset 1.5px → 1px |
-| border checkboxu Porovnat | ProduktovaKarta | 1.5px → 1px |
-CLAUDE.md §1 dostal větu „Šířka okraje není token — všude 1 px."
-Ověřeno KAPTUROU: hlavička (14px nav, LED text) i toolbar prototypu (14px, 1px linky).
-Ikona kategorie natvrdo v KategorickaDlazdice — NECHÁNA, viz otevřené otázky (icon prop).
+| `Hlavicka` | topbar s otevírací dobou a LED, logo, hledání, ikony účet/porovnat/košík, hlavní menu se záložkami a underline; pod 900 px hamburger + hledání na celý řádek | `searchValue`, `onSearchChange`, `compareCount`, `onCompare` |
+| `Breadcrumb` | drobečková navigace, poslední úroveň tučná bez odkazu; `bare` skryje DS poznámku i kartu | `items`, `bare` |
+| `KategorickaDlazdice` | dlaždice kategorie — ikona v kruhu 44, název, počet, výpis podkategorií, tlačítko „Zobrazit vše" | `cat` (objekt: name, count, subs, onPick) |
+| `ProduktovaKarta` | karta náhradního dílu: fotka 4:3, název, hvězdičky, skladovost + ceny na pevném 40px řádku, kvantifikátor + Koupit, Porovnat + obj. č.; řádky se zarovnají napříč gridem | `p` (data), `available` (false → „Není skladem" + Koupit disabled), `onDetail` |
+| `Chip` | filtrační chip (aktivní pill blue.600 s ✕, neaktivní surface.subtle) a značkový chip s počtem | `kind`, `active`, `label`, `count`, `onClick`, `onRemove` |
+| `Vyhledavani` | pole 44/48 s lupou, našeptávač s náhledy a rozdělením kategorie/produkt, mazání dotazu | `value`, `bare`, `height`, `placeholder` |
+| `Kvantifikator` | −/hodnota/+ ve dvou velikostech, blokuje se na hranicích | `value`, `onChange`, `min`, `max`, `size` |
+| `Skladovost` | skladem / není skladem / na dotaz, ikony 18×18, bez podbarvení | `state`, `text` |
+| `Badge` | sleva, doprava zdarma, novinka | `type`, `text` |
+| `Kosik` | ikona košíku s pill počtem a částkou; při 0 jen „Košík" | `count`, `total`, `onClick` |
+| `Cena` | cena bez DPH primárně, pod ní s DPH; s `original` přeškrtnutá původní a dopočtená sleva | `priceNet`, `priceGross`, `original`, `size` |
+| `Hodnoceni` | hvězdičky včetně půlhvězdy (klip) a počet recenzí | `value`, `count`, `size` |
+| `Toast` | hlášení success / info / danger; do prototypu záměrně NEnapojen | `message`, `variant`, `visible` |
+| `PoradenskyBlok` | poradenský pruh s telefonem a e-mailem (telefon zatím natvrdo) | `—` |
+| `Paticka` | tmavá patička #142F56, sloupce odkazů, sociální kolečka, adresy (zatím natvrdo) | `—` |
+| `LedIndikator` | pulzující LED otevřeno/zavřeno | `open` |
+| `Tlacitko` | jediný zdroj tlačítek: primary / secondary / buy / danger / ghost / text, tři velikosti, ikony, disabled, icon-only | `variant`, `size`, `label`, `icon`, `iconTrailing`, `iconOnly`, `disabled`, `fullWidth`, `onClick`, `ariaLabel` |
+| `Ikony` | jediný registr ikon (sada Tabler), 24×24, stroke 2, `currentColor` | `iconName`, `size` |
 
-## Blok W — Skupina Q kapturou (25. 7. 2026)
-Nový soubor KontrolaKomponentW.dc.html (testovací stránka, není součástí návrhu).
-| komponenta | co | stav |
-|---|---|---|
-| Vyhledavani | pole radius 6, tlačítko lupy | HOTOVO / KAPTURA |
-| Vyhledavani | našeptávač + thumbnail #F2F4F7, overline ls .06 | ROZDĚLANÉ / DOM — dropdown se otevírá na focus, programový focus se v kaptuře neprojevil |
-| KategorickaDlazdice | padding 16, gap subs 8 | HOTOVO / KAPTURA |
-| Breadcrumb | bare=true bez poznámky, bare=false s poznámkou | HOTOVO / KAPTURA |
-| Skladovost | gap 8, tři stavy, ikony 18 | HOTOVO / KAPTURA |
-| Badge | padding 4/8, tři typy | HOTOVO / KAPTURA |
-Vedlejší nález (NEOPRAVENO): Vyhledavani ignoruje prop value, když není předán
-on-search-change — v poli zůstal placeholder. Zapsáno jako dluh, nezasahováno.
+**Registr ikon:** 64 ikon v `Ikony.dc.html`. Nic nechybí (půlhvězda řešena klipem
+v `Hodnoceni`). Zúžení podle reálného použití je otevřená otázka.
 
-## Blok X — Zbytky DOM/JEN-ZÁPIS (25. 7. 2026)
-- Kvantifikator: KAPTURA hranic — value 1 minus zesvětlený, value 99 plus zesvětlený,
-  value 5 oba aktivní. cursor:not-allowed je v kódu (DOM), kaptura kurzor nekreslí.
-- ProduktovaKarta onDetail: DOM — řádek Koupit+kvantifikátor a řádek Porovnat/Obj. č.
-  mají onClick={stop} se stopPropagation, klik na kartu jinde volá onCard. Klik NEOVĚŘEN.
-- Chip: OPRAVENO — ✕ se dřív kreslil u každého aktivního chipu i bez handleru;
-  nově showX = active && !!onRemove. ✕ volá onRemove (DOM). Aktivní chip s onRemove
-  ověřen KAPTUROU; hover NEOVĚŘEN (kaptura hover nekreslí).
+**Prototyp `PrototypNahradniDilyVAPP.dc.html`** — funkční výpis náhradních dílů:
+full-bleed layout (container 1560, padding 32/16), drill-down kategorie → podkategorie,
+filtry (značka, dostupnost) s čítačem, řazení, skeleton ~400 ms, prázdný stav,
+donačítání, porovnání jako čítač v hlavičce. Grid ověřen kapturou na 10 šířkách
+(360–1440): ≥900 čtyři sloupce, 480–899 dva, <480 jeden; zlom sjednocen na 899/900
+napříč hlavičkou, patičkou, kartou i `matchMedia`. Karty mají Koupit ve stejné výšce
+při 480 / 500 / 768 / 1024.
 
-## Otevřené otázky / dluh (skupina 3 + ostatní)
-- Přístupnost: span→button napříč systémem (pak focus-visible reálně funguje).
-- Obsah v props: Paticka adresy/IČO, PoradenskyBlok telefon, Vyhledavani katalog — natvrdo.
-- Lupa ve Vyhledavani: iconOnly Tlacitka neumí výšku pole (48/42) → lokální <button>.
-- Chybějící varianty: Skladovost dodací lhůta, karta „není skladem", karta přívěsu s parametry.
-- Chybějící komponenty: paginace, filtr-panel jako komponenta, mobilní drawer, modal/drawer, mini-košík, řádková karta + přepínač mřížka/seznam.
-- Varianty nad rámec pravidel: ghost/text tlačítko, badge „Novinka" — doplnit do CLAUDE nebo zrušit.
-- Registr 64 ikon — zvážit další zúžení dle reálného použití.
-- prefers-reduced-motion pro LED a přechody.
-- Wireframy — povýšení na hi-fi (blok G) odloženo, storyboard vs full-bleed (a/b).
+**Testovací stránky** (nejsou součástí návrhu): `KontrolaKomponentT.dc.html` (Cena,
+Hodnoceni, Kosik, Toast, Chip, karta available/onDetail) a `KontrolaKomponentW.dc.html`
+(skupina Q + hranice kvantifikátoru).
 
-## H4 — Off-token NEOPRAVENO
-- Hlavicka: #97DBB4 (text „právě otevřeno" na tmavém). Návrh token: status.openOnDark ~ green.200 #97DBB4.
-- Hlavicka: 14.5px mobilní nav. Návrh: label.small 14 nebo body.medium 16 (skok na breakpointu).
-- Ikona kategorie v KategorickaDlazdice natvrdo (terč) — chce icon prop (rozhodnuto: samostatný krok).
-- Vyhledavani: prop value se neprojeví bez on-search-change (řízená vs. neřízená komponenta).
+**Zdroje pravdy:** `CLAUDE.md` (tokeny, pravidla) · `DesignSystemVAPP.dc.html` (základy) ·
+`KomponentyVAPP.dc.html` (katalog) · `AuditKomponentVAPP.dc.html` (audit) ·
+`BarevnaPaletaVAPP.dc.html` = archiv, nepoužívat.
 
-## Ikony k doexportu
-- star-half (půlhvězda) — obejito klipem, není nutné; jinak nic nechybí.
+**Zbývá neviděné (DOM / JEN-ZÁPIS):** sticky toolbar v prototypu (kaptura sticky prvek
+kreslí staticky) · našeptávač a focus ring `Vyhledavani` · klik `onDetail` a
+stopPropagation v kartě · hover stavy obecně · `cursor:not-allowed` kvantifikátoru.
+
+---
+
+## Odloženo — neřešit bez vyžádání
+
+- **Přístupnost `span` → `button`** napříč systémem (teprve pak reálně funguje
+  `:focus-visible`, které je připravené v Kateg. dlaždici, Patičce a Poradenském bloku).
+- **Obsah do props:** adresy a IČO v `Paticka`, telefon v `PoradenskyBlok`,
+  katalog dotazů v `Vyhledavani` — zatím natvrdo v komponentách.
+- **Wireframy** (`WireframeHomepageVAPP` a další) — povýšení na hi-fi neřešeno,
+  nerozhodnuto archiv + nové stránky vs. přepis na full-bleed.
+- **Off-token detaily:** `status.openOnDark` = #97DBB4 je už token (CLAUDE §1 +
+  DesignSystem). Ostatní zmapováno: 14.5 → 14, 13.5 → 14, 1.5px → 1px.
+  Otevřené: ikona kategorie natvrdo v `KategorickaDlazdice` (chce `icon` prop) a
+  `Vyhledavani` ignoruje prop `value` bez `on-search-change` (řízená vs. neřízená).
+- **Chybějící komponenty:** paginace, mobilní drawer, mini-košík, modal/drawer,
+  řádková karta s přepínačem mřížka/seznam, filtr-panel jako komponenta.
+- **Chybějící varianty:** `Skladovost` s dodací lhůtou, karta přívěsu s parametry.
+- **`prefers-reduced-motion`** pro LED a přechody.
+
+---
+
+## Další téma (otevřené, nezačínat)
+
+Sekce **„Výpis kategorií"**. Hlavní bolest je **mobilní zobrazení** — na malých
+šířkách je drill-down i dlaždicový výpis nepřehledný. Řešení se teprve navrhuje
+s uživatelem, zatím se nic nekreslí a nic se nemění.

@@ -11,44 +11,46 @@
 <meta name="robots" content="noindex, nofollow, noarchive">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
 <style>
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
-  body{background:#EEF1F5;}
+  .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
+  @media (max-width:899px){ .vp-in{padding-left:16px;padding-right:16px;} }
+  body{background:#F7F9FB;}
 </style>
 </helmet>
-<div data-screen-label="UX Backlog VAPP" style="font-family:'Hanken Grotesk',sans-serif;color:#1A1D21;background:#EEF1F5;min-height:100vh;padding:40px 20px 90px;">
-  <div style="max-width:880px;margin:0 auto;">
+<div data-screen-label="UX Backlog VAPP" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
+  <div class="vp-in" style="max-width:880px;padding-top:40px;padding-bottom:90px;">
 
     <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px;">
-      <h1 style="margin:0;font-size:28px;font-weight:800;letter-spacing:-0.02em;">UX backlog</h1>
+      <h1 style="margin:0;font-size:28px;font-weight:700;letter-spacing:-0.02em;">UX backlog</h1>
       <span style="font-size:15px;font-weight:700;color:#1E5AA8;letter-spacing:.04em;">VAPP.CZ</span>
     </div>
-    <p style="margin:0 0 22px;font-size:14px;color:#69707A;">Společný checklist k odškrtávání — body z <strong style="color:#39414B;font-weight:700;">UX analýzy agentury</strong> plus vrstva <strong style="color:#6D28D9;font-weight:700;">vlastních doporučení</strong> (filtrovatelné přes „Zdroj“).</p>
+    <p style="margin:0 0 22px;font-size:14px;color:#7A828C;">Společný checklist k odškrtávání — body z <strong style="color:#3A424C;font-weight:700;">UX analýzy agentury</strong> plus vrstva <strong style="color:#6D28D9;font-weight:700;">vlastních doporučení</strong> (filtrovatelné přes „Zdroj"). Aktualizováno 25. 7. 2026.</p>
 
-    <div style="background:#fff;border:1px solid #E2E5EA;border-radius:14px;padding:20px 22px;margin-bottom:20px;">
+    <div style="background:#fff;border:1px solid #D5DAE0;border-radius:14px;padding:20px 22px;margin-bottom:20px;">
       <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:14px;">
         <div>
-          <div style="font-size:13px;color:#69707A;font-weight:600;text-transform:uppercase;letter-spacing:.06em;">Hotovo</div>
-          <div style="font-size:26px;font-weight:800;margin-top:2px;"><span>{{ doneCount }}</span><span style="color:#AEB4BC;font-weight:600;"> / {{ total }}</span><span style="font-size:15px;font-weight:600;color:#69707A;"> položek · zbývá {{ remaining }}</span></div>
+          <div style="font-size:13px;color:#7A828C;font-weight:600;text-transform:uppercase;letter-spacing:.06em;">Hotovo</div>
+          <div style="font-size:26px;font-weight:700;margin-top:2px;"><span>{{ doneCount }}</span><span style="color:#9AA1AB;font-weight:600;"> / {{ total }}</span><span style="font-size:15px;font-weight:600;color:#7A828C;"> položek · zbývá {{ remaining }}</span></div>
         </div>
-        <div style="font-size:30px;font-weight:800;"><span style="{{ accentText }}">{{ pct }}</span><span style="{{ accentText }}">%</span></div>
+        <div style="font-size:30px;font-weight:700;"><span style="{{ accentText }}">{{ pct }}</span><span style="{{ accentText }}">%</span></div>
       </div>
-      <div style="height:9px;width:100%;background:#EAEDF1;border-radius:999px;overflow:hidden;">
+      <div style="height:9px;width:100%;background:#F2F4F7;border-radius:999px;overflow:hidden;">
         <div style="{{ barFill }}"></div>
       </div>
     </div>
 
     <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:22px;">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        <span style="font-size:12px;font-weight:700;color:#8A909A;text-transform:uppercase;letter-spacing:.06em;margin-right:2px;">Priorita</span>
+        <span style="font-size:12px;font-weight:700;color:#9AA1AB;text-transform:uppercase;letter-spacing:.06em;margin-right:2px;">Priorita</span>
         <sc-for list="{{ prioFilters }}" as="f" hint-placeholder-count="4">
           <button onClick="{{ f.onClick }}" style="{{ f.style }}">{{ f.label }}</button>
         </sc-for>
       </div>
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        <span style="font-size:12px;font-weight:700;color:#8A909A;text-transform:uppercase;letter-spacing:.06em;margin-right:2px;">Zdroj</span>
+        <span style="font-size:12px;font-weight:700;color:#9AA1AB;text-transform:uppercase;letter-spacing:.06em;margin-right:2px;">Zdroj</span>
         <sc-for list="{{ sourceFilters }}" as="s" hint-placeholder-count="3">
           <button onClick="{{ s.onClick }}" style="{{ s.style }}">{{ s.label }}</button>
         </sc-for>
@@ -58,8 +60,8 @@
         <button onClick="{{ hideDoneBtn.onClick }}" style="{{ hideDoneBtn.style }}">{{ hideDoneBtn.label }}</button>
       </div>
       <div style="display:flex;align-items:center;gap:6px;margin-left:auto;">
-        <span style="font-size:12px;font-weight:700;color:#8A909A;text-transform:uppercase;letter-spacing:.06em;">Seskupit</span>
-        <div style="display:flex;gap:2px;background:#E4E8ED;border-radius:9px;padding:3px;">
+        <span style="font-size:12px;font-weight:700;color:#9AA1AB;text-transform:uppercase;letter-spacing:.06em;">Seskupit</span>
+        <div style="display:flex;gap:2px;background:#F2F4F7;border-radius:9px;padding:3px;">
           <button onClick="{{ groupPrioBtn.onClick }}" style="{{ groupPrioBtn.style }}">{{ groupPrioBtn.label }}</button>
           <button onClick="{{ groupKatBtn.onClick }}" style="{{ groupKatBtn.style }}">{{ groupKatBtn.label }}</button>
         </div>
@@ -70,16 +72,16 @@
     <sc-for list="{{ groups }}" as="group" hint-placeholder-count="3">
       <div style="margin-bottom:26px;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:11px;">
-          <h2 style="margin:0;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#3A424C;">{{ group.name }}</h2>
+          <h2 style="margin:0;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#3A424C;">{{ group.name }}</h2>
           <span style="font-size:12px;color:#9AA1AB;font-weight:600;">{{ group.count }}</span>
-          <div style="flex:1;height:1px;background:#E1E5EA;"></div>
+          <div style="flex:1;height:1px;background:#D5DAE0;"></div>
         </div>
         <div style="display:flex;flex-direction:column;gap:9px;">
           <sc-for list="{{ group.items }}" as="item" hint-placeholder-count="3">
             <div style="{{ item.cardStyle }}">
               <div onClick="{{ item.onToggle }}" style="{{ item.boxStyle }}">
                 <sc-if value="{{ item.done }}" hint-placeholder-val="{{ true }}">
-                  <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                 </sc-if>
               </div>
               <div style="flex:1;min-width:0;">
@@ -96,7 +98,7 @@
                   <span style="font-size:12px;color:#9AA1AB;font-weight:600;">{{ item.meta }}</span>
                 </div>
                 <sc-if value="{{ item.hasNote }}" hint-placeholder-val="">
-                  <div style="margin-top:8px;font-size:13px;line-height:1.5;color:#76808B;background:#F4F6F8;border-radius:8px;padding:8px 11px;"><span style="font-weight:700;color:#9099A3;">Pozn.&nbsp;&nbsp;</span>{{ item.note }}</div>
+                  <div style="margin-top:8px;font-size:13px;line-height:1.5;color:#5A626C;background:#F2F4F7;border-radius:8px;padding:8px 11px;"><span style="font-weight:700;color:#9AA1AB;">Pozn.&nbsp;&nbsp;</span>{{ item.note }}</div>
                 </sc-if>
               </div>
             </div>
@@ -110,7 +112,7 @@
       <div style="text-align:center;padding:50px 20px;color:#9AA1AB;font-size:15px;font-weight:600;background:#fff;border:1px dashed #D5DAE0;border-radius:14px;">Žádné položky neodpovídají filtru.</div>
     </sc-if>
 
-    <p style="margin:28px 0 0;font-size:12px;color:#A4AAB3;text-align:center;">Stav odškrtnutí se ukládá ve vašem prohlížeči. Zdroj: UX analýza VAPP (agentura).</p>
+    <p style="margin:28px 0 0;font-size:12px;color:#9AA1AB;text-align:center;">Stav odškrtnutí se ukládá ve vašem prohlížeči. Zdroj: UX analýza VAPP (agentura) + vlastní doporučení.</p>
 
   </div>
 </div>
@@ -119,7 +121,7 @@
 class Component extends DCLogic {
   state = { prio:'all', source:'all', onlyDesign:false, hideDone:false, groupBy:'priorita', checked:{}, loaded:false };
 
-  KEY = 'vapp_ux_backlog_v1';
+  KEY = 'vapp_ux_backlog_v2';
 
   componentDidMount(){
     try{
@@ -131,33 +133,82 @@ class Component extends DCLogic {
 
   data(){
     return [
-      { id:'n1', kat:'Navigace a struktura', oblast:'Hlavní menu', task:'Zjednodušit strukturu a snížit počet odkazů — sekundární odkazy (Obchodní podmínky, O nás, Úvod) přesunout do horního sekundárního menu.', prio:'vysoká', eff:'střední', owner:'VAPP · BSSHOP', design:true, wf:true, note:'Vyřešeno ve wireframu: sekundární odkazy v top baru, vlevo jen produktové položky (vč. Akce a slevy), vpravo Poradna jako tlačítko (podmíněno aktivní prací klienta s Poradnou). Duplicitu kategorií řeší vizuální rozcestník. Dropdown Přívěsy dle struktury od klienta.', defaultDone:false },
-      { id:'n2', kat:'Navigace a struktura', oblast:'Announcement bar', task:'Ověřit relevanci sdělení a komunikovat USP.', prio:'střední', eff:'nízká', owner:'VAPP', design:true, wf:true, note:'Ve wireframu: bar střídá 2 USP sdělení (~5 s), šipky + indikátory, na mobilu ustupuje otevřenému menu.', defaultDone:false },
-      { id:'n3', kat:'Podpora a komunikace', oblast:'Kontaktní informace', task:'Přidat klikatelné telefonní číslo a e-mail.', prio:'střední', eff:'nízká', owner:'VAPP', design:false, note:'Hotovo.', defaultDone:true },
-      { id:'n4', kat:'Produkty a služby', oblast:'Popisy produktů', task:'Zkontrolovat a doplnit chybějící popisy produktů.', prio:'střední', eff:'střední', owner:'VAPP', design:false, note:'Vyšší časová náročnost — nejprve vyfiltrovat produkty bez popisu.', defaultDone:false },
-      { id:'n5', kat:'Produkty a služby', oblast:'Související produkty', task:'Doplnit u produktů, kde chybí.', prio:'střední', eff:'nízká', owner:'VAPP', design:false, note:'Šlo by doplnit automaticky podle kódu produktu?', defaultDone:false },
-      { id:'n6', kat:'Produkty a služby', oblast:'Servis — detail služby', task:'Přidat popis služby a CTA „Rezervovat“.', prio:'střední', eff:'nízká', owner:'VAPP', design:true, wf:true, note:'Ve wireframu: karta Servis s popisem a CTA „Rezervovat servis" (desktop i mobil).', defaultDone:false },
-      { id:'n7', kat:'Produkty a služby', oblast:'Půjčovna — sekce na HP', task:'Doplnit chybějící text.', prio:'střední', eff:'nízká', owner:'VAPP', design:false, note:'Text přidán — otevřeno připomínkám.', defaultDone:true },
-      { id:'n8', kat:'Produkty a služby', oblast:'Půjčovna — layout výpisu', task:'Nastavit 4 produkty na řádek pro sjednocení s náhradními díly.', prio:'střední', eff:'nízká', owner:'BSSHOP · VAPP', design:true, wf:true, note:'Ve wireframu: půjčovna s náhledy 4/řádek a CTA „Půjčit přívěs".', defaultDone:false },
-      { id:'n9', kat:'Accessibility', oblast:'Obrázky — alt popisky', task:'Doplnit alt popisky obrázků.', prio:'nízká', eff:'nízká', owner:'VAPP', design:false, note:'Hlídat při kódování a vkládání nových obrázků.', defaultDone:false },
-      { id:'n10', kat:'Důvěra a rozhodování', oblast:'Informace o cookies', task:'Přidat detailnější informace o cookies na stránku GDPR, případně na samostatnou stránku.', prio:'nízká', eff:'střední', owner:'VAPP', design:true, wf:true, note:'Ve wireframu: odkaz „Nastavení cookies" v patičce; detailní stránka cookies zůstává k doplnění obsahově.', defaultDone:false },
-      { id:'n11', kat:'Důvěra a rozhodování', oblast:'Podmínky půjčovny', task:'Přidat odkaz do patičky.', prio:'nízká', eff:'nízká', owner:'VAPP', design:true, wf:true, note:'Ve wireframu: „Podmínky půjčovny" ve sloupci Zákazník v patičce.', defaultDone:false },
-      { id:'n12', kat:'Navigace a struktura', oblast:'Řazení produktů', task:'Nastavit výchozí řazení podle popularity (Nejoblíbenější).', prio:'nízká', eff:'nízká', owner:'VAPP', design:false, note:'Nastavení e-shopu (p. Flégr).', defaultDone:false },
-      { id:'n13', kat:'Navigace a struktura', oblast:'Patička — odkazy', task:'Sjednotit odkazy s jejich názvy (O nás, Kontakty).', prio:'nízká', eff:'nízká', owner:'VAPP', design:true, wf:true, note:'Ve wireframu: sjednocené názvy ve 4 sloupcích + ikony plateb a dopravců.', defaultDone:false },
-      { id:'n14', kat:'Navigace a struktura', oblast:'Patička — kontakt', task:'Přidat odkaz s telefonem a e-mailem.', prio:'nízká', eff:'nízká', owner:'VAPP', design:true, wf:true, note:'Ve wireframu: klikatelný tel + e-mail v top baru i patičce, online status (zelená 8–16 h), odkaz „Všechny kontakty" (desktop, mobilní menu i mobilní patička).', defaultDone:false },
-      { id:'n15', kat:'Podpora a komunikace', oblast:'Kontaktní formulář', task:'Ověřit využitelnost formuláře, případně odstranit.', prio:'nízká', eff:'nízká', owner:'VAPP', design:false, note:'', defaultDone:false },
-      { id:'n16', kat:'Produkty a služby', oblast:'Přívěsy — fotky produktů', task:'Doplnit fotky — některé produkty mají jen 1 fotku.', prio:'nízká', eff:'vysoká', owner:'VAPP', design:false, note:'', defaultDone:false },
-      { id:'n17', kat:'Produkty a služby', oblast:'Parametry produktů', task:'Doplnit neúplné parametry.', prio:'nízká', eff:'střední', owner:'VAPP', design:false, note:'', defaultDone:false },
-      { id:'n18', kat:'Produkty a služby', oblast:'Dostupnost produktu', task:'Skrýt nedostupné produkty nebo je přesunout na konec výpisu.', prio:'nízká', eff:'nízká', owner:'VAPP', design:true, note:'', defaultDone:false },
-      { id:'n19', kat:'Produkty a služby', oblast:'Kompatibilita náhradních dílů', task:'Uvést kompatibilitu náhradních dílů — výběr dílů podle modelu přívěsu.', prio:'nízká', eff:'vysoká', owner:'VAPP', design:true, defer:true, note:'Odloženo kvůli rozpočtu (spolu s konfigurátorem přívěsů — ten byl náš návrh nad rámec analýzy). Struktura homepage s asistentem kompatibility počítá do budoucna.', defaultDone:false },
-      { id:'n20', kat:'Produkty a služby', oblast:'Půjčovna — názvosloví', task:'Prověřit logiku názvů produktů a sjednotit jejich strukturu.', prio:'nízká', eff:'vysoká', owner:'VAPP', design:false, note:'', defaultDone:false },
+      { id:'n1',  kat:'Navigace a struktura',  oblast:'Hlavní menu — struktura',        task:'Zjednodušit strukturu a snížit počet odkazů — sekundární položky přesunout do top baru.', prio:'vysoká', eff:'střední',  owner:'VAPP · BSSHOP',  design:true,  wf:true,  note:'Vyřešeno ve wireframu: sekundární odkazy v top baru, vlevo jen produktové položky, vpravo Poradna jako tlačítko.', defaultDone:false },
+      { id:'n2',  kat:'Navigace a struktura',  oblast:'Announcement bar',               task:'Původní verze odstraněna — nahradit rotujícím barem s USP sděleními.', prio:'střední', eff:'nízká',   owner:'VAPP',            design:true,  wf:true,  note:'Ve wireframu: bar střídá 2 USP sdělení (~5 s), šipky + indikátory, na mobilu ustupuje otevřenému menu.', defaultDone:false },
+      { id:'n3',  kat:'Podpora a komunikace',  oblast:'Kontaktní informace',            task:'Přidat klikatelné telefonní číslo a e-mail.', prio:'střední', eff:'nízká',   owner:'VAPP',            design:false,           note:'Hotovo.', defaultDone:true },
+      { id:'n4',  kat:'Produkty a služby',     oblast:'Popisy produktů',                task:'Zkontrolovat a doplnit chybějící popisy produktů.', prio:'střední', eff:'střední',  owner:'VAPP',            design:false,           note:'Nejprve vyfiltrovat produkty bez popisu.', defaultDone:false },
+      { id:'n5',  kat:'Produkty a služby',     oblast:'Související produkty',           task:'Doplnit u produktů, kde chybí.', prio:'střední', eff:'nízká',   owner:'VAPP',            design:false,           note:'Šlo by doplnit automaticky podle kódu produktu?', defaultDone:false },
+      { id:'n6',  kat:'Produkty a služby',     oblast:'Servis — detail služby',         task:'Přidat popis služby a CTA „Rezervovat".', prio:'střední', eff:'nízká',   owner:'VAPP',            design:true,  wf:true,  note:'Ve wireframu: karta Servis s popisem a CTA „Rezervovat servis".', defaultDone:false },
+      { id:'n7',  kat:'Produkty a služby',     oblast:'Půjčovna — sekce na HP',         task:'Doplnit chybějící text.', prio:'střední', eff:'nízká',   owner:'VAPP',            design:false,           note:'Text přidán.', defaultDone:true },
+      { id:'n8',  kat:'Produkty a služby',     oblast:'Půjčovna — layout výpisu',       task:'Nastavit 4 produkty na řádek pro sjednocení s náhradními díly.', prio:'střední', eff:'nízká',   owner:'BSSHOP · VAPP',   design:true,  wf:true,  note:'Ve wireframu: 4/řádek a CTA „Půjčit přívěs".', defaultDone:false },
+      { id:'n9',  kat:'Accessibility',         oblast:'Obrázky — alt popisky',          task:'Doplnit alt popisky obrázků.', prio:'nízká',   eff:'nízká',   owner:'VAPP',            design:false,           note:'Hlídat při kódování a vkládání nových obrázků.', defaultDone:false },
+      { id:'n10', kat:'Důvěra a rozhodování',  oblast:'Informace o cookies',            task:'Přidat detailnější informace o cookies na stránku GDPR nebo samostatnou stránku.', prio:'nízká',   eff:'střední',  owner:'VAPP',            design:true,  wf:true,  note:'Ve wireframu: odkaz „Nastavení cookies" v patičce.', defaultDone:false },
+      { id:'n11', kat:'Důvěra a rozhodování',  oblast:'Podmínky půjčovny',              task:'Přidat odkaz do patičky.', prio:'nízká',   eff:'nízká',   owner:'VAPP',            design:true,  wf:true,  note:'Hotovo.', defaultDone:true },
+      { id:'n12', kat:'Navigace a struktura',  oblast:'Řazení produktů — výchozí',      task:'Nastavit výchozí řazení podle popularity.', prio:'nízká',   eff:'nízká',   owner:'VAPP',            design:false,           note:'Nastavení e-shopu (p. Flégr).', defaultDone:false },
+      { id:'n13', kat:'Navigace a struktura',  oblast:'Patička — sjednocení odkazů',    task:'Sjednotit názvy odkazů (O nás, Kontakty).', prio:'nízká',   eff:'nízká',   owner:'VAPP',            design:true,  wf:true,  note:'Hotovo.', defaultDone:true },
+      { id:'n14', kat:'Navigace a struktura',  oblast:'Patička — kontaktní údaje',      task:'Přidat klikatelný telefon a e-mail do patičky.', prio:'nízká',   eff:'nízká',   owner:'VAPP',            design:true,  wf:true,  note:'Ve wireframu: klikatelný tel + e-mail + online status (zelená 8–16 h).', defaultDone:false },
+      { id:'n15', kat:'Podpora a komunikace',  oblast:'Kontaktní formulář',             task:'Ověřit využitelnost formuláře, případně odstranit.', prio:'nízká',   eff:'nízká',   owner:'VAPP',            design:false,           note:'Ověřeno — formulář zůstává.', defaultDone:true },
+      { id:'n16', kat:'Produkty a služby',     oblast:'Přívěsy — fotky',                task:'Doplnit fotky — některé produkty mají jen 1 fotku.', prio:'nízká',   eff:'vysoká',  owner:'VAPP',            design:false,           note:'', defaultDone:false },
+      { id:'n17', kat:'Produkty a služby',     oblast:'Parametry produktů',             task:'Doplnit neúplné parametry.', prio:'nízká',   eff:'střední',  owner:'VAPP',            design:false,           note:'', defaultDone:false },
+      { id:'n18', kat:'Produkty a služby',     oblast:'Nedostupné produkty',            task:'Skrýt nedostupné produkty nebo je přesunout na konec výpisu.', prio:'nízká',   eff:'nízká',   owner:'VAPP',            design:true,            note:'', defaultDone:false },
+      { id:'n19', kat:'Produkty a služby',     oblast:'Kompatibilita náhradních dílů',  task:'Uvést kompatibilitu náhradních dílů — výběr dílů podle modelu přívěsu.', prio:'nízká',   eff:'vysoká',  owner:'VAPP',            design:true,  defer:true, note:'Odloženo kvůli rozpočtu. Počítá s tím struktura homepage do budoucna.', defaultDone:false },
+      { id:'n20', kat:'Produkty a služby',     oblast:'Půjčovna — názvosloví',          task:'Prověřit logiku názvů produktů půjčovny a sjednotit jejich strukturu.', prio:'nízká',   eff:'vysoká',  owner:'VAPP',            design:false,           note:'', defaultDone:false },
 
-      { id:'m1', kat:'Doporučení (návrh)', oblast:'Konfigurátor přívěsu', task:'Vystavět nákup přívěsu jako konfigurátor s živým náhledem a průběžně přepočítávanou cenou (délka × šířka × hmotnost × výbava).', prio:'vysoká', eff:'vysoká', owner:'Návrh · BSSHOP', design:true, mine:true, note:'Největší příležitost odlišit se. Agados konfigurátor má, ale v recenzích Heureka si lidé stěžují na chybějící fotky/popisy a chyby v zobrazení ceny — tady se dá udělat lépe.', defaultDone:false },
-      { id:'m2', kat:'Doporučení (návrh)', oblast:'Asistent kompatibility dílů', task:'Místo statického textu navrhnout výběr „Mám přívěs / nápravu X → ukaž sedící díly“ (model, rozměr kol, nosnost, značka brzd).', prio:'vysoká', eff:'vysoká', owner:'Návrh · VAPP', design:true, mine:true, note:'Rozšiřuje agenturní bod „Kompatibilita“ o konkrétní UX řešení. Snižuje vratky a dotazy na podporu.', defaultDone:false },
-      { id:'m3', kat:'Doporučení (návrh)', oblast:'Vyhledávání a fasetová filtrace', task:'V hlubokém katalogu dílů (stovky podkategorií) zavést fasety: nosnost, rozměr kol, značka (AL-KO/KNOTT/BPW), typ brzdy, dostupnost skladem.', prio:'vysoká', eff:'střední', owner:'Návrh · BSSHOP', design:true, mine:true, note:'Při tak hluboké struktuře je rychlé filtrování klíčové pro nalezení správného dílu.', defaultDone:false },
-      { id:'m4', kat:'Doporučení (návrh)', oblast:'Srozumitelná dostupnost a dodací lhůty', task:'Sjednotit a zjednodušit stavy dostupnosti („skladem / očekáváme X ks / na dotaz / dodání za…“) do jasného vizuálního systému.', prio:'střední', eff:'střední', owner:'Návrh · VAPP', design:true, mine:true, note:'Z recenzí plyne, že hlášky typu „Očekáváme 2 ks“ matou — sdělit termín, ne stav skladu.', defaultDone:false },
-      { id:'m5', kat:'Doporučení (návrh)', oblast:'Dva režimy detailu produktu', task:'PDP řešit jako dvě šablony: bohatá karta přívěsu (konfigurátor, galerie, parametry) vs. jednoduchá karta dílu (kompatibilita, související).', prio:'střední', eff:'střední', owner:'Návrh', design:true, mine:true, note:'Sortiment kombinuje variantní přívěsy a převážně bezvariantní díly — jedna univerzální šablona nestačí.', defaultDone:false },
-      { id:'m6', kat:'Doporučení (návrh)', oblast:'Konzistentní budování důvěry', task:'Napříč webem komunikovat USP: český výrobce od 1991, velké skladové zásoby, autorizovaný servis AL-KO/BPW/KNOTT, ověřené recenze.', prio:'střední', eff:'nízká', owner:'Návrh · VAPP', design:true, mine:true, note:'Silné argumenty, dnes roztroušené. Provázat s announcement barem a hlavičkou (online status, otevírací doba).', defaultDone:false },
+      { id:'a1',  kat:'Důvěra a rozhodování',  oblast:'Recenze Google / Heureka',       task:'Přidat hodnocení obchodu do hlavičky — hvězdičky, procento spokojenosti, počet hodnocení. Zobrazit poslední recenze s odkazem na Heureku.', prio:'vysoká', eff:'střední',  owner:'BSSHOP',          design:true,            note:'„100 % nutnost" dle agentury. Výrazně zvyšuje důvěryhodnost.', defaultDone:false },
+
+      { id:'a2',  kat:'Mobile',                oblast:'Mobile menu — zobrazení',        task:'Zobrazit mobilní menu přes celou obrazovku, zvětšit klikací plochy (min. 44 px) a velikost fontu.', prio:'vysoká', eff:'střední',  owner:'BSSHOP',          design:true,  wf:true,  note:'Komponenta Hlavicka obsahuje mobile menu — ověřit fullscreen chování.', defaultDone:false },
+      { id:'a3',  kat:'Mobile',                oblast:'Mobile menu — reset stavu',      task:'Po zavření mobilního menu resetovat stav na původní (nezachovávat rozvíjenou kategorii).', prio:'vysoká', eff:'nízká',   owner:'BSSHOP',          design:true,            note:'', defaultDone:false },
+      { id:'a4',  kat:'Mobile',                oblast:'Mobile menu — drill-down',       task:'Zjednodušit rozevírací systém — definovat chování při kliknutí na kategorii (rozvinout, nebo rovnou přejít?).', prio:'vysoká', eff:'střední',  owner:'BSSHOP',          design:true,  wf:true,  note:'Součást návrhu komponenty Hlavicka — ověřit drill-down logiku.', defaultDone:false },
+      { id:'a5',  kat:'Mobile',                oblast:'Hero banner — mobil',            task:'Zvětšit banner, zlepšit čitelnost textu. Grafický slider s variantami pro desktop a mobil.', prio:'střední', eff:'střední',  owner:'BSSHOP',          design:true,            note:'', defaultDone:false },
+      { id:'a6',  kat:'Mobile',                oblast:'Patička — accordion mobil',      task:'Převést patičku na rozbalovací (accordion) sekce pro lepší organizaci obsahu na mobilu.', prio:'střední', eff:'střední',  owner:'BSSHOP',          design:true,            note:'Komponenta Paticka zatím řeší desktop. Přidat accordion variantu pro mobil.', defaultDone:false },
+      { id:'a7',  kat:'Mobile',                oblast:'Spacing — mobil',                task:'Upravit odsazení mezi sekcemi dle DS (4px grid, 16 px okraje stránky).', prio:'střední', eff:'nízká',   owner:'BSSHOP',          design:true,            note:'DS: page padding mobil 16 px (space-4).', defaultDone:false },
+      { id:'a8',  kat:'Mobile',                oblast:'Line height — mobil',            task:'Zvětšit řádkování pro zlepšení čitelnosti textu na malých obrazovkách.', prio:'střední', eff:'nízká',   owner:'BSSHOP',          design:true,            note:'DS: body.medium 1,6 — ověřit na mobilním renderování.', defaultDone:false },
+      { id:'a9',  kat:'Mobile',                oblast:'Breadcrumbs — mobil',            task:'Zjednodušit breadcrumb na mobilu na poslední odkaz nebo navigaci o řád výš.', prio:'střední', eff:'nízká',   owner:'BSSHOP',          design:true,  wf:true,  note:'Komponenta Breadcrumb existuje — zvážit prop compact pro mobilní variantu.', defaultDone:false },
+
+      { id:'a10', kat:'Navigace a struktura',  oblast:'Levé menu — odstranit',          task:'Odstranit duplicitní levé menu kategorií (stejný obsah jako hlavní menu).', prio:'střední', eff:'nízká',   owner:'BSSHOP',          design:false,           note:'', defaultDone:false },
+      { id:'a11', kat:'Navigace a struktura',  oblast:'Vyhledávání — kvalita výsledků', task:'Zlepšit kvalitu výsledků vyhledávání; zvážit řešení od třetích stran.', prio:'střední', eff:'vysoká',  owner:'BSSHOP',          design:false,           note:'Komponenta Vyhledavani řeší UI. Relevance výsledků závisí na e-shop platformě.', defaultDone:false },
+      { id:'a12', kat:'Navigace a struktura',  oblast:'Filtry — slide-out panel',       task:'Zobrazit nejčastější filtry přímo, ostatní za „Další filtry". Posuvný panel zleva/zprava.', prio:'střední', eff:'střední',  owner:'BSSHOP',          design:true,            note:'Prototyp má čipové filtry. Potřeba slide-out panel pro mobilní zobrazení.', defaultDone:false },
+      { id:'a13', kat:'Navigace a struktura',  oblast:'Filtry — desktop pozice',        task:'Přesunout filtry do levého sloupce jako slide-out panel místo horního pruhu.', prio:'střední', eff:'střední',  owner:'BSSHOP',          design:true,            note:'', defaultDone:false },
+      { id:'a14', kat:'Navigace a struktura',  oblast:'Kategorie — hover efekty',       task:'Přidat vizuální zpětnou vazbu (hover efekt) při najetí myší na kategorie.', prio:'střední', eff:'nízká',   owner:'BSSHOP',          design:true,  wf:true,  note:'Komponenta KategorickaDlazdice obsahuje hover stín. Ověřit implementaci na webu.', defaultDone:false },
+      { id:'a15', kat:'Navigace a struktura',  oblast:'Hlavní menu — dropdown',         task:'Implementovat dropdown navigaci v hlavním menu.', prio:'nízká',   eff:'střední',  owner:'BSSHOP',          design:true,  wf:true,  note:'Řeší návrh komponenty Hlavicka.', defaultDone:false },
+      { id:'a16', kat:'Navigace a struktura',  oblast:'Filtry — zobrazení značek',      task:'Zobrazit nejpopulárnější značky (AL-KO, BPW, KNOTT) s tlačítkem „Více značek".', prio:'nízká',   eff:'nízká',   owner:'BSSHOP',          design:true,            note:'Chip komponenta vhodná pro výběr značky.', defaultDone:false },
+      { id:'a17', kat:'Navigace a struktura',  oblast:'USP na HP — proklik',            task:'Přidat proklik z USP sekce na kotvu nebo samostatnou stránku.', prio:'nízká',   eff:'nízká',   owner:'BSSHOP',          design:false,           note:'', defaultDone:false },
+      { id:'a18', kat:'Navigace a struktura',  oblast:'Cookie lišta — pozice',          task:'Přesunout cookie lištu do spodní části stránky, přidat odkaz na podrobnosti.', prio:'nízká',   eff:'nízká',   owner:'BSSHOP',          design:false,           note:'', defaultDone:false },
+
+      { id:'a19', kat:'Accessibility',         oblast:'Kontrast textu',                 task:'Zvýšit kontrast textů a odkazů; ověřovat nástrojem při každém novém návrhu.', prio:'střední', eff:'nízká',   owner:'BSSHOP',          design:true,            note:'DS: text.primary #15181C, text.secondary #5A626C — splňují WCAG AA. Implementovat konzistentně.', defaultDone:false },
+      { id:'a20', kat:'Accessibility',         oblast:'Klikací plochy',                 task:'Zvětšit klikací plochy interaktivních prvků na minimum 44 × 44 px.', prio:'střední', eff:'nízká',   owner:'BSSHOP',          design:true,            note:'DS: tlačítka Medium 44 px, inputy 44 px.', defaultDone:false },
+
+      { id:'a21', kat:'Nákupní cesta',         oblast:'Dotazy u produktů',              task:'Vizuálně odlišit dotazy zákazníků od odpovědí pro lepší přehlednost.', prio:'střední', eff:'nízká',   owner:'BSSHOP',          design:true,            note:'', defaultDone:false },
+      { id:'a22', kat:'Nákupní cesta',         oblast:'Checkout formulář — stavy',      task:'Označit povinná pole, navrhnout vizuální stavy (vyplněno / nevyplněno / chyba).', prio:'střední', eff:'střední',  owner:'BSSHOP',          design:true,  wf:true,  note:'Komponenta FormularovePrvky definuje stavy. Ověřit v checkout toku.', defaultDone:false },
+      { id:'a23', kat:'Nákupní cesta',         oblast:'Nákup s/bez registrace',         task:'Detailněji analyzovat oba procesy dle Clarity dat a navrhnout optimalizace.', prio:'nízká',   eff:'střední',  owner:'BSSHOP',          design:false,           note:'', defaultDone:false },
+      { id:'a24', kat:'Nákupní cesta',         oblast:'Support banner v košíku',        task:'Odebrat banner kontaktní podpory z nákupního košíku.', prio:'nízká',   eff:'nízká',   owner:'BSSHOP',          design:false,           note:'', defaultDone:false },
+
+      { id:'a25', kat:'Podpora a komunikace',  oblast:'CTA podpora na PDP',             task:'Přidat CTA „Kontaktovat podporu" s proklikem na telefon na stránce detailu produktu.', prio:'střední', eff:'nízká',   owner:'BSSHOP',          design:true,  wf:true,  note:'Komponenta PoradenskyBlok tuto plochu řeší. Zapojit do šablony PDP.', defaultDone:false },
+      { id:'a26', kat:'Podpora a komunikace',  oblast:'Chatbot / AI asistent',          task:'Online podpora formou chatbotu nebo AI asistenta.', prio:'nízká',   eff:'vysoká',  owner:'BSSHOP',          design:false,           note:'Agentura není přesvědčena. V současné době testujeme AI asistenta.', defaultDone:false },
+
+      { id:'a27', kat:'Produkty a služby',     oblast:'Homepage — best-sellers',        task:'Přidat karusel nejprodávanějších produktů na homepage (nadpis, 2řádkový popis, navigační šipky).', prio:'střední', eff:'střední',  owner:'BSSHOP',          design:true,            note:'Nová komponenta nebo sekce v WireframeHomepageVAPP.', defaultDone:false },
+      { id:'a28', kat:'Produkty a služby',     oblast:'Přívěsy — texty produktů',       task:'Odstranit malé popisky u přívěsů — jsou nepřehledné a uživatelé je nečtou.', prio:'střední', eff:'nízká',   owner:'BSSHOP',          design:false,           note:'', defaultDone:false },
+      { id:'a29', kat:'Produkty a služby',     oblast:'Product page — varianty',        task:'Navrhnout řešení pro produkty s rozsáhlými variantami (délka × šířka × hmotnost × výbava přívěsu).', prio:'střední', eff:'střední',  owner:'BSSHOP',          design:true,            note:'Platí zejména pro přívěsy s konfigurací. Náhradní díly varianty obvykle nemají.', defaultDone:false },
+      { id:'a30', kat:'Produkty a služby',     oblast:'Půjčovna — CTA tlačítko',        task:'Přidat tlačítko pro objednání / rezervaci přívěsu.', prio:'střední', eff:'nízká',   owner:'BSSHOP',          design:true,  wf:true,  note:'Ve wireframu: CTA „Půjčit přívěs".', defaultDone:false },
+      { id:'a31', kat:'Produkty a služby',     oblast:'Přívěsy — výpis (počet)',        task:'Snížit počet produktů na stránce (nyní 36), nastavit responzivní grid.', prio:'nízká',   eff:'nízká',   owner:'BSSHOP',          design:false,           note:'', defaultDone:false },
+      { id:'a32', kat:'Produkty a služby',     oblast:'Půjčovna — řazení',              task:'Umožnit řazení podle popularity a ceny (obě směry).', prio:'nízká',   eff:'nízká',   owner:'BSSHOP',          design:false,           note:'', defaultDone:false },
+      { id:'a33', kat:'Produkty a služby',     oblast:'Půjčovna — design produktu',     task:'Přesunout cenu z obrázku do popisku, odstranit datum, zvýraznit název.', prio:'nízká',   eff:'nízká',   owner:'BSSHOP',          design:true,            note:'Sjednotit s DS card anatomií.', defaultDone:false },
+      { id:'a34', kat:'Produkty a služby',     oblast:'Poradna — duplikace',            task:'Na webu jsou dvě poradny — sjednotit na jednu.', prio:'nízká',   eff:'nízká',   owner:'BSSHOP',          design:false,           note:'', defaultDone:false },
+
+      { id:'u1',  kat:'UI',                    oblast:'Typografie — sentence case',     task:'Používat běžný zápis (sentence case) místo verzálek v nadpisech a navigaci.', prio:'střední', eff:'nízká',   owner:'BSSHOP',          design:true,            note:'DS: verzálky pouze u overline tokenu. Navigace a nadpisy bez all-caps.', defaultDone:false },
+      { id:'u2',  kat:'UI',                    oblast:'Interakce — hover efekty',       task:'Přidat hover efekty na všechny interaktivní prvky (tlačítka, karty, záložky, chipy).', prio:'střední', eff:'nízká',   owner:'BSSHOP',          design:true,            note:'DS definuje všechny hover stavy. Ověřit implementaci na webu.', defaultDone:false },
+      { id:'u3',  kat:'UI',                    oblast:'Sjednocení UI prvků',            task:'Sjednotit podtrhování odkazů, zaoblení prvků a velikosti ikonek napříč celým webem.', prio:'nízká',   eff:'střední',  owner:'BSSHOP',          design:true,            note:'DS: rádiusy 6/8/999, ikony 24×24, záložky s underline 3px blue.600.', defaultDone:false },
+      { id:'u4',  kat:'UI',                    oblast:'Filtry — vizuální design',       task:'Upravit vizuální design filtrů — stávající je příliš výrazný.', prio:'nízká',   eff:'nízká',   owner:'BSSHOP',          design:true,            note:'Chip komponenta definuje výchozí a aktivní stav.', defaultDone:false },
+      { id:'u5',  kat:'UI',                    oblast:'Hero banner HP — desktop',       task:'Zvážit nahrazení karuselu 3–4 statickými bannery s akcemi.', prio:'nízká',   eff:'střední',  owner:'BSSHOP',          design:true,            note:'', defaultDone:false },
+      { id:'u6',  kat:'UI',                    oblast:'Spacing — desktop',              task:'Zvětšit rozestupy mezi prvky dle DS (4px grid).', prio:'nízká',   eff:'nízká',   owner:'BSSHOP',          design:true,            note:'', defaultDone:false },
+      { id:'u7',  kat:'UI',                    oblast:'CTA — zarovnání textu',          task:'Zarovnat text CTA tlačítek na střed, přidat hover efekty.', prio:'nízká',   eff:'nízká',   owner:'BSSHOP',          design:true,            note:'', defaultDone:false },
+
+      { id:'m1',  kat:'Doporučení (návrh)',    oblast:'Konfigurátor přívěsu',           task:'Vystavět nákup přívěsu jako konfigurátor s živým náhledem a průběžně přepočítávanou cenou.', prio:'vysoká', eff:'vysoká',  owner:'Návrh · BSSHOP',  design:true,  mine:true, note:'Největší příležitost odlišit se. Agados konfigurátor má, ale zákazníci si stěžují na chyby cen.', defaultDone:false },
+      { id:'m2',  kat:'Doporučení (návrh)',    oblast:'Asistent kompatibility dílů',    task:'Výběr „Mám přívěs / nápravu X → ukaž sedící díly" (model, rozměr kol, nosnost, značka brzd).', prio:'vysoká', eff:'vysoká',  owner:'Návrh · VAPP',    design:true,  mine:true, note:'Snižuje vratky a dotazy na podporu.', defaultDone:false },
+      { id:'m3',  kat:'Doporučení (návrh)',    oblast:'Fasetová filtrace katalogu',     task:'V hlubokém katalogu dílů zavést fasety: nosnost, rozměr kol, značka, typ brzdy, dostupnost.', prio:'vysoká', eff:'střední',  owner:'Návrh · BSSHOP',  design:true,  mine:true, note:'Při stovkách podkategorií je rychlé filtrování klíčové.', defaultDone:false },
+      { id:'m4',  kat:'Doporučení (návrh)',    oblast:'Srozumitelná dostupnost',        task:'Sjednotit stavy dostupnosti do jasného systému — sdělit termín dodání, ne stav skladu.', prio:'střední', eff:'střední',  owner:'Návrh · VAPP',    design:true,  mine:true, note:'Z recenzí Heureka: hlášky „Očekáváme 2 ks" matou zákazníky.', defaultDone:false },
+      { id:'m5',  kat:'Doporučení (návrh)',    oblast:'Dvě PDP šablony',                task:'PDP jako dvě šablony: bohatá karta přívěsu (konfigurátor, galerie) vs. jednoduchá karta dílu (kompatibilita, poradenský blok).', prio:'střední', eff:'střední',  owner:'Návrh',           design:true,  mine:true, note:'Jedna šablona nestačí pro oba typy sortimentu.', defaultDone:false },
+      { id:'m6',  kat:'Doporučení (návrh)',    oblast:'Budování důvěry — USP',          task:'Napříč webem komunikovat USP: český výrobce od 1991, velké zásoby, autorizovaný servis AL-KO/BPW/KNOTT, ověřené recenze.', prio:'střední', eff:'nízká',   owner:'Návrh · VAPP',    design:true,  mine:true, note:'Silné argumenty, dnes roztroušené. Provázat s announcement barem a blokem recenzí.', defaultDone:false },
     ];
   }
 
@@ -180,92 +231,71 @@ class Component extends DCLogic {
     const pm = prioMeta[it.prio];
     const pillBase = 'display:inline-block;padding:4px 9px;border-radius:6px;font-weight:700;font-size:11px;line-height:1.3;letter-spacing:.04em;text-transform:uppercase;';
     const pills = [{ label:pm.label, style:pillBase+'background:'+pm.bg+';color:'+pm.fg+';' }];
-    if(it.mine) pills.push({ label:'Doporučení', style:pillBase+'background:#ECE7FB;color:#6D28D9;' });
-    else if(it.design) pills.push({ label:'Návrh', style:pillBase+'background:#E7EEF8;color:'+accent+';' });
-    if(it.wf) pills.push({ label:'Ve wireframu', style:pillBase+'background:#E7F6EE;color:#1F8A5B;' });
-    if(it.defer) pills.push({ label:'Odloženo', style:pillBase+'background:#FCEFCB;color:#A85C06;' });
+    if(it.mine)        pills.push({ label:'Doporučení', style:pillBase+'background:#ECE7FB;color:#6D28D9;' });
+    else if(it.design) pills.push({ label:'Návrh',      style:pillBase+'background:#EFF4FB;color:'+accent+';' });
+    if(it.wf)          pills.push({ label:'Ve wireframu', style:pillBase+'background:#E9F8EF;color:#0B6937;' });
+    if(it.defer)       pills.push({ label:'Odloženo',   style:pillBase+'background:#FEF3C7;color:#92400E;' });
+    const cardBg     = done ? '#F2F4F7' : (it.mine ? '#FBFAFE' : '#fff');
+    const cardBorder = done ? '#D5DAE0' : (it.mine ? '#E9E5F6' : '#D5DAE0');
     return {
-      id: it.id, oblast: it.oblast, task: it.task,
-      note: it.note, hasNote: !!it.note,
-      meta: 'Náročnost: '+it.eff+'  ·  '+it.owner,
+      id:it.id, oblast:it.oblast, task:it.task, note:it.note, hasNote:!!it.note,
+      meta:'Náročnost: '+it.eff+'  ·  '+it.owner,
       done, pills,
-      onToggle: ()=>this.toggle(it),
-      cardStyle:'display:flex;gap:13px;align-items:flex-start;padding:'+pad+';background:'+(done?'#F6F8FA':(it.mine?'#FBFAFE':'#fff'))+';border:1px solid '+(done?'#E9ECF0':(it.mine?'#E9E5F6':'#E4E7EC'))+';border-radius:12px;transition:background .15s;',
-      boxStyle:'flex:none;width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;margin-top:1px;border:2px solid '+(done?'#15803D':'#C4CAD2')+';background:'+(done?'#15803D':'#fff')+';transition:all .15s;',
-      titleStyle:'font-weight:700;font-size:15px;line-height:1.35;color:'+(done?'#9AA1AB':'#1A1D21')+';'+(done?'text-decoration:line-through;':''),
-      taskStyle:'margin-top:3px;font-weight:400;font-size:14px;line-height:1.5;color:'+(done?'#AEB4BC':'#525A64')+';'+(done?'text-decoration:line-through;':''),
+      onToggle:()=>this.toggle(it),
+      cardStyle:'display:flex;gap:13px;align-items:flex-start;padding:'+pad+';background:'+cardBg+';border:1px solid '+cardBorder+';border-radius:12px;transition:background .15s;',
+      boxStyle:'flex:none;width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;margin-top:1px;border:2px solid '+(done?'#0E7F43':'#C4CAD2')+';background:'+(done?'#0E7F43':'#fff')+';transition:all .15s;',
+      titleStyle:'font-weight:700;font-size:15px;line-height:1.35;color:'+(done?'#9AA1AB':'#15181C')+';'+(done?'text-decoration:line-through;':''),
+      taskStyle:'margin-top:3px;font-weight:400;font-size:14px;line-height:1.5;color:'+(done?'#9AA1AB':'#5A626C')+';'+(done?'text-decoration:line-through;':''),
     };
   }
 
   renderVals(){
     const accent = this.props.accentColor || '#1E5AA8';
-    const dense = (this.props.density || 'comfortable') === 'compact';
-    const pad = dense ? '12px 14px' : '15px 17px';
-    const all = this.data();
-    const total = all.length;
+    const dense  = (this.props.density||'comfortable')==='compact';
+    const pad    = dense ? '12px 14px' : '15px 17px';
+    const all    = this.data();
+    const total  = all.length;
     const doneCount = all.filter(it=>this.isDone(it)).length;
-    const pct = total ? Math.round(doneCount/total*100) : 0;
-
+    const pct    = total ? Math.round(doneCount/total*100) : 0;
     const prioMeta = {
       'vysoká': { label:'Vysoká', bg:'#FDE4E4', fg:'#B91C1C' },
-      'střední':{ label:'Střední', bg:'#FCEFCB', fg:'#A85C06' },
-      'nízká':  { label:'Nízká', bg:'#EAEEF3', fg:'#516072' },
+      'střední':{ label:'Střední', bg:'#FEF3C7', fg:'#92400E' },
+      'nízká':  { label:'Nízká',   bg:'#F2F4F7', fg:'#5A626C' },
     };
-
     let vis = all.filter(it=>{
       if(this.state.prio!=='all' && it.prio!==this.state.prio) return false;
-      if(this.state.source==='agentura' && it.mine) return false;
+      if(this.state.source==='agentura'   && it.mine)  return false;
       if(this.state.source==='doporuceni' && !it.mine) return false;
       if(this.state.onlyDesign && !it.design) return false;
-      if(this.state.hideDone && this.isDone(it)) return false;
+      if(this.state.hideDone   && this.isDone(it)) return false;
       return true;
     });
-
     let order, keyOf, labelOf;
     if(this.state.groupBy==='priorita'){
       order=['vysoká','střední','nízká'];
-      keyOf=it=>it.prio;
-      labelOf=k=>prioMeta[k].label+' priorita';
+      keyOf=it=>it.prio; labelOf=k=>prioMeta[k].label+' priorita';
     } else {
       order=[]; vis.forEach(it=>{ if(order.indexOf(it.kat)<0) order.push(it.kat); });
-      keyOf=it=>it.kat;
-      labelOf=k=>k;
+      keyOf=it=>it.kat; labelOf=k=>k;
     }
     const groups = order.map(k=>{
       const its = vis.filter(it=>keyOf(it)===k);
       if(!its.length) return null;
-      return {
-        name: labelOf(k),
-        count: its.length+' '+this.plural(its.length),
-        items: its.map(it=>this.mapItem(it, prioMeta, accent, pad))
-      };
+      return { name:labelOf(k), count:its.length+' '+this.plural(its.length), items:its.map(it=>this.mapItem(it,prioMeta,accent,pad)) };
     }).filter(Boolean);
-
-    const mkFilter=(key,label)=>{
-      const active = this.state.prio===key;
-      return { label, onClick:()=>this.setState({prio:key}),
-        style:'padding:7px 14px;border-radius:999px;font-weight:600;font-size:13px;cursor:pointer;border:1px solid '+(active?accent:'#D6DBE1')+';background:'+(active?accent:'#fff')+';color:'+(active?'#fff':'#39414B')+';transition:all .12s;' };
-    };
+    const mkFilter=(key,label)=>{ const a=this.state.prio===key; return { label, onClick:()=>this.setState({prio:key}), style:'padding:7px 14px;border-radius:999px;font-weight:600;font-size:13px;cursor:pointer;border:1px solid '+(a?accent:'#C4CAD2')+';background:'+(a?accent:'#fff')+';color:'+(a?'#fff':'#3A424C')+';transition:all .12s;' }; };
     const prioFilters=[mkFilter('all','Vše'),mkFilter('vysoká','Vysoká'),mkFilter('střední','Střední'),mkFilter('nízká','Nízká')];
-
-    const toggleStyle=(active)=>'padding:7px 14px;border-radius:999px;font-weight:600;font-size:13px;cursor:pointer;border:1px solid '+(active?accent:'#D6DBE1')+';background:'+(active?'#EAF1FA':'#fff')+';color:'+(active?accent:'#39414B')+';transition:all .12s;';
-    const onlyDesignBtn={ label:'Jen pro návrh', style:toggleStyle(this.state.onlyDesign), onClick:()=>this.setState({onlyDesign:!this.state.onlyDesign}) };
-    const hideDoneBtn={ label:'Skrýt hotové', style:toggleStyle(this.state.hideDone), onClick:()=>this.setState({hideDone:!this.state.hideDone}) };
-
-    const grpStyle=(active)=>'padding:6px 13px;font-weight:600;font-size:13px;cursor:pointer;border:none;background:'+(active?'#fff':'transparent')+';color:'+(active?'#1A1D21':'#69707A')+';border-radius:7px;box-shadow:'+(active?'0 1px 2px rgba(0,0,0,.1)':'none')+';transition:all .12s;';
-    const groupPrioBtn={ label:'Priorita', style:grpStyle(this.state.groupBy==='priorita'), onClick:()=>this.setState({groupBy:'priorita'}) };
-    const groupKatBtn={ label:'Kategorie', style:grpStyle(this.state.groupBy==='kategorie'), onClick:()=>this.setState({groupBy:'kategorie'}) };
-
-    const mkSource=(key,label)=>{
-      const active = this.state.source===key;
-      return { label, onClick:()=>this.setState({source:key}),
-        style:'padding:7px 14px;border-radius:999px;font-weight:600;font-size:13px;cursor:pointer;border:1px solid '+(active?'#6D28D9':'#D6DBE1')+';background:'+(active?'#6D28D9':'#fff')+';color:'+(active?'#fff':'#39414B')+';transition:all .12s;' };
-    };
+    const tS=(a)=>'padding:7px 14px;border-radius:999px;font-weight:600;font-size:13px;cursor:pointer;border:1px solid '+(a?accent:'#C4CAD2')+';background:'+(a?'#EFF4FB':'#fff')+';color:'+(a?accent:'#3A424C')+';transition:all .12s;';
+    const onlyDesignBtn={ label:'Jen pro návrh', style:tS(this.state.onlyDesign), onClick:()=>this.setState({onlyDesign:!this.state.onlyDesign}) };
+    const hideDoneBtn  ={ label:'Skrýt hotové',  style:tS(this.state.hideDone),   onClick:()=>this.setState({hideDone:!this.state.hideDone}) };
+    const gS=(a)=>'padding:6px 13px;font-weight:600;font-size:13px;cursor:pointer;border:none;background:'+(a?'#fff':'transparent')+';color:'+(a?'#15181C':'#7A828C')+';border-radius:7px;box-shadow:'+(a?'0 1px 2px rgba(20,47,86,.10)':'none')+';transition:all .12s;';
+    const groupPrioBtn={ label:'Priorita',  style:gS(this.state.groupBy==='priorita'),  onClick:()=>this.setState({groupBy:'priorita'}) };
+    const groupKatBtn ={ label:'Kategorie', style:gS(this.state.groupBy==='kategorie'), onClick:()=>this.setState({groupBy:'kategorie'}) };
+    const mkSource=(key,label)=>{ const a=this.state.source===key; return { label, onClick:()=>this.setState({source:key}), style:'padding:7px 14px;border-radius:999px;font-weight:600;font-size:13px;cursor:pointer;border:1px solid '+(a?'#6D28D9':'#C4CAD2')+';background:'+(a?'#6D28D9':'#fff')+';color:'+(a?'#fff':'#3A424C')+';transition:all .12s;' }; };
     const sourceFilters=[mkSource('all','Vše'),mkSource('agentura','Agentura'),mkSource('doporuceni','Doporučení')];
-
     return {
-      groups, total, doneCount, pct, remaining: total-doneCount,
-      hasResults: vis.length>0, noResults: vis.length===0,
+      groups, total, doneCount, pct, remaining:total-doneCount,
+      hasResults:vis.length>0, noResults:vis.length===0,
       barFill:'height:100%;width:'+pct+'%;background:'+accent+';border-radius:999px;transition:width .35s ease;',
       accentText:'color:'+accent+';',
       prioFilters, sourceFilters, onlyDesignBtn, hideDoneBtn, groupPrioBtn, groupKatBtn
