@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  .a11y-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
+  .a11y-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+</style>
+</helmet>
+<div style="border-top:1px solid #F2F4F7;background:#fff;">
+  <div style="padding:4px 16px;">
+    <sc-for list="{{ items }}" as="m" hint-placeholder-count="5">
+      <a class="a11y-i" href="#" onClick="{{ m.onClick }}" style="display:flex;align-items:center;justify-content:space-between;min-height:46px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="{{ m.style }}">{{ m.t }}</span><span style="color:#84AEDF;display:inline-flex;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></a>
+    </sc-for>
+  </div>
+  <div style="padding:12px 16px 16px;display:flex;flex-direction:column;gap:8px;">
+    <dc-import name="Tlacitko" variant="danger" size="medium" label="Akce a slevy" full-width="true" style="width:100%;" hint-size="100%,44px"></dc-import>
+    <dc-import name="Tlacitko" variant="secondary" size="medium" label="Poradna" full-width="true" style="width:100%;" hint-size="100%,44px"></dc-import>
+  </div>
+  <div style="padding:4px 16px;">
+    <div style="padding:8px 0 4px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Informace</div>
+    <sc-for list="{{ infoItems }}" as="s" hint-placeholder-count="4">
+      <a class="a11y-i" href="#" onClick="{{ s.onClick }}" style="display:flex;align-items:center;min-height:44px;border-bottom:1px solid #F2F4F7;font-size:14px;font-weight:500;color:#5A626C;cursor:pointer;">{{ s.t }}</a>
+    </sc-for>
+  </div>
+  <div style="padding:12px 16px 16px;">
+    <div style="background:#F2F4F7;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <dc-import name="LedIndikator" state="{{ ledState }}" label="" size="11" hint-size="11px,11px"></dc-import>
+        <sc-if value="{{ isOpen }}" hint-placeholder-val="{{ true }}"><span style="font-size:13px;font-weight:700;color:#0B6937;">{{ statusText }}</span></sc-if>
+        <sc-if value="{{ isClosed }}" hint-placeholder-val=""><span style="font-size:13px;font-weight:700;color:#C5232B;">{{ statusText }}</span></sc-if>
+      </div>
+      <a class="a11y-i" href="{{ phoneHref }}" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#15181C;text-decoration:underline;cursor:pointer;"><span style="display:inline-flex;color:#1E5AA8;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import></span>{{ phone }}</a>
+      <a class="a11y-i" href="{{ emailHref }}" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#15181C;text-decoration:underline;cursor:pointer;"><span style="display:inline-flex;color:#1E5AA8;"><dc-import name="Ikony" icon-name="mail" size="24" hint-size="24px,24px"></dc-import></span>{{ email }}</a>
+      <dc-import name="Tlacitko" variant="secondary" size="medium" label="Všechny kontakty" icon-trailing="arrow-right" full-width="true" on-click="{{ onAllContacts }}" style="width:100%;" hint-size="100%,44px"></dc-import>
+      <div style="display:flex;gap:8px;">
+        <div style="flex:1;min-width:0;display:flex;"><dc-import name="Tlacitko" variant="secondary" size="medium" label="Přihlásit se" icon="user" full-width="true" on-click="{{ onLogin }}" style="width:100%;" hint-size="100%,44px"></dc-import></div>
+        <div style="flex:1;min-width:0;display:flex;"><dc-import name="Tlacitko" variant="secondary" size="medium" label="Košík" icon="shopping-cart" full-width="true" on-click="{{ onCartClick }}" style="width:100%;" hint-size="100%,44px"></dc-import></div>
+      </div>
+    </div>
+  </div>
+</div>
+<sc-if value="{{ standalone }}" hint-placeholder-val="{{ true }}">
+  <div style="padding:24px 16px;display:flex;flex-direction:column;gap:5px;">
+    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> obsah rozbaleného mobilního menu v Hlavicce pod 1000 px. Panel nese jen border-top #F2F4F7 a bílé pozadí; hlavní položky 14/700 (aktivní #1E5AA8) s chevronem 24 px v #84AEDF, sekce Informace 14/500 #5A626C bez chevronu, kontaktní blok na surface.subtle #F2F4F7 s radiusem 8 a bez rámečku.</div>
+    <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nedávat sem pozicování, z-index, max-height, overflow ani box-shadow — ty patří pozicovanému obalu v Hlavicce. Neřešit tu Escape, focus management ani zámek scrollu. Obsah odkazů a kontaktů posílá stránka přes props, nezadrátovávat ho sem. Košík v bloku nemá čítač.</div>
+  </div>
+</sc-if>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:392,&quot;height&quot;:900},&quot;labels&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onSelect&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;infoLinks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;323 605 314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;email&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;hours&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Po–Pá 8–16&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onInfoSelect&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onLogin&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCartClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onAllContacts&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  renderVals(){
+    const P = this.props;
+    const embedded = typeof P.onSelect === 'function';
+    const labels = P.labels || ['Přívěsy','Náhradní díly','Příslušenství','Servis','Půjčovna'];
+    const active = P.active || 'Náhradní díly';
+    const onSelect = P.onSelect || (()=>{});
+    const infoLinks = P.infoLinks || ['Doprava a platba','Obchodní podmínky','O nás','Kontakty'];
+    const onInfoSelect = P.onInfoSelect || (()=>{});
+    const phone = P.phone || '323 605 314';
+    const email = P.email || 'obchod@vapp.cz';
+    const hours = P.hours || 'Po–Pá 8–16';
+    const open = (P.open ?? true) !== false;
+    const stop = (e)=>{ if(e&&e.preventDefault) e.preventDefault(); };
+    return {
+      embedded, standalone: !embedded, debug: P.debug ?? true,
+      items: labels.map(t=>({ t, onClick:(e)=>{ stop(e); onSelect(t); },
+        style:'font-size:14px;font-weight:700;color:'+(t===active?'#1E5AA8':'#15181C')+';' })),
+      infoItems: infoLinks.map(t=>({ t, onClick:(e)=>{ stop(e); onInfoSelect(t); } })),
+      phone, email, hours,
+      phoneHref: 'tel:+420' + phone.replace(/\D/g,''),
+      emailHref: 'mailto:' + email,
+      isOpen: open, isClosed: !open,
+      ledState: open ? 'open' : 'closed',
+      statusText: hours + (open ? ' · právě otevřeno' : ' · zavřeno'),
+      onLogin: P.onLogin || (()=>{}),
+      onCartClick: P.onCartClick || (()=>{}),
+      onAllContacts: P.onAllContacts || (()=>{}),
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -60,7 +60,7 @@ class Component extends DCLogic {
       const _lbl = P.label !== undefined ? P.label : (open ? 'Po–Pá 8–16 · právě otevřeno' : 'Zavřeno · otevíráme v Po 8:00');
       return { single:true, gallery:false,
         ledAria: (String(_lbl||'').trim() ? undefined : (open ? 'Právě otevřeno' : 'Zavřeno')),
-        label: P.label || (open ? 'Po–Pá 8–16 · právě otevřeno' : 'Zavřeno · otevíráme v Po 8:00'),
+        label: _lbl,
         wrapStyle:'display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:'+(onDark?'600':'700')+';color:'+textColor+';',
         dotStyle:'--led:'+led+';width:'+size+'px;height:'+size+'px;background:'+color+';flex:none;' };
     }
