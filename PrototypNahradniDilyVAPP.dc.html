@@ -44,6 +44,10 @@
 @media (max-width:899px){ .p-grid{grid-template-columns:repeat(2,1fr);} }
 @media (max-width:479px){ .p-grid{grid-template-columns:1fr;} }
 .sk{background:#F2F4F7;border-radius:6px;}
+@media (max-width:819px){ .sc-tiles{display:none !important;} }
+@media (min-width:820px){ .sc-rows{display:none !important;} }
+.sc-tile{transition:background .12s;}
+.sc-tile:not(.sc-tile-on):hover{background:#EFF4FB !important;}
 </style>
 <script>
 (function(){
@@ -94,12 +98,25 @@
             <h2 style="margin:0;font-size:14px;font-weight:700;color:#142F56;">{{ activeGroupName }}</h2>
             <span style="font-size:13px;color:#666E78;">{{ activeGroupCount }} produktů</span>
           </div>
+          <div class="sc-rows">
           <sc-for list="{{ subcats }}" as="s" hint-placeholder-count="5">
             <button type="button" class="a11y-i" onClick="{{ s.onPick }}" style="{{ s.style }}">
               <span style="{{ s.nameStyle }}">{{ s.name }}</span>
               <span style="display:flex;align-items:center;gap:8px;"><span style="font-size:13px;color:#666E78;">{{ s.count }}</span><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#84AEDF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></span>
             </button>
           </sc-for>
+          </div>
+          <div class="sc-tiles" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;padding:16px;">
+            <sc-for list="{{ subcats }}" as="s" hint-placeholder-count="6">
+              <button type="button" class="a11y-i sc-tile {{ s.tileCls }}" onClick="{{ s.onPick }}" style="{{ s.tileStyle }}">
+                <span style="flex:none;width:48px;height:48px;background:#FFFFFF;border-radius:6px;"></span>
+                <span style="flex:1;min-width:0;display:flex;flex-direction:column;">
+                  <span style="{{ s.tileNameStyle }}">{{ s.name }}</span>
+                  <span style="font-size:13px;font-weight:400;color:#666E78;">{{ s.countText }}</span>
+                </span>
+              </button>
+            </sc-for>
+          </div>
         </div>
       </sc-if>
     </div>
@@ -429,10 +446,13 @@ class Component extends DCLogic {
     const subcats = ag ? ag.subs.map(([n,c])=>{
       const on = s.subcat===n;
       return {
-        name:n, count:c,
+        name:n, count:c, countText: c+' produktů',
         onPick:()=>this.setState({ subcat:on?null:n, subcatGroup:g_key(ag), shown:15 }),
-        style:'display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:0 16px;border-bottom:1px solid #F2F4F7;cursor:pointer;'+(on?'background:#EFF4FB;':''),
+        style:'width:100%;display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:0 16px;border-bottom:1px solid #F2F4F7;cursor:pointer;'+(on?'background:#EFF4FB;':''),
         nameStyle:'font-size:14px;font-weight:'+(on?'700':'600')+';color:'+(on?'#1E5AA8':'#15181C')+';',
+        tileStyle:'width:100%;min-height:72px;display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;cursor:pointer;text-align:left;background:'+(on?'#D8E6F6':'#F2F4F7')+';',
+        tileNameStyle:'font-size:14px;font-weight:'+(on?'700':'600')+';color:'+(on?'#1E5AA8':'#15181C')+';',
+        tileCls: on?'sc-tile-on':'',
       };
     }) : [];
     function g_key(g){ return g.key; }
