@@ -80,7 +80,10 @@
 </sc-if>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:520,&quot;height&quot;:190},&quot;view&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;desktop&quot;,&quot;mobil&quot;],&quot;default&quot;:&quot;auto&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Náhled&quot;},&quot;count&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:10,&quot;tsType&quot;:&quot;number&quot;},&quot;total&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:42440,&quot;tsType&quot;:&quot;number&quot;},&quot;onClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:520,&quot;height&quot;:190},&quot;view&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;desktop&quot;,&quot;mobil&quot;],&quot;default&quot;:&quot;auto&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Náhled&quot;},&quot;defaultCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Výchozí stav&quot;},&quot;defaultTotal&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:42556,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Výchozí stav&quot;},&quot;count&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:10,&quot;tsType&quot;:&quot;number&quot;},&quot;total&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:42440,&quot;tsType&quot;:&quot;number&quot;},&quot;onClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null}}">
+// Výchozí stav košíku — jediné místo, odkud ho dědí i Hlavicka.
+const CART_DEFAULT = { count: 2, total: 42556 };
+
 class Component extends DCLogic {
   fmt(n){ return String(Math.round(n||0)).replace(/\B(?=(\d{3})+(?!\d))/g,'\u00A0') + ' Kč'; }
   cell(count,total){
@@ -92,8 +95,9 @@ class Component extends DCLogic {
     const P = this.props;
     const embedded = P.count!==undefined || P.total!==undefined || typeof P.onClick==='function';
     if (embedded){
-      const count = parseInt(P.count,10)||0;
-      const total = parseInt(P.total,10)||0;
+      const has = (v)=> v!==undefined && v!==null && v!=='';
+      const count = has(P.count) ? (parseInt(P.count,10)||0) : (has(P.defaultCount) ? (parseInt(P.defaultCount,10)||0) : CART_DEFAULT.count);
+      const total = has(P.total) ? (parseInt(P.total,10)||0) : (has(P.defaultTotal) ? (parseInt(P.defaultTotal,10)||0) : CART_DEFAULT.total);
       const c = this.cell(count,total);
       const v = P.view || 'auto';
       const viewCls = v==='desktop' ? 'ks-force-desk' : (v==='mobil' ? 'ks-force-mob' : '');

@@ -11,6 +11,8 @@
 - **Znovupoužitelné komponenty** = samostatné `.dc.html` soubory importované přes `dc-import`. Návrhové stránky komponenty nikdy nekopírují, vždy importují.
 - Při změně tokenu aktualizuj tento soubor i `DesignSystemVAPP.dc.html`.
 - **`dc-import` a prop `name`:** `dc-import` obsazuje atribut `name` pro výběr souboru a předává ho dítěti i jako prop — komponenta, která potřebuje vlastní prop `name`, musí použít alias. U `Ikony.dc.html` je proto kanonický prop `iconName`; `name` funguje jen ve standalone náhledu.
+- **Funkce přes `dc-import`:** funkce se předávají jen jako přímý prop. Funkce vložená dovnitř objektu nebo pole se při druhém předání ztratí — runtime hodnotu klonuje. Kontejnerová komponenta proto dostává data bez funkcí a skalární callbacky zvlášť, a per-položkové handlery si vyrábí sama.
+- **`flex:1` na `dc-import`:** nepropíše se při mountu — komponenta, která má sdílet šířku v řádku, se obaluje vlastním divem (`flex:1; min-width:0; display:flex`).
 
 ---
 

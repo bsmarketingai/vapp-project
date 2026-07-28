@@ -85,11 +85,7 @@
     <!-- ===== KATEGORIE (Datart/Alza drill-down) ===== -->
     <div style="margin-top:16px;">
       <sc-if value="{{ inGroups }}" hint-placeholder-val="{{ true }}">
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">
-          <sc-for list="{{ groups }}" as="g" hint-placeholder-count="6">
-            <dc-import name="KategorickaDlazdice" cat="{{ g }}" hint-size="100%,240px"></dc-import>
-          </sc-for>
-        </div>
+      <dc-import name="VypisKategorii" categories="{{ categoriesData }}" on-open-category="{{ onOpenCategory }}" on-pick-sub="{{ onPickSub }}" debug="{{ debug }}" hint-size="100%,500px"></dc-import>
       </sc-if>
       <sc-if value="{{ inSubcats }}" hint-placeholder-val="">
         <div style="background:#fff;border-radius:8px;overflow:hidden;">
@@ -273,12 +269,12 @@ class Component extends DCLogic {
   norm(x){ return x.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
 
   GROUPS = [
-    { key:'napravy', name:'Nápravy a brzdy', preview:'Nájezdové brzdy, čelisti…', count:612, subs:[['Nájezdové brzdy',94],['Brzdové čelisti a obložení',188],['Nápravy',76],['Náboje kol',102],['Ložiska a gufera',152]] },
-    { key:'spojovaci', name:'Spojovací zařízení', preview:'Kulové spojky, oje…', count:388, subs:[['Kulové spojky',121],['Kloubové spojky',44],['Oje a příčníky',59],['Zabezpečení proti krádeži',86],['Opěrná kolečka',78]] },
-    { key:'elektro', name:'Elektro a osvětlení', preview:'Světla, kabeláž, zástrčky…', count:474, subs:[['Zadní světla',146],['Poziční a obrysová světla',98],['Kabeláž a zásuvky',114],['Odrazky',66],['Osvětlení SPZ',50]] },
-    { key:'kola', name:'Kola a pneumatiky', preview:'Pneu, disky, šrouby…', count:296, subs:[['Pneumatiky s diskem',108],['Samostatné disky',64],['Pneumatiky',82],['Šrouby a matice kol',42]] },
-    { key:'karoserie', name:'Blatníky a karoserie', preview:'Blatníky, bočnice, podlahy…', count:412, subs:[['Blatníky',134],['Bočnice a sloupky',88],['Podlahy',52],['Plachty a konstrukce',96],['Panty a zámky bočnic',42]] },
-    { key:'upinani', name:'Upínání a doplňky', preview:'Navijáky, pásy, podpěry…', count:236, subs:[['Navijáky a kladky',58],['Upínací pásy',72],['Podpěrné nohy',48],['Plynové vzpěry',58]] },
+    { key:'napravy', image:'uploads/napravy-a-brzdy.jpg', name:'Nápravy a brzdy', preview:'Nájezdové brzdy, čelisti…', count:612, subs:[['Nájezdové brzdy',94],['Brzdové čelisti a obložení',188],['Nápravy',76],['Náboje kol',102],['Ložiska a gufera',152]] },
+    { key:'spojovaci', image:'uploads/spojovaci-zarizeni.jpg', name:'Spojovací zařízení', preview:'Kulové spojky, oje…', count:388, subs:[['Kulové spojky',121],['Kloubové spojky',44],['Oje a příčníky',59],['Zabezpečení proti krádeži',86],['Opěrná kolečka',78]] },
+    { key:'elektro', image:'uploads/elektro-a-osvetleni.jpg', name:'Elektro a osvětlení', preview:'Světla, kabeláž, zástrčky…', count:474, subs:[['Zadní světla',146],['Poziční a obrysová světla',98],['Kabeláž a zásuvky',114],['Odrazky',66],['Osvětlení SPZ',50]] },
+    { key:'kola', image:'uploads/kola-a-pneumatiky.jpg', name:'Kola a pneumatiky', preview:'Pneu, disky, šrouby…', count:296, subs:[['Pneumatiky s diskem',108],['Samostatné disky',64],['Pneumatiky',82],['Šrouby a matice kol',42]] },
+    { key:'karoserie', image:'uploads/blatniky-a-karoserie.jpg', name:'Blatníky a karoserie', preview:'Blatníky, bočnice, podlahy…', count:412, subs:[['Blatníky',134],['Bočnice a sloupky',88],['Podlahy',52],['Plachty a konstrukce',96],['Panty a zámky bočnic',42]] },
+    { key:'upinani', image:'uploads/navijaky-a-kladky.jpg', name:'Upínání a doplňky', preview:'Navijáky, pásy, podpěry…', count:236, subs:[['Navijáky a kladky',58],['Upínací pásy',72],['Podpěrné nohy',48],['Plynové vzpěry',58]] },
   ];
 
   PRODUCTS = [
@@ -422,6 +418,13 @@ class Component extends DCLogic {
       onOpen:()=>this.setState({ view:g.key, subcat:null, shown:15 }),
     }));
 
+    const categoriesData = this.GROUPS.map(g=>({
+      name:g.name, count:g.count, image:g.image,
+      subs: g.subs.slice(0,4).map(([n,c])=>({ name:n, count:c }))
+    }));
+    const onOpenCategory = (name)=>{ const g = this.GROUPS.find(x=>x.name===name); if(g) this.setState({ view:g.key, subcat:null, shown:15 }); };
+    const onPickSub = (catName, subName)=>{ const g = this.GROUPS.find(x=>x.name===catName); if(g) this.setState({ view:g.key, subcat:subName, subcatGroup:g.key, shown:15 }); };
+
     const ag = this.GROUPS.find(g=>g.key===s.view);
     const subcats = ag ? ag.subs.map(([n,c])=>{
       const on = s.subcat===n;
@@ -493,7 +496,7 @@ class Component extends DCLogic {
       descOpen:s.descOpen, toggleDesc:()=>this.setState({descOpen:!s.descOpen}),
       descLabel: s.descOpen ? 'Skrýt celý popis' : 'Zobrazit celý popis',
       inGroups: s.view==='groups', inSubcats: s.view!=='groups',
-      groups, subcats,
+      groups, subcats, categoriesData, onOpenCategory, onPickSub,
       activeGroupName: ag?ag.name:'', activeGroupCount: ag?ag.count:'',
       backToGroups:()=>this.setState({ view:'groups', subcat:null, shown:15 }),
       activeSubcat: s.subcat, clearSubcat:()=>this.setState({ subcat:null, shown:15 }),
