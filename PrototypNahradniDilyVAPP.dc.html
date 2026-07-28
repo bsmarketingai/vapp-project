@@ -40,8 +40,9 @@
   @keyframes pf-fade-in{from{opacity:0;}to{opacity:1;}}
   @keyframes pf-fade-out{from{opacity:1;}to{opacity:0;}}
   @media (prefers-reduced-motion:reduce){#pf-panel,#pf-overlay{animation:none !important;}}
-  @media (max-width:899px){ .dt{display:none !important;} .pg-h1{font-size:26px !important;} }
-  @media (max-width:999px){ .pg-lead{font-size:14px !important;} }
+  @media (max-width:899px){ .dt{display:none !important;} }
+  /* mobilní typografie — pásma S, XS, XXS */
+  @media (max-width:819px){ .pg-h1{font-size:26px !important;} .pg-lead{font-size:14px !important;} }
   @media (min-width:900px){ .mb{display:none !important;} }
 .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
 .vp-bleed{margin-left:-32px;margin-right:-32px;padding-left:32px;padding-right:32px;}

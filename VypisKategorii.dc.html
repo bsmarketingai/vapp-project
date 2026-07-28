@@ -17,9 +17,12 @@
   .a11y-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
   .a11y-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  /* mřížka kategorií: S dvousloupcová, jeden sloupec až na XS a XXS */
+  @media (max-width:819px){ .vk-grid{grid-template-columns:repeat(2,1fr) !important;} }
+  @media (max-width:549px){ .vk-grid{grid-template-columns:1fr !important;} }
 </style>
 </helmet>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">
+<div class="vk-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">
   <sc-for list="{{ cats }}" as="c" hint-placeholder-count="6">
     <dc-import name="KategorickaDlazdice" cat="{{ c }}" hint-size="100%,240px"></dc-import>
   </sc-for>

@@ -29,6 +29,11 @@
   html,body{margin:0;padding:0;}
   .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
   @media (max-width:899px){ .vp-in{padding-left:16px;padding-right:16px;} }
+  /* dokumentační řádky: pod 420 px (XXS) se pevné sloupce zalomí pod sebe */
+  @media (max-width:419px){
+    .ds-doc{flex-wrap:wrap;}
+    .ds-doc>span{width:100% !important;flex:1 1 100% !important;text-align:left !important;white-space:normal !important;}
+  }
   body{background:#F7F9FB;}
   a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
   .hvx1{transition:box-shadow .12s;} .hvx1:hover{box-shadow:0 6px 20px rgba(20,47,86,.10) !important;}
@@ -126,7 +131,7 @@
       <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Exo&nbsp;2 (400–700), fallback <span style="font-family:'JetBrains Mono',monospace;">'Helvetica Neue', Arial, sans-serif</span>. Základní text <strong>16&nbsp;px</strong>, minimum <strong>13&nbsp;px</strong>, maximální tučnost <strong>700</strong>. Nadpisy mají stažený proklad, běžný text řádkování 1,6.</p>
       <div style="background:#fff;border-radius:8px;padding:8px 28px;margin-bottom:24px;">
         <sc-for list="{{ typeScale }}" as="t" hint-placeholder-count="9">
-          <button type="button" onClick="{{ t.onCopy }}" class="a11y-i" style="display:flex;width:100%;align-items:baseline;gap:24px;padding:18px 0;border-bottom:1px solid #F2F4F7;cursor:pointer;">
+          <button type="button" onClick="{{ t.onCopy }}" class="a11y-i ds-doc" style="display:flex;width:100%;align-items:baseline;gap:24px;padding:18px 0;border-bottom:1px solid #F2F4F7;cursor:pointer;">
             <span style="flex:none;width:170px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:#666E78;">{{ t.name }}</span>
             <span style="flex:1;min-width:0;{{ t.style }}">{{ t.sample }}</span>
             <span style="flex:none;font-family:'JetBrains Mono',monospace;font-size:13px;color:#666E78;white-space:nowrap;">{{ t.spec }}</span>
@@ -134,11 +139,11 @@
         </sc-for>
       </div>
 
-      <h3 style="margin:0 0 6px;font-size:22px;font-weight:700;line-height:1.25;">Mobilní kroky (pod 900&nbsp;px)</h3>
+      <h3 style="margin:0 0 6px;font-size:22px;font-weight:700;line-height:1.25;">Mobilní kroky (pásmo S a níž, ≤ 819&nbsp;px)</h3>
       <p style="margin:0 0 16px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Doplněná chybějící mobilní škála. Nahrazuje jednorázový <span style="font-family:'JetBrains Mono',monospace;">clamp(26px,4vw,36px)</span> z prototypu — velikosti se přepínají skokem na breakpointu, ne fluidně.</p>
       <div style="background:#fff;border-radius:8px;padding:8px 28px;margin-bottom:24px;">
         <sc-for list="{{ typeMobile }}" as="t" hint-placeholder-count="6">
-          <div style="display:flex;align-items:baseline;gap:24px;padding:14px 0;border-bottom:1px solid #F2F4F7;">
+          <div class="ds-doc" style="display:flex;align-items:baseline;gap:24px;padding:14px 0;border-bottom:1px solid #F2F4F7;">
             <span style="flex:none;width:170px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:#666E78;">{{ t.name }}</span>
             <span style="flex:1;min-width:0;font-size:14px;font-weight:500;color:#5A626C;">{{ t.note }}</span>
             <span style="flex:none;font-family:'JetBrains Mono',monospace;font-size:13px;color:#5A626C;white-space:nowrap;">{{ t.spec }}</span>
@@ -150,7 +155,7 @@
       <p style="margin:0 0 16px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Speciální kroky pro ceny, skladovost a produktové názvy. Cena bez DPH je vždy primární a bez popisku.</p>
       <div style="background:#fff;border-radius:8px;padding:8px 28px;">
         <sc-for list="{{ typeCommerce }}" as="t" hint-placeholder-count="6">
-          <div style="display:flex;align-items:baseline;gap:24px;padding:14px 0;border-bottom:1px solid #F2F4F7;">
+          <div class="ds-doc" style="display:flex;align-items:baseline;gap:24px;padding:14px 0;border-bottom:1px solid #F2F4F7;">
             <span style="flex:none;width:170px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:#666E78;">{{ t.name }}</span>
             <span style="flex:1;min-width:0;{{ t.style }}">{{ t.sample }}</span>
             <span style="flex:none;font-family:'JetBrains Mono',monospace;font-size:13px;color:#666E78;white-space:nowrap;">{{ t.spec }}</span>
@@ -165,12 +170,24 @@
       <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Systém na <strong>4px gridu</strong>. Doplněny mezikroky, které se v návrzích reálně objevovaly (20, 28, 36, 40, 56) — místo aby zůstávaly jako neevidované výjimky.</p>
       <div style="background:#fff;border-radius:8px;padding:20px 24px 24px;">
         <sc-for list="{{ spacing }}" as="s" hint-placeholder-count="13">
-          <button type="button" onClick="{{ s.onCopy }}" class="a11y-i" style="display:flex;width:100%;align-items:center;gap:20px;padding:9px 0;border-bottom:1px solid #F2F4F7;cursor:pointer;">
+          <button type="button" onClick="{{ s.onCopy }}" class="a11y-i ds-doc" style="display:flex;width:100%;align-items:center;gap:20px;padding:9px 0;border-bottom:1px solid #F2F4F7;cursor:pointer;">
             <span style="flex:none;width:100px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;">{{ s.name }}</span>
             <span style="flex:none;width:56px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#5A626C;">{{ s.px }}</span>
             <span style="flex:none;{{ s.bar }}"></span>
             <span style="flex:1;min-width:0;font-size:14px;font-weight:500;color:#5A626C;text-align:right;">{{ s.use }}</span>
           </button>
+        </sc-for>
+      </div>
+
+      <h3 style="margin:28px 0 6px;font-size:22px;font-weight:700;line-height:1.25;">Rozměry ovládacích prvků</h3>
+      <p style="margin:0 0 16px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Samostatná řada mimo 4px grid — výšky interaktivních prvků, aby se nepletly s mezerami.</p>
+      <div style="background:#fff;border-radius:8px;padding:20px 24px 24px;">
+        <sc-for list="{{ sizes }}" as="z" hint-placeholder-count="2">
+          <div class="ds-doc" style="display:flex;align-items:baseline;gap:20px;padding:10px 0;border-bottom:1px solid #F2F4F7;">
+            <span style="flex:none;width:170px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;">{{ z.name }}</span>
+            <span style="flex:none;width:56px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#5A626C;">{{ z.value }}</span>
+            <span style="flex:1;min-width:0;font-size:14px;font-weight:500;color:#5A626C;">{{ z.use }}</span>
+          </div>
         </sc-for>
       </div>
     </div>
@@ -203,21 +220,34 @@
           </button>
         </sc-for>
       </div>
+
+      <h3 style="margin:28px 0 6px;font-size:22px;font-weight:700;line-height:1.25;">Vrstvení (z-index)</h3>
+      <p style="margin:0 0 16px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Zápis dnešního stavu — hodnoty se nepřečíslovávají, jen mají jméno. Panel mobilního menu má z-index 60 uvnitř stohovacího kontextu hlavičky, není to globální hodnota.</p>
+      <div style="background:#fff;border-radius:8px;padding:20px 24px 24px;margin-bottom:8px;">
+        <sc-for list="{{ zLayers }}" as="z" hint-placeholder-count="6">
+          <div class="ds-doc" style="display:flex;align-items:baseline;gap:20px;padding:10px 0;border-bottom:1px solid #F2F4F7;">
+            <span style="flex:none;width:170px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;">{{ z.name }}</span>
+            <span style="flex:none;width:56px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#5A626C;">{{ z.value }}</span>
+            <span style="flex:1;min-width:0;font-size:14px;font-weight:500;color:#5A626C;">{{ z.use }}</span>
+          </div>
+        </sc-for>
+      </div>
     </div>
 
     <!-- 8. LAYOUT -->
     <div>
       <h2 style="margin:0 0 6px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">8 · Layout, grid a breakpointy</h2>
-      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Výchozí šířka webu je <strong>1560&nbsp;px</strong>. Klíčový zlom je <strong>900&nbsp;px</strong> — přepíná desktopové a mobilní chování. Ostatní breakpointy jsou doplněné pro jemné dolaďování. Produktový grid má tři stupně (4 / 2 / 1 sloupec); zlomy <strong>480</strong> a <strong>900&nbsp;px</strong> patří do staré sady a čekají na migraci na škálu XXS–XXL.</p>
+      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Výchozí šířka webu je <strong>1560&nbsp;px</strong>. Layout se řídí škálou sedmi pásem <strong>XXS–XXL</strong>. Desktopová a mobilní navigace se přepíná na <strong>1000&nbsp;px</strong> — celé pásmo M (820–999&nbsp;px) je mobilní, s hamburgerem. Page padding 16/32, produktový grid (4 / 2 / 1 sloupec) a mobilní typografie zatím běží na staré sadě <strong>480 / 900</strong> a čekají na migraci na tuto škálu — je to zápis dnešního stavu, ne cíl.</p>
       <div style="background:#fff;border-radius:8px;padding:20px 24px 24px;">
-        <sc-for list="{{ layout }}" as="l" hint-placeholder-count="12">
-          <div style="display:flex;align-items:baseline;gap:20px;padding:11px 0;border-bottom:1px solid #F2F4F7;">
+        <sc-for list="{{ layout }}" as="l" hint-placeholder-count="19">
+          <div class="ds-doc" style="display:flex;align-items:baseline;gap:20px;padding:11px 0;border-bottom:1px solid #F2F4F7;">
             <span style="flex:none;width:210px;font-size:14px;font-weight:700;">{{ l.name }}</span>
             <span style="flex:none;width:220px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#15181C;">{{ l.value }}</span>
             <span style="flex:1;min-width:0;font-size:14px;font-weight:500;color:#5A626C;">{{ l.note }}</span>
           </div>
         </sc-for>
       </div>
+      <p style="margin:14px 0 0;font-size:14px;font-weight:500;line-height:1.6;color:#5A626C;max-width:760px;">Hranice, na kterých smí vzniknout media query: 1560 · 1150 · 1000 · 820 · 550 · 420. Jiná čísla se nepoužívají.</p>
     </div>
 
     <!-- 9. IKONY -->
@@ -226,7 +256,7 @@
       <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Inline SVG, <span style="font-family:'JetBrains Mono',monospace;">viewBox 0 0 24 24</span>, stroke-width 2, barva přes <span style="font-family:'JetBrains Mono',monospace;">currentColor</span>. Bez výplní, jen tahy. Kompletní registr ikon žije v <a href="./Ikony.dc.html" style="text-decoration:underline;">Ikony.dc.html</a> (sada Tabler) — komponenty ikony nekreslí inline, vkládají je odtud.</p>
       <div style="background:#fff;border-radius:8px;padding:20px 24px 24px;">
         <sc-for list="{{ media }}" as="m" hint-placeholder-count="8">
-          <div style="display:flex;align-items:baseline;gap:20px;padding:11px 0;border-bottom:1px solid #F2F4F7;">
+          <div class="ds-doc" style="display:flex;align-items:baseline;gap:20px;padding:11px 0;border-bottom:1px solid #F2F4F7;">
             <span style="flex:none;width:210px;font-size:14px;font-weight:700;">{{ m.name }}</span>
             <span style="flex:none;width:220px;font-family:'JetBrains Mono',monospace;font-size:13px;">{{ m.value }}</span>
             <span style="flex:1;min-width:0;font-size:14px;font-weight:500;color:#5A626C;">{{ m.note }}</span>
@@ -241,7 +271,7 @@
       <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Přechody jsou krátké a nenápadné. Doplněny chybějící stavy <span style="font-family:'JetBrains Mono',monospace;">:active</span> a klávesnicový focus, které dosud definované nebyly.</p>
       <div style="background:#fff;border-radius:8px;padding:20px 24px 24px;margin-bottom:20px;">
         <sc-for list="{{ states }}" as="s" hint-placeholder-count="14">
-          <div style="display:flex;align-items:baseline;gap:20px;padding:10px 0;border-bottom:1px solid #F2F4F7;">
+          <div class="ds-doc" style="display:flex;align-items:baseline;gap:20px;padding:10px 0;border-bottom:1px solid #F2F4F7;">
             <span style="flex:none;width:250px;font-size:14px;font-weight:700;">{{ s.name }}</span>
             <span style="flex:1;min-width:0;font-family:'JetBrains Mono',monospace;font-size:13px;color:#5A626C;">{{ s.value }}</span>
           </div>
@@ -249,7 +279,7 @@
       </div>
       <div style="background:#fff;border-radius:8px;padding:20px 24px 24px;">
         <sc-for list="{{ motion }}" as="s" hint-placeholder-count="5">
-          <div style="display:flex;align-items:baseline;gap:20px;padding:10px 0;border-bottom:1px solid #F2F4F7;">
+          <div class="ds-doc" style="display:flex;align-items:baseline;gap:20px;padding:10px 0;border-bottom:1px solid #F2F4F7;">
             <span style="flex:none;width:250px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;">{{ s.name }}</span>
             <span style="flex:none;width:110px;font-family:'JetBrains Mono',monospace;font-size:13px;">{{ s.value }}</span>
             <span style="flex:1;min-width:0;font-size:14px;font-weight:500;color:#5A626C;">{{ s.use }}</span>
@@ -261,7 +291,7 @@
     <!-- 11. ROZHODNUTÍ -->
     <div>
       <h2 style="margin:0 0 6px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">11 · Vyřešené konflikty a otevřené body</h2>
-      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Záznam rozhodnutí proti staršímu stavu projektu. Body označené <strong style="color:#C5232B;">k potvrzení</strong> je potřeba odsouhlasit — zbytek už je v tomto dokumentu zafixovaný.</p>
+      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Záznam rozhodnutí proti staršímu stavu projektu. Všechny body jsou zafixované; u breakpointů zbývá dokončit migraci existujících komponent.</p>
       <div style="display:flex;flex-direction:column;gap:10px;">
         <sc-for list="{{ decisions }}" as="d" hint-placeholder-count="12">
           <div style="background:#fff;border-radius:8px;padding:16px 18px;display:flex;gap:14px;align-items:flex-start;">
@@ -319,7 +349,7 @@ class Component extends DCLogic {
     const sw  = (bg,r)=>'display:block;width:100%;height:52px;border-radius:6px;background:'+bg+';'+(r?ring:'');
     const chip= (bg,r)=>'flex:none;width:34px;height:34px;border-radius:6px;background:'+bg+';'+(r?ring:'');
 
-    const metaChips = ['Exo 2 · 400–700','Jen světlý režim','Šířka 1560 px','Breakpoint 900 px','4px grid'];
+    const metaChips = ['Exo 2 · 400–700','Jen světlý režim','Šířka 1560 px','7 pásem XXS–XXL','4px grid'];
 
     /* ---------- 1. ŠKÁLY ---------- */
     const mkScale = (name, prefix, note, steps)=>({
@@ -390,6 +420,7 @@ class Component extends DCLogic {
         ['link.onDark.hover','#D8E6F6','Hover odkazu na tmavé ploše',1],
         ['link.onDarkMuted','#B4CEEC','Servisní odkazy v topbaru a patičce',1],
         ['link.onDarkMuted.hover','#FFFFFF','Hover servisního odkazu',1],
+        ['icon.chevron','#5189CC','Chevron a navigační šipky — blue.400, 3,5:1 na bílé; #84AEDF mělo 2,1:1'],
       ])},
       { title:'Stavy a commerce', items: mkItems([
         ['status.inStock','#0B6937','Text „Skladem > 15 ks"'],
@@ -481,6 +512,20 @@ class Component extends DCLogic {
       ['focus.ring','Focus inputů a interaktivních prvků','inset 0 0 0 2px #1E5AA8','box-shadow:inset 0 0 0 2px #1E5AA8;'],
     ].map(([name,use,value,box])=>({ name, use, value, box, onCopy:cp(value) }));
 
+    const zLayers = [
+      ['z.stickyBar','60','Sticky filtrační lišta nad výpisem'],
+      ['z.header','70','Sticky hlavička'],
+      ['z.drawerOverlay','80','Ztmavení pod drawerem'],
+      ['z.drawerPanel','90','Panel draweru (filtry)'],
+      ['z.toast','95','Toast a potvrzovací hlášky'],
+      ['z.debug','99','Debug lišta katalogu'],
+    ].map(([name,value,use])=>({ name, value, use }));
+
+    const sizes = [
+      ['size.control','44 px','Input, Kvantifikátor Standard, ikonové tlačítko, Tlačítko Medium'],
+      ['size.row','48 px','Řádek seznamu a navigace'],
+    ].map(([name,value,use])=>({ name, value, use }));
+
     /* ---------- 8. LAYOUT ---------- */
     const layout = [
       ['Container max-width','1560 px','Výchozí šířka webu'],
@@ -490,11 +535,13 @@ class Component extends DCLogic {
       ['Gap produktového gridu','12 px','space-3'],
       ['Šířka produktové karty','280–300 px','min / max'],
       ['Grid kategorií','minmax(280px,1fr)','auto-fit, gap 12'],
-      ['bp.mobile','< 600 px','Jednosloupcové rozvržení, kompaktní hlavička'],
-      ['bp.tablet','600–899 px','2sloupcový produktový grid, mobilní navigace'],
-      ['bp.desktop','≥ 900 px','Hlavní zlom — desktopová navigace a layout'],
-      ['bp.wide','≥ 1280 px','Plný 4sloupcový grid'],
-      ['bp.max','≥ 1560 px','Container se přestává roztahovat'],
+      ['XXL','≥ 1560 px','Container se přestává roztahovat'],
+      ['XL','1150–1559 px','Plná desktopová šířka'],
+      ['L','1000–1149 px','Nejnižší pásmo s desktopovou navigací'],
+      ['M','820–999 px','Celé pásmo je mobilní — hamburger'],
+      ['S','550–819 px','Mobilní layout, plné labely v hlavičce'],
+      ['XS','420–549 px','Mizí labely u Přihlásit / Porovnat'],
+      ['XXS','≤ 419 px','Logo 24 px'],
     ].map(([name,value,note])=>({ name, value, note }));
 
     /* ---------- 9. IKONY ---------- */
@@ -535,6 +582,7 @@ class Component extends DCLogic {
       ['motion.fast','60 ms','Stisk tlačítka (transform)'],
       ['motion.base','120 ms','Barvy, pozadí, okraje'],
       ['motion.slow','150 ms','Stíny a elevace karet'],
+      ['motion.panel','400 ms','Posun panelů — drill-down menu, drawer filtrů'],
       ['motion.led','1800 ms','Pulz LED indikátoru otevírací doby'],
       ['motion.easing','ease','Výchozí křivka pro všechny přechody'],
     ].map(([name,value,use])=>({ name, value, use }));
@@ -543,7 +591,6 @@ class Component extends DCLogic {
     const dotS = (c)=>'flex:none;width:10px;height:10px;border-radius:999px;margin-top:6px;background:'+c+';';
     const tagS = (bg,col)=>'flex:none;font-size:13px;font-weight:700;border-radius:6px;padding:5px 10px;background:'+bg+';color:'+col+';white-space:nowrap;';
     const OK   = ['Vyřešeno', tagS('#E9F8EF','#0B6937'), dotS('#0E7F43')];
-    const TODO = ['K potvrzení', tagS('#FDF1F1','#C5232B'), dotS('#C5232B')];
 
     const decisions = [
       ['Sloučení text.muted a text.tertiary','Kontrastní audit (WCAG 2.2 AA): #7A828C dával 3,89:1 a #9AA1AB 2,61:1 na bílé — obojí pod 4,5:1. Mezi #5A626C a bílou škála neunese tři rozlišitelné úrovně, které by všechny prošly, proto se muted a tertiary slučují do nového kroku neutral.650 #666E78 (5,16:1 na bílé, 4,89:1 na #F7F9FB, 4,69:1 na #F2F4F7 — projde i na surface.subtle). Hierarchii nese velikost a řez písma, ne barva. Zároveň status.onRequest #8A919C a commerce.priceGross → #666E78, border.control #C4CAD2 (1,65:1) → #91959B (3,01:1).',OK],
@@ -556,9 +603,12 @@ class Component extends DCLogic {
       ['Tmavý režim','Záměrně se nedělá. Systém je pouze světlý.',OK],
       ['LED indikátor otevřeno','Jednorázové #22C55E nahrazeno systémovou zelenou 400 (#2EAA6A), která je součástí škály.',OK],
       ['Cena bez DPH','Sjednoceno na 17 / 700 podle reálné produktové karty. Ukázka 18 px v původním DS byla nekonzistentní.',OK],
-      ['Mobilní typografie','Doplněna samostatná škála místo jednorázového clamp(26px,4vw,36px) v prototypu.',TODO],
-      ['Breakpointy','Doplněny 600 / 1280 / 1560 nad rámec hlavního zlomu 900 px.',TODO],
-      ['Stavy :active a focus-visible','Nově definovány — dosud v systému chyběly.',TODO],
+      ['Mobilní typografie','Doplněna samostatná škála místo jednorázového clamp(26px,4vw,36px) v prototypu. Přepíná se skokem na breakpointu.',OK],
+      ['Breakpointy','Zavedena škála sedmi pásem XXS–XXL se šesti hranicemi (1560 · 1150 · 1000 · 820 · 550 · 420). Staré názvosloví bp.mobile–bp.max je zrušené. Migrace existujících komponent (page padding, produktový grid, mobilní typografie) není dokončená.',OK],
+      ['Stavy :active a focus-visible','Nově definovány — dosud v systému chyběly.',OK],
+      ['Mobilní navigace','Drill-down panely místo akordeonu. Jedna úroveň = jedna obrazovka, hloubka neomezená, podval (tlačítka, Informace, kontakt) je na všech úrovních.',OK],
+      ['motion.panel 400 ms','Posun panelů nebyl pokrytý škálou 60 / 120 / 150 ms — doplněn samostatný krok.',OK],
+      ['icon.chevron','#84AEDF neprošel 3:1 pro netextový prvek nesoucí význam (2,1:1 na bílé). Chevrony a navigační šipky používají #5189CC.',OK],
     ].map(([title,body,t])=>({ title, body, tag:t[0], tagStyle:t[1], dot:t[2] }));
 
     /* ---------- 12. STRUKTURA ---------- */
@@ -566,7 +616,13 @@ class Component extends DCLogic {
       ['DesignSystemVAPP.dc.html','Základy','Tento dokument. Barvy, typografie, spacing, rádiusy, elevace, layout, stavy. Jediný zdroj tokenů.'],
       ['KomponentyVAPP.dc.html','Katalog komponent','Tlačítka, kvantifikátor, formuláře, badge, skladovost, menu, breadcrumb, patička. Jediné místo ladění UI prvků.'],
       ['ProduktovaKarta.dc.html','Sdílená komponenta','Jediný zdroj vzhledu karty. Prototyp i katalog ji přebírají přes dc-import.'],
-      ['Ikony.dc.html','Registr ikon','Jediný zdroj ikon (sada Tabler). Komponenty ikony nekreslí inline, vkládají přes dc-import name="Ikony".'],
+      ['Ikony.dc.html','Registr ikon','Jediný zdroj ikon (sada Tabler) — 24 × 24, stroke 2, currentColor. Komponenty ikony nekreslí inline, vkládají je přes dc-import name="Ikony" s propem iconName.'],
+      ['MobilniMenu.dc.html','Komponenta','Obsah rozbaleného mobilního menu — kanonická je tu drill-down navigace: strom v propu menuTree, řádek Zpět, Zobrazit kategorii a podval.'],
+      ['Hlavicka.dc.html','Komponenta','Topbar, logo, hledání, akce a hlavní navigace. Kanonická je tu logika přepnutí na mobilní menu a pozicování jeho panelu.'],
+      ['FiltracniLista.dc.html','Komponenta','Lišta nad výpisem — tlačítko Filtry s počtem, přepínač Skladem a dropdown řazení. Kanonický je tu vzhled i chování dropdownu.'],
+      ['VypisKategorii.dc.html','Komponenta','Přehled kategorií nad výpisem produktů. Kanonické je tu složení a řazení dlaždic.'],
+      ['KategorickaDlazdice.dc.html','Komponenta','Jedna dlaždice kategorie. Kanonická je tu náhledová fotka 64 × 64 i fallback na ikonu v kruhu 44 × 44.'],
+      ['Tlacitko.dc.html','Komponenta','Jediný zdroj tlačítek — varianty primary / secondary / buy / danger / ghost / text / ontint a velikosti Standard / Medium / Large.'],
       ['ArchivBarevnaPaletaVAPP.dc.html','Archiv','Nahrazeno sekcí 1 tohoto dokumentu. Nepoužívat jako referenci — starý styl (Hanken Grotesk, borders).'],
       ['CLAUDE.md','Trvalá pravidla','Závazné konvence projektu. Při změně tokenu aktualizovat i zde.'],
     ].map(([file,role,note])=>({ file, role, note }));
@@ -574,7 +630,7 @@ class Component extends DCLogic {
     return {
       metaChips, scales, neutrals, semanticGroups,
       typeScale, typeMobile, typeCommerce,
-      spacing, radii, shadows, layout, media,
+      spacing, radii, shadows, layout, media, zLayers, sizes,
       states, motion, decisions, structure,
       toast:this.state.toast
     };

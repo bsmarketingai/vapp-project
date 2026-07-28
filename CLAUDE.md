@@ -103,10 +103,10 @@ Dokumentační a katalogové bloky uvnitř souborů komponent (popisky „Kdy / 
 | `caption` | 13 / 500 / 1.4 |
 | `overline` | 13 / 700 uppercase, ls .06em |
 
-### Mobil (< 900 px)
+### Mobil (pásmo S a níž, ≤ 819 px)
 `h1` 26/700/1.2 · `h2` 22/700/1.25 · `h3` 18/700/1.3 · `h4` 16/700/1.35 · `body.large` 16/400/1.6 · `body.medium` beze změny.
 
-Přepínat skokem na breakpointu, **ne** přes `clamp()`.
+Přepínat skokem na breakpointu, **ne** přes `clamp()`. Hranice je 819/820. Nesouvisí se zlomem navigace 1000 — typografii řídí délka řádku, navigaci dostupná šířka pro záložky.
 
 ### Commerce
 | Token | Hodnota |
@@ -147,6 +147,7 @@ Mezihodnoty mimo tuto řadu nepoužívat.
 - Karta 280–300 px. Grid kategorií `auto-fit, minmax(280px,1fr)`, gap 12.
 - Rozměry karty 280–300 px platí jen pro samostatný náhled; v produktovém gridu je karta tekutá (`width:100%`, `min-width:0`, `max-width:none`).
 - **Sticky filtrační lišta** v prototypu platí na všech šířkách, včetně pásem M, S, XS a XXS. Vypínání sticky pod 900 px je zrušené — rozhodnuto, nevracet se k tomu.
+- **Stav migrace na škálu XXS–XXL.** Na nové škále už běží: mobilní typografie — `max-width:819px`, pásma S, XS, XXS. Na starém zlomu 899/900 dál visí: page padding (`.vp-in`, `.vp-bleed`), produktový grid (899 / 479), pomocníci viditelnosti `.dt` / `.mb`.
 - **Breakpointy:** `< 600` mobil · `600–899` tablet · **`≥ 900` hlavní zlom** (desktopová navigace a layout) · `≥ 1280` plný 4sloupcový grid · `≥ 1560` container se přestává roztahovat.
 
 ---
