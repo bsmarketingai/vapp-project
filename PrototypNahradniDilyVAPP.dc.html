@@ -36,6 +36,7 @@
   @keyframes vapp-led{0%{box-shadow:0 0 0 0 var(--led);}70%{box-shadow:0 0 0 7px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
   .vapp-led{border-radius:999px;animation:vapp-led 1.8s ease-out infinite;}
   @media (max-width:899px){ .dt{display:none !important;} .pg-h1{font-size:26px !important;} }
+  @media (max-width:999px){ .pg-lead{font-size:14px !important;} }
   @media (min-width:900px){ .mb{display:none !important;} }
 .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
 .vp-bleed{margin-left:-32px;margin-right:-32px;padding-left:32px;padding-right:32px;}
@@ -75,7 +76,7 @@
 </helmet>
 <div data-screen-label="Prototyp Náhradní díly VAPP" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
 
-  <dc-import name="Hlavicka" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" hint-size="100%,150px"></dc-import>
+  <dc-import name="Hlavicka" menu-tree="{{ menuTree }}" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" hint-size="100%,150px"></dc-import>
 
   <!-- CONTENT -->
   <main class="vp-in" style="padding-top:14px;padding-bottom:40px;">
@@ -88,7 +89,7 @@
     </div>
     <h1 class="pg-h1" style="margin:0;font-size:36px;font-weight:700;letter-spacing:-0.02em;color:#142F56;">{{ pageTitle }}</h1>
     <sc-if value="{{ inLeaf }}" hint-placeholder-val="">
-      <p style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">{{ leafDesc }}</p>
+      <p class="pg-lead" style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">{{ leafDesc }}</p>
     </sc-if>
     <sc-if value="{{ notLeaf }}" hint-placeholder-val="{{ true }}">
     <p style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Náhradní díly na přívěsy všech značek — KNOTT, AL-KO, BPW, Jokon i Winterhoff. Tisíce dílů skladem s expedicí do 24 hodin.<sc-if value="{{ descOpen }}" hint-placeholder-val=""> Vybírejte podle výrobce nápravy, průměru brzdy nebo čísla dílu. Nabízíme kompletní sortiment od nájezdových brzd a brzdových čelistí přes ložiska, náboje a spojovací zařízení až po osvětlení, blatníky, kola a plachty. Nevíte si rady? Zkušení obchodníci vám poradí s výběrem správného dílu po telefonu i e-mailu.</sc-if>
@@ -106,7 +107,7 @@
       <sc-if value="{{ inSubcats }}" hint-placeholder-val="">
         <div style="background:#fff;border-radius:8px;overflow:hidden;">
           <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid #F2F4F7;background:#EFF4FB;">
-            <button type="button" class="a11y-i" onClick="{{ backToGroups }}" style="display:inline-flex;align-items:center;gap:6px;min-height:34px;font-size:13px;font-weight:700;color:#1E5AA8;cursor:pointer;padding:0 10px 0 4px;"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>Zpět</button>
+            <button type="button" class="a11y-i" onClick="{{ backToGroups }}" style="display:inline-flex;align-items:center;gap:6px;min-height:34px;font-size:13px;font-weight:700;color:#1E5AA8;cursor:pointer;padding:0 10px 0 4px;"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>{{ backToGroupsLabel }}</button>
             <span style="font-size:13px;color:#666E78;margin-left:auto;">{{ activeGroupCount }} produktů</span>
           </div>
           <div class="sc-rows">
@@ -679,9 +680,25 @@ class Component extends DCLogic {
       backFromLeafHref: ag ? (path.length>0 ? this.urlFor(ag.key, path.slice(0,-1)) : '#/nahradni-dily/') : '#/nahradni-dily/',
       backFromLeafLabel: inCat ? ('Zpět na '+(path.length>1 ? path[path.length-2] : (path.length===1 ? ag.name : 'Náhradní díly'))) : '',
       showBackLink: inCat && !hasKids,
+      menuTree: [
+        { name:'Přívěsy', href:'#' },
+        { name:'Náhradní díly', href:'#/nahradni-dily/', children: this.GROUPS.map(g=>{
+            const walk = (node, segs)=>({
+              name: node.name, href: this.urlFor(g.key, segs),
+              children: (node.children||[]).length
+                ? node.children.map(c=>walk(c, segs.concat([c.name])))
+                : undefined,
+            });
+            return walk(g, []);
+          }) },
+        { name:'Příslušenství', href:'#' },
+        { name:'Servis', href:'#' },
+        { name:'Půjčovna', href:'#' },
+      ],
       groups, subcats, categoriesData, onOpenCategory, onPickSub,
       activeGroupName: ag?ag.name:'', activeGroupCount: curNode?curNode.count:'', crumbs,
       backToGroups:()=>{ if(path.length) this.go({ path: path.slice(0,-1), leafPath:null, subcat:null, shown:15 }, this.urlFor(ag.key, path.slice(0,-1))); else this.go({ view:'groups', path:[], leafPath:null, subcat:null, shown:15 }, '#/nahradni-dily/'); },
+      backToGroupsLabel: path.length>1 ? ('Zpět na '+path[path.length-2]) : (path.length===1 ? ('Zpět na '+(ag?ag.name:'Náhradní díly')) : 'Zpět na Náhradní díly'),
       activeSubcat: null, clearSubcat:()=>this.setState({ subcat:null, shown:15 }),
       filterOpen:s.filterOpen, openFilter:()=>this.setState({filterOpen:true}), closeFilter:()=>this.setState({filterOpen:false}),
       filterCount: filterCount||'',

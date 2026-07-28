@@ -48,11 +48,11 @@
   <div style="background:#142F56;color:#fff;">
     <div class="vp-in" style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:7px;padding-bottom:7px;">
       <span style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;"><span class="vapp-led" style="--led:rgba(46,170,106,.6);width:8px;height:8px;background:#2EAA6A;flex:none;"></span>Po–Pá 8–16 · <span style="color:#97DBB4;font-weight:700;">právě otevřeno</span></span>
+      <div class="hd-dt" style="display:flex;align-items:center;font-size:13px;margin-right:auto;"><a class="hd-clink hd-i hd-ondark hd-hit" href="tel:+420323605314" style="display:inline-flex;align-items:center;gap:7px;color:#fff;font-weight:700;text-decoration:underline;cursor:pointer;"><dc-import name="Ikony" icon-name="phone" size="18" hint-size="18px,18px"></dc-import>323 605 314</a></div>
       <div class="hd-dt" style="display:flex;align-items:center;gap:16px;font-size:13px;color:#B4CEEC;">
         <sc-for list="{{ infoItems }}" as="i" hint-placeholder-count="4">
           <a class="hd-top hd-i hd-ondark hd-hit" href="#" onClick="{{ i.onClick }}" style="cursor:pointer;">{{ i.t }}</a>
         </sc-for>
-        <a class="hd-clink hd-i hd-ondark hd-hit" href="tel:+420323605314" style="display:inline-flex;align-items:center;gap:7px;color:#fff;font-weight:700;text-decoration:underline;cursor:pointer;"><dc-import name="Ikony" icon-name="phone" size="18" hint-size="18px,18px"></dc-import>323 605 314</a>
       </div>
       <a class="hd-mb hd-clink hd-i hd-ondark" href="tel:+420323605314" style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;text-decoration:underline;cursor:pointer;color:inherit;"><dc-import name="Ikony" icon-name="phone" size="18" hint-size="18px,18px"></dc-import>323 605 314</a>
     </div>
@@ -90,14 +90,14 @@
     </nav>
     <sc-if value="{{ menuOpen }}" hint-placeholder-val="">
       <div class="hd-mb" id="hd-mobile-menu" role="navigation" aria-label="Hlavní menu" tabindex="-1" onKeyDown="{{ onMenuKey }}" style="position:absolute;top:100%;left:0;right:0;z-index:60;max-height:calc(100vh - 100%);overflow-y:auto;box-shadow:0 10px 30px rgba(20,30,45,.14);">
-        <dc-import name="MobilniMenu" labels="{{ menuLabels }}" active="{{ menuActive }}" on-select="{{ onMenuSelect }}" info-links="{{ infoLinks }}" debug="{{ debug }}" hint-size="100%,320px"></dc-import>
+        <dc-import name="MobilniMenu" menu-tree="{{ menuTree }}" active="{{ menuActive }}" on-select="{{ onMenuSelect }}" info-links="{{ infoLinks }}" debug="{{ debug }}" hint-size="100%,320px"></dc-import>
       </div>
     </sc-if>
   </div>
 </header>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:220},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;cartCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;},&quot;cartTotal&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1500,&quot;tsType&quot;:&quot;number&quot;},&quot;compareCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;tsType&quot;:&quot;number&quot;},&quot;tabs&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;searchValue&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;,&quot;default&quot;:null},&quot;onSearchChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCompare&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCart&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onTabClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onLogoClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;infoLinks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:220},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;cartCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;},&quot;cartTotal&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1500,&quot;tsType&quot;:&quot;number&quot;},&quot;compareCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;tsType&quot;:&quot;number&quot;},&quot;tabs&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;menuTree&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;,&quot;default&quot;:null},&quot;searchValue&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;,&quot;default&quot;:null},&quot;onSearchChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCompare&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCart&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onTabClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onLogoClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;infoLinks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null}}">
 class Component extends DCLogic {
   state = { menuOpen:false };
   lockScroll(on){ try{ document.body.style.overflow = on ? 'hidden' : ''; }catch(e){} }
@@ -143,8 +143,8 @@ class Component extends DCLogic {
 
       onMenuKey:(e)=>{ if(e.key==='Escape'){ e.preventDefault(); this.closeMenu(); } },
       infoLinks, infoItems: infoLinks.map(t=>({ t, onClick:(e)=>{ if(e&&e.preventDefault) e.preventDefault(); } })),
-      menuLabels: labels, menuActive: active,
-      onMenuSelect: (t)=>{ if(onTab) onTab(t); },
+      menuTree: P.menuTree || null, menuActive: active,
+      onMenuSelect: (t)=>{ this.closeMenu(); if(onTab) onTab(t); },
     };
   }
 }

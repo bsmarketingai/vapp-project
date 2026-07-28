@@ -19,65 +19,59 @@
   .a11y-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   a{color:#15181C;} a:hover{color:#1E5AA8;}
   .mm-link{transition:color .12s;} .mm-link:hover{color:#1E5AA8 !important;}
+  .mm-cat{transition:color .12s;} .mm-cat:hover{text-decoration:underline;}
+  @keyframes mmInRightA{from{transform:translateX(100%);opacity:0;}to{transform:none;opacity:1;}}
+  @keyframes mmInRightB{from{transform:translateX(100%);opacity:0;}to{transform:none;opacity:1;}}
+  @keyframes mmInLeftA{from{transform:translateX(-100%);opacity:0;}to{transform:none;opacity:1;}}
+  @keyframes mmInLeftB{from{transform:translateX(-100%);opacity:0;}to{transform:none;opacity:1;}}
+  @media (prefers-reduced-motion:reduce){[data-mm-list]{animation:none !important;}}
 </style>
 </helmet>
 <div style="border-top:1px solid #F2F4F7;background:#fff;">
-  <sc-if value="{{ isRoot }}" hint-placeholder-val="{{ true }}">
-    <div>
-      <div style="padding:4px 16px;">
-        <sc-for list="{{ items }}" as="m" hint-placeholder-count="5">
-          <sc-if value="{{ m.isBranch }}" hint-placeholder-val="">
-            <button type="button" class="mm-link a11y-i" onClick="{{ m.onClick }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;min-height:46px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="{{ m.style }}">{{ m.t }}</span><span style="color:#84AEDF;display:inline-flex;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></button>
-          </sc-if>
-          <sc-if value="{{ m.isLeaf }}" hint-placeholder-val="{{ true }}">
-            <a class="mm-link a11y-i" href="{{ m.href }}" onClick="{{ m.onClick }}" style="display:flex;align-items:center;justify-content:space-between;min-height:46px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="{{ m.style }}">{{ m.t }}</span><span style="color:#84AEDF;display:inline-flex;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></a>
-          </sc-if>
-        </sc-for>
+  <div data-mm-list="true" style="padding:4px 16px;overflow-x:hidden;animation:{{ listAnim }};">
+    <sc-if value="{{ isNested }}" hint-placeholder-val="">
+      <div>
+        <button type="button" class="mm-link a11y-i" onClick="{{ onBack }}" aria-label="{{ backAria }}" style="width:100%;display:flex;align-items:center;gap:8px;min-height:46px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="color:#84AEDF;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-left" size="24" hint-size="24px,24px"></dc-import></span><span style="font-size:14px;font-weight:700;color:#15181C;min-width:0;">{{ backLabel }}</span></button>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:46px;border-bottom:1px solid #F2F4F7;"><a class="mm-cat a11y-i" href="{{ levelHref }}" onClick="{{ onLevelSelect }}" style="font-size:18px;font-weight:700;line-height:1.35;color:#1E5AA8;min-width:0;cursor:pointer;">{{ levelName }}</a><a class="mm-link a11y-i" href="{{ levelHref }}" onClick="{{ onLevelSelect }}" style="flex:none;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#1E5AA8;cursor:pointer;">Zobrazit kategorii<span style="color:#84AEDF;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></a></div>
       </div>
-      <div style="padding:12px 16px 16px;display:flex;flex-wrap:wrap;gap:8px;">
-        <div style="flex:1 1 140px;min-width:140px;display:flex;"><dc-import name="Tlacitko" variant="secondary" size="medium" label="Poradna" icon="help" full-width="true" style="width:100%;" hint-size="100%,44px"></dc-import></div>
-        <div style="flex:1 1 140px;min-width:140px;display:flex;"><dc-import name="Tlacitko" variant="danger" size="medium" label="Akce a slevy" icon="discount" full-width="true" style="width:100%;" hint-size="100%,44px"></dc-import></div>
+    </sc-if>
+    <sc-for list="{{ items }}" as="m" hint-placeholder-count="5">
+      <sc-if value="{{ m.isBranch }}" hint-placeholder-val="">
+        <button type="button" class="mm-link a11y-i" onClick="{{ m.onClick }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:46px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="{{ m.style }}">{{ m.t }}</span><span style="color:#84AEDF;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></button>
+      </sc-if>
+      <sc-if value="{{ m.isLeaf }}" hint-placeholder-val="{{ true }}">
+        <a class="mm-link a11y-i" href="{{ m.href }}" onClick="{{ m.onClick }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:46px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="{{ m.style }}">{{ m.t }}</span><span style="color:#84AEDF;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></a>
+      </sc-if>
+    </sc-for>
+  </div>
+  <div style="padding:12px 16px 16px;display:flex;flex-wrap:wrap;gap:8px;">
+    <div style="flex:1 1 140px;min-width:140px;display:flex;"><dc-import name="Tlacitko" variant="secondary" size="medium" label="Poradna" icon="help" full-width="true" style="width:100%;" hint-size="100%,44px"></dc-import></div>
+    <div style="flex:1 1 140px;min-width:140px;display:flex;"><dc-import name="Tlacitko" variant="danger" size="medium" label="Akce a slevy" icon="discount" full-width="true" style="width:100%;" hint-size="100%,44px"></dc-import></div>
+  </div>
+  <div style="padding:4px 16px;">
+    <div style="padding:8px 0 4px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Informace</div>
+    <sc-for list="{{ infoItems }}" as="s" hint-placeholder-count="4">
+      <a class="mm-link a11y-i" href="#" onClick="{{ s.onClick }}" style="display:flex;align-items:center;min-height:44px;border-bottom:1px solid #F2F4F7;font-size:14px;font-weight:500;color:#5A626C;cursor:pointer;">{{ s.t }}</a>
+    </sc-for>
+  </div>
+  <div style="padding:12px 16px 16px;">
+    <div style="background:#F2F4F7;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <dc-import name="LedIndikator" state="{{ ledState }}" label="" size="11" hint-size="11px,11px"></dc-import>
+        <sc-if value="{{ isOpen }}" hint-placeholder-val="{{ true }}"><span style="font-size:13px;font-weight:700;color:#0B6937;">{{ statusText }}</span></sc-if>
+        <sc-if value="{{ isClosed }}" hint-placeholder-val=""><span style="font-size:13px;font-weight:700;color:#C5232B;">{{ statusText }}</span></sc-if>
       </div>
-      <div style="padding:4px 16px;">
-        <div style="padding:8px 0 4px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Informace</div>
-        <sc-for list="{{ infoItems }}" as="s" hint-placeholder-count="4">
-          <a class="mm-link a11y-i" href="#" onClick="{{ s.onClick }}" style="display:flex;align-items:center;min-height:44px;border-bottom:1px solid #F2F4F7;font-size:14px;font-weight:500;color:#5A626C;cursor:pointer;">{{ s.t }}</a>
-        </sc-for>
-      </div>
-      <div style="padding:12px 16px 16px;">
-        <div style="background:#F2F4F7;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:8px;">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <dc-import name="LedIndikator" state="{{ ledState }}" label="" size="11" hint-size="11px,11px"></dc-import>
-            <sc-if value="{{ isOpen }}" hint-placeholder-val="{{ true }}"><span style="font-size:13px;font-weight:700;color:#0B6937;">{{ statusText }}</span></sc-if>
-            <sc-if value="{{ isClosed }}" hint-placeholder-val=""><span style="font-size:13px;font-weight:700;color:#C5232B;">{{ statusText }}</span></sc-if>
-          </div>
-          <a class="mm-link a11y-i" href="{{ phoneHref }}" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#15181C;text-decoration:underline;cursor:pointer;"><span style="display:inline-flex;align-items:center;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import></span>{{ phone }}</a>
-          <a class="mm-link a11y-i" href="{{ emailHref }}" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#15181C;text-decoration:underline;cursor:pointer;"><span style="display:inline-flex;align-items:center;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="mail" size="24" hint-size="24px,24px"></dc-import></span>{{ email }}</a>
-          <dc-import name="Tlacitko" variant="primary" size="medium" label="Všechny kontakty" icon-trailing="arrow-right" full-width="true" on-click="{{ onAllContacts }}" style="width:100%;" hint-size="100%,44px"></dc-import>
-          <sc-if value="{{ showAccountButtons }}" hint-placeholder-val="">
-            <div style="display:flex;gap:8px;">
-              <div style="flex:1;min-width:0;display:flex;"><dc-import name="Tlacitko" variant="ontint" size="medium" label="Přihlásit" icon="user" full-width="true" on-click="{{ onLogin }}" style="width:100%;" hint-size="100%,44px"></dc-import></div>
-              <div style="flex:1;min-width:0;display:flex;"><dc-import name="Tlacitko" variant="ontint" size="medium" label="Košík" icon="shopping-cart" full-width="true" on-click="{{ onCartClick }}" style="width:100%;" hint-size="100%,44px"></dc-import></div>
-            </div>
-          </sc-if>
+      <a class="mm-link a11y-i" href="{{ phoneHref }}" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#15181C;text-decoration:underline;cursor:pointer;"><span style="display:inline-flex;align-items:center;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import></span>{{ phone }}</a>
+      <a class="mm-link a11y-i" href="{{ emailHref }}" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#15181C;text-decoration:underline;cursor:pointer;"><span style="display:inline-flex;align-items:center;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="mail" size="24" hint-size="24px,24px"></dc-import></span>{{ email }}</a>
+      <dc-import name="Tlacitko" variant="primary" size="medium" label="Všechny kontakty" icon-trailing="arrow-right" full-width="true" on-click="{{ onAllContacts }}" style="width:100%;" hint-size="100%,44px"></dc-import>
+      <sc-if value="{{ showAccountButtons }}" hint-placeholder-val="">
+        <div style="display:flex;gap:8px;">
+          <div style="flex:1;min-width:0;display:flex;"><dc-import name="Tlacitko" variant="ontint" size="medium" label="Přihlásit" icon="user" full-width="true" on-click="{{ onLogin }}" style="width:100%;" hint-size="100%,44px"></dc-import></div>
+          <div style="flex:1;min-width:0;display:flex;"><dc-import name="Tlacitko" variant="ontint" size="medium" label="Košík" icon="shopping-cart" full-width="true" on-click="{{ onCartClick }}" style="width:100%;" hint-size="100%,44px"></dc-import></div>
         </div>
-      </div>
+      </sc-if>
     </div>
-  </sc-if>
-  <sc-if value="{{ isNested }}" hint-placeholder-val="">
-    <div style="padding:4px 16px;">
-      <button type="button" class="mm-link a11y-i" onClick="{{ onBack }}" aria-label="Zpět na hlavní menu" style="width:100%;display:flex;align-items:center;gap:8px;min-height:46px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="color:#84AEDF;display:inline-flex;"><dc-import name="Ikony" icon-name="chevron-left" size="24" hint-size="24px,24px"></dc-import></span><span style="font-size:14px;font-weight:700;color:#15181C;">{{ parentName }}</span></button>
-      <a class="mm-link a11y-i" href="{{ parentHref }}" onClick="{{ onParentSelect }}" style="display:flex;align-items:center;min-height:46px;border-bottom:1px solid #F2F4F7;font-size:14px;font-weight:700;color:#1E5AA8;cursor:pointer;">{{ showAllText }}</a>
-      <sc-for list="{{ childItems }}" as="c" hint-placeholder-count="4">
-        <sc-if value="{{ c.isBranch }}" hint-placeholder-val="">
-          <button type="button" class="mm-link a11y-i" onClick="{{ c.onClick }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;min-height:46px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="{{ c.style }}">{{ c.t }}</span><span style="color:#84AEDF;display:inline-flex;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></button>
-        </sc-if>
-        <sc-if value="{{ c.isLeaf }}" hint-placeholder-val="{{ true }}">
-          <a class="mm-link a11y-i" href="{{ c.href }}" onClick="{{ c.onClick }}" style="display:flex;align-items:center;justify-content:space-between;min-height:46px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="{{ c.style }}">{{ c.t }}</span><span style="color:#84AEDF;display:inline-flex;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></a>
-        </sc-if>
-      </sc-for>
-    </div>
-  </sc-if>
+  </div>
 </div>
 <sc-if value="{{ standalone }}" hint-placeholder-val="{{ true }}">
   <div style="padding:24px 16px;display:flex;flex-direction:column;gap:5px;">
@@ -88,23 +82,115 @@
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:392,&quot;height&quot;:900},&quot;menuTree&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;,&quot;default&quot;:null},&quot;labels&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onSelect&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;infoLinks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;323 605 314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;email&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;hours&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Po–Pá 8–16&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onInfoSelect&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onLogin&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCartClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onAllContacts&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;showAccountButtons&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Obsah&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+const L = (name, children) => children ? { name, href: '#', children } : { name, href: '#' };
 const DEFAULT_TREE = [
-  { name: 'Přívěsy', href: '#' },
-  { name: 'Náhradní díly', href: '#', children: [
-    { name: 'Nápravy a brzdy', href: '#' },
-    { name: 'Elektro a osvětlení', href: '#' },
-    { name: 'Bordy, oje a příslušenství', href: '#' },
-    { name: 'Kola a pneumatiky', href: '#' },
-    { name: 'Plachty a nástavby', href: '#' },
-    { name: 'Spojovací a upevňovací materiál', href: '#' },
-  ] },
-  { name: 'Příslušenství', href: '#' },
-  { name: 'Servis', href: '#' },
-  { name: 'Půjčovna', href: '#' },
+  L('Přívěsy'),
+  L('Náhradní díly', [
+    L('Nápravy a brzdy', [
+      L('Nápravy kompletní', [
+        L('Nebrzděné nápravy', [
+          L('Nebrzděné do 750 kg'), L('Nebrzděné do 1350 kg'),
+          L('Nebrzděné 1500 kg a více'), L('Tuhé nebrzděné nápravy'),
+        ]),
+        L('Brzděné nápravy', [
+          L('Brzděné do 850 kg'), L('Brzděné do 1050 kg'), L('Brzděné do 1350 kg'),
+          L('Brzděné do 1600 kg'), L('Brzděné do 1800 kg'), L('Brzděné do 3500 kg'),
+          L('Tuhé brzděné nápravy'), L('Vodovzdorné brzděné nápravy'),
+        ]),
+        L('Ramena polonáprav'),
+      ]),
+      L('Díly náprav', [
+        L('Brzdové bubny'), L('Brzdové čelisti'), L('Brzdové štíty'),
+        L('Náboje a krytky'),
+        L('Ložiska a gufera', [
+          L('Jednotlivá ložiska'), L('Sady kuželíkových ložisek'),
+          L('Těsnící kroužky a gufera'),
+        ]),
+        L('Lanovody, vahadla, táhla'), L('Listové pružiny a příslušenství'),
+        L('Tlumiče náprav a držáky'), L('Kompletní kolové jednotky'),
+      ]),
+      L('Nájezdové brzdy a díly', [
+        L('Brzdy na V oje'), L('Brzdy na jeklové oje'),
+        L('Tažné trubky a dorazové kroužky'), L('Pouzdra, maznice, manžety'),
+        L('Tlumiče nájezdových brzd'), L('Lanka pojistná'),
+      ]),
+    ]),
+    L('Spojovací zařízení a podpěry', [
+      L('Tažné spojky, oka a koule', [
+        L('Spojky pro nebrzděné přívěsy'), L('Spojky pro brzděné přívěsy'),
+        L('Tažná oka'), L('Tažné koule'),
+      ]),
+      L('Stabilizátory'), L('Zámky a zabezpečení přívěsu'),
+      L('Opěrná kolečka, nohy a držáky', [
+        L('Opěrná kolečka', [
+          L('Do klemy, průměr 48 mm'), L('Do klemy, průměr 60 mm'), L('S přírubou'),
+        ]),
+        L('Opěrné nohy'), L('Držáky a klemy'),
+      ]),
+      L('Příslušenství a krytky spojovacích zařízení'),
+    ]),
+    L('Elektro a osvětlení', [
+      L('Sdružená zadní světla a obrysovky', [
+        L('LED sdružené svítilny'), L('Žárovkové sdružené svítilny'),
+        L('Přední obrysové svítilny'), L('Boční obrysové svítilny'),
+        L('Zadní obrysové svítilny'),
+      ]),
+      L('Zásuvky, zástrčky a kabeláž', [
+        L('Zástrčky'), L('Zásuvky'), L('Redukce a bajonety'),
+        L('Kabely a kabelové svazky'),
+      ]),
+      L('Odrazky a osvětlení SPZ'), L('Žárovky, LED moduly a náhradní skla'),
+      L('Majáky, pracovní světlomety a baterie'),
+    ]),
+    L('Kola a pneumatiky', [
+      L('Kompletní kola, disky a pneu', [
+        L('Disky kol', [
+          L('Alu disky'), L('Disky 8" a 10"'), L('Disky 12" a 13"'),
+          L('Disky 14" a více'),
+        ]),
+        L('Kompletní kola'), L('Pneumatiky'),
+      ]),
+      L('Kolové šrouby, matice a štefty'), L('Držáky rezervního kola'),
+      L('Příslušenství kol a pneumatik'),
+    ]),
+    L('Karoserie a konstrukce', [
+      L('Blatníky a zástěrky', [
+        L('Plastové blatníky'), L('Plechové blatníky'), L('Tandemové blatníky'),
+        L('Držáky blatníků'), L('Zástěrky a příslušenství'),
+      ]),
+      L('Bočnice, sloupky, uzávěry a panty', [
+        L('Bočnice'), L('Sloupky bočnic'), L('Přezky a uzávěry'),
+        L('Panty a lemování'),
+      ]),
+      L('Překližky, podlahy a pojezdové plechy'), L('Oje a díly rámů'),
+      L('Plachty a plachtové konstrukce'), L('Plynové vzpěry a konzoly'),
+      L('Hydraulika sklápění'), L('Rolny a opěry pro lodě'),
+      L('Spojovací materiál'),
+    ]),
+    L('Upínání, nakládání a doplňky', [
+      L('Upínací pásy, sítě a oka', [
+        L('Univerzální upínací soupravy'), L('Soupravy k přepravě automobilů'),
+        L('Jednotlivé popruhy a ráčny'), L('Zakrývací sítě'),
+        L('Upínací oka a misky'),
+      ]),
+      L('Navijáky, lana a popruhy'),
+      L('Nájezdy a příslušenství', [
+        L('Hliníkové nájezdy'), L('Ocelové nájezdy'), L('Příslušenství nájezdů'),
+      ]),
+      L('Klíny a zakládací držáky'), L('Boxy na nářadí a držáky'),
+      L('Doplňky k přívěsům'), L('Pomůcky pro údržbu'),
+    ]),
+  ]),
+  L('Příslušenství'),
+  L('Servis', [
+    L('AL-KO servis'), L('BPW servis'), L('KNOTT servis'),
+    L('Garanční prohlídky'), L('Pneuservis'),
+  ]),
+  L('Půjčovna'),
 ];
 
 class Component extends DCLogic {
-  state = { path: [] };
+  state = { path: [], dir: null, tick: 0 };
   renderVals(){
     const P = this.props;
     const embedded = typeof P.onSelect === 'function';
@@ -122,42 +208,50 @@ class Component extends DCLogic {
     const hours = P.hours || 'Po–Pá 8–16';
     const open = (P.open ?? true) !== false;
     const stop = (e)=>{ if(e&&e.preventDefault) e.preventDefault(); };
-    const path = this.state.path || [];
-    const parent = path.length ? tree[path[0]] : null;
-    const rowStyle = (name, useActive) =>
-      'font-size:14px;font-weight:700;color:' + (useActive && name===active ? '#1E5AA8' : '#15181C') + ';';
+    // reálný href necháme navigovat (prototyp jede na hash routách), '#' zastavíme
+    const goHref = (href, name) => (e)=>{ if(!href || href === '#') stop(e); onSelect(name); };
 
-    const items = tree.map((n, i) => {
+    // průchod stromu podle path — jakákoli hloubka
+    const path = Array.isArray(this.state.path) ? this.state.path : [];
+    const chain = [];
+    let level = tree;
+    for (const i of path) {
+      const node = level && level[i];
+      if (!node) break;
+      chain.push(node);
+      level = Array.isArray(node.children) ? node.children : [];
+    }
+    const depth = chain.length;
+    const current = depth ? chain[depth-1] : null;
+    const isRoot = depth === 0;
+
+    const items = (level || []).map((n, i) => {
       const branch = Array.isArray(n.children) && n.children.length > 0;
       return {
         t: n.name, href: n.href || '#',
         isBranch: branch, isLeaf: !branch,
-        style: rowStyle(n.name, true),
+        style: 'font-size:14px;font-weight:700;min-width:0;color:'
+          + (isRoot && n.name === active ? '#1E5AA8' : '#15181C') + ';',
         onClick: branch
-          ? (e)=>{ stop(e); this.setState({ path: [i] }); }
-          : (e)=>{ stop(e); onSelect(n.name); },
+          ? (e)=>{ stop(e); this.setState(s=>({ path: path.concat([i]), dir:'fwd', tick:s.tick+1 })); }
+          : goHref(n.href || '#', n.name),
       };
     });
 
-    const childItems = (parent && Array.isArray(parent.children) ? parent.children : []).map(n => {
-      const branch = Array.isArray(n.children) && n.children.length > 0;
-      return {
-        t: n.name, href: n.href || '#',
-        isBranch: branch, isLeaf: !branch,
-        style: rowStyle(n.name, false),
-        onClick: branch ? (e)=>{ stop(e); } : (e)=>{ stop(e); onSelect(n.name); },
-      };
-    });
+    const backLabel = depth > 1 ? 'Zpět na ' + chain[depth-2].name : 'Zpět domů';
 
     return {
       embedded, standalone: !embedded, debug: P.debug ?? true,
-      isRoot: path.length === 0, isNested: path.length > 0,
-      items, childItems,
-      parentName: parent ? parent.name : '',
-      parentHref: parent ? (parent.href || '#') : '#',
-      showAllText: parent ? 'Zobrazit vše — ' + parent.name : '',
-      onBack: (e)=>{ stop(e); this.setState({ path: [] }); },
-      onParentSelect: (e)=>{ stop(e); if(parent) onSelect(parent.name); },
+      isNested: !isRoot, items,
+      backLabel, backAria: backLabel,
+      onBack: (e)=>{ stop(e); this.setState(s=>({ path: path.slice(0, -1), dir:'back', tick:s.tick+1 })); },
+      listAnim: this.state.dir
+        ? (this.state.dir==='fwd' ? 'mmInRight' : 'mmInLeft')
+          + (this.state.tick % 2 ? 'A' : 'B') + ' 500ms ease'
+        : 'none',
+      levelHref: current ? (current.href || '#') : '#',
+      levelName: current ? current.name : '',
+      onLevelSelect: current ? goHref(current.href || '#', current.name) : (e)=>stop(e),
       infoItems: infoLinks.map(t=>({ t, onClick:(e)=>{ stop(e); onInfoSelect(t); } })),
       phone, email, hours,
       phoneHref: 'tel:+420' + phone.replace(/\D/g,''),
