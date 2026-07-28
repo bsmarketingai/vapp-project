@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="cs">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,7 +29,7 @@
 </style>
 </helmet>
 <div data-screen-label="Komponenty VAPP" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
-  <div class="vp-in" style="padding-top:56px;padding-bottom:120px;display:flex;flex-direction:column;gap:56px;">
+  <main class="vp-in" style="padding-top:56px;padding-bottom:120px;display:flex;flex-direction:column;gap:56px;">
 
     <div>
       <img src="./vapp-logo.svg" alt="VAPP" style="height:36px;display:block;margin-bottom:20px;">
@@ -102,20 +102,21 @@
       <dc-import name="Paticka" hint-size="100%,560px"></dc-import>
     </div>
 
-  </div>
+  </main>
+  <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:1600}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:1600}}">
 class Component extends DCLogic {
   renderVals(){
-    const base = { starsOn:'★★★★', starsOff:'★', reviews:23, availStyle:'display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:#0B6937;', availIn:true, availOut:false, avail:'Skladem > 15 ks', qty:1, cmp:false, cmpBox:'flex:none;width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1.5px solid #C4CAD2;background:#fff;', dot1:'display:none;', dot2:'display:none;', noImg:false, phStyle:'', imgLabel:'' };
+    const base = { starsOn:'★★★★', starsOff:'★', reviews:23, availStyle:'display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:#0B6937;', availIn:true, availOut:false, avail:'Skladem > 15 ks', qty:1, cmp:false, cmpBox:'flex:none;width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1.5px solid #91959B;background:#fff;', dot1:'display:none;', dot2:'display:none;', noImg:false, phStyle:'', imgLabel:'' };
     const withImg = (f)=>({ img:f, imgBgStyle:'aspect-ratio:4/3;background:#fff url("./'+f+'") center/contain no-repeat;background-origin:content-box;padding:18px 12px;' });
     const badge = (text,bg)=>({ badge:text, badgeStyle:'position:absolute;top:8px;left:8px;font-size:13px;font-weight:700;border-radius:6px;padding:4px 9px;color:'+(bg==='#E9F8EF'?'#0B6937':'#fff')+';background:'+bg+';' });
     const cards = [
       { ...base, ...withImg('uploads/kolecko-operne-dtr-prum-48-150-kg.jpg'), name:'Opěrné kolečko ⌀48 mm, nosnost 150 kg', priceNet:'365 Kč', price:'442 Kč', objNum:'404815', badge:'', badgeStyle:'' },
       { ...base, ...withImg('uploads/celisti-brzdove-knott-200x50-mala-sada-na-2-kola.jpg'), ...badge('−15 %','#C5232B'), name:'Brzdové čelisti KNOTT 200×50, sada na 2 kola', priceNet:'1 041 Kč', price:'1 260 Kč', objNum:'302005' },
       { ...base, ...withImg('uploads/pneu-165-r13-c-96n-710-kg-kenda-m-s.jpg'), ...badge('Doprava zdarma','#E9F8EF'), name:'Pneumatika 165 R13 C 96N, 710 kg Kenda M+S', priceNet:'1 190 Kč', price:'1 440 Kč', objNum:'401653' },
-      { ...base, name:'Blatník plastový jednoosý 200 mm', priceNet:'479 Kč', price:'580 Kč', objNum:'603200', badge:'', badgeStyle:'', img:'', imgBgStyle:'', noImg:true, phStyle:'aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;color:#9AA1AB;font-size:13px;font-weight:600;background:repeating-linear-gradient(45deg,#F2F4F7,#F2F4F7 11px,#E9ECEF 11px,#E9ECEF 22px);', imgLabel:'FOTO', availStyle:'display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:#8A919C;', availIn:false, availOut:true, avail:'Na dotaz' },
+      { ...base, name:'Blatník plastový jednoosý 200 mm', priceNet:'479 Kč', price:'580 Kč', objNum:'603200', badge:'', badgeStyle:'', img:'', imgBgStyle:'', noImg:true, phStyle:'aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;color:#666E78;font-size:13px;font-weight:600;background:repeating-linear-gradient(45deg,#F2F4F7,#F2F4F7 11px,#E9ECEF 11px,#E9ECEF 22px);', imgLabel:'FOTO', availStyle:'display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:#666E78;', availIn:false, availOut:true, avail:'Na dotaz' },
     ];
     const sections = [
       { title:'Tlačítka', name:'Tlacitko', file:'Tlacitko.dc.html', size:'100%,460px', note:' — typy, velikosti 36/44/52, ikony a stavy.' },
@@ -135,6 +136,11 @@ class Component extends DCLogic {
     return { cards, sections };
   }
 }
+
+
+// DebugBar: prop debug -> šablona
+(function(){ const rv = Component.prototype.renderVals;
+  Component.prototype.renderVals = function(){ const v = rv ? (rv.call(this) || {}) : {}; if (v.debug === undefined) v.debug = this.props.debug ?? true; return v; }; })();
 </script>
 </body>
 </html>

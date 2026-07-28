@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="cs">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
+  .pt-hit{position:relative;}
+  .pt-hit::after{content:"";position:absolute;left:0;right:0;top:-3px;bottom:-3px;}
+  .a11y-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
+  .a11y-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   html,body{margin:0!important;padding:0!important;}
   #dc-root{margin:0!important;padding:0!important;width:100%!important;
            max-width:none!important;border:0!important;}
@@ -19,6 +23,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
 <style>
+  .pt-hit{position:relative;}
+  .pt-hit::after{content:"";position:absolute;left:0;right:0;top:-3px;bottom:-3px;}
+  .a11y-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
+  .a11y-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{background:#F7F9FB;}
@@ -33,7 +41,7 @@
 .vp-bleed{margin-left:-32px;margin-right:-32px;padding-left:32px;padding-right:32px;}
 @media (max-width:899px){ .vp-in{padding-left:16px;padding-right:16px;} .vp-bleed{margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px;} }
 .p-grid{display:grid;gap:12px;grid-template-columns:repeat(4,1fr);}
-@media (max-width:899px){ .p-grid{grid-template-columns:repeat(2,1fr);} .p-sticky{position:static !important;} }
+@media (max-width:899px){ .p-grid{grid-template-columns:repeat(2,1fr);} }
 @media (max-width:479px){ .p-grid{grid-template-columns:1fr;} }
 .sk{background:#F2F4F7;border-radius:6px;}
 </style>
@@ -46,6 +54,10 @@
 })();
 </script>
 <style>
+  .pt-hit{position:relative;}
+  .pt-hit::after{content:"";position:absolute;left:0;right:0;top:-3px;bottom:-3px;}
+  .a11y-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
+  .a11y-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
 .hvx1{transition:background .12s;} .hvx1:hover{background:#F2F4F7 !important;}
 .hvx2{transition:color .12s;} .hvx2:hover{color:#1E5AA8 !important;}
 .hvx3{transition:background .12s;} .hvx3:hover{background:#D8E6F6 !important;}
@@ -62,13 +74,13 @@
   <dc-import name="Hlavicka" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" hint-size="100%,150px"></dc-import>
 
   <!-- CONTENT -->
-  <div class="vp-in" style="padding-top:14px;padding-bottom:40px;">
+  <main class="vp-in" style="padding-top:14px;padding-bottom:40px;">
 
     <!-- breadcrumb + title -->
-    <div style="font-size:13px;color:#7A828C;margin:4px 0 6px;">Úvod <span style="color:#B4CEEC;">›</span> <span style="font-weight:700;color:#173C70;">Náhradní díly</span></div>
-    <h1 class="pg-h1" style="margin:0;font-size:36px;font-weight:700;letter-spacing:-0.02em;color:#142F56;">Náhradní díly <span style="font-size:14px;font-weight:600;color:#7A828C;">2 418 produktů</span></h1>
+    <div style="font-size:13px;color:#666E78;margin:4px 0 6px;">Úvod <span aria-hidden="true" style="color:#B4CEEC;">›</span> <span style="font-weight:700;color:#173C70;">Náhradní díly</span></div>
+    <h1 class="pg-h1" style="margin:0;font-size:36px;font-weight:700;letter-spacing:-0.02em;color:#142F56;">Náhradní díly <span style="font-size:14px;font-weight:600;color:#666E78;">2 418 produktů</span></h1>
     <p style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Náhradní díly na přívěsy všech značek — KNOTT, AL-KO, BPW, Jokon i Winterhoff. Tisíce dílů skladem s expedicí do 24 hodin.<sc-if value="{{ descOpen }}" hint-placeholder-val=""> Vybírejte podle výrobce nápravy, průměru brzdy nebo čísla dílu. Nabízíme kompletní sortiment od nájezdových brzd a brzdových čelistí přes ložiska, náboje a spojovací zařízení až po osvětlení, blatníky, kola a plachty. Nevíte si rady? Zkušení obchodníci vám poradí s výběrem správného dílu po telefonu i e-mailu.</sc-if>
-    <span onClick="{{ toggleDesc }}" style="font-size:16px;font-weight:700;color:#1E5AA8;cursor:pointer;text-decoration:underline;margin-left:6px;white-space:nowrap;">{{ descLabel }}</span></p>
+    <button type="button" class="a11y-i pt-hit" onClick="{{ toggleDesc }}" style="font-size:16px;font-weight:700;color:#1E5AA8;cursor:pointer;text-decoration:underline;margin-left:6px;white-space:nowrap;">{{ descLabel }}</button></p>
 
     <!-- ===== KATEGORIE (Datart/Alza drill-down) ===== -->
     <div style="margin-top:16px;">
@@ -82,15 +94,15 @@
       <sc-if value="{{ inSubcats }}" hint-placeholder-val="">
         <div style="background:#fff;border-radius:8px;overflow:hidden;">
           <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid #F2F4F7;background:#EFF4FB;">
-            <span onClick="{{ backToGroups }}" style="display:inline-flex;align-items:center;gap:6px;min-height:34px;font-size:13px;font-weight:700;color:#1E5AA8;cursor:pointer;padding:0 10px 0 4px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>Zpět</span>
-            <span style="font-size:14px;font-weight:700;color:#142F56;">{{ activeGroupName }}</span>
-            <span style="font-size:13px;color:#7A828C;">{{ activeGroupCount }} produktů</span>
+            <button type="button" class="a11y-i" onClick="{{ backToGroups }}" style="display:inline-flex;align-items:center;gap:6px;min-height:34px;font-size:13px;font-weight:700;color:#1E5AA8;cursor:pointer;padding:0 10px 0 4px;"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>Zpět</button>
+            <h2 style="margin:0;font-size:14px;font-weight:700;color:#142F56;">{{ activeGroupName }}</h2>
+            <span style="font-size:13px;color:#666E78;">{{ activeGroupCount }} produktů</span>
           </div>
           <sc-for list="{{ subcats }}" as="s" hint-placeholder-count="5">
-            <div onClick="{{ s.onPick }}" style="{{ s.style }}">
+            <button type="button" class="a11y-i" onClick="{{ s.onPick }}" style="{{ s.style }}">
               <span style="{{ s.nameStyle }}">{{ s.name }}</span>
-              <span style="display:flex;align-items:center;gap:8px;"><span style="font-size:13px;color:#7A828C;">{{ s.count }}</span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#84AEDF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></span>
-            </div>
+              <span style="display:flex;align-items:center;gap:8px;"><span style="font-size:13px;color:#666E78;">{{ s.count }}</span><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#84AEDF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></span>
+            </button>
           </sc-for>
         </div>
       </sc-if>
@@ -99,21 +111,26 @@
     <!-- aktivní podkategorie chip -->
     <sc-if value="{{ activeSubcat }}" hint-placeholder-val="">
       <div style="display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap;">
-        <span style="font-size:13px;color:#7A828C;font-weight:600;">Zobrazeno:</span>
-        <span onClick="{{ clearSubcat }}" style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:999px;padding:8px 14px;cursor:pointer;">{{ activeSubcat }} ✕</span>
+        <span style="font-size:13px;color:#666E78;font-weight:600;">Zobrazeno:</span>
+        <button type="button" class="a11y-i" onClick="{{ clearSubcat }}" style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:999px;padding:8px 14px;cursor:pointer;">{{ activeSubcat }} ✕</button>
       </div>
     </sc-if>
 
-    <!-- ===== TOOLBAR (sticky) ===== -->
-    <div class="vp-bleed p-sticky" style="position:sticky;top:0;z-index:40;background:#F7F9FB;margin-top:14px;padding-top:10px;padding-bottom:10px;border-bottom:1px solid #F2F4F7;">
+    <!-- ===== TOOLBAR (sticky) =====
+         ZÁVAZNÉ: sticky platí na VŠECH šířkách (desktop i M, S, XS, XXS).
+         Vypínání sticky pod 900 px je zrušené — rozhodnuto, nevracet se k tomu.
+         Nepřidávat sem media query ani matchMedia, která by sticky podmiňovala.
+         Logika vytlačování hlavičky je v componentDidMount → this._onScroll. -->
+    <div class="p-sentinel" style="height:0;"></div>
+    <div class="vp-bleed p-sticky" style="position:sticky;top:0;z-index:60;background:#F7F9FB;margin-top:14px;padding-top:14px;padding-bottom:14px;border-bottom:1px solid #F2F4F7;">
       <div style="display:flex;gap:8px;max-width:1560px;margin:0 auto;">
-        <span onClick="{{ openFilter }}" style="flex:1;max-width:220px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;font-size:14px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;cursor:pointer;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>Filtry<sc-if value="{{ filterCount }}" hint-placeholder-val=""><span style="background:#C5232B;border-radius:999px;font-size:13px;padding:2px 8px;">{{ filterCount }}</span></sc-if></span>
-        <span onClick="{{ toggleStock }}" style="{{ stockBtnStyle }}"><span style="{{ stockBoxStyle }}">{{ stockCheck }}</span>Skladem</span>
+        <button type="button" class="a11y-i" id="pf-open" onClick="{{ openFilter }}" style="flex:1;max-width:220px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;font-size:14px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;cursor:pointer;"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>Filtry<sc-if value="{{ filterCount }}" hint-placeholder-val=""><span style="background:#C5232B;border-radius:999px;font-size:13px;padding:2px 8px;">{{ filterCount }}</span></sc-if></button>
+        <button type="button" class="a11y-i" aria-pressed="{{ stockPressed }}" onClick="{{ toggleStock }}" style="{{ stockBtnStyle }}"><span style="{{ stockBoxStyle }}">{{ stockCheck }}</span>Skladem</button>
         <div style="position:relative;flex:1;max-width:260px;margin-left:auto;">
-          <span onClick="{{ toggleSort }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;font-size:14px;font-weight:700;color:#15181C;background:#F2F4F7;border-radius:6px;cursor:pointer;padding:0 14px;">{{ sortLabel }} <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#84AEDF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span>
+          <button type="button" class="a11y-i" aria-expanded="{{ sortExpanded }}" onClick="{{ toggleSort }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;font-size:14px;font-weight:700;color:#15181C;background:#F2F4F7;border-radius:6px;cursor:pointer;padding:0 14px;">{{ sortLabel }} <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#84AEDF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></button>
           <sc-if value="{{ sortOpen }}" hint-placeholder-val="">
             <div style="position:absolute;top:calc(100% + 6px);right:0;left:0;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);overflow:hidden;z-index:50;">
-              <sc-for list="{{ sortOpts }}" as="o" hint-placeholder-count="4"><div onClick="{{ o.onPick }}" style="{{ o.style }}">{{ o.t }}</div></sc-for>
+              <sc-for list="{{ sortOpts }}" as="o" hint-placeholder-count="4"><button type="button" class="a11y-i" onClick="{{ o.onPick }}" style="{{ o.style }}">{{ o.t }}</button></sc-for>
             </div>
           </sc-if>
         </div>
@@ -121,12 +138,13 @@
     </div>
 
     <!-- ===== PRODUKTY ===== -->
+    <h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;margin:0;">Výpis produktů</h2>
     <div style="display:flex;align-items:baseline;justify-content:space-between;margin:16px 0 10px;">
       <span style="font-size:13px;color:#5A626C;font-weight:600;">{{ resultCount }} produktů</span>
-      <sc-if value="{{ anyFilter }}" hint-placeholder-val=""><span onClick="{{ clearFilters }}" style="font-size:13px;font-weight:700;color:#C5232B;cursor:pointer;text-decoration:underline;">Zrušit filtry</span></sc-if>
+      <sc-if value="{{ anyFilter }}" hint-placeholder-val=""><button type="button" class="a11y-i" onClick="{{ clearFilters }}" style="font-size:13px;font-weight:700;color:#C5232B;cursor:pointer;text-decoration:underline;">Zrušit filtry</button></sc-if>
     </div>
     <sc-if value="{{ loading }}" hint-placeholder-val="">
-      <div class="p-grid">
+      <div class="p-grid" aria-busy="true" aria-label="Načítání produktů">
         <sc-for list="{{ skeletons }}" as="k" hint-placeholder-count="4">
           <div style="background:#fff;border-radius:8px;overflow:hidden;padding-bottom:16px;">
             <div class="sk" style="aspect-ratio:4/3;border-radius:0;"></div>
@@ -142,7 +160,7 @@
     </sc-if>
     <sc-if value="{{ showEmpty }}" hint-placeholder-val="">
       <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:56px 20px;text-align:center;">
-        <span style="color:#9AA1AB;display:inline-flex;"><dc-import name="Ikony" icon-name="package-off" size="24" hint-size="24px,24px"></dc-import></span>
+        <span style="color:#666E78;display:inline-flex;"><dc-import name="Ikony" icon-name="package-off" size="24" hint-size="24px,24px"></dc-import></span>
         <div style="font-size:16px;font-weight:700;color:#15181C;">Žádné díly neodpovídají filtru</div>
         <div style="font-size:14px;color:#5A626C;max-width:360px;">Zkuste zrušit některý filtr nebo rozšířit výběr značek.</div>
         <dc-import name="Tlacitko" variant="secondary" size="medium" label="Zrušit filtry" on-click="{{ clearFilters }}" hint-size="150px,44px"></dc-import>
@@ -159,9 +177,9 @@
     <!-- load more -->
     <sc-if value="{{ hasMore }}" hint-placeholder-val="{{ true }}">
       <div style="display:flex;flex-direction:column;align-items:center;gap:10px;padding:22px 0 6px;">
-        <span style="font-size:13px;color:#7A828C;">Zobrazeno <b style="color:#3A424C;">{{ shownCount }}</b> z {{ resultCount }} produktů</span>
+        <span style="font-size:13px;color:#666E78;">Zobrazeno <b style="color:#3A424C;">{{ shownCount }}</b> z {{ resultCount }} produktů</span>
         <div style="width:min(280px,70%);height:5px;background:#D8E6F6;border-radius:999px;overflow:hidden;"><div style="{{ progressStyle }}"></div></div>
-        <span onClick="{{ loadMore }}" style="display:flex;align-items:center;justify-content:center;min-height:46px;padding:0 30px;font-size:14px;font-weight:700;color:#1E5AA8;border-radius:8px;cursor:pointer;background:#EFF4FB;" class="hvx3">Načíst dalších {{ nextBatch }}</span>
+        <button type="button" class="a11y-i" onClick="{{ loadMore }}" style="display:flex;align-items:center;justify-content:center;min-height:46px;padding:0 30px;font-size:14px;font-weight:700;color:#1E5AA8;border-radius:8px;cursor:pointer;background:#EFF4FB;">Načíst dalších {{ nextBatch }}</button>
       </div>
     </sc-if>
 
@@ -171,7 +189,9 @@
       <dc-import name="PoradenskyBlok" variant="compact" hint-size="100%,90px"></dc-import>
     </div>
     </sc-if>
-  </div>
+  
+
+  </main>
 
   <div style="margin-top:10px;">
     <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
@@ -179,25 +199,25 @@
 
   <!-- FILTER PANEL -->
   <sc-if value="{{ filterOpen }}" hint-placeholder-val="">
-    <div onClick="{{ closeFilter }}" style="position:fixed;inset:0;background:rgba(20,30,45,.45);z-index:80;"></div>
-    <div style="position:fixed;top:0;right:0;bottom:0;width:min(400px,92vw);background:#fff;z-index:90;display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(20,30,45,.2);">
+    <div onClick="{{ closeFilter }}" aria-hidden="true" style="position:fixed;inset:0;background:rgba(20,30,45,.45);z-index:80;"></div>
+    <div id="pf-panel" role="dialog" aria-modal="true" aria-label="Filtry" tabindex="-1" style="position:fixed;top:0;right:0;bottom:0;width:min(400px,92vw);background:#fff;z-index:90;display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(20,30,45,.2);">
       <div style="display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid #F2F4F7;">
-        <span style="font-size:16px;font-weight:700;color:#142F56;">Filtry</span>
-        <span onClick="{{ closeFilter }}" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:#5A626C;cursor:pointer;background:#F2F4F7;border-radius:8px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></span>
+        <h2 id="pf-title" style="margin:0;font-size:16px;font-weight:700;color:#142F56;">Filtry</h2>
+        <button type="button" class="a11y-i" aria-label="Zavřít filtry" onClick="{{ closeFilter }}" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:#5A626C;cursor:pointer;background:#F2F4F7;border-radius:8px;"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
       </div>
       <div style="flex:1;overflow-y:auto;padding:2px 18px;">
         <sc-for list="{{ filterAcc }}" as="f" hint-placeholder-count="5">
           <div style="border-bottom:1px solid #F2F4F7;">
-            <div onClick="{{ f.onToggle }}" style="display:flex;align-items:center;justify-content:space-between;min-height:50px;cursor:pointer;">
+            <h3 style="margin:0;font-size:inherit;font-weight:inherit;line-height:inherit;"><button type="button" class="a11y-i" aria-expanded="{{ f.expanded }}" onClick="{{ f.onToggle }}" style="display:flex;width:100%;align-items:center;justify-content:space-between;min-height:50px;cursor:pointer;">
               <span style="font-size:14px;font-weight:700;color:#15181C;">{{ f.h }}<sc-if value="{{ f.activeN }}" hint-placeholder-val=""><span style="margin-left:8px;font-size:13px;font-weight:700;color:#1E5AA8;background:#D8E6F6;border-radius:6px;padding:2px 7px;">{{ f.activeN }}</span></sc-if></span>
               <span style="font-size:14px;color:#84AEDF;">{{ f.chev }}</span>
-            </div>
+            </button></h3>
             <sc-if value="{{ f.open }}" hint-placeholder-val="">
               <div style="padding:0 0 14px;display:flex;flex-direction:column;gap:4px;">
                 <sc-for list="{{ f.opts }}" as="o" hint-placeholder-count="4">
-                  <span onClick="{{ o.onToggle }}" style="display:flex;align-items:center;gap:10px;font-size:14px;color:#3A424C;min-height:40px;cursor:pointer;">
-                    <span style="{{ o.box }}"><sc-if value="{{ o.on }}" hint-placeholder-val=""><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg></sc-if></span>{{ o.t }} <span style="color:#9AA1AB;font-size:13px;">{{ o.c }}</span>
-                  </span>
+                  <button type="button" class="a11y-i" role="checkbox" aria-checked="{{ o.checked }}" onClick="{{ o.onToggle }}" style="display:flex;align-items:center;gap:10px;font-size:14px;color:#3A424C;min-height:40px;cursor:pointer;">
+                    <span style="{{ o.box }}"><sc-if value="{{ o.on }}" hint-placeholder-val=""><svg aria-hidden="true" focusable="false" width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg></sc-if></span>{{ o.t }} <span style="color:#666E78;font-size:13px;">{{ o.c }}</span>
+                  </button>
                 </sc-for>
               </div>
             </sc-if>
@@ -205,16 +225,27 @@
         </sc-for>
       </div>
       <div style="display:flex;gap:10px;padding:14px 18px;border-top:1px solid #F2F4F7;background:#F7F9FB;">
-        <span onClick="{{ clearFilters }}" style="flex:none;display:flex;align-items:center;min-height:48px;font-size:13px;font-weight:700;color:#5A626C;border-radius:8px;padding:0 16px;cursor:pointer;background:#F2F4F7;">Zrušit vše</span>
-        <span onClick="{{ closeFilter }}" style="flex:1;display:flex;align-items:center;justify-content:center;min-height:48px;font-size:14px;font-weight:700;color:#fff;background:#0E7F43;border-radius:8px;cursor:pointer;">Zobrazit {{ resultCount }} produktů</span>
+        <button type="button" class="a11y-i" onClick="{{ clearFilters }}" style="flex:none;display:flex;align-items:center;min-height:48px;font-size:13px;font-weight:700;color:#5A626C;border-radius:8px;padding:0 16px;cursor:pointer;background:#F2F4F7;">Zrušit vše</button>
+        <button type="button" class="a11y-i" onClick="{{ closeFilter }}" style="flex:1;display:flex;align-items:center;justify-content:center;min-height:48px;font-size:14px;font-weight:700;color:#fff;background:#0E7F43;border-radius:8px;cursor:pointer;">Zobrazit {{ resultCount }} produktů</button>
       </div>
     </div>
   </sc-if>
 
+  <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:844},&quot;freeShippingThreshold&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1500,&quot;min&quot;:0,&quot;max&quot;:5000,&quot;step&quot;:100,&quot;unit&quot;:&quot;Kč&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;defaultOnlyStock&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;defaultSort&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;pop&quot;,&quot;cheap&quot;,&quot;exp&quot;,&quot;az&quot;],&quot;default&quot;:&quot;pop&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;showConsultancy&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:844},&quot;freeShippingThreshold&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1500,&quot;min&quot;:0,&quot;max&quot;:5000,&quot;step&quot;:100,&quot;unit&quot;:&quot;Kč&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;defaultOnlyStock&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;defaultSort&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;pop&quot;,&quot;cheap&quot;,&quot;exp&quot;,&quot;az&quot;],&quot;default&quot;:&quot;pop&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;showConsultancy&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;}}">
 class Component extends DCLogic {
+  lockScroll(on){ try{ document.body.style.overflow = on ? 'hidden' : ''; }catch(e){} }
+  openPanel(){ this.setState({filterOpen:true}); }
+  closePanel(){ this.setState({filterOpen:false}); }
+  componentDidUpdate(prevProps, prevState){
+    const was = prevState && prevState.filterOpen, now = this.state.filterOpen;
+    if (was === now) return;
+    this.lockScroll(!!now);
+    const el = document.getElementById(now ? 'pf-panel' : 'pf-open');
+    if (el && el.focus) el.focus();
+  }
   constructor(props){
     super(props);
     this.state = {
@@ -301,6 +332,48 @@ class Component extends DCLogic {
     return list;
   }
 
+  componentDidMount(){
+    this._onKey = (e)=>{
+      if(!this.state.filterOpen) return;
+      if(e.key==='Escape'){ this.closePanel(); return; }
+      if(e.key!=='Tab') return;
+      const p=document.getElementById('pf-panel'); if(!p) return;
+      const f=[...p.querySelectorAll('button,a[href],input,select,textarea,[tabindex]:not([tabindex="-1"])')].filter(el=>!el.disabled && el.offsetParent!==null);
+      if(!f.length) return;
+      const first=f[0], last=f[f.length-1], a=document.activeElement;
+      const inside = p.contains(a);
+      if(!inside){ e.preventDefault(); (e.shiftKey?last:first).focus(); return; }
+      if(e.shiftKey && (a===first || a===p)){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && a===last){ e.preventDefault(); first.focus(); }
+    };
+    document.addEventListener('keydown', this._onKey, true);
+    // Sticky lišta + vytlačování hlavičky: BEZ šířkové podmínky.
+    // Platí na všech pásmech (M, S, XS, XXS i desktop) — rozhodnuto, nevypínat.
+    this._onScroll = () => {
+      const hdr = document.querySelector('.hd-root');
+      const sen = document.querySelector('.p-sentinel');
+      if (!hdr || !sen) return;
+      const hdrH = hdr.offsetHeight;
+      const pinned = hdrH - 35;            // spodní hrana přilepené hlavičky
+      const bar = document.querySelector('.p-sticky');
+      const senTop = sen.getBoundingClientRect().top;
+      if (bar) { const bt = bar.getBoundingClientRect().top; if (bt > 1) this._gap = bt - senTop; }
+      const s = senTop + (this._gap || 0);
+      let push = pinned - s;
+      if (push < 0) push = 0;
+      if (push > hdrH) push = hdrH;
+      this._push = push;
+      hdr.style.transform = push ? 'translateY(' + (-push) + 'px)' : '';
+    };
+    window.addEventListener('scroll', this._onScroll, { passive:true });
+    this._onScroll();
+  }
+  componentWillUnmount(){
+    window.removeEventListener('scroll', this._onScroll);
+    if (this._onKey) document.removeEventListener('keydown', this._onKey, true);
+    this.lockScroll(false);
+    const hdr = document.querySelector('.hd-root'); if (hdr) hdr.style.transform = '';
+  }
   renderVals(){
     const s = this.state;
     const filteredAll = this.filtered();
@@ -318,7 +391,7 @@ class Component extends DCLogic {
         p1l:p.p[0][0], p1v:p.p[0][1], p2l:p.p[1][0], p2v:p.p[1][1], p3l:p.p[2][0], p3v:p.p[2][1],
         priceNet:p.net, price:p.gross,
         avail: p.stock>=15 ? 'Skladem > 15 ks' : (p.stock>0 ? 'Skladem '+p.stock+' ks' : 'Na dotaz'),
-        availStyle:'display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:'+(p.stock>0?'#0B6937;':'#8A919C;'),
+        availStyle:'display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:'+(p.stock>0?'#0B6937;':'#666E78;'),
         availIn:p.stock>0, availOut:!p.stock,
         starsOn:'★'.repeat(4+((p.name.length)%2)), starsOff:'★'.repeat(1-((p.name.length)%2)),
         reviews:(p.name.length*13)%38+3,
@@ -331,14 +404,14 @@ class Component extends DCLogic {
         badge: p.sale ? '−'+p.sale+' %' : (this.priceNum(p)>=freeShip ? 'Doprava zdarma' : ''),
         badgeStyle:'position:absolute;top:8px;left:8px;font-size:13px;font-weight:700;border-radius:6px;padding:4px 9px;'+(p.sale?'color:#fff;background:#C5232B;':'color:#0B6937;background:#E9F8EF;'),
         imgBgStyle:'aspect-ratio:4/3;background:#fff url("./'+(p.img||'')+'") center/contain no-repeat;background-origin:content-box;padding:18px 12px;',
-        phStyle:'aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;color:#9AA1AB;font-size:13px;font-weight:600;background:repeating-linear-gradient('+(hov?'-45deg,#D8E6F6,#D8E6F6 11px,#CFDFF2 11px,#CFDFF2 22px':'45deg,#E9ECEF,#E9ECEF 11px,#E3E6EA 11px,#E3E6EA 22px')+');',
+        phStyle:'aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;color:#666E78;font-size:13px;font-weight:600;background:repeating-linear-gradient('+(hov?'-45deg,#D8E6F6,#D8E6F6 11px,#CFDFF2 11px,#CFDFF2 22px':'45deg,#E9ECEF,#E9ECEF 11px,#E3E6EA 11px,#E3E6EA 22px')+');',
         imgLabel: hov ? 'FOTO 2' : 'FOTO 1',
         dot1:(p.img?'display:none;':'')+'width:6px;height:6px;border-radius:50%;background:'+(hov?'#B4CEEC':'#1E5AA8')+';',
         dot2:(p.img?'display:none;':'')+'width:6px;height:6px;border-radius:50%;background:'+(hov?'#1E5AA8':'#B4CEEC')+';',
         onEnter:()=>{ if(window.matchMedia('(min-width:900px)').matches) this.setState({ hoverCard:p.name }); },
         onLeave:()=>{ if(s.hoverCard===p.name) this.setState({ hoverCard:null }); },
         cmp,
-        cmpBox:'flex:none;width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1px solid '+(cmp?'#1E5AA8':'#C4CAD2')+';background:'+(cmp?'#1E5AA8':'#fff')+';',
+        cmpBox:'flex:none;width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1px solid '+(cmp?'#1E5AA8':'#91959B')+';background:'+(cmp?'#1E5AA8':'#fff')+';',
         onCmp:()=>{ const c=Object.assign({},s.compare); if(c[p.name]) delete c[p.name]; else c[p.name]=true; this.setState({compare:c}); },
       };
     });
@@ -363,19 +436,19 @@ class Component extends DCLogic {
 
     const activeBrandN = Object.keys(s.brands).filter(b=>s.brands[b]).length;
     const filterCount = activeBrandN + (s.onlyStock?1:0);
-    const box=(on)=>'flex:none;width:21px;height:21px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1px solid '+(on?'#1E5AA8':'#C4CAD2')+';background:'+(on?'#1E5AA8':'#fff')+';';
+    const box=(on)=>'flex:none;width:21px;height:21px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1px solid '+(on?'#1E5AA8':'#91959B')+';background:'+(on?'#1E5AA8':'#fff')+';';
     const mkAcc=(h, opts, extra)=>({
-      h, chev:s.accOpen[h]?'▴':'▾', open:!!s.accOpen[h], activeN: extra||0,
+      h, chev:s.accOpen[h]?'▴':'▾', open:!!s.accOpen[h], expanded: s.accOpen[h]?'true':'false', activeN: extra||0,
       onToggle:()=>{ const a=Object.assign({},s.accOpen); a[h]=!a[h]; this.setState({accOpen:a}); },
       opts,
     });
     const filterAcc = [
-      mkAcc('Výrobce', this.BRANDS.map(([b,c])=>({ t:b, c:'('+c+')', on:!!s.brands[b], box:box(!!s.brands[b]),
+      mkAcc('Výrobce', this.BRANDS.map(([b,c])=>({ t:b, c:'('+c+')', on:!!s.brands[b], box:box(!!s.brands[b]), checked: (!!s.brands[b])?'true':'false',
         onToggle:()=>{ const br=Object.assign({},s.brands); br[b]=!br[b]; this.reload({brands:br, shown:15}); } })), activeBrandN||''),
-      mkAcc('Dostupnost', [{ t:'Pouze skladem', c:'', on:s.onlyStock, box:box(s.onlyStock), onToggle:()=>this.reload({onlyStock:!s.onlyStock, shown:15}) }], s.onlyStock?'1':''),
-      mkAcc('Průměr brzdy', [['160 mm','(74)'],['200 mm','(112)'],['230 mm','(96)'],['250 mm','(58)']].map(([t,c])=>({ t, c, on:false, box:box(false), onToggle:()=>{} }))),
-      mkAcc('Rozteč kol', [['100×4','(52)'],['112×5','(140)'],['140×5','(66)']].map(([t,c])=>({ t, c, on:false, box:box(false), onToggle:()=>{} }))),
-      mkAcc('Cena', [['do 500 Kč','(680)'],['500–2 000 Kč','(1 114)'],['nad 2 000 Kč','(624)']].map(([t,c])=>({ t, c, on:false, box:box(false), onToggle:()=>{} }))),
+      mkAcc('Dostupnost', [{ t:'Pouze skladem', c:'', on:s.onlyStock, box:box(s.onlyStock), checked: s.onlyStock?'true':'false', onToggle:()=>this.reload({onlyStock:!s.onlyStock, shown:15}) }], s.onlyStock?'1':''),
+      mkAcc('Průměr brzdy', [['160 mm','(74)'],['200 mm','(112)'],['230 mm','(96)'],['250 mm','(58)']].map(([t,c])=>({ t, c, on:false, box:box(false), checked:'false', onToggle:()=>{} }))),
+      mkAcc('Rozteč kol', [['100×4','(52)'],['112×5','(140)'],['140×5','(66)']].map(([t,c])=>({ t, c, on:false, box:box(false), checked:'false', onToggle:()=>{} }))),
+      mkAcc('Cena', [['do 500 Kč','(680)'],['500–2 000 Kč','(1 114)'],['nad 2 000 Kč','(624)']].map(([t,c])=>({ t, c, on:false, box:box(false), checked:'false', onToggle:()=>{} }))),
     ];
 
     const sortMap = { pop:'Nejoblíbenější', cheap:'Od nejlevnějšího', exp:'Od nejdražšího', az:'Podle názvu A–Z' };
@@ -429,8 +502,10 @@ class Component extends DCLogic {
       anyFilter: filterCount>0,
       clearFilters:()=>this.reload({ brands:{}, onlyStock:false, shown:15 }),
       toggleStock:()=>this.reload({onlyStock:!s.onlyStock, shown:15}),
+      stockPressed: s.onlyStock ? 'true' : 'false',
+      sortExpanded: s.sortOpen ? 'true' : 'false',
       stockBtnStyle:'display:flex;align-items:center;gap:9px;min-height:44px;padding:0 6px;font-size:13px;font-weight:700;cursor:pointer;user-select:none;color:'+(s.onlyStock?'#0B6937;':'#3A424C;'),
-      stockBoxStyle:'flex:none;width:21px;height:21px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;'+(s.onlyStock?'background:#0E7F43;color:#fff;border:1px solid #0E7F43;':'background:#fff;color:transparent;border:1px solid #C4CAD2;'),
+      stockBoxStyle:'flex:none;width:21px;height:21px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;'+(s.onlyStock?'background:#0E7F43;color:#fff;border:1px solid #0E7F43;':'background:#fff;color:transparent;border:1px solid #91959B;'),
       stockCheck: s.onlyStock ? '✓' : '',
       sortOpen:s.sortOpen, toggleSort:()=>this.setState({sortOpen:!s.sortOpen}),
       sortLabel: sortMap[s.sort], sortOpts,
@@ -459,6 +534,11 @@ class Component extends DCLogic {
     };
   }
 }
+
+
+// DebugBar: prop debug -> šablona
+(function(){ const rv = Component.prototype.renderVals;
+  Component.prototype.renderVals = function(){ const v = rv ? (rv.call(this) || {}) : {}; if (v.debug === undefined) v.debug = this.props.debug ?? true; return v; }; })();
 </script>
 </body>
 </html>

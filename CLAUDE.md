@@ -28,9 +28,11 @@
 > Zelená je vyhrazená **pouze** pro konverzi (Koupit) a dostupnost (skladem, LED). Nikdy dekorativně.
 
 ### Neutrální (`neutral`)
-`0 #FFFFFF` · `50 #F7F9FB` · `100 #F2F4F7` · `200 #D5DAE0` · `300 #C4CAD2` · `400 #9AA1AB` · `500 #8A919C` · `600 #7A828C` · `700 #5A626C` · `800 #3A424C` · `900 #15181C`
+`0 #FFFFFF` · `50 #F7F9FB` · `100 #F2F4F7` · `200 #D5DAE0` · `300 #C4CAD2` · `400 #9AA1AB` · `500 #8A919C` · `600 #7A828C` · **`650 #666E78`** · `700 #5A626C` · `800 #3A424C` · `900 #15181C`
 
-> Šířka okraje není token — všude 1 px. Odstíny `#9099A3`, `#6B727C`, `#6E88AE` a `#22C55E` jsou **zrušené** — mapuj na nejbližší krok škály.
+> Šířka okraje není token — všude 1 px. Odstíny `#9099A3`, `#6B727C`, `#6E88AE` a `#22C55E` jsou **zrušené** — mapuj na nejbližší krok škály. Zrušený `#6B727C` nemá s krokem 650 `#666E78` nic společného — na nejbližší platný krok mapuj podle účelu.
+
+> **Kontrastní přemapování (a11y audit).** `text.muted`, `text.tertiary`, `status.onRequest` a `commerce.priceGross` byly `#7A828C` / `#9AA1AB` / `#8A919C` — tyto hodnoty nedosahovaly 4,5:1 na bílé (3,89 / 2,61 / 3,18). Mezi `#5A626C` a bílou škála neunese tři rozlišitelné úrovně, které by všechny prošly, proto se **muted a tertiary slučují** do kroku 650 `#666E78` (5,16:1 na bílé, 4,89:1 na `#F7F9FB`, 4,69:1 na `#F2F4F7` — projde i na `surface.subtle`) a hierarchii nese velikost a řez písma, ne barva. `border.control` `#C4CAD2` (1,65:1) → `#91959B` (3,01:1) kvůli 3:1 pro hranice ovládacích prvků. Kroky škály 300/400/500/600 zůstávají beze změny — jen se na ně už nemapují textové tokeny.
 
 ### Sémantické tokeny
 
@@ -38,8 +40,8 @@
 |---|---|---|
 | `text.primary` | `#15181C` | nadpisy, názvy, cena bez DPH |
 | `text.secondary` | `#5A626C` | perex, popisky, neaktivní menu |
-| `text.muted` | `#7A828C` | cena s DPH, počet recenzí |
-| `text.tertiary` | `#9AA1AB` | obj. č., meta, disabled text |
+| `text.muted` | `#666E78` | cena s DPH, počet recenzí |
+| `text.tertiary` | `#666E78` | obj. č., meta, disabled text |
 | `text.onDark` | `#FFFFFF` | text na tmavých plochách |
 | `text.onDarkMuted` | `#B4CEEC` | odkazy v patičce |
 | `surface.page` | `#F7F9FB` | pozadí stránky |
@@ -47,7 +49,7 @@
 | `surface.subtle` | `#F2F4F7` | inputy, chipy, kvantifikátor |
 | `surface.brandDark` | `#142F56` | topbar, patička |
 | `border.subtle` | `#F2F4F7` | oddělovače a linky |
-| `border.control` | `#C4CAD2` | nezaškrtnutý checkbox |
+| `border.control` | `#91959B` | nezaškrtnutý checkbox |
 | `action.primary` | `#1E5AA8` / hover `#1A4A8A` | primární tlačítko |
 | `action.secondary` | `#EFF4FB` / hover `#D8E6F6` | sekundární tlačítko, text `#1E5AA8` |
 | `action.buy` | `#0E7F43` / hover `#0B6937` | tlačítko Koupit |
@@ -55,12 +57,12 @@
 | `action.disabled` | bg `#F2F4F7`, text `#9AA1AB` | neaktivní stav |
 | `status.inStock` | `#0B6937` | text „Skladem > 15 ks" |
 | `status.outOfStock` | `#C5232B` | není skladem |
-| `status.onRequest` | `#8A919C` | na dotaz |
+| `status.onRequest` | `#666E78` | na dotaz |
 | `status.open` | `#2EAA6A` | LED otevřeno |
 | `status.openOnDark` | `#97DBB4` | text „právě otevřeno" na tmavém pruhu (green.200) |
 | `status.closed` | `#C5232B` | LED zavřeno |
 | `commerce.priceNet` | `#15181C` | cena bez DPH |
-| `commerce.priceGross` | `#7A828C` | cena s DPH |
+| `commerce.priceGross` | `#666E78` | cena s DPH |
 | `commerce.freeShipping` | text `#0B6937`, bg `#E9F8EF` | doprava zdarma |
 | `rating.star` | `#F5A623` / prázdná `#D5DAE0` | hvězdičky |
 | `brand.logoRed` | `#E41D32` | **výhradně logo**, nikdy v UI |
@@ -70,6 +72,14 @@
 ## 2. Typografie
 
 Font: **Exo 2** (Google Fonts), fallback `'Helvetica Neue', Arial, sans-serif`. Osa 400–700, **maximální tučnost 700**. Základní text 16 px, **minimum 13 px**.
+
+Povolené výjimky z minima 13 px:
+- číselné čítače v Hlavicce a Kosiku (16 × 16 px, font 10/700) — nejde o čtený text, ale o kompaktní číselný indikátor; význam nese `aria-label`,
+- textové labely u ikon v Hlavicce (Přihlásit, Porovnat).
+
+Jiné výjimky se nezavádějí bez rozhodnutí.
+
+Dokumentační a katalogové bloky uvnitř souborů komponent (popisky „Kdy / Kdy ne", názvy souborů, ukázkové kódy) nejsou UI a minimum 13 px se na ně nevztahuje. Platí jen pro to, co se dostane na web.
 
 ### Desktop
 | Token | Hodnota |
@@ -122,9 +132,10 @@ Mezihodnoty mimo tuto řadu nepoužívat.
 
 - **Full-bleed vzorec (závazné):** stránka nikdy nemá vnější padding ani `max-width` na kořenovém prvku — kořen je `width:100%`, `margin:0`, `padding:0`, bez `border-radius`, nese jen `background: surface.page #F7F9FB`. Sekce jdou přes celou šířku viewportu (topbar a patička `#142F56`, zbytek `surface.page`); omezený je až vnitřní obal každé sekce: `max-width:1560px; margin:0 auto; padding:0 32px` na desktopu a `0 16px` pod 900 px. `html` a `body` mají `margin:0; padding:0`. Platí i pro hlavičku a patičku.
 - Container max-width **1560 px**. Page padding 32 px desktop / 16 px mobil.
-- Produktový grid: **4 sloupce na desktopu, 2 na mobilu**, gap 12 px, `auto-fill, minmax(min(46%,270px),1fr)`.
+- Produktový grid má tři stupně: **≥ 900 px 4 sloupce · 480–899 px 2 sloupce · < 480 px 1 sloupec**, gap 12 px, formule `auto-fill, minmax(min(46%,270px),1fr)`. Zlomy 480 a 900 patří do staré sady a čekají na migraci na škálu XXS–XXL.
 - Karta 280–300 px. Grid kategorií `auto-fit, minmax(280px,1fr)`, gap 12.
 - Rozměry karty 280–300 px platí jen pro samostatný náhled; v produktovém gridu je karta tekutá (`width:100%`, `min-width:0`, `max-width:none`).
+- **Sticky filtrační lišta** v prototypu platí na všech šířkách, včetně pásem M, S, XS a XXS. Vypínání sticky pod 900 px je zrušené — rozhodnuto, nevracet se k tomu.
 - **Breakpointy:** `< 600` mobil · `600–899` tablet · **`≥ 900` hlavní zlom** (desktopová navigace a layout) · `≥ 1280` plný 4sloupcový grid · `≥ 1560` container se přestává roztahovat.
 
 ---

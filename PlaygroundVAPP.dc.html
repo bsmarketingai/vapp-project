@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="cs">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
+  .a11y-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
+  .a11y-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+
   html,body{margin:0!important;padding:0!important;}
   #dc-root{margin:0!important;padding:0!important;width:100%!important;
            max-width:none!important;border:0!important;}
@@ -19,6 +22,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
+  .a11y-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
+  .a11y-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
@@ -44,13 +50,13 @@
         <a class="pg-nav" href="./WireframeVypisProduktuVAPP.dc.html" style="display:inline-flex;align-items:center;min-height:36px;padding:0 14px;font-size:14px;font-weight:700;color:#1E5AA8;background:#EFF4FB;border-radius:8px;">Wireframe: výpis</a>
       </div>
       <div style="margin-left:auto;display:flex;align-items:center;gap:4px;background:#F2F4F7;border-radius:8px;padding:4px;">
-        <span onClick="{{ setDesktop }}" class="pg-tgl" style="{{ deskBtn }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"></rect><path d="M8 21h8M12 17v4"></path></svg>Desktop</span>
-        <span onClick="{{ setMobile }}" class="pg-tgl" style="{{ mobBtn }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"></rect><path d="M11 18h2"></path></svg>Mobil</span>
+        <button type="button" onClick="{{ setDesktop }}" class="pg-tgl a11y-i" aria-pressed="{{ deskPressed }}" style="{{ deskBtn }}"><svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"></rect><path d="M8 21h8M12 17v4"></path></svg>Desktop</button>
+        <button type="button" onClick="{{ setMobile }}" class="pg-tgl a11y-i" aria-pressed="{{ mobPressed }}" style="{{ mobBtn }}"><svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"></rect><path d="M11 18h2"></path></svg>Mobil</button>
       </div>
     </div>
   </div>
 
-  <div class="vp-in" style="padding-top:48px;padding-bottom:140px;display:flex;flex-direction:column;gap:64px;">
+  <main class="vp-in" style="padding-top:48px;padding-bottom:140px;display:flex;flex-direction:column;gap:64px;">
 
     <div>
       <h1 style="margin:0;font-size:36px;font-weight:700;letter-spacing:-0.02em;">Design systém pohromadě</h1>
@@ -58,80 +64,81 @@
     </div>
 
     <div style="display:flex;flex-direction:column;gap:20px;">
-      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Základy</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#7A828C;">DesignSystemVAPP.dc.html</span></div>
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Základy</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#666E78;">DesignSystemVAPP.dc.html</span></div>
       <div style="{{ stageStyle }}">
         <div style="position:relative;max-height:640px;overflow:hidden;border-radius:8px;">
           <dc-import name="DesignSystemVAPP" hint-size="100%,640px"></dc-import>
           <div style="position:absolute;left:0;right:0;bottom:0;height:120px;background:linear-gradient(to bottom,rgba(247,249,251,0),#F7F9FB);"></div>
         </div>
-        <a href="./DesignSystemVAPP.dc.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:14px;font-weight:700;color:#1E5AA8;">Zobrazit celý Design systém<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></a>
+        <a href="./DesignSystemVAPP.dc.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:14px;font-weight:700;color:#1E5AA8;">Zobrazit celý Design systém<svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></a>
       </div>
     </div>
 
     <div style="display:flex;flex-direction:column;gap:20px;">
-      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Formulářové prvky</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#7A828C;">FormularovePrvky.dc.html</span></div>
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Formulářové prvky</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#666E78;">FormularovePrvky.dc.html</span></div>
       <div style="{{ stageStyle }}"><dc-import name="FormularovePrvky" hint-size="100%,420px"></dc-import></div>
     </div>
 
     <div style="display:flex;flex-direction:column;gap:20px;">
-      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Tlačítka</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#7A828C;">Tlacitko.dc.html</span></div>
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Tlačítka</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#666E78;">Tlacitko.dc.html</span></div>
       <div style="{{ stageStyle }}"><dc-import name="Tlacitko" hint-size="100%,460px"></dc-import></div>
     </div>
 
     <div style="display:flex;flex-direction:column;gap:20px;">
-      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Badge a chipy</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#7A828C;">Badge.dc.html · Chip.dc.html</span></div>
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Badge a chipy</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#666E78;">Badge.dc.html · Chip.dc.html</span></div>
       <div style="{{ stageStyle }};display:flex;flex-direction:column;gap:24px;"><dc-import name="Badge" hint-size="100%,180px"></dc-import><dc-import name="Chip" hint-size="100%,300px"></dc-import></div>
     </div>
 
     <div style="display:flex;flex-direction:column;gap:20px;">
-      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Skladovost</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#7A828C;">Skladovost.dc.html</span></div>
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Skladovost</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#666E78;">Skladovost.dc.html</span></div>
       <div style="{{ stageStyle }}"><dc-import name="Skladovost" hint-size="100%,180px"></dc-import></div>
     </div>
 
     <div style="display:flex;flex-direction:column;gap:20px;">
-      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Kvantifikátor</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#7A828C;">Kvantifikator.dc.html</span></div>
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Kvantifikátor</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#666E78;">Kvantifikator.dc.html</span></div>
       <div style="{{ stageStyle }}"><dc-import name="Kvantifikator" hint-size="100%,220px"></dc-import></div>
     </div>
 
     <div style="display:flex;flex-direction:column;gap:20px;">
-      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Vyhledávání</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#7A828C;">Vyhledavani.dc.html</span></div>
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Vyhledávání</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#666E78;">Vyhledavani.dc.html</span></div>
       <div style="{{ stageStyle }}"><dc-import name="Vyhledavani" hint-size="100%,500px"></dc-import></div>
     </div>
 
     <div style="display:flex;flex-direction:column;gap:20px;">
-      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Produktová karta</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#7A828C;">ProduktovaKarta.dc.html</span></div>
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Produktová karta</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#666E78;">ProduktovaKarta.dc.html</span></div>
       <div style="{{ cardStage }}"><dc-import name="ProduktovaKarta" hint-size="300px,470px"></dc-import></div>
     </div>
 
     <div style="display:flex;flex-direction:column;gap:20px;">
-      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Kategorická dlaždice</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#7A828C;">KategorickaDlazdice.dc.html</span></div>
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Kategorická dlaždice</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#666E78;">KategorickaDlazdice.dc.html</span></div>
       <div style="{{ stageStyle }}"><dc-import name="KategorickaDlazdice" hint-size="100%,340px"></dc-import></div>
     </div>
 
     <div style="display:flex;flex-direction:column;gap:20px;">
-      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Poradenský blok</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#7A828C;">PoradenskyBlok.dc.html</span></div>
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Poradenský blok</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#666E78;">PoradenskyBlok.dc.html</span></div>
       <div style="{{ stageStyle }}"><dc-import name="PoradenskyBlok" hint-size="100%,220px"></dc-import></div>
     </div>
 
     <div style="display:flex;flex-direction:column;gap:20px;">
-      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Hlavička</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#7A828C;">Hlavicka.dc.html</span></div>
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Hlavička</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#666E78;">Hlavicka.dc.html</span></div>
       <div style="{{ stageStyle }}"><dc-import name="Hlavicka" hint-size="100%,220px"></dc-import></div>
     </div>
 
     <div style="display:flex;flex-direction:column;gap:20px;">
-      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Breadcrumb</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#7A828C;">Breadcrumb.dc.html</span></div>
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Breadcrumb</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#666E78;">Breadcrumb.dc.html</span></div>
       <div style="{{ stageStyle }}"><dc-import name="Breadcrumb" hint-size="100%,150px"></dc-import></div>
     </div>
 
     <div style="display:flex;flex-direction:column;gap:20px;">
-      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Patička</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#7A828C;">Paticka.dc.html</span></div>
+      <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;"><h2 style="margin:0;font-size:24px;font-weight:700;letter-spacing:-0.01em;">Patička</h2><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#666E78;">Paticka.dc.html</span></div>
       <div style="{{ stageStyle }}"><dc-import name="Paticka" hint-size="100%,560px"></dc-import></div>
     </div>
 
-  </div>
+  </main>
+  <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:1600}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:1600}}">
 class Component extends DCLogic {
   state = { mobile:false };
   renderVals(){
@@ -139,17 +146,24 @@ class Component extends DCLogic {
     const stageStyle = m ? 'width:100%;max-width:412px;margin:0 auto;' : 'width:100%;';
     const cardStage = m ? 'width:100%;max-width:300px;margin:0 auto;' : 'width:300px;';
     const tglOn = 'display:inline-flex;align-items:center;gap:7px;min-height:32px;padding:0 14px;font-size:14px;font-weight:700;border-radius:6px;cursor:pointer;background:#fff;color:#1E5AA8;box-shadow:0 1px 2px rgba(20,47,86,.10);';
-    const tglOff = 'display:inline-flex;align-items:center;gap:7px;min-height:32px;padding:0 14px;font-size:14px;font-weight:700;border-radius:6px;cursor:pointer;background:transparent;color:#8A919C;';
+    const tglOff = 'display:inline-flex;align-items:center;gap:7px;min-height:32px;padding:0 14px;font-size:14px;font-weight:700;border-radius:6px;cursor:pointer;background:transparent;color:#666E78;';
     return {
       stageStyle, cardStage,
       viewLabel: m ? 'Mobil · 412 px' : 'Desktop',
       deskBtn: m ? tglOff : tglOn,
       mobBtn: m ? tglOn : tglOff,
+      deskPressed: m ? 'false' : 'true',
+      mobPressed: m ? 'true' : 'false',
       setDesktop:()=>this.setState({mobile:false}),
       setMobile:()=>this.setState({mobile:true}),
     };
   }
 }
+
+
+// DebugBar: prop debug -> šablona
+(function(){ const rv = Component.prototype.renderVals;
+  Component.prototype.renderVals = function(){ const v = rv ? (rv.call(this) || {}) : {}; if (v.debug === undefined) v.debug = this.props.debug ?? true; return v; }; })();
 </script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="cs">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,16 +25,16 @@
 </helmet>
 <sc-if value="{{ single }}" hint-placeholder-val="">
   <span style="{{ wrapStyle }}">
-    <sc-if value="{{ isIn }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="circle-check" size="18" hint-size="18px,18px"></dc-import></sc-if>
-    <sc-if value="{{ isOut }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="circle-x" size="18" hint-size="18px,18px"></dc-import></sc-if>
-    <sc-if value="{{ isReq }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="help" size="18" hint-size="18px,18px"></dc-import></sc-if>{{ text }}</span>
+    <sc-if value="{{ isIn }}" hint-placeholder-val=""><span style="display:inline-flex;align-items:center;flex:none;"><dc-import name="Ikony" icon-name="circle-check" size="18" hint-size="18px,18px"></dc-import></span></sc-if>
+    <sc-if value="{{ isOut }}" hint-placeholder-val=""><span style="display:inline-flex;align-items:center;flex:none;"><dc-import name="Ikony" icon-name="circle-x" size="18" hint-size="18px,18px"></dc-import></span></sc-if>
+    <sc-if value="{{ isReq }}" hint-placeholder-val=""><span style="display:inline-flex;align-items:center;flex:none;"><dc-import name="Ikony" icon-name="help" size="18" hint-size="18px,18px"></dc-import></span></sc-if>{{ text }}</span>
 </sc-if>
 <sc-if value="{{ gallery }}" hint-placeholder-val="{{ true }}">
 <div style="display:flex;flex-direction:column;gap:16px;max-width:720px;">
   <div style="background:#fff;border-radius:8px;padding:28px;display:flex;gap:32px;flex-wrap:wrap;align-items:center;">
-    <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#0B6937;"><dc-import name="Ikony" icon-name="circle-check" size="18" hint-size="18px,18px"></dc-import>Skladem &gt; 15 ks</span>
-    <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#C5232B;"><dc-import name="Ikony" icon-name="circle-x" size="18" hint-size="18px,18px"></dc-import>Není skladem</span>
-    <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#8A919C;"><dc-import name="Ikony" icon-name="help" size="18" hint-size="18px,18px"></dc-import>Na dotaz</span>
+    <span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:700;line-height:1;color:#0B6937;"><span style="display:inline-flex;align-items:center;flex:none;"><dc-import name="Ikony" icon-name="circle-check" size="18" hint-size="18px,18px"></dc-import></span>Skladem &gt; 15 ks</span>
+    <span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:700;line-height:1;color:#C5232B;"><span style="display:inline-flex;align-items:center;flex:none;"><dc-import name="Ikony" icon-name="circle-x" size="18" hint-size="18px,18px"></dc-import></span>Není skladem</span>
+    <span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:700;line-height:1;color:#666E78;"><span style="display:inline-flex;align-items:center;flex:none;"><dc-import name="Ikony" icon-name="help" size="18" hint-size="18px,18px"></dc-import></span>Na dotaz</span>
   </div>
   <div style="display:flex;flex-direction:column;gap:5px;padding:2px 4px;">
     <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> ikona 18×18 + text bez podbarvení. Skladem = zelená, není skladem = červená, na dotaz = neutrální šedá.</div>
@@ -42,8 +42,9 @@
   </div>
 </div>
 </sc-if>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:720,&quot;height&quot;:180},&quot;state&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;in&quot;,&quot;out&quot;,&quot;request&quot;],&quot;default&quot;:&quot;in&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;text&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Skladem &gt; 15 ks&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:720,&quot;height&quot;:180},&quot;state&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;in&quot;,&quot;out&quot;,&quot;request&quot;],&quot;default&quot;:&quot;in&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;text&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Skladem &gt; 15 ks&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
   renderVals(){
     const P = this.props;
@@ -52,16 +53,21 @@ class Component extends DCLogic {
       const map = {
         in:{fg:'#0B6937',def:'Skladem > 15 ks'},
         out:{fg:'#C5232B',def:'Není skladem'},
-        request:{fg:'#8A919C',def:'Na dotaz'},
+        request:{fg:'#666E78',def:'Na dotaz'},
       };
       const v = map[P.state] || map.in;
       return { single:true, gallery:false, text: P.text || v.def,
-        wrapStyle:'display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:'+v.fg+';',
+        wrapStyle:'display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:700;line-height:1;color:'+v.fg+';',
         isIn:P.state==='in', isOut:P.state==='out', isReq:P.state==='request' };
     }
     return { single:false, gallery:true };
   }
 }
+
+
+// DebugBar: prop debug -> šablona
+(function(){ const rv = Component.prototype.renderVals;
+  Component.prototype.renderVals = function(){ const v = rv ? (rv.call(this) || {}) : {}; if (v.debug === undefined) v.debug = this.props.debug ?? true; return v; }; })();
 </script>
 </body>
 </html>

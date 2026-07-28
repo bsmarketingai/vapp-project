@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="cs">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,17 +25,17 @@
 </helmet>
 <sc-if value="{{ single }}" hint-placeholder-val="">
   <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
-    <sc-if value="{{ hasOriginal }}" hint-placeholder-val=""><span style="display:inline-flex;align-items:center;gap:8px;"><span style="font-size:13px;color:#9AA1AB;text-decoration:line-through;">{{ originalStr }}</span><span style="font-size:13px;font-weight:700;color:#C5232B;">−{{ discount }} %</span></span></sc-if>
+    <sc-if value="{{ hasOriginal }}" hint-placeholder-val=""><span style="display:inline-flex;align-items:center;gap:8px;"><span style="font-size:13px;color:#666E78;text-decoration:line-through;">{{ originalStr }}</span><span style="font-size:13px;font-weight:700;color:#C5232B;">−{{ discount }} %</span></span></sc-if>
     <span style="{{ netStyle }}">{{ netStr }}</span>
-    <span style="font-size:13px;font-weight:400;color:#7A828C;white-space:nowrap;">{{ grossStr }} s DPH</span>
+    <span style="font-size:13px;font-weight:400;color:#666E78;white-space:nowrap;">{{ grossStr }} s DPH</span>
   </div>
 </sc-if>
 <sc-if value="{{ gallery }}" hint-placeholder-val="{{ true }}">
 <div style="display:flex;flex-direction:column;gap:16px;max-width:720px;">
   <div style="background:#fff;border-radius:8px;padding:28px;display:flex;gap:48px;flex-wrap:wrap;align-items:flex-start;">
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;"><span style="font-size:17px;font-weight:700;color:#15181C;white-space:nowrap;">397 Kč</span><span style="font-size:13px;color:#7A828C;">480 Kč s DPH</span><span style="font-size:13px;color:#8A919C;margin-top:6px;">Default 17/700</span></div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;"><span style="display:inline-flex;align-items:center;gap:8px;"><span style="font-size:13px;color:#9AA1AB;text-decoration:line-through;">590 Kč</span><span style="font-size:13px;font-weight:700;color:#C5232B;">−33 %</span></span><span style="font-size:17px;font-weight:700;color:#15181C;">397 Kč</span><span style="font-size:13px;color:#7A828C;">480 Kč s DPH</span><span style="font-size:13px;color:#8A919C;margin-top:6px;">S původní cenou</span></div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;"><span style="font-size:22px;font-weight:700;color:#15181C;white-space:nowrap;">4 876 Kč</span><span style="font-size:13px;color:#7A828C;">5 900 Kč s DPH</span><span style="font-size:13px;color:#8A919C;margin-top:6px;">Large 22/700 — detail</span></div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;"><span style="font-size:17px;font-weight:700;color:#15181C;white-space:nowrap;">397 Kč</span><span style="font-size:13px;color:#666E78;">480 Kč s DPH</span><span style="font-size:13px;color:#666E78;margin-top:6px;">Default 17/700</span></div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;"><span style="display:inline-flex;align-items:center;gap:8px;"><span style="font-size:13px;color:#666E78;text-decoration:line-through;">590 Kč</span><span style="font-size:13px;font-weight:700;color:#C5232B;">−33 %</span></span><span style="font-size:17px;font-weight:700;color:#15181C;">397 Kč</span><span style="font-size:13px;color:#666E78;">480 Kč s DPH</span><span style="font-size:13px;color:#666E78;margin-top:6px;">S původní cenou</span></div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;"><span style="font-size:22px;font-weight:700;color:#15181C;white-space:nowrap;">4 876 Kč</span><span style="font-size:13px;color:#666E78;">5 900 Kč s DPH</span><span style="font-size:13px;color:#666E78;margin-top:6px;">Large 22/700 — detail</span></div>
   </div>
   <div style="display:flex;flex-direction:column;gap:5px;padding:2px 4px;">
     <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> cena bez DPH primárně (17/700, large 22/700), pod ní „X Kč s DPH" (13/400). Původní cena přeškrtnutá + sleva se dopočítá. Formát s mezerou po tisících.</div>
@@ -43,8 +43,9 @@
   </div>
 </div>
 </sc-if>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:720,&quot;height&quot;:180},&quot;priceNet&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:397,&quot;tsType&quot;:&quot;number&quot;},&quot;priceGross&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:480,&quot;tsType&quot;:&quot;number&quot;},&quot;original&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;tsType&quot;:&quot;number&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;large&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:720,&quot;height&quot;:180},&quot;priceNet&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:397,&quot;tsType&quot;:&quot;number&quot;},&quot;priceGross&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:480,&quot;tsType&quot;:&quot;number&quot;},&quot;original&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;tsType&quot;:&quot;number&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;large&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
   fmt(n){ return String(Math.round(n||0)).replace(/\B(?=(\d{3})+(?!\d))/g,'\u00A0') + ' Kč'; }
   renderVals(){
@@ -62,6 +63,11 @@ class Component extends DCLogic {
     return { single:false, gallery:true };
   }
 }
+
+
+// DebugBar: prop debug -> šablona
+(function(){ const rv = Component.prototype.renderVals;
+  Component.prototype.renderVals = function(){ const v = rv ? (rv.call(this) || {}) : {}; if (v.debug === undefined) v.debug = this.props.debug ?? true; return v; }; })();
 </script>
 </body>
 </html>

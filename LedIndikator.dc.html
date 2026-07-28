@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="cs">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,7 +26,7 @@
 </style>
 </helmet>
 <sc-if value="{{ single }}" hint-placeholder-val="">
-  <span style="{{ wrapStyle }}"><span class="vapp-led" style="{{ dotStyle }}"></span>{{ label }}</span>
+  <span role="img" aria-label="{{ ledAria }}" style="{{ wrapStyle }}"><span class="vapp-led" aria-hidden="true" style="{{ dotStyle }}"></span>{{ label }}</span>
 </sc-if>
 <sc-if value="{{ gallery }}" hint-placeholder-val="{{ true }}">
 <div style="display:flex;flex-direction:column;gap:16px;max-width:760px;">
@@ -43,8 +43,9 @@
   </div>
 </div>
 </sc-if>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:760,&quot;height&quot;:280},&quot;state&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;open&quot;,&quot;closed&quot;],&quot;default&quot;:&quot;open&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onDark&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:11,&quot;tsType&quot;:&quot;number&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:760,&quot;height&quot;:280},&quot;state&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;open&quot;,&quot;closed&quot;],&quot;default&quot;:&quot;open&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onDark&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:11,&quot;tsType&quot;:&quot;number&quot;}}">
 class Component extends DCLogic {
   renderVals(){
     const P = this.props;
@@ -56,13 +57,21 @@ class Component extends DCLogic {
       const led = open ? 'rgba(46,170,106,.5)' : 'rgba(197,35,43,.5)';
       const size = P.size || 11;
       const textColor = onDark ? '#fff' : color;
-      return { single:true, gallery:false, label: P.label || (open ? 'Po–Pá 8–16 · právě otevřeno' : 'Zavřeno · otevíráme v Po 8:00'),
+      const _lbl = P.label !== undefined ? P.label : (open ? 'Po–Pá 8–16 · právě otevřeno' : 'Zavřeno · otevíráme v Po 8:00');
+      return { single:true, gallery:false,
+        ledAria: (String(_lbl||'').trim() ? undefined : (open ? 'Právě otevřeno' : 'Zavřeno')),
+        label: P.label || (open ? 'Po–Pá 8–16 · právě otevřeno' : 'Zavřeno · otevíráme v Po 8:00'),
         wrapStyle:'display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:'+(onDark?'600':'700')+';color:'+textColor+';',
         dotStyle:'--led:'+led+';width:'+size+'px;height:'+size+'px;background:'+color+';flex:none;' };
     }
     return { single:false, gallery:true };
   }
 }
+
+
+// DebugBar: prop debug -> šablona
+(function(){ const rv = Component.prototype.renderVals;
+  Component.prototype.renderVals = function(){ const v = rv ? (rv.call(this) || {}) : {}; if (v.debug === undefined) v.debug = this.props.debug ?? true; return v; }; })();
 </script>
 </body>
 </html>

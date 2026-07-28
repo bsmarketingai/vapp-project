@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="cs">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,7 +25,7 @@
 </helmet>
 <sc-if value="{{ single }}" hint-placeholder-val="">
   <sc-if value="{{ isVisible }}" hint-placeholder-val="{{ true }}">
-    <div style="{{ toastStyle }}"><span style="{{ iconWrap }}"><dc-import name="Ikony" icon-name="{{ icon }}" size="24" hint-size="24px,24px"></dc-import></span><span style="font-size:14px;font-weight:700;line-height:1.35;">{{ message }}</span></div>
+    <div role="status" aria-live="{{ live }}" style="{{ toastStyle }}"><span style="{{ iconWrap }}"><dc-import name="Ikony" icon-name="{{ icon }}" size="24" hint-size="24px,24px"></dc-import></span><span style="font-size:14px;font-weight:700;line-height:1.35;">{{ message }}</span></div>
   </sc-if>
 </sc-if>
 <sc-if value="{{ gallery }}" hint-placeholder-val="{{ true }}">
@@ -41,8 +41,9 @@
   </div>
 </div>
 </sc-if>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:560,&quot;height&quot;:260},&quot;message&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Přidáno do košíku&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;success&quot;,&quot;info&quot;,&quot;danger&quot;],&quot;default&quot;:&quot;success&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;visible&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:560,&quot;height&quot;:260},&quot;message&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Přidáno do košíku&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;success&quot;,&quot;info&quot;,&quot;danger&quot;],&quot;default&quot;:&quot;success&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;visible&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
 class Component extends DCLogic {
   renderVals(){
     const P = this.props;
@@ -52,6 +53,7 @@ class Component extends DCLogic {
       const v = map[P.variant] || map.success;
       return { single:true, gallery:false,
         isVisible: P.visible !== false,
+        live: P.variant === 'danger' ? 'assertive' : 'polite',
         message: P.message, icon: v.icon,
         iconWrap:'display:inline-flex;color:'+v.fg+';',
         toastStyle:'display:inline-flex;align-items:center;gap:12px;background:#fff;border-radius:8px;padding:14px 18px;box-shadow:0 10px 30px rgba(20,30,45,.14);color:#15181C;' };
@@ -59,6 +61,11 @@ class Component extends DCLogic {
     return { single:false, gallery:true };
   }
 }
+
+
+// DebugBar: prop debug -> šablona
+(function(){ const rv = Component.prototype.renderVals;
+  Component.prototype.renderVals = function(){ const v = rv ? (rv.call(this) || {}) : {}; if (v.debug === undefined) v.debug = this.props.debug ?? true; return v; }; })();
 </script>
 </body>
 </html>

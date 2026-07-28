@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<sc-if value="{{ never }}" hint-placeholder-val="{{ false }}"><span></span></sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1308,&quot;height&quot;:240},&quot;visible&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;height&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:10,&quot;min&quot;:8,&quot;max&quot;:40,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;}}">
+const BANDS = [
+  { name: 'XXL', min: 1560, max: Infinity, range: '≥ 1560' },
+  { name: 'XL', min: 1150, max: 1559, range: '1150–1559' },
+  { name: 'L', min: 1000, max: 1149, range: '1000–1149' },
+  { name: 'M', min: 820, max: 999, range: '820–999' },
+  { name: 'S', min: 550, max: 819, range: '550–819' },
+  { name: 'XS', min: 420, max: 549, range: '420–549' },
+  { name: 'XXS', min: 0, max: 419, range: '≤ 419' }
+];
+const MONO = 'ui-monospace, SFMono-Regular, Menlo, monospace';
+const css = (el, o) => { for (const k in o) el.style[k] = o[k]; };
+
+const REG = window.__vappDebugBar || (window.__vappDebugBar = {
+  count: 0, suppress: 0, host: null, bar: null, main: null, handle: null,
+  ro: null, onResize: null, collapsed: false, height: 10,
+
+  paint() {
+    if (!this.host) return;
+    const w = document.documentElement.clientWidth;
+    const band = BANDS.find(b => w >= b.min && w <= b.max) || BANDS[BANDS.length - 1];
+    this.main.textContent = band.name + ' · ' + band.range + ' · šířka ' + w + 'px';
+    this.bar.style.display = this.collapsed ? 'none' : 'flex';
+    this.handle.style.display = this.collapsed ? 'flex' : 'none';
+  },
+
+  build() {
+    document.querySelectorAll('[data-vapp-debugbar-host]').forEach(n => {
+      if (n.parentNode) n.parentNode.removeChild(n);
+    });
+    const h = this.height;
+    const host = document.createElement('div');
+    host.setAttribute('data-vapp-debugbar-host', '1');
+    host.setAttribute('aria-hidden', 'true');
+
+    const bar = document.createElement('div');
+    bar.setAttribute('data-vapp-debugbar', '1');
+    css(bar, {
+      position: 'fixed', left: '0', right: '0', top: '0', zIndex: '2147483000',
+      height: h + 'px', background: '#15181C', color: '#FFFFFF', fontFamily: MONO,
+      fontSize: (h - 2) + 'px', lineHeight: h + 'px', letterSpacing: '0.02em',
+      display: 'flex', alignItems: 'center', paddingLeft: '8px', pointerEvents: 'none'
+    });
+    const main = document.createElement('span');
+    css(main, { pointerEvents: 'none' });
+    const close = document.createElement('button');
+    close.type = 'button';
+    close.textContent = '×';
+    close.setAttribute('aria-label', 'Sbalit debug bar');
+    css(close, {
+      marginLeft: 'auto', pointerEvents: 'auto', background: 'transparent', border: '0',
+      color: '#FFFFFF', fontFamily: MONO, fontSize: (h - 2) + 'px', lineHeight: h + 'px',
+      letterSpacing: '0.02em', padding: '0 8px', height: '100%', cursor: 'pointer'
+    });
+    close.addEventListener('click', () => { this.collapsed = true; this.paint(); });
+    bar.appendChild(main); bar.appendChild(close);
+
+    const handle = document.createElement('button');
+    handle.type = 'button';
+    handle.setAttribute('data-vapp-debugbar', '1');
+    handle.setAttribute('aria-label', 'Rozbalit debug bar');
+    css(handle, {
+      position: 'fixed', right: '0', top: '0', zIndex: '2147483000', width: '24px',
+      maxWidth: '24px', minWidth: '24px', height: Math.max(h, 24) + 'px', background: 'transparent',
+      color: '#FFFFFF', border: '0', padding: '0', fontFamily: MONO, fontSize: (h - 2) + 'px',
+      letterSpacing: '0.02em', display: 'none', alignItems: 'flex-start', justifyContent: 'center',
+      pointerEvents: 'auto', cursor: 'pointer'
+    });
+    const cap = document.createElement('span');
+    cap.textContent = '▼';
+    css(cap, { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: h + 'px', background: '#15181C', lineHeight: h + 'px' });
+    handle.appendChild(cap);
+    handle.addEventListener('click', () => { this.collapsed = false; this.paint(); });
+
+    host.appendChild(bar); host.appendChild(handle);
+    document.body.appendChild(host);
+    Object.assign(this, { host, bar, main, handle });
+
+    this.onResize = () => this.paint();
+    window.addEventListener('resize', this.onResize);
+    if (typeof ResizeObserver !== 'undefined') {
+      this.ro = new ResizeObserver(() => this.paint());
+      this.ro.observe(document.body);
+    }
+    this.paint();
+  },
+
+  destroy() {
+    if (this.onResize) window.removeEventListener('resize', this.onResize);
+    this.onResize = null;
+    if (this.ro) { this.ro.disconnect(); this.ro = null; }
+    if (this.host && this.host.parentNode) this.host.parentNode.removeChild(this.host);
+    this.host = this.bar = this.main = this.handle = null;
+  },
+
+  apply() {
+    const wanted = this.count > 0 && this.suppress === 0;
+    if (wanted && !this.host) this.build();
+    else if (!wanted && this.host) this.destroy();
+  },
+
+  acquire(height) {
+    this.count += 1;
+    if (this.count === 1) this.height = height;
+    this.apply();
+  },
+
+  release() {
+    if (this.count <= 0) return;
+    this.count -= 1;
+    this.apply();
+  },
+
+  suppressOn() { this.suppress += 1; this.apply(); },
+
+  suppressOff() {
+    if (this.suppress <= 0) return;
+    this.suppress -= 1;
+    this.apply();
+  }
+});
+
+class Component extends DCLogic {
+  _slot = null; // 'count' | 'suppress' | null
+
+  leave() {
+    if (this._slot === 'count') REG.release();
+    else if (this._slot === 'suppress') REG.suppressOff();
+    this._slot = null;
+  }
+
+  sync() {
+    const want = (this.props.visible ?? true) !== false ? 'count' : 'suppress';
+    if (this._slot === want) return;
+    this.leave();
+    this._slot = want;
+    if (want === 'count') REG.acquire(Number(this.props.height ?? 10));
+    else REG.suppressOn();
+  }
+
+  componentDidMount() { this.sync(); }
+  componentDidUpdate() { this.sync(); }
+  componentWillUnmount() { this.leave(); }
+
+  renderVals() { return { never: false }; }
+}
+</script>
+</body>
+</html>

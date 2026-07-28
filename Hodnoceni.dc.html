@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="cs">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,8 +24,8 @@
 </style>
 </helmet>
 <sc-if value="{{ single }}" hint-placeholder-val="">
-  <span style="display:inline-flex;align-items:center;gap:6px;">
-    <span style="display:inline-flex;align-items:center;gap:1px;">
+  <span role="img" aria-label="{{ ratingLabel }}" style="display:inline-flex;align-items:center;gap:6px;flex-wrap:nowrap;white-space:nowrap;">
+    <span aria-hidden="true" style="display:inline-flex;align-items:center;gap:1px;">
       <sc-for list="{{ stars }}" as="st" hint-placeholder-count="5">
         <sc-if value="{{ st.half }}" hint-placeholder-val="">
           <span style="position:relative;display:inline-flex;width:{{ size }}px;height:{{ size }}px;">
@@ -36,14 +36,14 @@
         <sc-if value="{{ st.solid }}" hint-placeholder-val=""><span style="{{ st.style }}"><dc-import name="Ikony" icon-name="{{ st.icon }}" size="{{ size }}" hint-size="14px,14px"></dc-import></span></sc-if>
       </sc-for>
     </span>
-    <sc-if value="{{ hasCount }}" hint-placeholder-val=""><span style="font-size:13px;color:#7A828C;">({{ count }})</span></sc-if>
+    <span aria-hidden="true" style="font-size:13px;font-weight:500;color:#666E78;white-space:nowrap;">{{ valueLabel }}<sc-if value="{{ hasCount }}" hint-placeholder-val=""> ({{ count }})</sc-if></span>
   </span>
 </sc-if>
 <sc-if value="{{ gallery }}" hint-placeholder-val="{{ true }}">
 <div style="display:flex;flex-direction:column;gap:16px;max-width:720px;">
   <div style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:16px;">
     <sc-for list="{{ demo }}" as="d" hint-placeholder-count="4">
-      <div style="display:flex;align-items:center;gap:14px;"><span style="display:inline-flex;align-items:center;gap:1px;"><sc-for list="{{ d.stars }}" as="st" hint-placeholder-count="5"><sc-if value="{{ st.half }}" hint-placeholder-val=""><span style="position:relative;display:inline-flex;width:16px;height:16px;"><span style="color:#D5DAE0;display:inline-flex;position:absolute;inset:0;"><dc-import name="Ikony" icon-name="star-filled" size="16" hint-size="16px,16px"></dc-import></span><span style="color:#F5A623;display:inline-flex;position:absolute;inset:0;width:50%;overflow:hidden;"><dc-import name="Ikony" icon-name="star-filled" size="16" hint-size="16px,16px"></dc-import></span></span></sc-if><sc-if value="{{ st.solid }}" hint-placeholder-val=""><span style="{{ st.style16 }}"><dc-import name="Ikony" icon-name="{{ st.icon }}" size="16" hint-size="16px,16px"></dc-import></span></sc-if></sc-for></span><span style="font-size:13px;color:#7A828C;">{{ d.label }}</span></div>
+      <div style="display:flex;align-items:center;gap:14px;"><span style="display:inline-flex;align-items:center;gap:1px;"><sc-for list="{{ d.stars }}" as="st" hint-placeholder-count="5"><sc-if value="{{ st.half }}" hint-placeholder-val=""><span style="position:relative;display:inline-flex;width:16px;height:16px;"><span style="color:#D5DAE0;display:inline-flex;position:absolute;inset:0;"><dc-import name="Ikony" icon-name="star-filled" size="16" hint-size="16px,16px"></dc-import></span><span style="color:#F5A623;display:inline-flex;position:absolute;inset:0;width:50%;overflow:hidden;"><dc-import name="Ikony" icon-name="star-filled" size="16" hint-size="16px,16px"></dc-import></span></span></sc-if><sc-if value="{{ st.solid }}" hint-placeholder-val=""><span style="{{ st.style16 }}"><dc-import name="Ikony" icon-name="{{ st.icon }}" size="16" hint-size="16px,16px"></dc-import></span></sc-if></sc-for></span><span style="font-size:13px;color:#666E78;">{{ d.label }}</span></div>
     </sc-for>
   </div>
   <div style="display:flex;flex-direction:column;gap:5px;padding:2px 4px;">
@@ -52,8 +52,9 @@
   </div>
 </div>
 </sc-if>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:720,&quot;height&quot;:220},&quot;value&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:4.5,&quot;tsType&quot;:&quot;number&quot;},&quot;count&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:23,&quot;tsType&quot;:&quot;number&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:14,&quot;tsType&quot;:&quot;number&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:720,&quot;height&quot;:220},&quot;value&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:4.5,&quot;tsType&quot;:&quot;number&quot;},&quot;count&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:23,&quot;tsType&quot;:&quot;number&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:14,&quot;tsType&quot;:&quot;number&quot;}}">
 class Component extends DCLogic {
   build(value){
     const out = [];
@@ -70,7 +71,9 @@ class Component extends DCLogic {
     const single = P.value !== undefined;
     if (single){
       const v = Math.max(0, Math.min(5, P.value||0));
-      return { single:true, gallery:false, stars:this.build(v), size:P.size||14,
+      const _num = v.toFixed(1).replace('.', ',');
+      const _lbl = 'Hodnocení ' + _num + ' z 5' + (P.count!=null ? ', ' + P.count + ' recenzí' : '');
+      return { single:true, gallery:false, stars:this.build(v), size:P.size||14, ratingLabel:_lbl, valueLabel:_num,
         hasCount: P.count!=null, count:P.count };
     }
     return { single:false, gallery:true, demo:[
@@ -79,6 +82,11 @@ class Component extends DCLogic {
     ] };
   }
 }
+
+
+// DebugBar: prop debug -> šablona
+(function(){ const rv = Component.prototype.renderVals;
+  Component.prototype.renderVals = function(){ const v = rv ? (rv.call(this) || {}) : {}; if (v.debug === undefined) v.debug = this.props.debug ?? true; return v; }; })();
 </script>
 </body>
 </html>
