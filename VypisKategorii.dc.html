@@ -53,7 +53,8 @@ class Component extends DCLogic {
       name: k.name,
       count: k.count,
       image: k.image,
-      subs: (k.subs||[]).map(s=>({ name: s.name, count: s.count, onPick: ()=>pick(k.name, s.name) })),
+      href: k.href,
+      subs: (k.subs||[]).map(s=>({ name: s.name, count: s.count, href: s.href, onPick: ()=>pick(k.name, s.name) })),
       onOpen: ()=>open(k.name)
     }));
     return { cats, showDocs: demo };

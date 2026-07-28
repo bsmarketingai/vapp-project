@@ -27,7 +27,12 @@
   /* Řádek skladovosti: styl přichází jako prop (nelze doplnit inline), proto class —
      min-width:0 dovolí zalomení textu na 2 řádky místo odstřižení. */
   .pk-av{min-width:0 !important;flex-wrap:nowrap;} .pk-av > span{min-width:0 !important;}
-  @container (max-width:380px){ .pk-buyrow{flex-direction:column;} }
+  @container (max-width:380px){ .pk-buyrow{flex-direction:column;}
+    .pk-qty{width:100%;}
+    .pk-qty > .sc-host{width:100%;}
+    .pk-qty > .sc-host > div{display:flex !important;width:100%;}
+    .pk-qty > .sc-host > div > span{flex:1;}
+  }
   .a11y-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
   .pk-title::after{content:"";position:absolute;inset:0;z-index:0;}
   .pk-title:focus-visible{outline:none;}
@@ -52,7 +57,7 @@
       <dc-import name="Cena" price-net="{{ netNum }}" price-gross="{{ grossNum }}" original="{{ originalNum }}" hint-size="120px,48px"></dc-import>
     </div>
     <div class="pk-buyrow pk-over" onClick="{{ stop }}" style="display:flex;align-items:stretch;gap:8px;">
-      <div style="flex:none;"><dc-import name="Kvantifikator" value="{{ qtyVal }}" on-change="{{ onQty }}" hint-size="120px,44px"></dc-import></div>
+      <div class="pk-qty" style="flex:none;"><dc-import name="Kvantifikator" value="{{ qtyVal }}" on-change="{{ onQty }}" hint-size="120px,44px"></dc-import></div>
       <div style="flex:1;display:flex;"><dc-import name="Tlacitko" variant="buy" size="medium" label="Koupit" full-width="true" disabled="{{ buyDisabled }}" on-click="{{ p.onBuy }}" style="width:100%;" hint-size="100%,44px"></dc-import></div>
     </div>
     <div class="pk-over" onClick="{{ stop }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;height:26px;padding-top:2px;">

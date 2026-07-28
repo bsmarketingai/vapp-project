@@ -44,7 +44,7 @@
 @media (max-width:899px){ .p-grid{grid-template-columns:repeat(2,1fr);} }
 @media (max-width:479px){ .p-grid{grid-template-columns:1fr;} }
 .sk{background:#F2F4F7;border-radius:6px;}
-@media (max-width:819px){ .sc-tiles{display:none !important;} }
+@media (max-width:819px){ .sc-tiles{display:none !important;} .sc-crumb:not(.sc-crumb-last){display:none !important;} }
 @media (min-width:820px){ .sc-rows{display:none !important;} }
 .sc-tile{transition:background .12s;}
 .sc-tile:not(.sc-tile-on):hover{background:#EFF4FB !important;}
@@ -81,13 +81,25 @@
   <main class="vp-in" style="padding-top:14px;padding-bottom:40px;">
 
     <!-- breadcrumb + title -->
-    <div style="font-size:13px;color:#666E78;margin:4px 0 6px;">Úvod <span aria-hidden="true" style="color:#B4CEEC;">›</span> <span style="font-weight:700;color:#173C70;">Náhradní díly</span></div>
-    <h1 class="pg-h1" style="margin:0;font-size:36px;font-weight:700;letter-spacing:-0.02em;color:#142F56;">Náhradní díly <span style="font-size:14px;font-weight:600;color:#666E78;">2 418 produktů</span></h1>
+    <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:13px;color:#666E78;margin:4px 0 6px;">
+      <sc-for list="{{ topCrumbs }}" as="t" hint-placeholder-count="2">
+        <span style="display:inline-flex;align-items:center;gap:6px;"><a class="a11y-i hvx2" href="{{ t.href }}" onClick="{{ t.onGo }}" style="{{ t.style }}">{{ t.name }}</a><span aria-hidden="true" style="{{ t.sepStyle }}">›</span></span>
+      </sc-for>
+    </div>
+    <h1 class="pg-h1" style="margin:0;font-size:36px;font-weight:700;letter-spacing:-0.02em;color:#142F56;">{{ pageTitle }}</h1>
+    <sc-if value="{{ inLeaf }}" hint-placeholder-val="">
+      <p style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">{{ leafDesc }}</p>
+    </sc-if>
+    <sc-if value="{{ notLeaf }}" hint-placeholder-val="{{ true }}">
     <p style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Náhradní díly na přívěsy všech značek — KNOTT, AL-KO, BPW, Jokon i Winterhoff. Tisíce dílů skladem s expedicí do 24 hodin.<sc-if value="{{ descOpen }}" hint-placeholder-val=""> Vybírejte podle výrobce nápravy, průměru brzdy nebo čísla dílu. Nabízíme kompletní sortiment od nájezdových brzd a brzdových čelistí přes ložiska, náboje a spojovací zařízení až po osvětlení, blatníky, kola a plachty. Nevíte si rady? Zkušení obchodníci vám poradí s výběrem správného dílu po telefonu i e-mailu.</sc-if>
     <button type="button" class="a11y-i pt-hit" onClick="{{ toggleDesc }}" style="font-size:16px;font-weight:700;color:#1E5AA8;cursor:pointer;text-decoration:underline;margin-left:6px;white-space:nowrap;">{{ descLabel }}</button></p>
+    </sc-if>
 
     <!-- ===== KATEGORIE (Datart/Alza drill-down) ===== -->
     <div style="margin-top:16px;">
+      <sc-if value="{{ showBackLink }}" hint-placeholder-val="">
+        <a class="a11y-i hvx2" href="{{ backFromLeafHref }}" onClick="{{ backFromLeaf }}" style="display:inline-flex;align-items:center;gap:6px;min-height:36px;font-size:14px;font-weight:700;color:#1E5AA8;cursor:pointer;"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>{{ backFromLeafLabel }}</a>
+      </sc-if>
       <sc-if value="{{ inGroups }}" hint-placeholder-val="{{ true }}">
       <dc-import name="VypisKategorii" categories="{{ categoriesData }}" on-open-category="{{ onOpenCategory }}" on-pick-sub="{{ onPickSub }}" debug="{{ debug }}" hint-size="100%,500px"></dc-import>
       </sc-if>
@@ -95,26 +107,25 @@
         <div style="background:#fff;border-radius:8px;overflow:hidden;">
           <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid #F2F4F7;background:#EFF4FB;">
             <button type="button" class="a11y-i" onClick="{{ backToGroups }}" style="display:inline-flex;align-items:center;gap:6px;min-height:34px;font-size:13px;font-weight:700;color:#1E5AA8;cursor:pointer;padding:0 10px 0 4px;"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>Zpět</button>
-            <h2 style="margin:0;font-size:14px;font-weight:700;color:#142F56;">{{ activeGroupName }}</h2>
-            <span style="font-size:13px;color:#666E78;">{{ activeGroupCount }} produktů</span>
+            <span style="font-size:13px;color:#666E78;margin-left:auto;">{{ activeGroupCount }} produktů</span>
           </div>
           <div class="sc-rows">
           <sc-for list="{{ subcats }}" as="s" hint-placeholder-count="5">
-            <button type="button" class="a11y-i" onClick="{{ s.onPick }}" style="{{ s.style }}">
+            <a class="a11y-i" href="{{ s.href }}" onClick="{{ s.onPick }}" style="{{ s.style }}">
               <span style="{{ s.nameStyle }}">{{ s.name }}</span>
               <span style="display:flex;align-items:center;gap:8px;"><span style="font-size:13px;color:#666E78;">{{ s.count }}</span><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#84AEDF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></span>
-            </button>
+            </a>
           </sc-for>
           </div>
           <div class="sc-tiles" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;padding:16px;">
             <sc-for list="{{ subcats }}" as="s" hint-placeholder-count="6">
-              <button type="button" class="a11y-i sc-tile {{ s.tileCls }}" onClick="{{ s.onPick }}" style="{{ s.tileStyle }}">
+              <a class="a11y-i sc-tile {{ s.tileCls }}" href="{{ s.href }}" onClick="{{ s.onPick }}" style="{{ s.tileStyle }}">
                 <span style="flex:none;width:48px;height:48px;background:#FFFFFF;border-radius:6px;"></span>
                 <span style="flex:1;min-width:0;display:flex;flex-direction:column;">
                   <span style="{{ s.tileNameStyle }}">{{ s.name }}</span>
                   <span style="font-size:13px;font-weight:400;color:#666E78;">{{ s.countText }}</span>
                 </span>
-              </button>
+              </a>
             </sc-for>
           </div>
         </div>
@@ -253,6 +264,7 @@ class Component extends DCLogic {
   openPanel(){ this.setState({filterOpen:true}); }
   closePanel(){ this.setState({filterOpen:false}); }
   componentDidUpdate(prevProps, prevState){
+    if (prevState && (prevState.view !== this.state.view || prevState.path !== this.state.path || prevState.leafPath !== this.state.leafPath)) this.syncJsonLd();
     const was = prevState && prevState.filterOpen, now = this.state.filterOpen;
     if (was === now) return;
     this.lockScroll(!!now);
@@ -263,7 +275,7 @@ class Component extends DCLogic {
     super(props);
     this.state = {
       menuOpen:false, descOpen:false, filterOpen:false, sortOpen:false,
-      view:'groups', subcat:null, onlyStock: props.defaultOnlyStock ?? false, sort: props.defaultSort ?? 'pop',
+      view:'groups', path:[], leafPath:null, subcat:null, onlyStock: props.defaultOnlyStock ?? false, sort: props.defaultSort ?? 'pop',
       brands:{}, params:{}, accOpen:{ 'Výrobce':true }, compare:{}, qty:{}, shown:15, hoverCard:null,
       searchQ:'', searchFocus:false, loading:false
     };
@@ -286,12 +298,64 @@ class Component extends DCLogic {
   norm(x){ return x.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
 
   GROUPS = [
-    { key:'napravy', image:'uploads/napravy-a-brzdy.jpg', name:'Nápravy a brzdy', preview:'Nájezdové brzdy, čelisti…', count:612, subs:[['Nájezdové brzdy',94],['Brzdové čelisti a obložení',188],['Nápravy',76],['Náboje kol',102],['Ložiska a gufera',152]] },
-    { key:'spojovaci', image:'uploads/spojovaci-zarizeni.jpg', name:'Spojovací zařízení', preview:'Kulové spojky, oje…', count:388, subs:[['Kulové spojky',121],['Kloubové spojky',44],['Oje a příčníky',59],['Zabezpečení proti krádeži',86],['Opěrná kolečka',78]] },
-    { key:'elektro', image:'uploads/elektro-a-osvetleni.jpg', name:'Elektro a osvětlení', preview:'Světla, kabeláž, zástrčky…', count:474, subs:[['Zadní světla',146],['Poziční a obrysová světla',98],['Kabeláž a zásuvky',114],['Odrazky',66],['Osvětlení SPZ',50]] },
-    { key:'kola', image:'uploads/kola-a-pneumatiky.jpg', name:'Kola a pneumatiky', preview:'Pneu, disky, šrouby…', count:296, subs:[['Pneumatiky s diskem',108],['Samostatné disky',64],['Pneumatiky',82],['Šrouby a matice kol',42]] },
-    { key:'karoserie', image:'uploads/blatniky-a-karoserie.jpg', name:'Blatníky a karoserie', preview:'Blatníky, bočnice, podlahy…', count:412, subs:[['Blatníky',134],['Bočnice a sloupky',88],['Podlahy',52],['Plachty a konstrukce',96],['Panty a zámky bočnic',42]] },
-    { key:'upinani', image:'uploads/navijaky-a-kladky.jpg', name:'Upínání a doplňky', preview:'Navijáky, pásy, podpěry…', count:236, subs:[['Navijáky a kladky',58],['Upínací pásy',72],['Podpěrné nohy',48],['Plynové vzpěry',58]] },
+    { key:'napravy', image:'uploads/napravy-a-brzdy.jpg', name:'Nápravy a brzdy', preview:'Nájezdové brzdy, čelisti…', count:612, children:[
+      { name:'Nájezdové brzdy', count:94, children:[
+        { name:'KNOTT', count:52, children:[ { name:'KF 7', count:12 }, { name:'KF 13', count:18 }, { name:'KF 17', count:14 }, { name:'KF 20', count:8 } ] },
+        { name:'AL-KO', count:31, children:[ { name:'AE 1350', count:11 }, { name:'AE 2700', count:12 }, { name:'AE 3500', count:8 } ] },
+        { name:'BPW', count:11 }
+      ] },
+      { name:'Brzdové čelisti a obložení', count:188, children:[
+        { name:'KNOTT', count:96, children:[ { name:'160×35', count:22 }, { name:'200×50', count:38 }, { name:'250×40', count:36 } ] },
+        { name:'AL-KO', count:64, children:[ { name:'160×35', count:18 }, { name:'200×50', count:26 }, { name:'230×60', count:20 } ] },
+        { name:'Obložení a nýty', count:28 }
+      ] },
+      { name:'Nápravy', count:76, children:[
+        { name:'Nebrzděné', count:34 },
+        { name:'Brzděné', count:42, children:[ { name:'do 750 kg', count:12 }, { name:'750–1350 kg', count:18 }, { name:'nad 1350 kg', count:12 } ] }
+      ] },
+      { name:'Náboje kol', count:102, children:[ { name:'4×100', count:38 }, { name:'5×112', count:44 }, { name:'6×205', count:20 } ] },
+      { name:'Ložiska a gufera', count:152 }
+    ] },
+    { key:'spojovaci', image:'uploads/spojovaci-zarizeni.jpg', name:'Spojovací zařízení', preview:'Kulové spojky, oje…', count:388, children:[
+      { name:'Kulové spojky', count:121, children:[
+        { name:'KNOTT', count:58, children:[ { name:'do 750 kg', count:20 }, { name:'750–1600 kg', count:24 }, { name:'nad 1600 kg', count:14 } ] },
+        { name:'AL-KO', count:47, children:[ { name:'AK 7', count:16 }, { name:'AK 160', count:18 }, { name:'AK 300', count:13 } ] },
+        { name:'Winterhoff', count:16 }
+      ] },
+      { name:'Kloubové spojky', count:44 },
+      { name:'Oje a příčníky', count:59, children:[ { name:'Trubkové oje', count:24 }, { name:'V-oje', count:21 }, { name:'Příčníky', count:14 } ] },
+      { name:'Zabezpečení proti krádeži', count:86, children:[ { name:'Zámky spojek', count:44 }, { name:'Kotevní body', count:22 }, { name:'Kolové zámky', count:20 } ] },
+      { name:'Opěrná kolečka', count:78 }
+    ] },
+    { key:'elektro', image:'uploads/elektro-a-osvetleni.jpg', name:'Elektro a osvětlení', preview:'Světla, kabeláž, zástrčky…', count:474, children:[
+      { name:'Zadní světla', count:146, children:[
+        { name:'LED', count:82, children:[ { name:'Jokon', count:34 }, { name:'Aspöck', count:28 }, { name:'Fristom', count:20 } ] },
+        { name:'Žárovkové', count:64, children:[ { name:'Jokon', count:30 }, { name:'Aspöck', count:34 } ] }
+      ] },
+      { name:'Poziční a obrysová světla', count:98, children:[ { name:'Bílé', count:36 }, { name:'Oranžové', count:34 }, { name:'Červené', count:28 } ] },
+      { name:'Kabeláž a zásuvky', count:114, children:[ { name:'Zásuvky 7pin', count:38 }, { name:'Zásuvky 13pin', count:34 }, { name:'Adaptéry', count:22 }, { name:'Kabely a svazky', count:20 } ] },
+      { name:'Odrazky', count:66 },
+      { name:'Osvětlení SPZ', count:50 }
+    ] },
+    { key:'kola', image:'uploads/kola-a-pneumatiky.jpg', name:'Kola a pneumatiky', preview:'Pneu, disky, šrouby…', count:296, children:[
+      { name:'Pneumatiky s diskem', count:108, children:[ { name:'8"', count:22 }, { name:'10"', count:26 }, { name:'13"', count:38 }, { name:'14"', count:22 } ] },
+      { name:'Samostatné disky', count:64, children:[ { name:'4×100', count:30 }, { name:'5×112', count:34 } ] },
+      { name:'Pneumatiky', count:82 },
+      { name:'Šrouby a matice kol', count:42 }
+    ] },
+    { key:'karoserie', image:'uploads/blatniky-a-karoserie.jpg', name:'Blatníky a karoserie', preview:'Blatníky, bočnice, podlahy…', count:412, children:[
+      { name:'Blatníky', count:134, children:[ { name:'Jednoosé', count:62 }, { name:'Tandemové', count:48 }, { name:'Lemy a gumy', count:24 } ] },
+      { name:'Bočnice a sloupky', count:88 },
+      { name:'Podlahy', count:52 },
+      { name:'Plachty a konstrukce', count:96, children:[ { name:'Plachty', count:54 }, { name:'Konstrukce', count:42 } ] },
+      { name:'Panty a zámky bočnic', count:42 }
+    ] },
+    { key:'upinani', image:'uploads/navijaky-a-kladky.jpg', name:'Upínání a doplňky', preview:'Navijáky, pásy, podpěry…', count:236, children:[
+      { name:'Navijáky a kladky', count:58, children:[ { name:'Ruční navijáky', count:32 }, { name:'Kladky a lana', count:26 } ] },
+      { name:'Upínací pásy', count:72, children:[ { name:'do 800 daN', count:28 }, { name:'800–2000 daN', count:26 }, { name:'nad 2000 daN', count:18 } ] },
+      { name:'Podpěrné nohy', count:48 },
+      { name:'Plynové vzpěry', count:58 }
+    ] },
   ];
 
   PRODUCTS = [
@@ -380,9 +444,59 @@ class Component extends DCLogic {
     };
     window.addEventListener('scroll', this._onScroll, { passive:true });
     this._onScroll();
+    this._onHash = ()=>this.routeFromUrl();
+    window.addEventListener('hashchange', this._onHash);
+    window.addEventListener('popstate', this._onHash);
+    this.routeFromUrl();
+    this.syncJsonLd();
   }
+
+  link(fn){ return (e)=>{ if(e&&e.preventDefault) e.preventDefault(); fn(); }; }
+
+  slug(x){ return String(x).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''); }
+
+  urlFor(catKey, path){
+    const segs = ['nahradni-dily'];
+    const g = this.GROUPS.find(x=>x.key===catKey);
+    if(g) segs.push(this.slug(g.name));
+    (path||[]).forEach(n=>segs.push(this.slug(n)));
+    return '#/'+segs.join('/')+'/';
+  }
+
+  go(patch, url){ this.setState(patch); if(url && location.hash!==url){ try{ history.pushState(null,'',url); }catch(e){ location.hash = url.slice(1); } } }
+
+  routeFromUrl(){
+    const raw = (location.hash||'').replace(/^#\/?/,'').replace(/\/+$/,'');
+    const parts = raw ? raw.split('/') : [];
+    if(parts[0] !== 'nahradni-dily' || parts.length < 2){ this.setState({ view:'groups', path:[], leafPath:null, subcat:null }); return; }
+    const g = this.GROUPS.find(x=>this.slug(x.name)===parts[1]);
+    if(!g){ this.setState({ view:'groups', path:[], leafPath:null, subcat:null }); return; }
+    let node = g, path = [];
+    for(const seg of parts.slice(2)){
+      const c = (node.children||[]).find(x=>this.slug(x.name)===seg);
+      if(!c) break;
+      node = c; path.push(c.name);
+    }
+    this.setState({ view:g.key, path: path, leafPath:null, subcat:null, subcatGroup:g.key, shown:15 });
+  }
+
+  /* Demonstrace: BreadcrumbList schema se drží aktuální cesty (data z renderVals). */
+  syncJsonLd(){
+    try{
+      const bc = this._bc || [];
+      if(!bc.length) return;
+      const base = location.origin + location.pathname;
+      const items = bc.map((c,i)=>({ '@type':'ListItem', position:i+1, name:c.name, item: base + c.url }));
+      let el = document.getElementById('vapp-breadcrumb-jsonld');
+      if(!el){ el = document.createElement('script'); el.type='application/ld+json'; el.id='vapp-breadcrumb-jsonld'; document.head.appendChild(el); }
+      el.textContent = JSON.stringify({ '@context':'https://schema.org', '@type':'BreadcrumbList', itemListElement: items });
+    }catch(e){}
+  }
+
+
   componentWillUnmount(){
     window.removeEventListener('scroll', this._onScroll);
+    if (this._onHash){ window.removeEventListener('hashchange', this._onHash); window.removeEventListener('popstate', this._onHash); }
     if (this._onKey) document.removeEventListener('keydown', this._onKey, true);
     this.lockScroll(false);
     const hdr = document.querySelector('.hd-root'); if (hdr) hdr.style.transform = '';
@@ -431,31 +545,71 @@ class Component extends DCLogic {
 
     const groups = this.GROUPS.map(g=>({
       name:g.name, count:g.count, preview:g.preview,
-      subs: g.subs.slice(0,4).map(([n])=>({ name:n, onPick:()=>this.setState({ view:g.key, subcat:n, subcatGroup:g.key, shown:15 }) })),
-      onOpen:()=>this.setState({ view:g.key, subcat:null, shown:15 }),
+      subs: (g.children||[]).slice(0,4).map(c=>({ name:c.name, onPick:()=>onPickSub(g.name, c.name) })),
+      onOpen:()=>this.setState({ view:g.key, path:[], subcat:null, shown:15 }),
     }));
 
     const categoriesData = this.GROUPS.map(g=>({
-      name:g.name, count:g.count, image:g.image,
-      subs: g.subs.slice(0,4).map(([n,c])=>({ name:n, count:c }))
+      name:g.name, count:g.count, image:g.image, href:this.urlFor(g.key,[]),
+      subs: (g.children||[]).slice(0,4).map(c=>({ name:c.name, count:c.count, href:this.urlFor(g.key,[c.name]) }))
     }));
-    const onOpenCategory = (name)=>{ const g = this.GROUPS.find(x=>x.name===name); if(g) this.setState({ view:g.key, subcat:null, shown:15 }); };
-    const onPickSub = (catName, subName)=>{ const g = this.GROUPS.find(x=>x.name===catName); if(g) this.setState({ view:g.key, subcat:subName, subcatGroup:g.key, shown:15 }); };
+    const onOpenCategory = (name)=>{ const g = this.GROUPS.find(x=>x.name===name); if(g) this.go({ view:g.key, path:[], leafPath:null, subcat:null, shown:15 }, this.urlFor(g.key,[])); };
+    const onPickSub = (catName, subName)=>{ const g = this.GROUPS.find(x=>x.name===catName); if(!g) return;
+      this.go({ view:g.key, path:[subName], leafPath:null, subcat:null, subcatGroup:g.key, shown:15 }, this.urlFor(g.key,[subName]));
+    };
 
     const ag = this.GROUPS.find(g=>g.key===s.view);
-    const subcats = ag ? ag.subs.map(([n,c])=>{
-      const on = s.subcat===n;
+    const leafPath = null;
+    const inLeaf = false;
+    const path = s.path || [];
+    const nodeAt = (g, p)=>{ let n = g; for(const nm of p){ const c = (n.children||[]).find(x=>x.name===nm); if(!c) break; n = c; } return n; };
+    const curNode = ag ? nodeAt(ag, path) : null;
+    const inCat = !!ag;
+    const curName = curNode ? curNode.name : '';
+    const hasKids = !!(curNode && curNode.children && curNode.children.length);
+    const crumbs = ag ? [ag.name].concat(path).map((nm, i, arr)=>{
+      const last = i === arr.length-1;
       return {
-        name:n, count:c, countText: c+' produktů',
-        onPick:()=>this.setState({ subcat:on?null:n, subcatGroup:g_key(ag), shown:15 }),
+        name: nm,
+        onGo: this.link(()=>this.go({ path: path.slice(0, i), leafPath:null, subcat:null, shown:15 }, this.urlFor(ag.key, path.slice(0, i)))),
+        href: this.urlFor(ag.key, path.slice(0, i)),
+        style: 'font-size:14px;font-weight:700;color:'+(last?'#142F56':'#1E5AA8')+';cursor:'+(last?'default':'pointer')+';',
+        sepStyle: last ? 'display:none;' : 'font-size:14px;color:#B4CEEC;',
+        crumbCls: last ? 'sc-crumb-last' : ''
+      };
+    }) : [];
+    const subcats = curNode ? (curNode.children||[]).map(c=>{
+      const on = false;
+      return {
+        name:c.name, count:c.count, countText: c.count+' produktů',
+        href: this.urlFor(ag.key, path.concat([c.name])),
+        onPick: this.link(()=>this.go({ path: path.concat([c.name]), leafPath:null, subcat:null, subcatGroup:ag.key, shown:15 }, this.urlFor(ag.key, path.concat([c.name])))),
         style:'width:100%;display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:0 16px;border-bottom:1px solid #F2F4F7;cursor:pointer;'+(on?'background:#EFF4FB;':''),
         nameStyle:'font-size:14px;font-weight:'+(on?'700':'600')+';color:'+(on?'#1E5AA8':'#15181C')+';',
         tileStyle:'width:100%;min-height:72px;display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;cursor:pointer;text-align:left;background:'+(on?'#D8E6F6':'#F2F4F7')+';',
         tileNameStyle:'font-size:14px;font-weight:'+(on?'700':'600')+';color:'+(on?'#1E5AA8':'#15181C')+';',
-        tileCls: on?'sc-tile-on':'',
+        tileCls: on?'sc-tile-on':''
       };
     }) : [];
-    function g_key(g){ return g.key; }
+    const leafNode = inLeaf ? nodeAt(ag, leafPath) : null;
+    const topRaw = [
+      { name:'Úvod', url:'#/', go:()=>this.go({ view:'groups', path:[], leafPath:null, subcat:null, shown:15 }, '#/') },
+      { name:'Náhradní díly', url:'#/nahradni-dily/', go:()=>this.go({ view:'groups', path:[], leafPath:null, subcat:null, shown:15 }, '#/nahradni-dily/') }
+    ];
+    if(ag){
+      topRaw.push({ name:ag.name, url:this.urlFor(ag.key,[]), go:()=>this.go({ view:ag.key, path:[], leafPath:null, subcat:null, shown:15 }, this.urlFor(ag.key,[])) });
+      const pp = inLeaf ? leafPath : path;
+      pp.forEach((nm,i)=>topRaw.push({ name:nm, url:this.urlFor(ag.key, pp.slice(0,i+1)),
+        go:()=>this.go({ view:ag.key, path:pp.slice(0,i+1), leafPath:null, subcat:null, shown:15 }, this.urlFor(ag.key, pp.slice(0,i+1))) }));
+    }
+    this._bc = topRaw.map(c=>({ name:c.name, url:c.url }));
+    if(typeof queueMicrotask==='function') queueMicrotask(()=>this.syncJsonLd()); else setTimeout(()=>this.syncJsonLd(),0);
+    const topCrumbs = topRaw.map((c,i,arr)=>{
+      const last = i===arr.length-1;
+      return { name:c.name, onGo:this.link(c.go), href:c.url,
+        style:'font-size:13px;font-weight:'+(last?'700':'400')+';color:'+(last?'#173C70':'#666E78')+';cursor:'+(last?'default':'pointer')+';',
+        sepStyle: last ? 'display:none;' : 'color:#B4CEEC;' };
+    });
 
     const activeBrandN = Object.keys(s.brands).filter(b=>s.brands[b]).length;
     const filterCount = activeBrandN + (s.onlyStock?1:0);
@@ -515,11 +669,20 @@ class Component extends DCLogic {
       ],
       descOpen:s.descOpen, toggleDesc:()=>this.setState({descOpen:!s.descOpen}),
       descLabel: s.descOpen ? 'Skrýt celý popis' : 'Zobrazit celý popis',
-      inGroups: s.view==='groups', inSubcats: s.view!=='groups',
+      inGroups: s.view==='groups', inSubcats: s.view!=='groups' && hasKids,
+      inLeaf: inCat, notLeaf: !inCat,
+      pageTitle: inCat ? curName : 'Náhradní díly',
+      pageCountText: inCat ? (resultCount.toLocaleString('cs-CZ')+' produktů') : '2 418 produktů',
+      leafDesc: inCat ? (curName+' — '+(path.length ? ('podkategorie '+(path.length>1?path[path.length-2]:ag.name)) : 'kategorie náhradních dílů')+' pro přívěsy všech značek. '+resultCount.toLocaleString('cs-CZ')+' položek skladem i na dotaz, expedice do 24 hodin. '+(hasKids?'Vyberte si přesnější zařazení níže, nebo procházejte celý výpis.':'Nevíte si rady s výběrem? Zavolejte nám.')) : '',
+      topCrumbs,
+      backFromLeaf: this.link(()=>{ if(path.length>0) this.go({ path: path.slice(0,-1), leafPath:null, subcat:null, shown:15 }, this.urlFor(ag.key, path.slice(0,-1))); else this.go({ view:'groups', path:[], leafPath:null, subcat:null, shown:15 }, '#/nahradni-dily/'); }),
+      backFromLeafHref: ag ? (path.length>0 ? this.urlFor(ag.key, path.slice(0,-1)) : '#/nahradni-dily/') : '#/nahradni-dily/',
+      backFromLeafLabel: inCat ? ('Zpět na '+(path.length>1 ? path[path.length-2] : (path.length===1 ? ag.name : 'Náhradní díly'))) : '',
+      showBackLink: inCat && !hasKids,
       groups, subcats, categoriesData, onOpenCategory, onPickSub,
-      activeGroupName: ag?ag.name:'', activeGroupCount: ag?ag.count:'',
-      backToGroups:()=>this.setState({ view:'groups', subcat:null, shown:15 }),
-      activeSubcat: s.subcat, clearSubcat:()=>this.setState({ subcat:null, shown:15 }),
+      activeGroupName: ag?ag.name:'', activeGroupCount: curNode?curNode.count:'', crumbs,
+      backToGroups:()=>{ if(path.length) this.go({ path: path.slice(0,-1), leafPath:null, subcat:null, shown:15 }, this.urlFor(ag.key, path.slice(0,-1))); else this.go({ view:'groups', path:[], leafPath:null, subcat:null, shown:15 }, '#/nahradni-dily/'); },
+      activeSubcat: null, clearSubcat:()=>this.setState({ subcat:null, shown:15 }),
       filterOpen:s.filterOpen, openFilter:()=>this.setState({filterOpen:true}), closeFilter:()=>this.setState({filterOpen:false}),
       filterCount: filterCount||'',
       anyFilter: filterCount>0,
