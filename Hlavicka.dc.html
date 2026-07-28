@@ -119,7 +119,8 @@ class Component extends DCLogic {
     const infoLinks = P.infoLinks || ['Doprava a platba','Obchodní podmínky','O nás','Kontakty'];
     const tabs = labels.map(label=>{
       const on = label === active;
-      return { label, cls: 'hd-tab hd-i', current: on ? 'page' : undefined,
+      return {
+        label, cls: 'hd-tab hd-i', current: on ? 'page' : undefined,
         onClick: (e)=>{ if(e&&e.preventDefault) e.preventDefault(); if(onTab) onTab(label); },
         style:'display:flex;align-items:center;align-self:stretch;font-size:18px;font-weight:700;padding:13px 2px;cursor:pointer;border-bottom:3px solid '+(on?'#1E5AA8':'transparent')+';color:'+(on?'#1E5AA8':'#3A424C')+';' };
     });
