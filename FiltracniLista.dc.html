@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  .fl-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
+  .fl-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  @media (max-width:599px){ .fl-stock{display:none !important;} }
+  a{color:#15181C;} a:hover{color:#1E5AA8;}
+</style>
+</helmet>
+<div style="display:flex;gap:8px;max-width:1560px;margin:0 auto;">
+  <button type="button" class="fl-i" id="pf-open" onClick="{{ onOpenFilter }}" style="flex:1;max-width:220px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;font-size:14px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;cursor:pointer;"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>Filtry<sc-if value="{{ filterCountText }}" hint-placeholder-val=""><span style="background:#C5232B;border-radius:999px;font-size:13px;padding:2px 8px;">{{ filterCountText }}</span></sc-if></button>
+  <button type="button" class="fl-i fl-stock" aria-pressed="{{ stockPressed }}" onClick="{{ onToggleStock }}" style="{{ stockBtnStyle }}"><span style="{{ stockBoxStyle }}">{{ stockCheck }}</span>Skladem</button>
+  <div style="position:relative;flex:none;max-width:260px;min-width:0;margin-left:auto;">
+    <button type="button" class="fl-i" aria-expanded="{{ sortExpanded }}" onClick="{{ toggleSort }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;font-size:14px;font-weight:700;color:#15181C;background:#F2F4F7;border-radius:6px;cursor:pointer;padding:0 14px;">{{ sortLabel }} <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#84AEDF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></button>
+    <sc-if value="{{ sortOpen }}" hint-placeholder-val="">
+      <div style="position:absolute;top:calc(100% + 6px);right:0;min-width:100%;white-space:nowrap;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);overflow:hidden;z-index:50;">
+        <sc-for list="{{ sortOpts }}" as="o" hint-placeholder-count="4"><button type="button" class="fl-i" onClick="{{ o.onPick }}" style="{{ o.style }}">{{ o.t }}</button></sc-for>
+      </div>
+    </sc-if>
+  </div>
+</div>
+<sc-if value="{{ standalone }}" hint-placeholder-val="{{ true }}">
+  <div style="padding:24px 16px;display:flex;flex-direction:column;gap:5px;">
+    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> lišta nad výpisem produktů — tlačítko Filtry (s počtem aktivních filtrů), rychlý přepínač Skladem a dropdown řazení. Stav řazení (otevřeno/zavřeno) drží komponenta, vybraná hodnota přichází z props.</div>
+    <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nedávat sem sticky pozicování, sentinel ani logiku vytlačování hlavičky — to patří obalu na stránce. Samotný drawer filtrů také ne, ten je stále na stránce.</div>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:900,&quot;height&quot;:220},&quot;filterCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0,&quot;max&quot;:9},&quot;onlyStock&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;sort&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;pop&quot;,&quot;options&quot;:[&quot;pop&quot;,&quot;cheap&quot;,&quot;exp&quot;,&quot;az&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;sortOptions&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;,&quot;default&quot;:null},&quot;onOpenFilter&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onToggleStock&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onSortChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null}}">
+const DEFAULT_SORTS = [
+  { key:'pop', label:'Nejoblíbenější' },
+  { key:'cheap', label:'Od nejlevnějšího' },
+  { key:'exp', label:'Od nejdražšího' },
+  { key:'az', label:'Podle názvu A–Z' },
+];
+
+class Component extends DCLogic {
+  state = { sortOpen:false };
+  renderVals(){
+    const P = this.props;
+    const embedded = typeof P.onOpenFilter === 'function' || typeof P.onSortChange === 'function';
+    const opts = Array.isArray(P.sortOptions) && P.sortOptions.length ? P.sortOptions : DEFAULT_SORTS;
+    const sort = P.sort || opts[0].key;
+    const onSortChange = P.onSortChange || (()=>{});
+    const onlyStock = (P.onlyStock ?? false) !== false;
+    const count = Number(P.filterCount || 0);
+    return {
+      standalone: !embedded,
+      onOpenFilter: P.onOpenFilter || (()=>{}),
+      onToggleStock: P.onToggleStock || (()=>{}),
+      filterCountText: count > 0 ? String(count) : '',
+      stockPressed: onlyStock ? 'true' : 'false',
+      stockBtnStyle:'display:flex;align-items:center;gap:9px;min-height:44px;padding:0 6px;font-size:13px;font-weight:700;cursor:pointer;user-select:none;color:'+(onlyStock?'#0B6937;':'#3A424C;'),
+      stockBoxStyle:'flex:none;width:21px;height:21px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;'+(onlyStock?'background:#0E7F43;color:#fff;border:1px solid #0E7F43;':'background:#fff;color:transparent;border:1px solid #91959B;'),
+      stockCheck: onlyStock ? '✓' : '',
+      sortOpen: this.state.sortOpen,
+      sortExpanded: this.state.sortOpen ? 'true' : 'false',
+      toggleSort: ()=>this.setState(s=>({ sortOpen: !s.sortOpen })),
+      sortLabel: (opts.find(o=>o.key===sort) || opts[0]).label,
+      sortOpts: opts.map(o=>({
+        t:o.label,
+        onPick:()=>{ this.setState({ sortOpen:false }); onSortChange(o.key); },
+        style:'display:flex;align-items:center;min-height:44px;padding:0 14px;font-size:14px;cursor:pointer;font-weight:'+(sort===o.key?'700':'600')+';color:'+(sort===o.key?'#1E5AA8':'#3A424C')+';'+(sort===o.key?'background:#EFF4FB;':''),
+      })),
+    };
+  }
+}
+</script>
+</body>
+</html>

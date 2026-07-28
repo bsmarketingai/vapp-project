@@ -35,6 +35,11 @@
   .wf-img2{background:repeating-linear-gradient(-45deg,#D8E6F6,#D8E6F6 11px,#CFDFF2 11px,#CFDFF2 22px);}
   @keyframes vapp-led{0%{box-shadow:0 0 0 0 var(--led);}70%{box-shadow:0 0 0 7px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
   .vapp-led{border-radius:999px;animation:vapp-led 1.8s ease-out infinite;}
+  @keyframes pf-in{from{transform:translateX(100%);}to{transform:none;}}
+  @keyframes pf-out{from{transform:none;}to{transform:translateX(100%);}}
+  @keyframes pf-fade-in{from{opacity:0;}to{opacity:1;}}
+  @keyframes pf-fade-out{from{opacity:1;}to{opacity:0;}}
+  @media (prefers-reduced-motion:reduce){#pf-panel,#pf-overlay{animation:none !important;}}
   @media (max-width:899px){ .dt{display:none !important;} .pg-h1{font-size:26px !important;} }
   @media (max-width:999px){ .pg-lead{font-size:14px !important;} }
   @media (min-width:900px){ .mb{display:none !important;} }
@@ -148,18 +153,7 @@
          Logika vytlačování hlavičky je v componentDidMount → this._onScroll. -->
     <div class="p-sentinel" style="height:0;"></div>
     <div class="vp-bleed p-sticky" style="position:sticky;top:0;z-index:60;background:#F7F9FB;margin-top:14px;padding-top:14px;padding-bottom:14px;border-bottom:1px solid #F2F4F7;">
-      <div style="display:flex;gap:8px;max-width:1560px;margin:0 auto;">
-        <button type="button" class="a11y-i" id="pf-open" onClick="{{ openFilter }}" style="flex:1;max-width:220px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;font-size:14px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;cursor:pointer;"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>Filtry<sc-if value="{{ filterCount }}" hint-placeholder-val=""><span style="background:#C5232B;border-radius:999px;font-size:13px;padding:2px 8px;">{{ filterCount }}</span></sc-if></button>
-        <button type="button" class="a11y-i" aria-pressed="{{ stockPressed }}" onClick="{{ toggleStock }}" style="{{ stockBtnStyle }}"><span style="{{ stockBoxStyle }}">{{ stockCheck }}</span>Skladem</button>
-        <div style="position:relative;flex:1;max-width:260px;margin-left:auto;">
-          <button type="button" class="a11y-i" aria-expanded="{{ sortExpanded }}" onClick="{{ toggleSort }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;font-size:14px;font-weight:700;color:#15181C;background:#F2F4F7;border-radius:6px;cursor:pointer;padding:0 14px;">{{ sortLabel }} <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#84AEDF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></button>
-          <sc-if value="{{ sortOpen }}" hint-placeholder-val="">
-            <div style="position:absolute;top:calc(100% + 6px);right:0;left:0;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);overflow:hidden;z-index:50;">
-              <sc-for list="{{ sortOpts }}" as="o" hint-placeholder-count="4"><button type="button" class="a11y-i" onClick="{{ o.onPick }}" style="{{ o.style }}">{{ o.t }}</button></sc-for>
-            </div>
-          </sc-if>
-        </div>
-      </div>
+      <dc-import name="FiltracniLista" filter-count="{{ filterCount }}" only-stock="{{ onlyStock }}" sort="{{ sortKey }}" sort-options="{{ sortOptions }}" on-open-filter="{{ openFilter }}" on-toggle-stock="{{ toggleStock }}" on-sort-change="{{ onSortChange }}" style="width:100%;" hint-size="100%,44px"></dc-import>
     </div>
 
     <!-- ===== PRODUKTY ===== -->
@@ -223,9 +217,9 @@
   </div>
 
   <!-- FILTER PANEL -->
-  <sc-if value="{{ filterOpen }}" hint-placeholder-val="">
-    <div onClick="{{ closeFilter }}" aria-hidden="true" style="position:fixed;inset:0;background:rgba(20,30,45,.45);z-index:80;"></div>
-    <div id="pf-panel" role="dialog" aria-modal="true" aria-label="Filtry" tabindex="-1" style="position:fixed;top:0;right:0;bottom:0;width:min(400px,92vw);background:#fff;z-index:90;display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(20,30,45,.2);">
+  <sc-if value="{{ filterMounted }}" hint-placeholder-val="">
+    <div id="pf-overlay" onClick="{{ closeFilter }}" aria-hidden="true" style="position:fixed;inset:0;background:rgba(20,30,45,.45);z-index:80;animation:{{ pfFade }};"></div>
+    <div id="pf-panel" role="dialog" aria-modal="true" aria-label="Filtry" tabindex="-1" style="position:fixed;top:0;right:0;bottom:0;width:min(400px,92vw);background:#fff;z-index:90;display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(20,30,45,.2);animation:{{ pfAnim }};">
       <div style="display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid #F2F4F7;">
         <h2 id="pf-title" style="margin:0;font-size:16px;font-weight:700;color:#142F56;">Filtry</h2>
         <button type="button" class="a11y-i" aria-label="Zavřít filtry" onClick="{{ closeFilter }}" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:#5A626C;cursor:pointer;background:#F2F4F7;border-radius:8px;"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
@@ -263,7 +257,12 @@
 class Component extends DCLogic {
   lockScroll(on){ try{ document.body.style.overflow = on ? 'hidden' : ''; }catch(e){} }
   openPanel(){ this.setState({filterOpen:true}); }
-  closePanel(){ this.setState({filterOpen:false}); }
+  closePanel(){
+    if(!this.state.filterOpen) return;
+    this.setState({ filterOpen:false, filterClosing:true });
+    clearTimeout(this._pfT);
+    this._pfT = setTimeout(()=>this.setState({ filterClosing:false }), 500);
+  }
   componentDidUpdate(prevProps, prevState){
     if (prevState && (prevState.view !== this.state.view || prevState.path !== this.state.path || prevState.leafPath !== this.state.leafPath)) this.syncJsonLd();
     const was = prevState && prevState.filterOpen, now = this.state.filterOpen;
@@ -275,7 +274,7 @@ class Component extends DCLogic {
   constructor(props){
     super(props);
     this.state = {
-      menuOpen:false, descOpen:false, filterOpen:false, sortOpen:false,
+      menuOpen:false, descOpen:false, filterOpen:false, filterClosing:false, sortOpen:false,
       view:'groups', path:[], leafPath:null, subcat:null, onlyStock: props.defaultOnlyStock ?? false, sort: props.defaultSort ?? 'pop',
       brands:{}, params:{}, accOpen:{ 'Výrobce':true }, compare:{}, qty:{}, shown:15, hoverCard:null,
       searchQ:'', searchFocus:false, loading:false
@@ -630,11 +629,7 @@ class Component extends DCLogic {
     ];
 
     const sortMap = { pop:'Nejoblíbenější', cheap:'Od nejlevnějšího', exp:'Od nejdražšího', az:'Podle názvu A–Z' };
-    const sortOpts = Object.keys(sortMap).map(k=>({
-      t:sortMap[k],
-      onPick:()=>this.reload({ sort:k, sortOpen:false }),
-      style:'display:flex;align-items:center;min-height:44px;padding:0 14px;font-size:14px;cursor:pointer;font-weight:'+(s.sort===k?'700':'600')+';color:'+(s.sort===k?'#1E5AA8':'#3A424C')+';'+(s.sort===k?'background:#EFF4FB;':''),
-    }));
+    const sortOptions = Object.keys(sortMap).map(k=>({ key:k, label:sortMap[k] }));
 
     const cmpCount = Object.keys(s.compare).length;
     const pct = Math.min(100, Math.round(visible.length/Math.max(filteredAll.length,1)*100));
@@ -700,18 +695,18 @@ class Component extends DCLogic {
       backToGroups:()=>{ if(path.length) this.go({ path: path.slice(0,-1), leafPath:null, subcat:null, shown:15 }, this.urlFor(ag.key, path.slice(0,-1))); else this.go({ view:'groups', path:[], leafPath:null, subcat:null, shown:15 }, '#/nahradni-dily/'); },
       backToGroupsLabel: path.length>1 ? ('Zpět na '+path[path.length-2]) : (path.length===1 ? ('Zpět na '+(ag?ag.name:'Náhradní díly')) : 'Zpět na Náhradní díly'),
       activeSubcat: null, clearSubcat:()=>this.setState({ subcat:null, shown:15 }),
-      filterOpen:s.filterOpen, openFilter:()=>this.setState({filterOpen:true}), closeFilter:()=>this.setState({filterOpen:false}),
+      filterOpen:s.filterOpen,
+      filterMounted: s.filterOpen || s.filterClosing,
+      pfAnim: s.filterOpen ? 'pf-in 500ms ease' : 'pf-out 500ms ease forwards',
+      pfFade: s.filterOpen ? 'pf-fade-in 500ms ease' : 'pf-fade-out 500ms ease forwards',
+      openFilter:()=>this.setState({filterOpen:true, filterClosing:false}), closeFilter:()=>this.closePanel(),
       filterCount: filterCount||'',
       anyFilter: filterCount>0,
       clearFilters:()=>this.reload({ brands:{}, onlyStock:false, shown:15 }),
       toggleStock:()=>this.reload({onlyStock:!s.onlyStock, shown:15}),
-      stockPressed: s.onlyStock ? 'true' : 'false',
-      sortExpanded: s.sortOpen ? 'true' : 'false',
-      stockBtnStyle:'display:flex;align-items:center;gap:9px;min-height:44px;padding:0 6px;font-size:13px;font-weight:700;cursor:pointer;user-select:none;color:'+(s.onlyStock?'#0B6937;':'#3A424C;'),
-      stockBoxStyle:'flex:none;width:21px;height:21px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;'+(s.onlyStock?'background:#0E7F43;color:#fff;border:1px solid #0E7F43;':'background:#fff;color:transparent;border:1px solid #91959B;'),
-      stockCheck: s.onlyStock ? '✓' : '',
-      sortOpen:s.sortOpen, toggleSort:()=>this.setState({sortOpen:!s.sortOpen}),
-      sortLabel: sortMap[s.sort], sortOpts,
+      onlyStock: s.onlyStock,
+      sortKey: s.sort, sortOptions,
+      onSortChange:(k)=>this.reload({ sort:k }),
       products,
       loading: s.loading,
       showGrid: !s.loading && visible.length>0,
