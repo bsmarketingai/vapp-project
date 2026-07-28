@@ -17,12 +17,14 @@
   html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
   .a11y-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
   .a11y-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  a{color:#15181C;} a:hover{color:#1E5AA8;}
+  .mm-link{transition:color .12s;} .mm-link:hover{color:#1E5AA8 !important;}
 </style>
 </helmet>
 <div style="border-top:1px solid #F2F4F7;background:#fff;">
   <div style="padding:4px 16px;">
     <sc-for list="{{ items }}" as="m" hint-placeholder-count="5">
-      <a class="a11y-i" href="#" onClick="{{ m.onClick }}" style="display:flex;align-items:center;justify-content:space-between;min-height:46px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="{{ m.style }}">{{ m.t }}</span><span style="color:#84AEDF;display:inline-flex;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></a>
+      <a class="mm-link a11y-i" href="#" onClick="{{ m.onClick }}" style="display:flex;align-items:center;justify-content:space-between;min-height:46px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="{{ m.style }}">{{ m.t }}</span><span style="color:#84AEDF;display:inline-flex;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></a>
     </sc-for>
   </div>
   <div style="padding:12px 16px 16px;display:flex;flex-direction:column;gap:8px;">
@@ -32,7 +34,7 @@
   <div style="padding:4px 16px;">
     <div style="padding:8px 0 4px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Informace</div>
     <sc-for list="{{ infoItems }}" as="s" hint-placeholder-count="4">
-      <a class="a11y-i" href="#" onClick="{{ s.onClick }}" style="display:flex;align-items:center;min-height:44px;border-bottom:1px solid #F2F4F7;font-size:14px;font-weight:500;color:#5A626C;cursor:pointer;">{{ s.t }}</a>
+      <a class="mm-link a11y-i" href="#" onClick="{{ s.onClick }}" style="display:flex;align-items:center;min-height:44px;border-bottom:1px solid #F2F4F7;font-size:14px;font-weight:500;color:#5A626C;cursor:pointer;">{{ s.t }}</a>
     </sc-for>
   </div>
   <div style="padding:12px 16px 16px;">
@@ -42,12 +44,12 @@
         <sc-if value="{{ isOpen }}" hint-placeholder-val="{{ true }}"><span style="font-size:13px;font-weight:700;color:#0B6937;">{{ statusText }}</span></sc-if>
         <sc-if value="{{ isClosed }}" hint-placeholder-val=""><span style="font-size:13px;font-weight:700;color:#C5232B;">{{ statusText }}</span></sc-if>
       </div>
-      <a class="a11y-i" href="{{ phoneHref }}" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#15181C;text-decoration:underline;cursor:pointer;"><span style="display:inline-flex;color:#1E5AA8;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import></span>{{ phone }}</a>
-      <a class="a11y-i" href="{{ emailHref }}" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#15181C;text-decoration:underline;cursor:pointer;"><span style="display:inline-flex;color:#1E5AA8;"><dc-import name="Ikony" icon-name="mail" size="24" hint-size="24px,24px"></dc-import></span>{{ email }}</a>
-      <dc-import name="Tlacitko" variant="secondary" size="medium" label="Všechny kontakty" icon-trailing="arrow-right" full-width="true" on-click="{{ onAllContacts }}" style="width:100%;" hint-size="100%,44px"></dc-import>
+      <a class="mm-link a11y-i" href="{{ phoneHref }}" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#15181C;text-decoration:underline;cursor:pointer;"><span style="display:inline-flex;align-items:center;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import></span>{{ phone }}</a>
+      <a class="mm-link a11y-i" href="{{ emailHref }}" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#15181C;text-decoration:underline;cursor:pointer;"><span style="display:inline-flex;align-items:center;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="mail" size="24" hint-size="24px,24px"></dc-import></span>{{ email }}</a>
+      <dc-import name="Tlacitko" variant="primary" size="medium" label="Všechny kontakty" icon-trailing="arrow-right" full-width="true" on-click="{{ onAllContacts }}" style="width:100%;" hint-size="100%,44px"></dc-import>
       <div style="display:flex;gap:8px;">
-        <div style="flex:1;min-width:0;display:flex;"><dc-import name="Tlacitko" variant="secondary" size="medium" label="Přihlásit se" icon="user" full-width="true" on-click="{{ onLogin }}" style="width:100%;" hint-size="100%,44px"></dc-import></div>
-        <div style="flex:1;min-width:0;display:flex;"><dc-import name="Tlacitko" variant="secondary" size="medium" label="Košík" icon="shopping-cart" full-width="true" on-click="{{ onCartClick }}" style="width:100%;" hint-size="100%,44px"></dc-import></div>
+        <div style="flex:1;min-width:0;display:flex;"><dc-import name="Tlacitko" variant="ontint" size="medium" label="Přihlásit" icon="user" full-width="true" on-click="{{ onLogin }}" style="width:100%;" hint-size="100%,44px"></dc-import></div>
+        <div style="flex:1;min-width:0;display:flex;"><dc-import name="Tlacitko" variant="ontint" size="medium" label="Košík" icon="shopping-cart" full-width="true" on-click="{{ onCartClick }}" style="width:100%;" hint-size="100%,44px"></dc-import></div>
       </div>
     </div>
   </div>

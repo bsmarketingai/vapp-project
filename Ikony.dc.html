@@ -70,7 +70,7 @@ class Component extends DCLogic {
   mkEl(name, size){
     const d = this.ICONS[name];
     if(!d) return React.createElement('span',{style:{display:'inline-block',width:size,height:size,border:'1px dashed #C5232B',borderRadius:4,boxSizing:'border-box'}});
-    const attrs = { width:size, height:size, viewBox:'0 0 24 24', 'aria-hidden':'true', focusable:'false', dangerouslySetInnerHTML:{__html:d.c} };
+    const attrs = { width:size, height:size, viewBox:'0 0 24 24', 'aria-hidden':'true', focusable:'false', style:{display:'block',flex:'none'}, dangerouslySetInnerHTML:{__html:d.c} };
     if(d.f){ attrs.fill='currentColor'; attrs.stroke='none'; }
     else { attrs.fill='none'; attrs.stroke='currentColor'; attrs.strokeWidth=2; attrs.strokeLinecap='round'; attrs.strokeLinejoin='round'; }
     return React.createElement('svg', attrs);

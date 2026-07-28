@@ -29,6 +29,7 @@
   @keyframes vapp-led{0%{box-shadow:0 0 0 0 var(--led);}70%{box-shadow:0 0 0 7px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
   .vapp-led{border-radius:999px;animation:vapp-led 1.8s ease-out infinite;}
   .ft-link{transition:color .12s;} .ft-link:hover{color:#fff !important;}
+  .ft-clink{transition:color .12s;} .ft-clink:hover{color:#D8E6F6 !important;}
   .ft-dark{transition:background .12s;} .ft-dark:hover{background:rgba(255,255,255,.2) !important;}
   .ft-social{transition:color .12s,border-color .12s;} .ft-social:hover{color:#fff !important;border-color:#fff !important;}
   .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
@@ -81,8 +82,8 @@
           <span style="font-size:15px;font-weight:700;color:#fff;">VAPP s.r.o.</span>
           <span style="font-size:15px;color:#B4CEEC;line-height:1.5;">Popovičky 50, 251 01 Říčany</span>
           <span style="font-size:15px;color:#B4CEEC;line-height:1.5;">Pobočka: Mladá Boleslav — Židněves</span>
-          <a class="a11y-i" href="tel:+420323605314" style="display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#fff;text-decoration:underline;cursor:pointer;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import>323 605 314</a>
-          <a class="a11y-i" href="mailto:obchod&#64;vapp.cz" style="display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#fff;text-decoration:underline;cursor:pointer;"><dc-import name="Ikony" icon-name="mail" size="24" hint-size="24px,24px"></dc-import>obchod<span>&#64;</span>vapp.cz</a>
+          <a class="ft-clink a11y-i" href="tel:+420323605314" style="display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#fff;text-decoration:underline;cursor:pointer;"><span style="display:inline-flex;align-items:center;flex:none;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import></span>323 605 314</a>
+          <a class="ft-clink a11y-i" href="mailto:obchod&#64;vapp.cz" style="display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#fff;text-decoration:underline;cursor:pointer;"><span style="display:inline-flex;align-items:center;flex:none;"><dc-import name="Ikony" icon-name="mail" size="24" hint-size="24px,24px"></dc-import></span>obchod&#64;vapp.cz</a>
           <span style="display:inline-flex;align-items:center;gap:9px;font-size:15px;color:#B4CEEC;"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:9px;height:9px;background:#2EAA6A;flex:none;"></span>Po–Pá 8–16 · právě otevřeno</span>
           <div style="height:1px;background:rgba(255,255,255,.12);margin:4px 0;"></div>
           <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#84AEDF;">Všechny kontakty</span>
@@ -99,7 +100,7 @@
       </div>
       <div style="height:1px;background:rgba(255,255,255,.10);"></div>
       <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-        <span style="font-size:14px;color:#84AEDF;">© 2026 VAPP s.r.o. · <a class="a11y-i ft-hit" href="#" onClick="{{ onNav }}" style="cursor:pointer;color:inherit;">Ochrana osobních údajů</a> · <a class="a11y-i ft-hit" href="#" onClick="{{ onNav }}" style="text-decoration:underline;cursor:pointer;color:inherit;">Nastavení cookies</a></span>
+        <span style="font-size:14px;color:#84AEDF;">© 2026 VAPP s.r.o. · <a class="ft-link a11y-i ft-hit" href="#" onClick="{{ onNav }}" style="cursor:pointer;color:#B4CEEC;">Ochrana osobních údajů</a> · <a class="ft-link a11y-i ft-hit" href="#" onClick="{{ onNav }}" style="text-decoration:underline;cursor:pointer;color:#B4CEEC;">Nastavení cookies</a></span>
       </div>
     </div>
   </div>

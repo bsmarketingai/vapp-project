@@ -64,6 +64,10 @@
 | `commerce.priceNet` | `#15181C` | cena bez DPH |
 | `commerce.priceGross` | `#666E78` | cena s DPH |
 | `commerce.freeShipping` | text `#0B6937`, bg `#E9F8EF` | doprava zdarma |
+| `link.onLight` | `#15181C` / hover `#1E5AA8` | textový odkaz na světlém pozadí (telefon, e-mail) |
+| `link.onLightBlue` | `#1E5AA8` / hover `#1A4A8A` | modrý odkaz v textu |
+| `link.onDark` | `#FFFFFF` / hover `#D8E6F6` | odkaz na tmavé ploše (topbar, patička) |
+| `link.onDarkMuted` | `#B4CEEC` / hover `#FFFFFF` | servisní odkazy v topbaru a patičce |
 | `rating.star` | `#F5A623` / prázdná `#D5DAE0` | hvězdičky |
 | `brand.logoRed` | `#E41D32` | **výhradně logo**, nikdy v UI |
 
@@ -158,6 +162,9 @@ Mezihodnoty mimo tuto řadu nepoužívat.
 | hover karta / dlaždice | `shadow.cardHover` |
 | hover tlačítka | pozadí o krok tmavší (600 → 700) |
 | hover záložka menu | `color: blue.600` |
+| hover odkaz na světlém | `#15181C → #1E5AA8`, přechod 120 ms |
+| hover modrý odkaz | `#1E5AA8 → #1A4A8A` |
+| hover odkaz na tmavém | `#FFFFFF → #D8E6F6`, resp. `#B4CEEC → #FFFFFF` |
 | hover chip značky | `border-color: blue.300` |
 | `:active` tlačítka | `translateY(1px)` + tmavší pozadí |
 | focus input | focus ring |
@@ -174,7 +181,7 @@ Mezihodnoty mimo tuto řadu nepoužívat.
 - Produktové karty **náhradních dílů** NEobsahují výpis klíčových vlastností/parametrů. Ty se vypisují pouze na kartách **přívěsů**.
 - **Anatomie karty náhradního dílu:** fotka 4:3 → název (`product.title`) → hvězdičky + počet → řádek: skladovost vlevo / ceny vpravo pod sebou (bez DPH primárně a bez popisku, pod ní menší „X Kč s DPH") → kvantifikátor + tlačítko Koupit → řádek: checkbox Porovnat + Obj. č. (6místné, terciální). Badge (sleva / Doprava zdarma) vlevo nahoře na fotce. Celá karta je klikací na detail.
 - **Hlavní menu:** záložky s underline (aktivní podtržená), **ne** tlačítka.
-- **Tlačítka:** jediný zdroj je `Tlacitko.dc.html`. Varianty: `primary`, `secondary`, `buy`, `danger`, `ghost`, `text`. Velikosti Standard `min-height 36` / fs 14 · Medium `44` / fs 15 · Large `52` / fs 16, horizontální padding `16 / 20 / 24`. Rádius 8, weight 700. Interaktivní tlačítko je vždy `<button>`, nikdy `<span>` (jinak se nespustí `:focus-visible`). Icon-only tlačítko musí mít `ariaLabel`.
+- **Tlačítka:** jediný zdroj je `Tlacitko.dc.html`. Varianty: `primary`, `secondary`, `buy`, `danger`, `ghost`, `text`. Velikosti Standard `min-height 36` / fs 14 · Medium `44` / fs 15 · Large `52` / fs 16, horizontální padding `16 / 20 / 24`. Rádius 8, weight 700. Interaktivní tlačítko je vždy `<button>`, nikdy `<span>` (jinak se nespustí `:focus-visible`). Icon-only tlačítko musí mít `ariaLabel`. Na podbarvené ploše (`surface.subtle` `#F2F4F7`) se `secondary` nepoužívá — jeho pozadí `#EFF4FB` s podkladem splývá; místo něj `ontint` (bílé pozadí, text `#1E5AA8`, hover `#EFF4FB`). Hlavní akci v takovém bloku nese `primary`.
 - **Kvantifikátor:** Standard 44 px, Compact 36 px. Bg `surface.subtle`, rádius 6, střední pole bílé, min-width 28 + padding (pojme 3 číslice).
 - **Inputy:** výška 44, bg `surface.subtle`, rádius 6, fs 15.
 - **Skladovost:** ikony 18 × 18, text bez podbarvení.

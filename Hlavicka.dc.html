@@ -30,6 +30,7 @@
   .hd-hit{position:relative;}
   .hd-hit::after{content:"";position:absolute;left:0;right:0;top:-4px;bottom:-4px;}
   .hd-top{transition:color .12s;} .hd-top:hover{color:#fff !important;}
+  .hd-clink{transition:color .12s;} .hd-clink:hover{color:#D8E6F6 !important;}
   .hd-tab{transition:color .12s;} .hd-tab:hover{color:#1E5AA8 !important;}
   .hd-icon{transition:background .12s;} .hd-icon:hover{background:#F2F4F7 !important;}
   .hd-act{color:#1E5AA8;transition:color .12s;} .hd-act:hover{color:#C5232B;}
@@ -51,9 +52,9 @@
         <sc-for list="{{ infoItems }}" as="i" hint-placeholder-count="4">
           <a class="hd-top hd-i hd-ondark hd-hit" href="#" onClick="{{ i.onClick }}" style="cursor:pointer;">{{ i.t }}</a>
         </sc-for>
-        <a class="hd-i hd-ondark hd-hit" href="tel:+420323605314" style="display:inline-flex;align-items:center;gap:7px;color:#fff;font-weight:700;text-decoration:underline;cursor:pointer;"><dc-import name="Ikony" icon-name="phone" size="18" hint-size="18px,18px"></dc-import>323 605 314</a>
+        <a class="hd-clink hd-i hd-ondark hd-hit" href="tel:+420323605314" style="display:inline-flex;align-items:center;gap:7px;color:#fff;font-weight:700;text-decoration:underline;cursor:pointer;"><dc-import name="Ikony" icon-name="phone" size="18" hint-size="18px,18px"></dc-import>323 605 314</a>
       </div>
-      <a class="hd-mb hd-i hd-ondark" href="tel:+420323605314" style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;text-decoration:underline;cursor:pointer;color:inherit;"><dc-import name="Ikony" icon-name="phone" size="18" hint-size="18px,18px"></dc-import>323 605 314</a>
+      <a class="hd-mb hd-clink hd-i hd-ondark" href="tel:+420323605314" style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;text-decoration:underline;cursor:pointer;color:inherit;"><dc-import name="Ikony" icon-name="phone" size="18" hint-size="18px,18px"></dc-import>323 605 314</a>
     </div>
   </div>
 
@@ -118,7 +119,7 @@ class Component extends DCLogic {
     const infoLinks = P.infoLinks || ['Doprava a platba','Obchodní podmínky','O nás','Kontakty'];
     const tabs = labels.map(label=>{
       const on = label === active;
-      return { label, cls: on ? 'hd-tab hd-i' : 'hd-i', current: on ? 'page' : undefined,
+      return { label, cls: 'hd-tab hd-i', current: on ? 'page' : undefined,
         onClick: (e)=>{ if(e&&e.preventDefault) e.preventDefault(); if(onTab) onTab(label); },
         style:'display:flex;align-items:center;align-self:stretch;font-size:18px;font-weight:700;padding:13px 2px;cursor:pointer;border-bottom:3px solid '+(on?'#1E5AA8':'transparent')+';color:'+(on?'#1E5AA8':'#3A424C')+';' };
     });
