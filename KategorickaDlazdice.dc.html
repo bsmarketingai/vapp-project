@@ -46,7 +46,7 @@
         <a href="#" onClick="{{ sub.onPick }}" class="k-sub a11y-i k-over" style="font-size:14px;font-weight:600;color:#3A424C;cursor:pointer;">{{ sub.name }}</a>
       </sc-for>
     </div>
-    <dc-import name="Tlacitko" variant="secondary" size="medium" label="Zobrazit vše" icon-trailing="chevron-right" style="margin-top:auto;align-self:flex-start;position:relative;z-index:1;" hint-size="150px,44px"></dc-import>
+    <dc-import name="Tlacitko" variant="secondary" size="medium" label="Zobrazit vše" icon-trailing="chevron-right" on-click="{{ cat.onOpen }}" style="margin-top:auto;align-self:flex-start;position:relative;z-index:1;" hint-size="150px,44px"></dc-import>
   </div>
 </sc-if>
 <sc-if value="{{ gallery }}" hint-placeholder-val="{{ true }}">

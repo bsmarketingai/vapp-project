@@ -151,7 +151,8 @@ Mezihodnoty mimo tuto řadu nepoužívat.
 - Inline SVG, **24 × 24 px** (`viewBox 0 0 24 24`), `stroke-width 2`, barva přes `currentColor`, bez výplní.
 - **Zdroj ikon:** všechny ikony pocházejí z `Ikony.dc.html` (sada **Tabler**) — jediný registr. Komponenty ikony **nekreslí inline**, vkládají je přes `dc-import name="Ikony"` (prop `iconName` + `size`; v tlačítkách přes props `icon` / `iconTrailing` / `iconOnly`). Kontrakt 24×24 / stroke 2 / `currentColor` platí beze změny.
 - Výjimka: ikony skladovosti **18 × 18**. Hlavní menu na desktopu 18 px.
-- Ikona v kruhu 44 × 44 (kategorické dlaždice, poradenský blok). Sociální kolečko 40 × 40.
+- Kategorická dlaždice zobrazuje **náhledovou fotku 64 × 64**, `object-fit: contain`, bez pozadí, paddingu i rádiusu. Když fotka chybí, dlaždice se vrací k **ikoně 44 × 44 v kruhu**. Ikona v kruhu 44 × 44 dál platí pro poradenský blok. Sociální kolečko 40 × 40.
+- **Otevřený bod:** fotky mají být buď u všech kategorií, nebo u žádné — smíšený stav, kdy část dlaždic má fotku a část kruhovou ikonu, vypadá rozpadle.
 - Produktové fotky: poměr **4:3**, `object-fit: contain`, bez ořezu, centrované, s paddingem.
 - Logo `vapp-logo.svg` (křivky, `#E41D32`). Na tmavém `filter: brightness(0) invert(1)`.
 
