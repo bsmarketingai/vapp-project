@@ -34,6 +34,8 @@
 
 > Šířka okraje není token — všude 1 px. Odstíny `#9099A3`, `#6B727C`, `#6E88AE` a `#22C55E` jsou **zrušené** — mapuj na nejbližší krok škály. Zrušený `#6B727C` nemá s krokem 650 `#666E78` nic společného — na nejbližší platný krok mapuj podle účelu.
 
+> **Chevrony (a11y).** `#84AEDF` má na bílé jen 2,1:1. Chevron je netextový prvek nesoucí význam, potřebuje 3:1 — proto `icon.chevron` `#5189CC` (blue.400, 3,3:1 na bílé). `#84AEDF` zůstává jen pro dekorativní plochy a ukázky, ne pro ikony.
+
 > **Kontrastní přemapování (a11y audit).** `text.muted`, `text.tertiary`, `status.onRequest` a `commerce.priceGross` byly `#7A828C` / `#9AA1AB` / `#8A919C` — tyto hodnoty nedosahovaly 4,5:1 na bílé (3,89 / 2,61 / 3,18). Mezi `#5A626C` a bílou škála neunese tři rozlišitelné úrovně, které by všechny prošly, proto se **muted a tertiary slučují** do kroku 650 `#666E78` (5,16:1 na bílé, 4,89:1 na `#F7F9FB`, 4,69:1 na `#F2F4F7` — projde i na `surface.subtle`) a hierarchii nese velikost a řez písma, ne barva. `border.control` `#C4CAD2` (1,65:1) → `#91959B` (3,01:1) kvůli 3:1 pro hranice ovládacích prvků. Kroky škály 300/400/500/600 zůstávají beze změny — jen se na ně už nemapují textové tokeny.
 
 ### Sémantické tokeny
@@ -70,6 +72,7 @@
 | `link.onLightBlue` | `#1E5AA8` / hover `#1A4A8A` | modrý odkaz v textu |
 | `link.onDark` | `#FFFFFF` / hover `#D8E6F6` | odkaz na tmavé ploše (topbar, patička) |
 | `link.onDarkMuted` | `#B4CEEC` / hover `#FFFFFF` | servisní odkazy v topbaru a patičce |
+| `icon.chevron` | `#5189CC` | chevrony a navigační šipky (blue.400) |
 | `rating.star` | `#F5A623` / prázdná `#D5DAE0` | hvězdičky |
 | `brand.logoRed` | `#E41D32` | **výhradně logo**, nikdy v UI |
 
@@ -129,7 +132,9 @@ Mezihodnoty mimo tuto řadu nepoužívat.
 
 - **Rádiusy:** `radius.sm` 6 px (inputy, badge, kvantifikátor, checkbox) · `radius.md` 8 px (karty, tlačítka, bloky, dropdown) · `radius.pill` 999 px (chipy, čítače, sociální kolečka). Rádiusy 5, 11 a 14 px jsou zrušené.
 - **Elevace:** karty jsou **bez borderů** a v klidu **bez stínu**. Hover `0 6px 20px rgba(20,47,86,.10)`. Overlay (dropdown, našeptávač, drawer) `0 10px 30px rgba(20,30,45,.14)`. Focus ring `inset 0 0 0 2px #1E5AA8`.
-- **Motion:** 60 ms stisk · 120 ms barvy a pozadí · 150 ms stíny · 1800 ms pulz LED · easing `ease`.
+- **Motion:** 60 ms stisk · 120 ms barvy a pozadí · 150 ms stíny · `motion.panel` **400 ms** posun panelů (drill-down menu, drawer filtrů) · 1800 ms pulz LED · easing `ease`.
+- **Rozměry:** `size.control` 44 px — input, Kvantifikátor Standard, ikonové tlačítko, Tlačítko Medium. `size.row` 48 px — řádek seznamu a navigace.
+- **Z-index (zápis dnešního stavu, nic se nepřečísluje):** `z.stickyBar` 60 · `z.header` 70 · `z.drawerOverlay` 80 · `z.drawerPanel` 90 · `z.toast` 95 · `z.debug` 99. Panel mobilního menu má z-index 60 uvnitř stohovacího kontextu hlavičky — není to globální hodnota.
 - **Jen světlý režim.** Dark mode se nedělá.
 
 ---

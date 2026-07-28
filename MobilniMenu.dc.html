@@ -19,7 +19,6 @@
   .a11y-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   a{color:#15181C;} a:hover{color:#1E5AA8;}
   .mm-link{transition:color .12s;} .mm-link:hover{color:#1E5AA8 !important;}
-  .mm-cat{transition:color .12s;} .mm-cat:hover{text-decoration:underline;}
   @keyframes mmInRightA{from{transform:translateX(100%);opacity:0;}to{transform:none;opacity:1;}}
   @keyframes mmInRightB{from{transform:translateX(100%);opacity:0;}to{transform:none;opacity:1;}}
   @keyframes mmInLeftA{from{transform:translateX(-100%);opacity:0;}to{transform:none;opacity:1;}}
@@ -31,16 +30,16 @@
   <div data-mm-list="true" style="padding:4px 16px;overflow-x:hidden;animation:{{ listAnim }};">
     <sc-if value="{{ isNested }}" hint-placeholder-val="">
       <div>
-        <button type="button" class="mm-link a11y-i" onClick="{{ onBack }}" aria-label="{{ backAria }}" style="width:100%;display:flex;align-items:center;gap:8px;min-height:46px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="color:#84AEDF;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-left" size="24" hint-size="24px,24px"></dc-import></span><span style="font-size:14px;font-weight:700;color:#15181C;min-width:0;">{{ backLabel }}</span></button>
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:46px;border-bottom:1px solid #F2F4F7;"><a class="mm-cat a11y-i" href="{{ levelHref }}" onClick="{{ onLevelSelect }}" style="font-size:18px;font-weight:700;line-height:1.35;color:#1E5AA8;min-width:0;cursor:pointer;">{{ levelName }}</a><a class="mm-link a11y-i" href="{{ levelHref }}" onClick="{{ onLevelSelect }}" style="flex:none;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#1E5AA8;cursor:pointer;">Zobrazit kategorii<span style="color:#84AEDF;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></a></div>
+        <button type="button" class="mm-link a11y-i" onClick="{{ onBack }}" aria-label="{{ backAria }}" style="width:100%;display:flex;align-items:center;gap:8px;min-height:48px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="color:#5189CC;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-left" size="24" hint-size="24px,24px"></dc-import></span><span style="font-size:14px;font-weight:700;color:#15181C;min-width:0;">{{ backLabel }}</span></button>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:48px;border-bottom:1px solid #F2F4F7;"><h2 style="margin:0;font-size:18px;font-weight:700;line-height:1.35;color:#1E5AA8;min-width:0;">{{ levelName }}</h2><a class="mm-link a11y-i" href="{{ levelHref }}" onClick="{{ onLevelSelect }}" style="flex:none;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#1E5AA8;cursor:pointer;">Zobrazit kategorii<span style="color:#5189CC;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></a></div>
       </div>
     </sc-if>
     <sc-for list="{{ items }}" as="m" hint-placeholder-count="5">
       <sc-if value="{{ m.isBranch }}" hint-placeholder-val="">
-        <button type="button" class="mm-link a11y-i" onClick="{{ m.onClick }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:46px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="{{ m.style }}">{{ m.t }}</span><span style="color:#84AEDF;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></button>
+        <button type="button" class="mm-link a11y-i" onClick="{{ m.onClick }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:48px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="{{ m.style }}">{{ m.t }}</span><span style="color:#5189CC;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></button>
       </sc-if>
       <sc-if value="{{ m.isLeaf }}" hint-placeholder-val="{{ true }}">
-        <a class="mm-link a11y-i" href="{{ m.href }}" onClick="{{ m.onClick }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:46px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="{{ m.style }}">{{ m.t }}</span><span style="color:#84AEDF;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></a>
+        <a class="mm-link a11y-i" href="{{ m.href }}" onClick="{{ m.onClick }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:48px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="{{ m.style }}">{{ m.t }}</span><span style="color:#5189CC;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></a>
       </sc-if>
     </sc-for>
   </div>
@@ -75,13 +74,13 @@
 </div>
 <sc-if value="{{ standalone }}" hint-placeholder-val="{{ true }}">
   <div style="padding:24px 16px;display:flex;flex-direction:column;gap:5px;">
-    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> obsah rozbaleného mobilního menu v Hlavicce pod 1000 px. Panel nese jen border-top #F2F4F7 a bílé pozadí; hlavní položky 14/700 (aktivní #1E5AA8) s chevronem 24 px v #84AEDF, sekce Informace 14/500 #5A626C bez chevronu, kontaktní blok na surface.subtle #F2F4F7 s radiusem 8 a bez rámečku.</div>
+    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> obsah rozbaleného mobilního menu v Hlavicce pod 1000 px. Panel nese jen border-top #F2F4F7 a bílé pozadí; hlavní položky 14/700 (aktivní #1E5AA8) s chevronem 24 px v #5189CC, sekce Informace 14/500 #5A626C bez chevronu, kontaktní blok na surface.subtle #F2F4F7 s radiusem 8 a bez rámečku.</div>
     <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nedávat sem pozicování, z-index, max-height, overflow ani box-shadow — ty patří pozicovanému obalu v Hlavicce. Neřešit tu Escape, focus management ani zámek scrollu. Obsah odkazů a kontaktů posílá stránka přes props, nezadrátovávat ho sem. Košík v bloku nemá čítač.</div>
   </div>
 </sc-if>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:392,&quot;height&quot;:900},&quot;menuTree&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;,&quot;default&quot;:null},&quot;labels&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onSelect&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;infoLinks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;323 605 314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;email&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;hours&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Po–Pá 8–16&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onInfoSelect&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onLogin&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCartClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onAllContacts&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;showAccountButtons&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Obsah&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:392,&quot;height&quot;:900},&quot;menuTree&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;,&quot;default&quot;:null},&quot;labels&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;panelOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onSelect&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;infoLinks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;323 605 314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;email&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;hours&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Po–Pá 8–16&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onInfoSelect&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onLogin&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCartClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onAllContacts&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;showAccountButtons&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Obsah&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 const L = (name, children) => children ? { name, href: '#', children } : { name, href: '#' };
 const DEFAULT_TREE = [
   L('Přívěsy'),
@@ -191,6 +190,11 @@ const DEFAULT_TREE = [
 
 class Component extends DCLogic {
   state = { path: [], dir: null, tick: 0 };
+  componentDidUpdate(prevProps){
+    const was = prevProps && (prevProps.panelOpen ?? true) !== false;
+    const now = (this.props.panelOpen ?? true) !== false;
+    if (!was && now && this.state.path.length) this.setState({ path: [], dir: null });
+  }
   renderVals(){
     const P = this.props;
     const embedded = typeof P.onSelect === 'function';
@@ -238,7 +242,7 @@ class Component extends DCLogic {
       };
     });
 
-    const backLabel = depth > 1 ? 'Zpět na ' + chain[depth-2].name : 'Zpět domů';
+    const backLabel = depth > 1 ? 'Zpět na ' + chain[depth-2].name : 'Zpět na hlavní menu';
 
     return {
       embedded, standalone: !embedded, debug: P.debug ?? true,
@@ -247,7 +251,7 @@ class Component extends DCLogic {
       onBack: (e)=>{ stop(e); this.setState(s=>({ path: path.slice(0, -1), dir:'back', tick:s.tick+1 })); },
       listAnim: this.state.dir
         ? (this.state.dir==='fwd' ? 'mmInRight' : 'mmInLeft')
-          + (this.state.tick % 2 ? 'A' : 'B') + ' 500ms ease'
+          + (this.state.tick % 2 ? 'A' : 'B') + ' 400ms ease'
         : 'none',
       levelHref: current ? (current.href || '#') : '#',
       levelName: current ? current.name : '',

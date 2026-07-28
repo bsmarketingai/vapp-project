@@ -17,15 +17,14 @@
   html,body{margin:0;padding:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
   .fl-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
   .fl-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
-  @media (max-width:599px){ .fl-stock{display:none !important;} }
   a{color:#15181C;} a:hover{color:#1E5AA8;}
 </style>
 </helmet>
-<div style="display:flex;gap:8px;max-width:1560px;margin:0 auto;">
+<div style="display:flex;flex-wrap:wrap;gap:8px;max-width:1560px;margin:0 auto;">
   <button type="button" class="fl-i" id="pf-open" onClick="{{ onOpenFilter }}" style="flex:1;max-width:220px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;font-size:14px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;cursor:pointer;"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>Filtry<sc-if value="{{ filterCountText }}" hint-placeholder-val=""><span style="background:#C5232B;border-radius:999px;font-size:13px;padding:2px 8px;">{{ filterCountText }}</span></sc-if></button>
-  <button type="button" class="fl-i fl-stock" aria-pressed="{{ stockPressed }}" onClick="{{ onToggleStock }}" style="{{ stockBtnStyle }}"><span style="{{ stockBoxStyle }}">{{ stockCheck }}</span>Skladem</button>
-  <div style="position:relative;flex:none;max-width:260px;min-width:0;margin-left:auto;">
-    <button type="button" class="fl-i" aria-expanded="{{ sortExpanded }}" onClick="{{ toggleSort }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;font-size:14px;font-weight:700;color:#15181C;background:#F2F4F7;border-radius:6px;cursor:pointer;padding:0 14px;">{{ sortLabel }} <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#84AEDF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></button>
+  <button type="button" class="fl-i" aria-pressed="{{ stockPressed }}" onClick="{{ onToggleStock }}" style="{{ stockBtnStyle }}"><span style="{{ stockBoxStyle }}">{{ stockCheck }}</span>Skladem</button>
+  <div ref="{{ rootRef }}" style="position:relative;flex:none;max-width:260px;min-width:0;margin-left:auto;">
+    <button type="button" class="fl-i" aria-expanded="{{ sortExpanded }}" onClick="{{ toggleSort }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;font-size:14px;font-weight:700;color:#15181C;background:#F2F4F7;border-radius:6px;cursor:pointer;padding:0 14px;">{{ sortLabel }} <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5189CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></button>
     <sc-if value="{{ sortOpen }}" hint-placeholder-val="">
       <div style="position:absolute;top:calc(100% + 6px);right:0;min-width:100%;white-space:nowrap;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);overflow:hidden;z-index:50;">
         <sc-for list="{{ sortOpts }}" as="o" hint-placeholder-count="4"><button type="button" class="fl-i" onClick="{{ o.onPick }}" style="{{ o.style }}">{{ o.t }}</button></sc-for>
@@ -50,6 +49,23 @@ const DEFAULT_SORTS = [
 
 class Component extends DCLogic {
   state = { sortOpen:false };
+  bindDocument(on){
+    if(on){
+      if(this._docBound) return;
+      this._onDoc = (e)=>{ if(this._root && this._root.contains(e.target)) return; this.closeSort(); };
+      this._onKey = (e)=>{ if(e.key==='Escape'){ e.stopPropagation(); this.closeSort(); } };
+      document.addEventListener('mousedown', this._onDoc, true);
+      document.addEventListener('keydown', this._onKey, true);
+      this._docBound = true;
+    } else if(this._docBound){
+      document.removeEventListener('mousedown', this._onDoc, true);
+      document.removeEventListener('keydown', this._onKey, true);
+      this._docBound = false;
+    }
+  }
+  closeSort(){ if(this.state.sortOpen) this.setState({ sortOpen:false }); }
+  componentDidUpdate(){ this.bindDocument(this.state.sortOpen); }
+  componentWillUnmount(){ this.bindDocument(false); }
   renderVals(){
     const P = this.props;
     const embedded = typeof P.onOpenFilter === 'function' || typeof P.onSortChange === 'function';
@@ -70,6 +86,7 @@ class Component extends DCLogic {
       sortOpen: this.state.sortOpen,
       sortExpanded: this.state.sortOpen ? 'true' : 'false',
       toggleSort: ()=>this.setState(s=>({ sortOpen: !s.sortOpen })),
+      rootRef: (el)=>{ this._root = el; },
       sortLabel: (opts.find(o=>o.key===sort) || opts[0]).label,
       sortOpts: opts.map(o=>({
         t:o.label,
