@@ -11,7 +11,7 @@
   - `CenovyFiltr.dc.html` — jediný zdroj rozsahu ceny (dva inputy 44 px + dvojitý slider). Bezstavová vůči stránce: hodnoty přicházejí v `valueFrom` / `valueTo`, změna se hlásí přes `onChange(od, do)`.
   - `MobilniMenu.dc.html` — jediný zdroj obsahu rozbaleného mobilního menu. Pozicování, `z-index`, `max-height`, `overflow`, `box-shadow`, Escape, focus trap a zámek scrollu drží `Hlavicka`, ne komponenta.
   - `VypisKategorii.dc.html` — mřížka kategorií složená z `KategorickaDlazdice`. Bezstavová; která kategorie je otevřená drží stránka.
-  - `BarevnaPaletaVAPP.dc.html` — **archiv, nepoužívat.** Obsahuje starý styl (Hanken Grotesk, borders, rádiusy 11–14).
+  - `ArchivBarevnaPaletaVAPP.dc.html` — **archiv, nepoužívat.** Obsahuje starý styl (Hanken Grotesk, borders, rádiusy 11–14).
 - **Struktura složek je daná: všechny soubory leží v kořeni projektu.** Podadresáře (např. `Components/`) se nezavádějí — rozhodnuto, nevracet se k tomu.
 - **Znovupoužitelné komponenty** = samostatné `.dc.html` soubory importované přes `dc-import`. Návrhové stránky komponenty nikdy nekopírují, vždy importují.
 - Při změně tokenu aktualizuj tento soubor i `DesignSystemVAPP.dc.html`.

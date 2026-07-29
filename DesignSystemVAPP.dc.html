@@ -86,7 +86,7 @@
     <!-- 2. NEUTRÁLNÍ -->
     <div>
       <h2 style="margin:0 0 6px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">2 · Neutrální škála</h2>
-      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Sjednocení dřívějších roztroušených šedých do jedné pojmenované škály. Hodnoty zůstávají reálné — nic se nepřebarvovalo. Odstíny <span style="font-family:'JetBrains Mono',monospace;">#9099A3</span>, <span style="font-family:'JetBrains Mono',monospace;">#6B727C</span> a <span style="font-family:'JetBrains Mono',monospace;">#6E88AE</span> se dále nepoužívají — mapují se na nejbližší krok.</p>
+      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Sjednocení dřívějších roztroušených šedých do jedné pojmenované škály. Hodnoty zůstávají reálné — nic se nepřebarvovalo. Odstíny <span style="font-family:'JetBrains Mono',monospace;">#9099A3</span>, <span style="font-family:'JetBrains Mono',monospace;">#6B727C</span> a <span style="font-family:'JetBrains Mono',monospace;">#6E88AE</span> a <span style="font-family:'JetBrains Mono',monospace;">#22C55E</span> se dále nepoužívají — mapují se na nejbližší krok.</p>
       <div style="background:#fff;border-radius:8px;padding:20px 22px 22px;">
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;">
           <sc-for list="{{ neutrals }}" as="t" hint-placeholder-count="11">
@@ -128,7 +128,7 @@
     <!-- 4. TYPOGRAFIE -->
     <div>
       <h2 style="margin:0 0 6px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">4 · Typografie</h2>
-      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Exo&nbsp;2 (400–700), fallback <span style="font-family:'JetBrains Mono',monospace;">'Helvetica Neue', Arial, sans-serif</span>. Základní text <strong>16&nbsp;px</strong>, minimum <strong>13&nbsp;px</strong>, maximální tučnost <strong>700</strong>. Nadpisy mají stažený proklad, běžný text řádkování 1,6.</p>
+      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Exo&nbsp;2 (400–700), fallback <span style="font-family:'JetBrains Mono',monospace;">'Helvetica Neue', Arial, sans-serif</span>. Základní text <strong>16&nbsp;px</strong>, minimum <strong>13&nbsp;px</strong>, maximální tučnost <strong>700</strong>. Nadpisy mají stažený proklad, běžný text řádkování 1,6. Povolené výjimky z minima: číselné čítače v Hlavicce a Kosiku (16 × 16, font 10/700, význam nese aria-label) a textové labely u ikon Přihlásit / Porovnat. Jiné se nezavádějí.</p>
       <div style="background:#fff;border-radius:8px;padding:8px 28px;margin-bottom:24px;">
         <sc-for list="{{ typeScale }}" as="t" hint-placeholder-count="9">
           <button type="button" onClick="{{ t.onCopy }}" class="a11y-i ds-doc" style="display:flex;width:100%;align-items:baseline;gap:24px;padding:18px 0;border-bottom:1px solid #F2F4F7;cursor:pointer;">
@@ -237,7 +237,7 @@
     <!-- 8. LAYOUT -->
     <div>
       <h2 style="margin:0 0 6px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">8 · Layout, grid a breakpointy</h2>
-      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Výchozí šířka webu je <strong>1560&nbsp;px</strong>. Layout se řídí škálou sedmi pásem <strong>XXS–XXL</strong>. Desktopová a mobilní navigace se přepíná na <strong>1000&nbsp;px</strong> — celé pásmo M (820–999&nbsp;px) je mobilní, s hamburgerem. Produktový grid má pevné počty sloupců podle pásem: <strong>4</strong> od L výš, <strong>3</strong> na M, <strong>2</strong> na S, <strong>1</strong> na XS a XXS. Na staré sadě <strong>899/900</strong> zatím zůstává jen page padding 16/32 a pomocníci viditelnosti — čekají na migraci, je to zápis dnešního stavu, ne cíl.</p>
+      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Výchozí šířka webu je <strong>1560&nbsp;px</strong>. Layout se řídí škálou sedmi pásem <strong>XXS–XXL</strong>. Desktopová a mobilní navigace se přepíná na <strong>1000&nbsp;px</strong> — celé pásmo M (820–999&nbsp;px) je mobilní, s hamburgerem. Produktový grid má pevné počty sloupců podle pásem: <strong>4</strong> od L výš, <strong>3</strong> na M, <strong>2</strong> na S, <strong>1</strong> na XS a XXS. Migrace na škálu je dokončená — všechny media queries leží na hranicích 1560 · 1150 · 1000 · 820 · 550 · 420. Jedinou výjimkou je container query 380&nbsp;px v <span style="font-family:'JetBrains Mono',monospace;">ProduktovaKarta</span>, která měří šířku karty, ne viewportu.</p>
       <div style="background:#fff;border-radius:8px;padding:20px 24px 24px;">
         <sc-for list="{{ layout }}" as="l" hint-placeholder-count="19">
           <div class="ds-doc" style="display:flex;align-items:baseline;gap:20px;padding:11px 0;border-bottom:1px solid #F2F4F7;">
@@ -291,7 +291,7 @@
     <!-- 11. ROZHODNUTÍ -->
     <div>
       <h2 style="margin:0 0 6px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">11 · Vyřešené konflikty a otevřené body</h2>
-      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Záznam rozhodnutí proti staršímu stavu projektu. Všechny body jsou zafixované; u breakpointů zbývá dokončit migraci existujících komponent.</p>
+      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Záznam rozhodnutí proti staršímu stavu projektu. Všechny body jsou zafixované.</p>
       <div style="display:flex;flex-direction:column;gap:10px;">
         <sc-for list="{{ decisions }}" as="d" hint-placeholder-count="12">
           <div style="background:#fff;border-radius:8px;padding:16px 18px;display:flex;gap:14px;align-items:flex-start;">
@@ -529,17 +529,18 @@ class Component extends DCLogic {
     /* ---------- 8. LAYOUT ---------- */
     const layout = [
       ['Container max-width','1560 px','Výchozí šířka webu'],
-      ['Page padding — desktop','32 px','Boční odsazení obsahu'],
-      ['Page padding — mobil','16 px','Boční odsazení obsahu'],
+      ['Page padding — desktop','32 px','Boční odsazení obsahu, od 820 px'],
+      ['Page padding — mobil','16 px','Boční odsazení obsahu, do 819 px'],
       ['Produktový grid','L+ 4 sl. · M 3 · S 2 · XS a XXS 1','pevné počty sloupců podle pásem, gap 12'],
       ['Gap produktového gridu','12 px','space-3'],
-      ['Šířka produktové karty','280–300 px','min / max'],
-      ['Grid kategorií','minmax(280px,1fr)','auto-fit, gap 12'],
+      ['Šířka produktové karty','280–300 px','Jen samostatný náhled — v gridu je karta tekutá (width:100%, max-width:none)'],
+      ['Container query — karta','≤ 380 px','Jediná výjimka ze škály — měří šířku karty, ne viewportu'],
+      ['Grid kategorií','auto-fit ≥ 820 · 2 sl. 550–819 · 1 sl. ≤ 549','minmax(280px,1fr), gap 12'],
       ['XXL','≥ 1560 px','Container se přestává roztahovat'],
       ['XL','1150–1559 px','Plná desktopová šířka'],
       ['L','1000–1149 px','Nejnižší pásmo s desktopovou navigací'],
       ['M','820–999 px','Celé pásmo je mobilní — hamburger'],
-      ['S','550–819 px','Mobilní layout, plné labely v hlavičce'],
+      ['S','550–819 px','Mobilní layout a mobilní typografie, plné labely v hlavičce'],
       ['XS','420–549 px','Mizí labely u Přihlásit / Porovnat'],
       ['XXS','≤ 419 px','Logo 24 px'],
     ].map(([name,value,note])=>({ name, value, note }));
@@ -549,7 +550,8 @@ class Component extends DCLogic {
       ['Ikona — standard','24 × 24 px','viewBox 0 0 24 24, stroke-width 2, currentColor'],
       ['Ikona — skladovost','18 × 18 px','Jediná výjimka ze standardu'],
       ['Hlavní menu — desktop','18 px','Velikost textu záložek'],
-      ['Ikona v kruhu','44 × 44 px','Kategorické dlaždice, poradenský blok'],
+      ['Náhledová fotka kategorie','64 × 64 px','Kategorická dlaždice, object-fit contain, bez pozadí, paddingu i rádiusu'],
+      ['Ikona v kruhu','44 × 44 px','Poradenský blok; u kategorické dlaždice jen fallback'],
       ['Sociální kolečko','40 × 40 px','Patička'],
       ['Produktová fotka','poměr 4:3','object-fit: contain, bez ořezu, centrovaná'],
       ['Thumbnail v našeptávači','40 × 40 px','Položky dropdownu'],
@@ -589,6 +591,7 @@ class Component extends DCLogic {
       ['motion.panel','400 ms','Posun panelů — drill-down menu, drawer filtrů'],
       ['motion.led','1800 ms','Pulz LED indikátoru otevírací doby'],
       ['motion.easing','ease','Výchozí křivka pro všechny přechody'],
+      ['prefers-reduced-motion','—','Panely a drawer přechod vypínají; u LED zatím nezohledněno'],
     ].map(([name,value,use])=>({ name, value, use }));
 
     /* ---------- 11. ROZHODNUTÍ ---------- */
@@ -608,7 +611,7 @@ class Component extends DCLogic {
       ['LED indikátor otevřeno','Jednorázové #22C55E nahrazeno systémovou zelenou 400 (#2EAA6A), která je součástí škály.',OK],
       ['Cena bez DPH','Sjednoceno na 17 / 700 podle reálné produktové karty. Ukázka 18 px v původním DS byla nekonzistentní.',OK],
       ['Mobilní typografie','Doplněna samostatná škála místo jednorázového clamp(26px,4vw,36px) v prototypu. Přepíná se skokem na breakpointu.',OK],
-      ['Breakpointy','Zavedena škála sedmi pásem XXS–XXL se šesti hranicemi (1560 · 1150 · 1000 · 820 · 550 · 420). Staré názvosloví bp.mobile–bp.max je zrušené. Migrace existujících komponent (page padding, produktový grid, mobilní typografie) není dokončená.',OK],
+      ['Breakpointy','Zavedena škála sedmi pásem XXS–XXL se šesti hranicemi (1560 · 1150 · 1000 · 820 · 550 · 420). Staré názvosloví bp.mobile–bp.max je zrušené. Migrace existujících komponent je dokončená.',OK],
       ['Stavy :active a focus-visible','Nově definovány — dosud v systému chyběly.',OK],
       ['Mobilní navigace','Drill-down panely místo akordeonu. Jedna úroveň = jedna obrazovka, hloubka neomezená, podval (tlačítka, Informace, kontakt) je na všech úrovních.',OK],
       ['motion.panel 400 ms','Posun panelů nebyl pokrytý škálou 60 / 120 / 150 ms — doplněn samostatný krok.',OK],
@@ -628,7 +631,7 @@ class Component extends DCLogic {
       ['FiltracniLista.dc.html','Komponenta','Lišta nad výpisem — tlačítko Filtry s počtem, přepínač Skladem a dropdown řazení. Kanonický je tu vzhled i chování dropdownu.'],
       ['VypisKategorii.dc.html','Komponenta','Přehled kategorií nad výpisem produktů. Kanonické je tu složení a řazení dlaždic.'],
       ['KategorickaDlazdice.dc.html','Komponenta','Jedna dlaždice kategorie. Kanonická je tu náhledová fotka 64 × 64 i fallback na ikonu v kruhu 44 × 44.'],
-      ['Tlacitko.dc.html','Komponenta','Jediný zdroj tlačítek — varianty primary / secondary / buy / danger / ghost / text / ontint a velikosti Standard / Medium / Large.'],
+      ['Tlacitko.dc.html','Komponenta','Jediný zdroj tlačítek — varianty primary / secondary / buy / danger / ghost / text / textDanger / ontint / ondark a velikosti Standard / Medium / Large.'],
       ['ArchivBarevnaPaletaVAPP.dc.html','Archiv','Nahrazeno sekcí 1 tohoto dokumentu. Nepoužívat jako referenci — starý styl (Hanken Grotesk, borders).'],
       ['CLAUDE.md','Trvalá pravidla','Závazné konvence projektu. Při změně tokenu aktualizovat i zde.'],
     ].map(([file,role,note])=>({ file, role, note }));
