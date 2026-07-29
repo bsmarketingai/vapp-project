@@ -37,13 +37,13 @@
   .vapp-led{border-radius:999px;animation:vapp-led 1.8s ease-out infinite;}
   @keyframes pf-in{from{transform:translateX(100%);}to{transform:none;}}
   @keyframes pf-out{from{transform:none;}to{transform:translateX(100%);}}
-  @media (max-width:899px){ .dt{display:none !important;} }
+  @media (max-width:819px){ .dt{display:none !important;} }
   /* mobilní typografie — pásma S, XS, XXS */
   @media (max-width:819px){ .pg-h1{font-size:26px !important;} .pg-lead{font-size:14px !important;} }
-  @media (min-width:900px){ .mb{display:none !important;} }
+  @media (min-width:820px){ .mb{display:none !important;} }
 .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
 .vp-bleed{margin-left:-32px;margin-right:-32px;padding-left:32px;padding-right:32px;}
-@media (max-width:899px){ .vp-in{padding-left:16px;padding-right:16px;} .vp-bleed{margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px;} }
+@media (max-width:819px){ .vp-in{padding-left:16px;padding-right:16px;} .vp-bleed{margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px;} }
 .p-grid{display:grid;gap:12px;grid-template-columns:repeat(4,1fr);}
 /* produktový grid na škále XXS–XXL: L+ 4 · M 3 · S 2 · XS a XXS 1 */
 @media (max-width:999px){ .p-grid{grid-template-columns:repeat(3,1fr);} }
@@ -480,7 +480,7 @@ class Component extends DCLogic {
         imgLabel: hov ? 'FOTO 2' : 'FOTO 1',
         dot1:(p.img?'display:none;':'')+'width:6px;height:6px;border-radius:50%;background:'+(hov?'#B4CEEC':'#1E5AA8')+';',
         dot2:(p.img?'display:none;':'')+'width:6px;height:6px;border-radius:50%;background:'+(hov?'#1E5AA8':'#B4CEEC')+';',
-        onEnter:()=>{ if(window.matchMedia('(min-width:900px)').matches) this.setState({ hoverCard:p.name }); },
+        onEnter:()=>{ if(window.matchMedia('(min-width:1000px)').matches) this.setState({ hoverCard:p.name }); },
         onLeave:()=>{ if(s.hoverCard===p.name) this.setState({ hoverCard:null }); },
         cmp,
         cmpBox:'flex:none;width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1px solid '+(cmp?'#1E5AA8':'#91959B')+';background:'+(cmp?'#1E5AA8':'#fff')+';',

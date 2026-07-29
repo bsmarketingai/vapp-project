@@ -173,15 +173,17 @@ Hranice: **1560 · 1150 · 1000 · 820 · 550 · 420**.
 - **labely u ikon Přihlásit / Porovnat** — mizí na `max-width:549px` (pásma `XS` a `XXS`), zůstává jen ikona; mezera skupiny se zmenšuje na 4 px.
 - **logo** — výška 24 px na `max-width:419px` (pásmo `XXS`).
 - **drill-down podkategorií v prototypu** — dlaždice na `min-width:820px`, řádkový seznam na `max-width:819px`. Přepíná se CSS, ne `matchMedia`.
+- **hover zvětšení karty v prototypu** — `matchMedia('(min-width:1000px)')`, tedy pásma s myší (`L` a výš).
 - **mobilní typografie** — `max-width:819px`, pásma `S`, `XS`, `XXS`.
+- **page padding 16/32** — `max-width:819px`, jednotně ve všech souborech (`.vp-in`, `.vp-bleed`).
+- **pomocníci viditelnosti** `.dt` (`max-width:819px`) a `.mb` (`min-width:820px`) — přepínají se v páru.
+- **patička** — sloupce odkazů 4 → 2 na `max-width:1149px`, kontaktní blok na plnou šířku na `max-width:819px`.
 
-**Stav migrace (nedokončeno).** Existující komponenty dál běží na staré sadě `480 / 600 / 900 / 1280`. Na starém zlomu 899/900 dnes visí: page padding 16/32 v `Hlavicce`, `Paticka`, `ProduktovaKarta`, a `matchMedia` v prototypu; pomocníci viditelnosti `.dt` / `.mb` na 899/900.
+**Stav migrace: dokončeno.** Všechny media queries v projektu leží na hranicích 1560 · 1150 · 1000 · 820 · 550 · 420. Jediná výjimka je container query `max-width:380px` v `ProduktovaKarta` — měří šířku karty, ne viewportu, a na škálu nepatří.
 
-Platí do dokončení migrace:
+Platí dál:
 - nové media queries piš **výhradně** na hranicích nové škály,
-- existující zlomy `480 / 600 / 900 / 1280` **neměň bez výslovného zadání**,
-- migrace probíhá po komponentách s ověřením kapturou, **nikdy dávkově**,
-- **page padding 16/32 se migruje společně s prototypem**, ne izolovaně v jednom souboru — jinak se hlavička rozejde se zarovnáním obsahu pod ní.
+- migrace probíhá po komponentách s ověřením kapturou, **nikdy dávkově**.
 
 ---
 

@@ -28,7 +28,7 @@
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
-  @media (max-width:899px){ .vp-in{padding-left:16px;padding-right:16px;} }
+  @media (max-width:819px){ .vp-in{padding-left:16px;padding-right:16px;} }
   /* dokumentační řádky: pod 420 px (XXS) se pevné sloupce zalomí pod sebe */
   @media (max-width:419px){
     .ds-doc{flex-wrap:wrap;}
@@ -531,7 +531,7 @@ class Component extends DCLogic {
       ['Container max-width','1560 px','Výchozí šířka webu'],
       ['Page padding — desktop','32 px','Boční odsazení obsahu'],
       ['Page padding — mobil','16 px','Boční odsazení obsahu'],
-      ['Produktový grid','≥900: 4 sl. · 480–899: 2 sl. · <480: 1 sl.','auto-fill, minmax(min(46%,270px),1fr)'],
+      ['Produktový grid','L+ 4 sl. · M 3 · S 2 · XS a XXS 1','pevné počty sloupců podle pásem, gap 12'],
       ['Gap produktového gridu','12 px','space-3'],
       ['Šířka produktové karty','280–300 px','min / max'],
       ['Grid kategorií','minmax(280px,1fr)','auto-fit, gap 12'],
