@@ -173,11 +173,12 @@ Hranice: **1560 · 1150 · 1000 · 820 · 550 · 420**.
 - **labely u ikon Přihlásit / Porovnat** — mizí na `max-width:549px` (pásma `XS` a `XXS`), zůstává jen ikona; mezera skupiny se zmenšuje na 4 px.
 - **logo** — výška 24 px na `max-width:419px` (pásmo `XXS`).
 - **drill-down podkategorií v prototypu** — dlaždice na `min-width:820px`, řádkový seznam na `max-width:819px`. Přepíná se CSS, ne `matchMedia`.
-- **hover zvětšení karty v prototypu** — `matchMedia('(min-width:1000px)')`, tedy pásma s myší (`L` a výš).
 - **mobilní typografie** — `max-width:819px`, pásma `S`, `XS`, `XXS`.
 - **page padding 16/32** — `max-width:819px`, jednotně ve všech souborech (`.vp-in`, `.vp-bleed`).
 - **pomocníci viditelnosti** `.dt` (`max-width:819px`) a `.mb` (`min-width:820px`) — přepínají se v páru.
 - **patička** — sloupce odkazů 4 → 2 na `max-width:1149px`, kontaktní blok na plnou šířku na `max-width:819px`.
+
+**Hover a jemný ukazatel se nezjišťují šířkou okna.** Používá se `(hover:hover) and (pointer:fine)`, nikdy breakpoint.
 
 **Stav migrace: dokončeno.** Všechny media queries v projektu leží na hranicích 1560 · 1150 · 1000 · 820 · 550 · 420. Jediná výjimka je container query `max-width:380px` v `ProduktovaKarta` — měří šířku karty, ne viewportu, a na škálu nepatří.
 
