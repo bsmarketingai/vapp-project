@@ -19,6 +19,7 @@
   .a11y-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   a{color:#15181C;} a:hover{color:#1E5AA8;}
   .mm-link{transition:color .12s;} .mm-link:hover{color:#1E5AA8 !important;}
+  .mm-back{transition:color .12s;} .mm-back:hover .mm-back-t{color:#1A4A8A !important;} .mm-back:hover .mm-back-i{color:#A21B22 !important;}
   @keyframes mmInRightA{from{transform:translateX(100%);opacity:0;}to{transform:none;opacity:1;}}
   @keyframes mmInRightB{from{transform:translateX(100%);opacity:0;}to{transform:none;opacity:1;}}
   @keyframes mmInLeftA{from{transform:translateX(-100%);opacity:0;}to{transform:none;opacity:1;}}
@@ -30,8 +31,8 @@
   <div data-mm-list="true" style="padding:4px 16px;overflow-x:hidden;animation:{{ listAnim }};">
     <sc-if value="{{ isNested }}" hint-placeholder-val="">
       <div>
-        <button type="button" class="mm-link a11y-i" onClick="{{ onBack }}" aria-label="{{ backAria }}" style="width:100%;display:flex;align-items:center;gap:8px;min-height:48px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="color:#5189CC;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-left" size="24" hint-size="24px,24px"></dc-import></span><span style="font-size:14px;font-weight:700;color:#15181C;min-width:0;">{{ backLabel }}</span></button>
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:48px;border-bottom:1px solid #F2F4F7;"><h2 style="margin:0;font-size:18px;font-weight:700;line-height:1.35;color:#1E5AA8;min-width:0;">{{ levelName }}</h2><a class="mm-link a11y-i" href="{{ levelHref }}" onClick="{{ onLevelSelect }}" style="flex:none;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#1E5AA8;cursor:pointer;">Zobrazit kategorii<span style="color:#5189CC;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></a></div>
+        <button type="button" class="mm-back a11y-i" onClick="{{ onBack }}" aria-label="{{ backAria }}" style="width:100%;display:flex;align-items:center;gap:8px;min-height:48px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span class="mm-back-i" style="color:#C5232B;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-left" size="24" hint-size="24px,24px"></dc-import></span><span class="mm-back-t" style="font-size:14px;font-weight:700;color:#1E5AA8;min-width:0;">{{ backLabel }}</span></button>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:48px;border-bottom:1px solid #F2F4F7;"><h2 style="margin:0;font-size:18px;font-weight:700;line-height:1.35;color:#15181C;min-width:0;">{{ levelName }}</h2><a class="mm-link a11y-i" href="{{ levelHref }}" onClick="{{ onLevelSelect }}" style="flex:none;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#1E5AA8;cursor:pointer;">Zobrazit kategorii<span style="color:#5189CC;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></a></div>
       </div>
     </sc-if>
     <sc-for list="{{ items }}" as="m" hint-placeholder-count="5">

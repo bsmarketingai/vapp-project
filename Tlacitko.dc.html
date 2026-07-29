@@ -28,9 +28,11 @@
   .b-danger:hover{background:#A21B22 !important;}
   .b-ghost:hover{background:#EFF4FB !important;}
   .b-buy:active,.b-primary:active,.b-secondary:active,.b-danger:active,.b-ghost:active{transform:translateY(1px);}
-  .b-text{transition:text-decoration-thickness .12s;}
-  .b-text:hover{text-decoration-thickness:2px;}
-  .b-buy:focus-visible,.b-primary:focus-visible,.b-secondary:focus-visible,.b-danger:focus-visible,.b-ghost:focus-visible,.b-text:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .b-text,.b-textdanger{transition:text-decoration-thickness .12s,color .12s;}
+  .b-textdanger:hover{color:#1A4A8A !important;}
+  .b-textdanger:hover .b-ticon{color:#A21B22 !important;}
+  .b-text:hover,.b-textdanger:hover{text-decoration-thickness:2px;}
+  .b-buy:focus-visible,.b-primary:focus-visible,.b-secondary:focus-visible,.b-danger:focus-visible,.b-ghost:focus-visible,.b-text:focus-visible,.b-textdanger:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   .b-ontint{transition:background .12s,transform .06s;}
   .b-ontint:hover{background:#EFF4FB !important;}
   .b-ontint:active{transform:translateY(1px);}
@@ -42,7 +44,7 @@
 </style>
 </helmet>
 <sc-if value="{{ single }}" hint-placeholder-val="">
-  <button type="button" onClick="{{ onClick }}" disabled="{{ isDisabled }}" aria-label="{{ ariaLabel }}" class="{{ btnClass }}" style="{{ btnStyle }}"><sc-if value="{{ hasLead }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="{{ leadIcon }}" size="{{ iconSize }}" hint-size="24px,24px"></dc-import></sc-if><sc-if value="{{ hasLabel }}" hint-placeholder-val="{{ true }}">{{ label }}</sc-if><sc-if value="{{ hasTrail }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="{{ trailIcon }}" size="{{ iconSize }}" hint-size="24px,24px"></dc-import></sc-if></button>
+  <button type="button" onClick="{{ onClick }}" disabled="{{ isDisabled }}" aria-label="{{ ariaLabel }}" class="{{ btnClass }}" style="{{ btnStyle }}"><sc-if value="{{ hasLead }}" hint-placeholder-val=""><span class="b-ticon" style="{{ iconWrapStyle }}"><dc-import name="Ikony" icon-name="{{ leadIcon }}" size="{{ iconSize }}" hint-size="24px,24px"></dc-import></span></sc-if><sc-if value="{{ hasLabel }}" hint-placeholder-val="{{ true }}">{{ label }}</sc-if><sc-if value="{{ hasTrail }}" hint-placeholder-val=""><span class="b-ticon" style="{{ iconWrapStyle }}"><dc-import name="Ikony" icon-name="{{ trailIcon }}" size="{{ iconSize }}" hint-size="24px,24px"></dc-import></span></sc-if></button>
 </sc-if>
 <sc-if value="{{ gallery }}" hint-placeholder-val="{{ true }}">
 <div style="display:flex;flex-direction:column;gap:16px;max-width:920px;">
@@ -88,7 +90,21 @@
         <button type="button" class="b-ghost" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#1E5AA8;background:transparent;border-radius:8px;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;">Ghost</button>
         <button type="button" class="b-text" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 4px;font-size:15px;font-weight:700;color:#1E5AA8;background:transparent;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;text-decoration:underline;">Text</button>
       </div>
-      <div style="font-size:13px;line-height:1.5;color:#5A626C;margin-top:10px;max-width:760px;"><strong style="color:#3A424C;">Kdy:</strong> Ghost = terciární akce bez plné plochy — v hutných místech nebo vedle silnějšího tlačítka (např. „Podpora" u „Akce a slevy"). Text = odkazová akce v textovém toku či jako méně důležitá volba. Nikdy ne pro hlavní konverzi (Koupit).</div>
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;margin:18px 0 14px;">Text danger — textové tlačítko s červenou ikonou</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <button type="button" class="b-textdanger" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 4px;font-size:15px;font-weight:700;color:#1E5AA8;background:transparent;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;"><span class="b-ticon" style="display:inline-flex;align-items:center;flex:none;color:#C5232B;"><dc-import name="Ikony" icon-name="chevron-left" size="24" hint-size="24px,24px"></dc-import></span>Ikona vlevo</button>
+        <button type="button" class="b-textdanger" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 4px;font-size:15px;font-weight:700;color:#1E5AA8;background:transparent;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;">Jen text</button>
+        <button type="button" class="b-textdanger" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 4px;font-size:15px;font-weight:700;color:#1E5AA8;background:transparent;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;">Ikona vpravo<span class="b-ticon" style="display:inline-flex;align-items:center;flex:none;color:#C5232B;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></button>
+        <button type="button" class="b-textdanger" aria-label="Zpět" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;color:#1E5AA8;background:transparent;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;"><span class="b-ticon" style="display:inline-flex;align-items:center;flex:none;color:#C5232B;"><dc-import name="Ikony" icon-name="chevron-left" size="24" hint-size="24px,24px"></dc-import></span></button>
+      </div>
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;margin:18px 0 14px;">Ghost — ikonové konfigurace</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <button type="button" class="b-ghost" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#1E5AA8;background:transparent;border-radius:8px;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;"><dc-import name="Ikony" icon-name="chevron-left" size="24" hint-size="24px,24px"></dc-import>Ikona vlevo</button>
+        <button type="button" class="b-ghost" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#1E5AA8;background:transparent;border-radius:8px;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;">Jen text</button>
+        <button type="button" class="b-ghost" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#1E5AA8;background:transparent;border-radius:8px;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;">Ikona vpravo<dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></button>
+        <button type="button" class="b-ghost" aria-label="Zpět" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;color:#1E5AA8;background:transparent;border-radius:8px;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;"><dc-import name="Ikony" icon-name="chevron-left" size="24" hint-size="24px,24px"></dc-import></button>
+      </div>
+      <div style="font-size:13px;line-height:1.5;color:#5A626C;margin-top:10px;max-width:760px;"><strong style="color:#3A424C;">Kdy:</strong> Ghost = terciární akce bez plné plochy — v hutných místech nebo vedle silnějšího tlačítka (např. „Podpora" u „Akce a slevy"). Text = odkazová akce v textovém toku či jako méně důležitá volba. Nikdy ne pro hlavní konverzi (Koupit). Ghost je zároveň jediná varianta s <strong>akcentním textem bez plochy</strong> — používá se i pro navigační řádky typu „Zpět na hlavní menu“ (props <code>icon</code>, <code>iconTrailing</code>, <code>iconOnly</code> + povinný <code>ariaLabel</code>).</div>
     </div>
   </div>
   <div style="background:#EFF4FB;border-radius:8px;padding:28px;">
@@ -113,7 +129,7 @@
 </div>
 </sc-if>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:920,&quot;height&quot;:540},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;buy&quot;,&quot;primary&quot;,&quot;secondary&quot;,&quot;danger&quot;,&quot;ghost&quot;,&quot;text&quot;,&quot;ontint&quot;,&quot;ondark&quot;],&quot;default&quot;:&quot;primary&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;standard&quot;,&quot;medium&quot;,&quot;large&quot;],&quot;default&quot;:&quot;medium&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Tlačítko&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;icon&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;iconTrailing&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;iconOnly&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;trailChevron&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;disabled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;fullWidth&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;ariaLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:920,&quot;height&quot;:540},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;buy&quot;,&quot;primary&quot;,&quot;secondary&quot;,&quot;danger&quot;,&quot;ghost&quot;,&quot;text&quot;,&quot;textDanger&quot;,&quot;ontint&quot;,&quot;ondark&quot;],&quot;default&quot;:&quot;primary&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;standard&quot;,&quot;medium&quot;,&quot;large&quot;],&quot;default&quot;:&quot;medium&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Tlačítko&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;icon&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;iconTrailing&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;iconOnly&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;trailChevron&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;disabled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;fullWidth&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;ariaLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
   renderVals(){
     const P = this.props;
@@ -131,6 +147,7 @@ class Component extends DCLogic {
         danger:{bg:'#C5232B',fg:'#fff',cls:'b-danger'},
         ghost:{bg:'transparent',fg:'#1E5AA8',cls:'b-ghost'},
         text:{bg:'transparent',fg:'#1E5AA8',cls:'b-text'},
+        textDanger:{bg:'transparent',fg:'#1E5AA8',fgIcon:'#C5232B',cls:'b-textdanger'},
       }[P.variant] || {bg:'#1E5AA8',fg:'#fff',cls:'b-primary'};
       const disabled = !!P.disabled;
       const iconOnly = !!P.iconOnly;
@@ -151,6 +168,7 @@ class Component extends DCLogic {
         btnClass: disabled ? '' : V.cls,
         label: P.label||'Tlačítko',
         ariaLabel: P.ariaLabel || P.label || 'Tlačítko',
+        iconWrapStyle: 'display:inline-flex;align-items:center;flex:none;color:'+(disabled ? '#666E78' : (V.fgIcon || V.fg))+';',
         iconSize: 24,
         leadIcon, trailIcon,
         hasLead: iconOnly ? !!leadIcon : !!leadIcon,
