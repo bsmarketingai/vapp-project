@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  .cf-in{width:100%;height:44px;background:#F2F4F7;border:0;border-radius:6px;padding:0 12px;font-family:inherit;font-size:15px;font-weight:700;color:#15181C;}
+  .cf-in:focus{outline:none;box-shadow:inset 0 0 0 2px #1E5AA8;}
+  .cf-r{position:absolute;left:0;right:0;top:0;height:24px;width:100%;margin:0;background:transparent;appearance:none;-webkit-appearance:none;pointer-events:none;}
+  .cf-r::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;pointer-events:auto;width:20px;height:20px;border-radius:999px;background:#1E5AA8;border:2px solid #fff;box-shadow:0 1px 4px rgba(20,47,86,.35);cursor:pointer;}
+  .cf-r::-moz-range-thumb{pointer-events:auto;width:20px;height:20px;border:2px solid #fff;border-radius:999px;background:#1E5AA8;cursor:pointer;}
+  .cf-r:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 3px #D8E6F6;}
+</style>
+</helmet>
+<div style="display:flex;flex-direction:column;gap:14px;">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div style="flex:1;min-width:0;"><label style="display:block;font-size:13px;font-weight:500;color:#666E78;margin-bottom:4px;">{{ fromLabel }}</label><input class="cf-in" type="text" inputMode="numeric" aria-label="{{ fromLabel }}" value="{{ minText }}" onChange="{{ onMinText }}"></div>
+    <span aria-hidden="true" style="flex:none;align-self:flex-end;height:44px;display:flex;align-items:center;color:#666E78;">–</span>
+    <div style="flex:1;min-width:0;"><label style="display:block;font-size:13px;font-weight:500;color:#666E78;margin-bottom:4px;">{{ toLabel }}</label><input class="cf-in" type="text" inputMode="numeric" aria-label="{{ toLabel }}" value="{{ maxText }}" onChange="{{ onMaxText }}"></div>
+  </div>
+  <div style="position:relative;height:24px;">
+    <div aria-hidden="true" style="position:absolute;left:0;right:0;top:10px;height:4px;border-radius:999px;background:#D5DAE0;"></div>
+    <div aria-hidden="true" style="{{ trackStyle }}"></div>
+    <input class="cf-r" type="range" min="{{ min }}" max="{{ max }}" step="{{ step }}" value="{{ lo }}" aria-label="{{ fromLabel }}" onChange="{{ onLo }}" onInput="{{ onLo }}">
+    <input class="cf-r" type="range" min="{{ min }}" max="{{ max }}" step="{{ step }}" value="{{ hi }}" aria-label="{{ toLabel }}" onChange="{{ onHi }}" onInput="{{ onHi }}">
+  </div>
+  <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:500;color:#666E78;"><span>{{ minBound }}</span><span>{{ maxBound }}</span></div>
+</div>
+<sc-if value="{{ standalone }}" hint-placeholder-val="{{ true }}">
+  <div style="padding:24px 0 0;display:flex;flex-direction:column;gap:5px;">
+    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> rozsah ceny v panelu filtrů — dva inputy (44 px, <code>surface.subtle</code>, radius 6) nad dvojitým sliderem. Hodnoty drží stránka, komponenta jen hlásí změnu přes <code>onChange(od, do)</code>.</div>
+    <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nepoužívat pro jednu hodnotu ani pro nespojité volby — na ty jsou checkboxy. Needitovat tu formát ceny; přichází z propů.</div>
+  </div>
+</sc-if>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:384,&quot;height&quot;:260},&quot;min&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2000,&quot;tsType&quot;:&quot;number&quot;},&quot;max&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:150000,&quot;tsType&quot;:&quot;number&quot;},&quot;step&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:100,&quot;tsType&quot;:&quot;number&quot;},&quot;valueFrom&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;tsType&quot;:&quot;number&quot;},&quot;valueTo&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:8000,&quot;tsType&quot;:&quot;number&quot;},&quot;fromLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Cena od&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;toLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Cena do&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+const fmt = (n)=>String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'\u00a0');
+
+class Component extends DCLogic {
+  state = { lo:null, hi:null };
+  renderVals(){
+    const P = this.props;
+    const embedded = typeof P.onChange === 'function';
+    const min = Number(P.min ?? 0), max = Number(P.max ?? 8000), step = Number(P.step ?? 100);
+    const lo = Number(P.valueFrom ?? this.state.lo ?? min);
+    const hi = Number(P.valueTo ?? this.state.hi ?? max);
+    const emit = (a,b)=>{
+      const A = Math.max(min, Math.min(a, b)), B = Math.min(max, Math.max(a, b));
+      this.setState({ lo:A, hi:B });
+      if (typeof P.onChange === 'function') P.onChange(A, B);
+    };
+    const pct = (v)=>((v - min) / (max - min || 1)) * 100;
+    const num = (s)=>{ const n = parseInt(String(s).replace(/[^\d]/g,''),10); return isNaN(n) ? null : n; };
+    return {
+      standalone: !embedded, debug: P.debug ?? true,
+      min, max, step, lo, hi,
+      fromLabel: P.fromLabel || 'Cena od', toLabel: P.toLabel || 'Cena do',
+      minText: fmt(lo), maxText: fmt(hi),
+      minBound: fmt(min) + ' Kč', maxBound: fmt(max) + ' Kč',
+      trackStyle: 'position:absolute;top:10px;height:4px;border-radius:999px;background:#1E5AA8;left:'+pct(lo)+'%;right:'+(100-pct(hi))+'%;',
+      onLo: (e)=>emit(Math.min(Number(e.target.value), hi), hi),
+      onHi: (e)=>emit(lo, Math.max(Number(e.target.value), lo)),
+      onMinText: (e)=>{ const n = num(e.target.value); if(n!==null) emit(n, hi); },
+      onMaxText: (e)=>{ const n = num(e.target.value); if(n!==null) emit(lo, n); },
+    };
+  }
+}
+</script>
+</body>
+</html>

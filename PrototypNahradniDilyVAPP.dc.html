@@ -37,9 +37,6 @@
   .vapp-led{border-radius:999px;animation:vapp-led 1.8s ease-out infinite;}
   @keyframes pf-in{from{transform:translateX(100%);}to{transform:none;}}
   @keyframes pf-out{from{transform:none;}to{transform:translateX(100%);}}
-  @keyframes pf-fade-in{from{opacity:0;}to{opacity:1;}}
-  @keyframes pf-fade-out{from{opacity:1;}to{opacity:0;}}
-  @media (prefers-reduced-motion:reduce){#pf-panel,#pf-overlay{animation:none !important;}}
   @media (max-width:899px){ .dt{display:none !important;} }
   /* mobilní typografie — pásma S, XS, XXS */
   @media (max-width:819px){ .pg-h1{font-size:26px !important;} .pg-lead{font-size:14px !important;} }
@@ -48,8 +45,10 @@
 .vp-bleed{margin-left:-32px;margin-right:-32px;padding-left:32px;padding-right:32px;}
 @media (max-width:899px){ .vp-in{padding-left:16px;padding-right:16px;} .vp-bleed{margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px;} }
 .p-grid{display:grid;gap:12px;grid-template-columns:repeat(4,1fr);}
-@media (max-width:899px){ .p-grid{grid-template-columns:repeat(2,1fr);} }
-@media (max-width:479px){ .p-grid{grid-template-columns:1fr;} }
+/* produktový grid na škále XXS–XXL: L+ 4 · M 3 · S 2 · XS a XXS 1 */
+@media (max-width:999px){ .p-grid{grid-template-columns:repeat(3,1fr);} }
+@media (max-width:819px){ .p-grid{grid-template-columns:repeat(2,1fr);} }
+@media (max-width:549px){ .p-grid{grid-template-columns:1fr;} }
 .sk{background:#F2F4F7;border-radius:6px;}
 @media (max-width:819px){ .sc-tiles{display:none !important;} .sc-crumb:not(.sc-crumb-last){display:none !important;} }
 @media (min-width:820px){ .sc-rows{display:none !important;} }
@@ -217,65 +216,26 @@
     <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
   </div>
 
-  <!-- FILTER PANEL -->
-  <sc-if value="{{ filterMounted }}" hint-placeholder-val="">
-    <div id="pf-overlay" onClick="{{ closeFilter }}" aria-hidden="true" style="position:fixed;inset:0;background:rgba(20,30,45,.45);z-index:80;animation:{{ pfFade }};"></div>
-    <div id="pf-panel" role="dialog" aria-modal="true" aria-label="Filtry" tabindex="-1" style="position:fixed;top:0;right:0;bottom:0;width:min(400px,92vw);background:#fff;z-index:90;display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(20,30,45,.2);animation:{{ pfAnim }};">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid #F2F4F7;">
-        <h2 id="pf-title" style="margin:0;font-size:16px;font-weight:700;color:#142F56;">Filtry</h2>
-        <button type="button" class="a11y-i" aria-label="Zavřít filtry" onClick="{{ closeFilter }}" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:#5A626C;cursor:pointer;background:#F2F4F7;border-radius:8px;"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
-      </div>
-      <div style="flex:1;overflow-y:auto;padding:2px 18px;">
-        <sc-for list="{{ filterAcc }}" as="f" hint-placeholder-count="5">
-          <div style="border-bottom:1px solid #F2F4F7;">
-            <h3 style="margin:0;font-size:inherit;font-weight:inherit;line-height:inherit;"><button type="button" class="a11y-i" aria-expanded="{{ f.expanded }}" onClick="{{ f.onToggle }}" style="display:flex;width:100%;align-items:center;justify-content:space-between;min-height:50px;cursor:pointer;">
-              <span style="font-size:14px;font-weight:700;color:#15181C;">{{ f.h }}<sc-if value="{{ f.activeN }}" hint-placeholder-val=""><span style="margin-left:8px;font-size:13px;font-weight:700;color:#1E5AA8;background:#D8E6F6;border-radius:6px;padding:2px 7px;">{{ f.activeN }}</span></sc-if></span>
-              <span style="font-size:14px;color:#84AEDF;">{{ f.chev }}</span>
-            </button></h3>
-            <sc-if value="{{ f.open }}" hint-placeholder-val="">
-              <div style="padding:0 0 14px;display:flex;flex-direction:column;gap:4px;">
-                <sc-for list="{{ f.opts }}" as="o" hint-placeholder-count="4">
-                  <button type="button" class="a11y-i" role="checkbox" aria-checked="{{ o.checked }}" onClick="{{ o.onToggle }}" style="display:flex;align-items:center;gap:10px;font-size:14px;color:#3A424C;min-height:40px;cursor:pointer;">
-                    <span style="{{ o.box }}"><sc-if value="{{ o.on }}" hint-placeholder-val=""><svg aria-hidden="true" focusable="false" width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg></sc-if></span>{{ o.t }} <span style="color:#666E78;font-size:13px;">{{ o.c }}</span>
-                  </button>
-                </sc-for>
-              </div>
-            </sc-if>
-          </div>
-        </sc-for>
-      </div>
-      <div style="display:flex;gap:10px;padding:14px 18px;border-top:1px solid #F2F4F7;background:#F7F9FB;">
-        <button type="button" class="a11y-i" onClick="{{ clearFilters }}" style="flex:none;display:flex;align-items:center;min-height:48px;font-size:13px;font-weight:700;color:#5A626C;border-radius:8px;padding:0 16px;cursor:pointer;background:#F2F4F7;">Zrušit vše</button>
-        <button type="button" class="a11y-i" onClick="{{ closeFilter }}" style="flex:1;display:flex;align-items:center;justify-content:center;min-height:48px;font-size:14px;font-weight:700;color:#fff;background:#0E7F43;border-radius:8px;cursor:pointer;">Zobrazit {{ resultCount }} produktů</button>
-      </div>
-    </div>
-  </sc-if>
+  <dc-import name="FiltrDrawer" open="{{ filterOpen }}" price-from="{{ priceFrom }}" price-to="{{ priceTo }}" on-price-change="{{ onPriceChange }}" flags="{{ filterFlags }}" on-toggle-flag="{{ onToggleFlag }}" only-stock="{{ onlyStock }}" on-toggle-stock="{{ toggleStock }}" groups="{{ filterGroups }}" result-count="{{ resultCount }}" on-toggle-option="{{ onFilterOption }}" on-clear="{{ clearFilters }}" on-close="{{ closeFilter }}" debug="{{ debug }}" hint-size="0px,0px"></dc-import>
 
   <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:844},&quot;freeShippingThreshold&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1500,&quot;min&quot;:0,&quot;max&quot;:5000,&quot;step&quot;:100,&quot;unit&quot;:&quot;Kč&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;defaultOnlyStock&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;defaultSort&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;pop&quot;,&quot;cheap&quot;,&quot;exp&quot;,&quot;az&quot;],&quot;default&quot;:&quot;pop&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;showConsultancy&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;}}">
 class Component extends DCLogic {
-  lockScroll(on){ try{ document.body.style.overflow = on ? 'hidden' : ''; }catch(e){} }
-  openPanel(){ this.setState({filterOpen:true}); }
-  closePanel(){
-    if(!this.state.filterOpen) return;
-    this.setState({ filterOpen:false, filterClosing:true });
-    clearTimeout(this._pfT);
-    this._pfT = setTimeout(()=>this.setState({ filterClosing:false }), 500);
-  }
+  FLAGS = [{t:'Sleva',on:false},{t:'Doprava zdarma',on:false},{t:'Skladem',on:false},{t:'Skladem u dodavatele',on:false}];
+  closePanel(){ if(this.state.filterOpen) this.setState({ filterOpen:false }); }
   componentDidUpdate(prevProps, prevState){
     if (prevState && (prevState.view !== this.state.view || prevState.path !== this.state.path || prevState.leafPath !== this.state.leafPath)) this.syncJsonLd();
     const was = prevState && prevState.filterOpen, now = this.state.filterOpen;
     if (was === now) return;
-    this.lockScroll(!!now);
-    const el = document.getElementById(now ? 'pf-panel' : 'pf-open');
-    if (el && el.focus) el.focus();
+    if (!now){ const el = document.getElementById('pf-open'); if (el && el.focus) el.focus(); }
   }
   constructor(props){
     super(props);
     this.state = {
-      menuOpen:false, descOpen:false, filterOpen:false, filterClosing:false, sortOpen:false,
+      menuOpen:false, descOpen:false, filterOpen:false, sortOpen:false,
+      priceFrom:0, priceTo:8000, flags:null,
       view:'groups', path:[], leafPath:null, subcat:null, onlyStock: props.defaultOnlyStock ?? false, sort: props.defaultSort ?? 'pop',
       brands:{}, params:{}, accOpen:{ 'Výrobce':true }, compare:{}, qty:{}, shown:15, hoverCard:null,
       searchQ:'', searchFocus:false, loading:false
@@ -411,20 +371,6 @@ class Component extends DCLogic {
   }
 
   componentDidMount(){
-    this._onKey = (e)=>{
-      if(!this.state.filterOpen) return;
-      if(e.key==='Escape'){ this.closePanel(); return; }
-      if(e.key!=='Tab') return;
-      const p=document.getElementById('pf-panel'); if(!p) return;
-      const f=[...p.querySelectorAll('button,a[href],input,select,textarea,[tabindex]:not([tabindex="-1"])')].filter(el=>!el.disabled && el.offsetParent!==null);
-      if(!f.length) return;
-      const first=f[0], last=f[f.length-1], a=document.activeElement;
-      const inside = p.contains(a);
-      if(!inside){ e.preventDefault(); (e.shiftKey?last:first).focus(); return; }
-      if(e.shiftKey && (a===first || a===p)){ e.preventDefault(); last.focus(); }
-      else if(!e.shiftKey && a===last){ e.preventDefault(); first.focus(); }
-    };
-    document.addEventListener('keydown', this._onKey, true);
     // Sticky lišta + vytlačování hlavičky: BEZ šířkové podmínky.
     // Platí na všech pásmech (M, S, XS, XXS i desktop) — rozhodnuto, nevypínat.
     this._onScroll = () => {
@@ -498,8 +444,6 @@ class Component extends DCLogic {
   componentWillUnmount(){
     window.removeEventListener('scroll', this._onScroll);
     if (this._onHash){ window.removeEventListener('hashchange', this._onHash); window.removeEventListener('popstate', this._onHash); }
-    if (this._onKey) document.removeEventListener('keydown', this._onKey, true);
-    this.lockScroll(false);
     const hdr = document.querySelector('.hd-root'); if (hdr) hdr.style.transform = '';
   }
   renderVals(){
@@ -614,19 +558,11 @@ class Component extends DCLogic {
 
     const activeBrandN = Object.keys(s.brands).filter(b=>s.brands[b]).length;
     const filterCount = activeBrandN + (s.onlyStock?1:0);
-    const box=(on)=>'flex:none;width:21px;height:21px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1px solid '+(on?'#1E5AA8':'#91959B')+';background:'+(on?'#1E5AA8':'#fff')+';';
-    const mkAcc=(h, opts, extra)=>({
-      h, chev:s.accOpen[h]?'▴':'▾', open:!!s.accOpen[h], expanded: s.accOpen[h]?'true':'false', activeN: extra||0,
-      onToggle:()=>{ const a=Object.assign({},s.accOpen); a[h]=!a[h]; this.setState({accOpen:a}); },
-      opts,
-    });
-    const filterAcc = [
-      mkAcc('Výrobce', this.BRANDS.map(([b,c])=>({ t:b, c:'('+c+')', on:!!s.brands[b], box:box(!!s.brands[b]), checked: (!!s.brands[b])?'true':'false',
-        onToggle:()=>{ const br=Object.assign({},s.brands); br[b]=!br[b]; this.reload({brands:br, shown:15}); } })), activeBrandN||''),
-      mkAcc('Dostupnost', [{ t:'Pouze skladem', c:'', on:s.onlyStock, box:box(s.onlyStock), checked: s.onlyStock?'true':'false', onToggle:()=>this.reload({onlyStock:!s.onlyStock, shown:15}) }], s.onlyStock?'1':''),
-      mkAcc('Průměr brzdy', [['160 mm','(74)'],['200 mm','(112)'],['230 mm','(96)'],['250 mm','(58)']].map(([t,c])=>({ t, c, on:false, box:box(false), checked:'false', onToggle:()=>{} }))),
-      mkAcc('Rozteč kol', [['100×4','(52)'],['112×5','(140)'],['140×5','(66)']].map(([t,c])=>({ t, c, on:false, box:box(false), checked:'false', onToggle:()=>{} }))),
-      mkAcc('Cena', [['do 500 Kč','(680)'],['500–2 000 Kč','(1 114)'],['nad 2 000 Kč','(624)']].map(([t,c])=>({ t, c, on:false, box:box(false), checked:'false', onToggle:()=>{} }))),
+    const filterGroups = [
+      { h:'Výrobce', activeN: activeBrandN||'', opts: this.BRANDS.map(([b,c])=>({ t:b, c:'('+c+')', on:!!s.brands[b] })) },
+      { h:'Průměr brzdy', activeN:'', opts:[['160 mm','(74)'],['200 mm','(112)'],['230 mm','(96)'],['250 mm','(58)']].map(([t,c])=>({ t, c, on:false })) },
+      { h:'Rozteč kol', activeN:'', opts:[['100×4','(52)'],['112×5','(140)'],['140×5','(66)']].map(([t,c])=>({ t, c, on:false })) },
+      { h:'Cena', activeN:'', opts:[['do 500 Kč','(680)'],['500–2 000 Kč','(1 114)'],['nad 2 000 Kč','(624)']].map(([t,c])=>({ t, c, on:false })) },
     ];
 
     const sortMap = { pop:'Nejoblíbenější', cheap:'Od nejlevnějšího', exp:'Od nejdražšího', az:'Podle názvu A–Z' };
@@ -697,13 +633,10 @@ class Component extends DCLogic {
       backToGroupsLabel: path.length>1 ? ('Zpět na '+path[path.length-2]) : (path.length===1 ? ('Zpět na '+(ag?ag.name:'Náhradní díly')) : 'Zpět na Náhradní díly'),
       activeSubcat: null, clearSubcat:()=>this.setState({ subcat:null, shown:15 }),
       filterOpen:s.filterOpen,
-      filterMounted: s.filterOpen || s.filterClosing,
-      pfAnim: s.filterOpen ? 'pf-in 500ms ease' : 'pf-out 500ms ease forwards',
-      pfFade: s.filterOpen ? 'pf-fade-in 500ms ease' : 'pf-fade-out 500ms ease forwards',
-      openFilter:()=>this.setState({filterOpen:true, filterClosing:false}), closeFilter:()=>this.closePanel(),
+      openFilter:()=>this.setState({filterOpen:true}), closeFilter:()=>this.closePanel(),
       filterCount: filterCount||'',
       anyFilter: filterCount>0,
-      clearFilters:()=>this.reload({ brands:{}, onlyStock:false, shown:15 }),
+      clearFilters:()=>this.reload({ brands:{}, onlyStock:false, shown:15, priceFrom:0, priceTo:8000, flags:null }),
       toggleStock:()=>this.reload({onlyStock:!s.onlyStock, shown:15}),
       onlyStock: s.onlyStock,
       sortKey: s.sort, sortOptions,
@@ -721,7 +654,15 @@ class Component extends DCLogic {
       progressStyle:'width:'+pct+'%;height:100%;background:#1E5AA8;border-radius:999px;transition:width .3s;',
       cmpCountNum: cmpCount, headerSearch: s.searchQ, onHeaderSearch:(v)=>this.setState({ searchQ:v }),
       openCompare:()=>{},
-      filterAcc,
+      filterGroups,
+      priceFrom: s.priceFrom ?? 0,
+      priceTo: s.priceTo ?? 8000,
+      onPriceChange: (a,b)=>this.setState({ priceFrom:a, priceTo:b }),
+      filterFlags: (s.flags || this.FLAGS).map(f=>({ t:f.t, on:!!f.on })),
+      onToggleFlag: (i)=>{ const f=(s.flags||this.FLAGS).map((x,xi)=> xi===i ? {t:x.t,on:!x.on} : {t:x.t,on:!!x.on}); this.setState({ flags:f }); },
+      onFilterOption: (gi, oi)=>{
+        if (gi === 0){ const b = this.BRANDS[oi] && this.BRANDS[oi][0]; if(!b) return; const br=Object.assign({},s.brands); br[b]=!br[b]; this.reload({brands:br, shown:15}); }
+      },
       footerCols: [
         { h:'Sortiment', items:['Přívěsy','Náhradní díly','Příslušenství','Akce a slevy'] },
         { h:'Služby', items:['Servis','Půjčovna','Poradna'] },

@@ -29,8 +29,8 @@
   .b-ghost:hover{background:#EFF4FB !important;}
   .b-buy:active,.b-primary:active,.b-secondary:active,.b-danger:active,.b-ghost:active{transform:translateY(1px);}
   .b-text,.b-textdanger{transition:text-decoration-thickness .12s,color .12s;}
-  .b-textdanger:hover{color:#1A4A8A !important;}
-  .b-textdanger:hover .b-ticon{color:#A21B22 !important;}
+  .b-textdanger{transition:background .12s,color .12s,text-decoration-thickness .12s;}
+  .b-textdanger:hover{color:#A21B22 !important;background:#FDF1F1 !important;}
   .b-text:hover,.b-textdanger:hover{text-decoration-thickness:2px;}
   .b-buy:focus-visible,.b-primary:focus-visible,.b-secondary:focus-visible,.b-danger:focus-visible,.b-ghost:focus-visible,.b-text:focus-visible,.b-textdanger:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   .b-ontint{transition:background .12s,transform .06s;}
@@ -90,12 +90,12 @@
         <button type="button" class="b-ghost" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#1E5AA8;background:transparent;border-radius:8px;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;">Ghost</button>
         <button type="button" class="b-text" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 4px;font-size:15px;font-weight:700;color:#1E5AA8;background:transparent;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;text-decoration:underline;">Text</button>
       </div>
-      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;margin:18px 0 14px;">Text danger — textové tlačítko s červenou ikonou</div>
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;margin:18px 0 14px;">Text danger — textové tlačítko s červeným textem</div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-        <button type="button" class="b-textdanger" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 4px;font-size:15px;font-weight:700;color:#1E5AA8;background:transparent;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;"><span class="b-ticon" style="display:inline-flex;align-items:center;flex:none;color:#C5232B;"><dc-import name="Ikony" icon-name="chevron-left" size="24" hint-size="24px,24px"></dc-import></span>Ikona vlevo</button>
-        <button type="button" class="b-textdanger" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 4px;font-size:15px;font-weight:700;color:#1E5AA8;background:transparent;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;">Jen text</button>
-        <button type="button" class="b-textdanger" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 4px;font-size:15px;font-weight:700;color:#1E5AA8;background:transparent;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;">Ikona vpravo<span class="b-ticon" style="display:inline-flex;align-items:center;flex:none;color:#C5232B;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></button>
-        <button type="button" class="b-textdanger" aria-label="Zpět" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;color:#1E5AA8;background:transparent;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;"><span class="b-ticon" style="display:inline-flex;align-items:center;flex:none;color:#C5232B;"><dc-import name="Ikony" icon-name="chevron-left" size="24" hint-size="24px,24px"></dc-import></span></button>
+        <button type="button" class="b-textdanger" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 4px;font-size:15px;font-weight:700;color:#C5232B;background:transparent;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;"><span class="b-ticon" style="display:inline-flex;align-items:center;flex:none;"><dc-import name="Ikony" icon-name="chevron-left" size="24" hint-size="24px,24px"></dc-import></span>Ikona vlevo</button>
+        <button type="button" class="b-textdanger" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 4px;font-size:15px;font-weight:700;color:#C5232B;background:transparent;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;">Jen text</button>
+        <button type="button" class="b-textdanger" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 4px;font-size:15px;font-weight:700;color:#C5232B;background:transparent;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;">Ikona vpravo<span class="b-ticon" style="display:inline-flex;align-items:center;flex:none;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></button>
+        <button type="button" class="b-textdanger" aria-label="Smazat" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;color:#C5232B;background:transparent;cursor:pointer;border:none;margin:0;appearance:none;-webkit-appearance:none;font-family:inherit;"><span class="b-ticon" style="display:inline-flex;align-items:center;flex:none;"><dc-import name="Ikony" icon-name="chevron-left" size="24" hint-size="24px,24px"></dc-import></span></button>
       </div>
       <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;margin:18px 0 14px;">Ghost — ikonové konfigurace</div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
@@ -147,7 +147,7 @@ class Component extends DCLogic {
         danger:{bg:'#C5232B',fg:'#fff',cls:'b-danger'},
         ghost:{bg:'transparent',fg:'#1E5AA8',cls:'b-ghost'},
         text:{bg:'transparent',fg:'#1E5AA8',cls:'b-text'},
-        textDanger:{bg:'transparent',fg:'#1E5AA8',fgIcon:'#C5232B',cls:'b-textdanger'},
+        textDanger:{bg:'transparent',fg:'#C5232B',cls:'b-textdanger'},
       }[P.variant] || {bg:'#1E5AA8',fg:'#fff',cls:'b-primary'};
       const disabled = !!P.disabled;
       const iconOnly = !!P.iconOnly;

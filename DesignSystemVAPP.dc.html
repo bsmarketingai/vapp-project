@@ -237,7 +237,7 @@
     <!-- 8. LAYOUT -->
     <div>
       <h2 style="margin:0 0 6px;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">8 · Layout, grid a breakpointy</h2>
-      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Výchozí šířka webu je <strong>1560&nbsp;px</strong>. Layout se řídí škálou sedmi pásem <strong>XXS–XXL</strong>. Desktopová a mobilní navigace se přepíná na <strong>1000&nbsp;px</strong> — celé pásmo M (820–999&nbsp;px) je mobilní, s hamburgerem. Page padding 16/32, produktový grid (4 / 2 / 1 sloupec) a mobilní typografie zatím běží na staré sadě <strong>480 / 900</strong> a čekají na migraci na tuto škálu — je to zápis dnešního stavu, ne cíl.</p>
+      <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Výchozí šířka webu je <strong>1560&nbsp;px</strong>. Layout se řídí škálou sedmi pásem <strong>XXS–XXL</strong>. Desktopová a mobilní navigace se přepíná na <strong>1000&nbsp;px</strong> — celé pásmo M (820–999&nbsp;px) je mobilní, s hamburgerem. Produktový grid má pevné počty sloupců podle pásem: <strong>4</strong> od L výš, <strong>3</strong> na M, <strong>2</strong> na S, <strong>1</strong> na XS a XXS. Na staré sadě <strong>899/900</strong> zatím zůstává jen page padding 16/32 a pomocníci viditelnosti — čekají na migraci, je to zápis dnešního stavu, ne cíl.</p>
       <div style="background:#fff;border-radius:8px;padding:20px 24px 24px;">
         <sc-for list="{{ layout }}" as="l" hint-placeholder-count="19">
           <div class="ds-doc" style="display:flex;align-items:baseline;gap:20px;padding:11px 0;border-bottom:1px solid #F2F4F7;">
@@ -561,6 +561,9 @@ class Component extends DCLogic {
       ['Hover — karta / dlaždice','box-shadow: shadow.cardHover'],
       ['Hover — primární tlačítko','background: blue.600 → blue.700'],
       ['Hover — sekundární tlačítko','background: blue.50 → blue.100'],
+      ['Checkbox „Skladem“','zaškrtnutý zelený #0E7F43, text #0B6937 — dostupnost je vždy zelená, i ve filtrech'],
+      ['Hover — položka v overlayi (dropdown, seznam)','background: transparent → surface.subtle (#F2F4F7), 120 ms; platí i pro neaktivní položky'],
+      ['Řádek seznamu jako <button>','width:100% — jinak podbarvení aktivní položky nesahá k okraji overlaye (dropdown, drill-down menu)'],
       ['Hover — ghost (akcentní text bez plochy)','background: transparent → blue.50 (#EFF4FB), text zůstává blue.600'],
       ['Hover — tlačítko ontint','background: #FFFFFF → blue.50 (varianta pro surface.subtle)'],
       ['Hover — Koupit','background: green.600 → green.700'],
@@ -620,6 +623,8 @@ class Component extends DCLogic {
       ['Ikony.dc.html','Registr ikon','Jediný zdroj ikon (sada Tabler) — 24 × 24, stroke 2, currentColor. Komponenty ikony nekreslí inline, vkládají je přes dc-import name="Ikony" s propem iconName.'],
       ['MobilniMenu.dc.html','Komponenta','Obsah rozbaleného mobilního menu — kanonická je tu drill-down navigace: strom v propu menuTree, řádek Zpět, Zobrazit kategorii a podval.'],
       ['Hlavicka.dc.html','Komponenta','Topbar, logo, hledání, akce a hlavní navigace. Kanonická je tu logika přepnutí na mobilní menu a pozicování jeho panelu.'],
+      ['CenovyFiltr.dc.html','Komponenta','Rozsah ceny — dva inputy nad dvojitým sliderem. Kanonická je tu geometrie sliderů i formát hodnot; stav drží stránka.'],
+      ['FiltrDrawer.dc.html','Komponenta','Fasetový panel filtrů. Kanonické je tu pozicování, overlay, animace příletu 400 ms, Escape, focus trap a zámek scrollu; facety posílá stránka jako data.'],
       ['FiltracniLista.dc.html','Komponenta','Lišta nad výpisem — tlačítko Filtry s počtem, přepínač Skladem a dropdown řazení. Kanonický je tu vzhled i chování dropdownu.'],
       ['VypisKategorii.dc.html','Komponenta','Přehled kategorií nad výpisem produktů. Kanonické je tu složení a řazení dlaždic.'],
       ['KategorickaDlazdice.dc.html','Komponenta','Jedna dlaždice kategorie. Kanonická je tu náhledová fotka 64 × 64 i fallback na ikonu v kruhu 44 × 44.'],

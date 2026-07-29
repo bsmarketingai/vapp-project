@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  .fd-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
+  .fd-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  a{color:#15181C;} a:hover{color:#1E5AA8;}
+  .fd-row{transition:color .12s;} .fd-row:hover{color:#1E5AA8 !important;}
+  .fd-stock:hover{color:#0B6937 !important;}
+  .fd-chip{transition:background .12s;} .fd-chip:hover{background:#1A4A8A !important;}
+  .fd-chip-clear{transition:background .12s;} .fd-chip-clear:hover{background:#A21B22 !important;}
+  @keyframes fd-in{from{transform:translateX(100%);}to{transform:translateX(0);}}
+  @keyframes fd-out{from{transform:translateX(0);}to{transform:translateX(100%);}}
+  @keyframes fd-fade-in{from{opacity:0;}to{opacity:1;}}
+  @keyframes fd-fade-out{from{opacity:1;}to{opacity:0;}}
+  @media (prefers-reduced-motion:reduce){.fd-panel,.fd-overlay{animation:none !important;}}
+</style>
+</helmet>
+<sc-if value="{{ mounted }}" hint-placeholder-val="{{ true }}">
+  <div>
+    <div class="fd-overlay" onClick="{{ onClose }}" aria-hidden="true" style="position:fixed;inset:0;background:rgba(20,30,45,.45);z-index:80;animation:{{ fadeAnim }};"></div>
+    <div class="fd-panel" ref="{{ panelRef }}" role="dialog" aria-modal="true" aria-label="Filtry" tabindex="-1" style="position:fixed;top:0;right:0;bottom:0;width:min(400px,92vw);background:#fff;z-index:90;display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(20,30,45,.2);animation:{{ panelAnim }};">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid #F2F4F7;">
+        <h2 style="margin:0;display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#142F56;min-width:0;"><span style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="filter" size="24" hint-size="24px,24px"></dc-import></span>{{ title }}</h2>
+        <button type="button" class="fd-i" aria-label="Zavřít filtry" onClick="{{ onClose }}" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;flex:none;color:#5A626C;cursor:pointer;background:#F2F4F7;border-radius:8px;"><dc-import name="Ikony" icon-name="x" size="24" hint-size="24px,24px"></dc-import></button>
+      </div>
+      <div style="flex:1;overflow-y:auto;padding:2px 18px;">
+        <sc-if value="{{ hasChips }}" hint-placeholder-val="{{ true }}">
+          <div style="border-bottom:1px solid #F2F4F7;padding:12px 0;">
+            <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;margin-bottom:8px;">Aktivní filtry</div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;">
+              <sc-for list="{{ chips }}" as="ch" hint-placeholder-count="3">
+                <button type="button" class="fd-i fd-chip" aria-label="{{ ch.aria }}" onClick="{{ ch.onRemove }}" style="display:inline-flex;align-items:center;gap:4px;min-height:28px;padding:0 6px 0 10px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;background:#1E5AA8;color:#fff;">{{ ch.t }}<span style="display:inline-flex;flex:none;opacity:.85;"><dc-import name="Ikony" icon-name="x" size="16" hint-size="16px,16px"></dc-import></span></button>
+              </sc-for>
+              <button type="button" class="fd-i fd-chip-clear" onClick="{{ onClearAll }}" style="display:inline-flex;align-items:center;gap:4px;min-height:28px;padding:0 6px 0 10px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;background:#C5232B;color:#fff;">Zrušit vše<span style="display:inline-flex;flex:none;opacity:.85;"><dc-import name="Ikony" icon-name="x" size="16" hint-size="16px,16px"></dc-import></span></button>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ hasStock }}" hint-placeholder-val="{{ true }}">
+          <div style="border-bottom:1px solid #F2F4F7;padding:10px 0;">
+            <button type="button" class="fd-i fd-row fd-stock" role="checkbox" aria-checked="{{ stockChecked }}" onClick="{{ onToggleStock }}" style="{{ stockColor }}">
+              <span style="{{ stockBox }}"><sc-if value="{{ stockOn }}" hint-placeholder-val=""><span style="color:#fff;display:inline-flex;"><dc-import name="Ikony" icon-name="check" size="16" hint-size="16px,16px"></dc-import></span></sc-if></span>{{ stockLabel }}
+            </button>
+          </div>
+        </sc-if>
+        <div style="border-bottom:1px solid #F2F4F7;">
+          <h3 style="margin:0;font-size:inherit;font-weight:inherit;line-height:inherit;"><button type="button" class="fd-i" aria-expanded="{{ priceExpanded }}" onClick="{{ onTogglePrice }}" style="display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;min-height:48px;cursor:pointer;">
+            <span style="font-size:14px;font-weight:700;color:#15181C;min-width:0;">Ceny a štítky</span>
+            <span style="{{ priceChevStyle }}"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></span>
+          </button></h3>
+          <sc-if value="{{ priceOpen }}" hint-placeholder-val="{{ true }}">
+            <div style="padding:2px 0 16px;display:flex;flex-direction:column;gap:16px;">
+              <dc-import name="CenovyFiltr" min="{{ priceMin }}" max="{{ priceMax }}" step="{{ priceStep }}" value-from="{{ priceFrom }}" value-to="{{ priceTo }}" on-change="{{ onPriceChange }}" debug="{{ false }}" hint-size="100%,150px"></dc-import>
+              <div>
+                <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;margin-bottom:6px;">Příznaky</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                  <sc-for list="{{ flags }}" as="g" hint-placeholder-count="4">
+                    <button type="button" class="fd-i fd-row" role="checkbox" aria-checked="{{ g.checked }}" onClick="{{ g.onToggle }}" style="display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:0;cursor:pointer;">
+                      <span style="{{ g.box }}"><sc-if value="{{ g.on }}" hint-placeholder-val=""><span style="color:#fff;display:inline-flex;"><dc-import name="Ikony" icon-name="check" size="16" hint-size="16px,16px"></dc-import></span></sc-if></span>
+                      <span style="{{ g.badge }}">{{ g.t }}</span>
+                    </button>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+        <sc-for list="{{ groups }}" as="f" hint-placeholder-count="5">
+          <div style="border-bottom:1px solid #F2F4F7;">
+            <h3 style="margin:0;font-size:inherit;font-weight:inherit;line-height:inherit;"><button type="button" class="fd-i" aria-expanded="{{ f.expanded }}" onClick="{{ f.onToggle }}" style="display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;min-height:48px;cursor:pointer;">
+              <span style="font-size:14px;font-weight:700;color:#15181C;min-width:0;">{{ f.h }}</span>
+              <span style="{{ f.chevStyle }}"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></span>
+            </button></h3>
+            <sc-if value="{{ f.open }}" hint-placeholder-val="{{ true }}">
+              <div style="padding:0 0 12px;display:flex;flex-direction:column;gap:8px;">
+                <sc-for list="{{ f.opts }}" as="o" hint-placeholder-count="4">
+                  <button type="button" class="fd-i fd-row" role="checkbox" aria-checked="{{ o.checked }}" onClick="{{ o.onToggle }}" style="width:100%;display:flex;align-items:center;gap:10px;font-size:14px;color:#3A424C;min-height:32px;padding:0;cursor:pointer;">
+                    <span style="{{ o.box }}"><sc-if value="{{ o.on }}" hint-placeholder-val=""><span style="color:#fff;display:inline-flex;"><dc-import name="Ikony" icon-name="check" size="16" hint-size="16px,16px"></dc-import></span></sc-if></span>{{ o.t }} <span style="color:#666E78;font-size:13px;">{{ o.c }}</span>
+                  </button>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;gap:10px;padding:14px 18px;border-top:1px solid #F2F4F7;background:#F7F9FB;">
+        <div style="flex:none;display:flex;"><dc-import name="Tlacitko" variant="secondary" size="large" label="Zrušit vše" on-click="{{ onClear }}" hint-size="120px,52px"></dc-import></div>
+        <div style="flex:1;min-width:0;display:flex;"><dc-import name="Tlacitko" variant="buy" size="large" label="{{ submitLabel }}" full-width="true" on-click="{{ onClose }}" style="width:100%;" hint-size="100%,52px"></dc-import></div>
+      </div>
+    </div>
+  </div>
+</sc-if>
+<sc-if value="{{ standalone }}" hint-placeholder-val="{{ true }}">
+  <div style="padding:24px 16px;display:flex;flex-direction:column;gap:5px;">
+    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> fasetový panel filtrů nad výpisem produktů. Komponenta drží pozicování, overlay, animaci příletu a odletu (400 ms), Escape, focus trap i zámek scrollu; skupiny a volby přicházejí z props jako čistá data.</div>
+    <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nezadrátovávat sem konkrétní facety ani počty — ty patří stránce. Nepočítat tu výsledky ani neřešit řazení. Otevření spouští <code>FiltracniLista</code>, stav otevřeno drží stránka.</div>
+  </div>
+</sc-if>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:420,&quot;height&quot;:844},&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;title&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Filtry&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;groups&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;,&quot;default&quot;:null},&quot;resultCount&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onlyStock&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;stockLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Skladem&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;priceMin&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Cena&quot;},&quot;priceMax&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:8000,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Cena&quot;},&quot;priceStep&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:100,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Cena&quot;},&quot;priceFrom&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Cena&quot;},&quot;priceTo&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:8000,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Cena&quot;},&quot;onPriceChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;flags&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;,&quot;default&quot;:null},&quot;onToggleFlag&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onToggleStock&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onToggleOption&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onClear&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onClose&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+const DEMO = [
+  { h:'Výrobce', activeN:1, opts:[{t:'AL-KO',c:'(214)',on:true},{t:'KNOTT',c:'(186)',on:false},{t:'BPW',c:'(132)',on:false}] },
+  { h:'Cena', activeN:0, opts:[{t:'do 500 Kč',c:'(680)',on:false},{t:'500–2 000 Kč',c:'(1 114)',on:false},{t:'nad 2 000 Kč',c:'(624)',on:false}] },
+];
+
+const FLAG_STYLE = {
+  'Sleva':        'background:#C5232B;color:#fff;',
+  'Doprava zdarma':'background:#E9F8EF;color:#0B6937;',
+  'Skladem':      'background:#E9F8EF;color:#0B6937;',
+  'Skladem u dodavatele':'background:#F2F4F7;color:#5A626C;',
+  'Novinka':      'background:#EFF4FB;color:#1E5AA8;',
+};
+const DEMO_FLAGS = [
+  { t:'Sleva', on:false },
+  { t:'Doprava zdarma', on:true },
+  { t:'Skladem', on:false },
+  { t:'Skladem u dodavatele', on:false },
+];
+
+class Component extends DCLogic {
+  state = { accOpen:{}, demoOpen:true, closing:false, prevOpen:false, priceOpen:true, demoFlags:DEMO_FLAGS, demoFrom:null, demoTo:null, demoStock:false, demoGroups:DEMO };
+
+  componentDidUpdate(prevProps){
+    const was = this.wasOpen;
+    const now = this.isOpen();
+    if (was === now) return;
+    this.wasOpen = now;
+    this.lockScroll(now);
+    this.bind(now);
+    if (now) { if (this._panel) this._panel.focus(); }
+    else if (this._returnTo && this._returnTo.focus) this._returnTo.focus();
+  }
+  componentDidMount(){
+    this.wasOpen = this.isOpen();
+    if (this.wasOpen) { this.lockScroll(true); this.bind(true); }
+  }
+  componentWillUnmount(){ this.bind(false); this.lockScroll(false); clearTimeout(this._t); }
+
+  isOpen(){ return (this.props.open ?? this.state.demoOpen) !== false; }
+  lockScroll(on){ try{ document.body.style.overflow = on ? 'hidden' : ''; }catch(e){} }
+
+  bind(on){
+    if (on){
+      if (this._bound) return;
+      this._returnTo = document.activeElement;
+      this._onKey = (e)=>{
+        if (e.key === 'Escape'){ e.stopPropagation(); this.close(); return; }
+        if (e.key !== 'Tab' || !this._panel) return;
+        const f = [...this._panel.querySelectorAll('button,a[href],input,select,textarea,[tabindex]:not([tabindex="-1"])')].filter(el=>!el.disabled && el.offsetParent !== null);
+        if (!f.length) return;
+        const first = f[0], last = f[f.length-1];
+        if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+      };
+      document.addEventListener('keydown', this._onKey, true);
+      this._bound = true;
+    } else if (this._bound){
+      document.removeEventListener('keydown', this._onKey, true);
+      this._bound = false;
+    }
+  }
+
+  close(){
+    const cb = this.props.onClose;
+    this.setState({ closing:true, demoOpen:false });
+    clearTimeout(this._t);
+    this._t = setTimeout(()=>this.setState({ closing:false }), 400);
+    if (typeof cb === 'function') cb();
+  }
+
+  renderVals(){
+    const P = this.props;
+    const embedded = typeof P.onClose === 'function';
+    const open = this.isOpen();
+    const groupsData = Array.isArray(P.groups) && P.groups.length ? P.groups : (embedded ? [] : this.state.demoGroups);
+    const onToggleOption = typeof P.onToggleOption === 'function' ? P.onToggleOption : (gi, oi)=>{
+      this.setState({ demoGroups: this.state.demoGroups.map((g, i)=> i!==gi ? g : Object.assign({}, g, {
+        opts: g.opts.map((o, j)=> j!==oi ? o : Object.assign({}, o, { on: !o.on })),
+      })) });
+    };
+    const boxStyle = (on)=>'flex:none;width:21px;height:21px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1px solid '+(on?'#1E5AA8':'#91959B')+';background:'+(on?'#1E5AA8':'#fff')+';';
+    const stockOn = P.onlyStock === undefined ? !!this.state.demoStock : !!P.onlyStock;
+    const acc = this.state.accOpen;
+    const isOpenGroup = (g, i)=> acc[g.h] === undefined ? i === 0 : !!acc[g.h];
+
+    const flagsData = Array.isArray(P.flags) && P.flags.length ? P.flags : (embedded ? [] : this.state.demoFlags);
+    const chips = [];
+    if (stockOn) chips.push({ t: P.stockLabel || 'Skladem', onRemove: ()=>{ if(typeof P.onToggleStock==='function') P.onToggleStock(); else this.setState({ demoStock:false }); } });
+    flagsData.forEach((g, i)=>{ if(g.on) chips.push({ t:g.t, onRemove: ()=>{
+      if (typeof P.onToggleFlag === 'function'){ P.onToggleFlag(i); return; }
+      this.setState({ demoFlags: this.state.demoFlags.map((x,xi)=> xi===i ? {t:x.t,on:false} : x) });
+    } }); });
+    groupsData.forEach((g, gi)=>(g.opts||[]).forEach((o, oi)=>{ if(o.on) chips.push({ t:o.t, onRemove: ()=>onToggleOption(gi, oi) }); }));
+
+    return {
+      hasChips: chips.length > 0,
+      chips: chips.map(ch=>({ t: ch.t, aria: 'Odebrat filtr ' + ch.t, onRemove: ch.onRemove })),
+      onClearAll: ()=>{
+        if (typeof P.onClear === 'function'){ P.onClear(); return; }
+        this.setState({
+          demoStock:false,
+          demoFlags: this.state.demoFlags.map(x=>({ t:x.t, on:false })),
+          demoGroups: this.state.demoGroups.map(g=>Object.assign({}, g, { opts: g.opts.map(o=>Object.assign({}, o, { on:false })) })),
+        });
+      },
+      standalone: !embedded,
+      debug: P.debug ?? true,
+      mounted: open || this.state.closing,
+      title: P.title || 'Filtry',
+      submitLabel: P.resultCount ? ('Zobrazit ' + P.resultCount + ' produktů') : 'Zobrazit produkty',
+      panelAnim: open ? 'fd-in 400ms ease' : 'fd-out 400ms ease forwards',
+      fadeAnim: open ? 'fd-fade-in 400ms ease' : 'fd-fade-out 400ms ease forwards',
+      panelRef: (el)=>{ this._panel = el; },
+      hasStock: typeof P.onToggleStock === 'function' || !embedded,
+      stockLabel: P.stockLabel || 'Skladem',
+      stockOn: stockOn,
+      stockChecked: stockOn ? 'true' : 'false',
+      stockBox: 'flex:none;width:21px;height:21px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1px solid '+(stockOn?'#0E7F43':'#91959B')+';background:'+(stockOn?'#0E7F43':'#fff')+';',
+      stockColor: 'width:100%;display:flex;align-items:center;gap:10px;min-height:32px;padding:0;font-size:14px;font-weight:700;cursor:pointer;color:'+(stockOn?'#0B6937':'#15181C')+';',
+      onToggleStock: ()=>{ if(typeof P.onToggleStock === 'function'){ P.onToggleStock(); return; } this.setState({ demoStock: !this.state.demoStock }); },
+      priceOpen: this.state.priceOpen,
+      priceExpanded: this.state.priceOpen ? 'true' : 'false',
+      priceChevStyle: 'display:inline-flex;flex:none;color:#5189CC;transition:transform .12s;transform:rotate('+(this.state.priceOpen?180:0)+'deg);',
+      onTogglePrice: ()=>this.setState({ priceOpen: !this.state.priceOpen }),
+      priceMin: Number(P.priceMin ?? 0),
+      priceMax: Number(P.priceMax ?? 8000),
+      priceStep: Number(P.priceStep ?? 100),
+      priceFrom: Number(P.priceFrom ?? this.state.demoFrom ?? P.priceMin ?? 0),
+      priceTo: Number(P.priceTo ?? this.state.demoTo ?? P.priceMax ?? 8000),
+      onPriceChange: (a,b)=>{
+        if (typeof P.onPriceChange === 'function'){ P.onPriceChange(a,b); return; }
+        this.setState({ demoFrom:a, demoTo:b });
+      },
+      flags: (Array.isArray(P.flags) && P.flags.length ? P.flags : (embedded ? [] : this.state.demoFlags)).map((g, i)=>({
+        t: g.t, on: !!g.on,
+        checked: g.on ? 'true' : 'false',
+        box: boxStyle(!!g.on),
+        badge: 'flex:none;font-size:13px;font-weight:700;border-radius:6px;padding:3px 9px;'+(FLAG_STYLE[g.t] || 'background:#F2F4F7;color:#5A626C;'),
+        onToggle: ()=>{
+          if (typeof P.onToggleFlag === 'function'){ P.onToggleFlag(i); return; }
+          const f = this.state.demoFlags.map((x,xi)=> xi===i ? { t:x.t, on:!x.on } : x);
+          this.setState({ demoFlags:f });
+        },
+      })),
+      onClose: ()=>this.close(),
+      onClear: P.onClear || (()=>{}),
+      groups: groupsData.map((g, gi)=>{
+        const isOn = isOpenGroup(g, gi);
+        return {
+          h: g.h,
+          activeN: g.activeN || '',
+          open: isOn,
+          expanded: isOn ? 'true' : 'false',
+          chevStyle: 'display:inline-flex;flex:none;color:#5189CC;transition:transform .12s;transform:rotate('+(isOn?180:0)+'deg);',
+          onToggle: ()=>{ const a = Object.assign({}, this.state.accOpen); a[g.h] = !isOn; this.setState({ accOpen:a }); },
+          opts: (g.opts || []).map((o, oi)=>({
+            t: o.t, c: o.c || '', on: !!o.on,
+            checked: o.on ? 'true' : 'false',
+            box: boxStyle(!!o.on),
+            onToggle: ()=>onToggleOption(gi, oi),
+          })),
+        };
+      }),
+    };
+  }
+}
+</script>
+</body>
+</html>

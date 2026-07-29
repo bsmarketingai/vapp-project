@@ -7,6 +7,8 @@
   - `DesignSystemVAPP.dc.html` — základy (barvy, typografie, spacing, rádiusy, elevace, layout, stavy).
   - `KomponentyVAPP.dc.html` — katalog UI prvků. Jediné místo, kde se komponenty ladí.
   - `ProduktovaKarta.dc.html` — jediný zdroj vzhledu produktové karty (ASCII název kvůli exportu na GitHub). Upravovat POUZE tam.
+  - `FiltrDrawer.dc.html` — jediný zdroj panelu filtrů. Komponenta drží pozicování, overlay, animaci (`motion.panel` 400 ms), Escape, focus trap i zámek scrollu; facety přicházejí jako čistá data v propu `groups`, přepnutí volby jde přes skalární `onToggleOption(indexSkupiny, indexVolby)`.
+  - `CenovyFiltr.dc.html` — jediný zdroj rozsahu ceny (dva inputy 44 px + dvojitý slider). Bezstavová vůči stránce: hodnoty přicházejí v `valueFrom` / `valueTo`, změna se hlásí přes `onChange(od, do)`.
   - `MobilniMenu.dc.html` — jediný zdroj obsahu rozbaleného mobilního menu. Pozicování, `z-index`, `max-height`, `overflow`, `box-shadow`, Escape, focus trap a zámek scrollu drží `Hlavicka`, ne komponenta.
   - `VypisKategorii.dc.html` — mřížka kategorií složená z `KategorickaDlazdice`. Bezstavová; která kategorie je otevřená drží stránka.
   - `BarevnaPaletaVAPP.dc.html` — **archiv, nepoužívat.** Obsahuje starý styl (Hanken Grotesk, borders, rádiusy 11–14).
@@ -146,7 +148,7 @@ Mezihodnoty mimo tuto řadu nepoužívat.
 
 - **Full-bleed vzorec (závazné):** stránka nikdy nemá vnější padding ani `max-width` na kořenovém prvku — kořen je `width:100%`, `margin:0`, `padding:0`, bez `border-radius`, nese jen `background: surface.page #F7F9FB`. Sekce jdou přes celou šířku viewportu (topbar a patička `#142F56`, zbytek `surface.page`); omezený je až vnitřní obal každé sekce: `max-width:1560px; margin:0 auto; padding:0 32px` na desktopu a `0 16px` pod 900 px. `html` a `body` mají `margin:0; padding:0`. Platí i pro hlavičku a patičku.
 - Container max-width **1560 px**. Page padding 32 px desktop / 16 px mobil.
-- Produktový grid má tři stupně: **≥ 900 px 4 sloupce · 480–899 px 2 sloupce · < 480 px 1 sloupec**, gap 12 px, formule `auto-fill, minmax(min(46%,270px),1fr)`. Zlomy 480 a 900 patří do staré sady a čekají na migraci na škálu XXS–XXL.
+- **Produktový grid** je na škále XXS–XXL, pevné počty sloupců, gap 12 px: `L / XL / XXL` **4** · `M` **3** (`max-width:999px`) · `S` **2** (`max-width:819px`) · `XS / XXS` **1** (`max-width:549px`). Formule `auto-fill minmax()` je zrušená — počty jsou explicitní, aby odpovídaly pásmům.
 - Karta 280–300 px. Grid kategorií `auto-fit, minmax(280px,1fr)`, gap 12.
 - Rozměry karty 280–300 px platí jen pro samostatný náhled; v produktovém gridu je karta tekutá (`width:100%`, `min-width:0`, `max-width:none`).
 - **Sticky filtrační lišta** v prototypu platí na všech šířkách, včetně pásem M, S, XS a XXS. Vypínání sticky pod 900 px je zrušené — rozhodnuto, nevracet se k tomu.
@@ -173,7 +175,7 @@ Hranice: **1560 · 1150 · 1000 · 820 · 550 · 420**.
 - **drill-down podkategorií v prototypu** — dlaždice na `min-width:820px`, řádkový seznam na `max-width:819px`. Přepíná se CSS, ne `matchMedia`.
 - **mobilní typografie** — `max-width:819px`, pásma `S`, `XS`, `XXS`.
 
-**Stav migrace (nedokončeno).** Existující komponenty dál běží na staré sadě `480 / 600 / 900 / 1280`. Na starém zlomu 899/900 dnes visí: page padding 16/32 v `Hlavicce`, `Paticka`, `ProduktovaKarta`, a `matchMedia` v prototypu; na zlomu 480 jednosloupcový grid.
+**Stav migrace (nedokončeno).** Existující komponenty dál běží na staré sadě `480 / 600 / 900 / 1280`. Na starém zlomu 899/900 dnes visí: page padding 16/32 v `Hlavicce`, `Paticka`, `ProduktovaKarta`, a `matchMedia` v prototypu; pomocníci viditelnosti `.dt` / `.mb` na 899/900.
 
 Platí do dokončení migrace:
 - nové media queries piš **výhradně** na hranicích nové škály,
@@ -206,6 +208,7 @@ Platí do dokončení migrace:
 | hover modrý odkaz | `#1E5AA8 → #1A4A8A` |
 | hover odkaz na tmavém | `#FFFFFF → #D8E6F6`, resp. `#B4CEEC → #FFFFFF` |
 | hover chip značky | `border-color: blue.300` |
+| hover položky v overlayi | pozadí `surface.subtle` `#F2F4F7`, přechod 120 ms — platí i pro neaktivní položky dropdownu a řádky seznamu |
 | `:active` tlačítka | `translateY(1px)` + tmavší pozadí |
 | focus input | focus ring |
 | `:focus-visible` ostatní | `outline: 2px solid #1E5AA8`, offset 2px |
@@ -221,10 +224,12 @@ Platí do dokončení migrace:
 - Produktové karty **náhradních dílů** NEobsahují výpis klíčových vlastností/parametrů. Ty se vypisují pouze na kartách **přívěsů**.
 - **Anatomie karty náhradního dílu:** fotka 4:3 → název (`product.title`) → hvězdičky + počet → řádek: skladovost vlevo / ceny vpravo pod sebou (bez DPH primárně a bez popisku, pod ní menší „X Kč s DPH") → kvantifikátor + tlačítko Koupit → řádek: checkbox Porovnat + Obj. č. (6místné, terciální). Badge (sleva / Doprava zdarma) vlevo nahoře na fotce. Celá karta je klikací na detail.
 - **Hlavní menu:** záložky s underline (aktivní podtržená), **ne** tlačítka.
-- **Tlačítka:** jediný zdroj je `Tlacitko.dc.html`. Varianty: `primary`, `secondary`, `buy`, `danger`, `ghost`, `text`, `textDanger`. `ghost` = akcentní text bez plochy (text `#1E5AA8`, hover pozadí `#EFF4FB`). `textDanger` = textové tlačítko bez plochy s **červenou ikonou** (text `#1E5AA8` / hover `#1A4A8A`, ikona `#C5232B` / hover `#A21B22`); nese navigační řádky typu „Zpět na hlavní menu“. Oba jsou dostupné ve všech čtyřech ikonových konfiguracích (ikona vlevo, jen text, ikona vpravo, icon-only s `ariaLabel`). Velikosti Standard `min-height 36` / fs 14 · Medium `44` / fs 15 · Large `52` / fs 16, horizontální padding `16 / 20 / 24`. Rádius 8, weight 700. Interaktivní tlačítko je vždy `<button>`, nikdy `<span>` (jinak se nespustí `:focus-visible`). Icon-only tlačítko musí mít `ariaLabel`. Na podbarvené ploše (`surface.subtle` `#F2F4F7`) se `secondary` nepoužívá — jeho pozadí `#EFF4FB` s podkladem splývá; místo něj `ontint` (bílé pozadí, text `#1E5AA8`, hover `#EFF4FB`). Hlavní akci v takovém bloku nese `primary`.
+- **Tlačítka:** jediný zdroj je `Tlacitko.dc.html`. Varianty: `primary`, `secondary`, `buy`, `danger`, `ghost`, `text`, `textDanger`. `ghost` = akcentní text bez plochy (text `#1E5AA8`, hover pozadí `#EFF4FB`). `textDanger` = textové tlačítko bez plochy s **červeným textem** (`#C5232B` / hover `#A21B22`, hover pozadí `#FDF1F1`) — zvýrazněná obdoba varianty `text`. Používá se tam, kde má textová akce vyniknout nebo nese destruktivní či slevový význam. Oba jsou dostupné ve všech čtyřech ikonových konfiguracích (ikona vlevo, jen text, ikona vpravo, icon-only s `ariaLabel`). Velikosti Standard `min-height 36` / fs 14 · Medium `44` / fs 15 · Large `52` / fs 16, horizontální padding `16 / 20 / 24`. Rádius 8, weight 700. Interaktivní tlačítko je vždy `<button>`, nikdy `<span>` (jinak se nespustí `:focus-visible`). `<button>` má shrink-to-fit šířku — tlačítko použité jako řádek seznamu (položka dropdownu, řádek navigace) musí mít `width:100%`, jinak podbarvení aktivní položky nesahá k okraji a `justify-content:space-between` se nemá čeho chytit. Icon-only tlačítko musí mít `ariaLabel`. Na podbarvené ploše (`surface.subtle` `#F2F4F7`) se `secondary` nepoužívá — jeho pozadí `#EFF4FB` s podkladem splývá; místo něj `ontint` (bílé pozadí, text `#1E5AA8`, hover `#EFF4FB`). Hlavní akci v takovém bloku nese `primary`.
 - **Kvantifikátor:** Standard 44 px, Compact 36 px. Bg `surface.subtle`, rádius 6, střední pole bílé, min-width 28 + padding (pojme 3 číslice).
 - **Inputy:** výška 44, bg `surface.subtle`, rádius 6, fs 15.
 - **Skladovost:** ikony 18 × 18, text bez podbarvení.
+- **Přepínač „Skladem":** zaškrtnutý je zelený (`#0E7F43` plocha, text `#0B6937`) — shodně v `FiltracniLista` i v `FiltrDrawer`. Ostatní checkboxy filtru jsou modré `#1E5AA8`.
+- **Příznaky ve filtru:** checkbox + badge ve stejné barvě jako na kartě — Sleva `#C5232B`/bílá, Doprava zdarma a Skladem `#E9F8EF`/`#0B6937`, Skladem u dodavatele `#F2F4F7`/`#5A626C`.
 
 ---
 
