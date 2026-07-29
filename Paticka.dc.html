@@ -50,7 +50,7 @@
           <div class="ft-cols">
             <sc-for list="{{ footerCols }}" as="col" hint-placeholder-count="4">
               <div style="display:flex;flex-direction:column;gap:14px;min-width:0;">
-                <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#84AEDF;">{{ col.title }}</span>
+                <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#B4CEEC;">{{ col.title }}</span>
                 <sc-for list="{{ col.links }}" as="l" hint-placeholder-count="4">
                   <a class="ft-link a11y-i ft-hit" href="#" onClick="{{ onNav }}" style="font-size:15px;color:#B4CEEC;cursor:pointer;">{{ l }}</a>
                 </sc-for>
@@ -60,7 +60,7 @@
           <div style="height:1px;background:rgba(255,255,255,.10);"></div>
           <div style="display:flex;gap:56px;flex-wrap:wrap;">
             <div style="display:flex;flex-direction:column;gap:12px;">
-              <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#84AEDF;">Platba</span>
+              <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#B4CEEC;">Platba</span>
               <div style="display:flex;gap:10px;flex-wrap:wrap;">
                 <sc-for list="{{ payMethods }}" as="m" hint-placeholder-count="4">
                   <span style="display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 18px;font-size:13px;font-weight:600;color:#B4CEEC;border:1px dashed rgba(180,206,236,.45);border-radius:8px;">{{ m }}</span>
@@ -68,7 +68,7 @@
               </div>
             </div>
             <div style="display:flex;flex-direction:column;gap:12px;">
-              <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#84AEDF;">Doprava</span>
+              <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#B4CEEC;">Doprava</span>
               <div style="display:flex;gap:10px;flex-wrap:wrap;">
                 <sc-for list="{{ shipMethods }}" as="m" hint-placeholder-count="3">
                   <span style="display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 18px;font-size:13px;font-weight:600;color:#B4CEEC;border:1px dashed rgba(180,206,236,.45);border-radius:8px;">{{ m }}</span>
@@ -78,7 +78,7 @@
           </div>
         </div>
         <div class="ft-contact" style="display:flex;flex-direction:column;gap:12px;background:rgba(255,255,255,.06);border-radius:8px;padding:24px;">
-          <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#84AEDF;">Kontakt</span>
+          <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#B4CEEC;">Kontakt</span>
           <span style="font-size:15px;font-weight:700;color:#fff;">VAPP s.r.o.</span>
           <span style="font-size:15px;color:#B4CEEC;line-height:1.5;">Popovičky 50, 251 01 Říčany</span>
           <span style="font-size:15px;color:#B4CEEC;line-height:1.5;">Pobočka: Mladá Boleslav — Židněves</span>
@@ -86,11 +86,11 @@
           <a class="ft-clink a11y-i" href="mailto:obchod&#64;vapp.cz" style="display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#fff;text-decoration:underline;cursor:pointer;"><span style="display:inline-flex;align-items:center;flex:none;"><dc-import name="Ikony" icon-name="mail" size="24" hint-size="24px,24px"></dc-import></span>obchod&#64;vapp.cz</a>
           <span style="display:inline-flex;align-items:center;gap:9px;font-size:15px;color:#B4CEEC;"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:9px;height:9px;background:#2EAA6A;flex:none;"></span>Po–Pá 8–16 · právě otevřeno</span>
           <div style="height:1px;background:rgba(255,255,255,.12);margin:4px 0;"></div>
-          <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#84AEDF;">Všechny kontakty</span>
+          <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#B4CEEC;">Všechny kontakty</span>
           <dc-import name="Tlacitko" variant="ondark" size="medium" icon="map-pin" label="Obchod, servis, půjčovna…" full-width="true" style="width:100%;" hint-size="100%,44px"></dc-import>
-          <span style="font-size:13px;color:#84AEDF;margin-top:2px;">IČO 12345678 · DIČ CZ12345678</span>
+          <span style="font-size:13px;color:#B4CEEC;margin-top:2px;">IČO 12345678 · DIČ CZ12345678</span>
           <div style="height:1px;background:rgba(255,255,255,.12);margin:4px 0;"></div>
-          <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#84AEDF;">Sledujte nás</span>
+          <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#B4CEEC;">Sledujte nás</span>
           <div style="display:flex;gap:12px;">
             <a class="ft-social a11y-i" href="#" onClick="{{ onNav }}" title="Facebook" aria-label="Facebook" style="width:40px;height:40px;border-radius:999px;border:1px solid rgba(180,206,236,.45);display:flex;align-items:center;justify-content:center;color:#B4CEEC;cursor:pointer;"><dc-import name="Ikony" icon-name="brand-facebook" size="24" hint-size="24px,24px"></dc-import></a>
             <a class="ft-social a11y-i" href="#" onClick="{{ onNav }}" title="Instagram" aria-label="Instagram" style="width:40px;height:40px;border-radius:999px;border:1px solid rgba(180,206,236,.45);display:flex;align-items:center;justify-content:center;color:#B4CEEC;cursor:pointer;"><dc-import name="Ikony" icon-name="brand-instagram" size="24" hint-size="24px,24px"></dc-import></a>
@@ -100,7 +100,7 @@
       </div>
       <div style="height:1px;background:rgba(255,255,255,.10);"></div>
       <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-        <span style="font-size:14px;color:#84AEDF;">© 2026 VAPP s.r.o. · <a class="ft-link a11y-i ft-hit" href="#" onClick="{{ onNav }}" style="cursor:pointer;color:#B4CEEC;">Ochrana osobních údajů</a> · <a class="ft-link a11y-i ft-hit" href="#" onClick="{{ onNav }}" style="text-decoration:underline;cursor:pointer;color:#B4CEEC;">Nastavení cookies</a></span>
+        <span style="font-size:14px;color:#B4CEEC;">© 2026 VAPP s.r.o. · <a class="ft-link a11y-i ft-hit" href="#" onClick="{{ onNav }}" style="cursor:pointer;color:#B4CEEC;">Ochrana osobních údajů</a> · <a class="ft-link a11y-i ft-hit" href="#" onClick="{{ onNav }}" style="text-decoration:underline;cursor:pointer;color:#B4CEEC;">Nastavení cookies</a></span>
       </div>
     </div>
   </div>

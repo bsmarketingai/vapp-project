@@ -119,7 +119,7 @@
           <sc-for list="{{ subcats }}" as="s" hint-placeholder-count="5">
             <a class="a11y-i" href="{{ s.href }}" onClick="{{ s.onPick }}" style="{{ s.style }}">
               <span style="{{ s.nameStyle }}">{{ s.name }}</span>
-              <span style="display:flex;align-items:center;gap:8px;"><span style="font-size:13px;color:#666E78;">{{ s.count }}</span><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#84AEDF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></span>
+              <span style="display:flex;align-items:center;gap:8px;"><span style="font-size:13px;color:#666E78;">{{ s.count }}</span><span style="display:inline-flex;flex:none;color:#5189CC;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></span>
             </a>
           </sc-for>
           </div>
