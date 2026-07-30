@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  .pg-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
+  .pg-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  a{color:#15181C;} a:hover{color:#1E5AA8;}
+  /* hover a stisk jako u ghost tlačítka */
+  .pg-nav:not(:disabled),.pg-num{transition:background .12s,transform .06s;}
+  .pg-nav:not(:disabled):hover{background:#EFF4FB !important;}
+  .pg-num[aria-current="false"]:hover{background:#EFF4FB !important;}
+  .pg-nav:not(:disabled):active,.pg-num:active{transform:translateY(1px);}
+  /* XS a XXS: struktura zůstává, u navigace jen ikona a všechno o krok menší */
+  @media (max-width:549px){
+    .pg-lbl{display:none !important;}
+    .pg-nav{padding:0 8px !important;min-height:36px !important;}
+    .pg-num{min-width:36px !important;height:36px !important;font-size:14px !important;}
+    .pg-dots{width:28px !important;height:36px !important;}
+    .pg-pager{gap:4px !important;}
+  }
+</style>
+</helmet>
+<div style="display:flex;flex-direction:column;align-items:center;gap:24px;width:100%;">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;">
+    <sc-if value="{{ showSummary }}" hint-placeholder-val="{{ true }}">
+      <div style="font-size:13px;font-weight:500;line-height:1.4;color:#666E78;">Zobrazeno <b style="color:#3A424C;font-weight:700;">{{ shownText }}</b> z {{ totalText }} produktů</div>
+    </sc-if>
+    <sc-if value="{{ showLoadMore }}" hint-placeholder-val="{{ true }}">
+      <div style="width:100%;max-width:320px;">
+        <dc-import name="Tlacitko" variant="secondary" size="large" label="{{ loadMoreLabel }}" full-width="{{ true }}" on-click="{{ onLoadMore }}" hint-size="320px,52px"></dc-import>
+      </div>
+    </sc-if>
+  </div>
+  <sc-if value="{{ showPager }}" hint-placeholder-val="{{ true }}">
+    <nav aria-label="Stránkování" class="pg-pager" style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:nowrap;">
+      <button type="button" class="pg-i pg-nav" disabled="{{ prevDisabled }}" onClick="{{ onPrev }}" aria-label="Předchozí stránka" style="{{ prevStyle }}"><dc-import name="Ikony" icon-name="chevron-left" size="{{ 24 }}" debug="{{ false }}" hint-size="24px,24px"></dc-import><span class="pg-lbl">Předchozí</span></button>
+      <sc-for list="{{ items }}" as="it" hint-placeholder-count="7">
+        <sc-if value="{{ it.isNum }}" hint-placeholder-val="{{ true }}">
+          <button type="button" class="pg-i pg-num" onClick="{{ it.onClick }}" aria-current="{{ it.ariaCurrent }}" aria-label="{{ it.aria }}" style="{{ it.style }}">{{ it.n }}</button>
+        </sc-if>
+        <sc-if value="{{ it.isDots }}" hint-placeholder-val="">
+          <span class="pg-dots" aria-hidden="true" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#666E78;font-size:15px;">…</span>
+        </sc-if>
+      </sc-for>
+      <button type="button" class="pg-i pg-nav" disabled="{{ nextDisabled }}" onClick="{{ onNext }}" aria-label="Další stránka" style="{{ nextStyle }}"><span class="pg-lbl">Další</span><dc-import name="Ikony" icon-name="chevron-right" size="{{ 24 }}" debug="{{ false }}" hint-size="24px,24px"></dc-import></button>
+    </nav>
+  </sc-if>
+</div>
+<sc-if value="{{ standalone }}" hint-placeholder-val="{{ true }}">
+  <div style="padding:24px 16px;display:flex;flex-direction:column;gap:5px;">
+    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> pod výpisem produktů. „Načíst další" připojí dávku k už zobrazeným, klik na číslo stránky obsah nahradí. Souhrn i tlačítko se skryjí předáním <code>totalCount=0</code> / <code>nextBatch=0</code>.</div>
+    <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> komponenta nedrží stav ani nescrolluje — skok na začátek výpisu po změně stránky řeší stránka. Progress bar ani ukazatel fáze načítání sem nepatří.</div>
+    <div style="font-size:13px;line-height:1.5;color:#5A626C;"><strong>Kontrakt:</strong> <code>page</code>, <code>pageCount</code>, <code>shownCount</code>, <code>totalCount</code>, <code>nextBatch</code> jako data; callbacky skalárně — <code>onPage(cislo)</code> a <code>onLoadMore()</code>. Per-položkové handlery si komponenta vyrábí sama.</div>
+  </div>
+</sc-if>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:900,&quot;height&quot;:320},&quot;page&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:3,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:1},&quot;pageCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:12,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:1},&quot;shownCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:48,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0},&quot;totalCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2418,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0},&quot;nextBatch&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:16,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0},&quot;onPage&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(page:number)=&gt;void&quot;,&quot;default&quot;:null},&quot;onLoadMore&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  NAV_BASE = 'min-height:44px;padding:0 14px;display:flex;align-items:center;gap:6px;border-radius:6px;font-size:14px;font-weight:700;';
+  NUM_BASE = 'min-width:44px;height:44px;padding:0 6px;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:15px;';
+  state = { win: 2 };
+  // okno čísel podle dostupné šířky: XS ±1, XXS jen aktivní stránka mezi 1 a poslední
+  componentDidMount(){
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    this._mqXS = window.matchMedia('(max-width:549px)');
+    this._mqXXS = window.matchMedia('(max-width:419px)');
+    this._sync = ()=>{ const w = this._mqXXS.matches ? 0 : (this._mqXS.matches ? 1 : 2); if (w !== this.state.win) this.setState({ win:w }); };
+    this._mqXS.addEventListener('change', this._sync);
+    this._mqXXS.addEventListener('change', this._sync);
+    this._sync();
+  }
+  componentWillUnmount(){
+    if (this._sync){ this._mqXS.removeEventListener('change', this._sync); this._mqXXS.removeEventListener('change', this._sync); }
+  }
+  // 1 a poslední vždy, kolem aktivní okno ±win; mezi nesousedícími čísly jedna výpustka
+  pages(page, count, win){
+    if (count <= win*2 + 3) return Array.from({length:count}, (_,i)=>i+1);
+    const set = new Set([1, count]);
+    for (let p = page-win; p <= page+win; p++) if (p >= 1 && p <= count) set.add(p);
+    const nums = [...set].sort((a,b)=>a-b);
+    const out = [];
+    nums.forEach((n,i)=>{ if (i && n - nums[i-1] > 1) out.push(null); out.push(n); });
+    return out;
+  }
+  fmt(n){ return Number(n||0).toLocaleString('cs-CZ'); }
+  renderVals(){
+    const P = this.props;
+    const standalone = !(typeof P.onPage === 'function' || typeof P.onLoadMore === 'function');
+    const page = Math.max(1, P.page ?? 3);
+    const count = Math.max(1, P.pageCount ?? 12);
+    const total = P.totalCount ?? 2418;
+    const batch = P.nextBatch ?? 16;
+    const goto = (n)=>{ if (typeof P.onPage === 'function') P.onPage(n); };
+    const items = this.pages(page, count, this.state.win).map(n=>{
+      if (n === null) return { isNum:false, isDots:true };
+      const active = n === page;
+      return {
+        isNum:true, isDots:false, n, active,
+        ariaCurrent: active ? 'page' : 'false',
+        aria: 'Stránka ' + n,
+        style: this.NUM_BASE + (active
+          ? 'font-weight:700;color:#FFFFFF;background:#1E5AA8;'
+          : 'font-weight:600;color:#15181C;background:transparent;'),
+        onClick: active ? (()=>{}) : (()=>goto(n))
+      };
+    });
+    const off = 'color:#9AA1AB;background:#F2F4F7;cursor:not-allowed;';
+    const on = 'color:#1E5AA8;background:transparent;';
+    return {
+      standalone, items,
+      showSummary: total > 0,
+      shownText: this.fmt(P.shownCount ?? 48),
+      totalText: this.fmt(total),
+      showLoadMore: batch > 0,
+      loadMoreLabel: 'Načíst dalších ' + batch + ' produktů',
+      onLoadMore: P.onLoadMore || (()=>{}),
+      showPager: count > 1,
+      prevDisabled: page === 1,
+      nextDisabled: page === count,
+      prevStyle: this.NAV_BASE + (page === 1 ? off : on),
+      nextStyle: this.NAV_BASE + (page === count ? off : on),
+      onPrev: ()=>{ if (page > 1) goto(page-1); },
+      onNext: ()=>{ if (page < count) goto(page+1); }
+    };
+  }
+}
+
+
+// DebugBar: prop debug -> šablona
+(function(){ const rv = Component.prototype.renderVals;
+  Component.prototype.renderVals = function(){ const v = rv ? (rv.call(this) || {}) : {}; if (v.debug === undefined) v.debug = this.props.debug ?? true; return v; }; })();
+</script>
+</body>
+</html>

@@ -41,11 +41,11 @@
         <sc-if value="{{ hasChips }}" hint-placeholder-val="{{ true }}">
           <div style="border-bottom:1px solid #F2F4F7;padding:12px 0;">
             <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;margin-bottom:8px;">Aktivní filtry</div>
-            <div style="display:flex;flex-wrap:wrap;gap:4px;">
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
               <sc-for list="{{ chips }}" as="ch" hint-placeholder-count="3">
-                <button type="button" class="fd-i fd-chip" aria-label="{{ ch.aria }}" onClick="{{ ch.onRemove }}" style="display:inline-flex;align-items:center;gap:4px;min-height:28px;padding:0 6px 0 10px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;background:#1E5AA8;color:#fff;">{{ ch.t }}<span style="display:inline-flex;flex:none;opacity:.85;"><dc-import name="Ikony" icon-name="x" size="16" hint-size="16px,16px"></dc-import></span></button>
+                <dc-import name="Chip" kind="secondary" size="small" label="{{ ch.t }}" on-remove="{{ ch.onRemove }}" debug="{{ false }}" hint-size="120px,32px"></dc-import>
               </sc-for>
-              <button type="button" class="fd-i fd-chip-clear" onClick="{{ onClearAll }}" style="display:inline-flex;align-items:center;gap:4px;min-height:28px;padding:0 6px 0 10px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;background:#C5232B;color:#fff;">Zrušit vše<span style="display:inline-flex;flex:none;opacity:.85;"><dc-import name="Ikony" icon-name="x" size="16" hint-size="16px,16px"></dc-import></span></button>
+              <button type="button" class="fd-i fd-chip-clear" onClick="{{ onClearAll }}" style="display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:4px 8px 4px 12px;border-radius:999px;font-size:14px;font-weight:700;line-height:24px;cursor:pointer;background:#C5232B;color:#fff;">Zrušit vše<span style="display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="x" size="18" hint-size="18px,18px"></dc-import></span></button>
             </div>
           </div>
         </sc-if>

@@ -20,11 +20,23 @@
   /* mřížka kategorií: S dvousloupcová, jeden sloupec až na XS a XXS */
   @media (max-width:819px){ .vk-grid{grid-template-columns:repeat(2,1fr) !important;} }
   @media (max-width:549px){ .vk-grid{grid-template-columns:1fr !important;} }
+  /* nejhledanější: desktop jeden řádek s labelem vlevo, pod 820 px label nad chipsy */
+  @media (max-width:819px){ .vk-top{flex-direction:column !important;align-items:flex-start !important;gap:8px !important;} }
 </style>
 </helmet>
+<sc-if value="{{ showTop }}" hint-placeholder-val="{{ true }}">
+  <nav class="vk-top" aria-label="Nejhledanější kategorie" style="display:flex;align-items:center;gap:8px 16px;flex-wrap:wrap;margin-bottom:24px;">
+    <span style="flex:none;font-size:13px;font-weight:700;line-height:1.4;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Nejhledanější</span>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0;">
+      <sc-for list="{{ topItems }}" as="t" hint-placeholder-count="5">
+        <dc-import name="Chip" kind="{{ t.kind }}" size="small" label="{{ t.label }}" icon-name="{{ t.iconName }}" href="{{ t.href }}" debug="{{ false }}" hint-size="150px,32px"></dc-import>
+      </sc-for>
+    </div>
+  </nav>
+</sc-if>
 <div class="vk-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">
   <sc-for list="{{ cats }}" as="c" hint-placeholder-count="6">
-    <dc-import name="KategorickaDlazdice" cat="{{ c }}" hint-size="100%,240px"></dc-import>
+    <dc-import name="KategorickaDlazdice" cat="{{ c }}" variant="{{ tileVariant }}" debug="{{ false }}" hint-size="100%,240px"></dc-import>
   </sc-for>
 </div>
 <sc-if value="{{ showDocs }}" hint-placeholder-val="">
@@ -36,16 +48,40 @@
 </sc-if>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:620},&quot;categories&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{name:string,count:number,subs:{name:string,count:number}[]}[]&quot;,&quot;default&quot;:null},&quot;onOpenCategory&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(name:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;onPickSub&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(catName:string,subName:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:700},&quot;layout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dlazdice&quot;,&quot;kompaktni&quot;],&quot;default&quot;:&quot;kompaktni&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;nejhledanejsi&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Nejhledanější&quot;},&quot;topSearched&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{kind:string,label:string,iconName?:string,href?:string}[]&quot;,&quot;default&quot;:null,&quot;section&quot;:&quot;Nejhledanější&quot;},&quot;categories&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{name:string,count:number,subs:{name:string,count:number}[]}[]&quot;,&quot;default&quot;:null},&quot;onOpenCategory&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(name:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;onPickSub&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(catName:string,subName:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 class Component extends DCLogic {
   DEMO = [
-    { name:'Nápravy a brzdy', image:'uploads/napravy-a-brzdy.jpg', count:612, subs:[{name:'Nájezdové brzdy',count:94},{name:'Brzdové čelisti a obložení',count:188},{name:'Nápravy',count:76},{name:'Náboje kol',count:82}] },
-    { name:'Spojovací zařízení', image:'uploads/spojovaci-zarizeni.jpg', count:388, subs:[{name:'Kulové spojky',count:121},{name:'Kloubové spojky',count:44},{name:'Oje a příčníky',count:59},{name:'Zabezpečení proti krádeži',count:63}] },
-    { name:'Elektro a osvětlení', image:'uploads/elektro-a-osvetleni.jpg', count:474, subs:[{name:'Zadní světla',count:146},{name:'Poziční a obrysová světla',count:98},{name:'Kabeláž a zásuvky',count:114},{name:'Odrazky',count:52}] },
-    { name:'Kola a pneumatiky', image:'uploads/kola-a-pneumatiky.jpg', count:296, subs:[{name:'Pneumatiky s diskem',count:108},{name:'Samostatné disky',count:64},{name:'Pneumatiky',count:82},{name:'Šrouby a matice kol',count:42}] },
-    { name:'Blatníky a karoserie', image:'uploads/blatniky-a-karoserie.jpg', count:412, subs:[{name:'Blatníky',count:134},{name:'Bočnice a sloupky',count:88},{name:'Podlahy',count:52},{name:'Plachty a konstrukce',count:96}] },
-    { name:'Upínání a doplňky', image:'uploads/navijaky-a-kladky.jpg', count:236, subs:[{name:'Navijáky a kladky',count:58},{name:'Upínací pásy',count:72},{name:'Podpěrné nohy',count:48},{name:'Plynové vzpěry',count:34}] }
+    { name:'Elektro, svítilny, odrazky', image:'uploads/elektro-a-osvetleni.jpg', count:474, subs:[{name:'Zadní světla',count:146},{name:'Poziční a obrysová světla',count:98},{name:'Kabeláž a zásuvky',count:114},{name:'Odrazky',count:52}] },
+    { name:'Pneu, kola, disky', image:'uploads/kola-a-pneumatiky.jpg', count:296, subs:[{name:'Pneumatiky s diskem',count:108},{name:'Samostatné disky',count:64},{name:'Pneumatiky',count:82},{name:'Šrouby a matice kol',count:42}] },
+    { name:'Spojovací zařízení a zámky', image:'uploads/kulove-tazne-spojky.jpg', count:388, subs:[{name:'Kulové spojky',count:121},{name:'Kloubové spojky',count:44},{name:'Oje a příčníky',count:59},{name:'Zabezpečení proti krádeži',count:63}] },
+    { name:'Plynové vzpěry', count:34, subs:[] },
+    { name:'Nájezdové brzdy a díly', image:'uploads/celisti-brzdove-knott-200x50-mala-sada-na-2-kola.jpg', count:212, subs:[{name:'Nájezdové brzdy',count:94},{name:'Lanka a tyčoví',count:66}] },
+    { name:'Nápravy kompletní', image:'uploads/napravy-a-brzdy.jpg', count:76, subs:[{name:'Nebrzděné nápravy',count:38},{name:'Brzděné nápravy',count:38}] },
+    { name:'Díly náprav', image:'uploads/celisti.jpg', count:188, subs:[{name:'Brzdové čelisti a obložení',count:96},{name:'Náboje kol',count:52},{name:'Ložiska a gufera',count:40}] },
+    { name:'Nájezdy', count:28, subs:[] },
+    { name:'Opěrná kolečka, nohy, držáky', image:'uploads/kolecka-1.jpg', count:132, subs:[{name:'Opěrná kolečka',count:64},{name:'Podpěrné nohy',count:48},{name:'Držáky',count:20}] },
+    { name:'Blatníky a zástěrky', image:'uploads/blatniky.jpg', count:134, subs:[{name:'Blatníky',count:98},{name:'Zástěrky',count:36}] },
+    { name:'Bočnice, uzávěry, panty', image:'uploads/bocnice.jpg', count:118, subs:[{name:'Bočnice',count:58},{name:'Uzávěry a panty',count:60}] },
+    { name:'Zabezpečení nákladu', count:72, subs:[] },
+    { name:'Navijáky a příslušenství', image:'uploads/navijaky-a-kladky.jpg', count:58, subs:[{name:'Navijáky',count:34},{name:'Kladky a lana',count:24}] },
+    { name:'Konstrukční díly', image:'uploads/konstrukcni_dily.jpg', count:164, subs:[] },
+    { name:'Plachty a příslušenství', count:96, subs:[{name:'Plachty',count:52},{name:'Konstrukce',count:44}] },
+    { name:'Boxy na nářadí a držáky', image:'uploads/box-naradi.jpg', count:44, subs:[] },
+    { name:'Klíny a držáky', image:'uploads/kliny.jpg', count:38, subs:[] },
+    { name:'Hydraulika přívěsů', image:'uploads/hydraulika.jpg', count:52, subs:[] },
+    { name:'Doplňky k přívěsům', image:'uploads/doplnky.jpg', count:126, subs:[] },
+    { name:'Pomůcky pro údržbu', count:64, subs:[] }
   ];
+  // první je odkaz do poradny (accent + ikona), dál nejnavštěvovanější podkategorie
+  TOP = [
+    { kind:'guide', label:'Schéma zapojení zásuvky 7 / 13 pin', iconName:'book', href:'#poradna-zasuvka' },
+    { kind:'secondary', label:'Plynové vzpěry',       href:'#plynove-vzpery' },
+    { kind:'secondary', label:'Nájezdové brzdy',      href:'#najezdove-brzdy' },
+    { kind:'secondary', label:'Kabeláž a zásuvky',    href:'#kabelaz-a-zasuvky' },
+    { kind:'secondary', label:'Pneumatiky s diskem',  href:'#pneumatiky-s-diskem' }
+  ];
+  // drží se defaultu v data-props; prázdný prop layout znamená „podle komponenty“
+  DEFAULT_LAYOUT = 'kompaktni';
   renderVals(){
     const given = this.props.categories;
     const demo = !given || !given.length;
@@ -60,7 +96,10 @@ class Component extends DCLogic {
       subs: (k.subs||[]).map(s=>({ name: s.name, count: s.count, href: s.href, onPick: ()=>pick(k.name, s.name) })),
       onOpen: ()=>open(k.name)
     }));
-    return { cats, showDocs: demo };
+    const topItems = (this.props.topSearched && this.props.topSearched.length)
+      ? this.props.topSearched
+      : this.TOP;
+    return { cats, showDocs: demo, tileVariant: ((this.props.layout || this.DEFAULT_LAYOUT) === 'kompaktni' ? 'kompaktni' : 'standard'), showTop: (this.props.nejhledanejsi ?? true) && topItems.length > 0, topItems };
   }
 }
 
