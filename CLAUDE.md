@@ -59,6 +59,7 @@
 | `surface.brandDark` | `#142F56` | topbar, patička |
 | `border.subtle` | `#F2F4F7` | oddělovače a linky |
 | `border.control` | `#91959B` | nezaškrtnutý checkbox |
+| `border.controlHover` | `#5A626C` | hranice ovládacího prvku v hoveru — 1px okraj potřebuje velký rozdíl, aby byla změna vidět; nejbližší krok `#7A828C` je na hairline nerozeznatelný. `#5A626C` je zároveň `text.secondary`, okraj a popisek tak ztmavnou spolu |
 | `action.primary` | `#1E5AA8` / hover `#1A4A8A` | primární tlačítko |
 | `action.secondary` | `#EFF4FB` / hover `#D8E6F6` | sekundární tlačítko, text `#1E5AA8` |
 | `action.buy` | `#0E7F43` / hover `#0B6937` | tlačítko Koupit |
@@ -210,7 +211,8 @@ Platí dál:
 | hover odkaz na světlém | `#15181C → #1E5AA8`, přechod 120 ms |
 | hover modrý odkaz | `#1E5AA8 → #1A4A8A` |
 | hover odkaz na tmavém | `#FFFFFF → #D8E6F6`, resp. `#B4CEEC → #FFFFFF` |
-| hover chip značky | `border-color: blue.300` |
+| hover chip značky | `border-color: blue.400 #5189CC` — `blue.300` má na bílé jen 2,1:1 |
+| hover hranice ovládacího prvku | `border.controlHover` `#5A626C` |
 | hover položky v overlayi | pozadí `surface.subtle` `#F2F4F7`, přechod 120 ms — platí i pro neaktivní položky dropdownu a řádky seznamu |
 | `:active` tlačítka | `translateY(1px)` + tmavší pozadí |
 | focus input | focus ring |

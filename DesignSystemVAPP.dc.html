@@ -29,10 +29,10 @@
   html,body{margin:0;padding:0;}
   .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
   @media (max-width:819px){ .vp-in{padding-left:16px;padding-right:16px;} }
-  /* dokumentační řádky: pod 420 px (XXS) se pevné sloupce zalomí pod sebe */
-  @media (max-width:419px){
+  /* dokumentační řádky: pásma S, XS, XXS — pevné sloupce se zalomí pod sebe */
+  @media (max-width:819px){
     .ds-doc{flex-wrap:wrap;}
-    .ds-doc>span{width:100% !important;flex:1 1 100% !important;text-align:left !important;white-space:normal !important;}
+    .ds-doc>span,.ds-doc>div{width:auto !important;min-width:0 !important;flex:1 1 100% !important;text-align:left !important;white-space:normal !important;}
   }
   body{background:#F7F9FB;}
   a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
@@ -399,6 +399,7 @@ class Component extends DCLogic {
         ['surface.brandDark','#142F56','Topbar, patička'],
         ['border.subtle','#F2F4F7','Oddělovače a linky',1],
         ['border.control','#91959B','Nezaškrtnutý checkbox',1],
+        ['border.controlHover','#5A626C','Hranice ovládacího prvku v hoveru'],
       ])},
       { title:'Akce', items: mkItems([
         ['action.primary.bg','#1E5AA8','Primární tlačítko'],
@@ -571,7 +572,8 @@ class Component extends DCLogic {
       ['Hover — Koupit','background: green.600 → green.700'],
       ['Hover — Akce a slevy','background: red.600 → red.700'],
       ['Hover — záložka menu','color: blue.600'],
-      ['Hover — chip značky','border-color: blue.300'],
+      ['Hover — chip značky','border-color: blue.400 #5189CC (blue.300 mělo na bílé 2,1:1)'],
+      ['Hover — hranice ovládacího prvku','border.control #91959B → border.controlHover #5A626C'],
       ['Hover — odkaz na světlém','color: link.onLight → link.onLight.hover (blue.600)'],
       ['Hover — modrý odkaz','color: blue.600 → blue.700'],
       ['Hover — odkaz na tmavém','color: #FFFFFF → blue.100 · #B4CEEC → #FFFFFF'],
