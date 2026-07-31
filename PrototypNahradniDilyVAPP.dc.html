@@ -81,7 +81,7 @@
 </helmet>
 <div data-screen-label="Prototyp Náhradní díly VAPP" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
 
-  <dc-import name="Hlavicka" menu-tree="{{ menuTree }}" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" hint-size="100%,150px"></dc-import>
+  <dc-import name="Hlavicka" variant="{{ headerVariant }}" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:00–16:00" contact-open="{{ true }}" menu-tree="{{ menuTree }}" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" hint-size="100%,150px"></dc-import>
 
   <!-- CONTENT -->
   <main class="vp-in" style="padding-top:14px;padding-bottom:40px;">
@@ -217,7 +217,7 @@
 
   </main>
 
-  <dc-import name="PrezentacniLista" active="{{ plActive }}" on-select="{{ plSelect }}" debug-on="{{ plDebugOn }}" on-toggle-debug="{{ plToggleDebug }}" hint-size="0px,0px"></dc-import>
+  <dc-import name="PrezentacniLista" active="{{ plActive }}" on-select="{{ plSelect }}" label2="Hlavička:" variants2="{{ headerVariantOptions }}" active2="{{ headerVariant }}" on-select2="{{ onHeaderVariant }}" debug-on="{{ plDebugOn }}" on-toggle-debug="{{ plToggleDebug }}" hint-size="0px,0px"></dc-import>
 
   <div style="margin-top:10px;">
     <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
@@ -245,7 +245,8 @@ class Component extends DCLogic {
       priceFrom:0, priceTo:8000, flags:null,
       view:'groups', path:[], leafPath:null, subcat:null, onlyStock: props.defaultOnlyStock ?? false, sort: props.defaultSort ?? 'pop',
       brands:{}, params:{}, accOpen:{ 'Výrobce':true }, compare:{}, qty:{}, pageFrom:1, pageTo:1, catLayout:null, debugOverride:null, hoverCard:null,
-      searchQ:'', searchFocus:false, loading:false, macro:null, brandFocus:null, saleOnly:false
+      searchQ:'', searchFocus:false, loading:false, macro:null, brandFocus:null, saleOnly:false,
+      headerVariant:'kontakt'
     };
     // demo katalog: skupiny bez ručně psaných produktů se doplní generovanými kusy,
     // aby žádný rozcestník nevedl na prázdný výpis
@@ -311,14 +312,23 @@ class Component extends DCLogic {
 
   GROUPS = [
     { key:'elektro', image:'uploads/elektro-a-osvetleni.jpg', name:'Elektro, svítilny, odrazky', preview:'Světla, kabeláž, zástrčky…', count:474, children:[
-      { name:'Zadní světla', count:146, children:[
-        { name:'LED', count:82, children:[ { name:'Jokon', count:34 }, { name:'Aspöck', count:28 }, { name:'Fristom', count:20 } ] },
-        { name:'Žárovkové', count:64, children:[ { name:'Jokon', count:30 }, { name:'Aspöck', count:34 } ] }
-      ] },
-      { name:'Poziční a obrysová světla', count:98, children:[ { name:'Bílé', count:36 }, { name:'Oranžové', count:34 }, { name:'Červené', count:28 } ] },
-      { name:'Kabeláž a zásuvky', count:114, children:[ { name:'Zásuvky 7pin', count:38 }, { name:'Zásuvky 13pin', count:34 }, { name:'Adaptéry', count:22 }, { name:'Kabely a svazky', count:20 } ] },
-      { name:'Odrazky', count:66 },
-      { name:'Osvětlení SPZ', count:50 }
+      { name:'Baterie, nabíječky a příslušenství', count:24 },
+      { name:'Blinkry', count:28 },
+      { name:'Brzdové svítilny', count:26 },
+      { name:'Couvačky a mlhovky', count:22 },
+      { name:'Držáky svítilen a odrazek', count:30 },
+      { name:'Kabely a kabeláže', count:38 },
+      { name:'Majáky a výstražné svítilny', count:24 },
+      { name:'Montážní materiál', count:26 },
+      { name:'Obrysové svítilny', count:42 },
+      { name:'Odrazky a odrazové desky', count:34 },
+      { name:'Osvětlení registrační značky', count:18 },
+      { name:'Pracovní světlomety', count:20 },
+      { name:'Sdružené zadní svítilny', count:46 },
+      { name:'Skla svítilen náhradní', count:28 },
+      { name:'Vnitřní osvětlení', count:12 },
+      { name:'Zásuvky, zástrčky, konektory', count:32 },
+      { name:'Žárovky, náhradní LED moduly', count:24 }
     ] },
     { key:'kola', image:'uploads/kola-a-pneumatiky.jpg', name:'Pneu, kola, disky', preview:'Pneu, disky, šrouby…', count:296, children:[
       { name:'Pneumatiky s diskem', count:108, children:[ { name:'8"', count:22 }, { name:'10"', count:26 }, { name:'13"', count:38 }, { name:'14"', count:22 } ] },
@@ -638,7 +648,10 @@ class Component extends DCLogic {
     const macroItems = (m)=>{
       if (m.brands) return m.brands.map(b=>({ name:b, count:(this.BRANDS.find(x=>x[0]===b)||[b,0])[1] }));
       if (m.sale) return saleGroups.map(x=>({ name:x.g.name, count:x.n * 12 }));
-      return macroOf(m).map(g=>({ name:g.name, count:g.count }));
+      const gs = macroOf(m);
+      // makro nad jedinou kategorií nepřidává mezistupeň — nabízí přímo její podkategorie
+      if (gs.length === 1 && (gs[0].children||[]).length) return gs[0].children.map(c=>({ name:c.name, count:c.count }));
+      return gs.map(g=>({ name:g.name, count:g.count }));
     };
     const macroOrder = [saleMacro].concat(this.MACROS.filter(m=>!m.sale));
     const macroCategories = macroOrder.map(m=>{
@@ -835,6 +848,9 @@ class Component extends DCLogic {
       plSelect: (id)=>this.setState({ catLayout: id === 'v2' ? 'dlazdice' : 'kompaktni' }),
       plDebugOn: effDebug,
       plToggleDebug: ()=>this.setState({ debugOverride: !effDebug }),
+      headerVariant: s.headerVariant,
+      headerVariantOptions: [{ id:'classic', label:'V1 topbar' }, { id:'kontakt', label:'V2 kontakt' }],
+      onHeaderVariant: (v)=>this.setState({ headerVariant: v }),
       activeGroupName: activeMacro ? activeMacro.name : (ag?ag.name:''),
       activeGroupCount: activeMacro ? macroSubcats.reduce((a,x)=>a+x.count,0).toLocaleString('cs-CZ') : (curNode?curNode.count:''), crumbs,
       backToGroups:()=>{ if(activeMacro){ this.go({ macro:null }, '#/nahradni-dily/'); return; } if(path.length) this.go({ path: path.slice(0,-1), leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, this.urlFor(ag.key, path.slice(0,-1))); else this.go({ view:'groups', path:[], leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, '#/nahradni-dily/'); },

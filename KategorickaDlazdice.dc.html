@@ -60,7 +60,9 @@
         </sc-for>
       </div>
     </sc-if>
-    <dc-import name="Tlacitko" variant="secondary" size="medium" label="Zobrazit vše" icon-trailing="chevron-right" on-click="{{ cat.onOpen }}" style="margin-top:auto;align-self:flex-start;position:relative;z-index:1;" hint-size="150px,44px"></dc-import>
+    <div style="margin-top:auto;display:flex;position:relative;z-index:1;">
+      <dc-import name="Tlacitko" variant="secondary" size="medium" label="Zobrazit vše" icon-trailing="chevron-right" on-click="{{ cat.onOpen }}" hint-size="150px,44px"></dc-import>
+    </div>
   </div>
 </sc-if>
 <sc-if value="{{ gallery }}" hint-placeholder-val="{{ true }}">
@@ -80,7 +82,9 @@
             <span class="k-sub" style="font-size:14px;font-weight:600;color:#3A424C;cursor:pointer;">{{ sub.name }}</span>
           </sc-for>
         </div>
-        <dc-import name="Tlacitko" variant="secondary" size="medium" label="Zobrazit vše" icon-trailing="chevron-right" style="margin-top:auto;align-self:flex-start;position:relative;z-index:1;" hint-size="150px,44px"></dc-import>
+        <div style="margin-top:auto;display:flex;position:relative;z-index:1;">
+          <dc-import name="Tlacitko" variant="secondary" size="medium" label="Zobrazit vše" icon-trailing="chevron-right" hint-size="150px,44px"></dc-import>
+        </div>
       </div>
     </sc-for>
   </div>

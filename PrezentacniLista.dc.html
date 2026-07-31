@@ -22,16 +22,25 @@
   @media (max-width:419px){ .pl-label{display:none !important;} .pl-btn{padding:0 10px !important;} }
 </style>
 </helmet>
-<div style="position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:96;display:flex;align-items:center;gap:8px;padding:6px;border-radius:999px;background:#142F56;box-shadow:0 10px 30px rgba(20,30,45,.14);">
+<div style="position:fixed;left:16px;right:16px;bottom:16px;z-index:96;display:flex;justify-content:center;pointer-events:none;">
+<div style="pointer-events:auto;display:flex;align-items:center;flex-wrap:wrap;justify-content:center;gap:8px;padding:6px;border-radius:999px;background:#142F56;box-shadow:0 10px 30px rgba(20,30,45,.14);">
   <span class="pl-label" style="font-size:13px;font-weight:700;color:#B4CEEC;padding:0 4px 0 10px;">{{ label }}</span>
   <sc-for list="{{ items }}" as="it" hint-placeholder-count="2">
     <button type="button" class="pl-i pl-btn" onClick="{{ it.onClick }}" aria-pressed="{{ it.pressed }}" style="{{ it.style }}">{{ it.label }}</button>
   </sc-for>
+  <sc-if value="{{ hasGroup2 }}" hint-placeholder-val="">
+    <span style="width:1px;height:20px;background:#1E5AA8;margin:0 2px;"></span>
+    <span class="pl-label" style="font-size:13px;font-weight:700;color:#B4CEEC;padding:0 4px 0 4px;">{{ label2 }}</span>
+    <sc-for list="{{ items2 }}" as="it" hint-placeholder-count="2">
+      <button type="button" class="pl-i pl-btn" onClick="{{ it.onClick }}" aria-pressed="{{ it.pressed }}" style="{{ it.style }}">{{ it.label }}</button>
+    </sc-for>
+  </sc-if>
   <span style="width:1px;height:20px;background:#1E5AA8;margin:0 2px;"></span>
   <button type="button" class="pl-i pl-btn" onClick="{{ onToggleDebug }}" aria-pressed="{{ debugPressed }}" style="{{ debugStyle }}">Debug</button>
 </div>
+</div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:520,&quot;height&quot;:120},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Kategorie:&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;variants&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{id:string,label:string}[]&quot;,&quot;default&quot;:null},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;v1&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onSelect&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(id:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;debugOn&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onToggleDebug&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:760,&quot;height&quot;:120},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Kategorie:&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;variants&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{id:string,label:string}[]&quot;,&quot;default&quot;:null},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;v1&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onSelect&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(id:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;label2&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;variants2&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{id:string,label:string}[]&quot;,&quot;default&quot;:null},&quot;active2&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onSelect2&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(id:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;debugOn&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onToggleDebug&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null}}">
 class Component extends DCLogic {
   BASE = 'min-height:32px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:700;';
   ON = 'background:#FFFFFF;color:#142F56;';
@@ -48,9 +57,18 @@ class Component extends DCLogic {
       style: this.BASE + (v.id === active ? this.ON : this.OFF),
       onClick: ()=>onSelect(String(v.id))
     }));
+    const src2 = (Array.isArray(P.variants2) && P.variants2.length) ? P.variants2 : null;
+    const onSelect2 = P.onSelect2 || (()=>{});
+    const active2 = P.active2 || '';
+    const items2 = src2 ? src2.map(v=>({
+      label: v.label, pressed: v.id === active2 ? 'true' : 'false',
+      style: this.BASE + (v.id === active2 ? this.ON : this.OFF),
+      onClick: ()=>onSelect2(String(v.id))
+    })) : [];
     const dOn = (P.debugOn ?? true) !== false;
     return {
       label: P.label || 'Kategorie:', items,
+      hasGroup2: !!src2, label2: P.label2 || '', items2,
       debugPressed: dOn ? 'true' : 'false',
       debugStyle: this.BASE + (dOn ? this.ON : this.OFF),
       onToggleDebug: P.onToggleDebug || (()=>{})

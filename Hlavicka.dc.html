@@ -42,9 +42,28 @@
   @media (max-width:819px){ .vp-in{padding-left:16px;padding-right:16px;} }
   @media (max-width:549px){ .hd-actlbl{display:none !important;} .hd-acts{gap:4px !important;} }
   @media (max-width:419px){ .hd-logo{height:24px !important;} }
+  @media (max-width:819px){ .hd-mdup{display:none !important;} }
+  @media (min-width:820px){ .hd-sdn{display:none !important;} }
+  .hd-v2 .hd-acts{margin-left:0 !important;}
+  @media (max-width:819px){ .hd-v2 .hd-acts{margin-left:auto !important;} }
+  .hd-kb{margin-left:auto;}
 </style>
 </helmet>
-<header class="hd-root" style="background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;width:100%;margin:0;padding:0;">
+<header class="hd-root {{ rootCls }}" style="background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;width:100%;margin:0;padding:0;">
+  <sc-if value="{{ isV2 }}" hint-placeholder-val="">
+  <div style="background:#142F56;color:#fff;">
+    <div class="vp-in" style="display:flex;align-items:center;gap:10px;padding-top:7px;padding-bottom:7px;">
+      <div class="hd-mdup" style="display:flex;align-items:center;gap:16px;font-size:13px;color:#B4CEEC;margin-right:auto;">
+        <sc-for list="{{ infoItems }}" as="i" hint-placeholder-count="4">
+          <a class="hd-top hd-i hd-ondark hd-hit" href="#" onClick="{{ i.onClick }}" style="cursor:pointer;">{{ i.t }}</a>
+        </sc-for>
+      </div>
+      <span class="hd-sdn" style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;margin-right:auto;"><span class="vapp-led" style="--led:rgba(46,170,106,.6);width:8px;height:8px;background:#2EAA6A;flex:none;"></span>Po–Pá 8–16 · <span style="color:#97DBB4;font-weight:700;">právě otevřeno</span></span>
+      <a class="hd-sdn hd-clink hd-i hd-ondark" href="{{ contactPhoneHref }}" style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;text-decoration:underline;cursor:pointer;color:inherit;"><dc-import name="Ikony" icon-name="phone" size="18" hint-size="18px,18px"></dc-import>{{ contactPhone }}</a>
+    </div>
+  </div>
+  </sc-if>
+  <sc-if value="{{ isV1 }}" hint-placeholder-val="{{ true }}">
   <div style="background:#142F56;color:#fff;">
     <div class="vp-in" style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:7px;padding-bottom:7px;">
       <span style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;"><span class="vapp-led" style="--led:rgba(46,170,106,.6);width:8px;height:8px;background:#2EAA6A;flex:none;"></span>Po–Pá 8–16 · <span style="color:#97DBB4;font-weight:700;">právě otevřeno</span></span>
@@ -57,13 +76,19 @@
       <a class="hd-mb hd-clink hd-i hd-ondark" href="tel:+420323605314" style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;text-decoration:underline;cursor:pointer;color:inherit;"><dc-import name="Ikony" icon-name="phone" size="18" hint-size="18px,18px"></dc-import>323 605 314</a>
     </div>
   </div>
+  </sc-if>
 
   <div style="background:#fff;border-bottom:1px solid #F2F4F7;">
     <div class="vp-in" style="display:flex;align-items:center;gap:14px;padding-top:12px;padding-bottom:12px;flex-wrap:wrap;">
       <a class="hd-i" href="#" aria-label="VAPP — domovská stránka" onClick="{{ onLogoNav }}" style="display:flex;flex:none;cursor:pointer;"><img class="hd-logo" src="./vapp-logo.svg" alt="VAPP" style="height:30px;display:block;"></a>
-      <div class="hd-dt" style="flex:1;min-width:200px;">
+      <div class="hd-dt" style="flex:1;min-width:200px;max-width:640px;margin-left:auto;margin-right:auto;">
         <dc-import name="Vyhledavani" bare="true" height="44" value="{{ searchValue }}" on-change="{{ onSearchChange }}" placeholder="Hledat díly podle názvu, čísla nebo modelu…" hint-size="100%,44px"></dc-import>
       </div>
+      <sc-if value="{{ isV2 }}" hint-placeholder-val="">
+        <div class="hd-kb hd-mdup" style="flex:none;">
+          <dc-import name="KontaktBlok" phone="{{ contactPhone }}" phone-href="{{ contactPhoneHref }}" hours="{{ contactHours }}" open="{{ contactOpen }}" debug="{{ debug }}" hint-size="190px,44px"></dc-import>
+        </div>
+      </sc-if>
       <div class="hd-acts" style="margin-left:auto;display:flex;align-items:center;gap:10px;">
         <button type="button" class="hd-act hd-i" aria-label="Přihlásit" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:44px;padding:0 8px;cursor:pointer;"><div style="display:flex;align-items:center;justify-content:center;"><dc-import name="Ikony" icon-name="user" size="24" hint-size="24px,24px"></dc-import></div><span class="hd-actlbl" style="font-size:13px;font-weight:600;">Přihlásit</span></button>
         <button type="button" class="hd-act hd-i" aria-label="{{ compareAria }}" onClick="{{ onCompare }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:44px;padding:0 8px;cursor:pointer;">
@@ -97,7 +122,7 @@
 </header>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:220},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;cartCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;},&quot;cartTotal&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1500,&quot;tsType&quot;:&quot;number&quot;},&quot;compareCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;tsType&quot;:&quot;number&quot;},&quot;tabs&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;menuTree&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;,&quot;default&quot;:null},&quot;searchValue&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;,&quot;default&quot;:null},&quot;onSearchChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCompare&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCart&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onTabClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onLogoClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;infoLinks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:220},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;classic&quot;,&quot;kontakt&quot;],&quot;default&quot;:&quot;kontakt&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactPhone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;323 605 314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactPhoneHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;tel:+420323605314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactHours&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;8:00–16:00&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;cartCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;},&quot;cartTotal&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1500,&quot;tsType&quot;:&quot;number&quot;},&quot;compareCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;tsType&quot;:&quot;number&quot;},&quot;tabs&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;menuTree&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;,&quot;default&quot;:null},&quot;searchValue&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;,&quot;default&quot;:null},&quot;onSearchChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCompare&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCart&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onTabClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onLogoClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;infoLinks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null}}">
 class Component extends DCLogic {
   state = { menuOpen:false };
   lockScroll(on){ try{ document.body.style.overflow = on ? 'hidden' : ''; }catch(e){} }
@@ -126,7 +151,13 @@ class Component extends DCLogic {
     });
     const cartCount = P.cartCount;
     const compareCount = P.compareCount || 0;
+    const isV1 = (P.variant || 'classic') !== 'kontakt';
     return {
+      isV1, isV2: !isV1, rootCls: isV1 ? 'hd-v1' : 'hd-v2',
+      contactPhone: P.contactPhone ?? '323 605 314',
+      contactPhoneHref: P.contactPhoneHref ?? 'tel:+420323605314',
+      contactHours: P.contactHours ?? '8:00–16:00',
+      contactOpen: P.contactOpen ?? true,
       searchValue: P.searchValue, onSearchChange: P.onSearchChange,
       compareAria: compareCount>0 ? ('Porovnat — ' + compareCount + (compareCount===1?' produkt':(compareCount<5?' produkty':' produktů'))) : 'Porovnat produkty',
       onNav: (e)=>{ if(e&&e.preventDefault) e.preventDefault(); },
