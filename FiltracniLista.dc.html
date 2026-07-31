@@ -34,7 +34,7 @@
   <sc-if value="{{ hasChips }}" hint-placeholder-val="{{ true }}">
     <div class="fl-chips" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0;">
       <sc-for list="{{ activeChips }}" as="c" hint-placeholder-count="3">
-        <dc-import name="Chip" kind="secondary" size="small" label="{{ c.label }}" on-remove="{{ c.onRemove }}" debug="{{ false }}" hint-size="120px,32px"></dc-import>
+        <dc-import name="Chip" kind="secondary" size="small" label="{{ c.label }}" on-remove="{{ c.onRemove }}" hint-size="120px,32px"></dc-import>
       </sc-for>
     </div>
   </sc-if>

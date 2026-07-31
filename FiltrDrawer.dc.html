@@ -43,7 +43,7 @@
             <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;margin-bottom:8px;">Aktivní filtry</div>
             <div style="display:flex;flex-wrap:wrap;gap:8px;">
               <sc-for list="{{ chips }}" as="ch" hint-placeholder-count="3">
-                <dc-import name="Chip" kind="secondary" size="small" label="{{ ch.t }}" on-remove="{{ ch.onRemove }}" debug="{{ false }}" hint-size="120px,32px"></dc-import>
+                <dc-import name="Chip" kind="secondary" size="small" label="{{ ch.t }}" on-remove="{{ ch.onRemove }}" hint-size="120px,32px"></dc-import>
               </sc-for>
               <button type="button" class="fd-i fd-chip-clear" onClick="{{ onClearAll }}" style="display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:4px 8px 4px 12px;border-radius:999px;font-size:14px;font-weight:700;line-height:24px;cursor:pointer;background:#C5232B;color:#fff;">Zrušit vše<span style="display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="x" size="18" hint-size="18px,18px"></dc-import></span></button>
             </div>
@@ -63,7 +63,7 @@
           </button></h3>
           <sc-if value="{{ priceOpen }}" hint-placeholder-val="{{ true }}">
             <div style="padding:2px 0 16px;display:flex;flex-direction:column;gap:16px;">
-              <dc-import name="CenovyFiltr" min="{{ priceMin }}" max="{{ priceMax }}" step="{{ priceStep }}" value-from="{{ priceFrom }}" value-to="{{ priceTo }}" on-change="{{ onPriceChange }}" debug="{{ false }}" hint-size="100%,150px"></dc-import>
+              <dc-import name="CenovyFiltr" min="{{ priceMin }}" max="{{ priceMax }}" step="{{ priceStep }}" value-from="{{ priceFrom }}" value-to="{{ priceTo }}" on-change="{{ onPriceChange }}" hint-size="100%,150px"></dc-import>
               <div>
                 <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;margin-bottom:6px;">Příznaky</div>
                 <div style="display:flex;flex-wrap:wrap;gap:8px;">

@@ -144,7 +144,7 @@ Mezihodnoty mimo tuto řadu nepoužívat.
 - **Motion:** 60 ms stisk · 120 ms barvy a pozadí · 150 ms stíny · `motion.panel` **400 ms** posun panelů (drill-down menu, drawer filtrů) · 1800 ms pulz LED · easing `ease`.
 - **Rozměry:** `size.control` 44 px — input, Kvantifikátor Standard, ikonové tlačítko, Tlačítko Medium. `size.row` 48 px — řádek seznamu a navigace.
 - **Jen světlý režim.** Dark mode se nedělá.
-- **Z-index (zápis dnešního stavu, nic se nepřečísluje):** `z.stickyBar` 60 · `z.header` 70 · `z.drawerOverlay` 80 · `z.drawerPanel` 90 · `z.toast` 95 · `z.debug` 99. Panel mobilního menu má z-index 60 uvnitř stohovacího kontextu hlavičky — není to globální hodnota. **Každá nová hodnota se sem zapíše.**
+- **Z-index (zápis dnešního stavu, nic se nepřečísluje):** `z.stickyBar` 60 · `z.header` 70 · `z.drawerOverlay` 80 · `z.drawerPanel` 90 · `z.toast` 95 · `z.presenter` 96 · `z.debug` 99. Panel mobilního menu má z-index 60 uvnitř stohovacího kontextu hlavičky — není to globální hodnota. **Každá nová hodnota se sem zapíše.**
 
 ---
 
@@ -273,3 +273,16 @@ Systém prošel auditem a splňuje AA. Nové komponenty i změny musí tuto úro
 - Sdílený registr `window.__vappDebugBar` s počítadlem referencí `count` a potlačením `suppress`. Bar je vidět, právě když `count > 0 && suppress === 0`. Jedno odškrtnutí kdekoli ho zhasne na celé stránce.
 - **Prop `debug`** (boolean, default `true`) má každá komponenta i stránka a předává ho dolů. Výjimky bez baru: `Tlacitko` (kořen `<button>`) a `Ikony`.
 - Bar má `aria-hidden="true"`.
+
+---
+
+## 11. PrezentacniLista — prezentační nástroj
+
+`PrezentacniLista.dc.html` **stojí mimo design systém.** Tokeny, minimum písma ani kontrast se na ni nevztahují a neposuzuje se v auditech. Do produkčního návrhu e-shopu nepatří.
+
+- Účel: klient u prezentace nevidí panel tweaks, proto si varianty zobrazení kategorií přepíná přímo na stránce. Součástí je i přepínač DebugBaru.
+- Fixní pill u **spodní** hrany okna, vodorovně centrovaný, `z-index` `z.presenter` 96. Horní hranu obsazuje sticky hlavička a DebugBar. Nezaměňovat s **topbarem** — tak se říká tmavému pruhu s otevírací dobou uvnitř `Hlavicky`.
+- Barvy jen `#142F56`, `#1E5AA8`, `#B4CEEC`, `#FFFFFF`. Jediná media query je `max-width:419px` (skryje popisek, zúží tlačítka), aby se lišta vešla na 320 px.
+- Props: `label`, `variants` (data, prázdné = vlastní default), `active`, `onSelect(id)`, `debugOn`, `onToggleDebug()`. Pole `variants` nese **jen data** — per-položkové `onClick` si komponenta vyrábí sama.
+- **Závazné mapování, nikdy se nepřečísluje:** `v1` = `kompaktni` (dnešní stav webu, výchozí volba), `v2` = `dlazdice` (návrh redukce). V UI lišty jsou vidět jen čísla, ne názvy variant.
+- Na stránce je zdrojem pravdy stav (`catLayout`, `debugOverride`); prop `categoryLayout` zůstává výchozí hodnotou pro tweak, stav ho přebíjí. `DEFAULT_CATEGORY_LAYOUT` zůstává `kompaktni`.

@@ -46,7 +46,7 @@
   </div>
   <sc-if value="{{ showPager }}" hint-placeholder-val="{{ true }}">
     <nav aria-label="Stránkování" class="pg-pager" style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:nowrap;">
-      <button type="button" class="pg-i pg-nav" disabled="{{ prevDisabled }}" onClick="{{ onPrev }}" aria-label="Předchozí stránka" style="{{ prevStyle }}"><dc-import name="Ikony" icon-name="chevron-left" size="{{ 24 }}" debug="{{ false }}" hint-size="24px,24px"></dc-import><span class="pg-lbl">Předchozí</span></button>
+      <button type="button" class="pg-i pg-nav" disabled="{{ prevDisabled }}" onClick="{{ onPrev }}" aria-label="Předchozí stránka" style="{{ prevStyle }}"><dc-import name="Ikony" icon-name="chevron-left" size="{{ 24 }}" hint-size="24px,24px"></dc-import><span class="pg-lbl">Předchozí</span></button>
       <sc-for list="{{ items }}" as="it" hint-placeholder-count="7">
         <sc-if value="{{ it.isNum }}" hint-placeholder-val="{{ true }}">
           <button type="button" class="pg-i pg-num" onClick="{{ it.onClick }}" aria-current="{{ it.ariaCurrent }}" aria-label="{{ it.aria }}" style="{{ it.style }}">{{ it.n }}</button>
@@ -55,7 +55,7 @@
           <span class="pg-dots" aria-hidden="true" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#666E78;font-size:15px;">…</span>
         </sc-if>
       </sc-for>
-      <button type="button" class="pg-i pg-nav" disabled="{{ nextDisabled }}" onClick="{{ onNext }}" aria-label="Další stránka" style="{{ nextStyle }}"><span class="pg-lbl">Další</span><dc-import name="Ikony" icon-name="chevron-right" size="{{ 24 }}" debug="{{ false }}" hint-size="24px,24px"></dc-import></button>
+      <button type="button" class="pg-i pg-nav" disabled="{{ nextDisabled }}" onClick="{{ onNext }}" aria-label="Další stránka" style="{{ nextStyle }}"><span class="pg-lbl">Další</span><dc-import name="Ikony" icon-name="chevron-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import></button>
     </nav>
   </sc-if>
 </div>
