@@ -217,7 +217,7 @@
 
   </main>
 
-  <dc-import name="PrezentacniLista" active="{{ plActive }}" on-select="{{ plSelect }}" label2="Hlavička:" variants2="{{ headerVariantOptions }}" active2="{{ headerVariant }}" on-select2="{{ onHeaderVariant }}" debug-on="{{ plDebugOn }}" on-toggle-debug="{{ plToggleDebug }}" hint-size="0px,0px"></dc-import>
+  <dc-import name="PrezentacniLista" variants="{{ plVariants }}" active="{{ plActive }}" on-select="{{ plSelect }}" label2="Hlavička:" variants2="{{ headerVariantOptions }}" active2="{{ headerVariant }}" on-select2="{{ onHeaderVariant }}" debug-on="{{ plDebugOn }}" on-toggle-debug="{{ plToggleDebug }}" hint-size="0px,0px"></dc-import>
 
   <div style="margin-top:10px;">
     <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
@@ -568,7 +568,8 @@ class Component extends DCLogic {
   renderVals(){
     const s = this.state;
     // prop je výchozí hodnota (tweak), stav ji přebíjí (prezentační lišta)
-    const propLayout = (this.props.categoryLayout === 'dlazdice' || this.props.categoryLayout === 'kompaktni')
+    const LAYOUTS = ['dlazdice','kompaktni','kompaktni-akordeon'];
+    const propLayout = LAYOUTS.indexOf(this.props.categoryLayout) >= 0
       ? this.props.categoryLayout : this.DEFAULT_CATEGORY_LAYOUT;
     const effLayout = s.catLayout || propLayout;
     const effDebug  = s.debugOverride === null ? (this.props.debug ?? true) : s.debugOverride;
@@ -834,18 +835,19 @@ class Component extends DCLogic {
         { name:'Půjčovna', href:'#' },
       ],
       groups, subcats, categoriesData, onOpenCategory, onPickSub,
-      inSubcatsCompact: inSubcats && effLayout === 'kompaktni',
-      inSubcatsTiles: (inSubcats || !!activeMacro) && effLayout !== 'kompaktni',
+      inSubcatsCompact: inSubcats && effLayout !== 'dlazdice',
+      inSubcatsTiles: (inSubcats || !!activeMacro) && effLayout === 'dlazdice',
       subcatCategories: subcats.map(x=>({ name:x.name, count:x.count, href:x.href, subs:[] })),
       onOpenSubcat: (name)=>{ const hit = subcats.find(x=>x.name===name); if (hit && hit.onPick) hit.onPick(); },
       categoryLayout: effLayout,
-      brandCategories: effLayout === 'kompaktni'
+      brandCategories: effLayout !== 'dlazdice'
         ? ['Sport Jacht','Agados','KNOTT','AL-KO'].map(b=>({ name:b, count:(this.BRANDS.find(x=>x[0]===b)||[b,0])[1], href:'#/nahradni-dily/vyrobce/'+this.slug(b)+'/' }))
         : [],
       onOpenBrand: (b)=>openBrand(b),
       debug: effDebug,
-      plActive: effLayout === 'dlazdice' ? 'v2' : 'v1',
-      plSelect: (id)=>this.setState({ catLayout: id === 'v2' ? 'dlazdice' : 'kompaktni' }),
+      plActive: effLayout === 'dlazdice' ? 'v2' : (effLayout === 'kompaktni-akordeon' ? 'v1b' : 'v1'),
+      plVariants: [{ id:'v1', label:'Varianta 1' }, { id:'v1b', label:'Varianta 1b' }, { id:'v2', label:'Varianta 2' }],
+      plSelect: (id)=>this.setState({ catLayout: id === 'v2' ? 'dlazdice' : (id === 'v1b' ? 'kompaktni-akordeon' : 'kompaktni') }),
       plDebugOn: effDebug,
       plToggleDebug: ()=>this.setState({ debugOverride: !effDebug }),
       headerVariant: s.headerVariant,
