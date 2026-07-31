@@ -22,6 +22,10 @@
   *{box-sizing:border-box;}
   .a11y-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
   .a11y-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  /* iOS Safari zoomuje na input s písmem pod 16 px a po zavření klávesnice zoom nevrátí —
+     stránka pak zůstane přeteklá do šířky. Pod 550 px proto 16 px. */
+  @media (max-width:549px){ .s-input{font-size:16px !important;} }
+  .s-sug{max-width:100%;overflow-wrap:anywhere;}
 
   html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
   .s-go{transition:background .12s;} .s-go:hover{background:#1A4A8A !important;}
@@ -32,12 +36,12 @@
   <div style="{{ cardStyle }}">
     <div style="position:relative;{{ fieldMaxW }}">
       <div style="display:flex;align-items:center;height:{{ fieldH }}px;border-radius:6px;overflow:hidden;background:#F2F4F7;box-shadow:{{ searchRing }};transition:box-shadow .15s;">
-        <input type="search" aria-label="Hledat v e-shopu" value="{{ q }}" onInput="{{ onSearch }}" onFocus="{{ onFocus }}" onBlur="{{ onBlur }}" placeholder="{{ placeholder }}" style="flex:1;min-width:0;border:none;outline:none;background:transparent;font-size:15px;font-family:inherit;color:#15181C;padding:0 8px 0 16px;">
+        <input type="search" class="s-input" aria-label="Hledat v e-shopu" value="{{ q }}" onInput="{{ onSearch }}" onFocus="{{ onFocus }}" onBlur="{{ onBlur }}" placeholder="{{ placeholder }}" style="flex:1;min-width:0;border:none;outline:none;background:transparent;font-size:15px;font-family:inherit;color:#15181C;padding:0 8px 0 16px;">
         <sc-if value="{{ hasQ }}" hint-placeholder-val=""><button type="button" class="a11y-i" aria-label="Vymazat hledaný výraz" onMouseDown="{{ clearSearch }}" style="width:44px;display:flex;align-items:center;justify-content:center;color:#666E78;cursor:pointer;flex:none;"><dc-import name="Ikony" icon-name="x" size="24" hint-size="24px,24px"></dc-import></button></sc-if>
         <button type="button" aria-label="Hledat" class="s-go" style="width:56px;height:100%;background:#1E5AA8;display:flex;align-items:center;justify-content:center;color:#fff;flex:none;cursor:pointer;border:none;margin:0;padding:0;appearance:none;-webkit-appearance:none;"><dc-import name="Ikony" icon-name="search" size="24" hint-size="24px,24px"></dc-import></button>
       </div>
       <sc-if value="{{ showSuggest }}" hint-placeholder-val="{{ true }}">
-        <div style="position:absolute;top:calc(100% + 8px);left:0;right:0;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);overflow:hidden;z-index:20;">
+        <div class="s-sug" style="position:absolute;top:calc(100% + 8px);left:0;right:0;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);overflow:hidden;z-index:20;">
           <div style="padding:10px 16px 6px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">{{ suggestHeading }}</div>
           <sc-for list="{{ suggestions }}" as="sg" hint-placeholder-count="4">
             <button type="button" onMouseDown="{{ sg.onPick }}" class="s-row a11y-i" style="display:flex;width:100%;align-items:center;gap:12px;min-height:52px;padding:6px 16px;cursor:pointer;">
