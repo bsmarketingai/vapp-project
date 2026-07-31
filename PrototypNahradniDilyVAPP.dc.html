@@ -290,7 +290,6 @@ class Component extends DCLogic {
     { key:'m-karoserie', name:'Karoserie', image:'uploads/blatniky.jpg', cats:['karoserie','bocnice','konstrukcni','plachty','vzpery'] },
     { key:'m-manipulace', name:'Manipulace a nakládání', image:'uploads/navijaky-a-kladky.jpg', cats:['najezdy','zabezpeceni','upinani','boxy','kliny'] },
     { key:'m-ostatni', name:'Ostatní', image:'uploads/doplnky.jpg', cats:['doplnky','udrzba'] },
-    { key:'m-vyrobce', name:'Díly podle výrobce', image:'uploads/celisti.jpg', cats:[], brands:['Sport Jacht','Agados','KNOTT','AL-KO'] },
     { key:'m-akce', name:'Akce a slevy %', image:'uploads/doplnky.jpg', cats:[], sale:true }
   ];
 
@@ -312,106 +311,165 @@ class Component extends DCLogic {
 
   GROUPS = [
     { key:'elektro', image:'uploads/elektro-a-osvetleni.jpg', name:'Elektro, svítilny, odrazky', preview:'Světla, kabeláž, zástrčky…', count:474, children:[
-      { name:'Baterie, nabíječky a příslušenství', count:24 },
+      { name:'Baterie, nabíječky a příslušenství', count:26 },
       { name:'Blinkry', count:28 },
-      { name:'Brzdové svítilny', count:26 },
-      { name:'Couvačky a mlhovky', count:22 },
-      { name:'Držáky svítilen a odrazek', count:30 },
-      { name:'Kabely a kabeláže', count:38 },
-      { name:'Majáky a výstražné svítilny', count:24 },
-      { name:'Montážní materiál', count:26 },
-      { name:'Obrysové svítilny', count:42 },
-      { name:'Odrazky a odrazové desky', count:34 },
-      { name:'Osvětlení registrační značky', count:18 },
-      { name:'Pracovní světlomety', count:20 },
-      { name:'Sdružené zadní svítilny', count:46 },
+      { name:'Brzdové svítilny', count:28 },
+      { name:'Couvačky a mlhovky', count:28 },
+      { name:'Držáky svítilen a odrazek', count:28 },
+      { name:'Kabely a kabeláže', count:28 },
+      { name:'Majáky a výstražné svítilny', count:28 },
+      { name:'Montážní materiál', count:28 },
+      { name:'Obrysové svítilny', count:28 },
+      { name:'Odrazky a odrazové desky', count:28 },
+      { name:'Osvětlení registrační značky', count:28 },
+      { name:'Pracovní světlomety', count:28 },
+      { name:'Sdružené zadní svítilny', count:28 },
       { name:'Skla svítilen náhradní', count:28 },
-      { name:'Vnitřní osvětlení', count:12 },
-      { name:'Zásuvky, zástrčky, konektory', count:32 },
-      { name:'Žárovky, náhradní LED moduly', count:24 }
+      { name:'Vnitřní osvětlení', count:28 },
+      { name:'Zásuvky, zástrčky, konektory', count:28 },
+      { name:'Žárovky, náhradní LED moduly', count:28 }
     ] },
     { key:'kola', image:'uploads/kola-a-pneumatiky.jpg', name:'Pneu, kola, disky', preview:'Pneu, disky, šrouby…', count:296, children:[
-      { name:'Pneumatiky s diskem', count:108, children:[ { name:'8"', count:22 }, { name:'10"', count:26 }, { name:'13"', count:38 }, { name:'14"', count:22 } ] },
-      { name:'Samostatné disky', count:64, children:[ { name:'4×100', count:30 }, { name:'5×112', count:34 } ] },
-      { name:'Pneumatiky', count:82 },
-      { name:'Šrouby a matice kol', count:42 }
+      { name:'Disky kol', count:34 },
+      { name:'Kompletní kola', count:34 },
+      { name:'Pneu', count:34 },
+      { name:'Pneu, kola, disky 8"', count:34 },
+      { name:'Pneu, kola, disky 10"', count:32 },
+      { name:'Pneu, kola, disky 13"', count:32 },
+      { name:'Pneu, kola, disky 14"', count:32 },
+      { name:'Pneu, kola, disky 15" a více', count:32 },
+      { name:'Příslušenství kol a pneumatik', count:32 }
     ] },
     { key:'spojovaci', image:'uploads/kulove-tazne-spojky.jpg', name:'Spojovací zařízení a zámky', preview:'Kulové spojky, oje, zámky…', count:310, children:[
-      { name:'Kulové spojky', count:121, children:[
-        { name:'KNOTT', count:58, children:[ { name:'do 750 kg', count:20 }, { name:'750–1600 kg', count:24 }, { name:'nad 1600 kg', count:14 } ] },
-        { name:'AL-KO', count:47, children:[ { name:'AK 7', count:16 }, { name:'AK 160', count:18 }, { name:'AK 300', count:13 } ] },
-        { name:'Winterhoff', count:16 }
-      ] },
-      { name:'Kloubové spojky', count:44 },
-      { name:'Oje a příčníky', count:59, children:[ { name:'Trubkové oje', count:24 }, { name:'V-oje', count:21 }, { name:'Příčníky', count:14 } ] },
-      { name:'Zabezpečení proti krádeži', count:86, children:[ { name:'Zámky spojek', count:44 }, { name:'Kotevní body', count:22 }, { name:'Kolové zámky', count:20 } ] }
+      { name:'Tažné kulové spojky', count:50 },
+      { name:'Tažná oka', count:52 },
+      { name:'Stabilizátory', count:52 },
+      { name:'Tažné koule', count:52 },
+      { name:'Zámky a zabezpečení', count:52 },
+      { name:'Příslušenství a náhradní díly', count:52 }
     ] },
-    { key:'vzpery', image:'uploads/plynova-vzpera-mala-o.jpg', name:'Plynové vzpěry', preview:'Vzpěry a úchyty…', count:70, children:[
-      { name:'Plynové vzpěry', count:58 }, { name:'Úchyty vzpěr', count:12 }
+    { key:'vzpery', image:'uploads/plynova-vzpera-mala-o.jpg', name:'Plynové vzpěry a příslušenství', preview:'Vzpěry a úchyty…', count:70, children:[
+      { name:'Plynové vzpěry', count:34 },
+      { name:'Koncovky a konzoly plynových vzpěr', count:36 }
     ] },
     { key:'napravy', image:'uploads/celisti-brzdove-knott-200x50-mala-sada-na-2-kola.jpg', name:'Nájezdové brzdy a díly', preview:'Brzdy, lanka, tyčoví…', count:212, children:[
-      { name:'Nájezdové brzdy', count:94, children:[
-        { name:'KNOTT', count:52, children:[ { name:'KF 7', count:12 }, { name:'KF 13', count:18 }, { name:'KF 17', count:14 }, { name:'KF 20', count:8 } ] },
-        { name:'AL-KO', count:31, children:[ { name:'AE 1350', count:11 }, { name:'AE 2700', count:12 }, { name:'AE 3500', count:8 } ] },
-        { name:'BPW', count:11 }
-      ] },
-      { name:'Lanka a tyčoví', count:66 },
-      { name:'Díly nájezdových brzd', count:52 }
+      { name:'Brzdy na "V" oje', count:22 },
+      { name:'Brzdy na jeklové oje', count:22 },
+      { name:'Spojovací zařízení nájezdových brzd', count:24 },
+      { name:'Lanka pojistná', count:24 },
+      { name:'Tlumiče a příslušenství', count:24 },
+      { name:'Tažné trubky a dorazové kroužky', count:24 },
+      { name:'Pouzdra a maznice', count:24 },
+      { name:'Manžety', count:24 },
+      { name:'Ostatní díly na náj. brzdy', count:24 }
     ] },
     { key:'napravy-kompletni', image:'uploads/napravy-a-brzdy.jpg', name:'Nápravy kompletní', preview:'Brzděné i nebrzděné…', count:76, children:[
-      { name:'Nebrzděné', count:34 },
-      { name:'Brzděné', count:42, children:[ { name:'do 750 kg', count:12 }, { name:'750–1350 kg', count:18 }, { name:'nad 1350 kg', count:12 } ] }
+      { name:'Nebrzděné nápravy', count:24 },
+      { name:'Brzděné nápravy', count:26 },
+      { name:'Ramena polonáprav', count:26 }
     ] },
     { key:'dily-naprav', image:'uploads/celisti.jpg', name:'Díly náprav', preview:'Čelisti, náboje, ložiska…', count:442, children:[
-      { name:'Brzdové čelisti a obložení', count:188, children:[
-        { name:'KNOTT', count:96, children:[ { name:'160×35', count:22 }, { name:'200×50', count:38 }, { name:'250×40', count:36 } ] },
-        { name:'AL-KO', count:64, children:[ { name:'160×35', count:18 }, { name:'200×50', count:26 }, { name:'230×60', count:20 } ] },
-        { name:'Obložení a nýty', count:28 }
-      ] },
-      { name:'Náboje kol', count:102, children:[ { name:'4×100', count:38 }, { name:'5×112', count:44 }, { name:'6×205', count:20 } ] },
-      { name:'Ložiska a gufera', count:152 }
+      { name:'Brzdové bubny', count:24 },
+      { name:'Brzdové čelisti', count:22 },
+      { name:'Brzdové štíty', count:22 },
+      { name:'Čepy náboje', count:22 },
+      { name:'Díly seřízování a couvací automatiky', count:22 },
+      { name:'Lanovody, vahadla, táhla', count:22 },
+      { name:'Listové pružiny a příslušenství', count:22 },
+      { name:'Ložiska', count:22 },
+      { name:'Kolové šrouby, matice, štefty', count:22 },
+      { name:'Kompletní kolové jednotky', count:22 },
+      { name:'Krytky náboje', count:22 },
+      { name:'Nebrzděné náboje', count:22 },
+      { name:'Pružiny brzdových čelistí', count:22 },
+      { name:'Rozpěrky a brzdové válečky', count:22 },
+      { name:'Seegerovy pojistky', count:22 },
+      { name:'Středové matice', count:22 },
+      { name:'Stabilizační jednotky', count:22 },
+      { name:'Těsnící kroužky, prachovky, gufera', count:22 },
+      { name:'Tlumiče náprav a držáky', count:22 },
+      { name:'Doplňky a příslušenství náprav', count:22 }
     ] },
     { key:'najezdy', image:'uploads/najezdy.jpg', name:'Nájezdy', preview:'Nájezdové rampy…', count:28, children:[
-      { name:'Hliníkové nájezdy', count:16 }, { name:'Ocelové nájezdy', count:12 }
+      { name:'Hliníkové nájezdy', count:8 },
+      { name:'Ocelové nájezdy', count:10 },
+      { name:'Příslušenství nájezdů', count:10 }
     ] },
     { key:'kolecka', image:'uploads/kolecka-1.jpg', name:'Opěrná kolečka, nohy, držáky', preview:'Kolečka, nohy, držáky…', count:146, children:[
-      { name:'Opěrná kolečka', count:78 }, { name:'Podpěrné nohy', count:48 }, { name:'Držáky', count:20 }
+      { name:'Opěrná kolečka', count:38 },
+      { name:'Opěrné nohy', count:36 },
+      { name:'Držáky a klemy', count:36 },
+      { name:'Díly a doplňky koleček a nohou', count:36 }
     ] },
     { key:'karoserie', image:'uploads/blatniky.jpg', name:'Blatníky a zástěrky', preview:'Blatníky, lemy, zástěrky…', count:170, children:[
-      { name:'Blatníky', count:134, children:[ { name:'Jednoosé', count:62 }, { name:'Tandemové', count:48 }, { name:'Lemy a gumy', count:24 } ] },
-      { name:'Zástěrky', count:36 }
+      { name:'Blatníky', count:58 },
+      { name:'Držáky blatníků', count:56 },
+      { name:'Zástěrky a příslušenství', count:56 }
     ] },
     { key:'bocnice', image:'uploads/bocnice.jpg', name:'Bočnice, uzávěry, panty', preview:'Bočnice, podlahy, panty…', count:182, children:[
-      { name:'Bočnice a sloupky', count:88 }, { name:'Podlahy', count:52 }, { name:'Panty a zámky bočnic', count:42 }
+      { name:'Bočnice', count:38 },
+      { name:'Sloupky bočnic', count:36 },
+      { name:'Panty bočnic', count:36 },
+      { name:'Přezky a uzávěry', count:36 },
+      { name:'Lemování bočnic', count:36 }
     ] },
     { key:'zabezpeceni', image:'uploads/zabezpeceni_nakladu.jpg', name:'Zabezpečení nákladu', preview:'Pásy, sítě, kurty…', count:96, children:[
-      { name:'Upínací pásy', count:72, children:[ { name:'do 800 daN', count:28 }, { name:'800–2000 daN', count:26 }, { name:'nad 2000 daN', count:18 } ] },
-      { name:'Sítě a plachty na náklad', count:24 }
+      { name:'Upínací soupravy a popruhy', count:12 },
+      { name:'Ochrany popruhů a háky', count:14 },
+      { name:'Zakrývací sítě', count:14 },
+      { name:'Upínací oka a misky', count:14 },
+      { name:'Klíny na ložnou plochu', count:14 },
+      { name:'Doplňky k zabezpečení nákladu', count:14 },
+      { name:'Obalové materiály', count:14 }
     ] },
     { key:'upinani', image:'uploads/navijaky-a-kladky.jpg', name:'Navijáky a příslušenství', preview:'Navijáky, kladky, lana…', count:58, children:[
-      { name:'Ruční navijáky', count:32 }, { name:'Kladky a lana', count:26 }
+      { name:'Ruční navijáky', count:10 },
+      { name:'Elektrické navijáky', count:12 },
+      { name:'Lana a popruhy', count:12 },
+      { name:'Držáky navijáků', count:12 },
+      { name:'Díly a příslušenství navijáků', count:12 }
     ] },
     { key:'konstrukcni', image:'uploads/konstrukcni_dily.jpg', name:'Konstrukční díly', preview:'Profily, úhelníky, spojky…', count:164, children:[
-      { name:'Profily a nosníky', count:88 }, { name:'Úhelníky a spojky', count:76 }
+      { name:'Držáky motocyklů', count:18 },
+      { name:'Držáky rezervního kola', count:18 },
+      { name:'Oje a příslušenství', count:16 },
+      { name:'Oje výškově stavitelné a díly', count:16 },
+      { name:'Pojezdové plechy', count:16 },
+      { name:'Překližky', count:16 },
+      { name:'Rolny a opěry pro lodě', count:16 },
+      { name:'Spojovací materiál', count:16 },
+      { name:'Doplňky', count:16 },
+      { name:'Díly rámů přívěsů VAPP', count:16 }
     ] },
     { key:'plachty', image:'uploads/plachty.jpg', name:'Plachty a příslušenství', preview:'Plachty, konstrukce…', count:96, children:[
-      { name:'Plachty', count:54 }, { name:'Konstrukce', count:42 }
+      { name:'Plachty s příslušenstvím', count:48 },
+      { name:'Příslušenství k plachtám', count:48 }
     ] },
-    { key:'boxy', image:'uploads/box-naradi.jpg', name:'Boxy na nářadí a držáky', preview:'Boxy, držáky boxů…', count:44, children:[
-      { name:'Boxy na nářadí', count:26 }, { name:'Držáky boxů', count:18 }
+    { key:'boxy', image:'uploads/box-naradi.jpg', name:'Boxy na nářadí a držáky boxů', preview:'Boxy, držáky boxů…', count:44, children:[
+      { name:'Boxy na nářadí', count:16 },
+      { name:'Držáky boxů', count:14 },
+      { name:'Náhradní díly boxů', count:14 }
     ] },
     { key:'kliny', image:'uploads/kliny.jpg', name:'Klíny a držáky', preview:'Zakládací klíny…', count:38, children:[
-      { name:'Zakládací klíny', count:24 }, { name:'Držáky klínů', count:14 }
+      { name:'Klíny na ložnou plochu', count:18 },
+      { name:'Zakládací klíny a držáky', count:20 }
     ] },
-    { key:'hydraulika', image:'uploads/hydraulika.jpg', name:'Hydraulika přívěsů', preview:'Hadice, pumpy, válce…', count:52, children:[
-      { name:'Hadice a rychlospojky', count:28 }, { name:'Pumpy a válce', count:24 }
-    ] },
+    { key:'hydraulika', image:'uploads/hydraulika.jpg', name:'Hydraulika přívěsů', preview:'Hadice, pumpy, válce…', count:52, children:[] },
     { key:'doplnky', image:'uploads/doplnky.jpg', name:'Doplňky k přívěsům', preview:'Tabulky, SPZ, značení…', count:126, children:[
-      { name:'Značení a tabulky', count:74 }, { name:'Držáky SPZ', count:52 }
+      { name:'Označení přívěsu', count:42 },
+      { name:'Příslušenství k přívěsu', count:42 },
+      { name:'Ostatní doplňky k přívěsům', count:42 }
     ] },
     { key:'udrzba', image:'uploads/pomucky.jpg', name:'Pomůcky pro údržbu', preview:'Maziva, sprej, čištění…', count:64, children:[
-      { name:'Maziva a spreje', count:38 }, { name:'Čištění a péče', count:26 }
-    ] },
+      { name:'Náplně do ostřikovačů', count:8 },
+      { name:'Přípravky', count:8 },
+      { name:'Brusné a řezné kotouče', count:8 },
+      { name:'Maziva a technické spreje', count:8 },
+      { name:'Ochranné pomůcky', count:8 },
+      { name:'Vrtáky a závitníky', count:8 },
+      { name:'Elektroinstalační materiál', count:8 },
+      { name:'Montážní svítilny', count:8 }
+    ] }
   ];
 
   PRODUCTS = [
@@ -840,9 +898,7 @@ class Component extends DCLogic {
       subcatCategories: subcats.map(x=>({ name:x.name, count:x.count, href:x.href, subs:[] })),
       onOpenSubcat: (name)=>{ const hit = subcats.find(x=>x.name===name); if (hit && hit.onPick) hit.onPick(); },
       categoryLayout: effLayout,
-      brandCategories: effLayout !== 'dlazdice'
-        ? ['Sport Jacht','Agados','KNOTT','AL-KO'].map(b=>({ name:b, count:(this.BRANDS.find(x=>x[0]===b)||[b,0])[1], href:'#/nahradni-dily/vyrobce/'+this.slug(b)+'/' }))
-        : [],
+      brandCategories: [],
       onOpenBrand: (b)=>openBrand(b),
       debug: effDebug,
       plActive: effLayout === 'dlazdice' ? 'v2' : (effLayout === 'kompaktni-akordeon' ? 'v1b' : 'v1'),
