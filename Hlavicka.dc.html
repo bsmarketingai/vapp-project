@@ -161,7 +161,7 @@
       </div>
     </nav>
     <sc-if value="{{ menuOpen }}" hint-placeholder-val="">
-      <div class="hd-mb" id="hd-mobile-menu" role="navigation" aria-label="Hlavní menu" tabindex="-1" onKeyDown="{{ onMenuKey }}" style="position:absolute;top:100%;left:0;right:0;z-index:60;/* z.stickyBar — lokální, uvnitř stohovacího kontextu hlavičky */max-height:calc(100vh - 100%);overflow-y:auto;box-shadow:0 10px 30px rgba(20,30,45,.14);">
+      <div class="hd-mb" id="hd-mobile-menu" role="navigation" aria-label="Hlavní menu" tabindex="-1" onKeyDown="{{ onMenuKey }}" style="position:absolute;top:100%;left:0;right:0;z-index:60;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;box-shadow:0 10px 30px rgba(20,30,45,.14);">
         <dc-import name="MobilniMenu" panel-open="{{ menuOpen }}" menu-tree="{{ menuTree }}" active="{{ menuActive }}" on-select="{{ onMenuSelect }}" info-links="{{ infoLinks }}" on-login="{{ onMenuLogin }}" currency="{{ currency }}" currencies="{{ currencyCodes }}" on-currency-change="{{ onMenuCurrency }}" debug="{{ debug }}" hint-size="100%,320px"></dc-import>
       </div>
     </sc-if>
@@ -186,7 +186,7 @@ class Component extends DCLogic {
     this._onDocDown = (e)=>{ if(!this.state.curOpen) return; const t=e.target; if(t && t.closest && t.closest('.hd-cur')) return; this.setState({ curOpen:false }); };
     document.addEventListener('mousedown', this._onDocDown, true);
   }
-  componentWillUnmount(){ this.lockScroll(false); if(this._onKey) document.removeEventListener('keydown', this._onKey, true); if(this._onDocDown) document.removeEventListener('mousedown', this._onDocDown, true); }
+  componentWillUnmount(){ this.lockScroll(false); this.unbindFit(); if(this._onKey) document.removeEventListener('keydown', this._onKey, true); if(this._onDocDown) document.removeEventListener('mousedown', this._onDocDown, true); }
   componentDidUpdate(prevProps, prevState){
 
     // runtime nedodává spolehlivý prevState — poslední stav si držíme na instanci
@@ -196,8 +196,33 @@ class Component extends DCLogic {
     this.lockScroll(now);
     const el = document.getElementById(now ? 'hd-mobile-menu' : 'hd-burger');
     if (el && el.focus) el.focus();
+    if (now) this.fitMenu(); else this.unbindFit();
   }
   closeMenu(){ this.setState({ menuOpen:false }); }
+
+  // procentní max-height se v absolutně pozicovaném panelu nevyhodnotí (rodič má auto výšku),
+  // proto dostupnou výšku měříme a zapisujeme inline
+  fitMenu(){
+    const apply = ()=>{
+      const el = document.getElementById('hd-mobile-menu');
+      if (!el) return;
+      const top = el.getBoundingClientRect().top;
+      const vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      el.style.maxHeight = Math.max(200, Math.round(vh - top)) + 'px';
+    };
+    apply();
+    if (!this._onFit){
+      this._onFit = ()=>{ if (this.state.menuOpen) apply(); };
+      window.addEventListener('resize', this._onFit);
+      if (window.visualViewport) window.visualViewport.addEventListener('resize', this._onFit);
+    }
+  }
+  unbindFit(){
+    if (!this._onFit) return;
+    window.removeEventListener('resize', this._onFit);
+    if (window.visualViewport) window.visualViewport.removeEventListener('resize', this._onFit);
+    this._onFit = null;
+  }
   renderVals(){
     const P = this.props;
     const active = P.active || 'Náhradní díly';

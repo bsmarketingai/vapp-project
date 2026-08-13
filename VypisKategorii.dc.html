@@ -25,7 +25,7 @@
 </style>
 </helmet>
 <sc-if value="{{ showTop }}" hint-placeholder-val="{{ true }}">
-  <nav class="vk-top" aria-label="Nejhledanější kategorie" style="display:flex;align-items:center;gap:8px 16px;flex-wrap:wrap;margin-bottom:24px;">
+  <nav class="vk-top" aria-label="Nejhledanější kategorie" style="display:flex;align-items:center;gap:8px 16px;flex-wrap:wrap;margin-bottom:{{ topMargin }};">
     <span style="flex:none;font-size:13px;font-weight:700;line-height:1.4;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Nejhledanější</span>
     <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0;">
       <sc-for list="{{ topItems }}" as="t" hint-placeholder-count="5">
@@ -34,10 +34,11 @@
     </div>
   </nav>
 </sc-if>
+<sc-if value="{{ showRest }}" hint-placeholder-val="{{ true }}">
 <sc-if value="{{ accOff }}" hint-placeholder-val="{{ true }}">
 <div class="vk-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">
   <sc-for list="{{ cats }}" as="c" hint-placeholder-count="6">
-    <dc-import name="KategorickaDlazdice" cat="{{ c }}" variant="{{ tileVariant }}" hint-size="100%,240px"></dc-import>
+    <dc-import name="KategorickaDlazdice" cat="{{ c }}" variant="{{ tileVariant }}" media="{{ tileMedia }}" hint-size="100%,240px"></dc-import>
   </sc-for>
 </div>
 <sc-if value="{{ showBrands }}" hint-placeholder-val="{{ true }}">
@@ -48,7 +49,7 @@
   </div>
   <div class="vk-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">
     <sc-for list="{{ brandCats }}" as="b" hint-placeholder-count="4">
-      <dc-import name="KategorickaDlazdice" cat="{{ b }}" variant="{{ tileVariant }}" hint-size="100%,88px"></dc-import>
+      <dc-import name="KategorickaDlazdice" cat="{{ b }}" variant="{{ tileVariant }}" media="{{ tileMedia }}" hint-size="100%,88px"></dc-import>
     </sc-for>
   </div>
 </sc-if>
@@ -63,7 +64,7 @@
   <sc-if value="{{ catsOpen }}" hint-placeholder-val="">
     <div id="vk-acc-cats" class="vk-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:12px;">
       <sc-for list="{{ cats }}" as="c" hint-placeholder-count="6">
-        <dc-import name="KategorickaDlazdice" cat="{{ c }}" variant="{{ tileVariant }}" hint-size="100%,240px"></dc-import>
+        <dc-import name="KategorickaDlazdice" cat="{{ c }}" variant="{{ tileVariant }}" media="{{ tileMedia }}" hint-size="100%,240px"></dc-import>
       </sc-for>
     </div>
   </sc-if>
@@ -77,11 +78,12 @@
     <sc-if value="{{ brandsOpen }}" hint-placeholder-val="">
       <div id="vk-acc-brands" class="vk-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:12px;">
         <sc-for list="{{ brandCats }}" as="b" hint-placeholder-count="4">
-          <dc-import name="KategorickaDlazdice" cat="{{ b }}" variant="{{ tileVariant }}" hint-size="100%,88px"></dc-import>
+          <dc-import name="KategorickaDlazdice" cat="{{ b }}" variant="{{ tileVariant }}" media="{{ tileMedia }}" hint-size="100%,88px"></dc-import>
         </sc-for>
       </div>
     </sc-if>
   </sc-if>
+</sc-if>
 </sc-if>
 <sc-if value="{{ showDocs }}" hint-placeholder-val="">
   <div style="display:flex;flex-direction:column;gap:5px;padding:2px 4px;margin-top:16px;">
@@ -92,7 +94,7 @@
 </sc-if>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:700},&quot;layout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dlazdice&quot;,&quot;kompaktni&quot;,&quot;kompaktni-akordeon&quot;],&quot;default&quot;:&quot;kompaktni&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;accordionLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Všechny kategorie&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;accordionOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;brandsAccordionLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Díly podle výrobce&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;nejhledanejsi&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Nejhledanější&quot;},&quot;topSearched&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{kind:string,label:string,iconName?:string,href?:string}[]&quot;,&quot;default&quot;:null,&quot;section&quot;:&quot;Nejhledanější&quot;},&quot;categories&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{name:string,count:number,subs:{name:string,count:number}[]}[]&quot;,&quot;default&quot;:null},&quot;onOpenCategory&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(name:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;onPickSub&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(catName:string,subName:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:700},&quot;media&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;fotky&quot;,&quot;ikony&quot;],&quot;default&quot;:&quot;fotky&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;layout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dlazdice&quot;,&quot;kompaktni&quot;,&quot;kompaktni-akordeon&quot;],&quot;default&quot;:&quot;kompaktni&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;accordionLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Všechny kategorie&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;accordionOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;brandsAccordionLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Díly podle výrobce&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;topOnly&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Nejhledanější&quot;},&quot;nejhledanejsi&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Nejhledanější&quot;},&quot;showGuideChip&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;topSearched&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{kind:string,label:string,iconName?:string,href?:string}[]&quot;,&quot;default&quot;:null,&quot;section&quot;:&quot;Nejhledanější&quot;},&quot;categories&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{name:string,count:number,subs:{name:string,count:number}[]}[]&quot;,&quot;default&quot;:null},&quot;onOpenCategory&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(name:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;onPickSub&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(catName:string,subName:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 class Component extends DCLogic {
   DEMO_BRANDS = [
     { name:'Sport Jacht', count:196 }, { name:'Agados', count:274 },
@@ -152,6 +154,7 @@ class Component extends DCLogic {
       name: k.name,
       count: k.count,
       image: k.image,
+      icon: k.icon,
       sale: !!k.sale,
       href: k.href,
       subs: (k.subs||[]).map(s=>({ name: s.name, count: s.count, href: s.href, onPick: ()=>pick(k.name, s.name) })),
@@ -163,9 +166,10 @@ class Component extends DCLogic {
       name: b.name, count: b.count, image: b.image, href: b.href, subs: [],
       onOpen: ()=>openBrand(b.name)
     }));
-    const topItems = (this.props.topSearched && this.props.topSearched.length)
+    // odkaz do poradny patří až do podkategorie, kam se váže obsahem — na hlavní kategorii se skryje
+    const topItems = ((this.props.topSearched && this.props.topSearched.length)
       ? this.props.topSearched
-      : this.TOP;
+      : this.TOP).filter(it => it.kind !== 'guide' || this.props.showGuideChip === true);
     const P = this.props;
     const layout = P.layout || this.DEFAULT_LAYOUT;
     const accLayout = layout === 'kompaktni-akordeon';
@@ -174,9 +178,14 @@ class Component extends DCLogic {
     if (this._accKey !== key){ this._accKey = key; this._accOpen = !!P.accordionOpen; }
     if (this._brKey !== key){ this._brKey = key; this._brOpen = false; }
     const chev = (open)=>'flex:none;display:flex;color:#5189CC;transition:transform .12s ease;'+(open?'transform:rotate(180deg);':'');
-    return { cats, brandCats, showBrands: brandCats.length > 0, showDocs: demo,
+    // v režimu topOnly jde o výřez pro stránku, ne o samostatný náhled — dokumentace se nevykresluje
+    return { cats, brandCats, showBrands: brandCats.length > 0, showDocs: demo && this.props.topOnly !== true,
       tileVariant: (layout === 'dlazdice' ? 'standard' : 'kompaktni'),
+      tileMedia: P.media === 'ikony' ? 'ikony' : 'fotky',
       showTop: (P.nejhledanejsi ?? true) && topItems.length > 0, topItems,
+      // topOnly: jen sekce Nejhledanější (stránka si ji umístí vedle nadpisu)
+      showRest: P.topOnly !== true,
+      topMargin: P.topOnly === true ? '0' : '24px',
       accOn, accOff: !accOn,
       accLabel: P.accordionLabel || 'Všechny kategorie',
       brandsLabel: P.brandsAccordionLabel || 'Díly podle výrobce',

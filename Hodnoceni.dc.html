@@ -23,6 +23,11 @@
   html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
 </style>
 </helmet>
+<sc-if value="{{ unrated }}" hint-placeholder-val="">
+  <span style="display:inline-flex;align-items:center;gap:6px;white-space:nowrap;font-size:13px;font-weight:500;color:#666E78;">
+    <span aria-hidden="true" style="display:inline-flex;color:#D5DAE0;"><dc-import name="Ikony" icon-name="star" size="{{ size }}" hint-size="14px,14px"></dc-import></span>{{ emptyLabel }}
+  </span>
+</sc-if>
 <sc-if value="{{ single }}" hint-placeholder-val="">
   <span role="img" aria-label="{{ ratingLabel }}" style="display:inline-flex;align-items:center;gap:6px;flex-wrap:nowrap;white-space:nowrap;">
     <span aria-hidden="true" style="display:inline-flex;align-items:center;gap:1px;">
@@ -54,7 +59,7 @@
 </sc-if>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:720,&quot;height&quot;:220},&quot;value&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:4.5,&quot;tsType&quot;:&quot;number&quot;},&quot;count&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:23,&quot;tsType&quot;:&quot;number&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:14,&quot;tsType&quot;:&quot;number&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:720,&quot;height&quot;:220},&quot;value&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:4.5,&quot;tsType&quot;:&quot;number&quot;},&quot;count&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:23,&quot;tsType&quot;:&quot;number&quot;},&quot;emptyLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Bez hodnocení&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:14,&quot;tsType&quot;:&quot;number&quot;}}">
 class Component extends DCLogic {
   build(value){
     const out = [];
@@ -68,6 +73,12 @@ class Component extends DCLogic {
   }
   renderVals(){
     const P = this.props;
+    // nehodnocený produkt: počet recenzí 0 — místo prázdných hvězd krátký text, slot na kartě zůstává vyplněný
+    const unrated = P.value !== undefined && Number(P.count) === 0;
+    if (unrated){
+      return { single:false, gallery:false, unrated:true, size:P.size||14,
+        emptyLabel: P.emptyLabel || 'Bez hodnocení' };
+    }
     const single = P.value !== undefined;
     if (single){
       const v = Math.max(0, Math.min(5, P.value||0));

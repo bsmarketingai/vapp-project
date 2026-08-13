@@ -242,7 +242,7 @@ class Component extends DCLogic {
       menuOpen:false, descOpen:false, filterOpen:false, sortOpen:false,
       priceFrom:0, priceTo:8000, flags:null,
       view:'groups', path:[], leafPath:null, subcat:null, onlyStock: props.defaultOnlyStock ?? false, sort: props.defaultSort ?? 'pop',
-      brands:{}, params:{}, accOpen:{ 'Výrobce':true }, compare:{}, qty:{}, pageFrom:1, pageTo:1, catLayout:null, debugOverride:null, hoverCard:null,
+      cart:{}, brands:{}, params:{}, accOpen:{ 'Výrobce':true }, compare:{}, qty:{}, pageFrom:1, pageTo:1, catLayout:null, debugOverride:null, hoverCard:null,
       searchQ:'', searchFocus:false, loading:false, macro:null, brandFocus:null, saleOnly:false,
       currency:'CZK',
       headerVariant:'kontakt'
@@ -309,7 +309,7 @@ class Component extends DCLogic {
   norm(x){ return x.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
 
   GROUPS = [
-    { key:'elektro', image:'uploads/elektro-a-osvetleni.jpg', name:'Elektro, svítilny, odrazky', preview:'Světla, kabeláž, zástrčky…', count:474, children:[
+    { key:'elektro', icon:'ikona-elektro-svitilny-odrazky.svg', image:'uploads/elektro-a-osvetleni.jpg', name:'Elektro, svítilny, odrazky', preview:'Světla, kabeláž, zástrčky…', count:474, children:[
       { name:'Baterie, nabíječky a příslušenství', count:26 },
       { name:'Blinkry', count:28 },
       { name:'Brzdové svítilny', count:28 },
@@ -328,7 +328,7 @@ class Component extends DCLogic {
       { name:'Zásuvky, zástrčky, konektory', count:28 },
       { name:'Žárovky, náhradní LED moduly', count:28 }
     ] },
-    { key:'kola', image:'uploads/kola-a-pneumatiky.jpg', name:'Pneu, kola, disky', preview:'Pneu, disky, šrouby…', count:296, children:[
+    { key:'kola', icon:'ikona-pneu-kola-disky.svg', image:'uploads/kola-a-pneumatiky.jpg', name:'Pneu, kola, disky', preview:'Pneu, disky, šrouby…', count:296, children:[
       { name:'Disky kol', count:34 },
       { name:'Kompletní kola', count:34 },
       { name:'Pneu', count:34 },
@@ -339,7 +339,7 @@ class Component extends DCLogic {
       { name:'Pneu, kola, disky 15" a více', count:32 },
       { name:'Příslušenství kol a pneumatik', count:32 }
     ] },
-    { key:'spojovaci', image:'uploads/kulove-tazne-spojky.jpg', name:'Spojovací zařízení a zámky', preview:'Kulové spojky, oje, zámky…', count:310, children:[
+    { key:'spojovaci', icon:'ikona-spojovaci-zarizeni-a-zamky.svg', image:'uploads/kulove-tazne-spojky.jpg', name:'Spojovací zařízení a zámky', preview:'Kulové spojky, oje, zámky…', count:310, children:[
       { name:'Tažné kulové spojky', count:50 },
       { name:'Tažná oka', count:52 },
       { name:'Stabilizátory', count:52 },
@@ -347,11 +347,11 @@ class Component extends DCLogic {
       { name:'Zámky a zabezpečení', count:52 },
       { name:'Příslušenství a náhradní díly', count:52 }
     ] },
-    { key:'vzpery', image:'uploads/plynova-vzpera-mala-o.jpg', name:'Plynové vzpěry a příslušenství', preview:'Vzpěry a úchyty…', count:70, children:[
+    { key:'vzpery', icon:'ikona-plynove-vzpery-a-prislusenstvi.svg', image:'uploads/plynova-vzpera-mala-o.jpg', name:'Plynové vzpěry a příslušenství', preview:'Vzpěry a úchyty…', count:70, children:[
       { name:'Plynové vzpěry', count:34 },
       { name:'Koncovky a konzoly plynových vzpěr', count:36 }
     ] },
-    { key:'napravy', image:'uploads/celisti-brzdove-knott-200x50-mala-sada-na-2-kola.jpg', name:'Nájezdové brzdy a díly', preview:'Brzdy, lanka, tyčoví…', count:212, children:[
+    { key:'napravy', icon:'ikona-najezdove-brzdy-a-dily.svg', image:'uploads/celisti-brzdove-knott-200x50-mala-sada-na-2-kola.jpg', name:'Nájezdové brzdy a díly', preview:'Brzdy, lanka, tyčoví…', count:212, children:[
       { name:'Brzdy na "V" oje', count:22 },
       { name:'Brzdy na jeklové oje', count:22 },
       { name:'Spojovací zařízení nájezdových brzd', count:24 },
@@ -362,12 +362,12 @@ class Component extends DCLogic {
       { name:'Manžety', count:24 },
       { name:'Ostatní díly na náj. brzdy', count:24 }
     ] },
-    { key:'napravy-kompletni', image:'uploads/napravy-a-brzdy.jpg', name:'Nápravy kompletní', preview:'Brzděné i nebrzděné…', count:76, children:[
+    { key:'napravy-kompletni', icon:'ikona-napravy-kompletni.svg', image:'uploads/napravy-a-brzdy.jpg', name:'Nápravy kompletní', preview:'Brzděné i nebrzděné…', count:76, children:[
       { name:'Nebrzděné nápravy', count:24 },
       { name:'Brzděné nápravy', count:26 },
       { name:'Ramena polonáprav', count:26 }
     ] },
-    { key:'dily-naprav', image:'uploads/celisti.jpg', name:'Díly náprav', preview:'Čelisti, náboje, ložiska…', count:442, children:[
+    { key:'dily-naprav', icon:'ikona-dily-naprav.svg', image:'uploads/celisti.jpg', name:'Díly náprav', preview:'Čelisti, náboje, ložiska…', count:442, children:[
       { name:'Brzdové bubny', count:24 },
       { name:'Brzdové čelisti', count:22 },
       { name:'Brzdové štíty', count:22 },
@@ -389,30 +389,30 @@ class Component extends DCLogic {
       { name:'Tlumiče náprav a držáky', count:22 },
       { name:'Doplňky a příslušenství náprav', count:22 }
     ] },
-    { key:'najezdy', image:'uploads/najezdy.jpg', name:'Nájezdy', preview:'Nájezdové rampy…', count:28, children:[
+    { key:'najezdy', icon:'ikona-najezdy.svg', image:'uploads/najezdy.jpg', name:'Nájezdy', preview:'Nájezdové rampy…', count:28, children:[
       { name:'Hliníkové nájezdy', count:8 },
       { name:'Ocelové nájezdy', count:10 },
       { name:'Příslušenství nájezdů', count:10 }
     ] },
-    { key:'kolecka', image:'uploads/kolecka-1.jpg', name:'Opěrná kolečka, nohy, držáky', preview:'Kolečka, nohy, držáky…', count:146, children:[
+    { key:'kolecka', icon:'ikona-operna-kolecka-nohy-drzaky.svg', image:'uploads/kolecka-1.jpg', name:'Opěrná kolečka, nohy, držáky', preview:'Kolečka, nohy, držáky…', count:146, children:[
       { name:'Opěrná kolečka', count:38 },
       { name:'Opěrné nohy', count:36 },
       { name:'Držáky a klemy', count:36 },
       { name:'Díly a doplňky koleček a nohou', count:36 }
     ] },
-    { key:'karoserie', image:'uploads/blatniky.jpg', name:'Blatníky a zástěrky', preview:'Blatníky, lemy, zástěrky…', count:170, children:[
+    { key:'karoserie', icon:'ikona-blatniky-a-zasterky.svg', image:'uploads/blatniky.jpg', name:'Blatníky a zástěrky', preview:'Blatníky, lemy, zástěrky…', count:170, children:[
       { name:'Blatníky', count:58 },
       { name:'Držáky blatníků', count:56 },
       { name:'Zástěrky a příslušenství', count:56 }
     ] },
-    { key:'bocnice', image:'uploads/bocnice.jpg', name:'Bočnice, uzávěry, panty', preview:'Bočnice, podlahy, panty…', count:182, children:[
+    { key:'bocnice', icon:'ikona-bocnice-uzavery-panty.svg', image:'uploads/bocnice.jpg', name:'Bočnice, uzávěry, panty', preview:'Bočnice, podlahy, panty…', count:182, children:[
       { name:'Bočnice', count:38 },
       { name:'Sloupky bočnic', count:36 },
       { name:'Panty bočnic', count:36 },
       { name:'Přezky a uzávěry', count:36 },
       { name:'Lemování bočnic', count:36 }
     ] },
-    { key:'zabezpeceni', image:'uploads/zabezpeceni_nakladu.jpg', name:'Zabezpečení nákladu', preview:'Pásy, sítě, kurty…', count:96, children:[
+    { key:'zabezpeceni', icon:'ikona-zabezpeceni-nakladu.svg', image:'uploads/zabezpeceni_nakladu.jpg', name:'Zabezpečení nákladu', preview:'Pásy, sítě, kurty…', count:96, children:[
       { name:'Upínací soupravy a popruhy', count:12 },
       { name:'Ochrany popruhů a háky', count:14 },
       { name:'Zakrývací sítě', count:14 },
@@ -421,14 +421,14 @@ class Component extends DCLogic {
       { name:'Doplňky k zabezpečení nákladu', count:14 },
       { name:'Obalové materiály', count:14 }
     ] },
-    { key:'upinani', image:'uploads/navijaky-a-kladky.jpg', name:'Navijáky a příslušenství', preview:'Navijáky, kladky, lana…', count:58, children:[
+    { key:'upinani', icon:'ikona-navijaky-a-prislusenstvi.svg', image:'uploads/navijaky-a-kladky.jpg', name:'Navijáky a příslušenství', preview:'Navijáky, kladky, lana…', count:58, children:[
       { name:'Ruční navijáky', count:10 },
       { name:'Elektrické navijáky', count:12 },
       { name:'Lana a popruhy', count:12 },
       { name:'Držáky navijáků', count:12 },
       { name:'Díly a příslušenství navijáků', count:12 }
     ] },
-    { key:'konstrukcni', image:'uploads/konstrukcni_dily.jpg', name:'Konstrukční díly', preview:'Profily, úhelníky, spojky…', count:164, children:[
+    { key:'konstrukcni', icon:'ikona-konstrukcni-dily.svg', image:'uploads/konstrukcni_dily.jpg', name:'Konstrukční díly', preview:'Profily, úhelníky, spojky…', count:164, children:[
       { name:'Držáky motocyklů', count:18 },
       { name:'Držáky rezervního kola', count:18 },
       { name:'Oje a příslušenství', count:16 },
@@ -440,26 +440,26 @@ class Component extends DCLogic {
       { name:'Doplňky', count:16 },
       { name:'Díly rámů přívěsů VAPP', count:16 }
     ] },
-    { key:'plachty', image:'uploads/plachty.jpg', name:'Plachty a příslušenství', preview:'Plachty, konstrukce…', count:96, children:[
+    { key:'plachty', icon:'ikona-plachty-a-prislusenstvi.svg', image:'uploads/plachty.jpg', name:'Plachty a příslušenství', preview:'Plachty, konstrukce…', count:96, children:[
       { name:'Plachty s příslušenstvím', count:48 },
       { name:'Příslušenství k plachtám', count:48 }
     ] },
-    { key:'boxy', image:'uploads/box-naradi.jpg', name:'Boxy na nářadí a držáky boxů', preview:'Boxy, držáky boxů…', count:44, children:[
+    { key:'boxy', icon:'ikona-boxy-na-naradi-a-drzaky-boxu.svg', image:'uploads/box-naradi.jpg', name:'Boxy na nářadí a držáky boxů', preview:'Boxy, držáky boxů…', count:44, children:[
       { name:'Boxy na nářadí', count:16 },
       { name:'Držáky boxů', count:14 },
       { name:'Náhradní díly boxů', count:14 }
     ] },
-    { key:'kliny', image:'uploads/kliny.jpg', name:'Klíny a držáky', preview:'Zakládací klíny…', count:38, children:[
+    { key:'kliny', icon:'ikona-kliny-a-drzaky.svg', image:'uploads/kliny.jpg', name:'Klíny a držáky', preview:'Zakládací klíny…', count:38, children:[
       { name:'Klíny na ložnou plochu', count:18 },
       { name:'Zakládací klíny a držáky', count:20 }
     ] },
-    { key:'hydraulika', image:'uploads/hydraulika.jpg', name:'Hydraulika přívěsů', preview:'Hadice, pumpy, válce…', count:52, children:[] },
-    { key:'doplnky', image:'uploads/doplnky.jpg', name:'Doplňky k přívěsům', preview:'Tabulky, SPZ, značení…', count:126, children:[
+    { key:'hydraulika', icon:'ikona-hydraulika-privesu.svg', image:'uploads/hydraulika.jpg', name:'Hydraulika přívěsů', preview:'Hadice, pumpy, válce…', count:52, children:[] },
+    { key:'doplnky', icon:'ikona-doplnky-k-privesum.svg', image:'uploads/doplnky.jpg', name:'Doplňky k přívěsům', preview:'Tabulky, SPZ, značení…', count:126, children:[
       { name:'Označení přívěsu', count:42 },
       { name:'Příslušenství k přívěsu', count:42 },
       { name:'Ostatní doplňky k přívěsům', count:42 }
     ] },
-    { key:'udrzba', image:'uploads/pomucky.jpg', name:'Pomůcky pro údržbu', preview:'Maziva, sprej, čištění…', count:64, children:[
+    { key:'udrzba', icon:'ikona-pomucky-pro-udrzbu.svg', image:'uploads/pomucky.jpg', name:'Pomůcky pro údržbu', preview:'Maziva, sprej, čištění…', count:64, children:[
       { name:'Náplně do ostřikovačů', count:8 },
       { name:'Přípravky', count:8 },
       { name:'Brusné a řezné kotouče', count:8 },
@@ -658,12 +658,12 @@ class Component extends DCLogic {
         availStyle:'display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:'+(p.stock>0?'#0B6937;':'#666E78;'),
         availIn:p.stock>0, availOut:!p.stock,
         starsOn:'★'.repeat(4+((p.name.length)%2)), starsOff:'★'.repeat(1-((p.name.length)%2)),
-        reviews:(p.name.length*13)%38+3,
+        reviews: (p.name.length % 5 === 0) ? 0 : ((p.name.length*13)%38+3),
         objNum:p.p[2][1].replace('-',''),
         qty:(s.qty&&s.qty[p.name])||1,
-        onMinus:()=>{ const q=Object.assign({},s.qty); q[p.name]=Math.max(1,((q[p.name]||1)-1)); this.setState({qty:q}); },
-        onPlus:()=>{ const q=Object.assign({},s.qty); q[p.name]=(q[p.name]||1)+1; this.setState({qty:q}); },
-        onQty:(v)=>{ const q=Object.assign({},s.qty); q[p.name]=Math.max(1,v); this.setState({qty:q}); },
+        onMinus:()=>{ this.setState(prev=>{ const q=Object.assign({}, prev.qty||{}); q[p.name]=Math.max(1,((q[p.name]||1)-1)); return { qty:q }; }); },
+        onPlus:()=>{ this.setState(prev=>{ const q=Object.assign({}, prev.qty||{}); q[p.name]=(q[p.name]||1)+1; return { qty:q }; }); },
+        onQty:(v)=>{ this.setState(prev=>{ const q=Object.assign({}, prev.qty||{}); q[p.name]=Math.max(1,v); return { qty:q }; }); },
         img:p.img||'', noImg:!p.img,
         badge: p.sale ? '−'+p.sale+' %' : (this.priceNum(p)>=freeShip ? 'Doprava zdarma' : ''),
         badgeStyle:'position:absolute;top:8px;left:8px;font-size:13px;font-weight:700;border-radius:6px;padding:4px 9px;'+(p.sale?'color:#fff;background:#C5232B;':'color:#0B6937;background:#E9F8EF;'),
@@ -676,12 +676,14 @@ class Component extends DCLogic {
         onLeave:()=>{ if(s.hoverCard===p.name) this.setState({ hoverCard:null }); },
         cmp,
         cmpBox:'flex:none;width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1px solid '+(cmp?'#1E5AA8':'#91959B')+';background:'+(cmp?'#1E5AA8':'#fff')+';',
-        onCmp:()=>{ const c=Object.assign({},s.compare); if(c[p.name]) delete c[p.name]; else c[p.name]=true; this.setState({compare:c}); },
+        onCmp:()=>{ this.setState(prev=>{ const c=Object.assign({}, prev.compare||{}); if(c[p.name]) delete c[p.name]; else c[p.name]=true; return { compare:c }; }); },
+        inCart: (s.cart && s.cart[p.name]) || 0,
+        onBuy:()=>{ const add=(s.qty&&s.qty[p.name])||1; this.setState(prev=>{ const c=Object.assign({}, prev.cart||{}); c[p.name]=(c[p.name]||0)+add; return { cart:c }; }); },
       };
     });
 
     const groups = this.GROUPS.map(g=>({
-      name:g.name, count:g.count, preview:g.preview,
+      name:g.name, count:g.count, preview:g.preview, icon:g.icon,
       subs: (g.children||[]).slice(0,4).map(c=>({ name:c.name, onPick:()=>onPickSub(g.name, c.name) })),
       onOpen:()=>this.setState({ view:g.key, path:[], subcat:null, pageFrom:1, pageTo:1 }),
     }));
@@ -696,7 +698,7 @@ class Component extends DCLogic {
       count: this.PRODUCTS.filter(pr=>pr.sale).length * 12, subs: []
     };
     const flatCategories = [saleTile].concat(this.GROUPS.map(g=>({
-      name:g.name, count:g.count, image:g.image, href:this.urlFor(g.key,[]),
+      name:g.name, count:g.count, image:g.image, icon:g.icon, href:this.urlFor(g.key,[]),
       subs: (g.children||[]).slice(0,4).map(c=>({ name:c.name, count:c.count, href:this.urlFor(g.key,[c.name]) }))
     })));
     // Akce a slevy se kategorizují podle toho, co je v katalogu ve slevě

@@ -65,8 +65,14 @@
     </div>
     <div class="pk-buyrow pk-over" onClick="{{ stop }}" style="display:flex;align-items:stretch;gap:8px;">
       <div class="pk-qty" style="flex:none;"><dc-import name="Kvantifikator" value="{{ qtyVal }}" on-change="{{ onQty }}" hint-size="120px,44px"></dc-import></div>
-      <div class="pk-buyfull" style="flex:1;display:flex;min-width:0;"><dc-import name="Tlacitko" variant="buy" size="medium" label="Koupit" full-width="true" disabled="{{ buyDisabled }}" on-click="{{ p.onBuy }}" style="width:100%;" hint-size="100%,44px"></dc-import></div>
-      <div class="pk-buyicon" style="margin-left:auto;"><dc-import name="Tlacitko" variant="buy" size="medium" icon-only="{{ true }}" icon="shopping-cart" aria-label="Koupit" disabled="{{ buyDisabled }}" on-click="{{ p.onBuy }}" hint-size="44px,44px"></dc-import></div>
+      <div class="pk-buyfull" style="position:relative;flex:1;display:flex;min-width:0;">
+        <dc-import name="Tlacitko" variant="buy" size="medium" label="Koupit" aria-label="{{ buyAria }}" full-width="true" disabled="{{ buyDisabled }}" on-click="{{ onBuyClick }}" style="width:100%;" hint-size="100%,44px"></dc-import>
+        <sc-if value="{{ showCartQty }}" hint-placeholder-val=""><span aria-hidden="true" style="{{ cartBadgeStyle }}">{{ cartQty }}</span></sc-if>
+      </div>
+      <div class="pk-buyicon" style="position:relative;margin-left:auto;">
+        <dc-import name="Tlacitko" variant="buy" size="medium" icon-only="{{ true }}" icon="shopping-cart" aria-label="{{ buyAria }}" disabled="{{ buyDisabled }}" on-click="{{ onBuyClick }}" hint-size="44px,44px"></dc-import>
+        <sc-if value="{{ showCartQty }}" hint-placeholder-val=""><span aria-hidden="true" style="{{ cartBadgeStyle }}">{{ cartQty }}</span></sc-if>
+      </div>
     </div>
     <div class="pk-over" onClick="{{ stop }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;height:26px;padding-top:2px;">
       <button type="button" class="a11y-i pk-cmp" role="checkbox" aria-checked="{{ p.cmpChecked }}" aria-label="Porovnat produkt" onClick="{{ p.onCmp }}" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#5A626C;cursor:pointer;min-height:24px;white-space:nowrap;"><span style="{{ p.cmpBox }}"><sc-if value="{{ p.cmp }}" hint-placeholder-val=""><svg width="9" height="9" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#fff" stroke-width="2.8" stroke-linecap="round"></path></svg></sc-if></span>Porovnat</button>
@@ -77,7 +83,17 @@
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:300,&quot;height&quot;:560},&quot;p&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;object&quot;,&quot;default&quot;:null},&quot;available&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Varianty&quot;},&quot;onDetail&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;,&quot;default&quot;:null}}">class Component extends DCLogic {
-  state = { qty:1, cmp:false };
+  state = { qty:1, cmp:false, inCartDemo:0 };
+  // čítač v košíku: stejný vzhled jako u Porovnat a Košíku v hlavičce
+  CART_BADGE = 'position:absolute;top:-6px;right:-6px;min-width:16px;width:16px;height:16px;border-radius:999px;background:#C5232B;color:#fff;font-size:10px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;pointer-events:none;';
+  cartVals(inCart, disabled){
+    const n = Number(inCart) || 0;
+    return {
+      cartQty: n, showCartQty: n > 0, cartBadgeStyle: this.CART_BADGE,
+      buyAria: n > 0 ? ('Koupit — v košíku ' + n + ' ks') : 'Koupit',
+      buyDisabled: disabled
+    };
+  }
   stars(filled){
     const n = Math.max(0, Math.min(5, Math.round(filled||0)));
     return Array.from({length:5}, (_,i)=>({ icon: i<n ? 'star-filled' : 'star', style:'color:'+(i<n?'#F5A623':'#D5DAE0')+';display:inline-flex;' }));
@@ -107,13 +123,17 @@
         ratingValue: filled, reviews: p.reviews,
         netNum: parseKc(p.priceNet), grossNum: parseKc(p.price), originalNum: parseKc(p.original),
         currency: this.props.currency || 'CZK',
+        ...this.cartVals(p.inCart, !avail),
+        onBuyClick: p.onBuy || (()=>{}),
         qtyVal: p.qty || 1, onQty: p.onQty || (()=>{}) };
     }
     const availDemo = (this.props.available!==undefined) ? !!this.props.available : true;
     const cmp = this.state.cmp;
     // Ukázková data pro samostatný náhled komponenty
     return { sizeClass:'', ratingValue:4, reviews:23, netNum:397, grossNum:480, originalNum:0, stop,
-      buyDisabled: !availDemo, onCard: this.props.onDetail || (()=>{}),
+      ...this.cartVals(this.state.inCartDemo, !availDemo),
+      onBuyClick: ()=>this.setState(s=>({ inCartDemo: s.inCartDemo + (s.qty || 1) })),
+      onCard: this.props.onDetail || (()=>{}),
       onCardNav: (e)=>{ if(e&&e.preventDefault) e.preventDefault(); const f=this.props.onDetail; if(f) f(e); },
       qtyVal:this.state.qty, onQty:(v)=>this.setState({qty:v}), p: {
       name:'Opěrné kolečko ⌀48 mm, nosnost 150 kg', starList:this.stars(4), reviews:23,

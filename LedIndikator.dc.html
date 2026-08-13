@@ -61,7 +61,10 @@ class Component extends DCLogic {
       return { single:true, gallery:false,
         ledAria: (String(_lbl||'').trim() ? undefined : (open ? 'Právě otevřeno' : 'Zavřeno')),
         label: _lbl,
-        wrapStyle:'display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:'+(onDark?'600':'700')+';color:'+textColor+';',
+        // bez labelu nemá obal nést textovou metriku (jinak tečku posune pod účaří sousedního textu)
+        wrapStyle: String(_lbl||'').trim()
+          ? 'display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:'+(onDark?'600':'700')+';color:'+textColor+';'
+          : 'display:inline-flex;align-items:center;justify-content:center;gap:0;font-size:0;line-height:0;color:'+textColor+';',
         dotStyle:'--led:'+led+';width:'+size+'px;height:'+size+'px;background:'+color+';flex:none;' };
     }
     return { single:false, gallery:true };
