@@ -17,11 +17,12 @@
   html,body{margin:0;background:#FFFFFF;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
   .kb-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;text-decoration:none;cursor:pointer;}
   .kb-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
-  .kb-tel{transition:color .12s;}
+  .kb-tel{position:relative;transition:color .12s;}
+  .kb-tel::after{content:"";position:absolute;left:0;right:0;top:-2px;bottom:-2px;}
   .kb-tel:hover{color:#1E5AA8;}
 </style>
 </helmet>
-<div style="display:flex;align-items:center;gap:12px;flex:none;">
+<div style="display:flex;align-items:center;gap:6px;flex:none;">
   <span aria-hidden="true" style="display:flex;color:#1E5AA8;flex:none;">
     <dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import>
   </span>

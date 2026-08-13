@@ -19,6 +19,10 @@
   .a11y-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   a{color:#15181C;} a:hover{color:#1E5AA8;}
   .mm-link{transition:color .12s;} .mm-link:hover{color:#1E5AA8 !important;}
+  .mm-cur{transition:background .12s,color .12s;}
+  .mm-cur[aria-pressed="false"]:hover{background:#EFF4FB !important;}
+  .mm-cur[aria-pressed="true"]:hover{background:#1A4A8A !important;}
+  .mm-cur:active{transform:translateY(1px);}
   .mm-back{transition:color .12s;} .mm-back:hover .mm-back-t{color:#1A4A8A !important;} .mm-back:hover .mm-back-i{color:#A21B22 !important;}
   @keyframes mmInRightA{from{transform:translateX(100%);opacity:0;}to{transform:none;opacity:1;}}
   @keyframes mmInRightB{from{transform:translateX(100%);opacity:0;}to{transform:none;opacity:1;}}
@@ -44,12 +48,21 @@
       </sc-if>
     </sc-for>
   </div>
-  <div style="padding:12px 16px 16px;display:flex;flex-wrap:wrap;gap:8px;">
-    <div style="flex:1 1 140px;min-width:140px;display:flex;"><dc-import name="Tlacitko" variant="guide" size="medium" label="Poradna" icon="book" full-width="true" style="width:100%;" hint-size="100%,44px"></dc-import></div>
-    <div style="flex:1 1 140px;min-width:140px;display:flex;"><dc-import name="Tlacitko" variant="danger" size="medium" label="Akce a slevy" icon="discount" full-width="true" style="width:100%;" hint-size="100%,44px"></dc-import></div>
-  </div>
+
   <div style="padding:4px 16px;">
-    <div style="padding:8px 0 4px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Informace</div>
+    <div style="padding:8px 0 4px;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;"><span aria-hidden="true" style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="user" size="18" hint-size="18px,18px"></dc-import></span>{{ accountHeading }}</div>
+    <sc-for list="{{ accountItems }}" as="a" hint-placeholder-count="1">
+      <button type="button" class="mm-link a11y-i" onClick="{{ a.onClick }}" style="width:100%;display:flex;align-items:center;min-height:44px;border-bottom:1px solid #F2F4F7;font-size:14px;font-weight:500;color:#5A626C;cursor:pointer;">{{ a.t }}</button>
+    </sc-for>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;border-bottom:1px solid #F2F4F7;">
+      <span style="font-size:14px;font-weight:500;color:#5A626C;">{{ currencyLabel }}</span>
+      <div role="group" aria-label="{{ currencyLabel }}" style="display:flex;align-items:center;gap:4px;flex:none;">
+        <sc-for list="{{ currencyItems }}" as="c" hint-placeholder-count="2">
+          <button type="button" class="a11y-i mm-cur" aria-pressed="{{ c.pressed }}" onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.code }}</button>
+        </sc-for>
+      </div>
+    </div>
+    <div style="padding:8px 0 4px;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;"><span aria-hidden="true" style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="info-circle" size="18" hint-size="18px,18px"></dc-import></span>Informace</div>
     <sc-for list="{{ infoItems }}" as="s" hint-placeholder-count="4">
       <a class="mm-link a11y-i" href="#" onClick="{{ s.onClick }}" style="display:flex;align-items:center;min-height:44px;border-bottom:1px solid #F2F4F7;font-size:14px;font-weight:500;color:#5A626C;cursor:pointer;">{{ s.t }}</a>
     </sc-for>
@@ -81,112 +94,178 @@
 </sc-if>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:392,&quot;height&quot;:900},&quot;menuTree&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;,&quot;default&quot;:null},&quot;labels&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;panelOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onSelect&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;infoLinks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;323 605 314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;email&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;hours&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Po–Pá 8–16&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onInfoSelect&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onLogin&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCartClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onAllContacts&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;showAccountButtons&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Obsah&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:392,&quot;height&quot;:900},&quot;menuTree&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;,&quot;default&quot;:null},&quot;labels&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;panelOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onSelect&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;infoLinks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;323 605 314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;email&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;hours&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Po–Pá 8–16&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onInfoSelect&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onLogin&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;loggedIn&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Účet&quot;},&quot;userName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Jaroslav Maňhal&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Účet&quot;},&quot;accountLinks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;currency&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;CZK&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;currencies&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;currencyLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Měna&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onCurrencyChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(code:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;onAccountSelect&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCartClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onAllContacts&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;showAccountButtons&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Obsah&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 const L = (name, children) => children ? { name, href: '#', children } : { name, href: '#' };
 const DEFAULT_TREE = [
   L('Přívěsy'),
   L('Náhradní díly', [
-    L('Nápravy a brzdy', [
-      L('Nápravy kompletní', [
-        L('Nebrzděné nápravy', [
-          L('Nebrzděné do 750 kg'), L('Nebrzděné do 1350 kg'),
-          L('Nebrzděné 1500 kg a více'), L('Tuhé nebrzděné nápravy'),
-        ]),
-        L('Brzděné nápravy', [
-          L('Brzděné do 850 kg'), L('Brzděné do 1050 kg'), L('Brzděné do 1350 kg'),
-          L('Brzděné do 1600 kg'), L('Brzděné do 1800 kg'), L('Brzděné do 3500 kg'),
-          L('Tuhé brzděné nápravy'), L('Vodovzdorné brzděné nápravy'),
-        ]),
-        L('Ramena polonáprav'),
-      ]),
-      L('Díly náprav', [
-        L('Brzdové bubny'), L('Brzdové čelisti'), L('Brzdové štíty'),
-        L('Náboje a krytky'),
-        L('Ložiska a gufera', [
-          L('Jednotlivá ložiska'), L('Sady kuželíkových ložisek'),
-          L('Těsnící kroužky a gufera'),
-        ]),
-        L('Lanovody, vahadla, táhla'), L('Listové pružiny a příslušenství'),
-        L('Tlumiče náprav a držáky'), L('Kompletní kolové jednotky'),
-      ]),
-      L('Nájezdové brzdy a díly', [
-        L('Brzdy na V oje'), L('Brzdy na jeklové oje'),
-        L('Tažné trubky a dorazové kroužky'), L('Pouzdra, maznice, manžety'),
-        L('Tlumiče nájezdových brzd'), L('Lanka pojistná'),
-      ]),
+    L('Elektro, svítilny, odrazky', [
+      L('Baterie, nabíječky a příslušenství'),
+      L('Blinkry'),
+      L('Brzdové svítilny'),
+      L('Couvačky a mlhovky'),
+      L('Držáky svítilen a odrazek'),
+      L('Kabely a kabeláže'),
+      L('Majáky a výstražné svítilny'),
+      L('Montážní materiál'),
+      L('Obrysové svítilny'),
+      L('Odrazky a odrazové desky'),
+      L('Osvětlení registrační značky'),
+      L('Pracovní světlomety'),
+      L('Sdružené zadní svítilny'),
+      L('Skla svítilen náhradní'),
+      L('Vnitřní osvětlení'),
+      L('Zásuvky, zástrčky, konektory'),
+      L('Žárovky, náhradní LED moduly'),
     ]),
-    L('Spojovací zařízení a podpěry', [
-      L('Tažné spojky, oka a koule', [
-        L('Spojky pro nebrzděné přívěsy'), L('Spojky pro brzděné přívěsy'),
-        L('Tažná oka'), L('Tažné koule'),
-      ]),
-      L('Stabilizátory'), L('Zámky a zabezpečení přívěsu'),
-      L('Opěrná kolečka, nohy a držáky', [
-        L('Opěrná kolečka', [
-          L('Do klemy, průměr 48 mm'), L('Do klemy, průměr 60 mm'), L('S přírubou'),
-        ]),
-        L('Opěrné nohy'), L('Držáky a klemy'),
-      ]),
-      L('Příslušenství a krytky spojovacích zařízení'),
-    ]),
-    L('Elektro a osvětlení', [
-      L('Sdružená zadní světla a obrysovky', [
-        L('LED sdružené svítilny'), L('Žárovkové sdružené svítilny'),
-        L('Přední obrysové svítilny'), L('Boční obrysové svítilny'),
-        L('Zadní obrysové svítilny'),
-      ]),
-      L('Zásuvky, zástrčky a kabeláž', [
-        L('Zástrčky'), L('Zásuvky'), L('Redukce a bajonety'),
-        L('Kabely a kabelové svazky'),
-      ]),
-      L('Odrazky a osvětlení SPZ'), L('Žárovky, LED moduly a náhradní skla'),
-      L('Majáky, pracovní světlomety a baterie'),
-    ]),
-    L('Kola a pneumatiky', [
-      L('Kompletní kola, disky a pneu', [
-        L('Disky kol', [
-          L('Alu disky'), L('Disky 8" a 10"'), L('Disky 12" a 13"'),
-          L('Disky 14" a více'),
-        ]),
-        L('Kompletní kola'), L('Pneumatiky'),
-      ]),
-      L('Kolové šrouby, matice a štefty'), L('Držáky rezervního kola'),
+    L('Pneu, kola, disky', [
+      L('Disky kol'),
+      L('Kompletní kola'),
+      L('Pneu'),
+      L('Pneu, kola, disky 8"'),
+      L('Pneu, kola, disky 10"'),
+      L('Pneu, kola, disky 13"'),
+      L('Pneu, kola, disky 14"'),
+      L('Pneu, kola, disky 15" a více'),
       L('Příslušenství kol a pneumatik'),
     ]),
-    L('Karoserie a konstrukce', [
-      L('Blatníky a zástěrky', [
-        L('Plastové blatníky'), L('Plechové blatníky'), L('Tandemové blatníky'),
-        L('Držáky blatníků'), L('Zástěrky a příslušenství'),
-      ]),
-      L('Bočnice, sloupky, uzávěry a panty', [
-        L('Bočnice'), L('Sloupky bočnic'), L('Přezky a uzávěry'),
-        L('Panty a lemování'),
-      ]),
-      L('Překližky, podlahy a pojezdové plechy'), L('Oje a díly rámů'),
-      L('Plachty a plachtové konstrukce'), L('Plynové vzpěry a konzoly'),
-      L('Hydraulika sklápění'), L('Rolny a opěry pro lodě'),
-      L('Spojovací materiál'),
+    L('Spojovací zařízení a zámky', [
+      L('Tažné kulové spojky'),
+      L('Tažná oka'),
+      L('Stabilizátory'),
+      L('Tažné koule'),
+      L('Zámky a zabezpečení'),
+      L('Příslušenství a náhradní díly'),
     ]),
-    L('Upínání, nakládání a doplňky', [
-      L('Upínací pásy, sítě a oka', [
-        L('Univerzální upínací soupravy'), L('Soupravy k přepravě automobilů'),
-        L('Jednotlivé popruhy a ráčny'), L('Zakrývací sítě'),
-        L('Upínací oka a misky'),
-      ]),
-      L('Navijáky, lana a popruhy'),
-      L('Nájezdy a příslušenství', [
-        L('Hliníkové nájezdy'), L('Ocelové nájezdy'), L('Příslušenství nájezdů'),
-      ]),
-      L('Klíny a zakládací držáky'), L('Boxy na nářadí a držáky'),
-      L('Doplňky k přívěsům'), L('Pomůcky pro údržbu'),
+    L('Plynové vzpěry a příslušenství', [
+      L('Plynové vzpěry'),
+      L('Koncovky a konzoly plynových vzpěr'),
+    ]),
+    L('Nájezdové brzdy a díly', [
+      L('Brzdy na "V" oje'),
+      L('Brzdy na jeklové oje'),
+      L('Spojovací zařízení nájezdových brzd'),
+      L('Lanka pojistná'),
+      L('Tlumiče a příslušenství'),
+      L('Tažné trubky a dorazové kroužky'),
+      L('Pouzdra a maznice'),
+      L('Manžety'),
+      L('Ostatní díly na náj. brzdy'),
+    ]),
+    L('Nápravy kompletní', [
+      L('Nebrzděné nápravy'),
+      L('Brzděné nápravy'),
+      L('Ramena polonáprav'),
+    ]),
+    L('Díly náprav', [
+      L('Brzdové bubny'),
+      L('Brzdové čelisti'),
+      L('Brzdové štíty'),
+      L('Čepy náboje'),
+      L('Díly seřízování a couvací automatiky'),
+      L('Lanovody, vahadla, táhla'),
+      L('Listové pružiny a příslušenství'),
+      L('Ložiska'),
+      L('Kolové šrouby, matice, štefty'),
+      L('Kompletní kolové jednotky'),
+      L('Krytky náboje'),
+      L('Nebrzděné náboje'),
+      L('Pružiny brzdových čelistí'),
+      L('Rozpěrky a brzdové válečky'),
+      L('Seegerovy pojistky'),
+      L('Středové matice'),
+      L('Stabilizační jednotky'),
+      L('Těsnící kroužky, prachovky, gufera'),
+      L('Tlumiče náprav a držáky'),
+      L('Doplňky a příslušenství náprav'),
+    ]),
+    L('Nájezdy', [
+      L('Hliníkové nájezdy'),
+      L('Ocelové nájezdy'),
+      L('Příslušenství nájezdů'),
+    ]),
+    L('Opěrná kolečka, nohy, držáky', [
+      L('Opěrná kolečka'),
+      L('Opěrné nohy'),
+      L('Držáky a klemy'),
+      L('Díly a doplňky koleček a nohou'),
+    ]),
+    L('Blatníky a zástěrky', [
+      L('Blatníky'),
+      L('Držáky blatníků'),
+      L('Zástěrky a příslušenství'),
+    ]),
+    L('Bočnice, uzávěry, panty', [
+      L('Bočnice'),
+      L('Sloupky bočnic'),
+      L('Panty bočnic'),
+      L('Přezky a uzávěry'),
+      L('Lemování bočnic'),
+    ]),
+    L('Zabezpečení nákladu', [
+      L('Upínací soupravy a popruhy'),
+      L('Ochrany popruhů a háky'),
+      L('Zakrývací sítě'),
+      L('Upínací oka a misky'),
+      L('Klíny na ložnou plochu'),
+      L('Doplňky k zabezpečení nákladu'),
+      L('Obalové materiály'),
+    ]),
+    L('Navijáky a příslušenství', [
+      L('Ruční navijáky'),
+      L('Elektrické navijáky'),
+      L('Lana a popruhy'),
+      L('Držáky navijáků'),
+      L('Díly a příslušenství navijáků'),
+    ]),
+    L('Konstrukční díly', [
+      L('Držáky motocyklů'),
+      L('Držáky rezervního kola'),
+      L('Oje a příslušenství'),
+      L('Oje výškově stavitelné a díly'),
+      L('Pojezdové plechy'),
+      L('Překližky'),
+      L('Rolny a opěry pro lodě'),
+      L('Spojovací materiál'),
+      L('Doplňky'),
+      L('Díly rámů přívěsů VAPP'),
+    ]),
+    L('Plachty a příslušenství', [
+      L('Plachty s příslušenstvím'),
+      L('Příslušenství k plachtám'),
+    ]),
+    L('Boxy na nářadí a držáky boxů', [
+      L('Boxy na nářadí'),
+      L('Držáky boxů'),
+      L('Náhradní díly boxů'),
+    ]),
+    L('Klíny a držáky', [
+      L('Klíny na ložnou plochu'),
+      L('Zakládací klíny a držáky'),
+    ]),
+    L('Hydraulika přívěsů'),
+    L('Doplňky k přívěsům', [
+      L('Označení přívěsu'),
+      L('Příslušenství k přívěsu'),
+      L('Ostatní doplňky k přívěsům'),
+    ]),
+    L('Pomůcky pro údržbu', [
+      L('Náplně do ostřikovačů'),
+      L('Přípravky'),
+      L('Brusné a řezné kotouče'),
+      L('Maziva a technické spreje'),
+      L('Ochranné pomůcky'),
+      L('Vrtáky a závitníky'),
+      L('Elektroinstalační materiál'),
+      L('Montážní svítilny'),
     ]),
   ]),
-  L('Příslušenství'),
   L('Servis', [
     L('AL-KO servis'), L('BPW servis'), L('KNOTT servis'),
     L('Garanční prohlídky'), L('Pneuservis'),
   ]),
   L('Půjčovna'),
+  L('Poradna'),
 ];
 
 class Component extends DCLogic {
@@ -208,6 +287,15 @@ class Component extends DCLogic {
     const onSelect = P.onSelect || (()=>{});
     const infoLinks = P.infoLinks || ['Doprava a platba','Obchodní podmínky','O nás','Kontakty'];
     const onInfoSelect = P.onInfoSelect || (()=>{});
+    const curCodes = Array.isArray(P.currencies) && P.currencies.length ? P.currencies : ['CZK','EUR'];
+    const currency = P.currency || curCodes[0];
+    const loggedIn = P.loggedIn === true;
+    const userName = P.userName || 'Jaroslav Maňhal';
+    const onAccount = P.onAccountSelect || null;
+    const onLogin = P.onLogin || null;
+    const accountLabels = loggedIn
+      ? (Array.isArray(P.accountLinks) && P.accountLinks.length ? P.accountLinks : ['Můj účet','Moje objednávky','Reklamace','Faktury'])
+      : ['Přihlásit se / Registrovat'];
     const phone = P.phone || '323 605 314';
     const email = P.email || 'obchod@vapp.cz';
     const hours = P.hours || 'Po–Pá 8–16';
@@ -265,6 +353,17 @@ class Component extends DCLogic {
       ledState: open ? 'open' : 'closed',
       statusText: hours + (open ? ' · právě otevřeno' : ' · zavřeno'),
       showAccountButtons: (P.showAccountButtons ?? false) !== false,
+      loggedIn,
+      currencyLabel: P.currencyLabel || 'Měna',
+      currencyItems: curCodes.map(code=>{
+        const on = code === currency;
+        return { code, pressed: on ? 'true' : 'false',
+          style: 'min-height:32px;padding:0 12px;border-radius:8px;font-size:13px;font-weight:700;display:inline-flex;align-items:center;cursor:pointer;'
+            + (on ? 'background:#1E5AA8;color:#fff;' : 'background:transparent;color:#1E5AA8;'),
+          onClick: ()=>{ if (typeof P.onCurrencyChange === 'function') P.onCurrencyChange(code); } };
+      }),
+      accountHeading: loggedIn ? userName : 'Můj účet',
+      accountItems: accountLabels.map(t=>({ t, onClick:()=>{ if(!loggedIn && onLogin) onLogin(); else if(onAccount) onAccount(t); } })),
       onLogin: P.onLogin || (()=>{}),
       onCartClick: P.onCartClick || (()=>{}),
       onAllContacts: P.onAllContacts || (()=>{}),

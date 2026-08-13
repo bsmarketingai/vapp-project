@@ -1,0 +1,101 @@
+/* ============================================================
+   COLOR TOKENS
+   Vrstva 1 (Core): sémantické aliasy používané všemi komponentami.
+   Vrstva 2 (Client Theme): přemapuje pouze sémantické aliasy.
+   Komponenty musí odkazovat na aliasy --color-* / --text-*,
+   nikdy na surové škály --gray-* / --accent-*.
+   ============================================================ */
+
+:root {
+  /* --- Základní paleta: neutrální šedá škála (surová) --- */
+  --gray-0:   #ffffff;
+  --gray-50:  #f8f9fa;
+  --gray-100: #f1f3f5;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-400: #ced4da;
+  --gray-500: #adb5bd;
+  --gray-600: #868e96;
+  --gray-650: #6b7280; /* text-muted — AA na bílé (~4,6:1) */
+  --gray-700: #495057;
+  --gray-800: #343a40;
+  --gray-900: #212529;
+  --gray-950: #0d0f11;
+
+  /* --- Základní paleta: jeden přístupný akcent (surová škála) --- */
+  --accent-50:  #eef4ff;
+  --accent-100: #dbe7fe;
+  --accent-200: #bfd4fe;
+  --accent-300: #93b4fd;
+  --accent-400: #6089fa;
+  --accent-500: #3b66f5;
+  --accent-600: #2450e6; /* primární akce — 4,9:1 na bílé */
+  --accent-700: #1d40c4;
+  --accent-800: #1e39a0;
+  --accent-900: #1e357f;
+
+  /* --- Sémantické stavové škály (surové) --- */
+  --green-500:  #16a34a;
+  --green-600:  #15803d;
+  --green-50:   #ecfdf3;
+  --amber-500:  #d97706;
+  --amber-600:  #b45309;
+  --amber-50:   #fffbeb;
+  --red-500:    #dc2626;
+  --red-600:    #b91c1c;
+  --red-50:     #fef2f2;
+
+  /* ==========================================================
+     SÉMANTICKÉ ALIASY — Theme Contract.
+     Klientský motiv přepisuje TYTO (a surové škály, které je
+     napájejí), nikdy hodnoty uvnitř komponent.
+     ========================================================== */
+
+  /* Povrchy */
+  --color-bg:            var(--gray-50);
+  --color-surface:       var(--gray-0);
+  --color-surface-sunken:var(--gray-100);
+  --color-surface-raised:var(--gray-0);
+  --color-overlay:       rgba(13, 15, 17, 0.5);
+
+  /* Text */
+  --text-primary:   var(--gray-900);
+  --text-secondary: var(--gray-700);
+  --text-muted:     var(--gray-650);
+  --text-disabled:  var(--gray-500);
+  --text-inverted:  var(--gray-0);
+  --text-link:      var(--color-accent);
+  --text-link-hover:var(--color-accent-hover);
+
+  /* Ohraničení */
+  --color-border:        var(--gray-200);
+  --color-border-strong: var(--gray-300);
+  --color-border-inverted: var(--gray-700);
+
+  /* Akcent / primární akce */
+  --color-accent:          var(--accent-600);
+  --color-accent-hover:    var(--accent-700);
+  --color-accent-active:   var(--accent-800);
+  --color-accent-subtle:   var(--accent-50);
+  --color-accent-contrast: var(--gray-0);
+
+  /* Focus */
+  --color-focus-ring: var(--accent-500);
+
+  /* Stavy */
+  --color-success:        var(--green-600);
+  --color-success-subtle: var(--green-50);
+  --color-warning:        var(--amber-600);
+  --color-warning-subtle: var(--amber-50);
+  --color-danger:         var(--red-600);
+  --color-danger-subtle:  var(--red-50);
+
+  /* Commerce sémantika */
+  --color-price:        var(--text-primary);
+  --color-price-sale:   var(--color-danger);
+  --color-price-strike: var(--text-muted);
+  --color-instock:      var(--color-success);
+  --color-lowstock:     var(--color-warning);
+  --color-outofstock:   var(--text-muted);
+  --color-rating:       var(--amber-500);
+}

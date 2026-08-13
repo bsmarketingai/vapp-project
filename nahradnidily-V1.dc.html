@@ -79,7 +79,7 @@
 .hvx9{transition:color .12s;} .hvx9:hover{color:#fff !important;}
 </style>
 </helmet>
-<div data-screen-label="Prototyp Náhradní díly VAPP" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
+<div data-screen-label="Náhradní díly V1" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
 
   <dc-import name="Hlavicka" variant="{{ headerVariant }}" currency="{{ currency }}" on-currency-change="{{ onCurrency }}" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:00–16:00" contact-open="{{ true }}" menu-tree="{{ menuTree }}" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" hint-size="100%,150px"></dc-import>
 
@@ -215,8 +215,17 @@
 
   </main>
 
-  <dc-import name="PrezentacniLista" variants="{{ plVariants }}" active="{{ plActive }}" on-select="{{ plSelect }}" label2="Hlavička:" variants2="{{ headerVariantOptions }}" active2="{{ headerVariant }}" on-select2="{{ onHeaderVariant }}" debug-on="{{ plDebugOn }}" on-toggle-debug="{{ plToggleDebug }}" hint-size="0px,0px"></dc-import>
 
+
+  <div style="position:fixed;left:16px;right:16px;bottom:16px;z-index:96;display:flex;justify-content:center;pointer-events:none;">
+    <div style="pointer-events:auto;display:flex;align-items:center;flex-wrap:wrap;justify-content:center;gap:8px;padding:6px;border-radius:999px;background:#142F56;box-shadow:0 10px 30px rgba(20,30,45,.14);">
+      <span style="font-size:13px;font-weight:700;color:#B4CEEC;padding:0 4px;">Verze stránky:</span>
+      <nav aria-label="Přepínač verzí" style="display:flex;align-items:center;gap:8px;">
+        <a href="./nahradnidily-V1.dc.html" aria-current="page" style="min-height:32px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:700;line-height:1;display:inline-flex;align-items:center;text-decoration:none;cursor:pointer;background:#FFFFFF;color:#142F56;">V1</a>
+        <a href="./nahradnidily-V2.dc.html" aria-current="false" style="min-height:32px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:700;line-height:1;display:inline-flex;align-items:center;text-decoration:none;cursor:pointer;background:transparent;color:#B4CEEC;">V2</a>
+      </nav>
+    </div>
+  </div>
   <div style="margin-top:10px;">
     <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
   </div>

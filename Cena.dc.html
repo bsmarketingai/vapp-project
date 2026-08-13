@@ -22,6 +22,7 @@
   *{box-sizing:border-box;}
   html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
 </style>
+<script src="./mena.js"></script>
 </helmet>
 <sc-if value="{{ single }}" hint-placeholder-val="">
   <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
@@ -47,7 +48,13 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:720,&quot;height&quot;:180},&quot;priceNet&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:397,&quot;tsType&quot;:&quot;number&quot;},&quot;priceGross&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:480,&quot;tsType&quot;:&quot;number&quot;},&quot;original&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;tsType&quot;:&quot;number&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;default&quot;,&quot;large&quot;],&quot;default&quot;:&quot;default&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
-  fmt(n){ return String(Math.round(n||0)).replace(/\B(?=(\d{3})+(?!\d))/g,'\u00A0') + ' Kč'; }
+  // ceny v datech jsou v CZK; přepočet a formát drží mena.js
+  fmt(n){
+    const M = typeof window !== 'undefined' ? window.VappMena : null;
+    const cur = this.props.currency || 'CZK';
+    if (M) return M.format(n, cur);
+    return String(Math.round(n||0)).replace(/\B(?=(\d{3})+(?!\d))/g,'\u00A0') + ' Kč';
+  }
   renderVals(){
     const P = this.props;
     const single = P.priceNet !== undefined || P.priceGross !== undefined;

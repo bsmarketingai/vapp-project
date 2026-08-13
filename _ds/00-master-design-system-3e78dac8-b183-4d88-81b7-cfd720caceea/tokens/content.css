@@ -1,0 +1,71 @@
+/* ============================================================
+   CONTENT ORGANIZATION TOKENS — Tabs + Accordion.
+   Aliasy na Control Size Contract a semantic vrstvu (themeable).
+   ============================================================ */
+:root {
+  /* Tabs — geometry (výšky = Control Size Contract) */
+  --tabs-trigger-height-small: var(--button-height-small);
+  --tabs-trigger-height-regular: var(--button-height-regular);
+  --tabs-trigger-height-large: var(--button-height-large);
+  --tabs-trigger-pad-inline-small: var(--button-pad-inline-small);
+  --tabs-trigger-pad-inline-regular: var(--button-pad-inline-regular);
+  --tabs-trigger-pad-inline-large: var(--space-5);
+  --tabs-trigger-gap: var(--button-gap-regular);
+  --tabs-trigger-icon-size-small: var(--button-icon-size-small);
+  --tabs-trigger-icon-size-regular: var(--button-icon-size-regular);
+  --tabs-trigger-icon-size-large: var(--button-icon-size-large);
+  --tabs-list-gap: var(--space-1);
+  --tabs-indicator-size-small: 1px;
+  --tabs-indicator-size-regular: 3px; /* dřívější 2px mapováno na Regular */
+  --tabs-indicator-size-large: 6px;
+  /* Tabs — solid appearance */
+  --tabs-solid-trigger-surface-default: transparent; /* @kind other */
+  --tabs-solid-trigger-surface-hover: var(--color-surface-sunken);
+  --tabs-solid-trigger-surface-pressed: var(--gray-200);
+  --tabs-solid-trigger-surface-selected: var(--color-accent);
+  --tabs-solid-trigger-surface-selected-hover: var(--color-accent-hover);
+  --tabs-solid-trigger-surface-selected-pressed: var(--color-accent-active);
+  --tabs-solid-trigger-fg-default: var(--text-secondary);
+  --tabs-solid-trigger-fg-selected: var(--color-accent-contrast);
+  --tabs-solid-trigger-border-default: var(--color-border);
+  --tabs-solid-trigger-border-selected: var(--color-accent);
+  --tabs-solid-trigger-radius: var(--radius-control);
+  --tabs-solid-list-gap: var(--space-2);
+  /* Tabs — states */
+  --tabs-trigger-surface-hover: var(--color-surface-sunken);
+  --tabs-trigger-surface-pressed: var(--gray-200);
+  --tabs-trigger-fg-default: var(--text-secondary);
+  --tabs-trigger-fg-selected: var(--text-primary);
+  --tabs-trigger-fg-disabled: var(--text-disabled);
+  --tabs-indicator-selected: var(--color-accent);
+  --tabs-list-border: var(--color-border);
+  /* Tabs — motion */
+  --tabs-motion-duration: var(--duration-fast); /* @kind other */
+  --tabs-motion-easing: var(--ease-standard);   /* @kind other */
+
+  /* Accordion — geometry (density, min výšky = Control Size Contract) */
+  --accordion-trigger-minh-small: var(--button-height-small);
+  --accordion-trigger-minh-regular: var(--button-height-regular);
+  --accordion-trigger-minh-large: var(--button-height-large);
+  --accordion-trigger-pad-block-small: var(--space-2);
+  --accordion-trigger-pad-block-regular: var(--space-3);
+  --accordion-trigger-pad-block-large: var(--space-4);
+  --accordion-trigger-gap: var(--space-3);
+  --accordion-trigger-pad-inline-small: var(--space-3);
+  --accordion-trigger-pad-inline-regular: var(--space-4);
+  --accordion-trigger-pad-inline-large: var(--space-5);
+  --accordion-icon-size-small: var(--button-icon-size-small);
+  --accordion-icon-size-regular: var(--button-icon-size-regular);
+  --accordion-icon-size-large: var(--button-icon-size-large);
+  --accordion-content-pad-block: var(--space-3);
+  --accordion-border-width: var(--border-width);
+  /* Accordion — states */
+  --accordion-trigger-surface-hover: var(--color-surface-sunken);
+  --accordion-trigger-surface-pressed: var(--gray-200);
+  --accordion-trigger-fg-default: var(--text-primary);
+  --accordion-trigger-fg-disabled: var(--text-disabled);
+  --accordion-border-default: var(--color-border);
+  /* Accordion — motion */
+  --accordion-motion-duration: var(--duration-base); /* @kind other */
+  --accordion-motion-easing: var(--ease-standard);   /* @kind other */
+}

@@ -22,6 +22,7 @@
   .cf-r::-moz-range-thumb{pointer-events:auto;width:20px;height:20px;border:2px solid #fff;border-radius:999px;background:#1E5AA8;cursor:pointer;}
   .cf-r:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 3px #D8E6F6;}
 </style>
+<script src="./mena.js"></script>
 </helmet>
 <div style="display:flex;flex-direction:column;gap:14px;">
   <div style="display:flex;align-items:center;gap:10px;">
@@ -54,6 +55,12 @@ class Component extends DCLogic {
     const P = this.props;
     const embedded = typeof P.onChange === 'function';
     const min = Number(P.min ?? 0), max = Number(P.max ?? 8000), step = Number(P.step ?? 100);
+    // hodnoty zůstávají v CZK, zobrazení se převádí (mena.js)
+    const M = typeof window !== 'undefined' ? window.VappMena : null;
+    const cur = P.currency || 'CZK';
+    const cvt = (n)=> M ? M.convert(n, cur) : n;
+    const inv = (n)=> (M && cur === 'EUR') ? Math.round(n * M.RATE_EUR) : n;
+    const sym = M ? M.symbol(cur) : 'Kč';
     const lo = Number(P.valueFrom ?? this.state.lo ?? min);
     const hi = Number(P.valueTo ?? this.state.hi ?? max);
     const emit = (a,b)=>{
@@ -67,13 +74,13 @@ class Component extends DCLogic {
       standalone: !embedded, debug: P.debug ?? true,
       min, max, step, lo, hi,
       fromLabel: P.fromLabel || 'Cena od', toLabel: P.toLabel || 'Cena do',
-      minText: fmt(lo), maxText: fmt(hi),
-      minBound: fmt(min) + ' Kč', maxBound: fmt(max) + ' Kč',
+      minText: fmt(cvt(lo)), maxText: fmt(cvt(hi)),
+      minBound: fmt(cvt(min)) + ' ' + sym, maxBound: fmt(cvt(max)) + ' ' + sym,
       trackStyle: 'position:absolute;top:10px;height:4px;border-radius:999px;background:#1E5AA8;left:'+pct(lo)+'%;right:'+(100-pct(hi))+'%;',
       onLo: (e)=>emit(Math.min(Number(e.target.value), hi), hi),
       onHi: (e)=>emit(lo, Math.max(Number(e.target.value), lo)),
-      onMinText: (e)=>{ const n = num(e.target.value); if(n!==null) emit(n, hi); },
-      onMaxText: (e)=>{ const n = num(e.target.value); if(n!==null) emit(lo, n); },
+      onMinText: (e)=>{ const n = num(e.target.value); if(n!==null) emit(inv(n), hi); },
+      onMaxText: (e)=>{ const n = num(e.target.value); if(n!==null) emit(lo, inv(n)); },
     };
   }
 }

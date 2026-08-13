@@ -1,0 +1,53 @@
+/* ============================================================
+   BUTTON COMPONENT TOKENS — první kanonická component-token vrstva.
+   Vše aliasy na foundation/semantic tokeny (themeable přes ně).
+   ============================================================ */
+:root {
+  /* Rozměry */
+  --button-radius: var(--radius-control);
+  --button-border-width: var(--border-width);
+  --button-height-small: var(--density-control-height-sm);   /* 32 */
+  --button-height-regular: var(--density-control-height);    /* 40 */
+  --button-height-large: var(--density-control-height-lg);   /* 48 */
+  --button-pad-inline-small: var(--density-control-pad-x-sm);
+  --button-pad-inline-regular: var(--density-control-pad-x);
+  --button-pad-inline-large: var(--space-6);
+  --button-gap-small: 0.375rem;  /* 6 */
+  --button-gap-regular: var(--space-2);
+  --button-gap-large: var(--space-2);
+  --button-icon-size-small: 1rem;      /* 16 */
+  --button-icon-size-regular: 1.25rem; /* 20 */
+  --button-icon-size-large: 1.25rem;   /* 20–24 */
+  --button-motion-duration: var(--duration-fast); /* @kind other */
+  --button-motion-easing: var(--ease-standard);   /* @kind other */
+
+  /* Primary */
+  --button-primary-surface-default: var(--color-action-primary-bg-default);
+  --button-primary-surface-hover: var(--color-action-primary-bg-hover);
+  --button-primary-surface-pressed: var(--color-action-primary-bg-active);
+  --button-primary-foreground: var(--color-action-primary-text);
+
+  /* Secondary */
+  --button-secondary-surface-default: var(--color-action-secondary-bg-default);
+  --button-secondary-surface-hover: var(--gray-100);
+  --button-secondary-surface-pressed: var(--gray-200);
+  --button-secondary-foreground: var(--text-primary);
+  --button-secondary-border-default: var(--color-border-strong);
+  --button-secondary-border-hover: var(--gray-400);
+  --button-secondary-border-pressed: var(--gray-500);
+
+  /* Outline */
+  --button-outline-surface-default: transparent;
+  --button-outline-surface-hover: var(--gray-100);
+  --button-outline-surface-pressed: var(--gray-200);
+  --button-outline-foreground: var(--text-primary);
+  --button-outline-border-default: var(--color-border-strong);
+  --button-outline-border-hover: var(--gray-500);
+  --button-outline-border-pressed: var(--gray-500);
+
+  /* Ghost */
+  --button-ghost-surface-default: transparent;
+  --button-ghost-surface-hover: var(--gray-100);
+  --button-ghost-surface-pressed: var(--gray-200);
+  --button-ghost-foreground: var(--text-primary);
+}

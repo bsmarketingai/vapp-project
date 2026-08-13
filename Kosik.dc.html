@@ -31,6 +31,7 @@
   .ks-f-desk .ks-box, .ks-force-desk .ks-box{display:inline-flex !important;} .ks-f-desk .ks-mob, .ks-force-desk .ks-mob{display:none !important;}
   .ks-f-mob .ks-box, .ks-force-mob .ks-box{display:none !important;} .ks-f-mob .ks-mob, .ks-force-mob .ks-mob{display:flex !important;}
 </style>
+<script src="./mena.js"></script>
 </helmet>
 <sc-if value="{{ single }}" hint-placeholder-val="">
   <button type="button" class="{{ viewCls }} a11y-i" onClick="{{ onClick }}" aria-label="{{ cartAria }}" style="display:inline-flex;align-items:center;cursor:pointer;">
@@ -85,7 +86,12 @@
 const CART_DEFAULT = { count: 2, total: 42556 };
 
 class Component extends DCLogic {
-  fmt(n){ return String(Math.round(n||0)).replace(/\B(?=(\d{3})+(?!\d))/g,'\u00A0') + ' Kč'; }
+  fmt(n){
+    const M = typeof window !== 'undefined' ? window.VappMena : null;
+    const cur = this.props.currency || 'CZK';
+    if (M) return M.format(n, cur);
+    return String(Math.round(n||0)).replace(/\B(?=(\d{3})+(?!\d))/g,'\u00A0') + ' Kč';
+  }
   cell(count,total){
     return { count, showCount: count>0,
       label: count>0 ? this.fmt(total) : 'Košík',
