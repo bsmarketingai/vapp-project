@@ -66,53 +66,41 @@
       <div style="font-family:'Architects Daughter',cursive;font-size:16px;color:#5A626C;margin-bottom:10px;">Desktop · homepage</div>
       <div style="background:#fff;border-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,.10);overflow:hidden;border:1px solid #DDE0E4;">
 
-        <!-- TOPBAR -->
-        <div style="background:#ECEEF1;border-bottom:1px solid #E0E3E7;display:flex;align-items:center;justify-content:space-between;padding:8px 26px;">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span style="width:9px;height:9px;border-radius:50%;background:#2EAA6A;display:inline-block;box-shadow:0 0 0 3px rgba(46,170,106,.18);"></span>
-            <span style="font-size:12.5px;font-weight:600;color:#4A525B;">Po–Pá 8–16 · <span style="color:#1F8A5B;font-weight:700;">Právě otevřeno</span></span>
+        <!-- HLAVIČKA — hotová (komponenta Hlavicka.dc.html, varianta V2 Kontakt) -->
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 26px;background:#142F56;">
+          <div style="display:flex;align-items:center;gap:16px;">
+            <span style="font-size:12.5px;color:#B4CEEC;">Doprava a platba</span>
+            <span style="font-size:12.5px;color:#B4CEEC;">Obchodní podmínky</span>
+            <span style="font-size:12.5px;color:#B4CEEC;">O nás</span>
+            <span style="font-size:12.5px;color:#B4CEEC;">Kontakty</span>
           </div>
-          <div style="display:flex;align-items:center;gap:18px;">
-            <span style="font-size:12.5px;color:#6B727C;">Doprava a platba</span>
-            <span style="font-size:12.5px;color:#6B727C;">Obchodní podmínky</span>
-            <span style="font-size:12.5px;color:#6B727C;">O nás</span>
-            <span style="font-size:12.5px;color:#6B727C;">Kontakty</span>
-            <span style="font-size:12.5px;font-weight:700;color:#3A424C;text-decoration:underline;">☎ 323 605 314</span>
-            <span style="font-size:12.5px;font-weight:700;color:#3A424C;text-decoration:underline;">✉ obchod<span>&#64;</span>vapp.cz</span>
+          <span style="font-size:11px;font-weight:700;color:#0B6937;background:#E9F8EF;border-radius:6px;padding:4px 9px;">HOTOVO — komponenta Hlavicka (V2 Kontakt)</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:24px;padding:14px 26px;border-bottom:1px solid #EEF0F2;">
+          <div style="flex:none;width:128px;height:40px;border:1.5px solid #C7CBD1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;letter-spacing:.06em;color:#3A424C;">VAPP</div>
+          <div style="flex:1;max-width:640px;margin:0 auto;display:flex;align-items:center;height:44px;border:1.5px dashed #BFC4CB;border-radius:8px;overflow:hidden;">
+            <span style="flex:1;padding:0 16px;font-size:14px;color:#9099A3;">Hledat díly, přívěsy, příslušenství…</span>
+            <div style="width:50px;height:100%;background:#E4E7EB;display:flex;align-items:center;justify-content:center;font-size:16px;color:#6B727C;">⌕</div>
+          </div>
+          <div style="flex:none;display:flex;flex-direction:column;gap:2px;">
+            <span style="font-size:16px;font-weight:700;color:#15181C;">323 605 314</span>
+            <span style="font-size:13px;color:#666E78;">obchod<span>&#64;</span>vapp.cz</span>
+          </div>
+          <div style="flex:none;display:flex;align-items:center;gap:16px;">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:24px;height:24px;border:1.5px solid #C7CBD1;border-radius:6px;"></div><span style="font-size:11px;color:#6B727C;font-weight:600;">Přihlásit</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:24px;height:24px;border:1.5px solid #C7CBD1;border-radius:6px;"></div><span style="font-size:11px;color:#6B727C;font-weight:600;">Porovnat</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;"><div style="width:24px;height:24px;border:1.5px solid #C7CBD1;border-radius:6px;"></div><span style="font-size:11px;color:#6B727C;font-weight:600;">Košík</span></div>
           </div>
         </div>
-        <sc-if value="{{ showNotes }}" hint-placeholder-val=""><div style="display:flex;flex-wrap:wrap;gap:8px;padding:11px 26px 4px;"><sc-for list="{{ notes.topbar }}" as="n" hint-placeholder-count="2"><div style="{{ n.box }}"><span style="{{ n.badge }}">{{ n.label }}</span><span style="font-size:12px;line-height:1.45;color:#4A5159;">{{ n.text }}</span></div></sc-for></div></sc-if>
-
-        <!-- HEADER -->
-        <div style="display:flex;align-items:center;gap:24px;padding:18px 26px;border-bottom:1px solid #EEF0F2;">
-          <div style="flex:none;width:128px;height:46px;border:1.5px solid #C7CBD1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;letter-spacing:.06em;color:#3A424C;">VAPP</div>
-          <div style="flex:1;display:flex;flex-direction:column;gap:4px;">
-            <div style="display:flex;align-items:center;height:46px;border:1.5px dashed #BFC4CB;border-radius:9px;overflow:hidden;">
-              <span style="flex:1;padding:0 16px;font-size:14px;color:#9099A3;">Hledat díly, přívěsy, příslušenství…</span>
-              <div style="width:54px;height:100%;background:#E4E7EB;display:flex;align-items:center;justify-content:center;font-size:16px;color:#6B727C;">⌕</div>
-            </div>
-            <span style="font-size:11px;color:#9DA3AB;font-family:'Architects Daughter',cursive;">↳ s našeptávačem (díly podle čísla / názvu / modelu)</span>
-          </div>
-          <div style="flex:none;display:flex;align-items:center;gap:18px;">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:26px;height:26px;border:1.5px solid #C7CBD1;border-radius:6px;"></div><span style="font-size:11px;color:#6B727C;font-weight:600;">Přihlásit</span></div>
-            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:26px;height:26px;border:1.5px solid #C7CBD1;border-radius:6px;"></div><span style="font-size:11px;color:#6B727C;font-weight:600;">Porovnat</span></div>
-            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:26px;height:26px;border:1.5px solid #C7CBD1;border-radius:6px;"></div><span style="font-size:11px;color:#6B727C;font-weight:600;">Košík</span></div>
-          </div>
+        <div style="display:flex;align-items:center;gap:26px;padding:0 26px;border-bottom:1px solid #F2F4F7;">
+          <span onClick="{{ togglePrivesy }}" style="{{ privesyNavStyle }}">Přívěsy</span>
+          <span style="font-size:15px;font-weight:700;color:#5A626C;padding:13px 0;cursor:pointer;">Náhradní díly</span>
+          <span style="font-size:15px;font-weight:700;color:#5A626C;padding:13px 0;cursor:pointer;">Servis</span>
+          <span style="font-size:15px;font-weight:700;color:#5A626C;padding:13px 0;cursor:pointer;">Půjčovna</span>
+          <span style="font-size:15px;font-weight:700;color:#5A626C;padding:13px 0;cursor:pointer;">Poradna</span>
         </div>
         <sc-if value="{{ showNotes }}" hint-placeholder-val=""><div style="display:flex;flex-wrap:wrap;gap:8px;padding:11px 26px 4px;"><sc-for list="{{ notes.header }}" as="n" hint-placeholder-count="1"><div style="{{ n.box }}"><span style="{{ n.badge }}">{{ n.label }}</span><span style="font-size:12px;line-height:1.45;color:#4A5159;">{{ n.text }}</span></div></sc-for></div></sc-if>
 
-        <!-- PRIMARY NAV -->
-        <div style="display:flex;align-items:center;gap:8px;padding:12px 26px;background:#F7F8F9;border-bottom:1px solid #EAECEF;">
-          <span onClick="{{ togglePrivesy }}" style="{{ privesyNavStyle }}">Přívěsy ▾</span>
-          <span style="font-size:14px;font-weight:700;color:#2B3036;padding:7px 14px;background:#E4E7EB;border-radius:7px;">Náhradní díly ▾</span>
-          <span style="font-size:14px;font-weight:700;color:#2B3036;padding:7px 14px;background:#E4E7EB;border-radius:7px;">Příslušenství ▾</span>
-          <span style="font-size:14px;font-weight:700;color:#2B3036;padding:7px 14px;background:#E4E7EB;border-radius:7px;">Servis</span>
-          <span style="font-size:14px;font-weight:700;color:#2B3036;padding:7px 14px;background:#E4E7EB;border-radius:7px;">Půjčovna</span>
-          <div style="margin-left:auto;display:flex;align-items:center;gap:12px;">
-            <span style="font-size:13px;font-weight:700;color:#5A626C;padding:8px 15px;border:1.5px solid #C7CBD1;border-radius:7px;">Poradna</span>
-            <span style="font-size:13.5px;font-weight:800;color:#fff;background:#A21B22;padding:9px 17px;border-radius:7px;">Akce a slevy</span>
-          </div>
-        </div>
         <!-- DROPDOWN PŘÍVĚSY -->
         <sc-if value="{{ privesyOpen }}" hint-placeholder-val="{{ true }}">
         <div style="background:#fff;border-bottom:1px solid #E0E3E7;box-shadow:0 12px 22px rgba(20,30,45,.08);padding:24px 26px 18px;">
@@ -194,8 +182,8 @@
         <sc-if value="{{ showNotes }}" hint-placeholder-val=""><div style="display:flex;flex-wrap:wrap;gap:8px;padding:0 26px 14px;"><sc-for list="{{ notes.cats }}" as="n" hint-placeholder-count="2"><div style="{{ n.box }}"><span style="{{ n.badge }}">{{ n.label }}</span><span style="font-size:12px;line-height:1.45;color:#4A5159;">{{ n.text }}</span></div></sc-for></div></sc-if>
 
         <!-- USP STRIP -->
-        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;padding:22px 26px;background:#F7F8F9;border-top:1px solid #EAECEF;border-bottom:1px solid #EAECEF;">
-          <sc-for list="{{ usp }}" as="u" hint-placeholder-count="5">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:22px 26px;background:#F7F8F9;border-top:1px solid #EAECEF;border-bottom:1px solid #EAECEF;">
+          <sc-for list="{{ usp }}" as="u" hint-placeholder-count="4">
             <div style="display:flex;align-items:flex-start;gap:11px;">
               <div style="flex:none;width:38px;height:38px;border:1.5px solid #C7CBD1;border-radius:9px;"></div>
               <div><div style="font-size:14px;font-weight:800;color:#23282D;line-height:1.2;">{{ u.t }}</div><div style="font-size:12px;color:#6B727C;margin-top:3px;line-height:1.4;">{{ u.s }}</div></div>
@@ -339,7 +327,8 @@
         <div style="width:360px;background:#fff;border-radius:26px;box-shadow:0 1px 4px rgba(0,0,0,.10);border:1px solid #DDE0E4;overflow:hidden;">
           <div style="height:30px;background:#ECEEF1;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:11px;color:#6B727C;font-weight:600;"><span>9:41</span><span>▦ ▦ ▮</span></div>
           <div style="display:flex;align-items:center;gap:7px;padding:7px 16px;background:#F4F6F8;border-bottom:1px solid #EAECEF;"><span style="width:8px;height:8px;border-radius:50%;background:#2EAA6A;"></span><span style="font-size:11.5px;font-weight:600;color:#4A525B;">Po–Pá 8–16 · otevřeno · ☎ 323 605 314</span></div>
-          <!-- header: logo + icons + hamburger -->
+          <!-- header: hotová komponenta Hlavicka (mobilní pásmo) -->
+          <div style="padding:6px 16px 0;"><span style="font-size:10.5px;font-weight:700;color:#0B6937;background:#E9F8EF;border-radius:5px;padding:3px 7px;">HOTOVO — komponenta Hlavicka</span></div>
           <div style="display:flex;align-items:center;gap:12px;padding:13px 16px;">
             <div style="flex:none;width:74px;height:32px;border:1.5px solid #C7CBD1;border-radius:5px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#3A424C;">VAPP</div>
             <div style="flex:1;"></div>
@@ -357,7 +346,7 @@
           <div style="padding:4px 16px 16px;"><div style="font-size:14px;font-weight:800;color:#1A1D21;margin-bottom:10px;">Co hledáte?</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"><sc-for list="{{ cats }}" as="c" hint-placeholder-count="4"><div style="border:1.5px solid #DFE2E6;border-radius:9px;overflow:hidden;cursor:pointer;"><div class="wf-img" style="height:46px;"></div><div style="padding:9px 10px 10px;"><div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-size:12.5px;font-weight:700;color:#23282D;">{{ c.t }}</span><span style="font-size:14px;font-weight:700;color:#1E5AA8;">›</span></div><div style="display:flex;flex-direction:column;gap:6px;margin-top:9px;"><sc-for list="{{ c.subMobile }}" as="s" hint-placeholder-count="2"><span style="display:flex;align-items:center;min-height:42px;font-size:12.5px;font-weight:600;color:#3A4651;background:#EEF1F4;border:1px solid #E0E4E8;border-radius:8px;padding:0 12px;cursor:pointer;">{{ s }}</span></sc-for></div></div></div></sc-for></div></div>
           <!-- USP -->
           <div style="padding:14px 16px;background:#F7F8F9;border-top:1px solid #EAECEF;border-bottom:1px solid #EAECEF;display:flex;flex-direction:column;gap:11px;">
-            <sc-for list="{{ usp }}" as="u" hint-placeholder-count="5">
+            <sc-for list="{{ usp }}" as="u" hint-placeholder-count="4">
               <div style="display:flex;align-items:flex-start;gap:10px;">
                 <div style="flex:none;width:30px;height:30px;border:1.5px solid #C7CBD1;border-radius:8px;"></div>
                 <div><div style="font-size:12.5px;font-weight:800;color:#23282D;line-height:1.2;">{{ u.t }}</div><div style="font-size:11px;color:#6B727C;margin-top:2px;line-height:1.35;">{{ u.s }}</div></div>
@@ -524,12 +513,13 @@ class Component extends DCLogic {
     { t:'Akce a slevy', sub:['Zlevněné přívěsy','Doprodej dílů','Bazar přívěsů'] },
   ]; }
 
+  // finální USP od klienta (4) — ikony se doplní po výběru
+  // finální USP od klienta (4) — ikony se doplní po výběru
   usp(){ return [
-    { t:'Výroba od 1991', s:'Rodinná tradice až do roku 1898' },
-    { t:'Velký sklad dílů', s:'Tisíce položek ihned k odeslání' },
-    { t:'Autorizovaný servis', s:'AL-KO · BPW · KNOTT' },
-    { t:'Odborná zákaznická podpora', s:'Zkušení obchodníci poradí po telefonu i e-mailu' },
-    { t:'Ověřené recenze', s:'Hodnoceno zákazníky na Heurece' },
+    { t:'35 let zkušeností', s:'35 let výroby přívěsů a zkušeností' },
+    { t:'Sklad dílů', s:'Největší skladové zásoby náhradních dílů v ČR' },
+    { t:'Rychlá expedice', s:'Skladové položky expedujeme do druhého dne' },
+    { t:'Autorizovaný servis', s:'Autorizovaný servis AL-KO a KNOTT' },
   ]; }
 
   footerCols(hasConfig){
@@ -670,7 +660,7 @@ class Component extends DCLogic {
       showNotes,
       privesyOpen,
       togglePrivesy: ()=> this.setState({ privesyOpen: !privesyOpen }),
-      privesyNavStyle: 'font-size:14px;font-weight:700;padding:7px 14px;border-radius:7px;cursor:pointer;transition:all .12s;'+(privesyOpen?'background:#2B3036;color:#fff;':'background:#E4E7EB;color:#2B3036;'),
+      privesyNavStyle: 'font-size:15px;font-weight:700;padding:13px 0;cursor:pointer;'+(privesyOpen?'color:#1E5AA8;box-shadow:inset 0 -3px 0 #1E5AA8;':'color:#5A626C;'),
       pmCols: this.pmCols().map((c,i)=>({ h:c.h, items:c.items, style: i===0 ? 'padding-right:26px;' : 'padding:0 26px;border-left:1px solid #ECEEF1;' })),
       cats: this.cats().map(c=>({ t:c.t, sub:c.sub, subMobile:c.sub.slice(0,2) })), usp: this.usp(), footerCols,
       mPrimary: this.mPrimary(), mSecondary: this.mSecondary(),

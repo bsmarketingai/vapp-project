@@ -152,6 +152,7 @@ class Component extends DCLogic {
     const openBrand = this.props.onOpenBrand || function(){};
     const cats = src.map(k=>({
       name: k.name,
+      countText: k.countText,
       count: k.count,
       image: k.image,
       icon: k.icon,
