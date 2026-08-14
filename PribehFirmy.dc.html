@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  .pf-row{display:flex;align-items:center;gap:32px;}
+  @media (max-width:819px){ .pf-row{flex-direction:column;align-items:stretch;gap:16px;} }
+  .pf-media{flex:none;width:420px;height:260px;}
+  @media (max-width:819px){ .pf-media{width:100%;height:200px;} }
+  .pf-h2{font-size:28px;line-height:1.2;letter-spacing:-0.01em;}
+  @media (max-width:819px){ .pf-h2{font-size:22px;line-height:1.25;} }
+  .pf-stats{display:flex;flex-wrap:wrap;gap:32px;}
+  @media (max-width:549px){ .pf-stats{gap:16px;} }
+</style>
+</helmet>
+<section aria-labelledby="pf-title" style="background:#FFFFFF;border-radius:8px;padding:32px;width:100%;">
+  <div class="pf-row">
+    <span aria-hidden="true" class="pf-media" style="border-radius:8px;background:#F2F4F7;overflow:hidden;display:block;">
+      <img src="./pribeh-firmy.png" alt="" style="display:block;width:100%;height:100%;object-fit:cover;">
+    </span>
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:12px;">
+      <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1E5AA8;">{{ overline }}</span>
+      <h2 id="pf-title" class="pf-h2" style="margin:0;font-weight:700;color:#15181C;text-wrap:pretty;">{{ title }}</h2>
+      <p style="margin:0;font-size:16px;line-height:1.6;color:#5A626C;text-wrap:pretty;">{{ text }}</p>
+      <div class="pf-stats">
+        <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
+          <span style="display:flex;flex-direction:column;gap:2px;">
+            <span style="font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.01em;color:#142F56;">{{ s.value }}</span>
+            <span style="font-size:13px;font-weight:500;line-height:1.4;color:#666E78;">{{ s.label }}</span>
+          </span>
+        </sc-for>
+      </div>
+      <div style="display:flex;margin-top:4px;">
+        <dc-import name="Tlacitko" variant="ghost" size="medium" label="{{ cta }}" icon-trailing="arrow-right" on-click="{{ onRead }}" hint-size="200px,44px"></dc-import>
+      </div>
+    </div>
+  </div>
+</section>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:360},&quot;overline&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náš příběh&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;title&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Rodinná tradice od roku 1991&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;text&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;stats&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;{value:string,label:string}[]&quot;},&quot;cta&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Přečíst příběh VAPP&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onRead&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  DEFAULT_STATS = [
+    { value:'35 let', label:'výroby přívěsů' },
+    { value:'2 pobočky', label:'Popovičky a Židněves' },
+    { value:'12 000+', label:'položek skladem' }
+  ];
+  renderVals(){
+    const P = this.props;
+    return {
+      overline: P.overline ?? 'Náš příběh',
+      title: P.title ?? 'Rodinná tradice od roku 1991',
+      text: P.text ?? 'Začínali jsme jako malá rodinná výrobna přívěsů. Dnes vyrábíme vlastní řadu, držíme největší skladové zásoby náhradních dílů v ČR a provozujeme autorizovaný servis. Zákazníkům radíme podle toho, co sami vyrábíme a opravujeme.',
+      stats: (Array.isArray(P.stats) && P.stats.length) ? P.stats.filter(Boolean) : this.DEFAULT_STATS,
+      cta: P.cta ?? 'Přečíst příběh VAPP',
+      onRead: P.onRead || (()=>{}),
+      debug: P.debug ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

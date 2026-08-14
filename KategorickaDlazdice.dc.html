@@ -39,7 +39,7 @@
     <sc-if value="{{ noImage }}" hint-placeholder-val="{{ true }}"><span style="flex:none;width:48px;height:48px;border-radius:6px;background:#F2F4F7;display:flex;align-items:center;justify-content:center;color:#9AA1AB;"><dc-import name="Ikony" icon-name="photo" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span></sc-if>
     <span style="flex:1;min-width:0;">
       <a class="k-cover a11y-i" href="{{ catHref }}" onClick="{{ cat.onOpen }}" style="{{ nameStyle }}">{{ cat.name }}</a>
-      <span style="display:block;font-size:13px;color:#666E78;margin-top:1px;">{{ cat.count }} produktů</span>
+      <span style="display:block;font-size:13px;color:#666E78;margin-top:1px;">{{ cat.countText }}</span>
     </span>
   </div>
 </sc-if>
@@ -52,7 +52,7 @@
       <sc-if value="{{ noImage }}" hint-placeholder-val="{{ true }}"><span style="flex:none;width:44px;height:44px;border-radius:8px;background:#EFF4FB;display:flex;align-items:center;justify-content:center;color:#1E5AA8;"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3"></circle></svg></span></sc-if>
       <span style="flex:1;min-width:0;">
         <a class="k-cover a11y-i" href="{{ catHref }}" onClick="{{ cat.onOpen }}" style="{{ nameStyle }}">{{ cat.name }}</a>
-        <span style="display:block;font-size:13px;color:#666E78;margin-top:1px;">{{ cat.count }} produktů</span>
+        <span style="display:block;font-size:13px;color:#666E78;margin-top:1px;">{{ cat.countText }}</span>
       </span>
     </div>
     <sc-if value="{{ hasSubs }}" hint-placeholder-val="{{ true }}">
@@ -125,6 +125,7 @@ class Component extends DCLogic {
     const P = this.props;
     if (P.cat){
       const cat = Object.assign({}, P.cat, { subs: this.norm(P.cat.subs) });
+      cat.countText = P.cat.countText || (P.cat.count + ' produktů');
       cat.onOpen = this.nav(P.cat.onOpen);
       const isCompact = P.variant === 'kompaktni';
       const isSale = !!cat.sale;

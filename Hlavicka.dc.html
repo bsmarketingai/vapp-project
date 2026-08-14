@@ -117,7 +117,7 @@
 
   <div style="background:#fff;border-bottom:1px solid #F2F4F7;">
     <div class="vp-in hd-logorow" style="display:flex;align-items:center;gap:14px;padding-top:12px;padding-bottom:12px;flex-wrap:wrap;">
-      <a class="hd-i" href="#" aria-label="VAPP — domovská stránka" onClick="{{ onLogoNav }}" style="display:flex;flex:none;cursor:pointer;"><img class="hd-logo" src="./vapp-logo.svg" alt="VAPP" style="height:30px;display:block;"></a>
+      <a class="hd-i" href="{{ logoHref }}" aria-label="VAPP — domovská stránka" onClick="{{ onLogoNav }}" style="display:flex;flex:none;cursor:pointer;"><img class="hd-logo" src="./vapp-logo.svg" alt="VAPP" style="height:30px;display:block;"></a>
       <div class="hd-dt hd-search-inline" style="flex:1;min-width:200px;max-width:640px;margin-left:auto;margin-right:auto;">
         <dc-import name="Vyhledavani" bare="true" height="44" value="{{ searchValue }}" on-change="{{ onSearchChange }}" placeholder="Hledat díly podle názvu, čísla nebo modelu…" hint-size="100%,44px"></dc-import>
       </div>
@@ -141,7 +141,7 @@
           <div style="position:relative;display:flex;align-items:center;justify-content:center;"><dc-import name="Ikony" icon-name="arrows-exchange" size="24" hint-size="24px,24px"></dc-import><sc-if value="{{ showCompare }}" hint-placeholder-val=""><span aria-hidden="true" style="position:absolute;top:-4px;right:-8px;min-width:16px;width:16px;height:16px;border-radius:999px;background:#C5232B;color:#fff;font-size:10px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;">{{ compareCount }}</span></sc-if></div>
           <span class="hd-actlbl" style="font-size:13px;font-weight:600;">Porovnat</span>
         </button>
-        <dc-import name="Kosik" count="{{ cartCount }}" total="{{ cartTotal }}" currency="{{ currency }}" on-click="{{ onCart }}" hint-size="60px,66px"></dc-import>
+        <span id="hd-cart" onMouseEnter="{{ onCartEnter }}" onMouseLeave="{{ onCartLeave }}" style="display:inline-flex;"><dc-import name="Kosik" count="{{ cartCount }}" total="{{ cartTotal }}" currency="{{ currency }}" on-click="{{ onCartClick }}" hint-size="60px,66px"></dc-import></span>
         <button type="button" class="hd-mb hd-icon hd-i" id="hd-burger" aria-label="{{ menuLabel }}" aria-expanded="{{ menuExpanded }}" aria-controls="hd-mobile-menu" onClick="{{ toggleMenu }}" style="width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#1E5AA8;cursor:pointer;"><sc-if value="{{ menuOpen }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="x" size="24" hint-size="24px,24px"></dc-import></sc-if><sc-if value="{{ menuClosed }}" hint-placeholder-val="{{ true }}"><dc-import name="Ikony" icon-name="menu-2" size="24" hint-size="24px,24px"></dc-import></sc-if></button>
       </div>
       <sc-if value="{{ searchOpen }}" hint-placeholder-val="">
@@ -156,7 +156,7 @@
     <nav class="hd-dt" aria-label="Hlavní navigace" style="border-top:1px solid #F2F4F7;">
       <div class="vp-in" style="display:flex;align-items:center;gap:26px;">
         <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
-          <a class="{{ t.cls }}" href="#" aria-current="{{ t.current }}" onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</a>
+          <a class="{{ t.cls }}" href="{{ t.href }}" aria-current="{{ t.current }}" onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</a>
         </sc-for>
       </div>
     </nav>
@@ -170,11 +170,14 @@
 <sc-if value="{{ loginOpen }}" hint-placeholder-val="">
   <dc-import name="LoginPopup" open="{{ true }}" on-close="{{ closeLogin }}" debug="{{ debug }}" hint-size="0px,0px"></dc-import>
 </sc-if>
+<sc-if value="{{ cartOpen }}" hint-placeholder-val="">
+  <dc-import name="BasketPopup" open="{{ true }}" items="{{ cartItems }}" currency="{{ currency }}" on-close="{{ closeCart }}" on-remove="{{ onCartRemove }}" on-go-to-cart="{{ onCart }}" on-back-to-shop="{{ closeCart }}" on-panel-enter="{{ onCartEnter }}" on-panel-leave="{{ onCartLeave }}" debug="{{ debug }}" hint-size="0px,0px"></dc-import>
+</sc-if>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:220},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;V1&quot;,&quot;V2&quot;,&quot;V3&quot;],&quot;default&quot;:&quot;V2&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactPhone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;323 605 314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactPhoneHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;tel:+420323605314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactHours&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;8:00–16:00&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;contactEmail&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactEmailHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;mailto:obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;currency&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;CZK&quot;,&quot;EUR&quot;],&quot;default&quot;:&quot;CZK&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;currencies&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;onCurrencyChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(code:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;cartCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;},&quot;cartTotal&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1500,&quot;tsType&quot;:&quot;number&quot;},&quot;compareCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;tsType&quot;:&quot;number&quot;},&quot;tabs&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;menuTree&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;,&quot;default&quot;:null},&quot;searchValue&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;,&quot;default&quot;:null},&quot;onSearchChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCompare&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCart&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onTabClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onLogoClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;infoLinks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null}}">
 class Component extends DCLogic {
-  state = { menuOpen:false, searchOpen:false, loginOpen:false, curOpen:false, currency:'CZK' };
+  state = { menuOpen:false, searchOpen:false, loginOpen:false, cartOpen:false, curOpen:false, currency:'CZK' };
   _menuWas = false;
   lockScroll(on){ try{ document.body.style.overflow = on ? 'hidden' : ''; }catch(e){} }
   componentDidMount(){
@@ -225,15 +228,17 @@ class Component extends DCLogic {
   }
   renderVals(){
     const P = this.props;
-    const active = P.active || 'Náhradní díly';
+    const active = P.active ?? 'Náhradní díly';
     const labels = P.tabs || ['Přívěsy','Náhradní díly','Servis','Půjčovna','Poradna'];
     const onTab = P.onTabClick;
     const infoLinks = P.infoLinks || ['Doprava a platba','Obchodní podmínky','O nás','Kontakty'];
+    const TAB_HREF = { 'Přívěsy':'privesy-V1.dc.html', 'Náhradní díly':'nahradnidily-V1.dc.html' };
     const tabs = labels.map(label=>{
       const on = label === active;
+      const href = TAB_HREF[label] || '#';
       return {
-        label, cls: 'hd-tab hd-i', current: on ? 'page' : undefined,
-        onClick: (e)=>{ if(e&&e.preventDefault) e.preventDefault(); if(onTab) onTab(label); },
+        label, cls: 'hd-tab hd-i', current: on ? 'page' : undefined, href,
+        onClick: (e)=>{ if(e&&e.preventDefault) e.preventDefault(); if (href !== '#' && !on){ window.location.href = href; return; } if(onTab) onTab(label); },
         style:'display:flex;align-items:center;align-self:stretch;font-size:18px;font-weight:700;padding:13px 2px;cursor:pointer;border-bottom:3px solid '+(on?'#1E5AA8':'transparent')+';color:'+(on?'#1E5AA8':'#3A424C')+';' };
     });
     const cartCount = P.cartCount;
@@ -280,9 +285,28 @@ class Component extends DCLogic {
       searchValue: P.searchValue, onSearchChange: P.onSearchChange,
       compareAria: compareCount>0 ? ('Porovnat — ' + compareCount + (compareCount===1?' produkt':(compareCount<5?' produkty':' produktů'))) : 'Porovnat produkty',
       onNav: (e)=>{ if(e&&e.preventDefault) e.preventDefault(); },
-      onLogoNav: (e)=>{ if(e&&e.preventDefault) e.preventDefault(); const f=P.onLogoClick; if(f) f(e); },
+      onLogoNav: (e)=>{ const f=P.onLogoClick; if (typeof f === 'function'){ if(e&&e.preventDefault) e.preventDefault(); f(e); } },
+      logoHref: P.logoHref ?? 'index.dc.html',
       onCompare: P.onCompare || (()=>{}),
       onCart: P.onCart || (()=>{}),
+      cartOpen: this.state.cartOpen,
+      cartItems: Array.isArray(P.cartItems) ? P.cartItems : null,
+      onCartRemove: typeof P.onCartRemove === 'function' ? P.onCartRemove : null,
+      // klik košík připne (zavře ho až křížek, overlay nebo Escape), hover jen dočasně otevírá
+      onCartClick: ()=>{ clearTimeout(this._cartT); this._cartPinned = true; this.setState({ cartOpen:true }); },
+      onCartEnter: ()=>{
+        clearTimeout(this._cartT);
+        if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+        if (this.state.cartOpen) return;
+        this._cartT = setTimeout(()=>this.setState({ cartOpen:true }), 120);
+      },
+      onCartLeave: ()=>{
+        clearTimeout(this._cartT);
+        if (this._cartPinned) return;
+        if (!window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+        this._cartT = setTimeout(()=>this.setState({ cartOpen:false }), 400);
+      },
+      closeCart: ()=>{ clearTimeout(this._cartT); this._cartPinned = false; this.setState({ cartOpen:false }); },
       onLogoClick: P.onLogoClick || (()=>{}),
       cartCount, cartTotal: P.cartTotal, compareCount, showCompare: compareCount>0,
       tabs,

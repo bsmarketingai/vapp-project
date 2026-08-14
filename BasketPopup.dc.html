@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  @keyframes bpFade{from{opacity:0;}to{opacity:1;}}
+  @keyframes bpIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes bpUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+  .bp-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
+  .bp-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .bp-close{transition:background .12s,color .12s;} .bp-close:hover{background:#F2F4F7;color:#1E5AA8;}
+  .bp-del{transition:background .12s,color .12s;} .bp-del:hover{background:#FDF1F1;color:#C5232B;}
+  .bp-row{transition:background .12s;} .bp-row:hover{background:#F7F9FB;}
+  .bp-name{transition:color .12s;} .bp-row:hover .bp-name{color:#1E5AA8;}
+  .bp-panel{outline:none;position:fixed;top:92px;right:24px;width:min(420px,calc(100vw - 32px));max-height:calc(100vh - 112px);display:flex;flex-direction:column;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);z-index:90;animation:bpIn 120ms ease;}
+  /* na desktopu overlay nesmí krást hover nad ikonou košíku */
+  .bp-ov{pointer-events:none;}
+  .bp-mobonly{display:none !important;}
+  @media (max-width:549px){
+    .bp-panel{top:0;right:0;left:0;bottom:0;width:100%;max-height:none;border-radius:0;animation:bpUp 150ms ease;}
+    .bp-ov{pointer-events:auto;}
+    .bp-mobonly{display:flex !important;}
+  }
+</style>
+<script src="./mena.js"></script>
+</helmet>
+<sc-if value="{{ mounted }}" hint-placeholder-val="{{ true }}">
+  <div>
+    <div class="bp-ov" onClick="{{ onOverlay }}" aria-hidden="true" style="position:fixed;inset:0;background:rgba(20,30,45,.45);z-index:80;animation:bpFade 120ms ease;"></div>
+    <div class="bp-panel" ref="{{ panelRef }}" role="dialog" aria-modal="true" aria-labelledby="bp-title" tabindex="-1" onMouseEnter="{{ onPanelEnter }}" onMouseLeave="{{ onPanelLeave }}">
+      <div style="flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 12px 12px 20px;border-bottom:1px solid #F2F4F7;">
+        <h2 id="bp-title" style="margin:0;font-size:18px;font-weight:700;line-height:1.35;color:#15181C;">{{ title }}</h2>
+        <button type="button" class="bp-i bp-close" aria-label="Zavřít košík" onClick="{{ onCloseClick }}" style="flex:none;width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#666E78;"><dc-import name="Ikony" icon-name="x" size="24" hint-size="24px,24px"></dc-import></button>
+      </div>
+
+      <sc-if value="{{ hasItems }}" hint-placeholder-val="{{ true }}">
+        <ul style="flex:1;min-height:0;overflow-y:auto;list-style:none;margin:0;padding:4px 8px;display:flex;flex-direction:column;">
+          <sc-for list="{{ items }}" as="it" hint-placeholder-count="3">
+            <li class="bp-row" style="display:flex;align-items:center;gap:12px;padding:10px 8px;border-radius:8px;">
+              <span aria-hidden="true" style="{{ it.thumbStyle }}"></span>
+              <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;">
+                <a class="bp-i bp-name" href="{{ it.href }}" style="font-size:14px;font-weight:700;line-height:1.3;color:#15181C;">{{ it.name }}</a>
+                <span style="font-size:13px;font-weight:400;color:#666E78;">{{ it.qtyLine }}</span>
+              </span>
+              <span style="flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
+                <span style="font-size:14px;font-weight:700;color:#15181C;white-space:nowrap;">{{ it.sum }}</span>
+                <span style="font-size:13px;font-weight:400;color:#666E78;white-space:nowrap;">{{ it.grossLine }}</span>
+              </span>
+              <button type="button" class="bp-i bp-del" aria-label="{{ it.removeAria }}" onClick="{{ it.onRemove }}" style="flex:none;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#666E78;"><dc-import name="Ikony" icon-name="trash" size="18" hint-size="18px,18px"></dc-import></button>
+            </li>
+          </sc-for>
+        </ul>
+      </sc-if>
+
+      <sc-if value="{{ empty }}" hint-placeholder-val="">
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:40px 24px;text-align:center;">
+          <span style="color:#666E78;display:inline-flex;"><dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import></span>
+          <span style="font-size:16px;font-weight:700;color:#15181C;">Košík je prázdný</span>
+          <span style="font-size:14px;font-weight:400;color:#5A626C;max-width:280px;">Přidejte první položku a uvidíte ji tady.</span>
+        </div>
+      </sc-if>
+
+      <div style="flex:none;padding:14px 20px 20px;border-top:1px solid #F2F4F7;display:flex;flex-direction:column;gap:14px;">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;">
+          <span style="display:flex;flex-direction:column;gap:2px;">
+            <span style="font-size:14px;font-weight:700;color:#15181C;">Celkem</span>
+            <span style="font-size:13px;font-weight:400;color:#666E78;">{{ countLine }}</span>
+          </span>
+          <span style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
+            <span style="font-size:17px;font-weight:700;color:#15181C;white-space:nowrap;">{{ totalNet }}</span>
+            <span style="font-size:13px;font-weight:400;color:#666E78;white-space:nowrap;">{{ totalGross }}</span>
+          </span>
+        </div>
+        <dc-import name="Tlacitko" variant="primary" size="large" label="Přejít do košíku" icon-trailing="arrow-right" on-click="{{ onGoToCart }}" full-width="true" style="width:100%;" hint-size="100%,52px"></dc-import>
+        <div class="bp-mobonly" style="width:100%;">
+          <dc-import name="Tlacitko" variant="secondary" size="large" label="Zpět do obchodu" icon="arrow-left" on-click="{{ onBackClick }}" full-width="true" style="width:100%;" hint-size="100%,52px"></dc-import>
+        </div>
+      </div>
+    </div>
+  </div>
+</sc-if>
+<sc-if value="{{ standalone }}" hint-placeholder-val="">
+  <div style="padding:24px 16px;display:flex;flex-direction:column;gap:5px;">
+    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> náhled košíku po najetí nebo kliknutí na košík v hlavičce. Komponenta drží overlay, pozicování, animaci, Escape, focus trap i zámek scrollu; položky a akce posílá hlavička přes props (<code>items</code>, <code>onRemove(index)</code>, <code>onGoToCart</code>, <code>onBackToShop</code>). Na XS a XXS panel pokrývá celý displej a přibývá sekundární „Zpět do obchodu".</div>
+    <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nepatří sem změna množství ani doprava a platba — to řeší stránka košíku. Položkové callbacky se nepředávají v poli dat, komponenta si je vyrábí z <code>onRemove(index)</code>.</div>
+  </div>
+</sc-if>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:520,&quot;height&quot;:620},&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onClose&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null},&quot;title&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Váš košík&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;items&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{name:string;img?:string;qty:number;price:number;href?:string}[]&quot;,&quot;default&quot;:null},&quot;currency&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;CZK&quot;,&quot;EUR&quot;],&quot;default&quot;:&quot;CZK&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onRemove&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(index:number)=&gt;void&quot;,&quot;default&quot;:null},&quot;onGoToCart&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null},&quot;onBackToShop&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null},&quot;onPanelEnter&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null},&quot;onPanelLeave&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { demoOpen: true, closing: false, demoItems: null };
+
+  DEMO = [
+    { name:'Opěrné kolečko ⌀48 mm, nosnost 150 kg', img:'uploads/kolecko-operne-dtr-prum-48-150-kg.jpg', qty:2, price:743 },
+    { name:'Čelisti brzdové KNOTT 200×50, sada na 2 kola', img:'uploads/celisti-brzdove-knott-200x50-mala-sada-na-2-kola.jpg', qty:1, price:1810 },
+    { name:'Zástrčka 7pol. 12 V kovová Jaeger', img:'uploads/zastrcka-vidlice-7-pol-12v-kovova-jaeger.jpg', qty:3, price:264 }
+  ];
+
+  isControlled(){ return typeof this.props.onClose === 'function'; }
+  isOpen(){ return this.isControlled() ? this.props.open !== false : this.state.demoOpen !== false; }
+  // scroll se zamyká jen ve fullscreen režimu (XS, XXS) — na desktopu je panel jen náhled
+  lockScroll(on){
+    try{
+      const full = window.matchMedia('(max-width:549px)').matches;
+      document.body.style.overflow = (on && full) ? 'hidden' : '';
+    }catch(e){}
+  }
+
+  componentDidMount(){
+    this.wasOpen = this.isOpen();
+    if (this.wasOpen){ this.lockScroll(true); this.bind(true); setTimeout(()=>{ if (this._panel && this._panel.focus) this._panel.focus(); }, 0); }
+  }
+  componentDidUpdate(){
+    const now = this.isOpen();
+    if (this.wasOpen === now) return;
+    this.wasOpen = now;
+    this.lockScroll(now); this.bind(now);
+    if (now){ if (this._panel) this._panel.focus(); }
+    else if (this._returnTo && this._returnTo.focus) this._returnTo.focus();
+  }
+  componentWillUnmount(){
+    const back = this._returnTo;
+    this.bind(false); this.lockScroll(false); clearTimeout(this._t);
+    if (back && back.focus) back.focus();
+  }
+
+  bind(on){
+    if (on){
+      if (this._bound) return;
+      this._returnTo = document.activeElement;
+      this._onKey = (e)=>{
+        if (e.key === 'Escape'){ e.stopPropagation(); this.close(); return; }
+        if (e.key !== 'Tab' || !this._panel) return;
+        const f = [...this._panel.querySelectorAll('button,a[href],input,select,textarea,[tabindex]:not([tabindex="-1"])')]
+          .filter(el=>!el.disabled && el.offsetParent !== null);
+        if (!f.length) return;
+        const first = f[0], last = f[f.length-1];
+        if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+      };
+      document.addEventListener('keydown', this._onKey, true);
+      this._bound = true;
+    } else if (this._bound){
+      document.removeEventListener('keydown', this._onKey, true);
+      this._bound = false;
+    }
+  }
+
+  close(){
+    const cb = this.props.onClose;
+    this.setState({ closing:true, demoOpen:false });
+    clearTimeout(this._t);
+    this._t = setTimeout(()=>this.setState({ closing:false }), 400);
+    if (typeof cb === 'function') cb();
+  }
+
+  fmt(czk){
+    const cur = this.props.currency || 'CZK';
+    return (window.VappMena ? window.VappMena.format(czk, cur) : Math.round(czk) + ' Kč');
+  }
+
+  renderVals(){
+    const P = this.props;
+    const embedded = this.isControlled();
+    const open = this.isOpen();
+    const src = Array.isArray(P.items) ? P.items : (this.state.demoItems || this.DEMO);
+    const vat = 1.21;
+    const removeItem = (i)=>{
+      if (typeof P.onRemove === 'function'){ P.onRemove(i); return; }
+      const next = (this.state.demoItems || this.DEMO).filter((x,ix)=>ix!==i);
+      this.setState({ demoItems: next });
+    };
+    const items = src.map((it,i)=>({
+      name: it.name,
+      href: it.href || '#',
+      qtyLine: (it.qty||1) + '× ' + this.fmt(it.price||0) + ' / ks',
+      sum: this.fmt((it.price||0) * (it.qty||1)),
+      grossLine: this.fmt(Math.round((it.price||0) * (it.qty||1) * vat)) + ' s DPH',
+      removeAria: 'Odebrat z košíku: ' + it.name,
+      thumbStyle: 'flex:none;width:56px;height:56px;border-radius:6px;background:#fff'
+        + (it.img ? ' url("./' + it.img + '") center/contain no-repeat' : '') + ';',
+      onRemove: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); removeItem(i); }
+    }));
+    const pieces = src.reduce((a,x)=>a + (x.qty||1), 0);
+    const net = src.reduce((a,x)=>a + (x.price||0) * (x.qty||1), 0);
+    const plural = pieces === 1 ? '1 položka' : (pieces >= 2 && pieces <= 4 ? pieces + ' položky' : pieces + ' položek');
+    const call = (f, fallback)=> ()=>{ if (typeof f === 'function') f(); else if (fallback) fallback(); };
+    return {
+      mounted: open || this.state.closing,
+      standalone: !embedded,
+      title: P.title ?? 'Váš košík',
+      items, hasItems: items.length > 0, empty: items.length === 0,
+      countLine: plural,
+      totalNet: this.fmt(net),
+      totalGross: this.fmt(Math.round(net * vat)) + ' s DPH',
+      onCloseClick: ()=>this.close(),
+      onOverlay: ()=>this.close(),
+      onGoToCart: call(P.onGoToCart),
+      onBackClick: call(P.onBackToShop, ()=>this.close()),
+      onPanelEnter: ()=>{ if (typeof P.onPanelEnter === 'function') P.onPanelEnter(); },
+      onPanelLeave: ()=>{ if (typeof P.onPanelLeave === 'function') P.onPanelLeave(); },
+      panelRef: (el)=>{ this._panel = el; },
+      debug: P.debug ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  .sb-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media (max-width:819px){ .sb-grid{grid-template-columns:1fr;} }
+  .sb-thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+  @media (max-width:549px){ .sb-thumbs{grid-template-columns:repeat(2,1fr);} }
+  .sb-card{transition:box-shadow .15s;} .sb-card:hover{box-shadow:0 6px 20px rgba(20,47,86,.10);}
+  .sb-dark .sb-card:hover{box-shadow:0 10px 30px rgba(0,0,0,.28);}
+</style>
+</helmet>
+<div class="{{ gridClass }}" style="width:100%;">
+  <sc-for list="{{ blocks }}" as="b" hint-placeholder-count="2">
+    <section class="sb-card" style="background:{{ cardBg }};border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span aria-hidden="true" style="flex:none;width:44px;height:44px;border-radius:999px;background:{{ iconBg }};display:flex;align-items:center;justify-content:center;color:{{ iconColor }};"><dc-import name="Ikony" icon-name="{{ b.icon }}" size="24" hint-size="24px,24px"></dc-import></span>
+        <h3 style="margin:0;font-size:22px;font-weight:700;line-height:1.25;color:{{ titleColor }};">{{ b.title }}</h3>
+      </div>
+      <p style="margin:0;font-size:16px;line-height:1.6;color:{{ bodyColor }};text-wrap:pretty;">{{ b.text }}</p>
+      <sc-if value="{{ b.hasThumbs }}" hint-placeholder-val="">
+        <div class="sb-thumbs">
+          <sc-for list="{{ b.thumbs }}" as="th" hint-placeholder-count="4">
+            <span aria-hidden="true" style="height:64px;border-radius:6px;background:{{ thumbBg }};display:flex;align-items:center;justify-content:center;color:{{ thumbColor }};"><dc-import name="Ikony" icon-name="photo" size="18" hint-size="18px,18px"></dc-import></span>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ b.hasFleet }}" hint-placeholder-val="">
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:baseline;gap:8px;">
+            <span style="font-size:36px;font-weight:700;line-height:1.15;letter-spacing:-0.02em;color:{{ titleColor }};">{{ b.fleetCount }}</span>
+            <span style="font-size:16px;font-weight:700;line-height:1.6;color:{{ bodyColor }};">{{ b.fleetLabel }}</span>
+          </div>
+          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px;">
+            <sc-for list="{{ b.fleet }}" as="f" hint-placeholder-count="6">
+              <li style="display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:4px 12px;background:{{ thumbBg }};font-size:14px;font-weight:500;line-height:24px;color:{{ bodyColor }};">
+                {{ f.name }}<span style="font-weight:700;color:{{ titleColor }};">{{ f.count }}</span>
+              </li>
+            </sc-for>
+          </ul>
+        </div>
+      </sc-if>
+      <sc-if value="{{ b.hasBullets }}" hint-placeholder-val="{{ true }}">
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;">
+          <sc-for list="{{ b.bullets }}" as="li" hint-placeholder-count="3">
+            <li style="display:flex;align-items:flex-start;gap:8px;font-size:14px;font-weight:500;line-height:1.5;color:{{ bulletColor }};">
+              <span aria-hidden="true" style="flex:none;display:flex;color:{{ checkColor }};"><dc-import name="Ikony" icon-name="check" size="18" hint-size="18px,18px"></dc-import></span>{{ li.text }}
+            </li>
+          </sc-for>
+        </ul>
+      </sc-if>
+      <sc-if value="{{ b.hasLogos }}" hint-placeholder-val="">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;">
+          <sc-for list="{{ b.logos }}" as="lg" hint-placeholder-count="2">
+            <span style="display:flex;align-items:center;justify-content:center;height:44px;padding:8px 16px;">
+              <img src="{{ lg.src }}" alt="{{ lg.alt }}" style="display:block;max-height:24px;width:auto;filter:{{ logoFilter }};">
+            </span>
+          </sc-for>
+        </div>
+      </sc-if>
+      <div style="margin-top:auto;padding-top:4px;display:flex;">
+        <dc-import name="Tlacitko" variant="{{ ctaVariant }}" size="medium" label="{{ b.cta }}" on-click="{{ b.onClick }}" hint-size="180px,44px"></dc-import>
+      </div>
+    </section>
+  </sc-for>
+</div>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:420},&quot;blocks&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;{icon:string,title:string,text:string,cta:string,bullets?:string[],thumbs?:number}[]&quot;},&quot;onSelect&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;(index:number)=&gt;void&quot;},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;'light'|'dark'&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  DEFAULT = [
+    { icon:'adjustments-horizontal', title:'Servis přívěsů', cta:'Rezervovat servis',
+      text:'Autorizovaný servis AL-KO a KNOTT, garanční prohlídky, pneuservis i opravy elektroinstalace.',
+      bullets:['Autorizovaný servis AL-KO a KNOTT','Garanční prohlídky a technické kontroly','Objednání na termín do dvou dnů'],
+      logos:[{ src:'./logo-alko.svg', alt:'AL-KO' },{ src:'./logo-knott-bila.png', alt:'KNOTT' }] },
+    { icon:'truck-delivery', title:'Půjčovna přívěsů', cta:'Vybrat přívěs k zapůjčení',
+      text:'Areál Popovičky u Prahy. Půjčovné se počítá za každých započatých 24 hodin, za víkend jeden den zdarma.',
+      fleetCount:21, fleetLabel:'přívěsů k zapůjčení',
+      fleet:[
+        { name:'Valníky do 750 kg', count:7 },
+        { name:'Brzděné valníky 2,7–3,5 t', count:8 },
+        { name:'Sklopné', count:2 },
+        { name:'Přepravníky motocyklů', count:2 },
+        { name:'Přepravník automobilů', count:1 },
+        { name:'Přepravník koní', count:1 }
+      ] }
+  ];
+  renderVals(){
+    const P = this.props;
+    const src = (Array.isArray(P.blocks) && P.blocks.length) ? P.blocks.filter(Boolean) : this.DEFAULT;
+    const cb = P.onSelect;
+    const dark = P.tone === 'dark';
+    return {
+      gridClass: dark ? 'sb-grid sb-dark' : 'sb-grid',
+      cardBg: dark ? 'rgba(23,60,112,.90)' : '#FFFFFF',
+      iconBg: dark ? '#C5232B' : '#FDF1F1',
+      iconColor: dark ? '#FFFFFF' : '#C5232B',
+      titleColor: dark ? '#FFFFFF' : '#15181C',
+      bodyColor: dark ? '#B4CEEC' : '#5A626C',
+      bulletColor: dark ? '#B4CEEC' : '#5A626C',
+      checkColor: dark ? '#97DBB4' : '#0E7F43',
+      thumbBg: dark ? '#1A4A8A' : '#F2F4F7',
+      thumbColor: dark ? '#B4CEEC' : '#666E78',
+      ctaVariant: dark ? 'ontint' : 'primary',
+      logoFilter: dark ? 'brightness(0) invert(1)' : 'none',
+      blocks: src.map((b,i)=>({
+        icon: b.icon || 'circle-check', title: b.title, text: b.text, cta: b.cta || 'Zjistit více',
+        hasLogos: Array.isArray(b.logos) && b.logos.length > 0,
+        logos: (b.logos || []).map(l=>({ src:l.src, alt:l.alt || '' })),
+        hasFleet: Array.isArray(b.fleet) && b.fleet.length > 0,
+        fleet: (b.fleet || []).map(f=>({ name:f.name, count:f.count })),
+        fleetCount: b.fleetCount != null ? b.fleetCount : (b.fleet || []).reduce((s,f)=>s+(Number(f.count)||0),0),
+        fleetLabel: b.fleetLabel || 'přívěsů k zapůjčení',
+        hasThumbs: Number(b.thumbs) > 0,
+        thumbs: Array.from({ length: Number(b.thumbs) || 0 }, (_,n)=>({ n })),
+        hasBullets: Array.isArray(b.bullets) && b.bullets.length > 0,
+        bullets: (b.bullets || []).map(text=>({ text })),
+        onClick: ()=>{ if (typeof cb === 'function') cb(i); }
+      })),
+      debug: P.debug ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

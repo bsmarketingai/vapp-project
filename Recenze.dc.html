@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  .rc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  @media (max-width:999px){ .rc-grid{grid-template-columns:repeat(2,1fr);} }
+  .rc-head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px;}
+  .rc-h2{font-size:28px;line-height:1.2;letter-spacing:-0.01em;}
+  @media (max-width:819px){ .rc-h2{font-size:22px;line-height:1.25;} .rc-grid{grid-template-columns:1fr;} }
+</style>
+</helmet>
+<section aria-labelledby="rc-title" style="width:100%;">
+  <div class="rc-head">
+    <h2 id="rc-title" class="rc-h2" style="margin:0;font-weight:700;color:#15181C;">{{ title }}</h2>
+    <span style="display:inline-flex;align-items:center;gap:8px;background:#FFFFFF;border-radius:999px;padding:8px 16px;">
+      <span aria-hidden="true" style="display:flex;color:#F5A623;"><dc-import name="Ikony" icon-name="star-filled" size="18" hint-size="18px,18px"></dc-import></span>
+      <span style="font-size:14px;font-weight:700;color:#15181C;">{{ scoreText }}</span>
+      <span style="font-size:13px;font-weight:400;color:#666E78;">{{ sourceText }}</span>
+    </span>
+  </div>
+  <ul class="rc-grid" style="list-style:none;margin:0;padding:0;">
+    <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="3">
+      <li style="background:#FFFFFF;border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:12px;">
+        <dc-import name="Hodnoceni" value="{{ r.value }}" hint-size="120px,20px"></dc-import>
+        <blockquote style="margin:0;font-size:16px;font-weight:400;line-height:1.6;color:#15181C;text-wrap:pretty;">{{ r.text }}</blockquote>
+        <div style="margin-top:auto;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:#666E78;">
+          <span style="font-weight:700;color:#5A626C;">{{ r.author }}</span>
+          <span aria-hidden="true">·</span>
+          <span>{{ r.meta }}</span>
+        </div>
+      </li>
+    </sc-for>
+  </ul>
+</section>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:320},&quot;title&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Co říkají zákazníci&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;scoreText&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;4,8 z 5&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;sourceText&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Ověřeno zákazníky · Heureka&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;reviews&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;{value:number,count:number,text:string,author:string,meta:string}[]&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  DEFAULT = [
+    { value:5, count:1, author:'Petr H.', meta:'nájezdová brzda KNOTT',
+      text:'Objednáno v pondělí, ve středu jsem díl montoval. Na telefonu mi rovnou poradili, který typ brzdy mám.' },
+    { value:5, count:1, author:'Jana K.', meta:'valníkový přívěs',
+      text:'Přívěs převzatý na pobočce, všechno vysvětlené na místě. Za rok jsme byli na garanční prohlídce, bez problémů.' },
+    { value:4.5, count:1, author:'Miloš V.', meta:'osvětlení a kabeláž',
+      text:'Sortiment dílů je opravdu velký, našel jsem i staré typy svítilen. Balení pečlivé, nic se nepoškodilo.' }
+  ];
+  renderVals(){
+    const P = this.props;
+    const src = (Array.isArray(P.reviews) && P.reviews.length) ? P.reviews.filter(Boolean) : this.DEFAULT;
+    return {
+      title: P.title ?? 'Co říkají zákazníci',
+      scoreText: P.scoreText ?? '4,8 z 5',
+      sourceText: P.sourceText ?? 'Ověřeno zákazníky · Heureka',
+      reviews: src,
+      debug: P.debug ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

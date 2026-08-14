@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  /* pevné počty sloupců, aby ve spodním řádku nezůstávalo volné místo */
+  .rs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  @media (max-width:999px){ .rs-grid{grid-template-columns:repeat(2,1fr);} }
+  .rs-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
+  .rs-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .rs-card{transition:box-shadow .15s;} .rs-card:hover{box-shadow:0 6px 20px rgba(20,47,86,.10);}
+  .rs-card:hover .rs-name{color:#1E5AA8;}
+  .rs-card:hover .rs-photo img{transform:scale(1.03);}
+  .rs-name{transition:color .12s;}
+  .rs-photo img{transition:transform .28s ease;}
+  @media (max-width:549px){ .rs-grid{grid-template-columns:1fr;} .rs-photo{height:160px !important;} }
+</style>
+</helmet>
+<div class="rs-grid" style="width:100%;">
+  <sc-for list="{{ items }}" as="c" hint-placeholder-count="6">
+    <section class="rs-card" style="background:#FFFFFF;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
+      <span class="rs-photo" aria-hidden="true" style="display:block;position:relative;height:200px;overflow:hidden;background:#F2F4F7;">
+        <sc-if value="{{ c.hasImage }}" hint-placeholder-val="{{ true }}">
+          <img src="{{ c.image }}" alt="" style="display:block;width:100%;height:100%;object-fit:cover;">
+        </sc-if>
+        <sc-if value="{{ c.noImage }}" hint-placeholder-val="">
+          <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;color:#666E78;font-size:13px;font-weight:500;"><dc-import name="Ikony" icon-name="photo" size="24" hint-size="24px,24px"></dc-import>Fotografie sekce</span>
+        </sc-if>
+        <sc-if value="{{ c.hasBadge }}" hint-placeholder-val="">
+          <span style="{{ c.badgeStyle }}">{{ c.badge }}</span>
+        </sc-if>
+      </span>
+      <div style="padding:16px 20px 20px;display:flex;flex-direction:column;gap:12px;flex:1;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <h3 style="margin:0;flex:1;min-width:0;font-size:22px;font-weight:700;line-height:1.25;color:#15181C;">
+            <a class="rs-i rs-name" href="{{ c.href }}" onClick="{{ c.onOpen }}" style="color:inherit;">{{ c.name }}</a>
+          </h3>
+          <span aria-hidden="true" style="flex:none;display:flex;color:#5189CC;"><dc-import name="Ikony" icon-name="arrow-right" size="24" hint-size="24px,24px"></dc-import></span>
+        </div>
+        <span style="font-size:13px;font-weight:400;line-height:1.4;color:#666E78;">{{ c.countText }}</span>
+        <nav aria-label="{{ c.navLabel }}" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;">
+          <sc-for list="{{ c.subs }}" as="s" hint-placeholder-count="4">
+            <dc-import name="Chip" kind="secondary" size="small" label="{{ s.name }}" href="{{ s.href }}" active="{{ false }}" count="{{ 0 }}" debug="{{ false }}" hint-size="120px,32px"></dc-import>
+          </sc-for>
+        </nav>
+      </div>
+    </section>
+  </sc-for>
+</div>
+<sc-if value="{{ showDocs }}" hint-placeholder-val="">
+  <div style="display:flex;flex-direction:column;gap:5px;padding:16px 4px 0;">
+    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> rozcestník hlavních sekcí na homepage — velká fotka 200 px nahoře, název s šipkou, popisek počtu a podkategorie jako chipy <code>secondary/small</code>. Sloupce jsou pevné (3 · 2 · 1), aby ve spodním řádku nezůstávalo volné místo — počet dlaždic drž dělitelný třemi.</div>
+    <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nepoužívat pro výpis produktových kategorií uvnitř e-shopu — na to je <code>VypisKategorii</code> s <code>KategorickaDlazdice</code>. Karta není celá klikací, protože chipy jsou samostatné odkazy.</div>
+  </div>
+</sc-if>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:760},&quot;items&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;{name:string,href?:string,image?:string,countText?:string,count?:number,badge?:string,badgeTone?:string,subs?:(string|{name:string,href?:string})[]}[]&quot;},&quot;maxSubs&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;min&quot;:2,&quot;max&quot;:6,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;onOpen&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;(index:number)=&gt;void&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  DEMO = [
+    { name:'Přívěsy', countText:'186 modelů', subs:['Valníkové přívěsy','Sklopné přívěsy','Skříňové přívěsy','Přepravníky aut'] },
+    { name:'Náhradní díly', href:'nahradnidily-V1.dc.html', countText:'4 218 produktů', subs:['Díly náprav','Nájezdové brzdy','Elektro a svítilny','Pneu, kola, disky'] },
+    { name:'Servis', countText:'Autorizovaný servis AL-KO a KNOTT', subs:['Servis přívěsů','Příprava na STK','Rezervace termínu'] },
+    { name:'Půjčovna', countText:'14 přívěsů k zapůjčení', subs:['Denní pronájem','Víkendový pronájem','Ceník'] },
+    { name:'Poradna', countText:'32 článků a návodů', subs:['Jak vybrat přívěs','Zapojení zásuvky','Seřízení brzdy'] },
+    { name:'Akce a slevy', countText:'148 zlevněných položek', badge:'Sleva', subs:['Zlevněné přívěsy','Doprodej dílů','Bazar'] }
+  ];
+  nav(fn, hasRealHref){ return (e)=>{ if (hasRealHref) return; if (e && e.preventDefault) e.preventDefault(); if (typeof fn === 'function') fn(); }; }
+  renderVals(){
+    const P = this.props;
+    const given = Array.isArray(P.items) && P.items.length ? P.items.filter(Boolean) : null;
+    const src = given || this.DEMO;
+    const open = P.onOpen;
+    const max = Math.max(1, Number(P.maxSubs) || 4);
+    return {
+      showDocs: !given,
+      items: src.map((c,i)=>({
+        name: c.name,
+        href: c.href || '#',
+        image: c.image,
+        hasImage: !!c.image,
+        noImage: !c.image,
+        countText: c.countText || ((c.count != null ? c.count : 0) + ' produktů'),
+        navLabel: 'Podkategorie: ' + c.name,
+        hasBadge: !!c.badge,
+        badge: c.badge,
+        badgeStyle: 'position:absolute;top:8px;left:8px;font-size:13px;font-weight:700;line-height:1.4;border-radius:6px;padding:4px 9px;background:'
+          + (c.badgeTone === 'green' ? '#E9F8EF;color:#0B6937;' : '#C5232B;color:#FFFFFF;'),
+        subs: (c.subs || []).slice(0, max).map(s=>{
+          const o = typeof s === 'string' ? { name:s } : s;
+          return { name:o.name, href:o.href || '#' };
+        }),
+        onOpen: this.nav(typeof open === 'function' ? ()=>open(i) : null, !!c.href)
+      })),
+      debug: P.debug ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

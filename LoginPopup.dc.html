@@ -33,12 +33,15 @@
   .lp-cbrow:focus-within .lp-cbbox{box-shadow:inset 0 0 0 2px #1E5AA8;border-color:#1E5AA8;}
   .lp-seznam{transition:background .12s;} .lp-seznam:hover{background:#A21B22 !important;}
   .lp-seznam:active{transform:translateY(1px);}
+  @media (max-width:549px){
+    .lp-panel{top:0 !important;left:0 !important;right:0 !important;bottom:0 !important;transform:none !important;width:100% !important;max-height:none !important;height:100% !important;border-radius:0 !important;}
+  }
 </style>
 </helmet>
 <sc-if value="{{ mounted }}" hint-placeholder-val="{{ true }}">
   <div>
     <div onClick="{{ onOverlay }}" aria-hidden="true" style="position:fixed;inset:0;background:rgba(20,30,45,.45);z-index:80;animation:{{ fadeAnim }};"></div>
-    <div ref="{{ panelRef }}" role="dialog" aria-modal="true" aria-labelledby="lp-title" tabindex="-1" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:min(420px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow-y:auto;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);z-index:90;animation:{{ panelAnim }};">
+    <div class="lp-panel" ref="{{ panelRef }}" role="dialog" aria-modal="true" aria-labelledby="lp-title" tabindex="-1" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:min(420px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow-y:auto;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);z-index:90;animation:{{ panelAnim }};">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 24px 4px;">
         <h2 id="lp-title" style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.01em;color:#15181C;">{{ title }}</h2>
         <button type="button" class="lp-i lp-close" aria-label="Zavřít přihlášení" onClick="{{ onCloseClick }}" style="flex:none;width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#666E78;"><dc-import name="Ikony" icon-name="x" size="24" hint-size="24px,24px"></dc-import></button>

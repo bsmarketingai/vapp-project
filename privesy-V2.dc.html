@@ -31,6 +31,8 @@
   html,body{margin:0;padding:0;}
   body{background:#F7F9FB;}
   a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
+  .dl-a{color:#1E5AA8;font-weight:700;text-decoration:underline;cursor:pointer;transition:color .12s;}
+  .dl-a:hover{color:#1A4A8A;}
   .wf-img{background:repeating-linear-gradient(45deg,#E9ECEF,#E9ECEF 11px,#E3E6EA 11px,#E3E6EA 22px);}
   .wf-img2{background:repeating-linear-gradient(-45deg,#D8E6F6,#D8E6F6 11px,#CFDFF2 11px,#CFDFF2 22px);}
   @keyframes vapp-led{0%{box-shadow:0 0 0 0 var(--led);}70%{box-shadow:0 0 0 7px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
@@ -79,9 +81,9 @@
 .hvx9{transition:color .12s;} .hvx9:hover{color:#fff !important;}
 </style>
 </helmet>
-<div data-screen-label="Náhradní díly V2" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
+<div data-screen-label="Přívěsy V2" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
 
-  <dc-import name="Hlavicka" active="Náhradní díly" variant="{{ headerVariant }}" currency="{{ currency }}" on-currency-change="{{ onCurrency }}" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:00–16:00" contact-open="{{ true }}" menu-tree="{{ menuTree }}" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" hint-size="100%,150px"></dc-import>
+  <dc-import name="Hlavicka" active="Přívěsy" variant="{{ headerVariant }}" currency="{{ currency }}" on-currency-change="{{ onCurrency }}" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:00–16:00" contact-open="{{ true }}" menu-tree="{{ menuTree }}" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" hint-size="100%,150px"></dc-import>
 
   <!-- CONTENT -->
   <main class="vp-in" style="padding-top:14px;padding-bottom:40px;">
@@ -95,7 +97,7 @@
       <p class="pg-lead" style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">{{ leafDesc }}</p>
     </sc-if>
     <sc-if value="{{ notLeaf }}" hint-placeholder-val="{{ true }}">
-    <p style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Náhradní díly na přívěsy všech značek — KNOTT, AL-KO, BPW, Jokon i Winterhoff. Tisíce dílů skladem s expedicí do 24 hodin.<sc-if value="{{ descOpen }}" hint-placeholder-val=""> Vybírejte podle výrobce nápravy, průměru brzdy nebo čísla dílu. Nabízíme kompletní sortiment od nájezdových brzd a brzdových čelistí přes ložiska, náboje a spojovací zařízení až po osvětlení, blatníky, kola a plachty. Nevíte si rady? Zkušení obchodníci vám poradí s výběrem správného dílu po telefonu i e-mailu.</sc-if>
+    <p style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Přívěsy do 3,5 tuny od <a class="dl-a" href="#/privesy/vapp/" onClick="{{ linkVapp }}">VAPP</a>, <a class="dl-a" href="#/privesy/agados/" onClick="{{ linkAgados }}">Agados</a>, <a class="dl-a" href="#/privesy/stema/" onClick="{{ linkStema }}">STEMA</a> a <a class="dl-a" href="#/privesy/unsinn/" onClick="{{ linkUnsinn }}">UNSINN</a> — <a class="dl-a" href="#/privesy/dvouose-valniky/" onClick="{{ linkValniky }}">valníky</a>, <a class="dl-a" href="#/privesy/sklopne-privesy/" onClick="{{ linkSklopne }}">sklopné</a>, <a class="dl-a" href="#/privesy/skrinove-privesy/" onClick="{{ linkSkrinove }}">skříňové</a> i speciální <a class="dl-a" href="#/privesy/prepravniky-stroju/" onClick="{{ linkStroje }}">přepravníky</a>.<sc-if value="{{ descOpen }}" hint-placeholder-val=""> Vybírejte podle počtu náprav, celkové hmotnosti nebo rozměru <a class="dl-a" href="#/privesy/jednoose-valniky/" onClick="{{ linkJednoose }}">ložné plochy</a>. Vyrábíme vlastní přívěsy VAPP a zastupujeme značky Agados, STEMA a UNSINN. Ke každému přívěsu dodáme <a class="dl-a" href="nahradnidily-V1.dc.html">příslušenství</a>, plachtu i nástavbu na míru a zajistíme servis po celou dobu životnosti — jak vybrat přívěs poradíme v <a class="dl-a" href="#/poradna/jak-vybrat-prives/">poradně</a>.</sc-if>
     </p>
     <button type="button" class="a11y-i hvx3" onClick="{{ toggleDesc }}" style="margin:10px 0 0;display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px 0 10px;border-radius:8px;background:#EFF4FB;font-size:14px;font-weight:700;color:#1E5AA8;cursor:pointer;transition:background .12s;">
       <sc-if value="{{ descClosed }}" hint-placeholder-val="{{ true }}"><span style="display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-down" size="18" hint-size="18px,18px"></dc-import></span></sc-if>
@@ -115,7 +117,7 @@
         <div style="display:flex;flex-direction:column;gap:12px;">
           <div style="display:flex;align-items:center;gap:10px;">
             <button type="button" class="a11y-i" onClick="{{ backToGroups }}" style="display:inline-flex;align-items:center;gap:6px;min-height:36px;font-size:14px;font-weight:700;color:#1E5AA8;cursor:pointer;padding:0 10px 0 4px;"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>{{ backToGroupsLabel }}</button>
-            <span style="font-size:13px;color:#666E78;margin-left:auto;">{{ activeGroupCount }} produktů</span>
+            <span style="font-size:13px;color:#666E78;margin-left:auto;">{{ activeGroupCount }} modelů</span>
           </div>
           <dc-import name="VypisKategorii" media="{{ catMedia }}" layout="kompaktni" nejhledanejsi="{{ false }}" categories="{{ subcatCategories }}" on-open-category="{{ onOpenSubcat }}" debug="{{ debug }}" hint-size="100%,300px"></dc-import>
         </div>
@@ -124,7 +126,7 @@
         <div style="background:#fff;border-radius:8px;overflow:hidden;">
           <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid #F2F4F7;background:#EFF4FB;">
             <button type="button" class="a11y-i" onClick="{{ backToGroups }}" style="display:inline-flex;align-items:center;gap:6px;min-height:34px;font-size:13px;font-weight:700;color:#1E5AA8;cursor:pointer;padding:0 10px 0 4px;"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>{{ backToGroupsLabel }}</button>
-            <span style="font-size:13px;color:#666E78;margin-left:auto;">{{ activeGroupCount }} produktů</span>
+            <span style="font-size:13px;color:#666E78;margin-left:auto;">{{ activeGroupCount }} modelů</span>
           </div>
           <div class="sc-rows">
           <sc-for list="{{ subcats }}" as="s" hint-placeholder-count="5">
@@ -170,11 +172,11 @@
     <!-- ===== PRODUKTY ===== -->
     <h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;margin:0;">Výpis produktů</h2>
     <div style="display:flex;align-items:baseline;justify-content:space-between;margin:16px 0 10px;">
-      <span style="font-size:13px;color:#5A626C;font-weight:600;">{{ resultCount }} produktů</span>
+      <span style="font-size:13px;color:#5A626C;font-weight:600;">{{ resultCount }} modelů</span>
       <sc-if value="{{ anyFilter }}" hint-placeholder-val=""><button type="button" class="a11y-i" onClick="{{ clearFilters }}" style="font-size:13px;font-weight:700;color:#C5232B;cursor:pointer;text-decoration:underline;">Zrušit filtry</button></sc-if>
     </div>
     <sc-if value="{{ loading }}" hint-placeholder-val="">
-      <div class="p-grid" aria-busy="true" aria-label="Načítání produktů">
+      <div class="p-grid" aria-busy="true" aria-label="Načítání přívěsů">
         <sc-for list="{{ skeletons }}" as="k" hint-placeholder-count="4">
           <div style="background:#fff;border-radius:8px;overflow:hidden;padding-bottom:16px;">
             <div class="sk" style="aspect-ratio:4/3;border-radius:0;"></div>
@@ -191,8 +193,8 @@
     <sc-if value="{{ showEmpty }}" hint-placeholder-val="">
       <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:56px 20px;text-align:center;">
         <span style="color:#666E78;display:inline-flex;"><dc-import name="Ikony" icon-name="package-off" size="24" hint-size="24px,24px"></dc-import></span>
-        <div style="font-size:16px;font-weight:700;color:#15181C;">Žádné díly neodpovídají filtru</div>
-        <div style="font-size:14px;color:#5A626C;max-width:360px;">Zkuste zrušit některý filtr nebo rozšířit výběr značek.</div>
+        <div style="font-size:16px;font-weight:700;color:#15181C;">Žádné přívěsy neodpovídají filtru</div>
+        <div style="font-size:14px;color:#5A626C;max-width:360px;">Zkuste zrušit některý filtr nebo rozšířit výběr hmotnostních tříd.</div>
         <dc-import name="Tlacitko" variant="secondary" size="medium" label="Zrušit filtry" on-click="{{ clearFilters }}" hint-size="150px,44px"></dc-import>
       </div>
     </sc-if>
@@ -231,8 +233,8 @@
       </nav>
       <span aria-hidden="true" style="width:1px;height:20px;background:#1E5AA8;margin:0 2px;"></span>
       <nav aria-label="Přepínač verzí" style="display:flex;align-items:center;gap:8px;">
-        <a href="./nahradnidily-V1.dc.html" aria-current="false" style="min-height:32px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:700;line-height:1;display:inline-flex;align-items:center;text-decoration:none;cursor:pointer;background:transparent;color:#B4CEEC;">V1</a>
-        <a href="./nahradnidily-V2.dc.html" aria-current="page" style="min-height:32px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:700;line-height:1;display:inline-flex;align-items:center;text-decoration:none;cursor:pointer;background:#FFFFFF;color:#142F56;">V2</a>
+        <a href="./privesy-V1.dc.html" aria-current="false" style="min-height:32px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:700;line-height:1;display:inline-flex;align-items:center;text-decoration:none;cursor:pointer;background:transparent;color:#B4CEEC;">V1</a>
+        <a href="./privesy-V2.dc.html" aria-current="page" style="min-height:32px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:700;line-height:1;display:inline-flex;align-items:center;text-decoration:none;cursor:pointer;background:#FFFFFF;color:#142F56;">V2</a>
       </nav>
     </div>
   </div>
@@ -262,7 +264,7 @@ class Component extends DCLogic {
     super(props);
     this.state = {
       menuOpen:false, descOpen:false, filterOpen:false, sortOpen:false,
-      priceFrom:0, priceTo:8000, flags:null,
+      priceFrom:0, priceTo:300000, flags:null,
       view:'groups', path:[], leafPath:null, subcat:null, onlyStock: props.defaultOnlyStock ?? false, sort: props.defaultSort ?? 'pop',
       catMedia:'fotky', cart:{}, brands:{}, params:{}, accOpen:{ 'Výrobce':true }, compare:{}, qty:{}, pageFrom:1, pageTo:1, catLayout:null, debugOverride:null, hoverCard:null,
       searchQ:'', searchFocus:false, loading:false, macro:null, brandFocus:null, saleOnly:false,
@@ -275,24 +277,32 @@ class Component extends DCLogic {
   }
 
   fillProducts(){
-    const BRANDS = ['KNOTT','AL-KO','Agados','Sport Jacht','VAPP','Winterhoff','BPW'];
+    const BRANDS = ['VAPP','Agados','STEMA','UNSINN'];
     const out = [];
     this.GROUPS.forEach((g, gi)=>{
-      if (this.PRODUCTS.some(pr=>pr.g === g.key)) return;
+      const have = this.PRODUCTS.filter(pr=>pr.g === g.key).length;
       const kids = (g.children||[]).map(c=>c.name);
-      const n = 18;
+      const n = Math.max(0, Math.min(12, g.count - have));
       for (let i = 0; i < n; i++){
         const kid = kids.length ? kids[i % kids.length] : g.name;
-        const net = 180 + ((gi*7 + i*13) % 40) * 47;
+        const net = 32000 + ((gi*5 + i*7) % 26) * 6400;
+        const len = 2100 + ((gi + i) % 8) * 480;
+        const wid = 1280 + ((i + gi) % 4) * 240;
+        const gvw = [750, 1300, 1500, 2000, 2700, 3500][(gi + i) % 6];
         out.push({
-          name: kid + ' ' + (i + 1),
+          name: 'VAPP ' + g.name.split(' ')[0].toUpperCase().slice(0,5) + ' ' + (gvw/1000).toFixed(1).replace('.', ',') + ' — ' + kid,
           g: g.key,
           brand: BRANDS[(gi + i) % BRANDS.length],
-          p: [['Kategorie', g.name],['Provedení', kid],['Kód', (40 + gi) + '-' + (1000 + i)]],
+          p: [['Ložná plocha', len + ' × ' + wid + ' mm'],['Celková hmotnost', gvw + ' kg'],['Kód', 'PR-' + (gi+1) + (100 + i)]],
+          specs: [
+            { label:'Ložná plocha', value: len + ' × ' + wid + ' mm' },
+            { label:'Celková hmotnost', value: gvw.toLocaleString('cs-CZ') + ' kg' },
+            { label:'Provedení', value: kid }
+          ],
           net: net.toLocaleString('cs-CZ') + ' Kč',
           gross: Math.round(net * 1.21).toLocaleString('cs-CZ') + ' Kč',
-          stock: (i % 5 === 0) ? 0 : (3 + (i * 3) % 40),
-          sale: (i % 6 === 2) ? (10 + (i % 3) * 5) : undefined,
+          stock: (i % 4 === 0) ? 0 : (1 + (i % 3)),
+          sale: (i % 7 === 3) ? (5 + (i % 3) * 5) : undefined,
           img: g.image
         });
       }
@@ -305,228 +315,124 @@ class Component extends DCLogic {
 
   // redukované členění pro layout "dlazdice": velké skupiny nad dnešními kategoriemi
   MACROS = [
-    { key:'m-elektro', name:'Elektro a osvětlení', image:'uploads/elektro-a-osvetleni.jpg', cats:['elektro'] },
-    { key:'m-podvozek', name:'Podvozek', image:'uploads/napravy-a-brzdy.jpg', cats:['napravy-kompletni','dily-naprav','napravy','kola'] },
-    { key:'m-spojeni', name:'Spojení s vozidlem', image:'uploads/kulove-tazne-spojky.jpg', cats:['spojovaci','kolecka','hydraulika'] },
-    { key:'m-karoserie', name:'Karoserie', image:'uploads/blatniky.jpg', cats:['karoserie','bocnice','konstrukcni','plachty','vzpery'] },
-    { key:'m-manipulace', name:'Manipulace a nakládání', image:'uploads/navijaky-a-kladky.jpg', cats:['najezdy','zabezpeceni','upinani','boxy','kliny'] },
-    { key:'m-ostatni', name:'Ostatní', image:'uploads/doplnky.jpg', cats:['doplnky','udrzba'] },
-    { key:'m-akce', name:'Akce a slevy %', image:'uploads/doplnky.jpg', cats:[], sale:true }
+    { key:'m-valniky', icon:'ikona-dvouose-valniky.svg', name:'Valníkové přívěsy', image:'privesy-kat-02.png', cats:['jednoose','dvouose','triose'] },
+    { key:'m-preprava', icon:'ikona-prepravniky-automobilu.svg', name:'Přepravníky', image:'privesy-kat-06.png', cats:['motocykly','stroje','automobily','lode','zvirata'] },
+    { key:'m-sklopne', icon:'ikona-sklopne-privesy.svg', name:'Sklopné přívěsy', image:'privesy-kat-07.png', cats:['sklopne'] },
+    { key:'m-skrinove', icon:'ikona-skrinove-privesy.svg', name:'Skříňové a chladírenské', image:'privesy-kat-10.png', cats:['skrinove','chladirenske'] },
+    { key:'m-akce', icon:'ikona-vyprodej.svg', name:'Výprodej přívěsů', image:'privesy-kat-01.png', cats:[], sale:true }
   ];
 
   reload(patch){ this.setState(Object.assign({ loading:true }, patch||{})); clearTimeout(this._rt); this._rt=setTimeout(()=>this.setState({ loading:false }), 400); }
 
   SEARCH = [
-    { name:'Nápravy a brzdy', meta:'Kategorie · 612 produktů', cat:true, kw:'brzda brzdy naprava napravy naprav' },
-    { name:'Kola a pneumatiky', meta:'Kategorie · 296 produktů', cat:true, kw:'kolo kola pneu pneumatika disk' },
-    { name:'Elektro a osvětlení', meta:'Kategorie · 474 produktů', cat:true, kw:'led elektro svetlo osvetleni zarovka kabel' },
-    { name:'Nájezdová brzda KNOTT KF13', meta:'Obj. č. 901301 · Skladem', kw:'brzda knott najezdova' },
-    { name:'Brzdové čelisti KNOTT 200×50', meta:'Obj. č. 302005 · Skladem', kw:'brzda celisti knott' },
-    { name:'Opěrné kolečko ⌀48 mm', meta:'Obj. č. 404815 · Skladem', kw:'kolo kolecko operne' },
-    { name:'Pneumatika 165 R13 C Kenda', meta:'Obj. č. 401653 · Skladem', kw:'pneu pneumatika kolo kenda' },
-    { name:'Svítilna Fristom FT-001 B LED', meta:'Obj. č. 501224 · Skladem', kw:'led svetlo svitilna fristom' },
-    { name:'Žárovka P21/5W 12 V BAY15d', meta:'Obj. č. 502155 · Skladem', kw:'led zarovka svetlo' },
+    { name:'Jednoosé valníky', meta:'Kategorie · 42 modelů', cat:true, kw:'valnik jednoosy 750' },
+    { name:'Sklopné přívěsy', meta:'Kategorie · 22 modelů', cat:true, kw:'sklopny sklapec sypke' },
+    { name:'Přepravníky automobilů', meta:'Kategorie · 18 modelů', cat:true, kw:'auto automobil transporter plato' },
+    { name:'VAPP PROFI 156', meta:'Jednoosý valník 1500 kg · na dotaz', kw:'profi valnik 1500' },
+    { name:'VAPP PAV 3.5 6022', meta:'Dvouosý valník 3500 kg · na dotaz', kw:'pav valnik 3500 dvouosy' },
+    { name:'VAPP MOTO 3', meta:'Přepravník motocyklů · skladem', kw:'moto motocykl prepravnik' },
+    { name:'Agados UDK 3500', meta:'Třístranný sklápěč · skladem', kw:'udk sklapec agados' },
+    { name:'UNSINN PK 2.7', meta:'Přepravník koní · na dotaz', kw:'kone zvirata unsinn' },
   ];
 
   norm(x){ return x.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
 
   GROUPS = [
-    { key:'elektro', icon:'ikona-elektro-svitilny-odrazky.svg', image:'uploads/elektro-a-osvetleni.jpg', name:'Elektro, svítilny, odrazky', preview:'Světla, kabeláž, zástrčky…', count:474, children:[
-      { name:'Baterie, nabíječky a příslušenství', count:26 },
-      { name:'Blinkry', count:28 },
-      { name:'Brzdové svítilny', count:28 },
-      { name:'Couvačky a mlhovky', count:28 },
-      { name:'Držáky svítilen a odrazek', count:28 },
-      { name:'Kabely a kabeláže', count:28 },
-      { name:'Majáky a výstražné svítilny', count:28 },
-      { name:'Montážní materiál', count:28 },
-      { name:'Obrysové svítilny', count:28 },
-      { name:'Odrazky a odrazové desky', count:28 },
-      { name:'Osvětlení registrační značky', count:28 },
-      { name:'Pracovní světlomety', count:28 },
-      { name:'Sdružené zadní svítilny', count:28 },
-      { name:'Skla svítilen náhradní', count:28 },
-      { name:'Vnitřní osvětlení', count:28 },
-      { name:'Zásuvky, zástrčky, konektory', count:28 },
-      { name:'Žárovky, náhradní LED moduly', count:28 }
+    { key:'jednoose', icon:'ikona-jednoose-valniky.svg', image:'privesy-kat-01.png', name:'Jednoosé valníky', preview:'Nebrzděné i brzděné do 1300 kg…', count:42, children:[
+      { name:'Nebrzděné do 750 kg', count:18 },
+      { name:'Brzděné do 1300 kg', count:14 },
+      { name:'Sklopné jednoosé', count:10 }
     ] },
-    { key:'kola', icon:'ikona-pneu-kola-disky.svg', image:'uploads/kola-a-pneumatiky.jpg', name:'Pneu, kola, disky', preview:'Pneu, disky, šrouby…', count:296, children:[
-      { name:'Disky kol', count:34 },
-      { name:'Kompletní kola', count:34 },
-      { name:'Pneu', count:34 },
-      { name:'Pneu, kola, disky 8"', count:34 },
-      { name:'Pneu, kola, disky 10"', count:32 },
-      { name:'Pneu, kola, disky 13"', count:32 },
-      { name:'Pneu, kola, disky 14"', count:32 },
-      { name:'Pneu, kola, disky 15" a více', count:32 },
-      { name:'Příslušenství kol a pneumatik', count:32 }
+    { key:'dvouose', icon:'ikona-dvouose-valniky.svg', image:'privesy-kat-02.png', name:'Dvouosé valníky', preview:'Od 2000 do 3500 kg…', count:38, children:[
+      { name:'Do 2000 kg', count:12 },
+      { name:'Do 2700 kg', count:14 },
+      { name:'Do 3500 kg', count:12 }
     ] },
-    { key:'spojovaci', icon:'ikona-spojovaci-zarizeni-a-zamky.svg', image:'uploads/kulove-tazne-spojky.jpg', name:'Spojovací zařízení a zámky', preview:'Kulové spojky, oje, zámky…', count:310, children:[
-      { name:'Tažné kulové spojky', count:50 },
-      { name:'Tažná oka', count:52 },
-      { name:'Stabilizátory', count:52 },
-      { name:'Tažné koule', count:52 },
-      { name:'Zámky a zabezpečení', count:52 },
-      { name:'Příslušenství a náhradní díly', count:52 }
+    { key:'triose', icon:'ikona-triose-valniky.svg', image:'privesy-kat-03.png', name:'Tříosé valníky', preview:'Dlouhá ložná plocha, 3500 kg…', count:12, children:[
+      { name:'Do 3500 kg', count:12 }
     ] },
-    { key:'vzpery', icon:'ikona-plynove-vzpery-a-prislusenstvi.svg', image:'uploads/plynova-vzpera-mala-o.jpg', name:'Plynové vzpěry a příslušenství', preview:'Vzpěry a úchyty…', count:70, children:[
-      { name:'Plynové vzpěry', count:34 },
-      { name:'Koncovky a konzoly plynových vzpěr', count:36 }
+    { key:'motocykly', icon:'ikona-prepravniky-motocyklu.svg', image:'privesy-kat-04.png', name:'Přepravníky motocyklů', preview:'Pro jeden až tři motocykly…', count:14, children:[
+      { name:'Pro 1 motocykl', count:4 },
+      { name:'Pro 2 motocykly', count:6 },
+      { name:'Pro 3 motocykly', count:4 }
     ] },
-    { key:'napravy', icon:'ikona-najezdove-brzdy-a-dily.svg', image:'uploads/celisti-brzdove-knott-200x50-mala-sada-na-2-kola.jpg', name:'Nájezdové brzdy a díly', preview:'Brzdy, lanka, tyčoví…', count:212, children:[
-      { name:'Brzdy na "V" oje', count:22 },
-      { name:'Brzdy na jeklové oje', count:22 },
-      { name:'Spojovací zařízení nájezdových brzd', count:24 },
-      { name:'Lanka pojistná', count:24 },
-      { name:'Tlumiče a příslušenství', count:24 },
-      { name:'Tažné trubky a dorazové kroužky', count:24 },
-      { name:'Pouzdra a maznice', count:24 },
-      { name:'Manžety', count:24 },
-      { name:'Ostatní díly na náj. brzdy', count:24 }
+    { key:'stroje', icon:'ikona-prepravniky-stroju.svg', image:'privesy-kat-05.png', name:'Přepravníky strojů', preview:'Rampy, klece, hydraulika…', count:16, children:[
+      { name:'Se sklopnou rampou', count:8 },
+      { name:'S hydraulikou', count:8 }
     ] },
-    { key:'napravy-kompletni', icon:'ikona-napravy-kompletni.svg', image:'uploads/napravy-a-brzdy.jpg', name:'Nápravy kompletní', preview:'Brzděné i nebrzděné…', count:76, children:[
-      { name:'Nebrzděné nápravy', count:24 },
-      { name:'Brzděné nápravy', count:26 },
-      { name:'Ramena polonáprav', count:26 }
+    { key:'automobily', icon:'ikona-prepravniky-automobilu.svg', image:'privesy-kat-06.png', name:'Přepravníky automobilů', preview:'Plata a autotransportéry…', count:18, children:[
+      { name:'Nebrzděné plato', count:4 },
+      { name:'Brzděné 2700 kg', count:8 },
+      { name:'Brzděné 3500 kg', count:6 }
     ] },
-    { key:'dily-naprav', icon:'ikona-dily-naprav.svg', image:'uploads/celisti.jpg', name:'Díly náprav', preview:'Čelisti, náboje, ložiska…', count:442, children:[
-      { name:'Brzdové bubny', count:24 },
-      { name:'Brzdové čelisti', count:22 },
-      { name:'Brzdové štíty', count:22 },
-      { name:'Čepy náboje', count:22 },
-      { name:'Díly seřízování a couvací automatiky', count:22 },
-      { name:'Lanovody, vahadla, táhla', count:22 },
-      { name:'Listové pružiny a příslušenství', count:22 },
-      { name:'Ložiska', count:22 },
-      { name:'Kolové šrouby, matice, štefty', count:22 },
-      { name:'Kompletní kolové jednotky', count:22 },
-      { name:'Krytky náboje', count:22 },
-      { name:'Nebrzděné náboje', count:22 },
-      { name:'Pružiny brzdových čelistí', count:22 },
-      { name:'Rozpěrky a brzdové válečky', count:22 },
-      { name:'Seegerovy pojistky', count:22 },
-      { name:'Středové matice', count:22 },
-      { name:'Stabilizační jednotky', count:22 },
-      { name:'Těsnící kroužky, prachovky, gufera', count:22 },
-      { name:'Tlumiče náprav a držáky', count:22 },
-      { name:'Doplňky a příslušenství náprav', count:22 }
+    { key:'sklopne', icon:'ikona-sklopne-privesy.svg', image:'privesy-kat-07.png', name:'Sklopné přívěsy', preview:'Zadní i třístranné sklápění…', count:22, children:[
+      { name:'Zadní sklápění', count:10 },
+      { name:'Třístranné sklápění', count:8 },
+      { name:'Hydraulické sklápění', count:4 }
     ] },
-    { key:'najezdy', icon:'ikona-najezdy.svg', image:'uploads/najezdy.jpg', name:'Nájezdy', preview:'Nájezdové rampy…', count:28, children:[
-      { name:'Hliníkové nájezdy', count:8 },
-      { name:'Ocelové nájezdy', count:10 },
-      { name:'Příslušenství nájezdů', count:10 }
+    { key:'lode', icon:'ikona-prepravniky-lodi.svg', image:'privesy-kat-08.png', name:'Přepravníky lodí a vodních skútrů', preview:'Rolny, opěry, navijáky…', count:15, children:[
+      { name:'Pro vodní skútry', count:5 },
+      { name:'Pro lodě do 6 m', count:6 },
+      { name:'Pro lodě nad 6 m', count:4 }
     ] },
-    { key:'kolecka', icon:'ikona-operna-kolecka-nohy-drzaky.svg', image:'uploads/kolecka-1.jpg', name:'Opěrná kolečka, nohy, držáky', preview:'Kolečka, nohy, držáky…', count:146, children:[
-      { name:'Opěrná kolečka', count:38 },
-      { name:'Opěrné nohy', count:36 },
-      { name:'Držáky a klemy', count:36 },
-      { name:'Díly a doplňky koleček a nohou', count:36 }
+    { key:'zvirata', icon:'ikona-prepravniky-zvirat.svg', image:'privesy-kat-09.png', name:'Přepravníky zvířat', preview:'Pro koně i hospodářská zvířata…', count:9, children:[
+      { name:'Pro koně', count:5 },
+      { name:'Pro hospodářská zvířata', count:4 }
     ] },
-    { key:'karoserie', icon:'ikona-blatniky-a-zasterky.svg', image:'uploads/blatniky.jpg', name:'Blatníky a zástěrky', preview:'Blatníky, lemy, zástěrky…', count:170, children:[
-      { name:'Blatníky', count:58 },
-      { name:'Držáky blatníků', count:56 },
-      { name:'Zástěrky a příslušenství', count:56 }
+    { key:'skrinove', icon:'ikona-skrinove-privesy.svg', image:'privesy-kat-10.png', name:'Skříňové přívěsy', preview:'Uzamykatelný náklad…', count:20, children:[
+      { name:'Jednoosé skříňové', count:8 },
+      { name:'Dvouosé skříňové', count:8 },
+      { name:'S nájezdovou rampou', count:4 }
     ] },
-    { key:'bocnice', icon:'ikona-bocnice-uzavery-panty.svg', image:'uploads/bocnice.jpg', name:'Bočnice, uzávěry, panty', preview:'Bočnice, podlahy, panty…', count:182, children:[
-      { name:'Bočnice', count:38 },
-      { name:'Sloupky bočnic', count:36 },
-      { name:'Panty bočnic', count:36 },
-      { name:'Přezky a uzávěry', count:36 },
-      { name:'Lemování bočnic', count:36 }
-    ] },
-    { key:'zabezpeceni', icon:'ikona-zabezpeceni-nakladu.svg', image:'uploads/zabezpeceni_nakladu.jpg', name:'Zabezpečení nákladu', preview:'Pásy, sítě, kurty…', count:96, children:[
-      { name:'Upínací soupravy a popruhy', count:12 },
-      { name:'Ochrany popruhů a háky', count:14 },
-      { name:'Zakrývací sítě', count:14 },
-      { name:'Upínací oka a misky', count:14 },
-      { name:'Klíny na ložnou plochu', count:14 },
-      { name:'Doplňky k zabezpečení nákladu', count:14 },
-      { name:'Obalové materiály', count:14 }
-    ] },
-    { key:'upinani', icon:'ikona-navijaky-a-prislusenstvi.svg', image:'uploads/navijaky-a-kladky.jpg', name:'Navijáky a příslušenství', preview:'Navijáky, kladky, lana…', count:58, children:[
-      { name:'Ruční navijáky', count:10 },
-      { name:'Elektrické navijáky', count:12 },
-      { name:'Lana a popruhy', count:12 },
-      { name:'Držáky navijáků', count:12 },
-      { name:'Díly a příslušenství navijáků', count:12 }
-    ] },
-    { key:'konstrukcni', icon:'ikona-konstrukcni-dily.svg', image:'uploads/konstrukcni_dily.jpg', name:'Konstrukční díly', preview:'Profily, úhelníky, spojky…', count:164, children:[
-      { name:'Držáky motocyklů', count:18 },
-      { name:'Držáky rezervního kola', count:18 },
-      { name:'Oje a příslušenství', count:16 },
-      { name:'Oje výškově stavitelné a díly', count:16 },
-      { name:'Pojezdové plechy', count:16 },
-      { name:'Překližky', count:16 },
-      { name:'Rolny a opěry pro lodě', count:16 },
-      { name:'Spojovací materiál', count:16 },
-      { name:'Doplňky', count:16 },
-      { name:'Díly rámů přívěsů VAPP', count:16 }
-    ] },
-    { key:'plachty', icon:'ikona-plachty-a-prislusenstvi.svg', image:'uploads/plachty.jpg', name:'Plachty a příslušenství', preview:'Plachty, konstrukce…', count:96, children:[
-      { name:'Plachty s příslušenstvím', count:48 },
-      { name:'Příslušenství k plachtám', count:48 }
-    ] },
-    { key:'boxy', icon:'ikona-boxy-na-naradi-a-drzaky-boxu.svg', image:'uploads/box-naradi.jpg', name:'Boxy na nářadí a držáky boxů', preview:'Boxy, držáky boxů…', count:44, children:[
-      { name:'Boxy na nářadí', count:16 },
-      { name:'Držáky boxů', count:14 },
-      { name:'Náhradní díly boxů', count:14 }
-    ] },
-    { key:'kliny', icon:'ikona-kliny-a-drzaky.svg', image:'uploads/kliny.jpg', name:'Klíny a držáky', preview:'Zakládací klíny…', count:38, children:[
-      { name:'Klíny na ložnou plochu', count:18 },
-      { name:'Zakládací klíny a držáky', count:20 }
-    ] },
-    { key:'hydraulika', icon:'ikona-hydraulika-privesu.svg', image:'uploads/hydraulika.jpg', name:'Hydraulika přívěsů', preview:'Hadice, pumpy, válce…', count:52, children:[] },
-    { key:'doplnky', icon:'ikona-doplnky-k-privesum.svg', image:'uploads/doplnky.jpg', name:'Doplňky k přívěsům', preview:'Tabulky, SPZ, značení…', count:126, children:[
-      { name:'Označení přívěsu', count:42 },
-      { name:'Příslušenství k přívěsu', count:42 },
-      { name:'Ostatní doplňky k přívěsům', count:42 }
-    ] },
-    { key:'udrzba', icon:'ikona-pomucky-pro-udrzbu.svg', image:'uploads/pomucky.jpg', name:'Pomůcky pro údržbu', preview:'Maziva, sprej, čištění…', count:64, children:[
-      { name:'Náplně do ostřikovačů', count:8 },
-      { name:'Přípravky', count:8 },
-      { name:'Brusné a řezné kotouče', count:8 },
-      { name:'Maziva a technické spreje', count:8 },
-      { name:'Ochranné pomůcky', count:8 },
-      { name:'Vrtáky a závitníky', count:8 },
-      { name:'Elektroinstalační materiál', count:8 },
-      { name:'Montážní svítilny', count:8 }
-    ] }
+    { key:'chladirenske', icon:'ikona-chladirenske-privesy.svg', image:'privesy-kat-10.png', name:'Chladírenské přívěsy', preview:'Chlazení pro převoz potravin…', count:6, children:[] }
   ];
 
   PRODUCTS = [
-    { name:'Nájezdová brzda KNOTT KF13', g:'napravy', brand:'KNOTT', p:[['Pro hmotnost','750–1350 kg'],['Oj','čtyřhran 70 mm'],['Kód','90-1301']], net:'4 876 Kč', gross:'5 900 Kč', stock:12 },
-    { name:'Manžeta gumová KNOTT KF/KR 7,5 až 27', g:'napravy', brand:'KNOTT', p:[['Pro brzdy','KF/KR 7,5–27'],['Materiál','pryž'],['Kód','90-7527']], net:'157 Kč', gross:'190 Kč', stock:44, img:'uploads/manzeta-gumova-knott-kf-kr-7-5-az-27.jpg' },
-    { name:'Brzdové čelisti KNOTT 200×50 — malá sada na 2 kola', g:'napravy', brand:'KNOTT', p:[['Průměr bubnu','200 mm'],['Šířka','50 mm'],['Kód','20-2050']], net:'405 Kč', gross:'490 Kč', stock:46, sale:15, img:'uploads/celisti-brzdove-knott-200x50-mala-sada-na-2-kola.jpg' },
-    { name:'Náboj kola KNOTT 112×5', g:'napravy', brand:'KNOTT', p:[['Rozteč','112×5 mm'],['Ložisko','kompaktní'],['Kód','30-1125']], net:'1 397 Kč', gross:'1 690 Kč', stock:8 },
-    { name:'Krytka náboje KNOTT ⌀64,2 mm pro buben 200×50', g:'napravy', brand:'KNOTT', p:[['Průměr','64,2 mm'],['Pro buben','200×50'],['Kód','30-6420']], net:'62 Kč', gross:'75 Kč', stock:120, img:'uploads/krytka-naboje-knott-pr-64-2-mm-pro-buben-200x50.jpg' },
-    { name:'Klín zakládací plastový Jokon-Tripus', g:'upinani', brand:'Jokon', p:[['Materiál','plast'],['Homologace','E'],['Kód','70-0100']], net:'157 Kč', gross:'190 Kč', stock:64, sale:20, img:'uploads/jokon-tripus-klin-zakladaci-plastovy.jpg' },
-    { name:'Matice samojistná M8-8 ZN DIN 985', g:'napravy', brand:'KNOTT', p:[['Závit','M8'],['Norma','DIN 985'],['Kód','30-0885']], net:'4 Kč', gross:'5 Kč', stock:500, img:'uploads/matice-samojistna-m8-8-zn-din-985.jpg' },
-    { name:'Matice M8 kulová ZN', g:'napravy', brand:'VAPP', p:[['Závit','M8'],['Povrch','zinek'],['Kód','30-0899']], net:'12 Kč', gross:'15 Kč', stock:340, img:'uploads/matice-m8-kulova-zn.jpg' },
-    { name:'Zámek ALBE Safety Box XL-K rozvírací', g:'spojovaci', brand:'AL-KO', p:[['Typ','Safety Box XL-K'],['Certifikace','SCM'],['Kód','40-3001']], net:'1 240 Kč', gross:'1 500 Kč', stock:9, img:'uploads/zamek-albe-safety-box-xl-k-rozviraci.jpg' },
-    { name:'Kulová spojka Winterhoff WW 8', g:'spojovaci', brand:'Winterhoff', p:[['Pro hmotnost','do 800 kg'],['Oj','kulatá 60 mm'],['Kód','40-0860']], net:'645 Kč', gross:'780 Kč', stock:21 },
-    { name:'Zadní sdružené světlo Jokon BBSK 550 s bajonetovým konektorem', g:'elektro', brand:'Jokon', p:[['Funkce','5 komor'],['Připojení','bajonet'],['Kód','50-5501']], net:'810 Kč', gross:'980 Kč', stock:17 },
-    { name:'Blatník plastový jednoosý 750', g:'karoserie', brand:'VAPP', p:[['Pro kola','13"'],['Šířka','200 mm'],['Kód','10-2240']], net:'405 Kč', gross:'490 Kč', stock:34 },
-    { name:'Ložisko do bubnu KNOTT 200×50, 64×34×37 mm originál', g:'napravy', brand:'KNOTT', p:[['Rozměr','64×34×37 mm'],['Typ','do bubnu'],['Kód','30-6434']], net:'950 Kč', gross:'1 150 Kč', stock:0, img:'uploads/lozisko-do-bubnu-knott-200x50-64x34-h37-original.jpg' },
-    { name:'Držák opěrného kolečka 48 mm KLE 48, plech', g:'spojovaci', brand:'KNOTT', p:[['Pro trubku','48 mm'],['Materiál','plech, zinek'],['Kód','40-4848']], net:'240 Kč', gross:'290 Kč', stock:37, img:'uploads/drzak-operneho-kolecka-48-mm-kle-48-plech.jpg' },
-    { name:'Opěrné kolečko ⌀48 mm, nosnost 150 kg', g:'spojovaci', brand:'AL-KO', p:[['Trubka','48 mm'],['Nosnost','150 kg'],['Kód','40-4815']], net:'397 Kč', gross:'480 Kč', stock:52, img:'uploads/kolecko-operne-dtr-prum-48-150-kg.jpg' },
-    { name:'Kolečko samostatné Winterhoff K ST 48, 200×50, ocelový disk', g:'spojovaci', brand:'Winterhoff', p:[['Rozměr','200×50 mm'],['Disk','ocelový'],['Kód','40-2051']], net:'314 Kč', gross:'380 Kč', stock:22, sale:10, img:'uploads/kolecko-samostatne-winterhoff-k-st-48-200-vb-200x50-ocelovy-disk.jpg' },
-    { name:'Pneumatika 165 R13 C 96N (710 kg) Kenda M+S', g:'kola', brand:'VAPP', p:[['Rozměr','165 R13 C'],['Nosnost','710 kg'],['Kód','60-1653']], net:'1 645 Kč', gross:'1 990 Kč', stock:14, img:'uploads/pneu-165-r13-c-96n-710-kg-kenda-m-s.jpg' },
-    { name:'Kabel 7×1 sedmibarevný — metráž', g:'elektro', brand:'VAPP', p:[['Průřez','7×1 mm²'],['Prodej','po metrech'],['Kód','50-0701']], net:'57 Kč', gross:'69 Kč', stock:200, img:'uploads/kabel-7x1-sedmibarevny-metraz.jpg' },
-    { name:'Naviják ruční 900 kg s pásem', g:'upinani', brand:'AL-KO', p:[['Tažná síla','900 kg'],['Pás','7 m'],['Kód','70-0900']], net:'1 810 Kč', gross:'2 190 Kč', stock:6 },
-    { name:'Držák boxu univerzální na V-oj — sada pro 1 box', g:'upinani', brand:'VAPP', p:[['Montáž','V-oj'],['Sada','pro 1 box'],['Kód','70-1001']], net:'570 Kč', gross:'690 Kč', stock:16, img:'uploads/drzak-boxu-univerzalni-na-v-oj-sada-pro-1-box.jpg' },
-    { name:'Lanko bezpečnostní záchytné s karabinou KNOTT 750 kg', g:'spojovaci', brand:'KNOTT', p:[['Nosnost','750 kg'],['Zakončení','karabina'],['Kód','40-0750']], net:'96 Kč', gross:'116 Kč', stock:73, img:'uploads/lanko-bezpecnostni-zachytne-s-karabinou-knott-750-kg.jpg' },
-    { name:'Lanko pojistné AL-KO 1005 mm pro 60S/90S/161S/251S', g:'napravy', brand:'AL-KO', p:[['Délka','1005 mm'],['Zakončení','hák'],['Kód','20-1005']], net:'240 Kč', gross:'290 Kč', stock:63, img:'uploads/lanko-pojistne-al-ko-1005-mm-pro-60s-90s-161s-251s.jpg' },
-    { name:'Svítilna přední obrysová Fristom FT-001 B LED', g:'elektro', brand:'Fristom', p:[['Zdroj','LED 12/24 V'],['Odrazka','integrovaná'],['Kód','50-1224']], net:'157 Kč', gross:'190 Kč', stock:88, img:'uploads/fristom-ft-001-b-led-svitilna-predni-obrysova.jpg' },
-    { name:'Odrazka oranžová ⌀61 mm s otvorem (VAPP PAV, PA)', g:'elektro', brand:'VAPP', p:[['Průměr','61 mm'],['Uchycení','otvor'],['Kód','50-0610']], net:'21 Kč', gross:'25 Kč', stock:600, img:'uploads/odrazka-oranzova-pr-61-mm-s-otvorem-vapp-pav-pa.jpg' },
-    { name:'Žárovka P21/5W 12 V, patice BAY15d, dvouvláknová', g:'elektro', brand:'Jokon', p:[['Patice','BAY15d'],['Napětí','12 V'],['Kód','50-2155']], net:'17 Kč', gross:'21 Kč', stock:800, img:'uploads/zarovka-p21-5w-12-v-s-patici-bay15d-dvouvlaknova.jpg' },
-    { name:'Zástrčka (vidlice) 7pól 12 V kovová JAEGER', g:'elektro', brand:'JAEGER', p:[['Póly','7'],['Materiál','kov'],['Kód','50-0712']], net:'236 Kč', gross:'285 Kč', stock:28, img:'uploads/zastrcka-vidlice-7-pol-12v-kovova-jaeger.jpg' },
-    { name:'Upínací pás 2 t s ráčnou 6 m', g:'upinani', brand:'VAPP', p:[['Nosnost','2 000 kg'],['Délka','6 m'],['Kód','70-2006']], net:'236 Kč', gross:'285 Kč', stock:41 },
-    { name:'Plynová vzpěra 500 N', g:'upinani', brand:'STEMA', p:[['Síla','500 N'],['Zdvih','195 mm'],['Kód','70-0500']], net:'314 Kč', gross:'380 Kč', stock:0 },
-    { name:'Blatník pozink dvouosý 2700', g:'karoserie', brand:'VAPP', p:[['Pro kola','14"'],['Šířka','220 mm'],['Kód','10-2700']], net:'1 066 Kč', gross:'1 290 Kč', stock:5 },
-    { name:'Disk 13" 112×5 stříbrný', g:'kola', brand:'VAPP', p:[['Rozměr','4.5J×13'],['Rozteč','112×5'],['Kód','60-1345']], net:'736 Kč', gross:'890 Kč', stock:19 },
+    { name:'VAPP PRAKTIK 2 — jednoosý valník 750 kg', g:'jednoose', brand:'VAPP', p:[['Ložná plocha','2060 × 1230 mm'],['Celková hmotnost','750 kg'],['Kód','PR-1001']],
+      specs:[{label:'Ložná plocha',value:'2060 × 1230 mm'},{label:'Celková hmotnost',value:'750 kg'},{label:'Nosnost',value:'595 kg'}],
+      net:'28 926 Kč', gross:'35 000 Kč', stock:6, img:'prives-praktik-2-a.jpg', img2:'prives-praktik-2-b.jpg' },
+    { name:'VAPP PVS 2.7 4021 — dvouosý sklopný valník', g:'dvouose', brand:'VAPP', p:[['Ložná plocha','4000 × 2100 mm'],['Celková hmotnost','2700 kg'],['Kód','PR-2001']],
+      specs:[{label:'Ložná plocha',value:'4000 × 2100 mm'},{label:'Celková hmotnost',value:'2700 kg'},{label:'Sklápění',value:'zadní, hydraulické'}],
+      net:'119 008 Kč', gross:'144 000 Kč', stock:2, img:'prives-pvs-2-7-4021-a.jpg', img2:'prives-pvs-2-7-4021-b.jpg' },
+    { name:'VAPP P3S 2.7 3618 — třístranný sklápěč', g:'sklopne', brand:'VAPP', p:[['Ložná plocha','3600 × 1800 mm'],['Celková hmotnost','2700 kg'],['Kód','PR-7001']],
+      specs:[{label:'Ložná plocha',value:'3600 × 1800 mm'},{label:'Celková hmotnost',value:'2700 kg'},{label:'Sklápění',value:'třístranné'}],
+      net:'144 628 Kč', gross:'175 000 Kč', stock:1, sale:8, img:'prives-p3s-2-7-3618-a.jpg', img2:'prives-p3s-2-7-3618-b.jpg' },
+    { name:'VAPP PAP 2.0 4019 — přepravník automobilů', g:'automobily', brand:'VAPP', p:[['Ložná plocha','4000 × 1900 mm'],['Celková hmotnost','2000 kg'],['Kód','PR-6001']],
+      specs:[{label:'Ložná plocha',value:'4000 × 1900 mm'},{label:'Celková hmotnost',value:'2000 kg'},{label:'Nosnost',value:'1560 kg'}],
+      net:'99 174 Kč', gross:'120 000 Kč', stock:3, img:'prives-pap-2-0-4019-a.jpg', img2:'prives-pap-2-0-4019-b.jpg' },
+    { name:'VAPP MOTO PROFI 132 — přepravník motocyklů', g:'motocykly', brand:'VAPP', p:[['Ložná plocha','2110 × 1550 mm'],['Celková hmotnost','750 kg'],['Kód','PR-4001']],
+      specs:[{label:'Ložná plocha',value:'2110 × 1550 mm'},{label:'Celková hmotnost',value:'750 kg'},{label:'Kapacita',value:'2 motocykly'}],
+      net:'40 496 Kč', gross:'49 000 Kč', stock:4, img:'prives-moto-profi-132-a.jpg', img2:'prives-moto-profi-132-b.jpg' },
+    { name:'VAPP PAV 2.7 4220 — dvouosý valník', g:'dvouose', brand:'VAPP', p:[['Ložná plocha','4210 × 2020 mm'],['Celková hmotnost','2700 kg'],['Kód','PR-2001']],
+      specs:[{label:'Ložná plocha',value:'4210 × 2020 mm'},{label:'Celková hmotnost',value:'2700 kg'},{label:'Nosnost',value:'2100 kg'}],
+      net:'97 521 Kč', gross:'118 000 Kč', stock:2, img:'privesy-kat-02.png' },
+    { name:'VAPP PAV 3.5 6022 — dvouosý valník', g:'dvouose', brand:'VAPP', p:[['Ložná plocha','6000 × 2200 mm'],['Celková hmotnost','3500 kg'],['Kód','PR-2002']],
+      specs:[{label:'Ložná plocha',value:'6000 × 2200 mm'},{label:'Celková hmotnost',value:'3500 kg'},{label:'Nosnost',value:'2760 kg'}],
+      net:'136 364 Kč', gross:'165 000 Kč', stock:1, sale:8, img:'privesy-kat-02.png' },
+    { name:'VAPP PAV 3.5 8022 — tříosý valník', g:'triose', brand:'VAPP', p:[['Ložná plocha','8000 × 2200 mm'],['Celková hmotnost','3500 kg'],['Kód','PR-3001']],
+      specs:[{label:'Ložná plocha',value:'8000 × 2200 mm'},{label:'Celková hmotnost',value:'3500 kg'},{label:'Nosnost',value:'2540 kg'}],
+      net:'161 157 Kč', gross:'195 000 Kč', stock:1, img:'privesy-kat-03.png' },
+    { name:'VAPP UNI 2.7 — přepravník strojů s rampou', g:'stroje', brand:'VAPP', p:[['Ložná plocha','3600 × 1800 mm'],['Celková hmotnost','2700 kg'],['Kód','PR-5001']],
+      specs:[{label:'Ložná plocha',value:'3600 × 1800 mm'},{label:'Celková hmotnost',value:'2700 kg'},{label:'Nájezd',value:'sklopná rampa'}],
+      net:'103 306 Kč', gross:'125 000 Kč', stock:2, img:'privesy-kat-05.png' },
+    { name:'VAPP UAT 4320 — autotransportér 3500 kg', g:'automobily', brand:'VAPP', p:[['Ložná plocha','4300 × 2070 mm'],['Celková hmotnost','3500 kg'],['Kód','PR-6001']],
+      specs:[{label:'Ložná plocha',value:'4300 × 2070 mm'},{label:'Celková hmotnost',value:'3500 kg'},{label:'Nosnost',value:'2650 kg'}],
+      net:'148 760 Kč', gross:'180 000 Kč', stock:0, img:'privesy-kat-06.png' },
+    { name:'Agados UDK 3500 — třístranný sklápěč', g:'sklopne', brand:'Agados', p:[['Ložná plocha','3060 × 1750 mm'],['Celková hmotnost','3500 kg'],['Kód','PR-7001']],
+      specs:[{label:'Ložná plocha',value:'3060 × 1750 mm'},{label:'Celková hmotnost',value:'3500 kg'},{label:'Sklápění',value:'třístranné'}],
+      net:'177 686 Kč', gross:'215 000 Kč', stock:1, img:'privesy-kat-07.png' },
+    { name:'Sport Jacht LP 600 — přepravník lodi', g:'lode', brand:'STEMA', p:[['Délka lodi','do 6 m'],['Celková hmotnost','750 kg'],['Kód','PR-8001']],
+      specs:[{label:'Délka lodi',value:'do 6 m'},{label:'Celková hmotnost',value:'750 kg'},{label:'Podpěry',value:'kýlové rolny'}],
+      net:'40 496 Kč', gross:'49 000 Kč', stock:2, img:'privesy-kat-08.png' },
+    { name:'UNSINN PK 2.7 — přepravník koní', g:'zvirata', brand:'UNSINN', p:[['Kapacita','2 koně'],['Celková hmotnost','2700 kg'],['Kód','PR-9001']],
+      specs:[{label:'Kapacita',value:'2 koně'},{label:'Celková hmotnost',value:'2700 kg'},{label:'Nosnost',value:'1800 kg'}],
+      net:'227 273 Kč', gross:'275 000 Kč', stock:1, img:'privesy-kat-09.png' },
+    { name:'VAPP SKR 1.3 — skříňový přívěs', g:'skrinove', brand:'VAPP', p:[['Ložná plocha','2530 × 1300 mm'],['Celková hmotnost','1300 kg'],['Kód','PR-1101']],
+      specs:[{label:'Ložná plocha',value:'2530 × 1300 mm'},{label:'Celková hmotnost',value:'1300 kg'},{label:'Vnitřní výška',value:'1500 mm'}],
+      net:'90 909 Kč', gross:'110 000 Kč', stock:2, img:'privesy-kat-10.png' },
   ];
 
-  BRANDS = [['KNOTT',486],['AL-KO',612],['Agados',274],['Sport Jacht',196],['BPW',248],['Fristom',182],['JAEGER',16],['Jokon',196],['Winterhoff',124],['VAPP',384],['STEMA',88]];
+  BRANDS = [['VAPP',96],['Agados',54],['STEMA',28],['UNSINN',22]];
 
   priceNum(p){ return parseInt(p.gross.replace(/\s/g,''),10); }
 
@@ -579,7 +485,7 @@ class Component extends DCLogic {
   slug(x){ return String(x).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''); }
 
   urlFor(catKey, path){
-    const segs = ['nahradni-dily'];
+    const segs = ['privesy'];
     const g = this.GROUPS.find(x=>x.key===catKey);
     if(g) segs.push(this.slug(g.name));
     (path||[]).forEach(n=>segs.push(this.slug(n)));
@@ -603,7 +509,7 @@ class Component extends DCLogic {
   routeFromUrl(){
     const raw = (location.hash||'').replace(/^#\/?/,'').replace(/\/+$/,'');
     const parts = raw ? raw.split('/') : [];
-    if(parts[0] !== 'nahradni-dily' || parts.length < 2){ this.setState({ view:'groups', path:[], leafPath:null, subcat:null }); return; }
+    if(parts[0] !== 'privesy' || parts.length < 2){ this.setState({ view:'groups', path:[], leafPath:null, subcat:null }); return; }
     if(parts[1] === 'akce' && parts[2]){
       const sg = this.GROUPS.find(x=>this.slug(x.name)===parts[2]);
       if(sg){ this.setState({ view:sg.key, path:[], leafPath:null, subcat:null, macro:null, brandFocus:null, saleOnly:true }); return; }
@@ -654,13 +560,13 @@ class Component extends DCLogic {
     const effDebug  = s.debugOverride === null ? (this.props.debug ?? true) : s.debugOverride;
     const filteredAll = this.filtered();
     const freeShip = this.props.freeShippingThreshold ?? 1500;
-    const factor = 134; // prototyp reprezentuje větší katalog
+    const factor = 1;
     // počet výsledků: bez filtrů drží statické číslo kategorie (shodné s dlaždicí), s filtry se počítá z výpisu
     const anyFilterOn = s.onlyStock || s.brandFocus || s.saleOnly || Object.keys(s.brands).some(b=>s.brands[b]);
     const groupNode = this.GROUPS.find(g=>g.key===s.view);
     const resultCount = anyFilterOn
-      ? ((s.brandFocus || s.saleOnly) ? filteredAll.length : filteredAll.length * 12)
-      : (s.view !== 'groups' && groupNode ? groupNode.count : 2418);
+      ? filteredAll.length
+      : (s.view !== 'groups' && groupNode ? groupNode.count : 212);
     // zobrazené okno je souvislý rozsah stránek pageFrom…pageTo; dávka = jedna celá stránka
     const PER_PAGE = 16;
     const pgCount  = Math.max(1, Math.ceil(filteredAll.length / PER_PAGE));
@@ -686,10 +592,12 @@ class Component extends DCLogic {
         onMinus:()=>{ this.setState(prev=>{ const q=Object.assign({}, prev.qty||{}); q[p.name]=Math.max(1,((q[p.name]||1)-1)); return { qty:q }; }); },
         onPlus:()=>{ this.setState(prev=>{ const q=Object.assign({}, prev.qty||{}); q[p.name]=(q[p.name]||1)+1; return { qty:q }; }); },
         onQty:(v)=>{ this.setState(prev=>{ const q=Object.assign({}, prev.qty||{}); q[p.name]=Math.max(1,v); return { qty:q }; }); },
-        img:p.img||'', noImg:!p.img,
+        specs: p.specs || [],
+        img:p.img||'', noImg:!p.img, img2:p.img2||'',
         badge: p.sale ? '−'+p.sale+' %' : (this.priceNum(p)>=freeShip ? 'Doprava zdarma' : ''),
         badgeStyle:'position:absolute;top:8px;left:8px;font-size:13px;font-weight:700;border-radius:6px;padding:4px 9px;'+(p.sale?'color:#fff;background:#C5232B;':'color:#0B6937;background:#E9F8EF;'),
         imgBgStyle:'aspect-ratio:4/3;background:#fff url("./'+(p.img||'')+'") center/contain no-repeat;background-origin:content-box;padding:18px 12px;',
+        imgBg2Style:'position:absolute;inset:0;box-sizing:border-box;background:#fff url("./'+(p.img2||'')+'") center/contain no-repeat;background-origin:content-box;padding:18px 12px;pointer-events:none;',
         phStyle:'aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;color:#666E78;font-size:13px;font-weight:600;background:repeating-linear-gradient('+(hov?'-45deg,#D8E6F6,#D8E6F6 11px,#CFDFF2 11px,#CFDFF2 22px':'45deg,#E9ECEF,#E9ECEF 11px,#E3E6EA 11px,#E3E6EA 22px')+');',
         imgLabel: hov ? 'FOTO 2' : 'FOTO 1',
         dot1:(p.img?'display:none;':'')+'width:6px;height:6px;border-radius:50%;background:'+(hov?'#B4CEEC':'#1E5AA8')+';',
@@ -716,8 +624,8 @@ class Component extends DCLogic {
     const activeMacro = this.MACROS.find(m=>m.key===s.macro) || null;
     const saleMacro = this.MACROS.find(m=>m.sale);
     const saleTile = {
-      name: saleMacro.name, sale:true, href:'#/nahradni-dily/'+this.slug(saleMacro.name)+'/',
-      count: this.PRODUCTS.filter(pr=>pr.sale).length * 12, subs: []
+      name: saleMacro.name, icon:'ikona-vyprodej.svg', sale:true, href:'#/privesy/'+this.slug(saleMacro.name)+'/',
+      count: this.PRODUCTS.filter(pr=>pr.sale).length, subs: []
     };
     const flatCategories = [saleTile].concat(this.GROUPS.map(g=>({
       name:g.name, count:g.count, image:g.image, icon:g.icon, href:this.urlFor(g.key,[]),
@@ -729,7 +637,7 @@ class Component extends DCLogic {
       .filter(x=>x.n > 0);
     const macroItems = (m)=>{
       if (m.brands) return m.brands.map(b=>({ name:b, count:(this.BRANDS.find(x=>x[0]===b)||[b,0])[1] }));
-      if (m.sale) return saleGroups.map(x=>({ name:x.g.name, count:x.n * 12 }));
+      if (m.sale) return saleGroups.map(x=>({ name:x.g.name, count:x.n }));
       const gs = macroOf(m);
       // makro nad jedinou kategorií nepřidává mezistupeň — nabízí přímo její podkategorie
       if (gs.length === 1 && (gs[0].children||[]).length) return gs[0].children.map(c=>({ name:c.name, count:c.count }));
@@ -738,19 +646,19 @@ class Component extends DCLogic {
     const macroOrder = [saleMacro].concat(this.MACROS.filter(m=>!m.sale));
     const macroCategories = macroOrder.map(m=>{
       const kids = macroItems(m);
-      return { name:m.name, image:m.image, sale: !!m.sale, count: kids.reduce((a,k)=>a+k.count,0), href:'#/nahradni-dily/'+this.slug(m.name)+'/',
+      return { name:m.name, image:m.image, icon:m.icon, sale: !!m.sale, count: kids.reduce((a,k)=>a+k.count,0), href:'#/privesy/'+this.slug(m.name)+'/',
         subs: kids.slice(0,5).map(k=>({ name:k.name, count:k.count })) };
     });
     const categoriesData = (macroMode && !activeMacro) ? macroCategories : flatCategories;
     const openGroup = (g)=>this.go({ view:g.key, path:[], leafPath:null, subcat:null, macro:null, brandFocus:null, saleOnly:false, pageFrom:1, pageTo:1 }, this.urlFor(g.key,[]));
     const onOpenCategory = (name)=>{
-      if (name === saleMacro.name){ this.go({ macro:saleMacro.key }, '#/nahradni-dily/'+this.slug(saleMacro.name)+'/'); return; }
+      if (name === saleMacro.name){ this.go({ macro:saleMacro.key }, '#/privesy/'+this.slug(saleMacro.name)+'/'); return; }
       const m = macroMode ? this.MACROS.find(x=>x.name===name) : null;
-      if (m){ this.go({ macro:m.key }, '#/nahradni-dily/' + this.slug(m.name) + '/'); return; }
+      if (m){ this.go({ macro:m.key }, '#/privesy/' + this.slug(m.name) + '/'); return; }
       const g = this.GROUPS.find(x=>x.name===name); if(g) openGroup(g);
     };
-    const openBrand = (b)=>this.go({ view:'groups', path:[], leafPath:null, subcat:null, macro:null, brandFocus:b, saleOnly:false, brands:{}, pageFrom:1, pageTo:1 }, '#/nahradni-dily/vyrobce/'+this.slug(b)+'/');
-    const openSaleGroup = (g)=>this.go({ view:g.key, path:[], leafPath:null, subcat:null, macro:null, brandFocus:null, saleOnly:true, pageFrom:1, pageTo:1 }, '#/nahradni-dily/akce/'+this.slug(g.name)+'/');
+    const openBrand = (b)=>this.go({ view:'groups', path:[], leafPath:null, subcat:null, macro:null, brandFocus:b, saleOnly:false, brands:{}, pageFrom:1, pageTo:1 }, '#/privesy/vyrobce/'+this.slug(b)+'/');
+    const openSaleGroup = (g)=>this.go({ view:g.key, path:[], leafPath:null, subcat:null, macro:null, brandFocus:null, saleOnly:true, pageFrom:1, pageTo:1 }, '#/privesy/akce/'+this.slug(g.name)+'/');
     const onPickSub = (catName, subName)=>{
       const m = macroMode ? this.MACROS.find(x=>x.name===catName) : null;
       if (m && m.brands){ openBrand(subName); return; }
@@ -783,8 +691,8 @@ class Component extends DCLogic {
     }) : [];
     // úroveň velké skupiny (layout dlazdice): jejími "podkategoriemi" jsou dnešní kategorie
     const macroSubcats = activeMacro ? macroItems(activeMacro).map(k=>({
-      name:k.name, count:k.count, countText: k.count+' produktů',
-      href: activeMacro.brands ? ('#/nahradni-dily/vyrobce/'+this.slug(k.name)+'/') : '#/nahradni-dily/',
+      name:k.name, count:k.count, countText: k.count+' modelů',
+      href: activeMacro.brands ? ('#/privesy/vyrobce/'+this.slug(k.name)+'/') : '#/privesy/',
       onPick: this.link(()=>{
         if (activeMacro.brands){ openBrand(k.name); return; }
         const g = this.GROUPS.find(x=>x.name===k.name);
@@ -799,7 +707,7 @@ class Component extends DCLogic {
     const subcatsOwn = curNode ? (curNode.children||[]).map(c=>{
       const on = false;
       return {
-        name:c.name, count:c.count, countText: c.count+' produktů',
+        name:c.name, count:c.count, countText: c.count+' modelů',
         href: this.urlFor(ag.key, path.concat([c.name])),
         onPick: this.link(()=>this.go({ path: path.concat([c.name]), leafPath:null, subcat:null, subcatGroup:ag.key, pageFrom:1, pageTo:1 }, this.urlFor(ag.key, path.concat([c.name])))),
         style:'width:100%;display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:0 16px;border-bottom:1px solid #F2F4F7;cursor:pointer;'+(on?'background:#EFF4FB;':''),
@@ -813,14 +721,14 @@ class Component extends DCLogic {
     const leafNode = inLeaf ? nodeAt(ag, leafPath) : null;
     const topRaw = [
       { name:'Úvod', url:'#/', go:()=>this.go({ view:'groups', path:[], leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, '#/') },
-      { name:'Náhradní díly', url:'#/nahradni-dily/', go:()=>this.go({ view:'groups', path:[], leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, '#/nahradni-dily/') }
+      { name:'Přívěsy', url:'#/privesy/', go:()=>this.go({ view:'groups', path:[], leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, '#/privesy/') }
     ];
     if(s.brandFocus){
-      topRaw.push({ name:'Díly podle výrobce', url:'#/nahradni-dily/dily-podle-vyrobce/', go:()=>this.go({ macro:'m-vyrobce', brandFocus:null }, '#/nahradni-dily/dily-podle-vyrobce/') });
-      topRaw.push({ name:s.brandFocus, url:'#/nahradni-dily/vyrobce/'+this.slug(s.brandFocus)+'/', go:()=>{} });
+      topRaw.push({ name:'Přívěsy podle výrobce', url:'#/privesy/podle-vyrobce/', go:()=>this.go({ macro:null, brandFocus:null }, '#/privesy/') });
+      topRaw.push({ name:s.brandFocus, url:'#/privesy/vyrobce/'+this.slug(s.brandFocus)+'/', go:()=>{} });
     }
     if(activeMacro){
-      topRaw.push({ name:activeMacro.name, url:'#/nahradni-dily/'+this.slug(activeMacro.name)+'/', go:()=>this.go({ view:'groups', path:[], leafPath:null, subcat:null, macro:activeMacro.key }, '#/nahradni-dily/'+this.slug(activeMacro.name)+'/') });
+      topRaw.push({ name:activeMacro.name, url:'#/privesy/'+this.slug(activeMacro.name)+'/', go:()=>this.go({ view:'groups', path:[], leafPath:null, subcat:null, macro:activeMacro.key }, '#/privesy/'+this.slug(activeMacro.name)+'/') });
     }
     if(ag){
       topRaw.push({ name:ag.name, url:this.urlFor(ag.key,[]), go:()=>this.go({ view:ag.key, path:[], leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, this.urlFor(ag.key,[])) });
@@ -845,9 +753,9 @@ class Component extends DCLogic {
     };
     const filterGroups = [
       { h:'Výrobce', activeN: activeBrandN||'', opts: this.BRANDS.map(([b,c])=>({ t:b, c:'('+c+')', on:!!s.brands[b] })) },
-      { h:'Průměr brzdy', activeN:'', opts:[['160 mm','(74)'],['200 mm','(112)'],['230 mm','(96)'],['250 mm','(58)']].map(([t,c])=>({ t, c, on:false })) },
-      { h:'Rozteč kol', activeN:'', opts:[['100×4','(52)'],['112×5','(140)'],['140×5','(66)']].map(([t,c])=>({ t, c, on:false })) },
-      { h:'Cena', activeN:'', opts:[['do 500 Kč','(680)'],['500–2 000 Kč','(1 114)'],['nad 2 000 Kč','(624)']].map(([t,c])=>({ t, c, on:false })) },
+      { h:'Počet náprav', activeN:'', opts:[['1 náprava','(68)'],['2 nápravy','(96)'],['3 nápravy','(28)']].map(([t,c])=>({ t, c, on:false })) },
+      { h:'Celková hmotnost', activeN:'', opts:[['do 750 kg','(46)'],['751–1500 kg','(52)'],['1501–2700 kg','(58)'],['3500 kg','(56)']].map(([t,c])=>({ t, c, on:false })) },
+      { h:'Cena', activeN:'', opts:[['do 60 000 Kč','(48)'],['60 000–120 000 Kč','(74)'],['nad 120 000 Kč','(90)']].map(([t,c])=>({ t, c, on:false })) },
     ];
 
     const sortMap = { pop:'Nejoblíbenější', cheap:'Od nejlevnějšího', exp:'Od nejdražšího', az:'Podle názvu A–Z' };
@@ -878,20 +786,29 @@ class Component extends DCLogic {
       search,
       menuClosed: !s.menuOpen,
       mobileNav: [
-        { t:'Přívěsy', style:'font-size:14px;font-weight:700;color:#15181C;' },
-        { t:'Náhradní díly', style:'font-size:14px;font-weight:700;color:#1E5AA8;' },
+        { t:'Přívěsy', style:'font-size:14px;font-weight:700;color:#1E5AA8;' },
+        { t:'Náhradní díly', style:'font-size:14px;font-weight:700;color:#15181C;' },
         { t:'Příslušenství', style:'font-size:14px;font-weight:700;color:#15181C;' },
         { t:'Servis', style:'font-size:14px;font-weight:700;color:#15181C;' },
         { t:'Půjčovna', style:'font-size:14px;font-weight:700;color:#15181C;' },
       ],
       descOpen:s.descOpen, descClosed:!s.descOpen, toggleDesc:()=>this.setState({descOpen:!s.descOpen}),
+      linkVapp:(e)=>{e.preventDefault();openBrand('VAPP');},
+      linkAgados:(e)=>{e.preventDefault();openBrand('Agados');},
+      linkStema:(e)=>{e.preventDefault();openBrand('STEMA');},
+      linkUnsinn:(e)=>{e.preventDefault();openBrand('UNSINN');},
+      linkValniky:(e)=>{e.preventDefault();onOpenCategory('Dvouosé valníky');},
+      linkJednoose:(e)=>{e.preventDefault();onOpenCategory('Jednoosé valníky');},
+      linkSklopne:(e)=>{e.preventDefault();onOpenCategory('Sklopné přívěsy');},
+      linkSkrinove:(e)=>{e.preventDefault();onOpenCategory('Skříňové přívěsy');},
+      linkStroje:(e)=>{e.preventDefault();onOpenCategory('Přepravníky strojů');},
       descLabel: s.descOpen ? 'Skrýt celý popis' : 'Zobrazit celý popis',
       inGroups: s.view==='groups' && !activeMacro && !s.brandFocus,
       inSubcats: inSubcats || !!activeMacro,
       inLeaf: inCat, notLeaf: !inCat,
-      pageTitle: s.brandFocus ? ('Díly ' + s.brandFocus) : (activeMacro ? activeMacro.name : (inCat ? curName : 'Náhradní díly')),
-      pageCountText: activeMacro ? (macroSubcats.reduce((a,x)=>a+x.count,0).toLocaleString('cs-CZ')+' produktů') : (inCat ? (resultCount.toLocaleString('cs-CZ')+' produktů') : '2 418 produktů'),
-      leafDesc: inCat ? (curName+' — '+(path.length ? ('podkategorie '+(path.length>1?path[path.length-2]:ag.name)) : 'kategorie náhradních dílů')+' pro přívěsy všech značek. '+resultCount.toLocaleString('cs-CZ')+' položek skladem i na dotaz, expedice do 24 hodin. '+(hasKids?'Vyberte si přesnější zařazení níže, nebo procházejte celý výpis.':'Nevíte si rady s výběrem? Zavolejte nám.')) : '',
+      pageTitle: s.brandFocus ? ('Přívěsy ' + s.brandFocus) : (activeMacro ? activeMacro.name : (inCat ? curName : 'Přívěsy')),
+      pageCountText: activeMacro ? (macroSubcats.reduce((a,x)=>a+x.count,0).toLocaleString('cs-CZ')+' modelů') : (inCat ? (resultCount.toLocaleString('cs-CZ')+' modelů') : '212 modelů'),
+      leafDesc: inCat ? (curName+' — '+(path.length ? ('podkategorie '+(path.length>1?path[path.length-2]:ag.name)) : 'kategorie přívěsů')+' od VAPP, Agados, STEMA a UNSINN. '+resultCount.toLocaleString('cs-CZ')+' modelů, dostupnost a termín dodání potvrdíme telefonicky. '+(hasKids?'Vyberte si přesnější zařazení níže, nebo procházejte celý výpis.':'Nevíte si rady s výběrem? Zavolejte nám.')) : '',
       crumbItems, onCrumbNav,
       catMedia: s.catMedia || 'fotky',
       mediaItems: [['fotky','Fotky'],['ikony','Ikony']].map(([id,label])=>({
@@ -901,13 +818,13 @@ class Component extends DCLogic {
         onClick: ()=>this.setState({ catMedia:id })
       })),
       currency: s.currency || 'CZK', onCurrency: (code)=>this.setState({ currency: code }),
-      backFromLeaf: this.link(()=>{ if(path.length>0) this.go({ path: path.slice(0,-1), leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, this.urlFor(ag.key, path.slice(0,-1))); else this.go({ view:'groups', path:[], leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, '#/nahradni-dily/'); }),
-      backFromLeafHref: ag ? (path.length>0 ? this.urlFor(ag.key, path.slice(0,-1)) : '#/nahradni-dily/') : '#/nahradni-dily/',
-      backFromLeafLabel: inCat ? ('Zpět na '+(path.length>1 ? path[path.length-2] : (path.length===1 ? ag.name : 'Náhradní díly'))) : '',
+      backFromLeaf: this.link(()=>{ if(path.length>0) this.go({ path: path.slice(0,-1), leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, this.urlFor(ag.key, path.slice(0,-1))); else this.go({ view:'groups', path:[], leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, '#/privesy/'); }),
+      backFromLeafHref: ag ? (path.length>0 ? this.urlFor(ag.key, path.slice(0,-1)) : '#/privesy/') : '#/privesy/',
+      backFromLeafLabel: inCat ? ('Zpět na '+(path.length>1 ? path[path.length-2] : (path.length===1 ? ag.name : 'Přívěsy'))) : '',
       showBackLink: inCat && !hasKids,
       menuTree: [
-        { name:'Přívěsy', href:'#' },
-        { name:'Náhradní díly', href:'#/nahradni-dily/', children: this.GROUPS.map(g=>{
+        { name:'Náhradní díly', href:'./nahradnidily-V1.dc.html' },
+        { name:'Přívěsy', href:'#/privesy/', children: this.GROUPS.map(g=>{
             const walk = (node, segs)=>({
               name: node.name, href: this.urlFor(g.key, segs),
               children: (node.children||[]).length
@@ -939,15 +856,15 @@ class Component extends DCLogic {
       onHeaderVariant: (v)=>this.setState({ headerVariant: v }),
       activeGroupName: activeMacro ? activeMacro.name : (ag?ag.name:''),
       activeGroupCount: activeMacro ? macroSubcats.reduce((a,x)=>a+x.count,0).toLocaleString('cs-CZ') : (curNode?curNode.count:''), crumbs,
-      backToGroups:()=>{ if(activeMacro){ this.go({ macro:null }, '#/nahradni-dily/'); return; } if(path.length) this.go({ path: path.slice(0,-1), leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, this.urlFor(ag.key, path.slice(0,-1))); else this.go({ view:'groups', path:[], leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, '#/nahradni-dily/'); },
-      backToGroupsLabel: activeMacro ? 'Zpět na Náhradní díly' : path.length>1 ? ('Zpět na '+path[path.length-2]) : (path.length===1 ? ('Zpět na '+(ag?ag.name:'Náhradní díly')) : 'Zpět na Náhradní díly'),
+      backToGroups:()=>{ if(activeMacro){ this.go({ macro:null }, '#/privesy/'); return; } if(path.length) this.go({ path: path.slice(0,-1), leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, this.urlFor(ag.key, path.slice(0,-1))); else this.go({ view:'groups', path:[], leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, '#/privesy/'); },
+      backToGroupsLabel: activeMacro ? 'Zpět na Přívěsy' : path.length>1 ? ('Zpět na '+path[path.length-2]) : (path.length===1 ? ('Zpět na '+(ag?ag.name:'Přívěsy')) : 'Zpět na Přívěsy'),
       activeSubcat: null, clearSubcat:()=>this.setState({ subcat:null, pageFrom:1, pageTo:1 }),
       filterOpen:s.filterOpen,
       openFilter:()=>this.setState({filterOpen:true}), closeFilter:()=>this.closePanel(),
       filterCount: filterCount||'',
       activeFilters, onRemoveFilter,
       anyFilter: filterCount>0,
-      clearFilters:()=>this.reload({ brands:{}, onlyStock:false, pageFrom:1, pageTo:1, priceFrom:0, priceTo:8000, flags:null }),
+      clearFilters:()=>this.reload({ brands:{}, onlyStock:false, pageFrom:1, pageTo:1, priceFrom:0, priceTo:300000, flags:null }),
       toggleStock:()=>this.reload({onlyStock:!s.onlyStock, pageFrom:1, pageTo:1}),
       onlyStock: s.onlyStock,
       sortKey: s.sort, sortOptions,
@@ -974,7 +891,7 @@ class Component extends DCLogic {
       openCompare:()=>{},
       filterGroups,
       priceFrom: s.priceFrom ?? 0,
-      priceTo: s.priceTo ?? 8000,
+      priceTo: s.priceTo ?? 300000,
       onPriceChange: (a,b)=>this.setState({ priceFrom:a, priceTo:b }),
       filterFlags: (s.flags || this.FLAGS).map(f=>({ t:f.t, on:!!f.on })),
       onToggleFlag: (i)=>{ const f=(s.flags||this.FLAGS).map((x,xi)=> xi===i ? {t:x.t,on:!x.on} : {t:x.t,on:!!x.on}); this.setState({ flags:f }); },

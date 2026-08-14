@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  html,body{margin:0!important;padding:0!important;}
+  #dc-root{margin:0!important;padding:0!important;width:100%!important;
+           max-width:none!important;border:0!important;border-radius:0!important;background:#F7F9FB!important;}
+  #dc-root>.sc-host{margin:0!important;padding:0!important;width:100%!important;}
+</style>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&amp;display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#F7F9FB;}
+  a{color:#15181C;text-decoration:none;} a:hover{color:#1E5AA8;}
+  .vp-in{max-width:1560px;margin:0 auto;padding:0 32px;}
+  @media (max-width:819px){ .vp-in{padding:0 16px;} }
+  .hp-sec{padding:40px 0;}
+  @media (max-width:819px){ .hp-sec{padding:24px 0;} }
+  .hp-h2{font-size:28px;line-height:1.2;letter-spacing:-0.01em;}
+  @media (max-width:819px){ .hp-h2{font-size:22px;line-height:1.25;} }
+  .hp-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:16px;}
+</style>
+</helmet>
+<div data-screen-label="Homepage" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;width:100%;margin:0;padding:0;min-height:100vh;">
+
+  <dc-import name="Hlavicka" variant="{{ headerVariant }}" active="" debug="{{ debug }}" hint-size="100%,190px"></dc-import>
+
+  <dc-import name="Usp" variant="pas" items="{{ uspPas }}" debug="{{ debug }}" hint-size="100%,48px"></dc-import>
+
+  <main>
+    <dc-import name="HeroHomepage" debug="{{ debug }}" hint-size="100%,420px"></dc-import>
+
+    <section aria-labelledby="hp-cats" class="hp-sec">
+      <div class="vp-in">
+        <div class="hp-head">
+          <h2 id="hp-cats" class="hp-h2" style="margin:0;font-weight:700;color:#15181C;">Co u nás hledáte?</h2>
+          <span style="font-size:16px;font-weight:400;color:#666E78;">Rozcestník hlavních sekcí e-shopu</span>
+        </div>
+        <dc-import name="RozcestnikSekci" items="{{ categories }}" debug="{{ debug }}" hint-size="100%,760px"></dc-import>
+      </div>
+    </section>
+
+    <section aria-label="Poradenství" style="padding-bottom:40px;">
+      <div class="vp-in">
+        <dc-import name="PoradenskyBlok" variant="standard" debug="{{ debug }}" hint-size="100%,80px"></dc-import>
+      </div>
+    </section>
+
+    <section aria-label="Servis a půjčovna" style="background:linear-gradient(rgba(20,47,86,.40),rgba(20,47,86,.58)),#142F56 url('./sekce-servis.png') center/cover no-repeat;padding:56px 0;margin-bottom:40px;">
+      <div class="vp-in">
+        <dc-import name="SluzbyBloky" tone="dark" debug="{{ debug }}" hint-size="100%,360px"></dc-import>
+      </div>
+    </section>
+
+    <section aria-label="O firmě" style="padding-bottom:40px;">
+      <div class="vp-in">
+        <dc-import name="PribehFirmy" debug="{{ debug }}" hint-size="100%,330px"></dc-import>
+      </div>
+    </section>
+
+    <section aria-label="Recenze zákazníků" style="padding-bottom:48px;">
+      <div class="vp-in">
+        <dc-import name="Recenze" debug="{{ debug }}" hint-size="100%,320px"></dc-import>
+      </div>
+    </section>
+  </main>
+
+  <div class="vp-in" style="margin-bottom:8px;">
+    <dc-import name="Usp" variant="sloupce" items="{{ uspGrid }}" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
+  </div>
+
+  <dc-import name="Paticka" debug="{{ debug }}" hint-size="100%,520px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;headerVariant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;V1&quot;,&quot;V2&quot;,&quot;V3&quot;],&quot;default&quot;:&quot;V2&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  CATS = [
+    { key:'privesy', name:'Přívěsy', href:'privesy-V1.dc.html', image:'./sekce-privesy.png', count:186, countText:'186 modelů přívěsů',
+      subs:['Valníkové přívěsy','Sklopné přívěsy','Skříňové přívěsy','Přepravníky aut','Přepravníky lodí'] },
+    { key:'nahradni-dily', name:'Náhradní díly', href:'nahradnidily-V1.dc.html', image:'./sekce-nahradni-dily.png', count:4218, countText:'4 218 produktů skladem',
+      subs:['Díly náprav','Nájezdové brzdy a díly','Elektro, svítilny, odrazky','Pneu, kola, disky','Spojovací zařízení a zámky'] },
+    { key:'servis', name:'Servis', image:'./sekce-servis.png', count:9, countText:'9 servisních úkonů',
+      subs:['Servis přívěsů','Servis náprav AL-KO','Servis KNOTT','Příprava na STK','Rezervace termínu'] },
+    { key:'pujcovna', name:'Půjčovna', image:'./sekce-pujcovna.png', count:14, countText:'14 přívěsů k zapůjčení',
+      subs:['Půjčovna přívěsů','Denní pronájem','Víkendový pronájem','Ceník půjčovny'] },
+    { key:'poradna', name:'Poradna', image:'./sekce-poradna.png', count:32, countText:'32 článků a návodů',
+      subs:['Jak vybrat přívěs','Zapojení zásuvky 7 a 13 pin','Seřízení nájezdové brzdy','Výměna ložisek náprav'] },
+    { key:'akce', name:'Akce a slevy', image:'./sekce-akce.png', count:148, countText:'148 zlevněných položek', badge:'Sleva',
+      subs:['Zlevněné přívěsy','Doprodej dílů','Bazar přívěsů'] }
+  ];
+  // finální USP od klienta; ikony jsou zástupné, klient je ještě vybírá
+  USP = [
+    { icon:'award', title:'35 let zkušeností', text:'35 let výroby přívěsů a zkušeností' },
+    { icon:'building-warehouse', title:'Sklad dílů', text:'Největší skladové zásoby náhradních dílů v ČR' },
+    { icon:'rocket', title:'Rychlá expedice', text:'Skladové položky expedujeme do druhého dne' },
+    { icon:'tool', title:'Autorizovaný servis', text:'Autorizovaný servis AL-KO a KNOTT' }
+  ];
+  slug(s){
+    return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  }
+  renderVals(){
+    const P = this.props;
+    const categories = this.CATS.map(c=>({
+      name: c.name, count: c.count, countText: c.countText, image: c.image, badge: c.badge,
+      href: c.href || ('#/' + c.key + '/'),
+      subs: c.subs.map(s=>({ name:s, href:'#/' + c.key + '/' + this.slug(s) + '/' }))
+    }));
+    return {
+      categories,
+      uspGrid: this.USP,
+      // pás nese USP i sezónní sdělení
+      uspPas: this.USP.concat([
+        { icon:'truck-delivery', title:'Doprava', text:'Doprava zdarma při nákupu nad 5 000 Kč' },
+        { icon:'map-pin', title:'Pobočky', text:'Osobní odběr v Popovičkách a v Židněvsi' }
+      ]),
+      headerVariant: P.headerVariant || 'V2',
+      debug: P.debug ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

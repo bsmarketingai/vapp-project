@@ -81,7 +81,7 @@
 </helmet>
 <div data-screen-label="Prototyp Náhradní díly VAPP" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
 
-  <dc-import name="Hlavicka" variant="{{ headerVariant }}" currency="{{ currency }}" on-currency-change="{{ onCurrency }}" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:00–16:00" contact-open="{{ true }}" menu-tree="{{ menuTree }}" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" hint-size="100%,150px"></dc-import>
+  <dc-import name="Hlavicka" active="Náhradní díly" variant="{{ headerVariant }}" currency="{{ currency }}" on-currency-change="{{ onCurrency }}" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:00–16:00" contact-open="{{ true }}" menu-tree="{{ menuTree }}" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" hint-size="100%,150px"></dc-import>
 
   <!-- CONTENT -->
   <main class="vp-in" style="padding-top:14px;padding-bottom:40px;">
@@ -96,7 +96,11 @@
     </sc-if>
     <sc-if value="{{ notLeaf }}" hint-placeholder-val="{{ true }}">
     <p style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Náhradní díly na přívěsy všech značek — KNOTT, AL-KO, BPW, Jokon i Winterhoff. Tisíce dílů skladem s expedicí do 24 hodin.<sc-if value="{{ descOpen }}" hint-placeholder-val=""> Vybírejte podle výrobce nápravy, průměru brzdy nebo čísla dílu. Nabízíme kompletní sortiment od nájezdových brzd a brzdových čelistí přes ložiska, náboje a spojovací zařízení až po osvětlení, blatníky, kola a plachty. Nevíte si rady? Zkušení obchodníci vám poradí s výběrem správného dílu po telefonu i e-mailu.</sc-if>
-    <button type="button" class="a11y-i pt-hit" onClick="{{ toggleDesc }}" style="font-size:16px;font-weight:700;color:#1E5AA8;cursor:pointer;text-decoration:underline;margin-left:6px;white-space:nowrap;">{{ descLabel }}</button></p>
+    </p>
+    <button type="button" class="a11y-i hvx3" onClick="{{ toggleDesc }}" style="margin:10px 0 0;display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px 0 10px;border-radius:8px;background:#EFF4FB;font-size:14px;font-weight:700;color:#1E5AA8;cursor:pointer;transition:background .12s;">
+      <sc-if value="{{ descClosed }}" hint-placeholder-val="{{ true }}"><span style="display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-down" size="18" hint-size="18px,18px"></dc-import></span></sc-if>
+      <sc-if value="{{ descOpen }}" hint-placeholder-val=""><span style="display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-up" size="18" hint-size="18px,18px"></dc-import></span></sc-if>
+      {{ descLabel }}</button>
     </sc-if>
 
     <!-- ===== KATEGORIE (Datart/Alza drill-down) ===== -->
@@ -862,7 +866,7 @@ class Component extends DCLogic {
         { t:'Servis', style:'font-size:14px;font-weight:700;color:#15181C;' },
         { t:'Půjčovna', style:'font-size:14px;font-weight:700;color:#15181C;' },
       ],
-      descOpen:s.descOpen, toggleDesc:()=>this.setState({descOpen:!s.descOpen}),
+      descOpen:s.descOpen, descClosed:!s.descOpen, toggleDesc:()=>this.setState({descOpen:!s.descOpen}),
       descLabel: s.descOpen ? 'Skrýt celý popis' : 'Zobrazit celý popis',
       inGroups: s.view==='groups' && !activeMacro && !s.brandFocus,
       inSubcats: inSubcats || !!activeMacro,
