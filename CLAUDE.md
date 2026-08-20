@@ -152,8 +152,8 @@ Mezihodnoty mimo tuto řadu nepoužívat.
 
 - **Full-bleed vzorec (závazné):** stránka nikdy nemá vnější padding ani `max-width` na kořenovém prvku — kořen je `width:100%`, `margin:0`, `padding:0`, bez `border-radius`, nese jen `background: surface.page #F7F9FB`. Sekce jdou přes celou šířku viewportu (topbar a patička `#142F56`, zbytek `surface.page`); omezený je až vnitřní obal každé sekce: `max-width:1560px; margin:0 auto; padding:0 32px` na desktopu a `0 16px` pod 900 px. `html` a `body` mají `margin:0; padding:0`. Platí i pro hlavičku a patičku.
 - Container max-width **1560 px**. Page padding 32 px desktop / 16 px mobil.
-- **Produktový grid** je na škále XXS–XXL, pevné počty sloupců, gap 12 px: `L / XL / XXL` **4** · `M` **3** (`max-width:999px`) · `S` **2** (`max-width:819px`) · `XS / XXS` **1** (`max-width:549px`). Formule `auto-fill minmax()` je zrušená — počty jsou explicitní, aby odpovídaly pásmům.
-- Karta 280–300 px. Grid kategorií `auto-fit, minmax(280px,1fr)`, gap 12.
+- **Produktový grid** je na škále XXS–XXL, pevné počty sloupců, gap 20 px: `L / XL / XXL` **4** · `M` **3** (`max-width:999px`) · `S` **2** (`max-width:819px`) · `XS / XXS` **1** (`max-width:549px`). Formule `auto-fill minmax()` je zrušená — počty jsou explicitní, aby odpovídaly pásmům.
+- Karta 280–300 px. Grid kategorií `auto-fit, minmax(280px,1fr)`, gap 20.
 - Rozměry karty 280–300 px platí jen pro samostatný náhled; v produktovém gridu je karta tekutá (`width:100%`, `min-width:0`, `max-width:none`).
 - **Sticky filtrační lišta** v prototypu platí na všech šířkách, včetně pásem M, S, XS a XXS. Vypínání sticky pod 900 px je zrušené — rozhodnuto, nevracet se k tomu.
 ### Breakpointy — závazné názvosloví

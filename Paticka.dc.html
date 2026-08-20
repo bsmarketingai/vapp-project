@@ -40,7 +40,13 @@
   .ft-main{order:1;flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:28px;}
   .ft-cols{display:grid;gap:36px;grid-template-columns:repeat(4,minmax(0,1fr));}
   @media (max-width:1149px){ .ft-cols{grid-template-columns:repeat(2,minmax(0,1fr));} }
-  @media (max-width:819px){ .ft-contact{flex:1 1 100%;} .ft-cols{gap:24px;} }
+  /* na mobilu se klikací plocha odkazů zvětšuje pseudoprvkem na 40 px; rozestup odkazů 16 px, aby se plochy nepřekrývaly */
+  @media (max-width:819px){
+    .ft-contact{flex:1 1 100%;}
+    .ft-cols{gap:24px;}
+    .ft-cols > div{gap:16px;}
+    .ft-hit::after{top:-8px;bottom:-8px;}
+  }
 </style>
 </helmet>
 <footer style="width:100%;margin:0;padding:0;">

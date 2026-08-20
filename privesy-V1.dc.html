@@ -46,7 +46,7 @@
 .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
 .vp-bleed{margin-left:-32px;margin-right:-32px;padding-left:32px;padding-right:32px;}
 @media (max-width:819px){ .vp-in{padding-left:16px;padding-right:16px;} .vp-bleed{margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px;} }
-.p-grid{display:grid;gap:12px;grid-template-columns:repeat(4,1fr);}
+.p-grid{display:grid;gap:20px;grid-template-columns:repeat(4,1fr);}
 /* produktový grid na škále XXS–XXL: L+ 4 · M 3 · S 2 · XS a XXS 1 */
 @media (max-width:999px){ .p-grid{grid-template-columns:repeat(3,1fr);} }
 @media (max-width:819px){ .p-grid{grid-template-columns:repeat(2,1fr);} }
@@ -100,8 +100,10 @@
       <p class="pg-lead" style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">{{ leafDesc }}</p>
     </sc-if>
     <sc-if value="{{ notLeaf }}" hint-placeholder-val="{{ true }}">
-    <p style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Přívěsy do 3,5 tuny od <a class="dl-a" href="#/privesy/vapp/" onClick="{{ linkVapp }}">VAPP</a>, <a class="dl-a" href="#/privesy/agados/" onClick="{{ linkAgados }}">Agados</a>, <a class="dl-a" href="#/privesy/stema/" onClick="{{ linkStema }}">STEMA</a> a <a class="dl-a" href="#/privesy/unsinn/" onClick="{{ linkUnsinn }}">UNSINN</a> — <a class="dl-a" href="#/privesy/dvouose-valniky/" onClick="{{ linkValniky }}">valníky</a>, <a class="dl-a" href="#/privesy/sklopne-privesy/" onClick="{{ linkSklopne }}">sklopné</a>, <a class="dl-a" href="#/privesy/skrinove-privesy/" onClick="{{ linkSkrinove }}">skříňové</a> i speciální <a class="dl-a" href="#/privesy/prepravniky-stroju/" onClick="{{ linkStroje }}">přepravníky</a>.<sc-if value="{{ descOpen }}" hint-placeholder-val=""> Vybírejte podle počtu náprav, celkové hmotnosti nebo rozměru <a class="dl-a" href="#/privesy/jednoose-valniky/" onClick="{{ linkJednoose }}">ložné plochy</a>. Vyrábíme vlastní přívěsy VAPP a zastupujeme značky Agados, STEMA a UNSINN. Ke každému přívěsu dodáme <a class="dl-a" href="nahradnidily-V1.dc.html">příslušenství</a>, plachtu i nástavbu na míru a zajistíme servis po celou dobu životnosti — jak vybrat přívěs poradíme v <a class="dl-a" href="#/poradna/jak-vybrat-prives/">poradně</a>.</sc-if>
-    </p>
+    <p style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Přívěsy do 3,5 tuny od <a class="dl-a" href="#/privesy/vapp/" onClick="{{ linkVapp }}">VAPP</a>, <a class="dl-a" href="#/privesy/agados/" onClick="{{ linkAgados }}">Agados</a>, <a class="dl-a" href="#/privesy/stema/" onClick="{{ linkStema }}">STEMA</a> a <a class="dl-a" href="#/privesy/unsinn/" onClick="{{ linkUnsinn }}">UNSINN</a> — <a class="dl-a" href="#/privesy/dvouose-valniky/" onClick="{{ linkValniky }}">valníky</a>, <a class="dl-a" href="#/privesy/sklopne-privesy/" onClick="{{ linkSklopne }}">sklopné</a>, <a class="dl-a" href="#/privesy/skrinove-privesy/" onClick="{{ linkSkrinove }}">skříňové</a> i speciální <a class="dl-a" href="#/privesy/prepravniky-stroju/" onClick="{{ linkStroje }}">přepravníky</a>.</p>
+    <sc-if value="{{ descOpen }}" hint-placeholder-val="">
+      <p style="margin:10px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Vybírejte podle počtu náprav, celkové hmotnosti nebo rozměru <a class="dl-a" href="#/privesy/jednoose-valniky/" onClick="{{ linkJednoose }}">ložné plochy</a>. Vyrábíme vlastní přívěsy VAPP a zastupujeme značky Agados, STEMA a UNSINN. Ke každému přívěsu dodáme <a class="dl-a" href="nahradnidily-V1.dc.html">příslušenství</a>, plachtu i nástavbu na míru a zajistíme servis po celou dobu životnosti — jak vybrat přívěs poradíme v <a class="dl-a" href="#/poradna/jak-vybrat-prives/">poradně</a>.</p>
+    </sc-if>
     <button type="button" class="a11y-i hvx3" onClick="{{ toggleDesc }}" style="margin:10px 0 0;display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px 0 10px;border-radius:8px;background:#EFF4FB;font-size:14px;font-weight:700;color:#1E5AA8;cursor:pointer;transition:background .12s;">
       <sc-if value="{{ descClosed }}" hint-placeholder-val="{{ true }}"><span style="display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-down" size="18" hint-size="18px,18px"></dc-import></span></sc-if>
       <sc-if value="{{ descOpen }}" hint-placeholder-val=""><span style="display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-up" size="18" hint-size="18px,18px"></dc-import></span></sc-if>
@@ -147,7 +149,7 @@
             </a>
           </sc-for>
           </div>
-          <div class="sc-tiles" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;padding:16px;">
+          <div class="sc-tiles" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;padding:16px;">
             <sc-for list="{{ subcats }}" as="s" hint-placeholder-count="6">
               <a class="a11y-i sc-tile {{ s.tileCls }}" href="{{ s.href }}" onClick="{{ s.onPick }}" style="{{ s.tileStyle }}">
                 <span style="flex:none;width:48px;height:48px;background:#FFFFFF;border-radius:6px;"></span>
@@ -267,9 +269,12 @@ class Component extends DCLogic {
   closePanel(){ if(this.state.filterOpen) this.setState({ filterOpen:false }); }
   componentDidUpdate(prevProps, prevState){
     if (prevState && (prevState.view !== this.state.view || prevState.path !== this.state.path || prevState.leafPath !== this.state.leafPath)) this.syncJsonLd();
-    const was = prevState && prevState.filterOpen, now = this.state.filterOpen;
-    if (was === now) return;
-    if (!now){ const el = document.getElementById('pf-open'); if (el && el.focus) el.focus(); }
+    // fokus se vrací na spouštěč jen při skutečném zavření panelu; bez prevState se nedělá nic,
+    // jinak by se fokus (a s ním scroll) přesouval při každém překreslení
+    if (!prevState) return;
+    const was = prevState.filterOpen, now = this.state.filterOpen;
+    if (was === now || now) return;
+    const el = document.getElementById('pf-open'); if (el && el.focus) el.focus();
   }
   constructor(props){
     super(props);

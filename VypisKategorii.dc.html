@@ -36,7 +36,7 @@
 </sc-if>
 <sc-if value="{{ showRest }}" hint-placeholder-val="{{ true }}">
 <sc-if value="{{ accOff }}" hint-placeholder-val="{{ true }}">
-<div class="vk-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">
+<div class="vk-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
   <sc-for list="{{ cats }}" as="c" hint-placeholder-count="6">
     <dc-import name="KategorickaDlazdice" cat="{{ c }}" variant="{{ tileVariant }}" media="{{ tileMedia }}" hint-size="100%,240px"></dc-import>
   </sc-for>
@@ -47,7 +47,7 @@
     <span style="flex:none;font-size:13px;font-weight:700;line-height:1.4;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Díly podle výrobce</span>
     <span style="flex:1;height:1px;background:#D5DAE0;"></span>
   </div>
-  <div class="vk-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">
+  <div class="vk-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
     <sc-for list="{{ brandCats }}" as="b" hint-placeholder-count="4">
       <dc-import name="KategorickaDlazdice" cat="{{ b }}" variant="{{ tileVariant }}" media="{{ tileMedia }}" hint-size="100%,88px"></dc-import>
     </sc-for>
@@ -62,7 +62,7 @@
     <span aria-hidden="true" style="{{ catsChevronStyle }}"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></span>
   </button>
   <sc-if value="{{ catsOpen }}" hint-placeholder-val="">
-    <div id="vk-acc-cats" class="vk-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:12px;">
+    <div id="vk-acc-cats" class="vk-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:12px;">
       <sc-for list="{{ cats }}" as="c" hint-placeholder-count="6">
         <dc-import name="KategorickaDlazdice" cat="{{ c }}" variant="{{ tileVariant }}" media="{{ tileMedia }}" hint-size="100%,240px"></dc-import>
       </sc-for>
@@ -76,7 +76,7 @@
       <span aria-hidden="true" style="{{ brandsChevronStyle }}"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></span>
     </button>
     <sc-if value="{{ brandsOpen }}" hint-placeholder-val="">
-      <div id="vk-acc-brands" class="vk-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:12px;">
+      <div id="vk-acc-brands" class="vk-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:12px;">
         <sc-for list="{{ brandCats }}" as="b" hint-placeholder-count="4">
           <dc-import name="KategorickaDlazdice" cat="{{ b }}" variant="{{ tileVariant }}" media="{{ tileMedia }}" hint-size="100%,88px"></dc-import>
         </sc-for>

@@ -50,6 +50,8 @@
   @media (max-width:999px){ .p-grid{grid-template-columns:repeat(3,1fr);} }
 @media (max-width:819px){ .p-grid{grid-template-columns:repeat(2,1fr);} }
 @media (max-width:549px){ .p-grid{grid-template-columns:1fr;} }
+  /* XS a XXS: sloupec Nejhledanější jde přes celou šířku a začíná u levého okraje */
+  @media (max-width:549px){ .pg-topcol{display:none !important;} }
 .sk{background:#F2F4F7;border-radius:6px;}
 @media (max-width:819px){ .sc-tiles{display:none !important;} .sc-crumb:not(.sc-crumb-last){display:none !important;} }
 @media (min-width:820px){ .sc-rows{display:none !important;} }
@@ -78,16 +80,13 @@
 .hvx7{transition:background .12s;} .hvx7:hover{background:rgba(255,255,255,.2) !important;}
 .hvx8{transition:color .12s,border-color .12s;} .hvx8:hover{color:#fff !important;border-color:#fff !important;}
 .hvx9{transition:color .12s;} .hvx9:hover{color:#fff !important;}
-@media (max-width:999px){ .hd-sep{display:none !important;} }
-/* XS a XXS: sloupec Nejhledanější jde přes celou šířku a začíná u levého okraje */
-@media (max-width:549px){ .pg-topcol{display:none !important;} }
 </style>
 </helmet>
-<div data-screen-label="Náhradní díly V1" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
+<div data-screen-label="Náhradní díly V3" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
 
-  <dc-import name="Usp" variant="pas" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,48px"></dc-import>
+  <dc-import name="Usp" variant="pas" tone="tmavy" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,48px"></dc-import>
 
-  <dc-import name="Hlavicka" active="Náhradní díly" variant="{{ headerVariant }}" currency="{{ currency }}" on-currency-change="{{ onCurrency }}" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:00–16:00" contact-open="{{ true }}" menu-tree="{{ menuTree }}" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" hint-size="100%,150px"></dc-import>
+  <dc-import name="Hlavicka" active="Náhradní díly" variant="V4" currency="{{ currency }}" on-currency-change="{{ onCurrency }}" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:00–16:00" contact-open="{{ true }}" menu-tree="{{ menuTree }}" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" hint-size="100%,150px"></dc-import>
 
   <!-- CONTENT -->
   <main class="vp-in" style="padding-top:14px;padding-bottom:40px;">
@@ -257,9 +256,9 @@
       </nav>
       <span aria-hidden="true" style="width:1px;height:20px;background:#1E5AA8;margin:0 2px;"></span>
       <nav aria-label="Přepínač verzí" style="display:flex;align-items:center;gap:8px;">
-        <a href="./nahradnidily-V1.dc.html" aria-current="page" style="min-height:32px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:700;line-height:1;display:inline-flex;align-items:center;text-decoration:none;cursor:pointer;background:#FFFFFF;color:#142F56;">V1</a>
+        <a href="./nahradnidily-V1.dc.html" aria-current="false" style="min-height:32px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:700;line-height:1;display:inline-flex;align-items:center;text-decoration:none;cursor:pointer;background:transparent;color:#B4CEEC;">V1</a>
         <a href="./nahradnidily-V2.dc.html" aria-current="false" style="min-height:32px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:700;line-height:1;display:inline-flex;align-items:center;text-decoration:none;cursor:pointer;background:transparent;color:#B4CEEC;">V2</a>
-        <a href="./nahradnidily-V3.dc.html" aria-current="false" style="min-height:32px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:700;line-height:1;display:inline-flex;align-items:center;text-decoration:none;cursor:pointer;background:transparent;color:#B4CEEC;">V3</a>
+        <a href="./nahradnidily-V3.dc.html" aria-current="page" style="min-height:32px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:700;line-height:1;display:inline-flex;align-items:center;text-decoration:none;cursor:pointer;background:#FFFFFF;color:#142F56;">V3</a>
       </nav>
     </div>
   </div>
@@ -297,7 +296,7 @@ class Component extends DCLogic {
       catMedia:'fotky', cart:{}, brands:{}, params:{}, accOpen:{ 'Výrobce':true }, compare:{}, qty:{}, pageFrom:1, pageTo:1, catLayout:null, debugOverride:null, hoverCard:null,
       searchQ:'', searchFocus:false, loading:false, macro:null, brandFocus:null, saleOnly:false,
       currency:'CZK',
-      headerVariant:'kontakt'
+      headerVariant:'V3'
     };
     // demo katalog: skupiny bez ručně psaných produktů se doplní generovanými kusy,
     // aby žádný rozcestník nevedl na prázdný výpis
@@ -858,7 +857,7 @@ class Component extends DCLogic {
       pp.forEach((nm,i)=>topRaw.push({ name:nm, url:this.urlFor(ag.key, pp.slice(0,i+1)),
         go:()=>this.go({ view:ag.key, path:pp.slice(0,i+1), leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, this.urlFor(ag.key, pp.slice(0,i+1))) }));
     }
-    // Nejhledanější: v rozcestníku kurátorovaný seznam, v kategorii a podkategorii
+// Nejhledanější: v rozcestníku kurátorovaný seznam, v kategorii a podkategorii
     // tématické chipy z okolí uzlu (potomci, jinak sourozenci)
     const GUIDE = { kind:'guide', label:'Schéma zapojení zásuvky 7 / 13 pin', iconName:'book', href:'#poradna-zasuvka' };
     let topChips = [], guideChip = false;
@@ -955,13 +954,13 @@ class Component extends DCLogic {
           + (((s.xxlCols||4) === n) ? 'background:#FFFFFF;color:#142F56;' : 'background:transparent;color:#B4CEEC;'),
         onClick: ()=>this.setState({ xxlCols:n })
       })),
+      showTopCol: topChips.length > 0, topSearchedData: topChips, showGuideChip: guideChip,
       mediaItems: [['fotky','Fotky'],['ikony','Ikony']].map(([id,label])=>({
         label, pressed: (s.catMedia||'fotky') === id ? 'true' : 'false',
         style: 'min-height:32px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:700;line-height:1;display:inline-flex;align-items:center;cursor:pointer;'
           + ((s.catMedia||'fotky') === id ? 'background:#FFFFFF;color:#142F56;' : 'background:transparent;color:#B4CEEC;'),
         onClick: ()=>this.setState({ catMedia:id })
       })),
-      showTopCol: topChips.length > 0, topSearchedData: topChips, showGuideChip: guideChip,
       currency: s.currency || 'CZK', onCurrency: (code)=>this.setState({ currency: code }),
       backFromLeaf: this.link(()=>{ if(path.length>0) this.go({ path: path.slice(0,-1), leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, this.urlFor(ag.key, path.slice(0,-1))); else this.go({ view:'groups', path:[], leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, '#/nahradni-dily/'); }),
       backFromLeafHref: ag ? (path.length>0 ? this.urlFor(ag.key, path.slice(0,-1)) : '#/nahradni-dily/') : '#/nahradni-dily/',

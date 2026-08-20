@@ -55,7 +55,7 @@
     <sc-if value="{{ p.img }}" hint-placeholder-val=""><div role="img" aria-label="{{ p.name }}" style="{{ p.imgBgStyle }}"></div></sc-if>
     <sc-if value="{{ p.img2 }}" hint-placeholder-val=""><div class="pk-img2" aria-hidden="true" style="{{ p.imgBg2Style }}"></div></sc-if>
     <sc-if value="{{ p.noImg }}" hint-placeholder-val=""><div style="{{ p.phStyle }}">{{ p.imgLabel }}</div></sc-if>
-    <sc-if value="{{ p.badge }}" hint-placeholder-val=""><span style="{{ p.badgeStyle }}">{{ p.badge }}</span></sc-if><span class="dt" aria-hidden="true" style="position:absolute;top:8px;right:8px;display:flex;gap:4px;"><span style="{{ p.dot1 }}"></span><span style="{{ p.dot2 }}"></span></span>
+    <sc-if value="{{ p.badge }}" hint-placeholder-val=""><span style="{{ p.badgeStyle }}">{{ p.badge }}</span></sc-if><span style="position:absolute;left:12px;bottom:8px;z-index:1;font-size:13px;color:#666E78;white-space:nowrap;">Obj. č. {{ p.objNum }}</span><span class="dt" aria-hidden="true" style="position:absolute;top:8px;right:8px;display:flex;gap:4px;"><span style="{{ p.dot1 }}"></span><span style="{{ p.dot2 }}"></span></span>
   </div>
   <div style="padding:14px 16px 16px;display:flex;flex-direction:column;gap:14px;flex:1;">
     <div style="display:flex;flex-direction:column;gap:6px;">
@@ -86,15 +86,16 @@
         <sc-if value="{{ showCartQty }}" hint-placeholder-val=""><span aria-hidden="true" style="{{ cartBadgeStyle }}">{{ cartQty }}</span></sc-if>
       </div>
     </div>
-    <div class="pk-over" onClick="{{ stop }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;height:26px;padding-top:2px;">
+    <sc-if value="{{ showCompare }}" hint-placeholder-val="">
+    <div class="pk-over" onClick="{{ stop }}" style="display:flex;align-items:center;gap:8px;height:26px;padding-top:2px;">
       <button type="button" class="a11y-i pk-cmp" role="checkbox" aria-checked="{{ p.cmpChecked }}" aria-label="Porovnat produkt" onClick="{{ p.onCmp }}" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#5A626C;cursor:pointer;min-height:24px;white-space:nowrap;"><span style="{{ p.cmpBox }}"><sc-if value="{{ p.cmp }}" hint-placeholder-val=""><svg width="9" height="9" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#fff" stroke-width="2.8" stroke-linecap="round"></path></svg></sc-if></span>Porovnat</button>
-      <span style="flex:none;white-space:nowrap;font-size:13px;color:#666E78;">Obj. č. {{ p.objNum }}</span>
     </div>
+    </sc-if>
   </div>
 </div>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:300,&quot;height&quot;:560},&quot;p&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;object&quot;,&quot;default&quot;:null},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dil&quot;,&quot;prives&quot;],&quot;default&quot;:&quot;dil&quot;,&quot;tsType&quot;:&quot;'dil'|'prives'&quot;,&quot;section&quot;:&quot;Varianty&quot;},&quot;available&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Varianty&quot;},&quot;onDetail&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;,&quot;default&quot;:null}}">class Component extends DCLogic {
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCompare&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:300,&quot;height&quot;:560},&quot;p&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;object&quot;,&quot;default&quot;:null},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dil&quot;,&quot;prives&quot;],&quot;default&quot;:&quot;dil&quot;,&quot;tsType&quot;:&quot;'dil'|'prives'&quot;,&quot;section&quot;:&quot;Varianty&quot;},&quot;available&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Varianty&quot;},&quot;onDetail&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;,&quot;default&quot;:null}}">class Component extends DCLogic {
   state = { qty:1, cmp:false, inCartDemo:0 };
   // čítač v košíku: stejný vzhled jako u Porovnat a Košíku v hlavičce
   CART_BADGE = 'position:absolute;top:-6px;right:-6px;min-width:16px;width:16px;height:16px;border-radius:999px;background:#C5232B;color:#fff;font-size:10px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;pointer-events:none;';
@@ -131,6 +132,7 @@
       const _cmpFn = p.onCmp;
       p.onCmpKey = (e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); if(_cmpFn) _cmpFn(e); } };
       return { p, sizeClass:'pk-fluid', stop,
+        showCompare: this.props.showCompare === true,
         buyDisabled: !avail,
         onCard: detail || (()=>{}),
         onCardNav: (e)=>{ if(e&&e.preventDefault) e.preventDefault(); if(detail) detail(e); },
@@ -150,7 +152,7 @@
     ] : [];
     const cmp = this.state.cmp;
     // Ukázková data pro samostatný náhled komponenty
-    return { sizeClass:'', ratingValue:4, reviews:23, netNum:397, grossNum:480, originalNum:0, stop,
+    return { showCompare: this.props.showCompare === true, sizeClass:'', ratingValue:4, reviews:23, netNum:397, grossNum:480, originalNum:0, stop,
       ...this.cartVals(this.state.inCartDemo, !availDemo),
       onBuyClick: ()=>this.setState(s=>({ inCartDemo: s.inCartDemo + (s.qty || 1) })),
       onCard: this.props.onDetail || (()=>{}),

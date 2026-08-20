@@ -33,9 +33,9 @@
   .hd-clink{transition:color .12s;} .hd-clink:hover{color:#D8E6F6 !important;}
   .hd-tab{transition:color .12s;} .hd-tab:hover{color:#1E5AA8 !important;}
   .hd-icon{transition:background .12s;} .hd-icon:hover{background:#F2F4F7 !important;}
-  .hd-v3 .hd-icon{background:#1E5AA8 !important;color:#FFFFFF !important;}
-  .hd-v3 .hd-icon:hover{background:#1A4A8A !important;}
-  .hd-v3 .hd-icon:active{transform:translateY(1px);}
+  .hd-v2 .hd-icon,.hd-v3 .hd-icon,.hd-v4 .hd-icon{background:#1E5AA8 !important;color:#FFFFFF !important;}
+  .hd-v2 .hd-icon:hover,.hd-v3 .hd-icon:hover,.hd-v4 .hd-icon:hover{background:#1A4A8A !important;}
+  .hd-v2 .hd-icon:active,.hd-v3 .hd-icon:active,.hd-v4 .hd-icon:active{transform:translateY(1px);}
   .hd-act{color:#1E5AA8;transition:color .12s;} .hd-act:hover{color:#C5232B;}
   .sc-host[data-sc-name="Hlavicka"]{display:contents;}
   .hd-root{position:sticky;top:-35px;z-index:70;} /* z.header */
@@ -62,6 +62,9 @@
   @media (min-width:820px) and (max-width:999px){ .hd-v2 .hd-mailblk{display:flex !important;} }
   /* V3: pod 1000 se místo trvalého pole vyhledává přes ikonu */
   .hd-v3 .hd-mbsearch{display:none !important;}
+  .hd-v4 .hd-mbsearch{display:none !important;}
+  .hd-v4 .hd-acts{margin-left:0 !important;}
+  @media (max-width:819px){ .hd-v4 .hd-acts{margin-left:auto !important;} }
   .hd-mail{transition:color .12s;} .hd-mail:hover{color:#1E5AA8 !important;}
   .hd-curitem{transition:background .12s;} .hd-curitem:hover{background:#F2F4F7 !important;}
 </style>
@@ -133,8 +136,20 @@
         </div>
       </sc-if>
       <div class="hd-acts" style="margin-left:auto;display:flex;align-items:center;gap:10px;">
-        <sc-if value="{{ isV3 }}" hint-placeholder-val="">
+        <sc-if value="{{ showSearchAct }}" hint-placeholder-val="">
           <button type="button" class="hd-act hd-i hd-mb" id="hd-search-toggle" aria-label="Hledat" aria-expanded="{{ searchExpanded }}" aria-controls="hd-search-panel" onClick="{{ toggleSearch }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:44px;padding:0 8px;cursor:pointer;"><div style="display:flex;align-items:center;justify-content:center;"><dc-import name="Ikony" icon-name="search" size="24" hint-size="24px,24px"></dc-import></div><span class="hd-actlbl" style="font-size:13px;font-weight:600;">Hledat</span></button>
+        </sc-if>
+        <sc-if value="{{ showCurAct }}" hint-placeholder-val="">
+          <div class="hd-cur hd-dt" style="position:relative;flex:none;">
+            <button type="button" class="hd-act hd-i" id="hd-currency" aria-haspopup="listbox" aria-expanded="{{ curExpanded }}" aria-label="{{ curAria }}" onClick="{{ toggleCur }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:44px;padding:0 8px;cursor:pointer;"><div style="display:flex;align-items:center;justify-content:center;"><dc-import name="Ikony" icon-name="coin" size="24" hint-size="24px,24px"></dc-import></div><span class="hd-actlbl" style="font-size:13px;font-weight:600;">{{ currency }}</span></button>
+            <sc-if value="{{ curOpen }}" hint-placeholder-val="">
+              <div role="listbox" aria-label="Měna" style="position:absolute;top:calc(100% + 8px);right:0;min-width:112px;padding:4px;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);z-index:90;">
+                <sc-for list="{{ currencyItems }}" as="c" hint-placeholder-count="2">
+                  <button type="button" class="hd-i hd-curitem" role="option" aria-selected="{{ c.selected }}" onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.code }}</button>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
         </sc-if>
         <button type="button" class="hd-act hd-i hd-dt" id="hd-login" aria-label="Přihlásit" onClick="{{ openLogin }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:44px;padding:0 8px;cursor:pointer;"><div style="display:flex;align-items:center;justify-content:center;"><dc-import name="Ikony" icon-name="user" size="24" hint-size="24px,24px"></dc-import></div><span class="hd-actlbl" style="font-size:13px;font-weight:600;">Přihlásit</span></button>
         <button type="button" class="hd-act hd-i" aria-label="{{ compareAria }}" onClick="{{ onCompare }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:44px;padding:0 8px;cursor:pointer;">
@@ -162,7 +177,7 @@
     </nav>
     <sc-if value="{{ menuOpen }}" hint-placeholder-val="">
       <div class="hd-mb" id="hd-mobile-menu" role="navigation" aria-label="Hlavní menu" tabindex="-1" onKeyDown="{{ onMenuKey }}" style="position:absolute;top:100%;left:0;right:0;z-index:60;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;box-shadow:0 10px 30px rgba(20,30,45,.14);">
-        <dc-import name="MobilniMenu" panel-open="{{ menuOpen }}" menu-tree="{{ menuTree }}" active="{{ menuActive }}" on-select="{{ onMenuSelect }}" info-links="{{ infoLinks }}" on-login="{{ onMenuLogin }}" currency="{{ currency }}" currencies="{{ currencyCodes }}" on-currency-change="{{ onMenuCurrency }}" debug="{{ debug }}" hint-size="100%,320px"></dc-import>
+        <dc-import name="MobilniMenu" show-info="{{ mmInfo }}" show-contacts="{{ mmContacts }}" panel-open="{{ menuOpen }}" menu-tree="{{ menuTree }}" active="{{ menuActive }}" on-select="{{ onMenuSelect }}" info-links="{{ infoLinks }}" on-login="{{ onMenuLogin }}" currency="{{ currency }}" currencies="{{ currencyCodes }}" on-currency-change="{{ onMenuCurrency }}" debug="{{ debug }}" hint-size="100%,320px"></dc-import>
       </div>
     </sc-if>
   </div>
@@ -175,7 +190,7 @@
 </sc-if>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:220},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;V1&quot;,&quot;V2&quot;,&quot;V3&quot;],&quot;default&quot;:&quot;V2&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactPhone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;323 605 314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactPhoneHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;tel:+420323605314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactHours&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;8:00–16:00&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;contactEmail&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactEmailHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;mailto:obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;currency&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;CZK&quot;,&quot;EUR&quot;],&quot;default&quot;:&quot;CZK&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;currencies&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;onCurrencyChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(code:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;cartCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;},&quot;cartTotal&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1500,&quot;tsType&quot;:&quot;number&quot;},&quot;compareCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;tsType&quot;:&quot;number&quot;},&quot;tabs&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;menuTree&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;,&quot;default&quot;:null},&quot;searchValue&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;,&quot;default&quot;:null},&quot;onSearchChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCompare&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCart&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onTabClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onLogoClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;infoLinks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:220},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;V1&quot;,&quot;V2&quot;,&quot;V3&quot;,&quot;V4&quot;],&quot;default&quot;:&quot;V2&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactPhone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;323 605 314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactPhoneHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;tel:+420323605314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactHours&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;8:00–16:00&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;contactEmail&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactEmailHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;mailto:obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;currency&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;CZK&quot;,&quot;EUR&quot;],&quot;default&quot;:&quot;CZK&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;currencies&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;onCurrencyChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(code:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;cartCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;},&quot;cartTotal&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1500,&quot;tsType&quot;:&quot;number&quot;},&quot;compareCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;tsType&quot;:&quot;number&quot;},&quot;tabs&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;menuTree&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;,&quot;default&quot;:null},&quot;searchValue&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;,&quot;default&quot;:null},&quot;onSearchChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCompare&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCart&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onTabClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onLogoClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;infoLinks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null}}">
 class Component extends DCLogic {
   state = { menuOpen:false, searchOpen:false, loginOpen:false, cartOpen:false, curOpen:false, currency:'CZK' };
   _menuWas = false;
@@ -246,15 +261,21 @@ class Component extends DCLogic {
     // 'classic' a 'kontakt' zůstávají jako aliasy V1 / V2
     const raw = P.variant || 'V1';
     const v = raw === 'kontakt' ? 'V2' : (raw === 'classic' ? 'V1' : raw);
-    const isV1 = v === 'V1', isV2 = v === 'V2', isV3 = v === 'V3';
-    const searchOpen = isV3 && this.state.searchOpen;
+    const isV1 = v === 'V1', isV2 = v === 'V2', isV3 = v === 'V3', isV4 = v === 'V4';
+    const searchOpen = (isV3 || isV4) && this.state.searchOpen;
     const codes = Array.isArray(P.currencies) && P.currencies.length ? P.currencies : ['CZK','EUR'];
     const curControlled = typeof P.onCurrencyChange === 'function';
     const currency = curControlled ? (P.currency || codes[0]) : this.state.currency;
     const setCurrency = (code)=>{ if (curControlled) P.onCurrencyChange(code); else this.setState({ currency: code }); };
     return {
-      isV1, isV2, isV3, showKb: isV2 || isV3, showMail: isV2 || isV3, showTopbarV2: isV2 || isV3,
-      rootCls: isV1 ? 'hd-v1' : (isV2 ? 'hd-v2' : 'hd-v3'),
+      isV1, isV2, isV3, isV4,
+      showKb: isV2 || isV3 || isV4, showMail: isV2 || isV3 || isV4,
+      // V4 nemá tmavý topbar — nahrazuje ho tmavý pás USP nad hlavičkou; měna je v akční skupině
+      showTopbarV2: isV2 || isV3,
+      showCurAct: isV4, showSearchAct: isV3 || isV4,
+      // V4: servisní odkazy jsou jen v patičce a kontakty na mobilu se zatím nikam nedávají
+      mmInfo: !isV4, mmContacts: !isV4,
+      rootCls: isV1 ? 'hd-v1' : (isV2 ? 'hd-v2' : (isV3 ? 'hd-v3' : 'hd-v4')),
       contactEmail: P.contactEmail ?? 'obchod@vapp.cz',
       contactEmailHref: P.contactEmailHref ?? ('mailto:' + (P.contactEmail ?? 'obchod@vapp.cz')),
       currencyCodes: codes, onMenuCurrency: (code)=>setCurrency(code),

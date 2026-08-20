@@ -29,9 +29,19 @@
   .usp-in{max-width:1560px;margin:0 auto;padding:0 32px;}
   @media (max-width:819px){ .usp-in{padding:0 16px;} }
   .usp-nav{transition:background .12s;} .usp-nav:hover{background:#D8E6F6;}
+  /* tmavý tón pásu — nahrazuje topbar, proto brandová modrá a světlý text */
+  .usp-dark{background:#142F56 !important;}
+  .usp-dark .usp-t{color:#FFFFFF !important;}
+  .usp-dark .usp-ic{color:#B4CEEC !important;}
+  .usp-dark .usp-nav{color:#B4CEEC !important;}
+  .usp-dark .usp-nav:hover{background:rgba(255,255,255,.16) !important;}
+  .usp-dark .usp-sep{background:#1E5AA8 !important;}
   .usp-dot{position:relative;transition:background .12s;}
   .usp-dot::after{content:"";position:absolute;inset:-8px;}
-  @media (max-width:419px){ .usp-dots{display:none !important;} }
+  /* pás: druhé sdělení a oddělovač jen od XL nahoru — na malých šířkách se dvě věty nevejdou */
+  .usp-2nd{display:none !important;}
+  @media (min-width:1150px){ .usp-2nd{display:inline-flex !important;} }
+  @media (max-width:419px){ .usp-dots{display:none !important;} .usp-nav{width:28px !important;} .usp-ic{display:none !important;} }
   @media (prefers-reduced-motion:reduce){ .usp-live{animation:none !important;} }
 </style>
 </helmet>
@@ -51,14 +61,16 @@
   </div>
 </sc-if>
 <sc-if value="{{ isPas }}" hint-placeholder-val="">
-  <div onMouseEnter="{{ onHold }}" onMouseLeave="{{ onRelease }}" onFocus="{{ onHold }}" onBlur="{{ onRelease }}" style="background:#EFF4FB;width:100%;">
+  <div class="{{ pasCls }}" onMouseEnter="{{ onHold }}" onMouseLeave="{{ onRelease }}" onFocus="{{ onHold }}" onBlur="{{ onRelease }}" style="background:#EFF4FB;width:100%;">
     <div class="usp-in">
       <div style="min-height:48px;display:flex;align-items:center;justify-content:center;gap:12px;padding:6px 0;">
         <button type="button" class="usp-i usp-nav" aria-label="Předchozí výhoda" onClick="{{ onPrev }}" style="flex:none;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#1E5AA8;"><dc-import name="Ikony" icon-name="chevron-left" size="18" hint-size="18px,18px"></dc-import></button>
         <div aria-live="polite" aria-atomic="true" style="flex:1;min-width:0;display:flex;justify-content:center;">
           <span class="usp-live" style="{{ liveStyle }}">
-            <span aria-hidden="true" style="flex:none;display:flex;color:#1E5AA8;"><dc-import name="Ikony" icon-name="{{ activeIcon }}" size="18" hint-size="18px,18px"></dc-import></span>
-            <span style="font-size:14px;font-weight:500;line-height:1.5;color:#15181C;">{{ activeText }}</span>
+            <span class="usp-ic" aria-hidden="true" style="flex:none;display:flex;color:#1E5AA8;"><dc-import name="Ikony" icon-name="{{ activeIcon }}" size="18" hint-size="18px,18px"></dc-import></span>
+            <span class="usp-t" style="font-size:14px;font-weight:500;line-height:1.5;color:#15181C;">{{ activeText }}</span>
+            <span class="usp-2nd usp-sep" aria-hidden="true" style="flex:none;width:1px;height:18px;background:#B4CEEC;margin:0 8px;"></span>
+            <span class="usp-2nd" style="align-items:center;gap:8px;"><span class="usp-ic" aria-hidden="true" style="flex:none;display:flex;color:#1E5AA8;"><dc-import name="Ikony" icon-name="{{ secondIcon }}" size="18" hint-size="18px,18px"></dc-import></span><span class="usp-t" style="font-size:14px;font-weight:500;line-height:1.5;color:#15181C;">{{ secondText }}</span></span>
           </span>
         </div>
         <button type="button" class="usp-i usp-nav" aria-label="Další výhoda" onClick="{{ onNext }}" style="flex:none;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#1E5AA8;"><dc-import name="Ikony" icon-name="chevron-right" size="18" hint-size="18px,18px"></dc-import></button>
@@ -80,7 +92,7 @@
 </sc-if>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:320},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;mrizka&quot;,&quot;sloupce&quot;,&quot;pas&quot;],&quot;default&quot;:&quot;mrizka&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;docs&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;items&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;{icon:string,title:string,text:string}[]&quot;},&quot;autoplay&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Pás&quot;},&quot;interval&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5000,&quot;min&quot;:2000,&quot;max&quot;:12000,&quot;step&quot;:500,&quot;unit&quot;:&quot;ms&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Pás&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:320},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;mrizka&quot;,&quot;sloupce&quot;,&quot;pas&quot;]},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;svetly&quot;,&quot;tmavy&quot;],&quot;default&quot;:&quot;svetly&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;default&quot;:&quot;mrizka&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;docs&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;items&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;{icon:string,title:string,text:string}[]&quot;},&quot;autoplay&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Pás&quot;},&quot;interval&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5000,&quot;min&quot;:2000,&quot;max&quot;:12000,&quot;step&quot;:500,&quot;unit&quot;:&quot;ms&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Pás&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 class Component extends DCLogic {
   DEFAULT = [
     { icon:'award', title:'35 let zkušeností', text:'35 let výroby přívěsů a zkušeností' },
@@ -108,7 +120,10 @@ class Component extends DCLogic {
 
   step(d){
     const n = this.items().length;
-    this.setState(s=>({ i: (s.i + d + n) % n, tick: (s.tick + 1) % 2 }));
+    // od XL se zobrazují dvě sdělení vedle sebe, proto se posouvá po dvou
+    const pair = (typeof window !== 'undefined' && window.matchMedia('(min-width:1150px)').matches) ? 2 : 1;
+    const stp = d * pair;
+    this.setState(s=>({ i: ((s.i + stp) % n + n) % n, tick: (s.tick + 1) % 2 }));
   }
   hold(on){ this._hold = on; this.arm(); }
 
@@ -118,6 +133,7 @@ class Component extends DCLogic {
     const variant = P.variant === 'pas' ? 'pas' : (P.variant === 'sloupce' ? 'sloupce' : 'mrizka');
     const i = Math.min(this.state.i, items.length - 1);
     const act = items[i] || {};
+    const sec = items[(i + 1) % items.length] || {};
     return {
       isGrid: variant === 'mrizka' || variant === 'sloupce',
       gridCls: variant === 'sloupce' ? 'usp-col' : '',
@@ -125,18 +141,22 @@ class Component extends DCLogic {
         ? 'background:transparent;padding:24px 0;width:100%;'
         : 'background:transparent;padding:24px 0;width:100%;',
       isPas: variant === 'pas',
+      pasCls: P.tone === 'tmavy' ? 'usp-dark' : '',
       // dokumentace jen ve standalone náhledu — embed pozná podle předaného propu ze stránky
       showDocs: P.docs !== false && !Array.isArray(P.items),
       items,
       activeIcon: act.icon || 'circle-check',
       activeText: act.text || act.title || '',
+      secondIcon: sec.icon || 'circle-check',
+      secondText: sec.text || sec.title || '',
       // dvě shodné animace se střídají, aby se náběh restartoval při každé změně
       liveStyle: 'display:inline-flex;align-items:center;gap:8px;text-align:center;animation:'
         + (this.state.tick ? 'uspInA' : 'uspInB') + ' 240ms ease;',
       dots: items.map((it,n)=>({
         label: 'Zobrazit výhodu ' + (n+1) + ' z ' + items.length,
         current: n === i ? 'true' : 'false',
-        style: 'flex:none;width:8px;height:8px;border-radius:999px;background:' + (n === i ? '#1E5AA8' : '#B4CEEC') + ';',
+        style: 'flex:none;width:8px;height:8px;border-radius:999px;background:'
+          + (P.tone === 'tmavy' ? (n === i ? '#FFFFFF' : '#1E5AA8') : (n === i ? '#1E5AA8' : '#B4CEEC')) + ';',
         onClick: ()=>{ this.setState(s=>({ i:n, tick:(s.tick+1)%2 })); }
       })),
       onHold: ()=>this.hold(true),
