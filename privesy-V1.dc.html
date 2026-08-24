@@ -214,7 +214,7 @@
     <sc-if value="{{ showGrid }}" hint-placeholder-val="{{ true }}">
     <div class="p-grid">
       <sc-for list="{{ products }}" as="p" hint-placeholder-count="8">
-        <dc-import name="ProduktovaKarta" p="{{ p }}" currency="{{ currency }}" hint-size="100%,470px"></dc-import>
+        <dc-import name="ProduktovaKarta" p="{{ p }}" detail-href="./detail-prives-V1.dc.html" currency="{{ currency }}" hint-size="100%,470px"></dc-import>
       </sc-for>
     </div>
     </sc-if>

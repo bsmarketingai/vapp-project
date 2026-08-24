@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0 !important;padding:0 !important;}
+  body{background:#F7F9FB;}
+  /* ZÁVAZNÉ: kolem stránky nikdy žádné odsazení ani rámeček — viz CLAUDE.md §5 */
+  #dc-root{margin:0 !important;padding:0 !important;width:100% !important;max-width:none !important;border:0 !important;}
+  #dc-root>.sc-host{margin:0 !important;padding:0 !important;width:100% !important;}
+  a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
+  .a11y-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
+  .a11y-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
+  @media (max-width:819px){ .vp-in{padding-left:16px;padding-right:16px;} }
+  @media (max-width:819px){ .pd-h1{font-size:26px !important;} .pd-h2{font-size:22px !important;} }
+  .pd-cols{display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap;}
+  .pd-gal{flex:1 1 520px;min-width:0;}
+  .pd-buy{flex:0 1 420px;min-width:320px;}
+  @media (max-width:819px){ .pd-buy{flex:1 1 100%;min-width:0;} }
+  .pd-gal-v2{display:flex;gap:12px;align-items:flex-start;}
+  .pd-gal-col{flex:none;display:flex;flex-direction:column;gap:12px;}
+  @media (max-width:549px){ .pd-gal-v2{flex-direction:column-reverse;} .pd-gal-col{flex-direction:row;flex-wrap:wrap;} }
+  .pd-desc{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:32px;}
+  @media (max-width:999px){ .pd-desc{grid-template-columns:minmax(0,1fr);} }
+  .pd-rel{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media (min-width:1560px){ .pd-rel{grid-template-columns:repeat(4,1fr);} }
+  @media (max-width:999px){ .pd-rel{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:549px){ .pd-rel{grid-template-columns:1fr;} }
+  .pd-heu{display:grid;grid-template-columns:220px minmax(0,1fr) 220px;gap:32px;align-items:center;}
+  @media (max-width:819px){ .pd-heu{grid-template-columns:minmax(0,1fr);gap:20px;} }
+  .pd-tabs{display:flex;gap:4px;overflow-x:auto;}
+  .hv-row{transition:background .12s;} .hv-row:hover{background:#F2F4F7 !important;}
+  .hv-lnk{transition:color .12s;} .hv-lnk:hover{color:#1E5AA8 !important;}
+  .hv-tab{transition:color .12s;} .hv-tab:hover{color:#1E5AA8 !important;}
+  .hv-var{transition:box-shadow .12s,background .12s;} .hv-var:hover{background:#EFF4FB !important;}
+</style>
+<script src="./mena.js"></script>
+</helmet>
+<div data-screen-label="Detail náhradního dílu V1" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
+
+  <dc-import name="Usp" variant="pas" tone="tmavy" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,48px"></dc-import>
+  <dc-import name="Hlavicka" active="Náhradní díly" variant="V4" currency="{{ currency }}" on-currency-change="{{ onCurrency }}" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:00–16:00" contact-open="{{ true }}" menu-tree="{{ menuTree }}" hint-size="100%,150px"></dc-import>
+
+  <main class="vp-in" style="padding-top:14px;padding-bottom:48px;">
+
+    <div style="margin:4px 0 10px;">
+      <dc-import name="Breadcrumb" items="{{ crumbItems }}" bare="{{ true }}" debug="{{ debug }}" hint-size="100%,20px"></dc-import>
+    </div>
+
+    <h1 class="pd-h1" style="margin:0;font-size:36px;font-weight:700;letter-spacing:-0.02em;line-height:1.15;color:#142F56;text-wrap:pretty;">Čelisti brzdové KNOTT 200×50 sada na 2 kola</h1>
+    <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-top:8px;">
+      <span style="font-size:14px;font-weight:500;color:#666E78;">zvolená varianta</span>
+      <span style="font-size:14px;font-weight:700;color:#15181C;">{{ variantTitle }}</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:10px;">
+      <dc-import name="Hodnoceni" value="{{ ratingValue }}" count="{{ ratingCount }}" size="16" hint-size="130px,20px"></dc-import>
+      <button type="button" class="a11y-i hv-lnk" onClick="{{ goReviews }}" style="font-size:13px;font-weight:700;color:#1E5AA8;">Zobrazit recenze ({{ ratingCount }})</button>
+    </div>
+
+    <div class="pd-cols" style="margin-top:20px;">
+
+      <!-- GALERIE -->
+      <div class="pd-gal">
+        <sc-if value="{{ galV1 }}" hint-placeholder-val="{{ true }}">
+          <div style="{{ mainImgStyle }}"></div>
+          <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;">
+            <sc-for list="{{ thumbs }}" as="t" hint-placeholder-count="4">
+              <button type="button" class="a11y-i" onClick="{{ t.onPick }}" aria-label="{{ t.aria }}" aria-pressed="{{ t.pressed }}" style="{{ t.style }}"></button>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ galV2 }}" hint-placeholder-val="">
+          <div class="pd-gal-v2">
+            <div class="pd-gal-col">
+              <sc-for list="{{ thumbs }}" as="t" hint-placeholder-count="4">
+                <button type="button" class="a11y-i" onClick="{{ t.onPick }}" aria-label="{{ t.aria }}" aria-pressed="{{ t.pressed }}" style="{{ t.style }}"></button>
+              </sc-for>
+            </div>
+            <div style="flex:1;min-width:0;">
+              <div style="{{ mainImgStyle }}"></div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+
+      <!-- NÁKUPNÍ BOX -->
+      <div class="pd-buy" style="background:#FFFFFF;border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:16px;">
+
+        <sc-if value="{{ secVarianty }}" hint-placeholder-val="{{ true }}">
+          <dc-import name="VyberVariant" label="Balení" icon="package" layout="{{ varLayout }}" value-size="16" options="{{ variantOptions }}" active-index="{{ variantIndex }}" on-pick="{{ onVariant }}" hint-size="100%,120px"></dc-import>
+          <span aria-hidden="true" style="height:1px;background:#F2F4F7;"></span>
+        </sc-if>
+
+        <sc-if value="{{ secDostupnost }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <dc-import name="Skladovost" state="in" text="{{ stockText }}" debug="{{ false }}" hint-size="160px,18px"></dc-import>
+            <div style="display:flex;gap:8px;font-size:14px;color:#5A626C;"><span style="flex:1;">Osobně v prodejně Popovičky</span><span style="font-weight:700;color:#15181C;">ještě dnes</span></div>
+            <div style="display:flex;gap:8px;font-size:14px;color:#5A626C;"><span style="flex:1;">Přepravci předáme</span><span style="font-weight:700;color:#15181C;">ještě dnes</span></div>
+          </div>
+          <span aria-hidden="true" style="height:1px;background:#F2F4F7;"></span>
+        </sc-if>
+
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+          <dc-import name="Cena" price-net="{{ netNum }}" price-gross="{{ grossNum }}" size="large" currency="{{ currency }}" debug="{{ false }}" hint-size="140px,50px"></dc-import>
+          <span style="font-size:14px;font-weight:500;color:#5A626C;">ceny za 1 ks</span>
+        </div>
+
+        <sc-if value="{{ secSlevy }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;">
+            <div style="display:flex;align-items:center;gap:8px;padding:0 0 8px;border-bottom:1px solid #F2F4F7;">
+              <span style="flex:1;font-size:13px;font-weight:700;color:#15181C;">Množstevní slevy</span>
+              <span style="width:88px;text-align:right;font-size:13px;font-weight:500;color:#666E78;">bez DPH/1 ks</span>
+              <span style="width:88px;text-align:right;font-size:13px;font-weight:500;color:#666E78;">s DPH/1 ks</span>
+            </div>
+            <sc-for list="{{ tiers }}" as="t" hint-placeholder-count="2">
+              <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #F2F4F7;">
+                <span style="flex:1;font-size:14px;color:#5A626C;">{{ t.label }}</span>
+                <span style="width:88px;text-align:right;font-size:14px;font-weight:700;color:#C5232B;">{{ t.net }}</span>
+                <span style="width:88px;text-align:right;font-size:13px;color:#666E78;">{{ t.gross }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <div style="display:flex;align-items:stretch;gap:12px;flex-wrap:wrap;">
+          <dc-import name="Kvantifikator" size="standard" value="{{ qty }}" on-change="{{ onQty }}" debug="{{ false }}" hint-size="116px,44px"></dc-import>
+          <div style="flex:1;min-width:160px;display:flex;">
+            <dc-import name="Tlacitko" variant="buy" size="medium" label="Koupit" icon="shopping-cart" full-width="{{ true }}" on-click="{{ onBuy }}" hint-size="100%,44px"></dc-import>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:16px;flex-wrap:wrap;background:#F2F4F7;border-radius:6px;padding:10px 14px;">
+          <span style="font-size:13px;color:#666E78;">Objednací číslo <span style="font-weight:700;color:#3A424C;">90000</span></span>
+          <span style="font-size:13px;color:#666E78;">Výrobce <span style="font-weight:700;color:#3A424C;">KNOTT</span></span>
+        </div>
+
+        <sc-if value="{{ secAkce }}" hint-placeholder-val="{{ true }}">
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px;">
+            <sc-for list="{{ actions }}" as="a" hint-placeholder-count="4">
+              <button type="button" class="a11y-i hv-lnk" onClick="{{ a.onClick }}" style="display:flex;align-items:center;gap:8px;min-height:32px;font-size:13px;font-weight:500;color:#5A626C;">
+                <span style="display:inline-flex;flex:none;color:#5189CC;"><dc-import name="Ikony" icon-name="{{ a.icon }}" size="18" hint-size="18px,18px"></dc-import></span>{{ a.label }}
+              </button>
+            </sc-for>
+          </div>
+        </sc-if>
+
+      </div>
+    </div>
+
+    <!-- HEUREKA -->
+    <sc-if value="{{ secHeureka }}" hint-placeholder-val="{{ true }}">
+      <section aria-labelledby="pd-heu-h" style="margin-top:24px;background:#FFFFFF;border-radius:8px;padding:24px;">
+        <h2 id="pd-heu-h" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:0;">Hodnocení produktu</h2>
+        <div class="pd-heu">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+            <span style="font-size:14px;font-weight:500;color:#5A626C;">Průměrné hodnocení</span>
+            <span style="font-size:36px;font-weight:700;line-height:1.15;color:#15181C;">93 %</span>
+            <dc-import name="Hodnoceni" value="{{ ratingValue }}" count="{{ ratingCount }}" size="18" hint-size="140px,22px"></dc-import>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <sc-for list="{{ dist }}" as="d" hint-placeholder-count="5">
+              <div style="display:flex;align-items:center;gap:12px;">
+                <span style="display:inline-flex;align-items:center;gap:1px;flex:none;color:#F5A623;">
+                  <sc-for list="{{ d.stars }}" as="st" hint-placeholder-count="5">
+                    <span style="display:inline-flex;"><dc-import name="Ikony" icon-name="star-filled" size="16" hint-size="16px,16px"></dc-import></span>
+                  </sc-for>
+                </span>
+                <span style="flex:1;min-width:60px;height:8px;border-radius:999px;background:#F2F4F7;display:flex;"><span style="{{ d.barStyle }}"></span></span>
+                <span style="width:36px;text-align:right;font-size:13px;color:#666E78;">{{ d.count }}×</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:stretch;gap:10px;">
+            <dc-import name="Tlacitko" variant="primary" size="medium" label="Přidat hodnocení" full-width="{{ true }}" on-click="{{ goReviews }}" hint-size="100%,44px"></dc-import>
+            <button type="button" class="a11y-i hv-lnk" onClick="{{ goReviews }}" style="text-align:center;font-size:13px;font-weight:700;color:#1E5AA8;">Zobrazit recenze ({{ ratingCount }})</button>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- TABY -->
+    <section aria-labelledby="pd-tabs-h" style="margin-top:24px;">
+      <h2 id="pd-tabs-h" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:0;">Informace o produktu</h2>
+      <div class="pd-tabs" role="tablist" aria-label="Informace o produktu" style="border-bottom:1px solid #F2F4F7;">
+        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+          <button type="button" role="tab" class="a11y-i hv-tab" aria-selected="{{ t.selected }}" onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</button>
+        </sc-for>
+      </div>
+
+      <div style="background:#FFFFFF;border-radius:0 0 8px 8px;padding:24px;">
+
+        <sc-if value="{{ tabPopis }}" hint-placeholder-val="{{ true }}">
+          <div class="pd-desc">
+            <div style="min-width:0;font-size:16px;line-height:1.6;color:#3A424C;">
+              <p style="margin:0 0 12px;text-wrap:pretty;">Sada originálních brzdových čelistí KNOTT do kolových jednotek 20-2425/1 (vnitřní průměr bubnu 200 mm, šířka čelisti 50 mm). Tyto čelisti jsou osazované na nápravách GB 8, GB 10, GB 13, VGB 8, VGB 10 a VGB 13.</p>
+              <p style="margin:0 0 8px;font-weight:700;color:#15181C;">Sada obsahuje</p>
+              <ul style="margin:0 0 16px;padding-left:22px;display:flex;flex-direction:column;gap:6px;">
+                <li>2 ks náběžná čelist</li>
+                <li>2 ks úběžná čelist včetně osazeného mechanismu couvací automatiky s pružinami Backmat</li>
+                <li>2 ks krátká tažná pružina</li>
+                <li>2 ks dlouhá tažná pružina</li>
+                <li>2 ks přítlačná kuželová pružina</li>
+              </ul>
+              <div style="{{ descImgStyle }}"></div>
+              <p style="margin:0 0 12px;font-size:13px;color:#666E78;">Schéma osazení kolové jednotky KNOTT 20-2425/1.</p>
+              <p style="margin:0 0 12px;text-wrap:pretty;">Jedná se o kompletní sadu pružinek a čelistí potřebných do dvou kol. Potřebujete identifikovat typ nápravy na přívěsu VAPP? Typ použité nápravy a nájezdové brzdy najdete v poznámce velkého technického průkazu, na štítku nápravy nebo prolisovaný na středové krytce náboje kola.</p>
+              <p style="margin:0;padding:12px 14px;border-radius:6px;background:#FDF1F1;font-size:14px;font-weight:700;color:#C5232B;">Pozor: tyto čelisti nelze použít do náprav, resp. kolových jednotek AL-KO.</p>
+            </div>
+            <aside style="display:flex;flex-direction:column;gap:12px;">
+              <dc-import name="Hodnoceni" value="{{ ratingValue }}" count="{{ ratingCount }}" size="16" hint-size="130px,20px"></dc-import>
+              <div style="display:flex;flex-direction:column;">
+                <sc-for list="{{ shortParams }}" as="r" hint-placeholder-count="3">
+                  <div style="{{ r.rowStyle }}">
+                    <span style="flex:0 0 40%;font-size:14px;color:#666E78;">{{ r.label }}</span>
+                    <span style="flex:1;min-width:0;font-size:14px;font-weight:700;color:#15181C;">{{ r.value }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <dc-import name="Tlacitko" variant="ghost" size="standard" label="Všechny parametry" icon-trailing="chevron-right" on-click="{{ goParams }}" hint-size="200px,36px"></dc-import>
+            </aside>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ tabParametry }}" hint-placeholder-val="">
+          <div style="max-width:840px;display:flex;flex-direction:column;">
+            <sc-for list="{{ params }}" as="r" hint-placeholder-count="10">
+              <sc-if value="{{ r.isHead }}" hint-placeholder-val="">
+                <div style="padding:14px 14px 8px;font-size:16px;font-weight:700;color:#15181C;">{{ r.label }}</div>
+              </sc-if>
+              <sc-if value="{{ r.isRow }}" hint-placeholder-val="{{ true }}">
+                <div style="{{ r.rowStyle }}">
+                  <span style="flex:0 0 46%;font-size:14px;color:#5A626C;">{{ r.label }}</span>
+                  <span style="flex:1;min-width:0;font-size:14px;font-weight:700;color:#15181C;">{{ r.value }}</span>
+                </div>
+              </sc-if>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ tabStazeni }}" hint-placeholder-val="">
+          <div style="max-width:720px;display:flex;flex-direction:column;gap:8px;">
+            <sc-for list="{{ files }}" as="f" hint-placeholder-count="3">
+              <a class="a11y-i hv-row" href="{{ f.href }}" download="" style="display:flex;align-items:center;gap:14px;min-height:64px;padding:12px 14px;border-radius:8px;background:#F7F9FB;">
+                <span style="flex:none;width:44px;height:44px;border-radius:6px;background:#FDF1F1;color:#C5232B;display:flex;align-items:center;justify-content:center;"><dc-import name="Ikony" icon-name="download" size="24" hint-size="24px,24px"></dc-import></span>
+                <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;">
+                  <span style="font-size:15px;font-weight:700;color:#15181C;">{{ f.name }}</span>
+                  <span style="font-size:13px;color:#666E78;">{{ f.meta }}</span>
+                </span>
+                <span style="flex:none;font-size:13px;font-weight:700;color:#1E5AA8;">Stáhnout</span>
+              </a>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ tabHodnoceni }}" hint-placeholder-val="">
+          <div style="display:flex;flex-direction:column;gap:20px;">
+            <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+              <span style="font-size:28px;font-weight:700;color:#15181C;">93 %</span>
+              <dc-import name="Hodnoceni" value="{{ ratingValue }}" count="{{ ratingCount }}" size="18" hint-size="140px,22px"></dc-import>
+              <div style="margin-left:auto;">
+                <dc-import name="Tlacitko" variant="primary" size="medium" label="Přidat hodnocení" on-click="{{ noop }}" hint-size="190px,44px"></dc-import>
+              </div>
+            </div>
+            <dc-import name="Recenze" title="Recenze produktu" score-text="4,5 z 5" source-text="Ověřeno zákazníky · Heureka" reviews="{{ reviews }}" debug="{{ false }}" hint-size="100%,320px"></dc-import>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ tabSouvisejici }}" hint-placeholder-val="">
+          <div class="pd-rel">
+            <sc-for list="{{ related }}" as="p" hint-placeholder-count="3">
+              <dc-import name="ProduktovaKarta" p="{{ p }}" currency="{{ currency }}" debug="{{ false }}" hint-size="100%,440px"></dc-import>
+            </sc-for>
+          </div>
+        </sc-if>
+
+      </div>
+    </section>
+  </main>
+
+  <div class="vp-in" style="margin-top:8px;">
+    <dc-import name="Usp" variant="sloupce" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
+  </div>
+  <div style="margin-top:10px;">
+    <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
+  </div>
+
+  <dc-import name="ControlBar" groups="{{ cbGroups }}" on-toggle="{{ cbToggle }}" on-select="{{ cbSelect }}" debug-on="{{ debug }}" on-toggle-debug="{{ cbDebug }}" hint-size="0px,0px"></dc-import>
+  <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1000},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  SECTIONS = [
+    ['varianty','Výběr variant'], ['slevy','Množstevní slevy']
+  ];
+  VARIANTS = [
+    { name:'malá sada', stockText:'Skladem > 10 ks', net:1496, gross:1810, title:'Čelisti brzdové KNOTT 200×50 malá sada na 2 kola' },
+    { name:'velká sada', stockText:'Skladem 6 ks', net:2390, gross:2892, title:'Čelisti brzdové KNOTT 200×50 velká sada na 2 kola' }
+  ];
+  IMAGES = [
+    'uploads/celisti-brzdove-knott-200x50-mala-sada-na-2-kola.jpg',
+    'uploads/celisti.jpg',
+    'uploads/lozisko-do-bubnu-knott-200x50-64x34-h37-original.jpg',
+    'uploads/krytka-naboje-knott-pr-64-2-mm-pro-buben-200x50.jpg'
+  ];
+  PARAM_GROUPS = [
+    { h:'Brzdové čelisti', rows:[
+      ['vnitřní průměr bubnu (mm)','200'], ['šířka čelisti (mm)','50'],
+      ['počet čelistí v sadě','4'], ['couvací automatika','ano — Backmat'],
+      ['obsah pružin','6 ks'], ['určení','sada na 2 kola']
+    ]},
+    { h:'Zařazení', rows:[
+      ['výrobce','KNOTT'], ['kolová jednotka','KNOTT 20-964/1 (200×50), KNOTT 20-2425/1 (200×50)'],
+      ['nápravy','GB 8, GB 10, GB 13, VGB 8, VGB 10, VGB 13'], ['balení','malá sada'],
+      ['objednací číslo','90000'], ['originální díl','ano']
+    ]},
+    { h:'Balení a hmotnost', rows:[
+      ['hmotnost (kg)','3,4'], ['počet v balení (ks)','1'], ['záruka (měsíce)','24']
+    ]}
+  ];
+  FILES = [
+    { name:'Montážní návod KNOTT — kolové jednotky 200×50', meta:'PDF · 1,2 MB' },
+    { name:'Katalog náhradních dílů náprav KNOTT GB / VGB', meta:'PDF · 4,8 MB' },
+    { name:'Seřízení nájezdové brzdy a couvací automatiky', meta:'PDF · 640 kB' }
+  ];
+  REVIEWS = [
+    { value:5, author:'Radek P.', meta:'čelisti KNOTT 200×50', text:'Sada je kompletní včetně pružin, sedlo přesně na jednotku 20-2425/1. Montáž na dvě kola za odpoledne.' },
+    { value:5, author:'Tomáš L.', meta:'náprava GB 13', text:'Originál KNOTT za rozumnou cenu, dorazilo druhý den. Poradili mi po telefonu, jaké čelisti mám.' },
+    { value:4, author:'Jiří M.', meta:'servis přívěsu', text:'Vše v pořádku, jen bych ocenil u produktu i schéma pro starší typ jednotky.' }
+  ];
+  DIST = [[5,2],[4,1],[3,0],[2,0],[1,0]];
+  RELATED = [
+    { name:'Ložisko do bubnu KNOTT 200×50, 64×34×37 mm originál', net:950, gross:1150, stock:24, obj:'306434', img:'uploads/lozisko-do-bubnu-knott-200x50-64x34-h37-original.jpg' },
+    { name:'Krytka náboje KNOTT ⌀64,2 mm pro buben 200×50', net:62, gross:75, stock:120, obj:'306420', img:'uploads/krytka-naboje-knott-pr-64-2-mm-pro-buben-200x50.jpg' },
+    { name:'Manžeta gumová KNOTT KF/KR 7,5 až 27', net:157, gross:190, stock:44, obj:'907527', img:'uploads/manzeta-gumova-knott-kf-kr-7-5-az-27.jpg' },
+    { name:'Lanko pojistné s karabinou KNOTT 750 kg', net:96, gross:116, stock:73, obj:'400750', img:'uploads/lanko-bezpecnostni-zachytne-s-karabinou-knott-750-kg.jpg' }
+  ];
+
+  state = {
+    variant:0, qty:1, tab:'popis', img:0, currency:'CZK', varStyle:0, galStyle:0, debugOverride:null, cart:0, relQty:{}, relCart:{},
+    sec:{ varianty:true, slevy:true, dostupnost:true, heureka:true, stazeni:true, souvisejici:true, akce:true }
+  };
+
+  fmt(n){
+    const M = typeof window !== 'undefined' ? window.VappMena : null;
+    const cur = this.state.currency || 'CZK';
+    if (M) return M.format(n, cur);
+    return String(Math.round(n||0)).replace(/\B(?=(\d{3})+(?!\d))/g,'\u00A0') + ' Kč';
+  }
+  setSec(key){ this.setState(s=>{ const sec = Object.assign({}, s.sec); sec[key] = !sec[key]; return { sec }; }); }
+  goTab(id){
+    this.setState({ tab:id });
+    try{
+      const el = document.querySelector('[role="tablist"]');
+      if (el){ const y = el.getBoundingClientRect().top + window.pageYOffset - 90; window.scrollTo(0, Math.max(0, y)); }
+    }catch(e){}
+  }
+
+  renderVals(){
+    const s = this.state;
+    const debug = s.debugOverride === null ? (this.props.debug ?? true) : s.debugOverride;
+    const v = this.VARIANTS[s.variant] || this.VARIANTS[0];
+
+    // varianty jdou do komponenty VyberVariant: čistá data + skalární onPick(index)
+    const variantOptions = this.VARIANTS.map(x=>({ label:x.name, note:x.stockText, meta:this.fmt(x.net) }));
+
+    const thumbs = this.IMAGES.map((src,i)=>({
+      onPick: ()=>this.setState({ img:i }),
+      aria:'Zobrazit fotku '+(i+1), pressed: i===s.img ? 'true' : 'false',
+      style:'flex:none;width:92px;height:70px;border-radius:6px;background:#FFFFFF url("./'+src+'") center/contain no-repeat;background-origin:content-box;padding:6px;box-shadow:inset 0 0 0 '+(i===s.img?'2px #1E5AA8':'1px #F2F4F7')+';'
+    }));
+
+    const maxDist = Math.max.apply(null, this.DIST.map(d=>d[1])) || 1;
+    const dist = this.DIST.map(([stars,count])=>({
+      stars: Array.from({length:stars}, (_,i)=>({ i })), count,
+      barStyle:'height:8px;border-radius:999px;background:#F5A623;width:'+Math.round((count/maxDist)*100)+'%;'
+    }));
+
+    const zebra = (i)=>'display:flex;gap:12px;padding:10px 14px;background:'+(i%2?'#FFFFFF':'#F7F9FB')+';';
+    const params = [];
+    this.PARAM_GROUPS.forEach(g=>{
+      params.push({ isHead:true, isRow:false, label:g.h });
+      g.rows.forEach((r,i)=>params.push({ isHead:false, isRow:true, label:r[0], value:r[1], rowStyle: zebra(i) }));
+    });
+    const shortParams = [['výrobce','KNOTT'], ['kolová jednotka','KNOTT 20-964/1, 20-2425/1 (200×50)'], ['balení', v.name]]
+      .map((r,i)=>({ label:r[0], value:r[1], rowStyle: zebra(i) }));
+
+    const TABS = [['popis','Popis'],['parametry','Parametry'],['stazeni','Ke stažení'],['hodnoceni','Hodnocení (3)'],['souvisejici','Související produkty']]
+      .filter(([id])=> id==='stazeni' ? s.sec.stazeni : (id==='souvisejici' ? s.sec.souvisejici : true));
+    const tab = TABS.some(([id])=>id===s.tab) ? s.tab : 'popis';
+    const tabs = TABS.map(([id,label])=>{
+      const on = id === tab;
+      return { label, selected: on ? 'true' : 'false', onClick: ()=>this.goTab(id),
+        style:'flex:none;min-height:48px;padding:0 18px;font-size:16px;font-weight:700;white-space:nowrap;color:'+(on?'#1E5AA8':'#5A626C')+';box-shadow:'+(on?'inset 0 -3px 0 0 #1E5AA8':'none')+';' };
+    });
+
+    const related = this.RELATED.map(p=>({
+      name:p.name, priceNet:this.fmt(p.net), price:this.fmt(p.gross),
+      rating:4, reviews:12, objNum:p.obj,
+      avail:'Skladem '+p.stock+' ks',
+      availStyle:'display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:#0B6937;',
+      availIn:true, availOut:false,
+      img:p.img, noImg:false, phStyle:'', imgLabel:'',
+      imgBgStyle:'aspect-ratio:4/3;background:#fff url("./'+p.img+'") center/contain no-repeat;background-origin:content-box;padding:18px 12px;',
+      badge:'', badgeStyle:'display:none;', dot1:'display:none;', dot2:'display:none;',
+      qty:(s.relQty[p.obj]||1), inCart:(s.relCart[p.obj]||0),
+      onQty:(n)=>this.setState(prev=>{ const q=Object.assign({},prev.relQty); q[p.obj]=Math.max(1,n); return { relQty:q }; }),
+      onMinus:()=>this.setState(prev=>{ const q=Object.assign({},prev.relQty); q[p.obj]=Math.max(1,(q[p.obj]||1)-1); return { relQty:q }; }),
+      onPlus:()=>this.setState(prev=>{ const q=Object.assign({},prev.relQty); q[p.obj]=(q[p.obj]||1)+1; return { relQty:q }; }),
+      onBuy:()=>this.setState(prev=>{ const c=Object.assign({},prev.relCart); c[p.obj]=(c[p.obj]||0)+(prev.relQty[p.obj]||1); return { relCart:c }; }),
+      onEnter:()=>{}, onLeave:()=>{}, cmp:false, cmpChecked:'false', onCmp:()=>{},
+      cmpBox:'flex:none;width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1px solid #91959B;background:#fff;'
+    }));
+
+    return {
+      debug, currency: s.currency, onCurrency:(c)=>this.setState({ currency:c }),
+      menuTree:[{ name:'Přívěsy', href:'#' }, { name:'Náhradní díly', href:'./nahradnidily-V3.dc.html' }, { name:'Příslušenství', href:'#' }, { name:'Servis', href:'#' }, { name:'Půjčovna', href:'#' }],
+      crumbItems:[{ name:'Úvod', href:'./index.dc.html' }, { name:'Náhradní díly', href:'./nahradnidily-V3.dc.html' }, { name:'Díly náprav', href:'./nahradnidily-V3.dc.html' }, { name:'Brzdové čelisti', href:'./nahradnidily-V3.dc.html' }, { name:'Čelisti brzdové KNOTT 200×50', href:'#' }],
+
+      variantTitle: v.title, stockText: v.stockText,
+      netNum: v.net, grossNum: v.gross,
+      ratingValue:4.5, ratingCount:3,
+      mainImgStyle:'aspect-ratio:4/3;border-radius:8px;background:#FFFFFF url("./'+this.IMAGES[s.img]+'") center/contain no-repeat;background-origin:content-box;padding:28px;',
+      descImgStyle:'aspect-ratio:16/9;max-width:520px;border-radius:8px;margin:0 0 8px;background:#F7F9FB url("./uploads/celisti.jpg") center/contain no-repeat;background-origin:content-box;padding:16px;',
+      thumbs, dist, params, shortParams, tabs, related,
+      variantOptions, variantIndex: s.variant, onVariant:(i)=>this.setState({ variant:i }),
+      varLayout: s.varStyle === 0 ? 'karty' : 'radky',
+      files: this.FILES.map(f=>({ name:f.name, meta:f.meta, href:'#' })),
+      reviews: this.REVIEWS,
+      tiers:[
+        { label:'po balení 10 ks', net:this.fmt(Math.round(v.net*0.98)), gross:this.fmt(Math.round(v.gross*0.98)) },
+        { label:'po balení 30 ks', net:this.fmt(Math.round(v.net*0.952)), gross:this.fmt(Math.round(v.gross*0.952)) }
+      ],
+      actions:[
+        { label:'Hlídat dostupnost / cenu', icon:'eye', onClick:()=>{} },
+        { label:'Porovnat', icon:'arrows-exchange', onClick:()=>{} },
+        { label:'Potřebuji poradit', icon:'help', onClick:()=>{} },
+        { label:'Doporučit známému', icon:'mail', onClick:()=>{} },
+        { label:'Přidat k oblíbeným', icon:'heart', onClick:()=>{} },
+        { label:'Sdílet', icon:'share-2', onClick:()=>{} }
+      ],
+      qty:s.qty, onQty:(n)=>this.setState({ qty:n }), onBuy:()=>this.setState(p=>({ cart:p.cart+p.qty })),
+      goReviews:()=>this.goTab('hodnoceni'), goParams:()=>this.goTab('parametry'), noop:()=>{},
+
+      secVarianty:s.sec.varianty, secSlevy:s.sec.slevy, secDostupnost:s.sec.dostupnost,
+      secHeureka:s.sec.heureka, secAkce:s.sec.akce,
+      varTiles: s.varStyle === 0, varRows: s.varStyle === 1,
+      galV1: s.galStyle === 0, galV2: s.galStyle === 1,
+      tabPopis: tab==='popis', tabParametry: tab==='parametry', tabStazeni: tab==='stazeni',
+      tabHodnoceni: tab==='hodnoceni', tabSouvisejici: tab==='souvisejici',
+
+      cbGroups:[
+        { label:'Sekce:', kind:'toggles', options:this.SECTIONS.map(([k,l])=>({ label:l, on:!!s.sec[k] })) },
+        { label:'Varianty:', kind:'select', activeIndex:s.varStyle, options:[{ label:'Karty' },{ label:'Řádky' }] },
+        { label:'Galerie:', kind:'select', activeIndex:s.galStyle, options:[{ label:'V1' },{ label:'V2' }] }
+      ],
+      cbToggle:(gi,oi)=>{ if (gi===0){ const k = this.SECTIONS[oi] && this.SECTIONS[oi][0]; if (k) this.setSec(k); } },
+      cbSelect:(gi,oi)=>{ if (gi===1) this.setState({ varStyle:oi }); if (gi===2) this.setState({ galStyle:oi }); },
+      cbDebug:()=>this.setState({ debugOverride: !debug })
+    };
+  }
+}
+
+</script>
+</body>
+</html>

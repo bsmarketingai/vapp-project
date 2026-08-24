@@ -33,7 +33,12 @@
         <input class="f-input" placeholder="Hledat díly…" style="min-height:44px;width:240px;border:none;outline:none;background:#F2F4F7;border-radius:6px;padding:0 16px;font-size:15px;font-family:inherit;color:#15181C;">
         <input value="S focus ringem" readOnly style="min-height:44px;width:200px;border:none;outline:none;background:#fff;box-shadow:0 0 0 2px #1E5AA8;border-radius:6px;padding:0 16px;font-size:15px;font-family:inherit;color:#15181C;">
         <input value="Disabled" disabled style="min-height:44px;width:160px;border:none;outline:none;background:#F2F4F7;border-radius:6px;padding:0 16px;font-size:15px;font-family:inherit;color:#9AA1AB;cursor:not-allowed;">
-        <span style="display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:44px;min-width:200px;font-size:15px;font-weight:600;color:#15181C;background:#F2F4F7;border-radius:6px;cursor:pointer;padding:0 16px;">Nejoblíbenější <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5189CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span>
+      </div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;margin-top:16px;">
+        <div style="width:220px;"><dc-import name="Select" aria-label="Řazení" options="{{ sortOptions }}" hint-size="220px,44px"></dc-import></div>
+        <div style="width:220px;"><dc-import name="Select" variant="outline" aria-label="Výbava" options="{{ vybavaOptions }}" hint-size="220px,44px"></dc-import></div>
+        <div style="width:180px;"><dc-import name="Select" size="compact" aria-label="Na stránku" options="{{ perPageOptions }}" hint-size="180px,36px"></dc-import></div>
+        <div style="width:180px;"><dc-import name="Select" aria-label="Nedostupné" disabled="{{ true }}" options="{{ sortOptions }}" hint-size="180px,44px"></dc-import></div>
       </div>
     </div>
     <div>
@@ -50,11 +55,19 @@
     </div>
   </div>
   <div style="display:flex;flex-direction:column;gap:5px;padding:2px 4px;">
-    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> výška 44, pozadí #F2F4F7, radius 6, fs 15. Focus = modrý ring inset 2px. Checkbox 21×21, radius 6, zaškrtnutý modře.</div>
+    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> výška 44 (compact 36), pozadí #F2F4F7, radius 6, fs 15. Focus = modrý ring inset 2px. Checkbox 21×21, radius 6, zaškrtnutý modře. Select je vždy komponenta <strong>Select</strong> — varianta <em>subtle</em> (výchozí) nebo <em>outline</em> (bílé pole, modrý blok 52 px).</div>
     <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nedávat bordery místo výplně; checkbox nezaškrtávat zeleně (zelená jen konverze/dostupnost).</div>
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:820,&quot;height&quot;:420}}"></script>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:820,&quot;height&quot;:420}}">class Component extends DCLogic {
+  renderVals(){
+    return {
+      sortOptions:[{ label:'Nejoblíbenější' }, { label:'Nejnovější' }, { label:'Nejnižší cena' }, { label:'Nejvyšší cena' }],
+      vybavaOptions:[{ label:'základní výbava' }, { label:'plachta + rám 1,2 m' }, { label:'nájezdové rampy' }],
+      perPageOptions:[{ label:'24 na stránku' }, { label:'48 na stránku' }, { label:'96 na stránku' }]
+    };
+  }
+}</script>
 </body>
 </html>

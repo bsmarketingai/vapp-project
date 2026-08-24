@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;}
+  .cb-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;line-height:inherit;cursor:pointer;}
+  .cb-i:focus-visible{outline:2px solid #FFFFFF;outline-offset:2px;}
+  .cb-btn{transition:background .12s,color .12s;}
+  .cb-btn:hover{background:#1E5AA8 !important;color:#FFFFFF !important;}
+  @media (max-width:549px){ .cb-lab{display:none !important;} .cb-btn{padding:0 10px !important;} }
+</style>
+</helmet>
+<div style="position:fixed;left:12px;right:12px;bottom:12px;z-index:96;display:flex;justify-content:center;pointer-events:none;">
+  <nav aria-label="Ovládání prototypu" style="pointer-events:auto;display:flex;align-items:center;flex-wrap:wrap;justify-content:center;gap:6px;padding:6px 10px;border-radius:999px;background:#142F56;box-shadow:0 10px 30px rgba(20,30,45,.14);max-width:100%;">
+    <sc-for list="{{ cells }}" as="c" hint-placeholder-count="6">
+      <sc-if value="{{ c.isLabel }}" hint-placeholder-val="{{ true }}">
+        <span class="cb-lab" style="font-size:13px;font-weight:700;color:#B4CEEC;padding:0 2px;">{{ c.label }}</span>
+      </sc-if>
+      <sc-if value="{{ c.isSep }}" hint-placeholder-val="">
+        <span aria-hidden="true" style="width:1px;height:20px;background:#1E5AA8;margin:0 2px;"></span>
+      </sc-if>
+      <sc-if value="{{ c.isBtn }}" hint-placeholder-val="">
+        <button type="button" class="cb-i cb-btn" onClick="{{ c.onClick }}" aria-pressed="{{ c.pressed }}" style="{{ c.style }}">{{ c.label }}</button>
+      </sc-if>
+    </sc-for>
+  </nav>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:900,&quot;height&quot;:140},&quot;groups&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{label:string,kind:'toggles'|'select',activeIndex?:number,options:{label:string,on?:boolean}[]}[]&quot;,&quot;default&quot;:null},&quot;onToggle&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(groupIndex:number,optionIndex:number)=&gt;void&quot;,&quot;default&quot;:null},&quot;onSelect&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(groupIndex:number,optionIndex:number)=&gt;void&quot;,&quot;default&quot;:null},&quot;debugOn&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onToggleDebug&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null}}">
+class Component extends DCLogic {
+  BASE = 'min-height:32px;padding:0 13px;border-radius:999px;font-size:13px;font-weight:700;line-height:1;display:inline-flex;align-items:center;gap:6px;';
+  ON = 'background:#FFFFFF;color:#142F56;';
+  OFF = 'background:transparent;color:#B4CEEC;';
+  DEFAULT_GROUPS = [
+    { label:'Sekce:', kind:'toggles', options:[{ label:'Sekce A', on:true }, { label:'Sekce B', on:false }] },
+    { label:'Varianta:', kind:'select', activeIndex:0, options:[{ label:'A' }, { label:'B' }] }
+  ];
+  renderVals(){
+    const P = this.props;
+    const groups = (Array.isArray(P.groups) && P.groups.length) ? P.groups : this.DEFAULT_GROUPS;
+    const onToggle = P.onToggle || (()=>{});
+    const onSelect = P.onSelect || (()=>{});
+    const cells = [];
+    groups.forEach((g, gi)=>{
+      if (gi > 0) cells.push({ isSep:true });
+      if (g.label) cells.push({ isLabel:true, label:g.label });
+      (g.options || []).forEach((o, oi)=>{
+        const isSel = g.kind === 'select';
+        const on = isSel ? ((g.activeIndex ?? 0) === oi) : !!o.on;
+        cells.push({
+          isBtn:true, label:(on && !isSel ? '✓ ' : '') + o.label,
+          pressed: on ? 'true' : 'false',
+          style: this.BASE + (on ? this.ON : this.OFF),
+          onClick: isSel ? (()=>onSelect(gi, oi)) : (()=>onToggle(gi, oi))
+        });
+      });
+    });
+    const dOn = (P.debugOn ?? true) !== false;
+    cells.push({ isSep:true });
+    cells.push({ isBtn:true, label:'Debug', pressed: dOn ? 'true' : 'false',
+      style: this.BASE + (dOn ? this.ON : this.OFF), onClick: P.onToggleDebug || (()=>{}) });
+    return { cells };
+  }
+}
+
+</script>
+</body>
+</html>

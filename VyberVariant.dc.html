@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  .vv-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;cursor:pointer;}
+  .vv-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .vv-opt{transition:background .12s,box-shadow .12s;}
+  .vv-opt:not([disabled]):hover{background:#EFF4FB !important;}
+  .vv-opt:not([disabled]):active{transform:translateY(1px);}
+</style>
+</helmet>
+<div style="display:flex;flex-direction:column;gap:10px;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;">
+  <sc-if value="{{ hasLabel }}" hint-placeholder-val="{{ true }}">
+    <span id="{{ labelId }}" style="{{ labelStyle }}">
+      <sc-if value="{{ hasIcon }}" hint-placeholder-val="{{ true }}">
+        <span style="display:inline-flex;flex:none;color:#5189CC;"><dc-import name="Ikony" icon-name="{{ icon }}" size="24" hint-size="24px,24px"></dc-import></span>
+      </sc-if>{{ label }}
+    </span>
+  </sc-if>
+
+  <sc-if value="{{ isTiles }}" hint-placeholder-val="{{ true }}">
+    <div role="group" aria-labelledby="{{ labelId }}" style="display:flex;gap:12px;flex-wrap:wrap;padding-top:6px;">
+      <sc-for list="{{ opts }}" as="o" hint-placeholder-count="3">
+        <button type="button" class="vv-i vv-opt" onClick="{{ o.onPick }}" aria-pressed="{{ o.pressed }}" disabled="{{ o.disabled }}" style="{{ o.tileStyle }}">
+          <span style="{{ o.valStyle }}">{{ o.label }}</span>
+          <sc-if value="{{ o.hasNote }}" hint-placeholder-val="{{ true }}">
+            <span style="{{ o.noteStyle }}">{{ o.note }}</span>
+          </sc-if>
+          <sc-if value="{{ o.on }}" hint-placeholder-val="">
+            <span aria-hidden="true" style="position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:999px;background:#1E5AA8;color:#FFFFFF;display:flex;align-items:center;justify-content:center;"><dc-import name="Ikony" icon-name="check" size="18" hint-size="18px,18px"></dc-import></span>
+          </sc-if>
+        </button>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isRows }}" hint-placeholder-val="">
+    <div role="group" aria-labelledby="{{ labelId }}" style="display:flex;flex-direction:column;gap:8px;">
+      <sc-for list="{{ opts }}" as="o" hint-placeholder-count="3">
+        <button type="button" class="vv-i vv-opt" onClick="{{ o.onPick }}" aria-pressed="{{ o.pressed }}" disabled="{{ o.disabled }}" style="{{ o.rowStyle }}">
+          <span style="{{ o.radioStyle }}"></span>
+          <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;text-align:left;">
+            <span style="{{ o.valStyle }}">{{ o.label }}</span>
+            <sc-if value="{{ o.hasNote }}" hint-placeholder-val="{{ true }}">
+              <span style="{{ o.noteStyle }}">{{ o.note }}</span>
+            </sc-if>
+          </span>
+          <sc-if value="{{ o.hasMeta }}" hint-placeholder-val="{{ true }}">
+            <span style="{{ o.metaStyle }}">{{ o.meta }}</span>
+          </sc-if>
+        </button>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isSelect }}" hint-placeholder-val="">
+    <dc-import name="Select" variant="outline" aria-label="{{ label }}" options="{{ selectOptions }}" value="{{ value }}" on-change="{{ onSelectValue }}" hint-size="100%,44px"></dc-import>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:520,&quot;height&quot;:260},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Délka ložné plochy (mm)&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;icon&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;arrows-vertical&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;kind&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;tiles&quot;,&quot;select&quot;],&quot;default&quot;:&quot;tiles&quot;,&quot;tsType&quot;:&quot;'tiles'|'select'&quot;},&quot;layout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;karty&quot;,&quot;radky&quot;],&quot;default&quot;:&quot;karty&quot;,&quot;tsType&quot;:&quot;'karty'|'radky'&quot;},&quot;valueSize&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:18,&quot;min&quot;:13,&quot;max&quot;:22,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;},&quot;options&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{label:string,note?:string,noteTone?:'stock'|'muted',meta?:string,disabled?:boolean}[]&quot;,&quot;default&quot;:null},&quot;activeIndex&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;number&quot;,&quot;default&quot;:0},&quot;onPick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(index:number)=&gt;void&quot;,&quot;default&quot;:null}}">
+class Component extends DCLogic {
+  DEMO = [
+    { label:'2100' },
+    { label:'2530', note:'Skladem 3 ks', meta:'+ 6 400 Kč' },
+    { label:'3030', note:'na dotaz', disabled:true }
+  ];
+  state = { demoIndex:0 };
+
+  renderVals(){
+    const P = this.props;
+    const raw = (Array.isArray(P.options) && P.options.length) ? P.options : this.DEMO;
+    const controlled = Array.isArray(P.options) && P.options.length;
+    const active = controlled ? (P.activeIndex ?? 0) : this.state.demoIndex;
+    const kind = P.kind || 'tiles';
+    const layout = P.layout || 'karty';
+    const onPick = controlled ? (P.onPick || (()=>{})) : ((i)=>this.setState({ demoIndex:i }));
+    const label = P.label ?? 'Délka ložné plochy (mm)';
+    const labelId = 'vv-' + (label || 'x').replace(/[^a-zA-Z0-9]+/g,'-').toLowerCase();
+
+    const opts = raw.map((o,i)=>{
+      const on = i === active, dis = !!o.disabled;
+      const noteGreen = o.noteTone !== 'muted' && !dis;
+      return {
+        label:o.label,
+        optionLabel: o.meta ? (o.label + '  (' + o.meta + ')') : o.label,
+        on, pressed: on ? 'true' : 'false', disabled: dis ? true : null,
+        hasNote: !!o.note, note:o.note || '',
+        hasMeta: !!o.meta, meta:o.meta || '',
+        onPick: dis ? (()=>{}) : (()=>onPick(i)),
+        tileStyle:'position:relative;flex:0 1 auto;min-width:104px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:72px;padding:12px 16px;border-radius:8px;background:#FFFFFF;box-shadow:inset 0 0 0 '+(on?'2px #1E5AA8':'1px '+(dis?'#D5DAE0':'#91959B'))+';cursor:'+(dis?'not-allowed':'pointer')+';',
+        rowStyle:'width:100%;display:flex;align-items:center;gap:12px;min-height:56px;padding:8px 14px;border-radius:8px;background:'+(on?'#EFF4FB':'#FFFFFF')+';box-shadow:inset 0 0 0 '+(on?'2px #1E5AA8':'1px '+(dis?'#D5DAE0':'#91959B'))+';cursor:'+(dis?'not-allowed':'pointer')+';',
+        radioStyle:'flex:none;width:20px;height:20px;border-radius:999px;box-shadow:inset 0 0 0 '+(on?'6px #1E5AA8':'1px '+(dis?'#D5DAE0':'#91959B'))+';',
+        valStyle:'font-size:'+(P.valueSize || 18)+'px;font-weight:700;color:#1E5AA8;'+(dis?'opacity:.55;':''),
+        noteStyle:'font-size:13px;font-weight:500;color:'+(noteGreen?'#0B6937':'#666E78')+';',
+        metaStyle:'flex:none;font-size:14px;font-weight:700;white-space:nowrap;color:#15181C;'
+      };
+    });
+
+    return {
+      opts, label, labelId,
+      hasLabel: !!label, hasIcon: !!P.icon, icon: P.icon || 'settings',
+      labelStyle:'display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#15181C;',
+      isTiles: kind !== 'select' && layout === 'karty',
+      isRows: kind !== 'select' && layout === 'radky',
+      isSelect: kind === 'select',
+      value: (raw[active] || raw[0] || {}).label,
+      // dropdown vykresluje komponenta Select (jediný zdroj formulářového pole)
+      selectOptions: raw.map(o=>({ value:o.label, label: o.meta ? (o.label + '  (' + o.meta + ')') : o.label, disabled: !!o.disabled })),
+      onSelectValue: (val)=>{ const i = raw.findIndex(o=>o.label === val); if (i>=0) onPick(i); }
+    };
+  }
+}
+
+</script>
+</body>
+</html>
