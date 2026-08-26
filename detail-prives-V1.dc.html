@@ -53,7 +53,7 @@
 <div data-screen-label="Detail přívěsu V1" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
 
   <dc-import name="Usp" variant="pas" tone="tmavy" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,48px"></dc-import>
-  <dc-import name="Hlavicka" active="Přívěsy" variant="V4" currency="{{ currency }}" on-currency-change="{{ onCurrency }}" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:00–16:00" contact-open="{{ true }}" menu-tree="{{ menuTree }}" hint-size="100%,150px"></dc-import>
+  <dc-import name="Hlavicka" active="Přívěsy" currency="{{ currency }}" on-currency-change="{{ onCurrency }}" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:30–16:30" contact-open="{{ true }}" menu-tree="{{ menuTree }}" hint-size="100%,150px"></dc-import>
 
   <main class="vp-in" style="padding-top:14px;padding-bottom:48px;">
 
@@ -491,7 +491,7 @@ class Component extends DCLogic {
 
     return {
       debug, currency: s.currency, onCurrency:(c)=>this.setState({ currency:c }),
-      menuTree:[{ name:'Přívěsy', href:'./privesy-V2.dc.html' }, { name:'Náhradní díly', href:'./nahradnidily-V3.dc.html' }, { name:'Příslušenství', href:'#' }, { name:'Servis', href:'#' }, { name:'Půjčovna', href:'#' }],
+      menuTree:[{ name:'Přívěsy', href:'./privesy-V2.dc.html' }, { name:'Náhradní díly', href:'./nahradnidily.dc.html' }, { name:'Příslušenství', href:'#' }, { name:'Servis', href:'#' }, { name:'Půjčovna', href:'#' }],
       crumbItems:[{ name:'Úvod', href:'./index.dc.html' }, { name:'Přívěsy', href:'./privesy-V2.dc.html' }, { name:'Valníkové přívěsy', href:'./privesy-V2.dc.html' }, { name:'Nebrzděné do 750 kg', href:'./privesy-V2.dc.html' }, { name:'VAPP PRAKTIK', href:'#' }],
 
       configTitle: chosen.delka.label + ' × ' + chosen.sirka.label + ' mm · ' + chosen.hmotnost.label + ' kg · ' + chosen.vybava.label,

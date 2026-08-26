@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0!important;padding:0!important;background:#F7F9FB;}
+  #dc-root{margin:0!important;padding:0!important;width:100%!important;max-width:none!important;border:0!important;}
+  #dc-root>.sc-host{margin:0!important;padding:0!important;width:100%!important;}
+  .vp-in{max-width:1560px;margin:0 auto;padding:0 32px;}
+  @media (max-width:819px){ .vp-in{padding:0 16px;} }
+  a{color:#1E5AA8;text-decoration:none;}
+  a:hover{color:#1A4A8A;}
+</style>
+</helmet>
+<div data-screen-label="Baglog 2" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
+  <div class="vp-in" style="max-width:960px;padding-top:40px;padding-bottom:96px;">
+
+    <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px;">
+      <h1 style="margin:0;font-size:28px;font-weight:700;letter-spacing:-0.01em;line-height:1.2;">Baglog úprav</h1>
+      <span style="font-size:15px;font-weight:700;color:#1E5AA8;letter-spacing:.04em;">VAPP.CZ</span>
+    </div>
+    <p style="margin:0 0 28px;font-size:16px;line-height:1.6;color:#5A626C;max-width:70ch;text-wrap:pretty;">Přehled zásadních úprav prototypu pro klienta — <strong style="font-weight:700;color:#15181C;">co se upravovalo</strong>, <strong style="font-weight:700;color:#15181C;">proč</strong> a <strong style="font-weight:700;color:#15181C;">jaké je řešení</strong>. Nahoře to, co se dělá teď.</p>
+
+    <h2 style="margin:0 0 12px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Právě se řeší</h2>
+    <sc-if value="{{ hasNow }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:36px;">
+        <sc-for list="{{ now }}" as="item" hint-placeholder-count="2">
+          <div style="background:#FFFFFF;border-radius:8px;padding:16px 18px;display:flex;gap:14px;align-items:flex-start;">
+            <span style="flex:0 0 auto;margin-top:2px;width:8px;height:8px;border-radius:999px;background:#1E5AA8;"></span>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:16px;font-weight:700;line-height:1.35;">{{ item.title }}</div>
+              <div style="margin-top:4px;font-size:14px;font-weight:500;line-height:1.5;color:#5A626C;">{{ item.note }}</div>
+            </div>
+            <span style="flex:0 0 auto;font-size:13px;font-weight:700;color:#666E78;">{{ item.where }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ noNow }}">
+      <div style="background:#F2F4F7;border-radius:8px;padding:16px 18px;font-size:14px;font-weight:500;color:#666E78;margin-bottom:36px;">Nic v běhu — čeká se na zadání dalších úprav.</div>
+    </sc-if>
+
+    <h2 style="margin:0 0 12px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Historie úprav</h2>
+    <sc-if value="{{ hasLog }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        <sc-for list="{{ log }}" as="day" hint-placeholder-count="2">
+          <div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+              <span style="font-size:16px;font-weight:700;">{{ day.date }}</span>
+              <span style="flex:1;height:1px;background:#D5DAE0;"></span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <sc-for list="{{ day.items }}" as="e" hint-placeholder-count="2">
+                <div style="background:#FFFFFF;border-radius:8px;padding:20px 22px;">
+                  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:12px;">
+                    <div style="flex:1;min-width:220px;font-size:18px;font-weight:700;line-height:1.35;">{{ e.title }}</div>
+                    <span style="{{ e.tagStyle }}">{{ e.where }}</span>
+                  </div>
+                  <div style="display:grid;grid-template-columns:96px 1fr;gap:8px 16px;font-size:15px;line-height:1.6;">
+                    <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;padding-top:4px;">Úprava</span>
+                    <span style="color:#15181C;">{{ e.what }}</span>
+                    <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;padding-top:4px;">Proč</span>
+                    <span style="color:#5A626C;">{{ e.why }}</span>
+                    <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;padding-top:4px;">Řešení</span>
+                    <span style="color:#15181C;">{{ e.how }}</span>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ noLog }}">
+      <div style="background:#F2F4F7;border-radius:8px;padding:16px 18px;font-size:14px;font-weight:500;color:#666E78;">Zatím žádný záznam — první úprava se sem zapíše, jakmile začneme.</div>
+    </sc-if>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  renderVals() {
+    // "Právě se řeší" — co je rozpracované teď
+    const now = [];
+
+    // Historie: nejnovější den nahoře; items = {title, where, what, why, how}
+    const log = [
+      { date: '26. 8. 2026', items: [
+        { title: 'Patička je na mobilu zabalená do akordeonu',
+          where: 'Patička',
+          what: 'Čtyři sloupce odkazů (Sortiment, Služby, O firmě, Zákazník) se pod 820 px zobrazují jako čtyři rozbalovací řádky. Výchozí stav: všechny zabalené. Na desktopu se nic nemění.',
+          why: 'Na mobilu patička kvůli 16 odkazům pod sebou zabírala víc než dvě obrazovky — kontakt a hodnocení se ztrácely daleko dole.',
+          how: 'Řádky mají 48 px na dotek a šipku, která se otočí; obsah zůstává v HTML (kvůli SEO se nic neskrývá před vyhledávači).' },
+        { title: 'Na výpisu je vždy plný počet řádků — 20 produktů na velkém monitoru',
+          where: 'Náhradní díly — výpis',
+          what: 'Na XXL (5 sloupců) se vypisuje 20 produktů a tlačítko načte dalších 20. Na ostatních šířkách zůstává 16 a načítá se 16.',
+          why: 'Dávka 16 nechávala v pětisloupcové mřížce poslední řádek rozbitý — 3 karty a dvě prázdná místa. Násobek počtu sloupců drží mřížku celou.',
+          how: 'Počet se přepíná automaticky podle šířky okna, stránkování i souhrn „zobrazeno X z Y“ na to reagují.' },
+        { title: 'Objednací číslo už neleze přes fotku',
+          where: 'Karta produktu (díly i přívěsy)',
+          what: 'Obj. číslo je na samostatném řádku nad názvem produktu, drobným písmem. Z fotky zmizelo.',
+          why: 'Přes fotku působilo jako vodoznak a u světlých produktů se ztrácelo. Nad názvem je čitelné a fotka zůstane čistá.',
+          how: 'Platí pro kartu dílu i přívěsu — je to jeden zdroj. Zapsáno do pravidel anatomie karty.' },
+        { title: 'Hlavička dýchá — vyšší řádek s logem, užší hledání',
+          where: 'Hlavička',
+          what: 'Odsazení řádku s logem, hledáním a akcemi je 20 px shora i zdola (bylo 12). Vyhledávací pole se na velkých monitorech zúžilo z 640 na 520 px. Přihlásit je vidět i na tabletu a mobilu (na nejmenších šířkách jen ikona) a ikona košíku má na malých šířkách odstup od hamburgeru.',
+          why: 'Hlavička je první, co zákazník vidí — nalepené prvky ji dělaly stísněnou. Přihlášení bylo pod 1000 px dostupné jen přes menu, přitom je to častá akce. Přebujelé hledání odsouvalo kontakt a akce k okraji.',
+          how: 'Řádek je o 16 px vyšší, výškově se to vyrovnává tím, že tmavý pás USP nad hlavičkou zhubl ze 48 na 32 px — celkově tedy hlavička nenarostla.' },
+        { title: 'Porovnávání zmizelo z hlavičky',
+          where: 'Hlavička',
+          what: 'Ikona „Porovnat“ s čítačem už v akční skupině není.',
+          why: 'Funkci nikdo nepoužívá a v řadě ikon soutěžila o pozornost s košíkem a hledáním.',
+          how: 'Jen skryté, ne smazané — kód i čítač zůstávají a jedním přepnutím se dá vrátit. Checkbox „Porovnat“ na kartě produktu je skrytý už dřív.' },
+        { title: 'Výběr měny je v boxu košíku, ne jako samostatná ikona',
+          where: 'Hlavička',
+          what: 'Tlačítko s ikonou měny vedle Přihlásit zmizelo. V boxu košíku je za cenou vertikální oddělovač a přepínač „CZK ⌄“, který rozbalí volbu CZK / EUR.',
+          why: 'Měna dřív bydlela v tmavém topbaru; ten se zrušil a náhradní ikona v akční skupině přidávala další prvek do řady a nebyla čitelná. Vedle ceny má měna přirozený význam — mění to, v čem je částka.',
+          how: 'Přepínač je součástí komponenty košíku, takže je stejný na všech stránkách. Zavírá se Escapem i klikem mimo, aktivní měna je modrá.' },
+        { title: 'Tmavý pás USP nad hlavičkou je o třetinu nižší',
+          where: 'Celý web',
+          what: 'Výška pásu se střídajícími se výhodami klesla ze 48 px na 32 px.',
+          why: 'Pás je nad hlavičkou na každé stránce — každý ušetřený pixel se počítá směrem k tomu, aby byl na notebooku pod hlavičkou vidět obsah. Sdělení ani počet hlášení se nemění.',
+          how: 'Zmizelo vnitřní odsazení řádku, šipky i tečky si drží dotykovou plochu 32 × 32 px (minimum je 24). Platí i pro světlou variantu pásu.' },
+        { title: 'Výpis náhradních dílů má jednu finální verzi',
+          where: 'Náhradní díly — výpis',
+          what: 'Zůstává jediná stránka „nahradnidily“ (dřívější V1). Verze V2 a V3 jsou smazané a všechny odkazy — z homepage, menu v hlavičce, výpisu přívěsů i z detailů — vedou na ni.',
+          why: 'Tři verze sloužily ke srovnání. Po rozhodnutí by se jen rozcházely a klient by nevěděl, která je platná.',
+          how: 'Soubor je přejmenovaný, odkazy přesměrované. Další úpravy výpisu dílů se dělají už jen tady.' },
+        { title: 'Kategorie mají fotky — varianta s ikonami se ruší',
+          where: 'Výpisy dílů i přívěsů',
+          what: 'Přepínač „Fotky / Ikony“ v prezentační liště je odstraněný. Dlaždice kategorií i podkategorií ukazují náhledovou fotku.',
+          why: 'Klient vybral verzi s fotkami; kreslení sady ikon pro všechny kategorie se dělat nebude. Držet druhou variantu by znamenalo udržovat obojí.',
+          how: 'Stránky médium už neřeší — fotka je výchozí chování komponenty. Zbývá dodat fotky ke kategoriím, které je ještě nemají (dnes jim zaskočí kolečko s ikonou); smíšený stav vypadá rozpadle.' },
+        { title: 'Na velkých monitorech je výpis dílů v 5 sloupcích',
+          where: 'Náhradní díly — výpis',
+          what: 'Od šířky 1560 px se produkty vypisují v 5 sloupcích (dřív 4, 5 bylo jen na vyzkoušení). Přepínač 4/5 v prezentační liště je zrušený, stejně jako přepínač verzí stránky V1/V2/V3.',
+          why: 'Pět sloupců vyšlo v porovnání lépe — na velkém monitoru je vidět víc zboží bez rolování a karta si drží čitelnou šířku. Přepínače v liště sloužily jen k výběru, po rozhodnutí matou.',
+          how: '5 sloupců je pevná hodnota v pásmu XXL, ostatní pásma se nemění (XL a L 4, M 3, S 2, XS a XXS 1). Zapsáno do pravidel projektu.' },
+        { title: 'Hlavička je jen v jedné verzi — V3 s tmavým pásem USP',
+          where: 'Celý web',
+          what: 'Všechny stránky (homepage, výpisy dílů i přívěsů, detaily, prototyp) mají hlavičku V3: nahoře tmavý pás s USP, pod ním logo, hledání, kontakt a akce, dole navigace. Ostatní verze jsou smazané, přepínač hlavičky je ze stránek i z prezentační lišty odstraněný.',
+          why: 'Verze s tmavým topbarem sloužily jen ke srovnání. Držet tři varianty znamená trojí ladění a riziko, že se rozejdou; klient vybral tuto, tak je jediná platná.',
+          how: 'Komponenta umí jednu hlavičku — markup, styly i volba varianty starých verzí jsou z kódu odstraněné, takže se nemá kde vrátit nedopatřením. Zapsáno do design systému i do pravidel projektu.' },
+        { title: 'Popis kategorie se rozbaluje inline, ne tlačítkem pod textem',
+          where: 'Náhradní díly — výpis',
+          what: 'Tlačítko „Zobrazit celý popis“ pod perexem zmizelo. Odkaz na rozbalení je teď na konci textu, ve stejném řádku, a delší popis se doplní přímo do odstavce.',
+          why: 'Tlačítko na samostatném řádku brala výška navíc hned pod nadpisem — a právě horní část stránky se snažíme zkrátit, aby byla vidět filtrace a začátek výpisu.',
+          how: 'Perex a pokračování jsou jeden odstavec; přepínač je textový odkaz s chevronem na konci věty (zavřeno „Zobrazit celý popis“, otevřeno „Skrýt“). Ušetří se celý řádek plus jeho odsazení, chování zůstává stejné.' },
+        { title: 'Kategorie zaberou méně výšky — vidět je i filtrace a produkty',
+          where: 'Výpis kategorií',
+          what: 'Z dlaždic kategorií i podkategorií zmizel počet produktů, mezera mezi dlaždicemi je 8 px místo 20 px, kompaktní dlaždice je 64 px vysoká (dřív 72 px) a odsazení bloku kategorií nad výpisem je 12 px místo 16 px.',
+          why: 'Na notebooku a menších monitorech zabral rozcestník kategorií celou první obrazovku — zákazník nevidí, že pod ním pokračuje filtrace a produkty, a nepozná, že je na výpisu. Počet produktů u kategorie navíc pro rozhodování nic neřeší.',
+          how: 'Počet se v dlaždici nevykresluje (data zůstávají, jen se nezobrazují — lze vrátit). Mezera mezi dlaždicemi kategorií se odlišila od produktového gridu, který si 20 px drží dál. Změna je v jednom zdroji (VypisKategorii + KategorickaDlazdice), takže platí na všech výpisech dílů i přívěsů.' }
+      ] }
+    ];
+
+    const tag = "display:inline-block;flex:0 0 auto;background:#EFF4FB;color:#1E5AA8;border-radius:999px;padding:4px 12px;font-size:13px;font-weight:700;line-height:24px;";
+    const logOut = log.map(d => ({ ...d, items: (d.items || []).map(i => ({ ...i, tagStyle: tag })) }));
+
+    return {
+      now, log: logOut,
+      hasNow: now.length > 0, noNow: now.length === 0,
+      hasLog: logOut.length > 0, noLog: logOut.length === 0
+    };
+  }
+}
+</script>
+</body>
+</html>

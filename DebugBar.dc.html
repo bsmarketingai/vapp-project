@@ -47,8 +47,8 @@ const REG = window.__vappDebugBar || (window.__vappDebugBar = {
     const bar = document.createElement('div');
     bar.setAttribute('data-vapp-debugbar', '1');
     css(bar, {
-      position: 'fixed', left: '0', right: '0', top: '0', zIndex: '2147483000',
-      height: h + 'px', background: '#15181C', color: '#FFFFFF', fontFamily: MONO,
+      position: 'relative', width: '100%', zIndex: '2147483000',
+      height: h + 'px', flex: '0 0 auto', background: '#15181C', color: '#FFFFFF', fontFamily: MONO,
       fontSize: (h - 2) + 'px', lineHeight: h + 'px', letterSpacing: '0.02em',
       display: 'flex', alignItems: 'center', paddingLeft: '8px', pointerEvents: 'none'
     });
@@ -84,7 +84,8 @@ const REG = window.__vappDebugBar || (window.__vappDebugBar = {
     handle.addEventListener('click', () => { this.collapsed = false; this.paint(); });
 
     host.appendChild(bar); host.appendChild(handle);
-    document.body.appendChild(host);
+    // bar je v toku dokumentu jako první prvek — netlačí se přes obsah webu
+    document.body.insertBefore(host, document.body.firstChild);
     Object.assign(this, { host, bar, main, handle });
 
     this.onResize = () => this.paint();

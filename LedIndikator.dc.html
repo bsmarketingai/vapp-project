@@ -31,8 +31,8 @@
 <sc-if value="{{ gallery }}" hint-placeholder-val="{{ true }}">
 <div style="display:flex;flex-direction:column;gap:16px;max-width:760px;">
   <div style="background:#fff;border-radius:8px;padding:28px;display:flex;gap:40px;flex-wrap:wrap;align-items:center;">
-    <span style="display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:#0B6937;"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:11px;height:11px;background:#2EAA6A;flex:none;"></span>Po–Pá 8–16 · právě otevřeno</span>
-    <span style="display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:#C5232B;"><span class="vapp-led" style="--led:rgba(197,35,43,.5);width:11px;height:11px;background:#C5232B;flex:none;"></span>Zavřeno · otevíráme v Po 8:00</span>
+    <span style="display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:#0B6937;"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:11px;height:11px;background:#2EAA6A;flex:none;"></span>Po–Pá 8:30–16:30 · právě otevřeno</span>
+    <span style="display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:#C5232B;"><span class="vapp-led" style="--led:rgba(197,35,43,.5);width:11px;height:11px;background:#C5232B;flex:none;"></span>Zavřeno · otevíráme v Po 8:30</span>
   </div>
   <div style="background:#142F56;border-radius:8px;padding:20px 24px;display:flex;gap:40px;flex-wrap:wrap;align-items:center;">
     <span style="display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:600;color:#fff;"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:11px;height:11px;background:#2EAA6A;flex:none;"></span>Na tmavém podkladu (topbar / patička)</span>
@@ -57,7 +57,7 @@ class Component extends DCLogic {
       const led = open ? 'rgba(46,170,106,.5)' : 'rgba(197,35,43,.5)';
       const size = P.size || 11;
       const textColor = onDark ? '#fff' : color;
-      const _lbl = P.label !== undefined ? P.label : (open ? 'Po–Pá 8–16 · právě otevřeno' : 'Zavřeno · otevíráme v Po 8:00');
+      const _lbl = P.label !== undefined ? P.label : (open ? 'Po–Pá 8:30–16:30 · právě otevřeno' : 'Zavřeno · otevíráme v Po 8:30');
       return { single:true, gallery:false,
         ledAria: (String(_lbl||'').trim() ? undefined : (open ? 'Právě otevřeno' : 'Zavřeno')),
         label: _lbl,

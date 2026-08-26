@@ -41,12 +41,23 @@
   .ft-cols{display:grid;gap:36px;grid-template-columns:repeat(4,minmax(0,1fr));}
   @media (max-width:1149px){ .ft-cols{grid-template-columns:repeat(2,minmax(0,1fr));} }
   /* na mobilu se klikací plocha odkazů zvětšuje pseudoprvkem na 40 px; rozestup odkazů 16 px, aby se plochy nepřekrývaly */
+  /* kontaktní blok na plnou šířku od M dolů */
+  @media (max-width:999px){ .ft-contact{flex:1 1 100%;} }
   @media (max-width:819px){
-    .ft-contact{flex:1 1 100%;}
-    .ft-cols{gap:24px;}
-    .ft-cols > div{gap:16px;}
+    /* sloupce se na mobilu zabalí do akordeonu — footer je jinak nekonečně vysoký */
+    .ft-cols{gap:0;grid-template-columns:1fr;}
+    .ft-cols > div{gap:0;}
     .ft-hit::after{top:-8px;bottom:-8px;}
+    .ft-acc{display:flex !important;}
+    .ft-t{display:none !important;}
+    .ft-links{padding:4px 0 16px;gap:16px;}
+    .ft-links.ft-closed{display:none !important;}
+    .ft-col{border-bottom:1px solid rgba(255,255,255,.12);}
   }
+  @media (min-width:820px){ .ft-acc{display:none !important;} }
+  /* S a níž: loga plateb a dopravy na 3/4 velikosti */
+  @media (max-width:819px){ .ft-logo{width:49px !important;height:30px !important;} }
+  .ft-acc{transition:color .12s;} .ft-acc:hover{color:#fff !important;}
 </style>
 </helmet>
 <footer style="width:100%;margin:0;padding:0;">
@@ -56,21 +67,24 @@
         <div class="ft-main">
           <div class="ft-cols">
             <sc-for list="{{ footerCols }}" as="col" hint-placeholder-count="4">
-              <div style="display:flex;flex-direction:column;gap:14px;min-width:0;">
-                <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#B4CEEC;">{{ col.title }}</span>
-                <sc-for list="{{ col.links }}" as="l" hint-placeholder-count="4">
-                  <a class="ft-link a11y-i ft-hit" href="#" onClick="{{ onNav }}" style="font-size:15px;color:#B4CEEC;cursor:pointer;">{{ l }}</a>
-                </sc-for>
+              <div class="ft-col" style="display:flex;flex-direction:column;gap:14px;min-width:0;">
+                <span class="ft-t" style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#B4CEEC;">{{ col.title }}</span>
+                <button type="button" class="ft-acc a11y-i" aria-expanded="{{ col.expanded }}" onClick="{{ col.onToggle }}" style="display:none;width:100%;align-items:center;justify-content:space-between;gap:12px;min-height:48px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#B4CEEC;cursor:pointer;">{{ col.title }}<span aria-hidden="true" style="{{ col.chevStyle }}"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></span></button>
+                <div class="ft-links {{ col.cls }}" style="display:flex;flex-direction:column;gap:14px;min-width:0;">
+                  <sc-for list="{{ col.links }}" as="l" hint-placeholder-count="4">
+                    <a class="ft-link a11y-i ft-hit" href="#" onClick="{{ onNav }}" style="font-size:15px;color:#B4CEEC;cursor:pointer;">{{ l }}</a>
+                  </sc-for>
+                </div>
               </div>
             </sc-for>
           </div>
           <div style="height:1px;background:rgba(255,255,255,.10);"></div>
-          <div style="display:flex;gap:56px;flex-wrap:wrap;">
+          <div style="display:flex;gap:20px 56px;flex-wrap:wrap;">
             <div style="display:flex;flex-direction:column;gap:12px;">
               <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#B4CEEC;">Platba</span>
               <div style="display:flex;gap:10px;flex-wrap:wrap;">
                 <sc-for list="{{ payMethods }}" as="m" hint-placeholder-count="4">
-                  <span role="img" aria-label="{{ m.alt }}" style="{{ m.style }}"></span>
+                  <span class="ft-logo" role="img" aria-label="{{ m.alt }}" style="{{ m.style }}"></span>
                 </sc-for>
               </div>
             </div>
@@ -78,7 +92,7 @@
               <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#B4CEEC;">Doprava</span>
               <div style="display:flex;gap:10px;flex-wrap:wrap;">
                 <sc-for list="{{ shipMethods }}" as="m" hint-placeholder-count="3">
-                  <span role="img" aria-label="{{ m.alt }}" style="{{ m.style }}"></span>
+                  <span class="ft-logo" role="img" aria-label="{{ m.alt }}" style="{{ m.style }}"></span>
                 </sc-for>
               </div>
             </div>
@@ -96,14 +110,14 @@
         <div class="ft-contact" style="display:flex;flex-direction:column;gap:12px;background:rgba(255,255,255,.06);border-radius:8px;padding:24px;">
           <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#B4CEEC;">Kontakt</span>
           <span style="font-size:15px;font-weight:700;color:#fff;">VAPP s.r.o.</span>
-          <span style="font-size:15px;color:#B4CEEC;line-height:1.5;">Popovičky 50, 251 01 Říčany</span>
-          <span style="font-size:15px;color:#B4CEEC;line-height:1.5;">Pobočka: Mladá Boleslav — Židněves</span>
+          <span style="display:flex;flex-direction:column;gap:2px;font-size:15px;color:#B4CEEC;line-height:1.5;"><span>Popovičky 50, 251 01 Říčany</span></span>
+          <a class="ft-clink a11y-i" href="https://www.google.cz/maps/dir//VAPP+-+p%C5%99%C3%ADv%C4%9Bsy,+p%C5%99%C3%ADslu%C5%A1enstv%C3%AD,+n%C3%A1hradn%C3%AD+d%C3%ADly+a+servis,+38,+251+01+Popovi%C4%8Dky/@49.9695313,14.6010162,13z/data=!4m9!4m8!1m0!1m5!1m1!1s0x470b8f238df097eb:0x94157206222d85f7!2m2!1d14.6005557!2d49.9599557!3e0?entry=ttu&amp;g_ep=EgoyMDI2MDgyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#fff;line-height:1.5;text-decoration:underline;cursor:pointer;"><span aria-hidden="true" style="display:inline-flex;align-items:center;flex:none;"><dc-import name="Ikony" icon-name="map-pin" size="24" hint-size="24px,24px"></dc-import></span>Popovičky 38, 251 01 Říčany, Praha-východ</a>
           <a class="ft-clink a11y-i" href="tel:+420323605314" style="display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#fff;text-decoration:underline;cursor:pointer;"><span style="display:inline-flex;align-items:center;flex:none;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import></span>323 605 314</a>
           <a class="ft-clink a11y-i" href="mailto:obchod&#64;vapp.cz" style="display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#fff;text-decoration:underline;cursor:pointer;"><span style="display:inline-flex;align-items:center;flex:none;"><dc-import name="Ikony" icon-name="mail" size="24" hint-size="24px,24px"></dc-import></span>obchod&#64;vapp.cz</a>
-          <span style="display:inline-flex;align-items:center;gap:9px;font-size:15px;color:#B4CEEC;"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:9px;height:9px;background:#2EAA6A;flex:none;"></span>Po–Pá 8–16 · právě otevřeno</span>
+          <span style="display:inline-flex;align-items:center;gap:9px;font-size:15px;color:#B4CEEC;"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:9px;height:9px;background:#2EAA6A;flex:none;"></span>Po–Pá 8:30–16:30 · právě otevřeno</span>
           <div style="height:1px;background:rgba(255,255,255,.12);margin:4px 0;"></div>
           <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#B4CEEC;">Všechny kontakty</span>
-          <dc-import name="Tlacitko" variant="ondark" size="medium" icon="map-pin" label="Obchod, servis, půjčovna…" full-width="true" style="width:100%;" hint-size="100%,44px"></dc-import>
+          <dc-import name="Tlacitko" variant="ondark" size="medium" icon="address-book" label="Obchod, servis, půjčovna…" full-width="true" style="width:100%;" hint-size="100%,44px"></dc-import>
           <span style="font-size:13px;color:#B4CEEC;margin-top:2px;">IČO 12345678 · DIČ CZ12345678</span>
           <div style="height:1px;background:rgba(255,255,255,.12);margin:4px 0;"></div>
           <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#B4CEEC;">Sledujte nás</span>
@@ -117,6 +131,7 @@
       <div style="height:1px;background:rgba(255,255,255,.10);"></div>
       <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
         <span style="font-size:14px;color:#B4CEEC;">© 2026 VAPP s.r.o. · <a class="ft-link a11y-i ft-hit" href="#" onClick="{{ onNav }}" style="cursor:pointer;color:#B4CEEC;">Ochrana osobních údajů</a> · <a class="ft-link a11y-i ft-hit" href="#" onClick="{{ onNav }}" style="text-decoration:underline;cursor:pointer;color:#B4CEEC;">Nastavení cookies</a></span>
+        <span style="margin-left:auto;font-size:14px;color:#B4CEEC;">Powered by <a class="ft-link a11y-i ft-hit" href="#" onClick="{{ onNav }}" style="font-weight:700;color:#B4CEEC;cursor:pointer;">BSSHOP</a></span>
       </div>
     </div>
   </div>
@@ -131,17 +146,27 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:540},&quot;bare&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
 class Component extends DCLogic {
+  state = { openCols:{} };
   renderVals(){
+    const open = this.state.openCols || {};
+    const toggle = (i)=>this.setState({ openCols: Object.assign({}, open, { [i]: !open[i] }) });
+    // na mobilu jsou sloupce defaultně zabalené; na desktopu CSS akordeon vypne
+    const decorate = (cols)=>cols.map((c,i)=>Object.assign({}, c, {
+      expanded: open[i] ? 'true' : 'false',
+      cls: open[i] ? '' : 'ft-closed',
+      chevStyle: 'display:inline-flex;flex:none;transition:transform .12s ease;' + (open[i] ? 'transform:rotate(180deg);' : ''),
+      onToggle: ()=>toggle(i)
+    }));
     const logoStyle=(file)=>'display:block;flex:none;width:65px;height:40px;background:url("./uploads/DeliveryPaymentSelectorView_'+file+'.svg") center/contain no-repeat;';
     return {
       onNav:(e)=>{ if(e&&e.preventDefault) e.preventDefault(); },
       showNote: !this.props.bare,
-      footerCols: [
+      footerCols: decorate([
         { title:'Sortiment', links:['Přívěsy','Náhradní díly','Příslušenství','Akce a slevy'] },
         { title:'Služby', links:['Servis','Půjčovna','Poradna'] },
         { title:'O firmě', links:['O nás','Náš příběh','Reference','Kariéra'] },
         { title:'Zákazník', links:['Obchodní podmínky','Doprava a platba','Reklamace','Podmínky půjčovny','Cookies'] },
-      ],
+      ]),
       payMethods: [
         ['Apple Pay','ApplePay'],['Visa a Mastercard','VisaMastercard'],
         ['Google Pay','GooglePay'],['Comgate','Comgate'],

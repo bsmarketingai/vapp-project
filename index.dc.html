@@ -33,9 +33,9 @@
 </helmet>
 <div data-screen-label="Homepage" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;width:100%;margin:0;padding:0;min-height:100vh;">
 
-  <dc-import name="Hlavicka" variant="{{ headerVariant }}" active="" debug="{{ debug }}" hint-size="100%,190px"></dc-import>
+  <dc-import name="Usp" variant="pas" tone="tmavy" items="{{ uspPas }}" debug="{{ debug }}" hint-size="100%,48px"></dc-import>
 
-  <dc-import name="Usp" variant="pas" items="{{ uspPas }}" debug="{{ debug }}" hint-size="100%,48px"></dc-import>
+  <dc-import name="Hlavicka" active="" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
 
   <main>
     <dc-import name="HeroHomepage" debug="{{ debug }}" hint-size="100%,420px"></dc-import>
@@ -82,12 +82,12 @@
   <dc-import name="Paticka" debug="{{ debug }}" hint-size="100%,520px"></dc-import>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;headerVariant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;V1&quot;,&quot;V2&quot;,&quot;V3&quot;],&quot;default&quot;:&quot;V2&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 class Component extends DCLogic {
   CATS = [
     { key:'privesy', name:'Přívěsy', href:'privesy-V1.dc.html', image:'./sekce-privesy.png', count:186, countText:'186 modelů přívěsů',
       subs:['Valníkové přívěsy','Sklopné přívěsy','Skříňové přívěsy','Přepravníky aut','Přepravníky lodí'] },
-    { key:'nahradni-dily', name:'Náhradní díly', href:'nahradnidily-V1.dc.html', image:'./sekce-nahradni-dily.png', count:4218, countText:'4 218 produktů skladem',
+    { key:'nahradni-dily', name:'Náhradní díly', href:'nahradnidily.dc.html', image:'./sekce-nahradni-dily.png', count:4218, countText:'4 218 produktů skladem',
       subs:['Díly náprav','Nájezdové brzdy a díly','Elektro, svítilny, odrazky','Pneu, kola, disky','Spojovací zařízení a zámky'] },
     { key:'servis', name:'Servis', image:'./sekce-servis.png', count:9, countText:'9 servisních úkonů',
       subs:['Servis přívěsů','Servis náprav AL-KO','Servis KNOTT','Příprava na STK','Rezervace termínu'] },
@@ -122,9 +122,8 @@ class Component extends DCLogic {
       // pás nese USP i sezónní sdělení
       uspPas: this.USP.concat([
         { icon:'truck-delivery', title:'Doprava', text:'Doprava zdarma při nákupu nad 5 000 Kč' },
-        { icon:'map-pin', title:'Pobočky', text:'Osobní odběr v Popovičkách a v Židněvsi' }
+        { icon:'map-pin', title:'Pobočky', text:'Osobní odběr v Popovičkách' }
       ]),
-      headerVariant: P.headerVariant || 'V2',
       debug: P.debug ?? true
     };
   }

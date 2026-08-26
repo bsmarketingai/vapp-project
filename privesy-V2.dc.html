@@ -47,7 +47,8 @@
 .vp-bleed{margin-left:-32px;margin-right:-32px;padding-left:32px;padding-right:32px;}
 @media (max-width:819px){ .vp-in{padding-left:16px;padding-right:16px;} .vp-bleed{margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px;} }
 .p-grid{display:grid;gap:20px;grid-template-columns:repeat(4,1fr);}
-/* produktový grid na škále XXS–XXL: L+ 4 · M 3 · S 2 · XS a XXS 1 */
+/* produktový grid na škále XXS–XXL: XXL 5 · L a XL 4 · M 3 · S 2 · XS a XXS 1 */
+@media (min-width:1560px){ .p-grid{grid-template-columns:repeat(5,1fr);} }
 @media (max-width:999px){ .p-grid{grid-template-columns:repeat(3,1fr);} }
 @media (max-width:819px){ .p-grid{grid-template-columns:repeat(2,1fr);} }
 @media (max-width:549px){ .p-grid{grid-template-columns:1fr;} }
@@ -73,6 +74,7 @@
 .hvx1{transition:background .12s;} .hvx1:hover{background:#F2F4F7 !important;}
 .hvx2{transition:color .12s;} .hvx2:hover{color:#1E5AA8 !important;}
 .hvx3{transition:background .12s;} .hvx3:hover{background:#D8E6F6 !important;}
+  .hvxin:hover{color:#1A4A8A !important;text-decoration:underline;}
 .hvx4{transition:background .12s;} .hvx4:hover{background:#A21B22 !important;}
 .hvx5{transition:box-shadow .12s;} .hvx5:hover{box-shadow:0 6px 20px rgba(20,47,86,.10) !important;}
 .hvx6{transition:color .12s,text-decoration .12s;} .hvx6:hover{color:#1E5AA8 !important;text-decoration:underline !important;}
@@ -83,7 +85,9 @@
 </helmet>
 <div data-screen-label="Přívěsy V2" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
 
-  <dc-import name="Hlavicka" active="Přívěsy" variant="{{ headerVariant }}" currency="{{ currency }}" on-currency-change="{{ onCurrency }}" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:00–16:00" contact-open="{{ true }}" menu-tree="{{ menuTree }}" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" hint-size="100%,150px"></dc-import>
+  <dc-import name="Usp" variant="pas" tone="tmavy" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,48px"></dc-import>
+
+  <dc-import name="Hlavicka" active="Přívěsy" currency="{{ currency }}" on-currency-change="{{ onCurrency }}" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:30–16:30" contact-open="{{ true }}" menu-tree="{{ menuTree }}" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" hint-size="100%,150px"></dc-import>
 
   <!-- CONTENT -->
   <main class="vp-in" style="padding-top:14px;padding-bottom:40px;">
@@ -97,23 +101,16 @@
       <p class="pg-lead" style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">{{ leafDesc }}</p>
     </sc-if>
     <sc-if value="{{ notLeaf }}" hint-placeholder-val="{{ true }}">
-    <p style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Přívěsy do 3,5 tuny od <a class="dl-a" href="#/privesy/vapp/" onClick="{{ linkVapp }}">VAPP</a>, <a class="dl-a" href="#/privesy/agados/" onClick="{{ linkAgados }}">Agados</a>, <a class="dl-a" href="#/privesy/stema/" onClick="{{ linkStema }}">STEMA</a> a <a class="dl-a" href="#/privesy/unsinn/" onClick="{{ linkUnsinn }}">UNSINN</a> — <a class="dl-a" href="#/privesy/dvouose-valniky/" onClick="{{ linkValniky }}">valníky</a>, <a class="dl-a" href="#/privesy/sklopne-privesy/" onClick="{{ linkSklopne }}">sklopné</a>, <a class="dl-a" href="#/privesy/skrinove-privesy/" onClick="{{ linkSkrinove }}">skříňové</a> i speciální <a class="dl-a" href="#/privesy/prepravniky-stroju/" onClick="{{ linkStroje }}">přepravníky</a>.</p>
-    <sc-if value="{{ descOpen }}" hint-placeholder-val="">
-      <p style="margin:10px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">Vybírejte podle počtu náprav, celkové hmotnosti nebo rozměru <a class="dl-a" href="#/privesy/jednoose-valniky/" onClick="{{ linkJednoose }}">ložné plochy</a>. Vyrábíme vlastní přívěsy VAPP a zastupujeme značky Agados, STEMA a UNSINN. Ke každému přívěsu dodáme <a class="dl-a" href="nahradnidily-V1.dc.html">příslušenství</a>, plachtu i nástavbu na míru a zajistíme servis po celou dobu životnosti — jak vybrat přívěs poradíme v <a class="dl-a" href="#/poradna/jak-vybrat-prives/">poradně</a>.</p>
-    </sc-if>
-    <button type="button" class="a11y-i hvx3" onClick="{{ toggleDesc }}" style="margin:10px 0 0;display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px 0 10px;border-radius:8px;background:#EFF4FB;font-size:14px;font-weight:700;color:#1E5AA8;cursor:pointer;transition:background .12s;">
-      <sc-if value="{{ descClosed }}" hint-placeholder-val="{{ true }}"><span style="display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-down" size="18" hint-size="18px,18px"></dc-import></span></sc-if>
-      <sc-if value="{{ descOpen }}" hint-placeholder-val=""><span style="display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-up" size="18" hint-size="18px,18px"></dc-import></span></sc-if>
-      {{ descLabel }}</button>
+    <p style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;text-wrap:pretty;">Přívěsy do 3,5 tuny od <a class="dl-a" href="#/privesy/vapp/" onClick="{{ linkVapp }}">VAPP</a>, <a class="dl-a" href="#/privesy/agados/" onClick="{{ linkAgados }}">Agados</a>, <a class="dl-a" href="#/privesy/stema/" onClick="{{ linkStema }}">STEMA</a> a <a class="dl-a" href="#/privesy/unsinn/" onClick="{{ linkUnsinn }}">UNSINN</a> — <a class="dl-a" href="#/privesy/dvouose-valniky/" onClick="{{ linkValniky }}">valníky</a>, <a class="dl-a" href="#/privesy/sklopne-privesy/" onClick="{{ linkSklopne }}">sklopné</a>, <a class="dl-a" href="#/privesy/skrinove-privesy/" onClick="{{ linkSkrinove }}">skříňové</a> i speciální <a class="dl-a" href="#/privesy/prepravniky-stroju/" onClick="{{ linkStroje }}">přepravníky</a>.<sc-if value="{{ descOpen }}" hint-placeholder-val=""><span> Vybírejte podle počtu náprav, celkové hmotnosti nebo rozměru <a class="dl-a" href="#/privesy/jednoose-valniky/" onClick="{{ linkJednoose }}">ložné plochy</a>. Vyrábíme vlastní přívěsy VAPP a zastupujeme značky Agados, STEMA a UNSINN. Ke každému přívěsu dodáme <a class="dl-a" href="nahradnidily.dc.html">příslušenství</a>, plachtu i nástavbu na míru a zajistíme servis po celou dobu životnosti — jak vybrat přívěs poradíme v <a class="dl-a" href="#/poradna/jak-vybrat-prives/">poradně</a>.</span></sc-if><span> </span><button type="button" class="a11y-i hvxin" aria-expanded="{{ descExpanded }}" onClick="{{ toggleDesc }}" style="display:inline;font-size:16px;font-weight:700;color:#1E5AA8;cursor:pointer;white-space:nowrap;transition:color .12s;">{{ descLabel }}<span aria-hidden="true" style="display:inline-flex;vertical-align:-4px;margin-left:2px;"><sc-if value="{{ descClosed }}" hint-placeholder-val="{{ true }}"><dc-import name="Ikony" icon-name="chevron-down" size="18" hint-size="18px,18px"></dc-import></sc-if><sc-if value="{{ descOpen }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="chevron-up" size="18" hint-size="18px,18px"></dc-import></sc-if></span></button></p>
     </sc-if>
 
     <!-- ===== KATEGORIE (Datart/Alza drill-down) ===== -->
-    <div style="margin-top:16px;">
+    <div style="margin-top:14px;">
       <sc-if value="{{ showBackLink }}" hint-placeholder-val="">
         <a class="a11y-i hvx2" href="{{ backFromLeafHref }}" onClick="{{ backFromLeaf }}" style="display:inline-flex;align-items:center;gap:6px;min-height:36px;font-size:14px;font-weight:700;color:#1E5AA8;cursor:pointer;"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>{{ backFromLeafLabel }}</a>
       </sc-if>
       <sc-if value="{{ inGroups }}" hint-placeholder-val="{{ true }}">
-      <dc-import name="VypisKategorii" media="{{ catMedia }}" layout="{{ categoryLayout }}" nejhledanejsi="{{ false }}" categories="{{ categoriesData }}" brand-categories="{{ brandCategories }}" on-open-brand="{{ onOpenBrand }}" on-open-category="{{ onOpenCategory }}" on-pick-sub="{{ onPickSub }}" debug="{{ debug }}" hint-size="100%,500px"></dc-import>
+      <dc-import name="VypisKategorii" layout="{{ categoryLayout }}" nejhledanejsi="{{ false }}" categories="{{ categoriesData }}" brand-categories="{{ brandCategories }}" on-open-brand="{{ onOpenBrand }}" on-open-category="{{ onOpenCategory }}" on-pick-sub="{{ onPickSub }}" debug="{{ debug }}" hint-size="100%,500px"></dc-import>
       </sc-if>
       <sc-if value="{{ inSubcatsCompact }}" hint-placeholder-val="">
         <div style="display:flex;flex-direction:column;gap:12px;">
@@ -121,7 +118,7 @@
             <button type="button" class="a11y-i" onClick="{{ backToGroups }}" style="display:inline-flex;align-items:center;gap:6px;min-height:36px;font-size:14px;font-weight:700;color:#1E5AA8;cursor:pointer;padding:0 10px 0 4px;"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>{{ backToGroupsLabel }}</button>
             <span style="font-size:13px;color:#666E78;margin-left:auto;">{{ activeGroupCount }} modelů</span>
           </div>
-          <dc-import name="VypisKategorii" media="{{ catMedia }}" layout="kompaktni" nejhledanejsi="{{ false }}" categories="{{ subcatCategories }}" on-open-category="{{ onOpenSubcat }}" debug="{{ debug }}" hint-size="100%,300px"></dc-import>
+          <dc-import name="VypisKategorii" layout="kompaktni" nejhledanejsi="{{ false }}" categories="{{ subcatCategories }}" on-open-category="{{ onOpenSubcat }}" debug="{{ debug }}" hint-size="100%,300px"></dc-import>
         </div>
       </sc-if>
       <sc-if value="{{ inSubcatsTiles }}" hint-placeholder-val="">
@@ -134,17 +131,17 @@
           <sc-for list="{{ subcats }}" as="s" hint-placeholder-count="5">
             <a class="a11y-i" href="{{ s.href }}" onClick="{{ s.onPick }}" style="{{ s.style }}">
               <span style="{{ s.nameStyle }}">{{ s.name }}</span>
-              <span style="display:flex;align-items:center;gap:8px;"><span style="font-size:13px;color:#666E78;">{{ s.count }}</span><span style="display:inline-flex;flex:none;color:#5189CC;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></span>
+              <span style="display:flex;align-items:center;gap:8px;"><span style="display:inline-flex;flex:none;color:#5189CC;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></span>
             </a>
           </sc-for>
           </div>
-          <div class="sc-tiles" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;padding:16px;">
+          <div class="sc-tiles" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;padding:16px;">
             <sc-for list="{{ subcats }}" as="s" hint-placeholder-count="6">
               <a class="a11y-i sc-tile {{ s.tileCls }}" href="{{ s.href }}" onClick="{{ s.onPick }}" style="{{ s.tileStyle }}">
                 <span style="flex:none;width:48px;height:48px;background:#FFFFFF;border-radius:6px;"></span>
                 <span style="flex:1;min-width:0;display:flex;flex-direction:column;">
                   <span style="{{ s.tileNameStyle }}">{{ s.name }}</span>
-                  <span style="font-size:13px;font-weight:400;color:#666E78;">{{ s.countText }}</span>
+                  
                 </span>
               </a>
             </sc-for>
@@ -222,24 +219,6 @@
   
 
   </main>
-
-
-
-  <div style="position:fixed;left:16px;right:16px;bottom:16px;z-index:96;display:flex;justify-content:center;pointer-events:none;">
-    <div style="pointer-events:auto;display:flex;align-items:center;flex-wrap:wrap;justify-content:center;gap:8px;padding:6px;border-radius:999px;background:#142F56;box-shadow:0 10px 30px rgba(20,30,45,.14);">
-      <span style="font-size:13px;font-weight:700;color:#B4CEEC;padding:0 4px;">Verze stránky:</span>
-      <nav aria-label="Náhledy kategorií" style="display:flex;align-items:center;gap:8px;">
-        <sc-for list="{{ mediaItems }}" as="m" hint-placeholder-count="2">
-          <button type="button" class="a11y-i pl-btn" aria-pressed="{{ m.pressed }}" onClick="{{ m.onClick }}" style="{{ m.style }}">{{ m.label }}</button>
-        </sc-for>
-      </nav>
-      <span aria-hidden="true" style="width:1px;height:20px;background:#1E5AA8;margin:0 2px;"></span>
-      <nav aria-label="Přepínač verzí" style="display:flex;align-items:center;gap:8px;">
-        <a href="./privesy-V1.dc.html" aria-current="false" style="min-height:32px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:700;line-height:1;display:inline-flex;align-items:center;text-decoration:none;cursor:pointer;background:transparent;color:#B4CEEC;">V1</a>
-        <a href="./privesy-V2.dc.html" aria-current="page" style="min-height:32px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:700;line-height:1;display:inline-flex;align-items:center;text-decoration:none;cursor:pointer;background:#FFFFFF;color:#142F56;">V2</a>
-      </nav>
-    </div>
-  </div>
   <div class="vp-in" style="margin-top:8px;">
     <dc-import name="Usp" variant="sloupce" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
   </div>
@@ -271,7 +250,7 @@ class Component extends DCLogic {
       menuOpen:false, descOpen:false, filterOpen:false, sortOpen:false,
       priceFrom:0, priceTo:300000, flags:null,
       view:'groups', path:[], leafPath:null, subcat:null, onlyStock: props.defaultOnlyStock ?? false, sort: props.defaultSort ?? 'pop',
-      catMedia:'fotky', cart:{}, brands:{}, params:{}, accOpen:{ 'Výrobce':true }, compare:{}, qty:{}, pageFrom:1, pageTo:1, catLayout:null, debugOverride:null, hoverCard:null,
+      cart:{}, brands:{}, params:{}, accOpen:{ 'Výrobce':true }, compare:{}, qty:{}, pageFrom:1, pageTo:1, catLayout:null, debugOverride:null, hoverCard:null,
       searchQ:'', searchFocus:false, loading:false, macro:null, brandFocus:null, saleOnly:false,
       currency:'CZK',
       headerVariant:'V3'
@@ -478,6 +457,18 @@ class Component extends DCLogic {
     };
     window.addEventListener('scroll', this._onScroll, { passive:true });
     this._onScroll();
+    // dávka výpisu podle pásma: XXL (5 sloupců) 20, jeden sloupec (XS a XXS) 8, jinak 16
+    this._mqXXL = window.matchMedia('(min-width:1560px)');
+    this._mqOne = window.matchMedia('(max-width:549px)');
+    this._mqM = window.matchMedia('(min-width:820px) and (max-width:999px)');
+    this._onXXL = ()=>{
+      const w = this._mqXXL.matches, o = this._mqOne.matches, m = this._mqM.matches;
+      if (w !== !!this.state.wideXXL || o !== !!this.state.oneCol || m !== !!this.state.threeCol) this.setState({ wideXXL:w, oneCol:o, threeCol:m });
+    };
+    this._mqXXL.addEventListener('change', this._onXXL);
+    this._mqOne.addEventListener('change', this._onXXL);
+    this._mqM.addEventListener('change', this._onXXL);
+    this._onXXL();
     this._onHash = ()=>this.routeFromUrl();
     window.addEventListener('hashchange', this._onHash);
     window.addEventListener('popstate', this._onHash);
@@ -552,6 +543,7 @@ class Component extends DCLogic {
 
   componentWillUnmount(){
     window.removeEventListener('scroll', this._onScroll);
+    if (this._onXXL){ this._mqXXL.removeEventListener('change', this._onXXL); this._mqOne.removeEventListener('change', this._onXXL); this._mqM.removeEventListener('change', this._onXXL); }
     if (this._onHash){ window.removeEventListener('hashchange', this._onHash); window.removeEventListener('popstate', this._onHash); }
     const hdr = document.querySelector('.hd-root'); if (hdr) hdr.style.transform = '';
   }
@@ -573,7 +565,8 @@ class Component extends DCLogic {
       ? filteredAll.length
       : (s.view !== 'groups' && groupNode ? groupNode.count : 212);
     // zobrazené okno je souvislý rozsah stránek pageFrom…pageTo; dávka = jedna celá stránka
-    const PER_PAGE = 16;
+    // dávka je vždy násobkem počtu sloupců, aby poslední řádek nebyl poloprázdný
+    const PER_PAGE = this.state.oneCol ? 8 : (this.state.wideXXL ? 20 : (this.state.threeCol ? 18 : 16));
     const pgCount  = Math.max(1, Math.ceil(filteredAll.length / PER_PAGE));
     const pgTo     = Math.min(Math.max(1, s.pageTo || 1), pgCount);
     const pgFrom   = Math.min(Math.max(1, s.pageFrom || 1), pgTo);
@@ -807,7 +800,8 @@ class Component extends DCLogic {
       linkSklopne:(e)=>{e.preventDefault();onOpenCategory('Sklopné přívěsy');},
       linkSkrinove:(e)=>{e.preventDefault();onOpenCategory('Skříňové přívěsy');},
       linkStroje:(e)=>{e.preventDefault();onOpenCategory('Přepravníky strojů');},
-      descLabel: s.descOpen ? 'Skrýt celý popis' : 'Zobrazit celý popis',
+      descLabel: s.descOpen ? 'Skrýt' : 'Zobrazit celý popis',
+      descExpanded: s.descOpen ? 'true' : 'false',
       inGroups: s.view==='groups' && !activeMacro && !s.brandFocus,
       inSubcats: inSubcats || !!activeMacro,
       inLeaf: inCat, notLeaf: !inCat,
@@ -815,20 +809,13 @@ class Component extends DCLogic {
       pageCountText: activeMacro ? (macroSubcats.reduce((a,x)=>a+x.count,0).toLocaleString('cs-CZ')+' modelů') : (inCat ? (resultCount.toLocaleString('cs-CZ')+' modelů') : '212 modelů'),
       leafDesc: inCat ? (curName+' — '+(path.length ? ('podkategorie '+(path.length>1?path[path.length-2]:ag.name)) : 'kategorie přívěsů')+' od VAPP, Agados, STEMA a UNSINN. '+resultCount.toLocaleString('cs-CZ')+' modelů, dostupnost a termín dodání potvrdíme telefonicky. '+(hasKids?'Vyberte si přesnější zařazení níže, nebo procházejte celý výpis.':'Nevíte si rady s výběrem? Zavolejte nám.')) : '',
       crumbItems, onCrumbNav,
-      catMedia: s.catMedia || 'fotky',
-      mediaItems: [['fotky','Fotky'],['ikony','Ikony']].map(([id,label])=>({
-        label, pressed: (s.catMedia||'fotky') === id ? 'true' : 'false',
-        style: 'min-height:32px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:700;line-height:1;display:inline-flex;align-items:center;cursor:pointer;'
-          + ((s.catMedia||'fotky') === id ? 'background:#FFFFFF;color:#142F56;' : 'background:transparent;color:#B4CEEC;'),
-        onClick: ()=>this.setState({ catMedia:id })
-      })),
       currency: s.currency || 'CZK', onCurrency: (code)=>this.setState({ currency: code }),
       backFromLeaf: this.link(()=>{ if(path.length>0) this.go({ path: path.slice(0,-1), leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, this.urlFor(ag.key, path.slice(0,-1))); else this.go({ view:'groups', path:[], leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, '#/privesy/'); }),
       backFromLeafHref: ag ? (path.length>0 ? this.urlFor(ag.key, path.slice(0,-1)) : '#/privesy/') : '#/privesy/',
       backFromLeafLabel: inCat ? ('Zpět na '+(path.length>1 ? path[path.length-2] : (path.length===1 ? ag.name : 'Přívěsy'))) : '',
       showBackLink: inCat && !hasKids,
       menuTree: [
-        { name:'Náhradní díly', href:'./nahradnidily-V1.dc.html' },
+        { name:'Náhradní díly', href:'./nahradnidily.dc.html' },
         { name:'Přívěsy', href:'#/privesy/', children: this.GROUPS.map(g=>{
             const walk = (node, segs)=>({
               name: node.name, href: this.urlFor(g.key, segs),

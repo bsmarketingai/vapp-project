@@ -26,6 +26,10 @@
   html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
   body{padding:24px;}
   .ks-box{transition:border-color .12s;} .ks-box:hover{border-color:#5A626C !important;}
+  .ks-cur{transition:background .12s;} .ks-cur:hover{background:#F2F4F7 !important;border-radius:0 7px 7px 0;}
+  .ks-curitem{transition:background .12s;} .ks-curitem:hover{background:#F2F4F7 !important;}
+  /* M a níž (kde je hamburger): měnu si zákazník přepíná v mobilním menu */
+  @media (max-width:999px){ .ks-sep, .ks-curwrap{display:none !important;} }
   .ks-mob{display:none;}
   @media (max-width:549px){ .ks-box{display:none !important;} .ks-mob{display:flex !important;} }
   .ks-f-desk .ks-box, .ks-force-desk .ks-box{display:inline-flex !important;} .ks-f-desk .ks-mob, .ks-force-desk .ks-mob{display:none !important;}
@@ -34,17 +38,32 @@
 <script src="./mena.js"></script>
 </helmet>
 <sc-if value="{{ single }}" hint-placeholder-val="">
-  <button type="button" class="{{ viewCls }} a11y-i" onClick="{{ onClick }}" aria-label="{{ cartAria }}" style="display:inline-flex;align-items:center;cursor:pointer;">
-    <div class="ks-box" style="position:relative;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:1px solid #91959B;border-radius:8px;background:#fff;color:#15181C;">
-      <span style="display:flex;align-items:center;color:#1E5AA8;"><dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import></span>
-      <span style="font-size:14px;font-weight:700;color:#15181C;white-space:nowrap;">{{ label }}</span>
+  <div class="{{ viewCls }}" style="display:inline-flex;align-items:center;">
+    <div class="ks-box" style="position:relative;display:inline-flex;align-items:center;min-height:44px;border:1px solid #91959B;border-radius:8px;background:#fff;color:#15181C;">
+      <button type="button" class="a11y-i" onClick="{{ onClick }}" onMouseEnter="{{ onHoverEnter }}" onMouseLeave="{{ onHoverLeave }}" aria-label="{{ cartAria }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;cursor:pointer;">
+        <span style="display:flex;align-items:center;color:#1E5AA8;"><dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import></span>
+        <span style="font-size:14px;font-weight:700;color:#15181C;white-space:nowrap;">{{ label }}</span>
+      </button>
+      <sc-if value="{{ showCur }}" hint-placeholder-val="{{ true }}">
+        <span class="ks-sep" aria-hidden="true" style="flex:none;width:1px;align-self:stretch;margin:8px 0;background:#D5DAE0;"></span>
+        <div class="ks-curwrap" style="position:relative;flex:none;">
+          <button type="button" class="a11y-i ks-cur" aria-haspopup="listbox" aria-expanded="{{ curExpanded }}" aria-label="{{ curAria }}" onClick="{{ toggleCur }}" style="display:inline-flex;align-items:center;gap:2px;min-height:44px;padding:0 10px 0 12px;font-size:14px;font-weight:700;color:#15181C;white-space:nowrap;cursor:pointer;">{{ curCode }}<span aria-hidden="true" style="{{ curChevronStyle }}"><dc-import name="Ikony" icon-name="chevron-down" size="18" hint-size="18px,18px"></dc-import></span></button>
+          <sc-if value="{{ curOpen }}" hint-placeholder-val="">
+            <div role="listbox" aria-label="Měna" style="position:absolute;top:calc(100% + 8px);right:0;min-width:112px;padding:4px;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);z-index:90;">
+              <sc-for list="{{ currencyItems }}" as="c" hint-placeholder-count="2">
+                <button type="button" class="a11y-i ks-curitem" role="option" aria-selected="{{ c.selected }}" onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.code }}</button>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
       <sc-if value="{{ showCount }}" hint-placeholder-val=""><span aria-hidden="true" style="position:absolute;top:-4px;right:-8px;min-width:16px;width:16px;height:16px;border-radius:999px;background:#C5232B;color:#fff;font-size:10px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;">{{ count }}</span></sc-if>
     </div>
-    <div class="ks-mob" style="position:relative;align-items:center;justify-content:center;width:44px;height:44px;color:#1E5AA8;">
+    <button type="button" class="ks-mob a11y-i" onClick="{{ onClick }}" aria-label="{{ cartAria }}" style="position:relative;align-items:center;justify-content:center;width:44px;height:44px;color:#1E5AA8;cursor:pointer;">
       <dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import>
       <sc-if value="{{ showCount }}" hint-placeholder-val=""><span aria-hidden="true" style="position:absolute;top:4px;right:2px;min-width:16px;width:16px;height:16px;border-radius:999px;background:#C5232B;color:#fff;font-size:10px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;">{{ count }}</span></sc-if>
-    </div>
-  </button>
+    </button>
+  </div>
 </sc-if>
 <sc-if value="{{ gallery }}" hint-placeholder-val="{{ true }}">
 <div style="display:flex;flex-direction:column;gap:16px;max-width:560px;">
@@ -86,6 +105,17 @@
 const CART_DEFAULT = { count: 2, total: 42556 };
 
 class Component extends DCLogic {
+  state = { curOpen:false };
+  componentDidMount(){
+    this._away = (e)=>{ if(!this.state.curOpen) return; const n=e.target; if(n&&n.closest&&n.closest('.ks-cur, [role="listbox"]')) return; this.setState({ curOpen:false }); };
+    this._esc = (e)=>{ if(e.key==='Escape' && this.state.curOpen) this.setState({ curOpen:false }); };
+    document.addEventListener('click', this._away);
+    document.addEventListener('keydown', this._esc);
+  }
+  componentWillUnmount(){
+    document.removeEventListener('click', this._away);
+    document.removeEventListener('keydown', this._esc);
+  }
   fmt(n){
     const M = typeof window !== 'undefined' ? window.VappMena : null;
     const cur = this.props.currency || 'CZK';
@@ -107,11 +137,28 @@ class Component extends DCLogic {
       const c = this.cell(count,total);
       const v = P.view || 'auto';
       const viewCls = v==='desktop' ? 'ks-force-desk' : (v==='mobil' ? 'ks-force-mob' : '');
+      const codes = Array.isArray(P.currencies) && P.currencies.length ? P.currencies : ['CZK','EUR'];
+      const cur = P.currency || codes[0];
+      const setCur = typeof P.onCurrencyChange === 'function' ? P.onCurrencyChange : null;
+      const curOpen = !!this.state.curOpen;
       return { single:true, gallery:false, viewCls, count:c.count, showCount:c.showCount, label:c.label, labelStyle:c.labelStyle,
         cartAria: count>0 ? ('Košík — ' + count + (count===1?' položka':(count<5?' položky':' položek'))) : 'Košík — prázdný',
-        onClick:P.onClick||(()=>{}) };
+        onClick:P.onClick||(()=>{}),
+        // náhled košíku se otevírá jen nad cenou — nad přepínačem měny ne, jinak se měna nedá vybrat
+        onHoverEnter: typeof P.onHoverEnter === 'function' ? P.onHoverEnter : (()=>{}),
+        onHoverLeave: typeof P.onHoverLeave === 'function' ? P.onHoverLeave : (()=>{}),
+        showCur: !!setCur && codes.length > 1,
+        curCode: cur, curOpen, curExpanded: curOpen ? 'true' : 'false', curAria: 'Měna: ' + cur,
+        curChevronStyle: 'display:inline-flex;flex:none;color:#5189CC;transition:transform .12s ease;' + (curOpen ? 'transform:rotate(180deg);' : ''),
+        toggleCur: ()=>this.setState({ curOpen: !this.state.curOpen }),
+        currencyItems: codes.map(code=>({
+          code, selected: code === cur ? 'true' : 'false',
+          style: 'width:100%;min-height:44px;padding:0 12px;border-radius:6px;display:flex;align-items:center;font-size:14px;font-weight:'
+            + (code === cur ? '700' : '500') + ';color:' + (code === cur ? '#1E5AA8' : '#5A626C') + ';cursor:pointer;',
+          onClick: ()=>{ this.setState({ curOpen:false }); if (setCur) setCur(code); }
+        })) };
     }
-    return { single:false, gallery:true, states:[ this.cell(0,0), this.cell(1,397), this.cell(12,14990) ] };
+    return { single:false, gallery:true, showCur:false, states:[ this.cell(0,0), this.cell(1,397), this.cell(12,14990) ] };
   }
 }
 

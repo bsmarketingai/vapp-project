@@ -63,7 +63,7 @@
 <sc-if value="{{ isPas }}" hint-placeholder-val="">
   <div class="{{ pasCls }}" onMouseEnter="{{ onHold }}" onMouseLeave="{{ onRelease }}" onFocus="{{ onHold }}" onBlur="{{ onRelease }}" style="background:#EFF4FB;width:100%;">
     <div class="usp-in">
-      <div style="min-height:48px;display:flex;align-items:center;justify-content:center;gap:12px;padding:6px 0;">
+      <div style="min-height:32px;display:flex;align-items:center;justify-content:center;gap:12px;padding:0;">
         <button type="button" class="usp-i usp-nav" aria-label="Předchozí výhoda" onClick="{{ onPrev }}" style="flex:none;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#1E5AA8;"><dc-import name="Ikony" icon-name="chevron-left" size="18" hint-size="18px,18px"></dc-import></button>
         <div aria-live="polite" aria-atomic="true" style="flex:1;min-width:0;display:flex;justify-content:center;">
           <span class="usp-live" style="{{ liveStyle }}">
@@ -74,11 +74,7 @@
           </span>
         </div>
         <button type="button" class="usp-i usp-nav" aria-label="Další výhoda" onClick="{{ onNext }}" style="flex:none;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#1E5AA8;"><dc-import name="Ikony" icon-name="chevron-right" size="18" hint-size="18px,18px"></dc-import></button>
-        <div class="usp-dots" style="flex:none;display:flex;align-items:center;gap:6px;margin-left:4px;">
-          <sc-for list="{{ dots }}" as="d" hint-placeholder-count="4">
-            <button type="button" class="usp-i usp-dot" aria-label="{{ d.label }}" aria-current="{{ d.current }}" onClick="{{ d.onClick }}" style="{{ d.style }}"></button>
-          </sc-for>
-        </div>
+
       </div>
     </div>
   </div>
@@ -86,7 +82,7 @@
 <sc-if value="{{ showDocs }}" hint-placeholder-val="">
   <div style="display:flex;flex-direction:column;gap:5px;padding:16px 4px 0;">
     <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy mrizka:</strong> statický pás čtyř výhod na bílé ploše — pod rozcestníkem kategorií nebo nad patičkou. Ikona 24, název 16/700, popis 13/400. Na M dva sloupce, pod 550 px jeden.</div>
-    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy pas:</strong> úzký světle modrý pruh pod hlavičkou, kde se hlášení střídají (auto 5 s, šipky, tečky, pauza při hoveru a fokusu). Nese i sezónní sdělení, ne jen USP.</div>
+    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy pas:</strong> úzký pruh výšky 32 px (dotyková plocha šipek 32 × 32), světle modrý nebo tmavý pod hlavičkou, kde se hlášení střídají (auto 5 s, šipky, pauza při hoveru a fokusu). Nese i sezónní sdělení, ne jen USP.</div>
     <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nepoužívat obě varianty se stejným obsahem na jedné stránce; pás nemá nést odkazy ani CTA — je to sdělení, ne navigace.</div>
   </div>
 </sc-if>

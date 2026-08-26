@@ -28,10 +28,10 @@
 <div style="display:flex;flex-direction:column;gap:20px;width:100%;">
   <sc-if value="{{ showStd }}" hint-placeholder-val="{{ true }}">
     <div style="display:flex;align-items:center;gap:16px;background:#EFF4FB;border-radius:8px;padding:16px;flex-wrap:wrap;">
-      <div style="flex:none;width:44px;height:44px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#1E5AA8;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import></div>
+      <img src="./uploads/supportLine.png" alt="" style="flex:none;width:76px;height:72px;object-fit:contain;display:block;">
       <div style="flex:1;min-width:200px;">
-        <div style="font-size:16px;font-weight:700;color:#142F56;">Nevíte, který díl je ten správný?</div>
-        <div style="display:inline-flex;align-items:center;gap:8px;font-size:14px;color:#5A626C;margin-top:2px;"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:9px;height:9px;background:#2EAA6A;flex:none;"></span>Zkušení obchodníci poradí po telefonu i e-mailu · Po–Pá 8–16</div>
+        <div style="font-size:22px;font-weight:700;line-height:1.25;color:#142F56;">Potřebujete poradit s výběrem?</div>
+        <div style="display:inline-flex;align-items:center;gap:8px;font-size:16px;line-height:1.6;color:#5A626C;margin-top:4px;"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:9px;height:9px;background:#2EAA6A;flex:none;"></span>Zkušení obchodníci poradí po telefonu i e-mailu · Po–Pá 8:30–16:30</div>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <dc-import name="Tlacitko" variant="primary" size="medium" label="323 605 314" icon="phone" hint-size="180px,44px"></dc-import>
@@ -41,10 +41,10 @@
   </sc-if>
   <sc-if value="{{ showCompact }}" hint-placeholder-val="">
     <div style="display:flex;align-items:center;gap:14px;background:#EFF4FB;border-radius:8px;padding:16px;flex-wrap:wrap;">
-      <div style="flex:none;width:40px;height:40px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#1E5AA8;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import></div>
+      <img src="./uploads/supportLine.png" alt="" style="flex:none;width:62px;height:58px;object-fit:contain;display:block;">
       <div style="flex:1;min-width:180px;">
-        <div style="font-size:14px;font-weight:700;color:#142F56;">Nevíte, který díl je ten správný?</div>
-        <div style="display:inline-flex;align-items:center;gap:8px;font-size:13px;color:#5A626C;margin-top:1px;"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:9px;height:9px;background:#2EAA6A;flex:none;"></span>Zkušení obchodníci poradí po telefonu i e-mailu · Po–Pá 8–16</div>
+        <div style="font-size:18px;font-weight:700;line-height:1.35;color:#142F56;">Potřebujete poradit s výběrem?</div>
+        <div style="display:inline-flex;align-items:center;gap:8px;font-size:15px;line-height:1.6;color:#5A626C;margin-top:2px;"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:9px;height:9px;background:#2EAA6A;flex:none;"></span>Zkušení obchodníci poradí po telefonu i e-mailu · Po–Pá 8:30–16:30</div>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <dc-import name="Tlacitko" variant="primary" size="medium" label="323 605 314" icon="phone" hint-size="180px,44px"></dc-import>
@@ -54,9 +54,9 @@
   </sc-if>
   <sc-if value="{{ showNote }}" hint-placeholder-val="{{ true }}">
     <div style="display:flex;flex-direction:column;gap:5px;padding:2px 4px;">
-      <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy standard (44/44):</strong> samostatná pobídka na stránce kategorie i v detailu — dostatek prostoru, ikona 44 a tlačítka 44.</div>
-      <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy compact (ikona 40):</strong> v hutnějším kontextu (pod výpisem, v užším sloupci), kde je potřeba nižší profil. Po sjednocení mají tlačítka 44 px jako standard — menší zůstává jen ikona (40).</div>
-      <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> neopakovat víckrát na jedné stránce; telefon vždy jako primární akce; podklad vždy #EFF4FB.</div>
+      <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy standard:</strong> samostatná pobídka na stránce kategorie i v detailu — fotka operátora 76 × 72 vlevo, tlačítka 44.</div>
+      <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy compact:</strong> v hutnějším kontextu (pod výpisem, v užším sloupci), kde je potřeba nižší profil — fotka 62 × 58, tlačítka zůstávají 44.</div>
+      <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> neopakovat víckrát na jedné stránce; telefon vždy jako primární akce; podklad vždy #EFF4FB; fotka operátora bez plochy, rámečku i rádiusu.</div>
     </div>
   </sc-if>
 </div>
