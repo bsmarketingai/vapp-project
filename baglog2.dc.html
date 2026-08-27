@@ -98,6 +98,16 @@ class Component extends DCLogic {
     // Historie: nejnovější den nahoře; items = {title, where, what, why, how}
     const log = [
       { date: '27. 8. 2026', items: [
+        { title: 'Breadcrumb jen na vnořených stránkách',
+          where: 'O nás, Poradna',
+          what: 'Stránky bez nadřazené kategorie už drobečkovou navigaci nemají — odebraná z O nás a z výpisu poradny bez zvolené rubriky. Na rubrice a v detailu článku zůstává.',
+          why: 'Breadcrumb Domů → O nás nenesl žádnou informaci; jediný odkaz v něm vedl na homepage, kam se člověk dostane odkazem v logu.',
+          how: 'Nadpis se posunul na 16 px od hlavičky, aby po odebrání drobečků nezůstala prázdná mezera.' },
+        { title: 'Sjednocená typografie navigačních seznamů',
+          where: 'Mobilní menu, Patička',
+          what: 'Podpoložky v mobilním menu i rozbalené odkazy v patičce mají 18/700 (první úroveň 20/700). V patičce je mezera nadpis–první položka 4 px. Aktivní kategorie se v mobilním menu už nezvýrazňuje modrou.',
+          why: 'Menu i patička jsou stejný typ navigace, ale měly rozdílné velikosti; položky byly na dotek malé. Modré zvýraznění aktivní kategorie ztratilo smysl, když menu vede na reálné stránky — na aktivní stránce ho není potřeba hlásit dvakrát.',
+          how: 'Velikosti se drží dvou kroků: 20 px rodič, 18 px potomek. Barvu nese hierarchie (#15181C vs. #5A626C), ne stav.' },
         { title: 'Patička je čitelnější a lépe uspořádaná',
           where: 'Patička',
           what: 'Nadpisy sloupců i akordeonové hlavičky mají 20/700 v bílé (dřív 13/700 uppercase v blue.300), odkazy 16/700 (dřív 15/400), mezera mezi nadpisem a prvním odkazem 8 px. V akordeonu jsou odkazy odsazené o 16 px, na desktopu u okraje sloupce. V kontaktním bloku je pořadí e-mail → telefon → otevírací doba, doba dostala ikonu clock a bílý text, tlačítko má text „Všechny kontakty“ bez kickeru nad ním. Sloupec Zákazník: Obchodní podmínky, Podmínky půjčovny, Reklamace a vrácení zboží, Doprava a platba, Nákup na splátky ESSOX, Ochrana osobních údajů. Do sloupce O firmě přidány Kontakty na druhou pozici.',
