@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&amp;display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  .pkr-btn{appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;cursor:pointer;}
+  .pkr-btn:focus-visible,.pkr-all:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .pkr-all{text-decoration:none;}
+  .pkr-track{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding-bottom:4px;}
+  .pkr-track::-webkit-scrollbar{display:none;}
+  .pkr-item{flex:0 0 calc((100% - 80px)/5);min-width:0;scroll-snap-align:start;display:flex;}
+  /* mount komponenty karty nedědí flex — roztáhne se blokově, ne flexem (host má i mount DebugBaru) */
+  .pkr-item>.sc-host{display:block;width:100%;min-width:0;}
+  .pkr-item .h-card{width:100%;}
+  @media (max-width:1559px){ .pkr-item{flex-basis:calc((100% - 60px)/4);} }
+  @media (max-width:999px){ .pkr-item{flex-basis:calc((100% - 40px)/3);} }
+  @media (max-width:819px){ .pkr-item{flex-basis:calc((100% - 20px)/2);} }
+  /* XS a XXS: vždy právě jedna celá karta, nic nevykukuje */
+  @media (max-width:549px){ .pkr-item{flex-basis:100%;} }
+  .pkr-h2{font-size:28px;line-height:1.2;letter-spacing:-0.01em;}
+  @media (max-width:819px){ .pkr-h2{font-size:22px;line-height:1.25;} }
+  .pkr-navwrap{display:flex;}
+</style>
+</helmet>
+<section aria-labelledby="{{ headingId }}" style="width:100%;display:flex;flex-direction:column;gap:16px;">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+    <h2 id="{{ headingId }}" class="pkr-h2" style="margin:0;font-weight:700;color:#15181C;">{{ title }}</h2>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <a class="pkr-all" href="{{ allHref }}" style="display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 16px;border-radius:8px;font-size:14px;font-weight:700;color:#C5232B;transition:background 120ms ease;" style-hover="background:#FDF1F1;" style-active="transform:translateY(1px);">{{ allLabel }}
+        <dc-import name="Ikony" icon-name="arrow-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
+      </a>
+      <div class="pkr-navwrap" style="align-items:center;gap:4px;">
+        <button type="button" class="pkr-btn" aria-label="Předchozí produkty" onClick="{{ onPrev }}" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:999px;background:#FFFFFF;color:#C5232B;transition:background 120ms ease;" style-hover="background:#FDF1F1;" style-active="transform:translateY(1px);">
+          <dc-import name="Ikony" icon-name="chevron-left" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
+        </button>
+        <button type="button" class="pkr-btn" aria-label="Další produkty" onClick="{{ onNext }}" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:999px;background:#FFFFFF;color:#C5232B;transition:background 120ms ease;" style-hover="background:#FDF1F1;" style-active="transform:translateY(1px);">
+          <dc-import name="Ikony" icon-name="chevron-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="pkr-track" ref="{{ trackRef }}" tabindex="0" role="group" aria-label="{{ trackLabel }}">
+    <sc-for list="{{ products }}" as="p" hint-placeholder-count="5">
+      <div class="pkr-item">
+        <dc-import name="ProduktovaKarta" p="{{ p }}" detail-href="{{ detailHref }}" currency="{{ currency }}" hint-size="100%,470px"></dc-import>
+      </div>
+    </sc-for>
+  </div>
+</section>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:600},&quot;title&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Nejprodávanější náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;allLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Zobrazit celou kategorii&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;allHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;#&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;detailHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;#&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;currency&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;CZK&quot;,&quot;EUR&quot;],&quot;default&quot;:&quot;CZK&quot;,&quot;tsType&quot;:&quot;'CZK'|'EUR'&quot;},&quot;items&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;object[]&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  state = { qty:{}, cart:{} };
+  DEMO = [
+    { name:'Opěrné kolečko ⌀48 mm, nosnost 150 kg', objNum:'404815', net:'397 Kč', gross:'480 Kč', stock:22, sale:15 },
+    { name:'Nájezdová brzda KNOTT KF13', objNum:'901301', net:'4 876 Kč', gross:'5 900 Kč', stock:12 },
+    { name:'Manžeta gumová KNOTT KF/KR 7,5–27', objNum:'907527', net:'157 Kč', gross:'190 Kč', stock:44 },
+    { name:'Svítilna zadní Aspöck Multipoint II levá', objNum:'310221', net:'812 Kč', gross:'983 Kč', stock:8 },
+    { name:'Kolo 195/50 R13C, 5 × 112', objNum:'220513', net:'1 940 Kč', gross:'2 347 Kč', stock:16 },
+    { name:'Zámek kulového čepu Winterhoff WS 3000', objNum:'770300', net:'2 390 Kč', gross:'2 892 Kč', stock:0 }
+  ];
+  trackRef = React.createRef();
+  scroll(dir){
+    const el = this.trackRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * Math.round(el.clientWidth * 0.9), behavior:'smooth' });
+  }
+  card(raw, i){
+    const st = this.state;
+    const stock = Number(raw.stock) || 0;
+    const rating = raw.rating != null ? raw.rating : 4 + (i % 2 ? 0 : 1) * 0;
+    const specs = Array.isArray(raw.specs) ? raw.specs.slice(0,3) : [];
+    const badge = raw.sale ? ('−' + raw.sale + ' %') : (raw.freeShipping ? 'Doprava zdarma' : '');
+    const key = raw.name;
+    return {
+      name: raw.name,
+      objNum: raw.objNum || '',
+      img: raw.img || '',
+      noImg: !raw.img,
+      imgBgStyle: 'aspect-ratio:4/3;background:#fff url("./' + (raw.img||'') + '") center/contain no-repeat;background-origin:content-box;padding:18px 12px;',
+      phStyle: 'aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;color:#666E78;font-size:13px;font-weight:600;background:repeating-linear-gradient(45deg,#E9ECEF,#E9ECEF 11px,#E3E6EA 11px,#E3E6EA 22px);',
+      imgLabel: 'FOTO',
+      badge, badgeStyle: 'position:absolute;top:8px;left:8px;font-size:13px;font-weight:700;border-radius:6px;padding:4px 9px;' + (raw.sale ? 'color:#fff;background:#C5232B;' : 'color:#0B6937;background:#E9F8EF;'),
+      dot1:'display:none;', dot2:'display:none;',
+      rating, reviews: raw.reviews != null ? raw.reviews : ((raw.name.length * 13) % 38 + 3),
+      specs, priceNet: raw.net, price: raw.gross, original: raw.original || 0,
+      available: stock > 0,
+      avail: stock >= 15 ? 'Skladem > 15 ks' : (stock > 0 ? ('Skladem ' + stock + ' ks') : 'Na dotaz'),
+      availIn: stock > 0, availOut: stock === 0,
+      availStyle: 'display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:' + (stock > 0 ? '#0B6937;' : '#666E78;'),
+      qty: st.qty[key] || 1,
+      onQty: (v)=>this.setState(prev=>({ qty: Object.assign({}, prev.qty, { [key]: Math.max(1, v) }) })),
+      inCart: st.cart[key] || 0,
+      onBuy: ()=>this.setState(prev=>({ cart: Object.assign({}, prev.cart, { [key]: (prev.cart[key]||0) + (prev.qty[key]||1) }) }))
+    };
+  }
+  renderVals(){
+    const P = this.props;
+    const src = (Array.isArray(P.items) && P.items.length) ? P.items.filter(Boolean) : this.DEMO;
+    const title = P.title ?? 'Nejprodávanější náhradní díly';
+    const slug = String(title).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+    return {
+      title,
+      headingId: 'pkr-' + slug,
+      trackLabel: title + ' — karusel produktů',
+      allLabel: P.allLabel ?? 'Zobrazit vše',
+      allHref: P.allHref ?? '#',
+      detailHref: P.detailHref ?? '#',
+      currency: P.currency ?? 'CZK',
+      products: src.map((r,i)=>this.card(r,i)),
+      trackRef: this.trackRef,
+      onPrev: ()=>this.scroll(-1),
+      onNext: ()=>this.scroll(1),
+      debug: P.debug ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

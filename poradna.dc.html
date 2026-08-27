@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&amp;display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0!important;padding:0!important;background:#F7F9FB;}
+  #dc-root{margin:0!important;padding:0!important;width:100%!important;max-width:none!important;border:0!important;}
+  #dc-root>.sc-host{margin:0!important;padding:0!important;width:100%!important;}
+  a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
+  .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
+  @media (max-width:819px){ .vp-in{padding-left:16px;padding-right:16px;} }
+  @media (max-width:819px){ .pg-h1{font-size:26px!important;} .pg-lead{font-size:14px!important;} }
+  .cl-grid{display:grid;gap:20px;grid-template-columns:repeat(3,1fr);}
+  @media (min-width:1560px){ .cl-grid{grid-template-columns:repeat(4,1fr);} }
+  @media (max-width:999px){ .cl-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:549px){ .cl-grid{grid-template-columns:1fr;} }
+  .pg-back{appearance:none;-webkit-appearance:none;border:0;margin:0;font:inherit;background:transparent;cursor:pointer;display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px 0 6px;border-radius:8px;font-size:14px;font-weight:700;color:#1E5AA8;transition:background 120ms ease;}
+  .pg-back:hover{background:#EFF4FB;}
+  .pg-back:active{transform:translateY(1px);}
+  .pg-back:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+</style>
+</helmet>
+<div data-screen-label="Poradna" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
+
+  <dc-import name="Usp" variant="pas" tone="tmavy" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,48px"></dc-import>
+
+  <dc-import name="Hlavicka" active="Poradna" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:30–16:30" contact-open="{{ true }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
+
+  <main class="vp-in" style="padding-top:14px;padding-bottom:40px;">
+
+    <div style="margin:4px 0 6px;">
+      <dc-import name="Breadcrumb" items="{{ crumbItems }}" on-navigate="{{ onCrumbNav }}" bare="{{ true }}" debug="{{ debug }}" hint-size="100%,20px"></dc-import>
+    </div>
+
+    <h1 class="pg-h1" style="margin:28px 0 0;font-size:36px;font-weight:700;letter-spacing:-0.02em;color:#142F56;">{{ pageTitle }}</h1>
+    <p class="pg-lead" style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;text-wrap:pretty;">{{ lead }}</p>
+
+    <sc-if value="{{ noFilter }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top:20px;">
+        <dc-import name="VypisKategorii" layout="kompaktni" media="fotky" nejhledanejsi="{{ false }}" categories="{{ rubrikyData }}" on-open-category="{{ onOpenRubrika }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ hasFilter }}" hint-placeholder-val="">
+      <div style="margin:24px 0 14px;">
+        <button type="button" class="pg-back" onClick="{{ clearRubrika }}">
+          <dc-import name="Ikony" icon-name="chevron-left" size="{{ 24 }}" hint-size="24px,24px"></dc-import>Zpět na všechny články
+        </button>
+      </div>
+    </sc-if>
+    <sc-if value="{{ noFilter }}" hint-placeholder-val="{{ true }}">
+      <div style="height:24px;"></div>
+    </sc-if>
+
+    <div class="cl-grid">
+      <sc-for list="{{ articles }}" as="a" hint-placeholder-count="9">
+        <dc-import name="KartaClanku" a="{{ a }}" debug="{{ false }}" hint-size="100%,400px"></dc-import>
+      </sc-for>
+    </div>
+
+    <div style="padding:22px 0 6px;">
+      <dc-import name="Paginace" page="{{ pgPage }}" page-count="{{ pgCount }}" shown-count="{{ shownCount }}" total-count="{{ 0 }}" next-batch="{{ nextBatch }}" item-word="článků" on-page="{{ onPageChange }}" on-load-more="{{ onLoadMore }}" debug="{{ debug }}" hint-size="100%,120px"></dc-import>
+    </div>
+
+  </main>
+
+  <div class="vp-in" style="margin-top:8px;">
+    <dc-import name="Usp" variant="sloupce" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
+  </div>
+  <div style="margin-top:10px;">
+    <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
+  </div>
+
+  <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  RUBRIKY = [
+    { name:'Technický rádce', image:'uploads/rubrika-technicky-radce.png' },
+    { name:'Elektroinstalace', image:'uploads/rubrika-elektroinstalace.png' },
+    { name:'Předpisy', image:'uploads/rubrika-predpisy.png' },
+    { name:'Potřebuji vyřídit', image:'uploads/rubrika-potrebuji-vyridit.png' }
+  ];
+  A = [
+    { name:'Tachograf od 1. 7. 2026', typ:'Legislativa', rubrika:'Předpisy', image:'uploads/clanek-tachograf.png', href:'clanek-tachograf.dc.html',
+      perex:'Od 1. července 2026 musí být některé automobily a soupravy s přívěsem s hmotností od 2,5 t do 3,5 t vybaveny chytrým tachografem. Koho se povinnost týká a jak ji splnit.' },
+    { name:'Jak vybrat správný disk', typ:'Návod', rubrika:'Technický rádce', image:'uploads/clanek-disk.png',
+      perex:'Rozteč, kolový úchyt, ET a nosnost — čtyři údaje, podle kterých se disk k přívěsu vybírá. Kde je na přívěsu najdete a co znamenají.' },
+    { name:'Zástrčky přívěsů a zásuvky tažných zařízení', typ:'Návod', rubrika:'Elektroinstalace', image:'uploads/clanek-zastrcky.png',
+      perex:'Sedm nebo třináct pinů, adaptéry a záměny vodičů. Přehled zapojení, které se na českých přívěsech potkáte nejčastěji.' },
+    { name:'Výjimka TEMPO 100 pro přípojná vozidla', typ:'Legislativa', rubrika:'Potřebuji vyřídit', image:'uploads/clanek-tempo-100.png',
+      perex:'Co musí souprava splnit, jaké dokumenty úřad vyžaduje a kolik celé vyřízení stojí. Krok za krokem od technické prohlídky k zápisu.' },
+    { name:'Huštění pneu přívěsu', typ:'Údržba', rubrika:'Technický rádce', image:'uploads/clanek-husteni-pneu.png',
+      perex:'Tlak podle nosnosti, ne podle osobního auta. Jak najít správnou hodnotu na bočnici i na výrobním štítku přívěsu.' },
+    { name:'Skupiny řidičského průkazu a přívěs', typ:'Legislativa', rubrika:'Předpisy', image:'uploads/clanek-ridicsky-prukaz.png',
+      perex:'B, B96, BE nebo C1E — co s jakou skupinou smíte táhnout a jak se počítá hmotnost jízdní soupravy.' },
+    { name:'Jak správně naložit přívěs', typ:'Návod', rubrika:'Technický rádce', image:'uploads/clanek-nalozit-prives.png',
+      perex:'Svislé zatížení, rozložení nákladu a upínání. Nejčastější chyby, kvůli kterých se přívěs na dálnici rozkmitá.' },
+    { name:'Povinné a nepovinné osvětlení přívěsu', typ:'Předpis', rubrika:'Elektroinstalace', image:'uploads/elektro-a-osvetleni.jpg',
+      perex:'Které svítilny musí přívěs mít, které jsou volitelné a jaké kombinace kontrolní technik neuzná.' },
+    { name:'Stabilizace jízdy s přívěsem', typ:'Technika', rubrika:'Technický rádce', image:'uploads/kulove-tazne-spojky.jpg',
+      perex:'Stabilizační spojky, tlumení kmitání a co reálně pomůže při jízdě s lehkým přívěsem ve vyšších rychlostech.' },
+    { name:'Seřízení nájezdové brzdy', typ:'Údržba', rubrika:'Technický rádce', image:'uploads/napravy-a-brzdy.jpg',
+      perex:'Kdy je čas na seřízení, jak poznat opotřebené obložení a jaký postup platí pro brzdy KNOTT a AL-KO.' },
+    { name:'Registrace přívěsu na úřadě', typ:'Návod', rubrika:'Potřebuji vyřídit', image:'uploads/doplnky.jpg',
+      perex:'Co si vzít s sebou na registr vozidel, jaké formuláře vyplnit a na co si dát pozor u dovezeného přívěsu.' },
+    { name:'Kontrola vůle ložisek náprav', typ:'Údržba', rubrika:'Technický rádce', image:'uploads/napravy-a-brzdy.jpg',
+      perex:'Jednoduchá zkouška, která odhalí opotřebené ložisko dřív, než poškodí náboj i čep nápravy.' },
+    { name:'Zapojení zásuvky 13 pin krok za krokem', typ:'Návod', rubrika:'Elektroinstalace', image:'uploads/clanek-zastrcky.png',
+      perex:'Barvy vodičů, pořadí pinů a kontrola funkce. Zapojení, které zvládnete bez návštěvy servisu.' },
+    { name:'Technická prohlídka přívěsu', typ:'Legislativa', rubrika:'Potřebuji vyřídit', image:'uploads/clanek-tempo-100.png',
+      perex:'Intervaly podle kategorie, nejčastější závady a co si na stanici připravit, aby prohlídka proběhla na první pokus.' },
+    { name:'Odrazky a značení zadní části přívěsu', typ:'Předpis', rubrika:'Předpisy', image:'uploads/elektro-a-osvetleni.jpg',
+      perex:'Trojúhelníkové odrazky, obrysové značení a reflexní pásky — kde musí být a v jakém provedení.' },
+    { name:'Výměna kulové spojky', typ:'Návod', rubrika:'Technický rádce', image:'uploads/kulove-tazne-spojky.jpg',
+      perex:'Jak poznat opotřebenou spojku, jaký typ vybrat a co dodržet při montáži na oj přívěsu.' },
+    { name:'Plachta na přívěs — rozměry a uchycení', typ:'Návod', rubrika:'Technický rádce', image:'uploads/plachty.jpg',
+      perex:'Jak správně změřit korbu, jaké uchycení volit a proč se plachta na míru vyplatí víc než univerzální.' },
+    { name:'Pojištění přívěsu', typ:'Legislativa', rubrika:'Potřebuji vyřídit', image:'uploads/doplnky.jpg',
+      perex:'Povinné ručení, havarijní pojištění a kdy krytí tažného vozidla na přívěs nestačí.' },
+    { name:'Kabeláž přívěsu a ochrana proti vodě', typ:'Údržba', rubrika:'Elektroinstalace', image:'uploads/elektro-a-osvetleni.jpg',
+      perex:'Kde kabely nejčastěji korodují, jak spoje utěsnit a čím vedení upevnit, aby se neprodřelo o rám.' },
+    { name:'Zabezpečení přívěsu proti krádeži', typ:'Technika', rubrika:'Technický rádce', image:'uploads/zabezpeceni_nakladu.jpg',
+      perex:'Zámky oje, kolové zámky a sledovací jednotky. Kombinace, která zloděje reálně odradí.' },
+    { name:'Nosnost a hmotnostní štítek přívěsu', typ:'Předpis', rubrika:'Předpisy', image:'uploads/konstrukcni_dily.jpg',
+      perex:'Jak čtete štítek, co znamená provozní a užitečná hmotnost a jaká pokuta hrozí za přetížení.' },
+    { name:'Přepis přívěsu při prodeji', typ:'Návod', rubrika:'Potřebuji vyřídit', image:'uploads/clanek-ridicsky-prukaz.png',
+      perex:'Kupní smlouva, termíny a společná návštěva registru. Přehled, díky kterému se přepis nezasekne.' },
+    { name:'Konzervace rámu a prevence koroze', typ:'Údržba', rubrika:'Technický rádce', image:'uploads/pomucky.jpg',
+      perex:'Kde přívěs rezne první, jaké přípravky použít a jak často údržbu opakovat u přívěsu na soli.' },
+    { name:'Opěrné kolečko — výběr a montáž', typ:'Návod', rubrika:'Technický rádce', image:'uploads/kolecka-1.jpg',
+      perex:'Průměr, nosnost a automatika. Jak vybrat kolečko, které nepovolí pod zatíženou ojí.' },
+    { name:'Rychlost s přívěsem na dálnici', typ:'Předpis', rubrika:'Předpisy', image:'uploads/clanek-tempo-100.png',
+      perex:'Limity podle kategorie soupravy, výjimky pro TEMPO 100 a jak je kontroluje policie.' },
+    { name:'LED svítilny místo žárovkových', typ:'Technika', rubrika:'Elektroinstalace', image:'uploads/elektro-a-osvetleni.jpg',
+      perex:'Kdy se výměna vyplatí, na co si dát pozor u kontroly přerušení obvodu a jaká homologace je potřeba.' },
+    { name:'Náhradní kolo a povinná výbava přívěsu', typ:'Předpis', rubrika:'Předpisy', image:'uploads/kola-a-pneumatiky.jpg',
+      perex:'Co v přívěsu musí být, co je jen doporučení a jak výbavu upevnit, aby při jízdě neputovala po korbě.' },
+    { name:'Dovoz přívěsu ze zahraničí', typ:'Návod', rubrika:'Potřebuji vyřídit', image:'uploads/doplnky.jpg',
+      perex:'Schválení technické způsobilosti, COC list a překlady dokladů. Postup, který ušetří druhou cestu na úřad.' }
+  ];
+  PER_PAGE = 12;
+  state = { rubrika:'', page:1, shown:0 };
+  componentDidMount(){
+    this._onHash = ()=>this.routeFromUrl();
+    window.addEventListener('hashchange', this._onHash);
+    window.addEventListener('popstate', this._onHash);
+    this.routeFromUrl();
+  }
+  componentWillUnmount(){
+    window.removeEventListener('hashchange', this._onHash);
+    window.removeEventListener('popstate', this._onHash);
+  }
+  // #/poradna/rubrika/<slug>/ otevře rubriku, prázdný hash výpis všech článků
+  routeFromUrl(){
+    const raw = (location.hash||'').replace(/^#\/?/,'').replace(/\/+$/,'');
+    const parts = raw ? raw.split('/') : [];
+    const seg = (parts[0]==='poradna' && parts[1]==='rubrika') ? parts[2] : '';
+    const found = seg ? (this.RUBRIKY.find(r=>this.slug(r.name)===seg)||null) : null;
+    this.setState({ rubrika: found ? found.name : '', page:1, shown:0 });
+  }
+  go(rubrika){
+    const url = rubrika ? '#/poradna/rubrika/'+this.slug(rubrika)+'/' : '#/poradna/';
+    if (location.hash !== url){ try{ history.pushState(null,'',url); }catch(e){ location.hash = url.slice(1); } }
+    this.setState({ rubrika, page:1, shown:0 });
+    try{ window.scrollTo(0,0); }catch(e){}
+  }
+  slug(s){ return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
+  plural(n){ return n===1 ? 'článek' : (n>=2 && n<=4 ? 'články' : 'článků'); }
+  renderVals(){
+    const s = this.state;
+    // prototyp: všechny články vedou na jediný hotový detail
+    const all = this.A.map(a=>({ ...a, href:'clanek-tachograf.dc.html' }));
+    const filtered = s.rubrika ? all.filter(a=>a.rubrika === s.rubrika) : all;
+    const per = this.PER_PAGE;
+    const pgCount = Math.max(1, Math.ceil(filtered.length / per));
+    const page = Math.min(s.page, pgCount);
+    const shown = Math.max(per, Math.min(s.shown || per, filtered.length));
+    const start = (page - 1) * per;
+    const articles = filtered.slice(start, start + shown);
+    const nextBatch = Math.max(0, Math.min(per, filtered.length - (start + shown)));
+    const crumbRaw = [{ name:'Domů', href:'index.dc.html' }, { name:'Poradna', href:'poradna.dc.html' }]
+      .concat(s.rubrika ? [{ name:s.rubrika, href:'#' }] : []);
+    return {
+      crumbItems: crumbRaw.map(c=>({ name:c.name, href:c.href })),
+      onCrumbNav: (i)=>{ if (crumbRaw[i] && crumbRaw[i].name === 'Poradna') this.go(''); },
+      pageTitle: s.rubrika || 'Poradna',
+      lead: s.rubrika
+        ? ('Články a návody v rubrice ' + s.rubrika + ' — ' + filtered.length + ' ' + this.plural(filtered.length) + ' z praxe našeho servisu.')
+        : 'Návody, technické rady a přehled předpisů k přívěsům. Vše, co potřebujete vyřešit dřív, než vyjedete — od zapojení zásuvky po vyřízení TEMPO 100.',
+      rubrikyData: this.RUBRIKY.map(r=>({ name:r.name, image:r.image, subs:[] })),
+      onOpenRubrika: (name)=>this.go(name === this.state.rubrika ? '' : name),
+      hasFilter: !!s.rubrika, noFilter: !s.rubrika,
+      activeRubrika: s.rubrika,
+      clearRubrika: ()=>this.go(''),
+      countText: filtered.length + ' ' + this.plural(filtered.length),
+      articles,
+      pgPage: page, pgCount, pgTotal: filtered.length, shownCount: articles.length, nextBatch,
+      onPageChange: (n)=>{ this.setState({ page:n, shown:0 }); },
+      onLoadMore: ()=>this.setState({ shown: shown + per }),
+      debug: this.props.debug ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

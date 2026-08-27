@@ -18,11 +18,13 @@
   .fl-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
   .fl-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   a{color:#15181C;} a:hover{color:#1E5AA8;}
-  /* XS a XXS: tlačítko Filtry na celou šířku, pod ním Skladem vlevo a řazení vpravo */
+  /* XS a XXS: Filtry a řazení v jednom řádku, Skladem jen v drawru; pod ~320 px se řádek zalomí */
   @media (max-width:549px){
-    .fl-filter{flex:1 0 100% !important;max-width:none !important;}
-    .fl-sort{margin-left:auto;}
-    /* XS a XXS: aktivní filtry se do lišty nevejdou, zůstávají jen v drawru */
+    .fl-filter{flex:1 1 160px !important;max-width:none !important;}
+    .fl-stock{display:none !important;}
+    .fl-sort{margin-left:auto;flex:1 1 150px !important;max-width:none !important;min-width:0;}
+    .fl-sort > button{width:100%;}
+    /* aktivní filtry se do lišty nevejdou, zůstávají jen v drawru */
     .fl-chips{display:none !important;}
   }
   .fl-opt{transition:background .12s;} .fl-opt:hover{background:#F2F4F7 !important;}
@@ -30,7 +32,7 @@
 </helmet>
 <div style="display:flex;flex-wrap:wrap;gap:8px;max-width:1560px;margin:0 auto;">
   <button type="button" class="fl-i fl-filter" id="pf-open" onClick="{{ onOpenFilter }}" style="flex:1;max-width:220px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;font-size:14px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;cursor:pointer;"><span style="display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="filter" size="24" hint-size="24px,24px"></dc-import></span>Filtry<sc-if value="{{ filterCountText }}" hint-placeholder-val=""><span style="background:#C5232B;border-radius:999px;font-size:13px;padding:2px 8px;">{{ filterCountText }}</span></sc-if></button>
-  <button type="button" class="fl-i" aria-pressed="{{ stockPressed }}" onClick="{{ onToggleStock }}" style="{{ stockBtnStyle }}"><span style="{{ stockBoxStyle }}"><sc-if value="{{ stockOn }}" hint-placeholder-val=""><span style="color:#fff;display:inline-flex;"><dc-import name="Ikony" icon-name="check" size="16" hint-size="16px,16px"></dc-import></span></sc-if></span>Skladem</button>
+  <button type="button" class="fl-i fl-stock" aria-pressed="{{ stockPressed }}" onClick="{{ onToggleStock }}" style="{{ stockBtnStyle }}"><span style="{{ stockBoxStyle }}"><sc-if value="{{ stockOn }}" hint-placeholder-val=""><span style="color:#fff;display:inline-flex;"><dc-import name="Ikony" icon-name="check" size="16" hint-size="16px,16px"></dc-import></span></sc-if></span>Skladem</button>
   <sc-if value="{{ hasChips }}" hint-placeholder-val="{{ true }}">
     <div class="fl-chips" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0;">
       <sc-for list="{{ activeChips }}" as="c" hint-placeholder-count="3">

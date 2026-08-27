@@ -18,6 +18,9 @@
   /* pevné počty sloupců, aby ve spodním řádku nezůstávalo volné místo */
   .rs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
   @media (max-width:999px){ .rs-grid{grid-template-columns:repeat(2,1fr);} }
+  /* méně sekcí než sloupců: roztáhnout na plnou šířku */
+  .rs-grid-2{grid-template-columns:repeat(2,1fr);}
+  .rs-grid-1{grid-template-columns:1fr;}
   .rs-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
   .rs-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   .rs-card{transition:box-shadow .15s;} .rs-card:hover{box-shadow:0 6px 20px rgba(20,47,86,.10);}
@@ -25,10 +28,12 @@
   .rs-card:hover .rs-photo img{transform:scale(1.03);}
   .rs-name{transition:color .12s;}
   .rs-photo img{transition:transform .28s ease;}
-  @media (max-width:549px){ .rs-grid{grid-template-columns:1fr;} .rs-photo{height:160px !important;} }
+  /* poměr místo pevné výšky, aby fotka nebyla placatá v širokých kartách */
+  .rs-photo{aspect-ratio:16/9;height:auto!important;}
+  @media (max-width:549px){ .rs-grid{grid-template-columns:1fr;} .rs-photo{aspect-ratio:3/2;} }
 </style>
 </helmet>
-<div class="rs-grid" style="width:100%;">
+<div class="rs-grid {{ gridMod }}" style="width:100%;">
   <sc-for list="{{ items }}" as="c" hint-placeholder-count="6">
     <section class="rs-card" style="background:#FFFFFF;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;">
       <span class="rs-photo" aria-hidden="true" style="display:block;position:relative;height:200px;overflow:hidden;background:#F2F4F7;">
@@ -85,6 +90,7 @@ class Component extends DCLogic {
     const open = P.onOpen;
     const max = Math.max(1, Number(P.maxSubs) || 4);
     return {
+      gridMod: src.length < 3 ? ('rs-grid-' + src.length) : '',
       showDocs: !given,
       items: src.map((c,i)=>({
         name: c.name,

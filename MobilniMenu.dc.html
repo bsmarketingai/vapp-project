@@ -23,7 +23,6 @@
   .mm-cur[aria-pressed="false"]:hover{background:#EFF4FB !important;}
   .mm-cur[aria-pressed="true"]:hover{background:#1A4A8A !important;}
   .mm-cur:active{transform:translateY(1px);}
-  .mm-back{transition:color .12s;} .mm-back:hover .mm-back-t{color:#1A4A8A !important;} .mm-back:hover .mm-back-i{color:#A21B22 !important;}
   @keyframes mmInRightA{from{transform:translateX(100%);opacity:0;}to{transform:none;opacity:1;}}
   @keyframes mmInRightB{from{transform:translateX(100%);opacity:0;}to{transform:none;opacity:1;}}
   @keyframes mmInLeftA{from{transform:translateX(-100%);opacity:0;}to{transform:none;opacity:1;}}
@@ -32,28 +31,18 @@
 </style>
 </helmet>
 <div style="border-top:1px solid #F2F4F7;background:#fff;">
-  <div data-mm-list="true" style="padding:4px 16px;overflow-x:hidden;animation:{{ listAnim }};">
-    <sc-if value="{{ isNested }}" hint-placeholder-val="">
-      <div>
-        <button type="button" class="mm-back a11y-i" onClick="{{ onBack }}" aria-label="{{ backAria }}" style="width:100%;display:flex;align-items:center;gap:8px;min-height:48px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span class="mm-back-i" style="color:#C5232B;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-left" size="24" hint-size="24px,24px"></dc-import></span><span class="mm-back-t" style="font-size:14px;font-weight:700;color:#1E5AA8;min-width:0;">{{ backLabel }}</span></button>
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:48px;border-bottom:1px solid #F2F4F7;"><h2 style="margin:0;font-size:18px;font-weight:700;line-height:1.35;color:#15181C;min-width:0;">{{ levelName }}</h2><a class="mm-link a11y-i" href="{{ levelHref }}" onClick="{{ onLevelSelect }}" style="flex:none;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#1E5AA8;cursor:pointer;">Zobrazit kategorii<span style="color:#5189CC;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></a></div>
-      </div>
-    </sc-if>
+  <div style="padding:4px 16px;">
     <sc-for list="{{ items }}" as="m" hint-placeholder-count="5">
       <sc-if value="{{ m.isBranch }}" hint-placeholder-val="">
-        <button type="button" class="mm-link a11y-i" onClick="{{ m.onClick }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:48px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="{{ m.style }}">{{ m.t }}</span><span style="color:#5189CC;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></button>
+        <button type="button" class="mm-link a11y-i" aria-expanded="{{ m.expanded }}" onClick="{{ m.onClick }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:52px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="{{ m.style }}">{{ m.t }}</span><span style="color:#1E5AA8;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="{{ m.iconName }}" size="24" hint-size="24px,24px"></dc-import></span></button>
       </sc-if>
       <sc-if value="{{ m.isLeaf }}" hint-placeholder-val="{{ true }}">
-        <a class="mm-link a11y-i" href="{{ m.href }}" onClick="{{ m.onClick }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:48px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="{{ m.style }}">{{ m.t }}</span><span style="color:#5189CC;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></a>
+        <a class="mm-link a11y-i" href="{{ m.href }}" onClick="{{ m.onClick }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:52px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="{{ m.style }}">{{ m.t }}</span></a>
       </sc-if>
     </sc-for>
   </div>
 
   <div style="padding:4px 16px;">
-    <div style="padding:8px 0 4px;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;"><span aria-hidden="true" style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="user" size="18" hint-size="18px,18px"></dc-import></span>{{ accountHeading }}</div>
-    <sc-for list="{{ accountItems }}" as="a" hint-placeholder-count="1">
-      <button type="button" class="mm-link a11y-i" onClick="{{ a.onClick }}" style="width:100%;display:flex;align-items:center;min-height:44px;border-bottom:1px solid #F2F4F7;font-size:14px;font-weight:500;color:#5A626C;cursor:pointer;">{{ a.t }}</button>
-    </sc-for>
     <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;border-bottom:1px solid #F2F4F7;">
       <span style="font-size:14px;font-weight:500;color:#5A626C;">{{ currencyLabel }}</span>
       <div role="group" aria-label="{{ currencyLabel }}" style="display:flex;align-items:center;gap:4px;flex:none;">
@@ -69,6 +58,7 @@
     </sc-for>
     </sc-if>
   </div>
+  <sc-if value="{{ showFooterCard }}" hint-placeholder-val="{{ true }}">
   <div style="padding:12px 16px 16px;">
     <div style="background:#F2F4F7;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:8px;">
       <sc-if value="{{ showContacts }}" hint-placeholder-val="{{ true }}">
@@ -77,9 +67,10 @@
         <sc-if value="{{ isOpen }}" hint-placeholder-val="{{ true }}"><span style="font-size:13px;font-weight:700;color:#0B6937;">{{ statusText }}</span></sc-if>
         <sc-if value="{{ isClosed }}" hint-placeholder-val=""><span style="font-size:13px;font-weight:700;color:#C5232B;">{{ statusText }}</span></sc-if>
       </div>
+      <span style="font-size:15px;font-weight:700;color:#15181C;">VAPP s.r.o.</span>
+      <a class="mm-link a11y-i" href="https://www.google.cz/maps/search/VAPP+Popovi%C4%8Dky" style="display:flex;align-items:center;gap:8px;font-size:15px;line-height:1.5;font-weight:700;color:#15181C;text-decoration:underline;cursor:pointer;"><span style="display:inline-flex;align-items:center;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="map-pin" size="24" hint-size="24px,24px"></dc-import></span>Popovičky 50, 251 01 Říčany</a>
       <a class="mm-link a11y-i" href="{{ phoneHref }}" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#15181C;text-decoration:underline;cursor:pointer;"><span style="display:inline-flex;align-items:center;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import></span>{{ phone }}</a>
       <a class="mm-link a11y-i" href="{{ emailHref }}" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#15181C;text-decoration:underline;cursor:pointer;"><span style="display:inline-flex;align-items:center;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="mail" size="24" hint-size="24px,24px"></dc-import></span>{{ email }}</a>
-      <dc-import name="Tlacitko" variant="primary" size="medium" label="Všechny kontakty" icon-trailing="arrow-right" full-width="true" on-click="{{ onAllContacts }}" style="width:100%;" hint-size="100%,44px"></dc-import>
       </sc-if>
       <sc-if value="{{ showAccountButtons }}" hint-placeholder-val="">
         <div style="display:flex;gap:8px;">
@@ -89,10 +80,11 @@
       </sc-if>
     </div>
   </div>
+  </sc-if>
 </div>
 <sc-if value="{{ standalone }}" hint-placeholder-val="{{ true }}">
   <div style="padding:24px 16px;display:flex;flex-direction:column;gap:5px;">
-    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> obsah rozbaleného mobilního menu v Hlavicce pod 1000 px. Panel nese jen border-top #F2F4F7 a bílé pozadí; hlavní položky 14/700 (aktivní #1E5AA8) s chevronem 24 px v #5189CC, sekce Informace 14/500 #5A626C bez chevronu, kontaktní blok na surface.subtle #F2F4F7 s radiusem 8 a bez rámečku.</div>
+    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> obsah rozbaleného mobilního menu v Hlavicce pod 1000 px. Panel nese jen border-top #F2F4F7 a bílé pozadí; hlavní položky 20/700 (aktivní #1E5AA8) rozbalují podkategorie akordeonem (ikona plus/minus 24 px v #1E5AA8), podpoložky 16/700 #5A626C s odsazením 16 px na úroveň, sekce Informace 14/500 #5A626C bez chevronu, kontaktní blok na surface.subtle #F2F4F7 s radiusem 8 a bez rámečku.</div>
     <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nedávat sem pozicování, z-index, max-height, overflow ani box-shadow — ty patří pozicovanému obalu v Hlavicce. Neřešit tu Escape, focus management ani zámek scrollu. Obsah odkazů a kontaktů posílá stránka přes props, nezadrátovávat ho sem. Košík v bloku nemá čítač.</div>
   </div>
 </sc-if>
@@ -100,9 +92,44 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:392,&quot;height&quot;:900},&quot;menuTree&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;,&quot;default&quot;:null},&quot;labels&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;panelOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onSelect&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;infoLinks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;323 605 314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;email&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;hours&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Po–Pá 8:30–16:30&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onInfoSelect&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onLogin&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;loggedIn&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Účet&quot;},&quot;userName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Jaroslav Maňhal&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Účet&quot;},&quot;accountLinks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;currency&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;CZK&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;currencies&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;currencyLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Měna&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onCurrencyChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(code:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;onAccountSelect&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCartClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onAllContacts&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;showAccountButtons&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Obsah&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 const L = (name, children) => children ? { name, href: '#', children } : { name, href: '#' };
+// prototypové stránky routují z hashe (#/privesy/jednoose-valniky/), odkazy se proto skládají ze slugů názvů
+const MM_SLUG = (s)=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/["']/g,'').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+const MM_BASES = {
+  'Přívěsy': { file:'privesy-V1.dc.html', route:'#/privesy/' },
+  'Náhradní díly': { file:'nahradnidily.dc.html', route:'#/nahradni-dily/' },
+  'Poradna': { file:'poradna.dc.html', route:'#/poradna/rubrika/' },
+};
+const MM_LINK = (nodes, base, segs)=>(nodes||[]).map(n=>{
+  const path = segs.concat(MM_SLUG(n.name));
+  const out = { name:n.name, href: base ? base.file + base.route + path.join('/') + '/' : (n.href || '#') };
+  if (Array.isArray(n.children) && n.children.length) out.children = MM_LINK(n.children, base, path);
+  return out;
+});
+const MM_ROUTE = (tree)=>(tree||[]).map(root=>{
+  const base = MM_BASES[root.name];
+  if (!base) return root;
+  const out = { name:root.name, href: base.file };
+  if (Array.isArray(root.children) && root.children.length) out.children = MM_LINK(root.children, base, []);
+  return out;
+});
+// H = položka s reálným odkazem (prototypové stránky)
+const H = (name, href, children) => children ? { name, href, children } : { name, href };
 const DEFAULT_TREE = [
-  L('Přívěsy'),
-  L('Náhradní díly', [
+  H('Přívěsy', 'privesy-V1.dc.html', [
+    H('Jednoosé valníky', 'privesy-V1.dc.html'),
+    H('Dvouosé valníky', 'privesy-V1.dc.html'),
+    H('Tříosé valníky', 'privesy-V1.dc.html'),
+    H('Přepravníky motocyklů', 'privesy-V1.dc.html'),
+    H('Přepravníky strojů', 'privesy-V1.dc.html'),
+    H('Přepravníky automobilů', 'privesy-V1.dc.html'),
+    H('Sklopné přívěsy', 'privesy-V1.dc.html'),
+    H('Přepravníky lodí a vodních skútrů', 'privesy-V1.dc.html'),
+    H('Přepravníky zvířat', 'privesy-V1.dc.html'),
+    H('Skříňové přívěsy', 'privesy-V1.dc.html'),
+    H('Chladírenské přívěsy', 'privesy-V1.dc.html'),
+    H('Výprodej', 'privesy-V1.dc.html'),
+  ]),
+  H('Náhradní díly', 'nahradnidily.dc.html', [
     L('Elektro, svítilny, odrazky', [
       L('Baterie, nabíječky a příslušenství'),
       L('Blinkry'),
@@ -269,7 +296,12 @@ const DEFAULT_TREE = [
     L('Garanční prohlídky'), L('Pneuservis'),
   ]),
   L('Půjčovna'),
-  L('Poradna'),
+  H('Poradna', 'poradna.dc.html', [
+    H('Technický rádce', 'poradna.dc.html'),
+    H('Elektroinstalace', 'poradna.dc.html'),
+    H('Předpisy', 'poradna.dc.html'),
+    H('Potřebuji vyřídit', 'poradna.dc.html'),
+  ]),
 ];
 
 class Component extends DCLogic {
@@ -282,11 +314,11 @@ class Component extends DCLogic {
   renderVals(){
     const P = this.props;
     const embedded = typeof P.onSelect === 'function';
-    const tree = Array.isArray(P.menuTree) && P.menuTree.length
+    const tree = MM_ROUTE(Array.isArray(P.menuTree) && P.menuTree.length
       ? P.menuTree
       : (Array.isArray(P.labels) && P.labels.length
         ? P.labels.map(l => ({ name: l, href: '#' }))
-        : DEFAULT_TREE);
+        : DEFAULT_TREE));
     const active = P.active || 'Náhradní díly';
     const onSelect = P.onSelect || (()=>{});
     const infoLinks = P.infoLinks || ['Doprava a platba','Obchodní podmínky','O nás','Kontakty'];
@@ -308,47 +340,38 @@ class Component extends DCLogic {
     // reálný href necháme navigovat (prototyp jede na hash routách), '#' zastavíme
     const goHref = (href, name) => (e)=>{ if(!href || href === '#') stop(e); onSelect(name); };
 
-    // průchod stromu podle path — jakákoli hloubka
-    const path = Array.isArray(this.state.path) ? this.state.path : [];
-    const chain = [];
-    let level = tree;
-    for (const i of path) {
-      const node = level && level[i];
-      if (!node) break;
-      chain.push(node);
-      level = Array.isArray(node.children) ? node.children : [];
-    }
-    const depth = chain.length;
-    const current = depth ? chain[depth-1] : null;
-    const isRoot = depth === 0;
-
-    const items = (level || []).map((n, i) => {
-      const branch = Array.isArray(n.children) && n.children.length > 0;
-      return {
-        t: n.name, href: n.href || '#',
-        isBranch: branch, isLeaf: !branch,
-        style: 'font-size:14px;font-weight:700;min-width:0;color:'
-          + (isRoot && n.name === active ? '#1E5AA8' : '#15181C') + ';',
-        onClick: branch
-          ? (e)=>{ stop(e); this.setState(s=>({ path: path.concat([i]), dir:'fwd', tick:s.tick+1 })); }
-          : goHref(n.href || '#', n.name),
-      };
-    });
-
-    const backLabel = depth > 1 ? 'Zpět na ' + chain[depth-2].name : 'Zpět na hlavní menu';
+    // akordeon: rozbalené větve drží stav v množině klíčů cesty
+    const openKeys = this.state.openKeys || {};
+    const toggle = (key)=>(e)=>{ stop(e); this.setState(s=>{
+      const next = Object.assign({}, s.openKeys || {});
+      if (next[key]) delete next[key]; else next[key] = true;
+      return { openKeys: next };
+    }); };
+    const items = [];
+    const walk = (nodes, depth, prefix)=>{
+      (nodes || []).forEach((n, i)=>{
+        const key = prefix + '/' + i;
+        const branch = Array.isArray(n.children) && n.children.length > 0;
+        const isOpen = !!openKeys[key];
+        const root = depth === 0;
+        items.push({
+          t: n.name, href: n.href || '#',
+          isBranch: branch, isLeaf: !branch,
+          iconName: isOpen ? 'minus' : 'plus',
+          expanded: isOpen ? 'true' : 'false',
+          style: 'font-size:' + (root ? 20 : 16) + 'px;font-weight:700;line-height:1.35;min-width:0;'
+            + (depth ? 'padding-left:' + (depth * 16) + 'px;' : '') + 'color:'
+            + (root ? (n.name === active ? '#1E5AA8' : '#15181C') : '#5A626C') + ';',
+          onClick: branch ? toggle(key) : goHref(n.href || '#', n.name),
+        });
+        if (branch && isOpen) walk(n.children, depth + 1, key);
+      });
+    };
+    walk(tree, 0, '');
 
     return {
       embedded, standalone: !embedded, debug: P.debug ?? true,
-      isNested: !isRoot, items,
-      backLabel, backAria: backLabel,
-      onBack: (e)=>{ stop(e); this.setState(s=>({ path: path.slice(0, -1), dir:'back', tick:s.tick+1 })); },
-      listAnim: this.state.dir
-        ? (this.state.dir==='fwd' ? 'mmInRight' : 'mmInLeft')
-          + (this.state.tick % 2 ? 'A' : 'B') + ' 400ms ease'
-        : 'none',
-      levelHref: current ? (current.href || '#') : '#',
-      levelName: current ? current.name : '',
-      onLevelSelect: current ? goHref(current.href || '#', current.name) : (e)=>stop(e),
+      items,
       infoItems: infoLinks.map(t=>({ t, onClick:(e)=>{ stop(e); onInfoSelect(t); } })),
       phone, email, hours,
       phoneHref: 'tel:+420' + phone.replace(/\D/g,''),
@@ -372,6 +395,8 @@ class Component extends DCLogic {
       onCartClick: P.onCartClick || (()=>{}),
       showInfo: P.showInfo !== false,
       showContacts: P.showContacts !== false,
+      // prázdná šedá karta se nevykresluje
+      showFooterCard: (P.showContacts !== false) || ((P.showAccountButtons ?? false) !== false),
       onAllContacts: P.onAllContacts || (()=>{}),
     };
   }

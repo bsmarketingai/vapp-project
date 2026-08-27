@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&amp;display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0!important;padding:0!important;background:#F7F9FB;}
+  #dc-root{margin:0!important;padding:0!important;width:100%!important;max-width:none!important;border:0!important;}
+  #dc-root>.sc-host{margin:0!important;padding:0!important;width:100%!important;}
+  a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
+  .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
+  @media (max-width:819px){ .vp-in{padding-left:16px;padding-right:16px;} }
+  .on-h1{font-size:36px;font-weight:700;line-height:1.15;letter-spacing:-0.02em;}
+  .on-h2{font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.01em;}
+  .on-h3{font-size:22px;font-weight:700;line-height:1.25;}
+  @media (max-width:819px){ .on-h1{font-size:26px;line-height:1.2;} .on-h2{font-size:22px;line-height:1.25;} .on-h3{font-size:18px;line-height:1.3;} .on-body{font-size:16px!important;} }
+  .on-body{font-size:18px;font-weight:400;line-height:1.6;color:#3A424C;}
+  .on-card{background:#FFFFFF;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;}
+  .on-info{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start;}
+  @media (max-width:999px){ .on-info{grid-template-columns:1fr;} }
+  .on-text{max-width:860px;display:flex;flex-direction:column;gap:16px;}
+  .on-hist1{display:flex;align-items:flex-start;gap:32px;}
+  @media (max-width:819px){ .on-hist1{flex-direction:column;gap:20px;} .on-hist1>figure{width:180px;} }
+  .on-mile{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  @media (max-width:999px){ .on-mile{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:549px){ .on-mile{grid-template-columns:1fr;} }
+  .on-gal{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  @media (max-width:819px){ .on-gal{grid-template-columns:repeat(2,1fr);} }
+  .on-ph{aspect-ratio:4/3;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;letter-spacing:.06em;color:#666E78;background:repeating-linear-gradient(45deg,#E9ECEF,#E9ECEF 11px,#E3E6EA 11px,#E3E6EA 22px);}
+  .on-dl{display:flex;flex-direction:column;gap:10px;font-size:16px;line-height:1.6;}
+  .on-dl div{display:flex;gap:8px;flex-wrap:wrap;}
+  .on-dl dt{flex:none;font-weight:400;color:#666E78;margin:0;}
+  .on-dl dd{margin:0;font-weight:700;color:#15181C;}
+  .on-btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 20px;border-radius:8px;font-size:15px;font-weight:700;text-decoration:none;transition:background 120ms ease;}
+  .on-btn:active{transform:translateY(1px);}
+  .on-btn-p{background:#1E5AA8;color:#FFFFFF;} .on-btn-p:hover{background:#1A4A8A;color:#FFFFFF;}
+  .on-btn-s{background:#EFF4FB;color:#1E5AA8;} .on-btn-s:hover{background:#D8E6F6;color:#1E5AA8;}
+  .on-btn-t{background:#FFFFFF;color:#1E5AA8;} .on-btn-t:hover{background:#EFF4FB;color:#1E5AA8;}
+</style>
+</helmet>
+<div data-screen-label="O nás" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
+
+  <dc-import name="Usp" variant="pas" tone="tmavy" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,48px"></dc-import>
+  <dc-import name="Hlavicka" active="" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:30–16:30" contact-open="{{ true }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
+
+  <main class="vp-in" style="padding-top:14px;padding-bottom:48px;">
+    <div style="margin:4px 0 6px;">
+      <dc-import name="Breadcrumb" items="{{ crumbItems }}" bare="{{ true }}" debug="{{ debug }}" hint-size="100%,20px"></dc-import>
+    </div>
+
+    <h1 class="on-h1" style="margin:28px 0 0;color:#142F56;">O nás</h1>
+    <p class="on-body" style="margin:10px 0 0;max-width:860px;color:#5A626C;text-wrap:pretty;">Rodinná strojírenská tradice od roku 1898, výroba přívěsů VAPP od roku 1991. Dnes vlastní výroba, prodej přívěsů dalších značek, autorizovaný servis AL‑KO, BPW a KNOTT a distribuce náhradních dílů.</p>
+
+    <section aria-labelledby="on-firma-h" style="margin-top:32px;display:flex;flex-direction:column;gap:16px;">
+      <h2 id="on-firma-h" class="on-h2" style="margin:0;color:#15181C;">Provozovna a údaje o firmě</h2>
+      <div class="on-info">
+        <div class="on-card">
+          <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;"><span style="display:inline-flex;color:#1E5AA8;"><dc-import name="Ikony" icon-name="map-pin" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>Provozovna</span>
+          <p style="margin:0;font-size:16px;line-height:1.6;font-weight:700;color:#15181C;">Areál VAPP s.r.o.<br>Popovičky 38, 251 01 Popovičky<br><span style="font-weight:400;color:#5A626C;">Praha – východ</span></p>
+          <p style="margin:0;font-size:16px;line-height:1.6;color:#5A626C;">Po–Pá 8:30–16:30</p>
+          <a class="on-btn on-btn-s" href="https://www.google.cz/maps/dir//VAPP+-+přívěsy+a+příslušenství,+251+01+Popovičky/@49.9695313,14.6010162,13z" style="margin-top:auto;align-self:flex-start;">Naplánovat trasu
+            <dc-import name="Ikony" icon-name="arrow-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
+          </a>
+        </div>
+        <div class="on-card">
+          <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;"><span style="display:inline-flex;color:#1E5AA8;"><dc-import name="Ikony" icon-name="building-warehouse" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>Fakturační údaje</span>
+          <dl class="on-dl">
+            <div><dt>IČ</dt><dd>24140309</dd></div>
+            <div><dt>DIČ</dt><dd>CZ24140309</dd></div>
+          </dl>
+          <p style="margin:0;font-size:14px;line-height:1.5;color:#5A626C;">Firma je zapsána v obchodním rejstříku vedeném Městským soudem v Praze, oddíl C, vložka 182308.</p>
+        </div>
+        <div class="on-card">
+          <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;"><span style="display:inline-flex;color:#1E5AA8;"><dc-import name="Ikony" icon-name="credit-card" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>Bankovní spojení</span>
+          <dl class="on-dl">
+            <div><dt>Tuzemské platby (Kč)</dt><dd>888 222 000 / 2010</dd></div>
+            <div><dt>IBAN (EUR)</dt><dd>CZ17 2010 0000 0029 0015 4768</dd></div>
+            <div><dt>SWIFT</dt><dd>FIOBCZPPXXX</dd></div>
+          </dl>
+          <p style="margin:0;font-size:14px;line-height:1.5;color:#5A626C;">Fio banka, a.s.</p>
+          <div style="display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:12px;border-top:1px solid #F2F4F7;">
+            <img src="uploads/qr_platba_882200_2010.gif" alt="QR kód pro platbu na tuzemský účet 888 222 000 / 2010" style="flex:none;width:104px;height:104px;object-fit:contain;display:block;">
+            <span style="font-size:14px;line-height:1.5;color:#5A626C;">QR platba na tuzemský účet — naskenujte v bankovní aplikaci.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="on-mile-h" style="margin-top:48px;display:flex;flex-direction:column;gap:16px;">
+      <h2 id="on-mile-h" class="on-h2" style="margin:0;color:#15181C;">Milníky</h2>
+      <div class="on-mile">
+        <sc-for list="{{ milniky }}" as="m" hint-placeholder-count="4">
+          <div class="on-card" style="gap:8px;">
+            <span style="font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.01em;color:#1E5AA8;">{{ m.rok }}</span>
+            <p style="margin:0;font-size:16px;line-height:1.6;color:#3A424C;text-wrap:pretty;">{{ m.text }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-labelledby="on-hist-h" style="margin-top:48px;display:flex;flex-direction:column;gap:20px;">
+      <h2 id="on-hist-h" class="on-h2" style="margin:0;color:#15181C;">Historie</h2>
+      <div class="on-hist1">
+        <figure style="margin:0;flex:none;width:260px;display:flex;flex-direction:column;gap:8px;">
+          <img src="uploads/zstantejsky.jpg" alt="Zdeněk Štantejský, zakladatel firmy VAPP" style="display:block;width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px;">
+          <figcaption style="font-size:13px;font-weight:500;line-height:1.4;color:#666E78;">Zdeněk Štantejský, zakladatel firmy VAPP</figcaption>
+        </figure>
+      <div class="on-text on-body">
+        <p style="margin:0;text-wrap:pretty;">Firma VAPP byla založena panem Zdeňkem Štantejským v roce 1991. Nešlo o náhodné rozhodnutí — strojírenská výroba má v rodině Štantejských dlouholetou tradici. Už v roce 1898 začal František Štantejský v Praze ve Vladislavově ulici vyrábět jízdní kola vlastní značky, od roku 1934 pak v licenci i kola Hellyett včetně tehdy špičkových závodních speciálů z dovážených trubek Reynolds. Výrobu kol značky Štantejský ukončila éra socialismu; navázat na rodinnou tradici ryze české výrobní firmy se podařilo až v roce 1991 zahájením výroby vlastních nákladních přívěsů.</p>
+        <p style="margin:0;text-wrap:pretty;">Po svém vzniku se firma specializovala na dvounápravové brzděné přívěsy. Jako jedny z prvních na českém trhu byly přívěsy VAPP vyráběny s tehdy málo rozšířenou, velmi odolnou povrchovou úpravou žárovým zinkováním. Díky kvalitnímu dílenskému zpracování, jízdním vlastnostem a vysoké odolnosti se staly vyhledávanými i mezi profesionálními dopravci — zvlášť přepravníky automobilů.</p>
+        <p style="margin:0;text-wrap:pretty;">S rozšiřováním výroby o další typy se nezměnila dlouhodobá strategie: nabízet vysoce kvalitní produkty v užším portfoliu tak, aby byla zajištěna dlouholetá plná podpora všech produktů, bezproblémová dostupnost náhradních dílů a snadná opravitelnost. Díky tomu je dnes možné potkat na silnicích plně funkční přívěsy VAPP i z počátku devadesátých let.</p>
+      </div>
+      </div>
+      <div class="on-gal">
+        <sc-for list="{{ galerie }}" as="g" hint-placeholder-count="4">
+          <div class="on-ph" style="background-image:url({{ g.src }});background-size:cover;background-position:center;" role="img" aria-label="{{ g.alt }}"></div>
+        </sc-for>
+      </div>
+      <div class="on-text on-body">
+        <p style="margin:0;text-wrap:pretty;">V současné době nabízí VAPP jak přívěsy vlastní výroby, tak přívěsy dalších značek, kterými vhodně doplňuje nabídku vlastní produkce. Samozřejmostí jsou servisní služby včetně pravidelné údržby a přípravy přívěsů na STK — se zaměřením na nákladní přívěsy, podvozkové části karavanů a speciálních přívěsů, kompresorů a elektrocentrál do 3 500 kg. VAPP je autorizovaným servisním střediskem přívěsové techniky AL‑KO, BPW a KNOTT. Nedílnou součástí činnosti je prodej a distribuce náhradních dílů, doplňků a příslušenství.</p>
+        <p style="margin:0;text-wrap:pretty;">Od svého vzniku firma udržuje vysoký standard poskytovaných služeb a výrobků a tento trend má v plánu zachovávat i nadále.</p>
+      </div>
+    </section>
+
+    <section aria-label="Poradenství" style="margin-top:48px;">
+      <dc-import name="PoradenskyBlok" variant="standard" debug="{{ debug }}" hint-size="100%,80px"></dc-import>
+    </section>
+  </main>
+
+  <div class="vp-in" style="margin-top:8px;">
+    <dc-import name="Usp" variant="sloupce" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
+  </div>
+  <div style="margin-top:10px;">
+    <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
+  </div>
+
+  <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  MILNIKY = [
+    { rok:'1898', text:'František Štantejský začíná v Praze vyrábět jízdní kola vlastní značky — začátek rodinné strojírenské tradice.' },
+    { rok:'1991', text:'Zdeněk Štantejský zakládá firmu VAPP a zahajuje výrobu vlastních nákladních přívěsů.' },
+    { rok:'1996', text:'První výrobce v ČR s přepravníkem dvou automobilů v kategorii O2 do 3 500 kg.' },
+    { rok:'2005', text:'Přívěsy VAPP posouvají povolenou rychlost z 80 na 100 km/h a plní podmínky Tempo 100 v Německu.' }
+  ];
+  GALERIE = [
+    { src:'uploads/IMG_2922.jpg', alt:'Expozice přívěsů VAPP na výstavě, druhá polovina devadesátých let' },
+    { src:'uploads/IMG_2933.jpg', alt:'Historický přepravník automobilů VAPP s naloženou Škodou Favorit' },
+    { src:'uploads/IMG_2929.jpg', alt:'Přepravník dvou automobilů VAPP při nakládání' },
+    { src:'uploads/IMG_2924.jpg', alt:'Žárově zinkovaný dvounápravový valník VAPP' }
+  ];
+  renderVals(){
+    return {
+      crumbItems: [{ name:'Domů', href:'index.dc.html' }, { name:'O nás', href:'#' }],
+      milniky: this.MILNIKY,
+      galerie: this.GALERIE,
+      debug: this.props.debug ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

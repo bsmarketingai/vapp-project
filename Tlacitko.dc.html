@@ -47,7 +47,10 @@
   .b-ondark:focus-visible{outline:2px solid #fff;outline-offset:2px;}
 </style>
 </helmet>
-<sc-if value="{{ single }}" hint-placeholder-val="">
+<sc-if value="{{ isLink }}" hint-placeholder-val="">
+  <a href="{{ href }}" aria-label="{{ ariaLabel }}" class="{{ btnClass }}" style="{{ linkStyle }}"><sc-if value="{{ hasLead }}" hint-placeholder-val=""><span class="b-ticon" style="{{ iconWrapStyle }}"><dc-import name="Ikony" icon-name="{{ leadIcon }}" size="{{ iconSize }}" hint-size="24px,24px"></dc-import></span></sc-if><sc-if value="{{ hasLabel }}" hint-placeholder-val="{{ true }}">{{ label }}</sc-if><sc-if value="{{ hasTrail }}" hint-placeholder-val=""><span class="b-ticon" style="{{ iconWrapStyle }}"><dc-import name="Ikony" icon-name="{{ trailIcon }}" size="{{ iconSize }}" hint-size="24px,24px"></dc-import></span></sc-if></a>
+</sc-if>
+<sc-if value="{{ isButton }}" hint-placeholder-val="">
   <button type="button" onClick="{{ onClick }}" disabled="{{ isDisabled }}" aria-label="{{ ariaLabel }}" class="{{ btnClass }}" style="{{ btnStyle }}"><sc-if value="{{ hasLead }}" hint-placeholder-val=""><span class="b-ticon" style="{{ iconWrapStyle }}"><dc-import name="Ikony" icon-name="{{ leadIcon }}" size="{{ iconSize }}" hint-size="24px,24px"></dc-import></span></sc-if><sc-if value="{{ hasLabel }}" hint-placeholder-val="{{ true }}">{{ label }}</sc-if><sc-if value="{{ hasTrail }}" hint-placeholder-val=""><span class="b-ticon" style="{{ iconWrapStyle }}"><dc-import name="Ikony" icon-name="{{ trailIcon }}" size="{{ iconSize }}" hint-size="24px,24px"></dc-import></span></sc-if></button>
 </sc-if>
 <sc-if value="{{ gallery }}" hint-placeholder-val="{{ true }}">
@@ -134,7 +137,7 @@
 </div>
 </sc-if>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:920,&quot;height&quot;:540},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;buy&quot;,&quot;primary&quot;,&quot;secondary&quot;,&quot;guide&quot;,&quot;danger&quot;,&quot;ghost&quot;,&quot;text&quot;,&quot;textDanger&quot;,&quot;ontint&quot;,&quot;ondark&quot;],&quot;default&quot;:&quot;primary&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;standard&quot;,&quot;medium&quot;,&quot;large&quot;],&quot;default&quot;:&quot;medium&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Tlačítko&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;icon&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;iconTrailing&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;iconOnly&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;trailChevron&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;disabled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;fullWidth&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;ariaLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:920,&quot;height&quot;:540},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;buy&quot;,&quot;primary&quot;,&quot;secondary&quot;,&quot;guide&quot;,&quot;danger&quot;,&quot;ghost&quot;,&quot;text&quot;,&quot;textDanger&quot;,&quot;ontint&quot;,&quot;ondark&quot;],&quot;default&quot;:&quot;primary&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;standard&quot;,&quot;medium&quot;,&quot;large&quot;],&quot;default&quot;:&quot;medium&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Tlačítko&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;href&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;icon&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;iconTrailing&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;iconOnly&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;trailChevron&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;disabled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;fullWidth&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;ariaLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
   renderVals(){
     const P = this.props;
@@ -169,8 +172,12 @@ class Component extends DCLogic {
       } else {
         btnStyle = 'display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:'+mh+'px;padding:0 '+pad+'px;font-size:'+fs+'px;font-weight:700;color:'+fg+';background:'+bg+';border-radius:8px;cursor:'+(disabled?'not-allowed':'pointer')+';'+reset+(P.fullWidth?'width:100%;':'')+(P.variant==='text'?'text-decoration:underline;padding:0 4px;':'');
       }
+      // navigace: s href se vykreslí <a>, jinak <button>
+      const asLink = !!P.href && !disabled;
       return {
         single:true, gallery:false, btnStyle,
+        isLink: asLink, isButton: !asLink, href: P.href || '#',
+        linkStyle: btnStyle + 'text-decoration:none;',
         btnClass: disabled ? '' : V.cls,
         label: P.label||'Tlačítko',
         ariaLabel: P.ariaLabel || P.label || 'Tlačítko',

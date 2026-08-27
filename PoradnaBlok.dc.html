@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&amp;display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  .pb-a{text-decoration:none;color:inherit;}
+  .pb-a:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .pb-h2{font-size:28px;line-height:1.2;letter-spacing:-0.01em;}
+  @media (max-width:819px){ .pb-h2{font-size:22px;line-height:1.25;} }
+  .pb-cols{display:grid;grid-template-columns:2fr 1fr;gap:20px;align-items:start;}
+  @media (max-width:999px){ .pb-cols{grid-template-columns:1fr;} }
+  .pb-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media (max-width:549px){ .pb-cards{grid-template-columns:1fr;} }
+  .pb-card{background:#FFFFFF;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow 150ms ease;}
+  .pb-card:hover{box-shadow:0 6px 20px rgba(20,47,86,.10);}
+  .pb-card:hover .pb-title{color:#1E5AA8;}
+  .pb-card img{transition:transform .28s ease;}
+  .pb-card:hover img{transform:scale(1.03);}
+  .pb-title{transition:color 120ms ease;}
+  .pb-row{display:flex;align-items:center;gap:12px;background:#FFFFFF;padding:12px;border-radius:8px;transition:box-shadow 150ms ease,background 120ms ease;}
+  /* na mobilu je z CTA v řádku jen ikonové tlačítko 44 px */
+  @media (max-width:819px){
+    .pb-row>.pb-btn{width:44px;height:44px;padding:0;justify-content:center;gap:0;}
+    .pb-btn-l{display:none;}
+    .pb-row>.pb-title{font-size:15px!important;-webkit-line-clamp:3;}
+  }
+  .pb-row:hover{box-shadow:0 6px 20px rgba(20,47,86,.10);}
+  .pb-row:hover .pb-title{color:#1E5AA8;}
+  .pb-clamp{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+  .pb-clamp2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .pb-cta{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:#1E5AA8;cursor:pointer;}
+  .pb-cta:hover{color:#1A4A8A;}
+  /* CTA článku = sekundární tlačítko */
+  .pb-btn{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 16px;border-radius:8px;background:#EFF4FB;color:#1E5AA8;font-size:14px;font-weight:700;transition:background 120ms ease;}
+  .pb-btn:hover{background:#D8E6F6;color:#1E5AA8;}
+  .pb-btn:active{transform:translateY(1px);}
+  .pb-all,.pb-all:hover{color:#C5232B;}
+  @media (max-width:819px){ .pb-head{flex-direction:column;align-items:flex-start;gap:16px;}
+    .pb-head>h2{align-self:flex-start;text-align:left;width:100%;}
+    .pb-nav{width:100%;flex-direction:column;align-items:flex-start;gap:12px;}
+    .pb-nav>.pb-all{align-self:flex-start;margin-left:-16px!important;} }
+</style>
+</helmet>
+<section aria-labelledby="pb-head" style="width:100%;display:flex;flex-direction:column;gap:16px;">
+  <div class="pb-head" style="display:flex;align-items:center;justify-content:flex-start;gap:24px;flex-wrap:wrap;">
+    <h2 id="pb-head" class="pb-h2" style="margin:0;font-weight:700;color:#15181C;">{{ title }}</h2>
+    <div class="pb-nav" style="flex:1;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <sc-for list="{{ rubriky }}" as="r" hint-placeholder-count="4">
+          <dc-import name="Chip" kind="secondary" size="small" label="{{ r.name }}" href="{{ r.href }}" debug="{{ false }}" hint-size="140px,32px"></dc-import>
+        </sc-for>
+      </div>
+      <a class="pb-a pb-cta pb-all" href="{{ allHref }}" style="margin-left:auto;min-height:36px;padding:0 16px;border-radius:8px;color:#C5232B;transition:background 120ms ease;" style-hover="background:#FDF1F1;">{{ allLabel }}
+        <dc-import name="Ikony" icon-name="arrow-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
+      </a>
+    </div>
+  </div>
+
+  <div class="pb-cols">
+    <div class="pb-cards">
+      <sc-for list="{{ featured }}" as="f" hint-placeholder-count="2">
+        <dc-import name="KartaClanku" a="{{ f }}" debug="{{ false }}" hint-size="100%,400px"></dc-import>
+      </sc-for>
+    </div>
+
+    <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;">
+      <sc-for list="{{ rows }}" as="r" hint-placeholder-count="6">
+        <li class="pb-row">
+          <img src="{{ r.image }}" alt="" style="flex:none;width:64px;height:64px;border-radius:6px;object-fit:cover;">
+          <span class="pb-title pb-clamp2" style="flex:1;min-width:0;font-size:15px;font-weight:700;line-height:1.3;color:#15181C;">
+            <a class="pb-a" href="{{ r.href }}">{{ r.name }}</a>
+          </span>
+          <a class="pb-a pb-btn" href="{{ r.href }}" aria-label="Přečíst článek" style="flex:none;"><span class="pb-btn-l">Přečíst</span>
+            <dc-import name="Ikony" icon-name="arrow-right" size="{{ 18 }}" hint-size="18px,18px"></dc-import>
+          </a>
+        </li>
+      </sc-for>
+    </ul>
+  </div>
+</section>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:560},&quot;title&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Poradna&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;allLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Zobrazit vše&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;allHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;#/poradna/&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;rowCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:7,&quot;min&quot;:3,&quot;max&quot;:10,&quot;tsType&quot;:&quot;number&quot;},&quot;featured&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;object[]&quot;},&quot;rows&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;object[]&quot;},&quot;rubriky&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;object[]&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  RUBRIKY = [
+    { name:'Technický rádce', href:'#/poradna/technicky-radce/' },
+    { name:'Elektroinstalace', href:'#/poradna/elektroinstalace/' },
+    { name:'Předpisy', href:'#/poradna/predpisy/' },
+    { name:'Potřebuji vyřídit', href:'#/poradna/potrebuji-vyridit/' }
+  ];
+  FEATURED = [
+    { name:'Tachograf od 1. 7. 2026', typ:'Legislativa', rubrika:'Předpisy', image:'uploads/clanek-tachograf.png',
+      perex:'Od 1. července 2026 musí být některé automobily a soupravy s přívěsem s hmotností od 2,5 t do 3,5 t vybaveny chytrým tachografem. Koho se povinnost týká a jak ji splnit.',
+      href:'clanek-tachograf.dc.html' },
+    { name:'Jak vybrat správný disk', typ:'Návod', rubrika:'Technický rádce', image:'uploads/clanek-disk.png',
+      perex:'Rozteč, kolový úchyt, ET a nosnost — čtyři údaje, podle kterých se disk k přívěsu vybírá. Kde je na přívěsu najdete a co znamenají.',
+      href:'#/poradna/jak-vybrat-spravny-disk/' }
+  ];
+  ROWS = [
+    { name:'Huštění pneu přívěsu', image:'uploads/clanek-husteni-pneu.png', href:'#/poradna/husteni-pneu/' },
+    { name:'Zástrčky přívěsů a zásuvky tažných zařízení', image:'uploads/clanek-zastrcky.png', href:'#/poradna/zastrcky-a-zasuvky/' },
+    { name:'Výjimka TEMPO 100 pro přípojná vozidla', image:'uploads/clanek-tempo-100.png', href:'#/poradna/tempo-100/' },
+    { name:'Skupiny řidičského průkazu', image:'uploads/clanek-ridicsky-prukaz.png', href:'#/poradna/skupiny-ridicskeho-prukazu/' },
+    { name:'Jak správně naložit přívěs', image:'uploads/clanek-nalozit-prives.png', href:'#/poradna/jak-nalozit-prives/' },
+    { name:'Povinné a nepovinné osvětlení přívěsu', image:'uploads/elektro-a-osvetleni.jpg', href:'#/poradna/osvetleni-privesu/' },
+    { name:'Stabilizace jízdy s přívěsem', image:'uploads/kulove-tazne-spojky.jpg', href:'#/poradna/stabilizace-jizdy/' }
+  ];
+  renderVals(){
+    const P = this.props;
+    return {
+      title: P.title ?? 'Poradna',
+      allLabel: P.allLabel ?? 'Zobrazit vše',
+      allHref: P.allHref ?? 'poradna.dc.html',
+      rubriky: Array.isArray(P.rubriky) && P.rubriky.length ? P.rubriky : this.RUBRIKY,
+      featured: (Array.isArray(P.featured) && P.featured.length ? P.featured : this.FEATURED).slice(0,2).map(f=>({ ...f, href:'clanek-tachograf.dc.html' })),
+      // prototyp: všechny články vedou na jediný hotový detail
+      rows: (Array.isArray(P.rows) && P.rows.length ? P.rows : this.ROWS).slice(0, Math.max(1, Number(P.rowCount) || 5)).map(r=>({ ...r, href:'clanek-tachograf.dc.html' })),
+      debug: P.debug ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

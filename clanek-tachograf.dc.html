@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&amp;display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0!important;padding:0!important;background:#F7F9FB;}
+  #dc-root{margin:0!important;padding:0!important;width:100%!important;max-width:none!important;border:0!important;}
+  #dc-root>.sc-host{margin:0!important;padding:0!important;width:100%!important;}
+  a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
+  .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
+  @media (max-width:819px){ .vp-in{padding-left:16px;padding-right:16px;} }
+  .ar-cols{display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:40px;align-items:start;}
+  @media (max-width:1149px){ .ar-cols{grid-template-columns:minmax(0,1fr);gap:28px;} }
+  .ar-h1{font-size:36px;font-weight:700;line-height:1.15;letter-spacing:-0.02em;}
+  .ar-h2{font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.01em;}
+  .ar-h3{font-size:22px;font-weight:700;line-height:1.25;}
+  @media (max-width:819px){ .ar-h1{font-size:26px;line-height:1.2;} .ar-h2{font-size:22px;line-height:1.25;} .ar-h3{font-size:18px;line-height:1.3;} .ar-body{font-size:16px!important;} }
+  .ar-body{font-size:18px;font-weight:400;line-height:1.6;color:#3A424C;}
+  .ar-body p{margin:0;text-wrap:pretty;}
+  .ar-side{display:flex;flex-direction:column;gap:16px;}
+  .ar-row{display:flex;align-items:center;gap:12px;background:#FFFFFF;padding:12px;border-radius:8px;transition:box-shadow 150ms ease;}
+  .ar-row:hover{box-shadow:0 6px 20px rgba(20,47,86,.10);}
+  .ar-row:hover .ar-row-t{color:#1E5AA8;}
+  .ar-row-t{transition:color 120ms ease;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .ar-row-b{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 16px;border-radius:8px;background:#EFF4FB;color:#1E5AA8;font-size:14px;font-weight:700;text-decoration:none;transition:background 120ms ease;}
+  .ar-row-b:hover{background:#D8E6F6;color:#1E5AA8;}
+  @media (max-width:819px){ .ar-row>.ar-row-b{width:44px;height:44px;padding:0;justify-content:center;gap:0;} .ar-row-bl{display:none;} .ar-row-t{-webkit-line-clamp:3;} }
+  .ar-rel{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media (max-width:999px){ .ar-rel{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:549px){ .ar-rel{grid-template-columns:1fr;} }
+  .ar-tab{width:100%;border-collapse:collapse;font-size:16px;}
+  .ar-tab th,.ar-tab td{text-align:left;padding:12px 16px;border-bottom:1px solid #F2F4F7;}
+  .ar-tab th{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;}
+  .ar-tab td{font-weight:400;color:#3A424C;}
+  .ar-tab td:first-child{font-weight:700;color:#15181C;}
+  .ar-btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 20px;border-radius:8px;font-size:15px;font-weight:700;text-decoration:none;transition:background 120ms ease;}
+  .ar-btn:active{transform:translateY(1px);}
+  .ar-btn-p{background:#1E5AA8;color:#FFFFFF;} .ar-btn-p:hover{background:#1A4A8A;color:#FFFFFF;}
+  .ar-btn-s{background:#EFF4FB;color:#1E5AA8;} .ar-btn-s:hover{background:#D8E6F6;color:#1E5AA8;}
+  .ar-btn-all{background:transparent;color:#C5232B;padding:0 16px;min-height:36px;} .ar-btn-all:hover{background:#FDF1F1;color:#C5232B;}
+</style>
+</helmet>
+<div data-screen-label="Článek — Tachograf" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
+
+  <dc-import name="Usp" variant="pas" tone="tmavy" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,48px"></dc-import>
+  <dc-import name="Hlavicka" active="Poradna" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:30–16:30" contact-open="{{ true }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
+
+  <main class="vp-in" style="padding-top:14px;padding-bottom:40px;">
+    <div style="margin:4px 0 6px;">
+      <dc-import name="Breadcrumb" items="{{ crumbItems }}" bare="{{ true }}" debug="{{ debug }}" hint-size="100%,20px"></dc-import>
+    </div>
+
+    <div class="ar-cols" style="margin-top:32px;">
+      <article style="min-width:0;display:flex;flex-direction:column;gap:24px;">
+
+        <header style="display:flex;flex-direction:column;gap:14px;">
+          <h1 class="ar-h1" style="margin:0;color:#142F56;text-wrap:pretty;">Tachograf od 1. 7. 2026: koho se povinnost týká</h1>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <dc-import name="Chip" kind="guide" size="small" label="Předpisy" icon-name="book" href="poradna.dc.html" debug="{{ false }}" hint-size="130px,32px"></dc-import>
+          </div>
+          <p style="margin:0;font-size:18px;font-weight:400;line-height:1.6;color:#5A626C;text-wrap:pretty;">Od 1. července 2026 musí být některé automobily a soupravy s přívěsem o hmotnosti od 2,5 t do 3,5 t vybaveny chytrým tachografem. Shrnuli jsme, koho se povinnost týká, jaké jsou výjimky a co udělat, abyste pokutu nedostali hned první den.</p>
+          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:13px;font-weight:500;color:#666E78;">
+            <span style="display:inline-flex;align-items:center;gap:6px;"><dc-import name="Ikony" icon-name="refresh" size="{{ 18 }}" hint-size="18px,18px"></dc-import>Aktualizováno 12. 8. 2026</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;"><dc-import name="Ikony" icon-name="clock" size="{{ 18 }}" hint-size="18px,18px"></dc-import>6 minut čtení</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;"><dc-import name="Ikony" icon-name="user" size="{{ 18 }}" hint-size="18px,18px"></dc-import>Technické oddělení VAPP</span>
+          </div>
+        </header>
+
+        <img src="uploads/clanek-tachograf.png" alt="Chytrý tachograf v kabině vozidla" style="display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px;">
+
+        <section id="koho-se-tyka" style="display:flex;flex-direction:column;gap:16px;">
+          <h2 class="ar-h2" style="margin:0;color:#142F56;">Koho se povinnost týká</h2>
+          <div class="ar-body" style="display:flex;flex-direction:column;gap:16px;">
+            <p>Novinka míří na dopravu za účelem podnikání v rámci mezinárodní přepravy. Rozhodující není samotné vozidlo, ale <strong>největší povolená hmotnost celé jízdní soupravy</strong> — tedy tažného vozidla i přívěsu dohromady.</p>
+            <ul style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px;">
+              <li>Souprava s hmotností <strong>nad 2,5 t</strong> a do 3,5 t včetně přívěsu.</li>
+              <li>Přeprava <strong>zboží</strong> pro cizí potřebu nebo pro vlastní podnikání.</li>
+              <li>Jízda <strong>mimo území ČR</strong> — mezinárodní přeprava.</li>
+            </ul>
+            <p>Pokud kterákoli z podmínek neplatí, povinnost na vás nedopadá. Typicky se netýká soukromých jízd s přívěsem za rodinným automobilem ani vnitrostátní dopravy.</p>
+          </div>
+        </section>
+
+        <section id="hmotnosti" style="display:flex;flex-direction:column;gap:16px;">
+          <h2 class="ar-h2" style="margin:0;color:#142F56;">Jak se počítá hmotnost soupravy</h2>
+          <div class="ar-body" style="display:flex;flex-direction:column;gap:16px;">
+            <p>Sečtěte největší povolenou hmotnost tažného vozidla a největší povolenou hmotnost přívěsu z technického průkazu. Nejde o skutečnou naloženou hmotnost — kontrola pracuje s údaji z dokladů a výrobního štítku.</p>
+          </div>
+          <div style="background:#FFFFFF;border-radius:8px;overflow:hidden;">
+            <table class="ar-tab">
+              <thead>
+                <tr><th>Souprava</th><th>Hmotnost celkem</th><th>Tachograf</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Osobní vozidlo 2,0 t + přívěs 0,75 t</td><td>2,75 t</td><td>Ano, při mezinárodní přepravě zboží</td></tr>
+                <tr><td>Dodávka 3,5 t + přívěs 1,3 t</td><td>4,8 t</td><td>Ano</td></tr>
+                <tr><td>Osobní vozidlo 1,8 t + přívěs 0,6 t</td><td>2,4 t</td><td>Ne</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="vyjimky" style="display:flex;flex-direction:column;gap:16px;">
+          <h2 class="ar-h2" style="margin:0;color:#142F56;">Výjimky, na které se často zapomíná</h2>
+          <div class="ar-body" style="display:flex;flex-direction:column;gap:16px;">
+            <p>Z povinnosti jsou vyňaty některé typy jízd. V praxi nejčastěji narazíte na tyto tři:</p>
+            <ul style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px;">
+              <li><strong>Nekomerční přeprava</strong> — přesun vlastního materiálu bez vazby na podnikání.</li>
+              <li><strong>Vnitrostátní jízdy</strong> — v ČR povinnost pro tuto hmotnostní kategorii nevzniká.</li>
+              <li><strong>Přeprava vozidel do hmotnosti 2,5 t</strong> včetně přívěsu.</li>
+            </ul>
+          </div>
+          <div style="display:flex;gap:12px;padding:16px;background:#FCF1DC;border-radius:8px;color:#7A4E00;">
+            <span aria-hidden="true" style="flex:none;display:flex;"><dc-import name="Ikony" icon-name="alert-triangle" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>
+            <p style="margin:0;font-size:16px;line-height:1.6;font-weight:500;">Výjimku je potřeba umět prokázat. U kontroly rozhoduje účel jízdy, ne to, co je napsáno na vozidle — vozte s sebou doklady k nákladu.</p>
+          </div>
+        </section>
+
+        <section id="co-udelat" style="display:flex;flex-direction:column;gap:16px;">
+          <h2 class="ar-h2" style="margin:0;color:#142F56;">Co udělat před 1. červencem</h2>
+          <ol class="ar-body" style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:10px;">
+            <li>Sečtěte hmotnosti soupravy podle technických průkazů a ověřte, zda do kategorie spadáte.</li>
+            <li>Nechte si u autorizované dílny <strong>namontovat a ověřit chytrý tachograf</strong> — čekací doby se před termínem prodlužují.</li>
+            <li>Zajistěte řidičům <strong>kartu řidiče</strong> a proškolte je v obsluze i v pravidlech dob řízení.</li>
+            <li>Zaveďte pravidelné stahování dat a jejich archivaci po dobu, kterou předpis vyžaduje.</li>
+            <li>Zkontrolujte technický stav přívěsu — u kontroly se řeší celá souprava, ne jen tachograf.</li>
+          </ol>
+        </section>
+
+        <section id="prives" style="display:flex;flex-direction:column;gap:16px;">
+          <h2 class="ar-h2" style="margin:0;color:#142F56;">Co to znamená pro přívěs</h2>
+          <div class="ar-body" style="display:flex;flex-direction:column;gap:16px;">
+            <p>Tachograf se montuje do tažného vozidla, přívěs sám žádné zařízení nepotřebuje. Kontrola u soupravy nad 2,5 t ale bývá důkladnější — a nejčastější závady jsou pořád stejné: nefunkční osvětlení, prodřená kabeláž, opotřebené obložení brzd a vůle v ložiskách náprav.</p>
+            <p>Než vyjedete, projděte přívěs podle našeho <a href="poradna.dc.html">servisního přehledu</a> a chybějící díly doplňte předem.</p>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <a class="ar-btn ar-btn-p" href="nahradnidily.dc.html">Náhradní díly na přívěs
+              <dc-import name="Ikony" icon-name="arrow-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
+            </a>
+            <a class="ar-btn ar-btn-s" href="#">Objednat servis</a>
+          </div>
+        </section>
+
+        <div style="margin-top:8px;">
+          <dc-import name="PoradenskyBlok" variant="compact" debug="{{ debug }}" hint-size="100%,90px"></dc-import>
+        </div>
+      </article>
+
+      <aside class="ar-side" aria-labelledby="ar-more-h">
+        <h2 id="ar-more-h" class="ar-h3" style="margin:0;color:#15181C;">Další články z poradny</h2>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;">
+          <sc-for list="{{ rows }}" as="r" hint-placeholder-count="8">
+            <li class="ar-row">
+              <img src="{{ r.image }}" alt="" style="flex:none;width:64px;height:64px;border-radius:6px;object-fit:cover;">
+              <span class="ar-row-t" style="flex:1;min-width:0;font-size:15px;font-weight:700;line-height:1.3;color:#15181C;">
+                <a href="{{ r.href }}" style="color:inherit;text-decoration:none;">{{ r.name }}</a>
+              </span>
+              <a class="ar-row-b" href="{{ r.href }}" aria-label="Přečíst článek" style="flex:none;"><span class="ar-row-bl">Přečíst</span>
+                <dc-import name="Ikony" icon-name="arrow-right" size="{{ 18 }}" hint-size="18px,18px"></dc-import>
+              </a>
+            </li>
+          </sc-for>
+        </ul>
+        <a class="ar-btn ar-btn-all" href="poradna.dc.html" style="align-self:flex-end;">Všechny články
+          <dc-import name="Ikony" icon-name="arrow-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
+        </a>
+      </aside>
+    </div>
+
+    <section aria-labelledby="ar-rel-h" style="margin-top:48px;display:flex;flex-direction:column;gap:16px;">
+      <h2 id="ar-rel-h" class="ar-h2" style="margin:0;color:#15181C;">Další články z rubriky Předpisy</h2>
+      <div class="ar-rel">
+        <sc-for list="{{ related }}" as="a" hint-placeholder-count="3">
+          <dc-import name="KartaClanku" a="{{ a }}" debug="{{ false }}" hint-size="100%,400px"></dc-import>
+        </sc-for>
+      </div>
+    </section>
+  </main>
+
+  <div class="vp-in" style="margin-top:8px;">
+    <dc-import name="Usp" variant="sloupce" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
+  </div>
+  <div style="margin-top:10px;">
+    <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
+  </div>
+
+  <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  ROWS = [
+    { name:'Skupiny řidičského průkazu a přívěs', image:'uploads/clanek-ridicsky-prukaz.png', href:'#' },
+    { name:'Výjimka TEMPO 100 pro přípojná vozidla', image:'uploads/clanek-tempo-100.png', href:'#' },
+    { name:'Zástrčky přívěsů a zásuvky tažných zařízení', image:'uploads/clanek-zastrcky.png', href:'#' },
+    { name:'Jak vybrat správný disk', image:'uploads/clanek-disk.png', href:'#' },
+    { name:'Jak správně naložit přívěs', image:'uploads/clanek-nalozit-prives.png', href:'#' },
+    { name:'Technická prohlídka přívěsu', image:'uploads/napravy-a-brzdy.jpg', href:'#' },
+    { name:'Povinné a nepovinné osvětlení přívěsu', image:'uploads/elektro-a-osvetleni.jpg', href:'#' },
+    { name:'Huštění pneu přívěsu', image:'uploads/clanek-husteni-pneu.png', href:'#' }
+  ];
+  RELATED = [
+    { name:'Skupiny řidičského průkazu a přívěs', rubrika:'Předpisy', image:'uploads/clanek-ridicsky-prukaz.png',
+      perex:'B, B96, BE nebo C1E — co s jakou skupinou smíte táhnout a jak se počítá hmotnost jízdní soupravy.', href:'#' },
+    { name:'Rychlost s přívěsem na dálnici', rubrika:'Předpisy', image:'uploads/clanek-tempo-100.png',
+      perex:'Limity podle kategorie soupravy, výjimky pro TEMPO 100 a jak je kontroluje policie.', href:'#' },
+    { name:'Nosnost a hmotnostní štítek přívěsu', rubrika:'Předpisy', image:'uploads/konstrukcni_dily.jpg',
+      perex:'Jak čtete štítek, co znamená provozní a užitečná hmotnost a jaká pokuta hrozí za přetížení.', href:'#' }
+  ];
+  renderVals(){
+    return {
+      crumbItems: [
+        { name:'Domů', href:'index.dc.html' },
+        { name:'Poradna', href:'poradna.dc.html' },
+        { name:'Předpisy', href:'poradna.dc.html' },
+        { name:'Tachograf od 1. 7. 2026', href:'#' }
+      ],
+      rows: this.ROWS.map(r=>({ ...r, href:'clanek-tachograf.dc.html' })),
+      related: this.RELATED.map(r=>({ ...r, href:'clanek-tachograf.dc.html' })),
+      debug: this.props.debug ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&amp;display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  .kc-a{text-decoration:none;color:inherit;}
+  .kc-a:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .kc{background:#FFFFFF;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;height:100%;transition:box-shadow 150ms ease;}
+  .kc:hover{box-shadow:0 6px 20px rgba(20,47,86,.10);}
+  .kc:hover .kc-title{color:#1E5AA8;}
+  .kc img{transition:transform .28s ease;}
+  .kc:hover img{transform:scale(1.03);}
+  .kc-title{transition:color 120ms ease;}
+  .kc-clamp{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+  .kc-btn{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 16px;border-radius:8px;background:#EFF4FB;color:#1E5AA8;font-size:14px;font-weight:700;transition:background 120ms ease;}
+  .kc-btn:hover{background:#D8E6F6;color:#1E5AA8;}
+  .kc-btn:active{transform:translateY(1px);}
+</style>
+</helmet>
+<article class="kc">
+  <a class="kc-a" href="{{ href }}" tabindex="-1" aria-hidden="true" style="display:block;overflow:hidden;">
+    <img src="{{ image }}" alt="" style="display:block;width:100%;aspect-ratio:16/9;object-fit:cover;">
+  </a>
+  <div style="padding:16px;display:flex;flex-direction:column;gap:10px;flex:1;">
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+      <span style="display:inline-flex;align-items:center;height:26px;padding:0 10px;border-radius:999px;background:#FCF1DC;color:#7A4E00;font-size:13px;font-weight:700;">{{ rubrika }}</span>
+    </div>
+    <h3 class="kc-title" style="margin:0;font-size:18px;font-weight:700;line-height:1.35;color:#15181C;text-wrap:pretty;">
+      <a class="kc-a" href="{{ href }}">{{ name }}</a>
+    </h3>
+    <p class="kc-clamp" style="margin:0;font-size:14px;font-weight:400;line-height:1.5;color:#5A626C;">{{ perex }}</p>
+    <a class="kc-a kc-btn" href="{{ href }}" style="margin-top:auto;align-self:flex-start;">Přečíst
+      <dc-import name="Ikony" icon-name="arrow-right" size="{{ 18 }}" hint-size="18px,18px"></dc-import>
+    </a>
+  </div>
+</article>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:420,&quot;height&quot;:420},&quot;a&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;{name,typ,rubrika,image,perex,href}&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  DEMO = { name:'Tachograf od 1. 7. 2026', typ:'Legislativa', rubrika:'Předpisy', image:'uploads/clanek-tachograf.png',
+    perex:'Od 1. července 2026 musí být některé automobily a soupravy s přívěsem s hmotností od 2,5 t do 3,5 t vybaveny chytrým tachografem. Koho se povinnost týká a jak ji splnit.',
+    href:'#/poradna/tachograf-od-1-7-2026/' };
+  renderVals(){
+    const P = this.props;
+    const a = (P.a && P.a.name) ? P.a : this.DEMO;
+    return {
+      name: a.name, typ: a.typ, rubrika: a.rubrika, image: a.image, perex: a.perex,
+      href: a.href || '#',
+      debug: P.debug ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

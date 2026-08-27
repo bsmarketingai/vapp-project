@@ -111,7 +111,7 @@
       </div>
     </nav>
     <sc-if value="{{ menuOpen }}" hint-placeholder-val="">
-      <div class="hd-mb" id="hd-mobile-menu" role="navigation" aria-label="Hlavní menu" tabindex="-1" onKeyDown="{{ onMenuKey }}" style="position:absolute;top:100%;left:0;right:0;z-index:60;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;box-shadow:0 10px 30px rgba(20,30,45,.14);">
+      <div class="hd-mb" id="hd-mobile-menu" role="navigation" aria-label="Hlavní menu" tabindex="-1" onKeyDown="{{ onMenuKey }}" style="position:absolute;top:100%;left:0;right:0;z-index:60;min-height:calc(100dvh - 100%);background:#fff;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;box-shadow:0 10px 30px rgba(20,30,45,.14);">
         <dc-import name="MobilniMenu" show-info="{{ mmInfo }}" show-contacts="{{ mmContacts }}" panel-open="{{ menuOpen }}" menu-tree="{{ menuTree }}" active="{{ menuActive }}" on-select="{{ onMenuSelect }}" info-links="{{ infoLinks }}" on-login="{{ onMenuLogin }}" currency="{{ currency }}" currencies="{{ currencyCodes }}" on-currency-change="{{ onMenuCurrency }}" debug="{{ debug }}" hint-size="100%,320px"></dc-import>
       </div>
     </sc-if>
@@ -179,7 +179,7 @@ class Component extends DCLogic {
     const labels = P.tabs || ['Přívěsy','Náhradní díly','Servis','Půjčovna','Poradna'];
     const onTab = P.onTabClick;
     const infoLinks = P.infoLinks || ['Doprava a platba','Obchodní podmínky','O nás','Kontakty'];
-    const TAB_HREF = { 'Přívěsy':'privesy-V1.dc.html', 'Náhradní díly':'nahradnidily.dc.html' };
+    const TAB_HREF = { 'Přívěsy':'privesy-V1.dc.html', 'Náhradní díly':'nahradnidily.dc.html', 'Poradna':'poradna.dc.html' };
     const tabs = labels.map(label=>{
       const on = label === active;
       const href = TAB_HREF[label] || '#';
@@ -200,8 +200,8 @@ class Component extends DCLogic {
       showKb: true, showMail: true, showSearchAct: true,
       // porovnávání se nepoužívá — ikona je skrytá, kód zůstává (prop showCompareAction ji vrátí)
       showCompareAct: P.showCompareAction === true,
-      // servisní odkazy jsou jen v patičce, kontakty na mobilu se zatím nikam nedávají
-      mmInfo: false, mmContacts: false,
+      // servisní odkazy jsou jen v patičce, kontaktní blok v mobilním menu zůstává
+      mmInfo: false, mmContacts: true,
       rootCls: 'hd-v4',
       contactEmail: P.contactEmail ?? 'obchod@vapp.cz',
       contactEmailHref: P.contactEmailHref ?? ('mailto:' + (P.contactEmail ?? 'obchod@vapp.cz')),

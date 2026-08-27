@@ -43,7 +43,7 @@
         </sc-for>
       </div>
       <div style="display:flex;margin-top:4px;">
-        <dc-import name="Tlacitko" variant="ghost" size="medium" label="{{ cta }}" icon-trailing="arrow-right" on-click="{{ onRead }}" hint-size="200px,44px"></dc-import>
+        <dc-import name="Tlacitko" variant="secondary" size="medium" label="{{ cta }}" href="{{ ctaHref }}" icon-trailing="arrow-right" on-click="{{ onRead }}" hint-size="200px,44px"></dc-import>
       </div>
     </div>
   </div>
@@ -65,6 +65,7 @@ class Component extends DCLogic {
       text: P.text ?? 'Začínali jsme jako malá rodinná výrobna přívěsů. Dnes vyrábíme vlastní řadu, držíme největší skladové zásoby náhradních dílů v ČR a provozujeme autorizovaný servis. Zákazníkům radíme podle toho, co sami vyrábíme a opravujeme.',
       stats: (Array.isArray(P.stats) && P.stats.length) ? P.stats.filter(Boolean) : this.DEFAULT_STATS,
       cta: P.cta ?? 'Přečíst příběh VAPP',
+      ctaHref: P.ctaHref ?? 'onas.dc.html',
       onRead: P.onRead || (()=>{}),
       debug: P.debug ?? true
     };

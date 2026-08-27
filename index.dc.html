@@ -28,6 +28,9 @@
   @media (max-width:819px){ .hp-sec{padding:24px 0;} }
   .hp-h2{font-size:28px;line-height:1.2;letter-spacing:-0.01em;}
   @media (max-width:819px){ .hp-h2{font-size:22px;line-height:1.25;} }
+  .hp-h1{font-size:36px;line-height:1.15;letter-spacing:-0.02em;}
+  @media (max-width:819px){ .hp-h1{font-size:26px;line-height:1.2;} }
+  @media (max-width:819px){ .hp-h1row{flex-direction:column;gap:16px;} }
   .hp-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:16px;}
 </style>
 </helmet>
@@ -40,7 +43,29 @@
   <main>
     <dc-import name="HeroHomepage" debug="{{ debug }}" hint-size="100%,420px"></dc-import>
 
-    <section aria-labelledby="hp-cats" class="hp-sec">
+    <section aria-labelledby="hp-h1" class="hp-sec" style="padding-top:64px;padding-bottom:56px;">
+      <div class="vp-in" style="display:flex;flex-direction:column;gap:20px;">
+        <div class="hp-h1row" style="display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;">
+          <h1 id="hp-h1" class="hp-h1" style="margin:0;font-weight:700;color:#15181C;text-wrap:pretty;text-align:center;">Přívěsy, příslušenství a náhradní díly</h1>
+          <a href="#/hodnoceni/" style="display:inline-flex;align-items:center;gap:12px;background:#FFFFFF;border-radius:999px;padding:10px 20px;text-decoration:none;box-shadow:0 6px 20px rgba(20,47,86,.10);">
+            <span style="display:inline-flex;color:#F5A623;">
+              <dc-import name="Ikony" icon-name="star-filled" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
+            </span>
+            <span style="font-size:16px;font-weight:700;color:#15181C;">4,8 z 5</span>
+            <span style="font-size:15px;font-weight:400;color:#5A626C;">Ověřeno zákazníky · Heureka</span>
+          </a>
+        </div>
+        <dc-import name="Usp" variant="sloupce" items="{{ uspGrid }}" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
+      </div>
+    </section>
+
+    <section aria-label="Servis a půjčovna" style="background:linear-gradient(rgba(20,47,86,.40),rgba(20,47,86,.58)),#142F56 url('./sekce-servis.png') center/cover no-repeat;padding:56px 0;">
+      <div class="vp-in">
+        <dc-import name="SluzbyBloky" tone="dark" debug="{{ debug }}" hint-size="100%,360px"></dc-import>
+      </div>
+    </section>
+
+    <section aria-labelledby="hp-cats" class="hp-sec" style="display:none;">
       <div class="vp-in">
         <div class="hp-head">
           <h2 id="hp-cats" class="hp-h2" style="margin:0;font-weight:700;color:#15181C;">Co u nás hledáte?</h2>
@@ -50,34 +75,32 @@
       </div>
     </section>
 
+    <section aria-label="Karusely produktů" class="hp-sec" style="background:#EFF4FB;margin-bottom:40px;">
+      <div class="vp-in" style="display:flex;flex-direction:column;gap:40px;">
+        <dc-import name="ProduktovyKarusel" title="Přívěsy" items="{{ privesyItems }}" all-label="Zobrazit vše" all-href="privesy-V1.dc.html" detail-href="detail-prives-V1.dc.html" debug="{{ debug }}" hint-size="100%,620px"></dc-import>
+        <dc-import name="ProduktovyKarusel" title="Náhradní díly" items="{{ dilyItems }}" all-label="Zobrazit vše" all-href="nahradnidily.dc.html" detail-href="detail-nahradnidil-V1.dc.html" debug="{{ debug }}" hint-size="100%,620px"></dc-import>
+      </div>
+    </section>
+
+    <section aria-label="Poradna" class="hp-sec" style="padding-bottom:64px;">
+      <div class="vp-in">
+        <dc-import name="PoradnaBlok" debug="{{ debug }}" hint-size="100%,560px"></dc-import>
+      </div>
+    </section>
+
     <section aria-label="Poradenství" style="padding-bottom:40px;">
       <div class="vp-in">
         <dc-import name="PoradenskyBlok" variant="standard" debug="{{ debug }}" hint-size="100%,80px"></dc-import>
       </div>
     </section>
 
-    <section aria-label="Servis a půjčovna" style="background:linear-gradient(rgba(20,47,86,.40),rgba(20,47,86,.58)),#142F56 url('./sekce-servis.png') center/cover no-repeat;padding:56px 0;margin-bottom:40px;">
-      <div class="vp-in">
-        <dc-import name="SluzbyBloky" tone="dark" debug="{{ debug }}" hint-size="100%,360px"></dc-import>
-      </div>
-    </section>
-
-    <section aria-label="O firmě" style="padding-bottom:40px;">
-      <div class="vp-in">
+    <section aria-label="O firmě a recenze zákazníků" style="background:#EFF4FB;padding:56px 0;">
+      <div class="vp-in" style="display:flex;flex-direction:column;gap:48px;">
         <dc-import name="PribehFirmy" debug="{{ debug }}" hint-size="100%,330px"></dc-import>
-      </div>
-    </section>
-
-    <section aria-label="Recenze zákazníků" style="padding-bottom:48px;">
-      <div class="vp-in">
         <dc-import name="Recenze" debug="{{ debug }}" hint-size="100%,320px"></dc-import>
       </div>
     </section>
   </main>
-
-  <div class="vp-in" style="margin-bottom:8px;">
-    <dc-import name="Usp" variant="sloupce" items="{{ uspGrid }}" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
-  </div>
 
   <dc-import name="Paticka" debug="{{ debug }}" hint-size="100%,520px"></dc-import>
 </div>
@@ -105,19 +128,43 @@ class Component extends DCLogic {
     { icon:'rocket', title:'Rychlá expedice', text:'Skladové položky expedujeme do druhého dne' },
     { icon:'tool', title:'Autorizovaný servis', text:'Autorizovaný servis AL-KO a KNOTT' }
   ];
+  PRIVESY = [
+    { name:'VAPP Praktik 2', objNum:'PRA2', img:'uploads/prives-vapp-praktik-2.jpg', net:'42 149 Kč', gross:'51 000 Kč', stock:4, reviews:18, rating:5,
+      specs:[{label:'Ložná plocha',value:'2030 × 1230 mm'},{label:'Celková hmotnost',value:'750 kg'},{label:'Nosnost',value:'570 kg'}] },
+    { name:'VAPP PAP 2.0 4019', objNum:'PAP2040', img:'uploads/prives-vapp-pap-2-0-4019.jpg', net:'68 595 Kč', gross:'83 000 Kč', stock:2, reviews:11, rating:4,
+      specs:[{label:'Ložná plocha',value:'4000 × 1900 mm'},{label:'Celková hmotnost',value:'2 000 kg'},{label:'Nosnost',value:'1 540 kg'}] },
+    { name:'VAPP PVS 2.7 4021 sklopný', objNum:'PVS2740', img:'uploads/prives-vapp-pvs-2-7-4021.jpg', net:'96 694 Kč', gross:'117 000 Kč', stock:1, sale:8, reviews:7, rating:5,
+      specs:[{label:'Ložná plocha',value:'4000 × 2100 mm'},{label:'Celková hmotnost',value:'2 700 kg'},{label:'Nosnost',value:'2 090 kg'}] },
+    { name:'VAPP P3S 2.7 3618 třístranný sklápěč', objNum:'P3S2736', img:'uploads/prives-vapp-p3s-2-7-3618.jpg', net:'149 587 Kč', gross:'181 000 Kč', stock:0, reviews:5, rating:5,
+      specs:[{label:'Ložná plocha',value:'3600 × 1800 mm'},{label:'Celková hmotnost',value:'2 700 kg'},{label:'Nosnost',value:'1 950 kg'}] },
+    { name:'VAPP Moto Profi 132', objNum:'MOT132', img:'uploads/prives-vapp-moto-profi-132.jpg', net:'38 843 Kč', gross:'47 000 Kč', stock:6, reviews:24, rating:4,
+      specs:[{label:'Ložná plocha',value:'2200 × 1320 mm'},{label:'Celková hmotnost',value:'750 kg'},{label:'Nosnost',value:'540 kg'}] }
+  ];
+  DILY = [
+    { name:'Opěrné kolečko DTR ⌀48 mm, nosnost 150 kg', objNum:'404815', img:'uploads/kolecko-operne-dtr-prum-48-150-kg.jpg', net:'397 Kč', gross:'480 Kč', stock:22, sale:15, reviews:23, rating:4 },
+    { name:'Manžeta gumová KNOTT KF/KR 7,5 až 27', objNum:'907527', img:'uploads/manzeta-gumova-knott-kf-kr-7-5-az-27.jpg', net:'157 Kč', gross:'190 Kč', stock:44, reviews:9, rating:5 },
+    { name:'Čelisti brzdové KNOTT 200×50, sada na 2 kola', objNum:'902005', img:'uploads/celisti-brzdove-knott-200x50-mala-sada-na-2-kola.jpg', net:'1 190 Kč', gross:'1 440 Kč', stock:17, reviews:31, rating:5 },
+    { name:'Pneu 165 R13 C 96N, 710 kg, Kenda M+S', objNum:'165130', img:'uploads/pneu-165-r13-c-96n-710-kg-kenda-m-s.jpg', net:'1 149 Kč', gross:'1 390 Kč', stock:12, reviews:14, rating:4 },
+    { name:'Zástrčka 7pólová 12 V kovová Jaeger', objNum:'701207', img:'uploads/zastrcka-vidlice-7-pol-12v-kovova-jaeger.jpg', net:'289 Kč', gross:'350 Kč', stock:38, reviews:6, rating:4 },
+    { name:'Zámek Albe Safety Box XL k rozvírací spojce', objNum:'ALBEXL', img:'uploads/zamek-albe-safety-box-xl-k-rozviraci.jpg', net:'2 314 Kč', gross:'2 800 Kč', stock:0, reviews:3, rating:5 }
+  ];
   slug(s){
     return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
       .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
   }
   renderVals(){
     const P = this.props;
-    const categories = this.CATS.map(c=>({
+    // rozcestník nese jen produktové sekce; servis, půjčovna, poradna a akce jsou skryté (data zůstávají)
+    const HIDDEN = ['servis','pujcovna','poradna','akce'];
+    const categories = this.CATS.filter(c=>!HIDDEN.includes(c.key)).map(c=>({
       name: c.name, count: c.count, countText: c.countText, image: c.image, badge: c.badge,
       href: c.href || ('#/' + c.key + '/'),
       subs: c.subs.map(s=>({ name:s, href:'#/' + c.key + '/' + this.slug(s) + '/' }))
     }));
     return {
       categories,
+      privesyItems: this.PRIVESY,
+      dilyItems: this.DILY,
       uspGrid: this.USP,
       // pás nese USP i sezónní sdělení
       uspPas: this.USP.concat([
