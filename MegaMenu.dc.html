@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  .mm-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
+  .mm-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .mm-in{max-width:1560px;margin:0 auto;padding:0 32px;}
+  @media (max-width:819px){ .mm-in{padding:0 16px;} }
+  /* sloupce: XL a XXL podle propu, L a M tři, S dva, XS a XXS jeden */
+  .mm-grid{display:grid;gap:28px 32px;grid-template-columns:repeat(var(--mm-cols,4),1fr);}
+  @media (max-width:1149px){ .mm-grid{grid-template-columns:repeat(3,1fr);} }
+  @media (max-width:819px){ .mm-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:549px){ .mm-grid{grid-template-columns:1fr;} }
+  .mm-head{transition:color .12s;} .mm-head:hover{color:#1E5AA8 !important;}
+  .mm-row{transition:background .12s,color .12s;}
+  .mm-row:hover{background:#F2F4F7 !important;color:#1E5AA8 !important;}
+  .mm-more{transition:background .12s,color .12s;}
+  .mm-more:hover{background:#EFF4FB !important;color:#1A4A8A !important;}
+</style>
+</helmet>
+<div style="background:#FFFFFF;border-top:1px solid #F2F4F7;box-shadow:0 10px 30px rgba(20,30,45,.14);">
+  <div class="mm-in" style="padding-top:24px;padding-bottom:24px;">
+    <h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;margin:0;">{{ heading }}</h2>
+    <div class="mm-grid" style="{{ gridStyle }}">
+      <sc-for list="{{ blocks }}" as="blk" hint-placeholder-count="8">
+        <div style="display:flex;align-items:flex-start;gap:12px;min-width:0;">
+          <sc-if value="{{ blk.hasPhoto }}" hint-placeholder-val="{{ true }}">
+            <img src="{{ blk.image }}" alt="" width="48" height="48" loading="lazy" style="flex:none;width:48px;height:48px;object-fit:contain;">
+          </sc-if>
+          <sc-if value="{{ blk.hasIcon }}" hint-placeholder-val="">
+            <span aria-hidden="true" style="flex:none;width:44px;height:44px;border-radius:999px;background:#EFF4FB;display:flex;align-items:center;justify-content:center;color:#1E5AA8;"><dc-import name="Ikony" icon-name="{{ blk.icon }}" size="24" hint-size="24px,24px"></dc-import></span>
+          </sc-if>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;">
+          <a class="mm-i mm-head" href="{{ blk.href }}" style="display:block;font-size:16px;font-weight:700;line-height:1.3;color:#15181C;">{{ blk.name }}</a>
+          <div style="display:flex;flex-direction:column;gap:2px;">
+            <sc-for list="{{ blk.items }}" as="it" hint-placeholder-count="6">
+              <a class="mm-i mm-row" href="{{ it.href }}" style="display:block;font-size:14px;font-weight:500;line-height:1.5;color:#5A626C;padding:5px 8px;margin:0 -8px;border-radius:6px;">{{ it.name }}</a>
+            </sc-for>
+          </div>
+          <sc-if value="{{ blk.hasMore }}" hint-placeholder-val="">
+            <a class="mm-i mm-more" href="{{ blk.href }}" style="display:inline-flex;align-items:center;gap:4px;align-self:flex-start;min-height:32px;padding:0 8px;margin:0 -8px;border-radius:6px;font-size:14px;font-weight:700;color:#1E5AA8;">{{ blk.moreLabel }}<span aria-hidden="true" style="display:inline-flex;"><dc-import name="Ikony" icon-name="chevron-right" size="18" hint-size="18px,18px"></dc-import></span></a>
+          </sc-if>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:420},&quot;groups&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{name:string,href:string,items:{name:string,href:string}[]}[]&quot;,&quot;default&quot;:null},&quot;heading&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;maxItems&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:6,&quot;min&quot;:3,&quot;max&quot;:12,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;columns&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;min&quot;:2,&quot;max&quot;:5,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;showThumbs&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  DEMO = [
+    { name:'Nápravy a díly náprav', href:'#', image:'uploads/napravy-a-brzdy.jpg', icon:'ikona-napravy-kompletni.svg', items:[
+      { name:'Nápravy kompletní', href:'#' }, { name:'Díly náprav', href:'#' } ] },
+    { name:'Elektro, svítilny, odrazky', href:'#', image:'uploads/elektro-a-osvetleni.jpg', items:[
+      { name:'Baterie, nabíječky a příslušenství', href:'#' }, { name:'Blinkry', href:'#' },
+      { name:'Brzdové svítilny', href:'#' }, { name:'Couvačky a mlhovky', href:'#' },
+      { name:'Držáky svítilen a odrazek', href:'#' }, { name:'Kabely a kabeláže', href:'#' },
+      { name:'Majáky a výstražné svítilny', href:'#' }, { name:'Obrysové svítilny', href:'#' },
+      { name:'Zásuvky, zástrčky, konektory', href:'#' } ] },
+    { name:'Pneu, kola, disky', href:'#', image:'uploads/kola-a-pneumatiky.jpg', items:[
+      { name:'Disky kol', href:'#' }, { name:'Kompletní kola', href:'#' }, { name:'Pneu', href:'#' },
+      { name:'Pneu, kola, disky 8"', href:'#' }, { name:'Pneu, kola, disky 10"', href:'#' },
+      { name:'Pneu, kola, disky 13"', href:'#' }, { name:'Příslušenství kol a pneumatik', href:'#' } ] },
+    { name:'Doplňky a údržba', href:'#', image:'uploads/doplnky.jpg', items:[
+      { name:'Boxy na nářadí a držáky boxů', href:'#' }, { name:'Doplňky k přívěsům', href:'#' },
+      { name:'Plachty a příslušenství', href:'#' }, { name:'Pomůcky pro údržbu', href:'#' } ] }
+  ];
+  renderVals(){
+    const P = this.props;
+    const src = (Array.isArray(P.groups) && P.groups.length) ? P.groups : this.DEMO;
+    const max = Math.max(1, P.maxItems ?? 6);
+    const cols = Math.min(5, Math.max(2, P.columns ?? 4));
+    const thumbs = (P.showThumbs ?? true) !== false;
+    return {
+      heading: P.heading || 'Náhradní díly',
+      gridStyle: '--mm-cols:' + cols + ';',
+      blocks: src.map(g=>{
+        const items = Array.isArray(g.items) ? g.items : [];
+        const rest = Math.max(0, items.length - max);
+        const img = g.image ? (String(g.image).indexOf('/') === 0 || /^\.\//.test(g.image) ? g.image : './' + g.image) : '';
+        const photo = thumbs && !!img;
+        return {
+          name: g.name, href: g.href || '#',
+          image: img, hasPhoto: photo,
+          icon: g.icon || 'layout-grid', hasIcon: thumbs && !photo,
+          items: items.slice(0, max).map(it=>({ name: it.name, href: it.href || '#' })),
+          hasMore: rest > 0,
+          moreLabel: 'Zobrazit vše (' + items.length + ')'
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

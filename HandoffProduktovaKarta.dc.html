@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0!important;padding:0!important;}
+  #dc-root{margin:0!important;padding:0!important;width:100%!important;max-width:none!important;border:0!important;}
+  #dc-root>.sc-host{margin:0!important;padding:0!important;width:100%!important;}
+  *{box-sizing:border-box;}
+  body{background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
+  .hf-sec{scroll-margin-top:80px;}
+  .hf-mono{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;color:#15181C;white-space:pre-line;overflow-wrap:anywhere;}
+  .hf-content{container-type:inline-size;}
+  @container (max-width:900px){ .hf-2col{grid-template-columns:1fr!important;} }
+  .hf-tab{appearance:none;border:0;margin:0;font:inherit;cursor:pointer;padding:0 16px;height:38px;display:inline-flex;align-items:center;font-size:13px;font-weight:700;color:#666E78;background:transparent;border-radius:6px;transition:background .12s,color .12s;}
+  .hf-tab:hover{background:#F2F4F7;color:#15181C;}
+  .hf-tab.is-on{background:#15181C;color:#fff;}
+  .hf-copy{appearance:none;border:0;margin:0;font:inherit;cursor:pointer;padding:0 12px;height:30px;font-size:12px;font-weight:700;color:#B4CEEC;background:rgba(255,255,255,.10);border-radius:6px;transition:background .12s,color .12s;}
+  .hf-copy:hover{background:rgba(255,255,255,.20);color:#fff;}
+  /* živý produktový grid — pevné počty sloupců podle pásem */
+  .hf-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+  @container (max-width:999px){ .hf-grid{grid-template-columns:repeat(3,1fr);} }
+  @container (max-width:819px){ .hf-grid{grid-template-columns:repeat(2,1fr);} }
+  @container (max-width:549px){ .hf-grid{grid-template-columns:1fr;} }
+  .hf-num{flex:none;width:22px;height:22px;border-radius:999px;background:#1E5AA8;color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+</style>
+</helmet>
+
+<div style="display:flex;align-items:flex-start;width:100%;min-height:100vh;background:#F7F9FB;">
+  <dc-import name="HandoffNav" active="produktovakarta" sections="{{ navSections }}" hint-size="268px,100vh"></dc-import>
+
+  <main style="flex:1;min-width:0;padding:0 0 80px;">
+    <div style="position:sticky;top:0;z-index:20;background:rgba(247,249,251,.94);backdrop-filter:blur(6px);padding:14px 32px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-bottom:1px solid #F2F4F7;">
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Produktová karta</div>
+      <div style="flex:1;"></div>
+      <div style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:#15181C;background:#fff;padding:7px 12px;border-radius:6px;">
+        <span style="color:#666E78;">container</span><span>{{ contW }} px</span>
+        <span style="display:inline-block;width:1px;height:14px;background:#D5DAE0;"></span>
+        <span style="color:#666E78;">pásmo</span><span style="font-weight:700;color:#1E5AA8;">{{ band }}</span>
+        <span style="display:inline-block;width:1px;height:14px;background:#D5DAE0;"></span>
+        <span style="color:#666E78;">sloupců</span><span style="font-weight:700;">{{ cols }}</span>
+      </div>
+    </div>
+
+    <div class="hf-content" style="padding:28px 32px 0;display:flex;flex-direction:column;gap:28px;max-width:1560px;">
+
+      <section class="hf-sec" style="display:flex;flex-direction:column;gap:10px;">
+        <h1 style="margin:0;font-size:36px;font-weight:700;line-height:1.15;letter-spacing:-.02em;">Produktová karta</h1>
+        <p style="margin:0;max-width:820px;font-size:18px;line-height:1.6;color:#5A626C;text-wrap:pretty;">Karta ve výpisu a v karuselu. Dvě varianty: <strong>náhradní díl</strong> (bez parametrů) a <strong>přívěs</strong> (max 3 parametry). Variantu zapíná přítomnost dat, ne přepínač — karta se sama nerozhoduje.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;padding-top:4px;">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#1E5AA8;background:#EFF4FB;padding:5px 10px;border-radius:6px;">ProduktovaKarta.dc.html</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#666E78;background:#F2F4F7;padding:5px 10px;border-radius:6px;">skládá: Cena · Hodnoceni · Kvantifikator · Tlacitko · Ikony</span>
+        </div>
+      </section>
+
+      <section class="hf-sec" id="pk-anatomie" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:20px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Anatomie — závazné pořadí</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">Pořadí prvků je dané a nemění se. Živá karta vlevo, popis vpravo.</p>
+        </div>
+        <div class="hf-2col" style="display:grid;grid-template-columns:300px 1fr;gap:28px;align-items:start;">
+          <div style="width:300px;">
+            <dc-import name="ProduktovaKarta" p="{{ pDil }}" show-compare="{{ on }}" debug="{{ off }}" hint-size="300px,520px"></dc-import>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <sc-for list="{{ anatomy }}" as="a" hint-placeholder-count="8">
+              <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:#F7F9FB;border-radius:8px;">
+                <span class="hf-num">{{ a.n }}</span>
+                <div style="min-width:0;display:flex;flex-direction:column;gap:4px;">
+                  <div style="font-size:15px;font-weight:700;">{{ a.name }}</div>
+                  <div class="hf-mono">{{ a.spec }}</div>
+                  <div style="font-size:13px;line-height:1.5;color:#5A626C;text-wrap:pretty;">{{ a.note }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <section class="hf-sec" id="pk-varianty" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:20px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Varianty a stavy — živě</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">Šest skutečných karet. Najeď myší — karta dostane stín a fotka se prolne na druhý snímek (jen na zařízení s myší).</p>
+        </div>
+        <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;">
+          <sc-for list="{{ cards }}" as="c" hint-placeholder-count="6">
+            <div style="flex:none;width:300px;display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;flex-direction:column;gap:2px;min-height:52px;">
+                <div style="font-size:16px;font-weight:700;">{{ c.title }}</div>
+                <div style="font-size:13px;line-height:1.4;color:#666E78;">{{ c.note }}</div>
+              </div>
+              <dc-import name="ProduktovaKarta" p="{{ c.p }}" show-compare="{{ c.compare }}" debug="{{ off }}" hint-size="300px,520px"></dc-import>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <section class="hf-sec" id="pk-stavy" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:18px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Stavy — popis po jednom</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">Osm stavů karty. Většina z nich není v klidovém návrhu vidět.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;">
+          <sc-for list="{{ states }}" as="s" hint-placeholder-count="8">
+            <div style="background:#F7F9FB;border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;">
+                <span style="font-size:16px;font-weight:700;">{{ s.name }}</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#1E5AA8;">{{ s.selector }}</span>
+              </div>
+              <div class="hf-mono">{{ s.css }}</div>
+              <div style="font-size:13px;line-height:1.6;color:#3A424C;text-wrap:pretty;">{{ s.note }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <section class="hf-sec" id="pk-grid" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:18px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Grid a responzivita</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">Počty sloupců jsou <strong>explicitní</strong> — formule <span style="font-family:'JetBrains Mono',monospace;font-size:14px;">auto-fill minmax()</span> je zrušená, protože nedodržela pásma. V gridu je karta tekutá; rozměr 280–300 px platí jen pro samostatný náhled.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;">
+          <sc-for list="{{ bands }}" as="b" hint-placeholder-count="7">
+            <div style="{{ b.style }}">
+              <div style="font-size:16px;font-weight:700;">{{ b.name }}</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:{{ b.subColor }};">{{ b.range }}</div>
+              <div style="font-size:20px;font-weight:700;">{{ b.cols }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Živý grid — zužuj okno, počet sloupců se přepíná na hranicích 1000 · 820 · 550</div>
+          <div class="hf-grid">
+            <dc-import name="ProduktovaKarta" p="{{ pG1 }}" debug="{{ off }}" hint-size="100%,500px"></dc-import>
+            <dc-import name="ProduktovaKarta" p="{{ pG2 }}" debug="{{ off }}" hint-size="100%,500px"></dc-import>
+            <dc-import name="ProduktovaKarta" p="{{ pG3 }}" debug="{{ off }}" hint-size="100%,500px"></dc-import>
+            <dc-import name="ProduktovaKarta" p="{{ pG4 }}" debug="{{ off }}" hint-size="100%,500px"></dc-import>
+          </div>
+        </div>
+        <div style="background:#EFF4FB;border-radius:8px;padding:16px 18px;font-size:13px;line-height:1.6;color:#173C70;"><strong>Container query, ne viewport:</strong> karta měří <em>svou</em> šířku (<span style="font-family:'JetBrains Mono',monospace;">container-type:inline-size</span>). Pod 270 px šířky karty se tlačítko Koupit přepne na icon-only 44 px a kvantifikátor dorovná zbytek řádku — řádek se nikdy nezalomí do dvou. To je jediná výjimka z pásmové škály v celém projektu.</div>
+      </section>
+
+      <section class="hf-sec" id="pk-kod" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Kód</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">HTML je struktura karty včetně krycího odkazu, CSS celý stylopis, JS řeší košík, porovnání a druhou fotku.</p>
+        </div>
+        <div style="display:flex;gap:6px;background:#F7F9FB;padding:6px;border-radius:8px;align-self:flex-start;flex-wrap:wrap;">
+          <button type="button" class="{{ tabHtmlCls }}" onClick="{{ pickHtml }}">HTML</button>
+          <button type="button" class="{{ tabCssCls }}" onClick="{{ pickCss }}">CSS</button>
+          <button type="button" class="{{ tabJsCls }}" onClick="{{ pickJs }}">JavaScript</button>
+        </div>
+        <div style="background:#15181C;border-radius:8px;overflow:hidden;">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;background:rgba(255,255,255,.06);">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#B4CEEC;">{{ codeFile }}</span>
+            <button type="button" class="hf-copy" onClick="{{ copyCode }}">{{ copyLabel }}</button>
+          </div>
+          <pre style="margin:0;padding:18px;overflow:auto;max-height:680px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.75;color:#E6ECF5;white-space:pre;">{{ code }}</pre>
+        </div>
+      </section>
+
+      <section class="hf-sec" id="pk-vyvojar" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:16px;">
+        <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Pozor při implementaci</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;">
+          <sc-for list="{{ warnings }}" as="w" hint-placeholder-count="7">
+            <div style="{{ w.style }}">
+              <div style="{{ w.titleStyle }}">{{ w.title }}</div>
+              <div style="font-size:14px;line-height:1.6;color:#3A424C;text-wrap:pretty;">{{ w.body }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { tab:'html', copied:false, contW:0 };
+
+  componentDidMount(){
+    this._m = () => {
+      const host = document.querySelector('#pk-grid');
+      this.setState({ contW: host ? Math.round(host.getBoundingClientRect().width) : 0 });
+    };
+    this._m();
+    window.addEventListener('resize', this._m);
+  }
+  componentWillUnmount(){ window.removeEventListener('resize', this._m); }
+
+  bandOf(w){
+    if (w >= 1560) return ['XXL','≥ 1560',5]; if (w >= 1150) return ['XL','1150–1559',4];
+    if (w >= 1000) return ['L','1000–1149',4]; if (w >= 820) return ['M','820–999',3];
+    if (w >= 550) return ['S','550–819',2]; if (w >= 420) return ['XS','420–549',1];
+    return ['XXS','≤ 419',1];
+  }
+
+  photo(file){
+    return 'aspect-ratio:4/3;background:#fff url("./' + file + '") center/contain no-repeat;background-origin:content-box;padding:18px 12px;';
+  }
+  card(o){
+    const inStock = o.available !== false;
+    return Object.assign({
+      name:o.name, objNum:o.objNum, reviews:o.reviews ?? 23, rating:o.rating ?? 4,
+      priceNet:o.priceNet, price:o.price, original:o.original || 0,
+      img:o.img, imgBgStyle:this.photo(o.img),
+      img2:o.img2 || '', imgBg2Style: o.img2 ? ('position:absolute;inset:0;' + this.photo(o.img2)) : '',
+      noImg:false, phStyle:'', imgLabel:'',
+      badge:o.badge || '', badgeStyle: o.badge
+        ? ('position:absolute;top:8px;left:8px;font-size:13px;font-weight:700;border-radius:6px;padding:4px 9px;color:' + (o.badgeTone === 'ship' ? '#0B6937' : '#fff') + ';background:' + (o.badgeTone === 'ship' ? '#E9F8EF' : '#C5232B') + ';')
+        : '',
+      dot1:'display:none;', dot2:'display:none;',
+      available: inStock,
+      availIn: inStock, availOut: !inStock,
+      avail: inStock ? (o.avail || 'Skladem > 15 ks') : 'Není skladem',
+      availStyle: 'display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:' + (inStock ? '#0B6937' : '#C5232B') + ';min-width:0;',
+      specs: o.specs || [], qty:1, cmp: !!o.cmp, cmpChecked: o.cmp ? 'true' : 'false',
+      cmpBox:'flex:none;width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1px solid ' + (o.cmp ? '#1E5AA8' : '#91959B') + ';background:' + (o.cmp ? '#1E5AA8' : '#fff') + ';',
+      inCart:o.inCart || 0,
+      detailHref:'#',
+    }, {});
+  }
+
+  htmlCode(){
+    return [
+'<!-- Celá karta je klikací na detail. NIKDY <a> obalující celou kartu —',
+'     uvnitř jsou tlačítka a vnořené interaktivní prvky jsou zakázané. -->',
+'<article class="vapp-card">',
+'',
+'  <!-- 1) Fotka 4:3 (v gridu 16:10), contain, bez ořezu -->',
+'  <div class="vapp-card__photo">',
+'    <div class="vapp-card__img" role="img" aria-label="Opěrné kolečko ⌀48 mm"',
+'         style="background-image:url(/img/kolecko-48.jpg)"></div>',
+'    <!-- druhá fotka se prolne v hoveru, jen na myši -->',
+'    <div class="vapp-card__img vapp-card__img--2" aria-hidden="true"',
+'         style="background-image:url(/img/kolecko-48-b.jpg)"></div>',
+'    <!-- badge vlevo nahoře: sleva NEBO doprava zdarma, ne obojí -->',
+'    <span class="vapp-card__badge vapp-card__badge--sale">−15 %</span>',
+'  </div>',
+'',
+'  <div class="vapp-card__body">',
+'    <!-- 2) Obj. číslo v řádku s hodnocením, NIKDY jako overlay na fotce -->',
+'    <!-- 3) Název nese krycí odkaz (::after inset:0) -->',
+'    <a class="vapp-card__title" href="/dil/404815/">Opěrné kolečko ⌀48 mm, nosnost 150 kg</a>',
+'',
+'    <div class="vapp-card__meta">',
+'      <span class="vapp-rating" aria-label="Hodnocení 4 z 5">★★★★☆ <span>(23)</span></span>',
+'      <span class="vapp-card__sku">Obj. č. 404815</span>',
+'    </div>',
+'',
+'    <!-- 4) JEN u přívěsů: max 3 parametry. U dílů se nevypisují. -->',
+'    <ul class="vapp-card__specs">',
+'      <li><span>Ložná plocha</span><strong>3030 × 1530 mm</strong></li>',
+'      <li><span>Celková hmotnost</span><strong>1 500 kg</strong></li>',
+'      <li><span>Nosnost</span><strong>1 180 kg</strong></li>',
+'    </ul>',
+'',
+'    <!-- 5) Skladovost vlevo / ceny vpravo pod sebou -->',
+'    <div class="vapp-card__row">',
+'      <span class="vapp-card__stock vapp-card__stock--in">',
+'        <svg width="18" height="18" …>…</svg> Skladem &gt; 15 ks',
+'      </span>',
+'      <span class="vapp-price">',
+'        <strong class="vapp-price__net">397 Kč</strong>',
+'        <span class="vapp-price__gross">480 Kč s DPH</span>',
+'      </span>',
+'    </div>',
+'',
+'    <!-- 6) Kvantifikátor + Koupit. z-index nad krycím odkazem. -->',
+'    <div class="vapp-card__buy">',
+'      <div class="vapp-qty"> … </div>',
+'      <button type="button" class="vapp-btn vapp-btn--buy vapp-btn--block">',
+'        <svg …>…</svg> Koupit',
+'        <span class="vapp-card__cartqty" aria-hidden="true">2</span>',
+'      </button>',
+'    </div>',
+'',
+'    <!-- 7) Porovnat — role="checkbox" + aria-checked, ne <input> -->',
+'    <div class="vapp-card__compare">',
+'      <button type="button" class="vapp-card__cmp" role="checkbox" aria-checked="false"',
+'              aria-label="Porovnat produkt">',
+'        <span class="vapp-card__cmpbox"></span> Porovnat',
+'      </button>',
+'    </div>',
+'  </div>',
+'</article>'
+    ].join('\n');
+  }
+
+  cssCode(){
+    return [
+'/* === VAPP — Produktová karta ==========================================',
+'   V gridu je karta TEKUTÁ (width:100%). Rozměr 280–300 px platí jen',
+'   pro samostatný náhled. Karta měří SVOU šířku, ne viewport.',
+'   ------------------------------------------------------------------- */',
+'.vapp-card{',
+'  position:relative;',
+'  display:flex; flex-direction:column; height:100%;',
+'  background:#FFFFFF; border-radius:8px; overflow:hidden;',
+'  container-type:inline-size;        /* container query níž */',
+'  font-family:\'Exo 2\',\'Helvetica Neue\',Arial,sans-serif;',
+'  cursor:pointer;',
+'  transition:box-shadow .15s ease;',
+'}',
+'/* karty jsou BEZ borderu a v klidu BEZ stínu */',
+'.vapp-card:hover{box-shadow:0 6px 20px rgba(20,47,86,.10);}',
+'',
+'/* --- fotka: contain, bez ořezu ------------------------------------- */',
+'.vapp-card__photo{position:relative;}',
+'.vapp-card__img{',
+'  aspect-ratio:16/10;               /* ve výpisu; samostatně 4/3 */',
+'  background:#fff center/contain no-repeat;',
+'  background-origin:content-box; padding:18px 12px;',
+'}',
+'.vapp-card__img--2{position:absolute; inset:0; opacity:0; transition:opacity .12s ease;}',
+'@media (hover:hover) and (pointer:fine){',
+'  .vapp-card:hover .vapp-card__img--2{opacity:1;}',
+'}',
+'',
+'/* --- badge: vlevo nahoře, jeden --------------------------------------*/',
+'.vapp-card__badge{',
+'  position:absolute; top:8px; left:8px;',
+'  font-size:13px; font-weight:700; border-radius:6px; padding:4px 9px;',
+'}',
+'.vapp-card__badge--sale{background:#C5232B; color:#FFFFFF;}',
+'.vapp-card__badge--ship{background:#E9F8EF; color:#0B6937;}',
+'',
+'/* --- tělo ----------------------------------------------------------- */',
+'.vapp-card__body{padding:14px 16px 16px; display:flex; flex-direction:column; gap:14px; flex:1;}',
+'',
+'/* --- název + krycí odkaz -------------------------------------------- */',
+'.vapp-card__title{',
+'  display:block; font-size:16px; font-weight:700; line-height:1.3;',
+'  min-height:42px;                  /* dvě řádky → karty v gridu drží linii */',
+'  color:#15181C; text-decoration:none;',
+'}',
+'/* krycí plocha: klik kdekoli na kartě vede na detail */',
+'.vapp-card__title::after{content:""; position:absolute; inset:0; z-index:0;}',
+'.vapp-card__title:focus-visible{outline:none;}',
+'.vapp-card__title:focus-visible::after{outline:2px solid #1E5AA8; outline-offset:-2px; border-radius:8px;}',
+'',
+'.vapp-card__meta{display:flex; align-items:baseline; justify-content:space-between; gap:8px; flex-wrap:wrap;}',
+'.vapp-card__sku{font-size:13px; font-weight:400; line-height:1.4; color:#666E78; white-space:nowrap;}',
+'',
+'/* --- parametry: JEN u přívěsů, max 3 -------------------------------- */',
+'.vapp-card__specs{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:5px;}',
+'.vapp-card__specs li{display:flex; align-items:baseline; justify-content:space-between; gap:8px;',
+'  font-size:13px; font-weight:400; line-height:1.4; color:#666E78;}',
+'.vapp-card__specs strong{flex:none; font-weight:700; color:#15181C; white-space:nowrap;}',
+'',
+'/* --- skladovost + cena --------------------------------------------- */',
+'.vapp-card__row{',
+'  margin-top:auto;                  /* přišpendlí spodní blok ke dnu karty */',
+'  display:flex; align-items:flex-end; justify-content:space-between; gap:8px;',
+'  height:46px; overflow:hidden;     /* pevná výška drží zarovnání karet */',
+'}',
+'.vapp-card__stock{display:inline-flex; align-items:center; gap:7px; font-size:13px; font-weight:700; min-width:0;}',
+'.vapp-card__stock--in{color:#0B6937;}',
+'.vapp-card__stock--out{color:#C5232B;}',
+'.vapp-card__stock--request{color:#666E78;}',
+'.vapp-card__stock > svg{flex:none; width:18px; height:18px;}',
+'.vapp-price{display:flex; flex-direction:column; align-items:flex-end;}',
+'.vapp-price__net{font-size:17px; font-weight:700; color:#15181C;}',
+'.vapp-price__gross{font-size:13px; font-weight:400; color:#666E78;}',
+'',
+'/* --- řádek nákupu: nad krycím odkazem ------------------------------ */',
+'.vapp-card__buy{position:relative; z-index:1; display:flex; align-items:stretch; gap:8px;}',
+'.vapp-card__buy > .vapp-btn{flex:1; min-width:0;}',
+'.vapp-card__cartqty{',
+'  position:absolute; top:-6px; right:-6px;',
+'  width:16px; height:16px; border-radius:999px;',
+'  background:#C5232B; color:#fff; font-size:10px; font-weight:700; line-height:1;',
+'  display:flex; align-items:center; justify-content:center; pointer-events:none;',
+'}',
+'',
+'/* --- porovnat ------------------------------------------------------- */',
+'.vapp-card__compare{position:relative; z-index:1; display:flex; align-items:center; gap:8px; height:26px; padding-top:2px;}',
+'.vapp-card__cmp{appearance:none; background:none; border:0; padding:0; margin:0; font:inherit; cursor:pointer;',
+'  display:inline-flex; align-items:center; gap:6px; min-height:24px;',
+'  font-size:13px; font-weight:600; color:#5A626C; white-space:nowrap;}',
+'.vapp-card__cmp:focus-visible{outline:2px solid #1E5AA8; outline-offset:2px;}',
+'.vapp-card__cmpbox{flex:none; width:20px; height:20px; border-radius:6px;',
+'  display:flex; align-items:center; justify-content:center;',
+'  border:1px solid #91959B; background:#FFFFFF;}',
+'.vapp-card__cmp[aria-checked="true"] .vapp-card__cmpbox{border-color:#1E5AA8; background:#1E5AA8;}',
+'',
+'/* --- container query: úzká karta ----------------------------------- */',
+'/* pod 270 px ŠÍŘKY KARTY (ne okna) se Koupit přepne na icon-only */',
+'@container (max-width:269px){',
+'  .vapp-card__buy .vapp-btn--block{display:none;}',
+'  .vapp-card__buy .vapp-btn--icononly{display:flex; flex:none; margin-left:auto;}',
+'  .vapp-card__buy .vapp-qty{flex:1; min-width:0;}',
+'}',
+'',
+'/* --- grid výpisu: PEVNÉ počty sloupců, ne auto-fill ---------------- */',
+'.vapp-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}',
+'@media (min-width:1560px){ .vapp-grid{grid-template-columns:repeat(5,1fr);} }',
+'@media (max-width:999px){ .vapp-grid{grid-template-columns:repeat(3,1fr);} }',
+'@media (max-width:819px){ .vapp-grid{grid-template-columns:repeat(2,1fr);} }',
+'@media (max-width:549px){ .vapp-grid{grid-template-columns:1fr;} }'
+    ].join('\n');
+  }
+
+  jsCode(){
+    return [
+'/* === Produktová karta — JS ============================================',
+'   Karta sama téměř nic nepotřebuje: klik na detail nese odkaz,',
+'   hover a druhá fotka jsou v CSS. JS řeší košík a porovnání.',
+'   ------------------------------------------------------------------- */',
+'',
+'const grid = document.querySelector(\'.vapp-grid\');',
+'',
+'/* 1) Koupit. Vnitřní tlačítka NEJSOU vnořená v krycím odkazu,',
+'      takže klik do odkazu neprobublá — preventDefault není potřeba. */',
+'grid.addEventListener(\'click\', (e) => {',
+'  const buy = e.target.closest(\'.vapp-btn--buy\');',
+'  if (!buy) return;',
+'  const card = buy.closest(\'.vapp-card\');',
+'  const qty  = Number(card.querySelector(\'.vapp-qty__value\').textContent);',
+'  addToCart(card.dataset.sku, qty).then((total) => {',
+'    /* čítač na tlačítku: 0 = badge se nevykresluje vůbec */',
+'    const badge = card.querySelector(\'.vapp-card__cartqty\');',
+'    badge.textContent = total;',
+'    badge.hidden = total === 0;',
+'    /* aria-label nese počet, badge je aria-hidden */',
+'    buy.setAttribute(\'aria-label\', total ? `Koupit — v košíku ${total} ks` : \'Koupit\');',
+'  });',
+'});',
+'',
+'/* 2) Porovnat. role="checkbox" musí obsluhovat i mezerník a Enter. */',
+'grid.addEventListener(\'click\', (e) => {',
+'  const cmp = e.target.closest(\'.vapp-card__cmp\');',
+'  if (!cmp) return;',
+'  const on = cmp.getAttribute(\'aria-checked\') !== \'true\';',
+'  cmp.setAttribute(\'aria-checked\', String(on));',
+'  toggleCompare(cmp.closest(\'.vapp-card\').dataset.sku, on);',
+'});',
+'grid.addEventListener(\'keydown\', (e) => {',
+'  const cmp = e.target.closest(\'.vapp-card__cmp\');',
+'  if (!cmp || (e.key !== \' \' && e.key !== \'Enter\')) return;',
+'  e.preventDefault();      /* mezerník by jinak odscrolloval stránku */',
+'  cmp.click();',
+'});',
+'',
+'/* 3) Není skladem: tlačítko dostane disabled ATRIBUT.',
+'      Skladovost se přebarví a text se změní — ne jen barva. */',
+'',
+'/* Co NEDĚLAT:',
+'   — neobalovat celou kartu do <a>: vnořené <button> jsou zakázané a HTML',
+'     je nevalidní; krycí odkaz na názvu (::after inset:0) dělá totéž,',
+'   — neřešit klik na kartu JS listenerem na .vapp-card: rozbije to',
+'     Ctrl+klik, prostřední tlačítko a kopírování odkazu,',
+'   — neměnit výšku bloku skladovost/cena (46 px) — karty v gridu',
+'     by přestaly držet linii. */'
+    ].join('\n');
+  }
+
+  renderVals(){
+    const S = this.state;
+    const [band, bandRange, cols] = this.bandOf(S.contW || 0);
+
+    const pDil = this.card({ name:'Opěrné kolečko ⌀48 mm, nosnost 150 kg', objNum:'404815', priceNet:397, price:480, img:'privesy-kat-01.png', badge:'−15 %', reviews:23, rating:4, cmp:false, inCart:2 });
+
+    const cards = [
+      { title:'Náhradní díl', note:'Bez parametrů — dílové karty je nevypisují.', compare:true,
+        p:this.card({ name:'Brzdový buben KNOTT 200×50', objNum:'331204', priceNet:1290, price:1561, img:'privesy-kat-02.png', reviews:12, rating:5 }) },
+      { title:'Náhradní díl se slevou', note:'Badge −15 % vlevo nahoře, škrtnutá původní cena.', compare:true,
+        p:this.card({ name:'Opěrné kolečko ⌀48 mm, nosnost 150 kg', objNum:'404815', priceNet:397, price:480, original:467, img:'privesy-kat-01.png', badge:'−15 %' }) },
+      { title:'Přívěs — 3 parametry', note:'Varianta se zapíná přítomností dat p.specs.', compare:false,
+        p:this.card({ name:'Přívěs PRAKTIK 2, sklopný, 1 500 kg', objNum:'PR2-1500', priceNet:41900, price:50699, img:'prives-praktik-2-a.jpg', img2:'prives-praktik-2-b.jpg', reviews:8, rating:5,
+          specs:[{label:'Ložná plocha',value:'3030 × 1530 mm'},{label:'Celková hmotnost',value:'1 500 kg'},{label:'Nosnost',value:'1 180 kg'}] }) },
+      { title:'Doprava zdarma', note:'Zelený badge — nikdy zároveň se slevou.', compare:false,
+        p:this.card({ name:'Přívěs moto PROFI 132, jednoosý', objNum:'MP-132', priceNet:32500, price:39325, img:'prives-moto-profi-132-a.jpg', img2:'prives-moto-profi-132-b.jpg', badge:'Doprava zdarma', badgeTone:'ship',
+          specs:[{label:'Ložná plocha',value:'2200 × 1320 mm'},{label:'Celková hmotnost',value:'750 kg'},{label:'Nosnost',value:'570 kg'}] }) },
+      { title:'Není skladem', note:'Koupit je disabled, skladovost červená s textem.', compare:true,
+        p:this.card({ name:'Tažná kulová spojka AL-KO AK 7', objNum:'220841', priceNet:2190, price:2650, img:'privesy-kat-03.png', available:false }) },
+      { title:'V košíku + Porovnat zaškrtnuto', note:'Čítač 2 na tlačítku, checkbox modrý.', compare:true,
+        p:this.card({ name:'Sdružená zadní svítilna, LED, pravá', objNum:'512003', priceNet:890, price:1077, img:'privesy-kat-04.png', inCart:2, cmp:true }) },
+    ];
+
+    const anatomy = [
+      { n:1, name:'Fotka', spec:'poměr 16/10 ve výpisu · 4/3 samostatně\nobject-fit: contain · padding 18/12\npozadí #FFFFFF', note:'Bez ořezu a bez zvětšení v hoveru. Když má produkt druhý snímek, prolne se v hoveru (jen na myši).' },
+      { n:2, name:'Badge', spec:'top 8 · left 8 · radius 6 · padding 4/9\nsleva: #C5232B / bílá\ndoprava zdarma: #E9F8EF / #0B6937', note:'Vždy vlevo nahoře na fotce a vždy jen jeden — sleva NEBO doprava zdarma.' },
+      { n:3, name:'Objednací číslo', spec:'13 / 400 · #666E78\nv řádku s hodnocením, vpravo', note:'Nikdy jako overlay na fotce. Je to identifikátor, ne příznak.' },
+      { n:4, name:'Název', spec:'16 / 700 / 1.3 · #15181C\nmin-height 42px (dva řádky)', note:'Nese krycí odkaz — ::after inset:0 přes celou kartu. Pevná min-height drží karty v gridu na jedné linii.' },
+      { n:5, name:'Hodnocení', spec:'hvězdy #F5A623 / prázdné #D5DAE0\npočet 13px · letter-spacing 1.5px', note:'Vedle hvězd je vždy číslo — význam nesmí nést jen barva.' },
+      { n:6, name:'Parametry (jen přívěs)', spec:'max 3 řádky\nlabel 13 / 400 · #666E78\nhodnota 13 / 700 · #15181C', note:'Zapíná je přítomnost dat. Karty náhradních dílů parametry NEobsahují.' },
+      { n:7, name:'Skladovost a cena', spec:'blok výšky 46px, margin-top:auto\nskladem #0B6937 · není #C5232B\ncena bez DPH 17/700 · s DPH 13/400 #666E78', note:'Cena bez DPH je primární a bez popisku; pod ní menší „X Kč s DPH“. Pevná výška drží zarovnání karet.' },
+      { n:8, name:'Kvantifikátor + Koupit a Porovnat', spec:'gap 8 · z-index 1 nad krycím odkazem\ncheckbox 20 × 20 · radius 6\nlinka #91959B → #1E5AA8', note:'Vnitřní tlačítka nejsou vnořená v odkazu, proto klik neprobublá. Porovnat je button s role="checkbox".' },
+    ];
+
+    const states = [
+      { name:'Hover karty', selector:'.vapp-card:hover', css:'box-shadow:0 6px 20px rgba(20,47,86,.10);', note:'V klidu karta stín NEMÁ. Bez borderu, bez zvětšení. Přechod 150 ms.' },
+      { name:'Hover fotky', selector:'@media (hover:hover)', css:'.vapp-card__img--2 { opacity:1 }\ntransition .12s', note:'Druhá fotka se prolne, jen když má produkt img2 a jen na zařízení s myší — na dotyku by blikala při scrollu.' },
+      { name:'Focus názvu', selector:'.vapp-card__title:focus-visible::after', css:'outline:2px solid #1E5AA8;\noutline-offset:-2px;\nborder-radius:8px;', note:'Ring kreslí krycí pseudoprvek, ne text — jinak by orámoval jen dva řádky názvu. Offset je záporný kvůli overflow:hidden karty.' },
+      { name:'Není skladem', selector:'[disabled]', css:'stock: #C5232B + ikona circle-x\nKoupit: disabled → #F2F4F7 / #666E78', note:'Text se změní na „Není skladem“ a tlačítko dostane atribut disabled. Nikdy jen červená barva bez textu.' },
+      { name:'Na dotaz', selector:'.vapp-card__stock--request', css:'color:#666E78', note:'Třetí stav skladovosti. Neutrální šedá — není to chyba ani dostupnost.' },
+      { name:'V košíku', selector:'.vapp-card__cartqty', css:'16 × 16 · radius 999\nbg #C5232B · text 10/700 bílá\ntop −6 · right −6', note:'Čítač na tlačítku Koupit. Při 0 se nevykresluje vůbec. Badge je aria-hidden, počet nese aria-label tlačítka.' },
+      { name:'Porovnat zaškrtnuto', selector:'[aria-checked="true"]', css:'border-color:#1E5AA8;\nbackground:#1E5AA8;\nfajfka bílá 9px', note:'Je to <button role="checkbox">, ne <input> — musí reagovat i na mezerník a Enter, a mezerník nesmí odscrollovat stránku.' },
+      { name:'Úzká karta', selector:'@container (max-width:269px)', css:'Koupit → icon-only 44px\nkvantifikátor flex:1', note:'Container query měří šířku KARTY. Řádek nákupu se nikdy nezalomí do dvou — místo toho zmizí text tlačítka.' },
+    ];
+
+    const bandsRaw = [['XXL','≥ 1560',5],['XL','1150–1559',4],['L','1000–1149',4],['M','820–999',3],['S','550–819',2],['XS','420–549',1],['XXS','≤ 419',1]];
+    const bands = bandsRaw.map(([n,r,c]) => {
+      const on = n === band;
+      return { name:n, range:r + ' px', cols: c + (c === 1 ? ' sloupec' : (c < 5 ? ' sloupce' : ' sloupců')),
+        style:'display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-radius:8px;background:' + (on ? '#1E5AA8' : '#F7F9FB') + ';color:' + (on ? '#fff' : '#15181C') + ';',
+        subColor: on ? '#B4CEEC' : '#666E78' };
+    });
+
+    const tabCls = (t) => 'hf-tab' + (S.tab === t ? ' is-on' : '');
+    const codeMap = { html:this.htmlCode(), css:this.cssCode(), js:this.jsCode() };
+    const fileMap = { html:'produktova-karta.html', css:'vapp-card.css', js:'vapp-card.js' };
+    const code = codeMap[S.tab];
+
+    const warn = (title, body, tone) => ({ title, body,
+      style: 'background:' + (tone==='no' ? '#FDF1F1' : '#F7F9FB') + ';border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:8px;',
+      titleStyle: 'font-size:16px;font-weight:700;color:' + (tone==='no' ? '#80181D' : '#15181C') + ';' });
+
+    return {
+      navSections: [['Anatomie','#pk-anatomie'],['Varianty a stavy','#pk-varianty'],['Stavy po jednom','#pk-stavy'],['Grid a responzivita','#pk-grid'],['Kód (HTML / CSS / JS)','#pk-kod'],['Pozor při implementaci','#pk-vyvojar']],
+      contW: S.contW, band, cols, bandRange: '(' + bandRange + ' px)',
+      on: true, off: false,
+      pDil, cards, anatomy, states, bands,
+      pG1: cards[0].p, pG2: cards[3].p, pG3: cards[1].p, pG4: cards[4].p,
+      tabHtmlCls: tabCls('html'), tabCssCls: tabCls('css'), tabJsCls: tabCls('js'),
+      pickHtml: () => this.setState({ tab:'html', copied:false }),
+      pickCss: () => this.setState({ tab:'css', copied:false }),
+      pickJs: () => this.setState({ tab:'js', copied:false }),
+      code, codeFile: fileMap[S.tab],
+      copyLabel: S.copied ? 'Zkopírováno' : 'Kopírovat',
+      copyCode: () => { navigator.clipboard.writeText(code).then(() => { this.setState({ copied:true }); setTimeout(() => this.setState({ copied:false }), 1600); }).catch(()=>{}); },
+      warnings: [
+        warn('Nikdy <a> kolem celé karty', 'Uvnitř karty jsou tlačítka a vnořené interaktivní prvky jsou zakázané. Klikací plochu dělá krycí odkaz na názvu: ::after { position:absolute; inset:0 }. Vnitřní tlačítka mají position:relative a z-index:1 — klik do odkazu pak neprobublá, protože prvky nejsou vnořené.', 'no'),
+        warn('Klik na kartu není JS listener', 'Odkaz musí být skutečný <a href>, aby fungoval Ctrl+klik, prostřední tlačítko, kopírování odkazu a náhled URL ve stavovém řádku.', 'no'),
+        warn('Parametry jen u přívěsů', 'Karty náhradních dílů nevypisují klíčové vlastnosti. U přívěsů jsou to maximálně tři řádky — víc karta neunese a rozjede grid.'),
+        warn('Pevné výšky drží linii', 'Název má min-height 42 px a blok skladovost/cena 46 px. Bez nich se karty v gridu rozjedou a tlačítka Koupit nejsou na jedné lince.'),
+        warn('Cena bez DPH je primární', 'Bez popisku, 17/700, #15181C. Pod ní menší „X Kč s DPH“ 13/400 #666E78. Obráceně to být nesmí — sortiment je převážně B2B.'),
+        warn('Jeden badge', 'Sleva nebo doprava zdarma, ne obojí. Dva badge nad sebou zakryjí fotku a rozbijí čitelnost.'),
+        warn('Container query, ne breakpoint', 'Karta reaguje na svou šířku (max-width:269px). Je to jediná výjimka z pásmové škály v projektu a je záměrná — karta nezná šířku okna a v karuselu je jinak široká než ve výpisu.'),
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

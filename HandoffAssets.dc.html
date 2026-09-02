@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0!important;padding:0!important;}
+  #dc-root{margin:0!important;padding:0!important;width:100%!important;max-width:none!important;border:0!important;}
+  #dc-root>.sc-host{margin:0!important;padding:0!important;width:100%!important;}
+  *{box-sizing:border-box;}
+  body{background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  a{color:#1E5AA8;}
+  a:hover{color:#1A4A8A;}
+  .hf-dl{appearance:none;border:0;margin:0;font:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;transition:background .12s,transform .06s;}
+  .hf-dl:hover{background:#1A4A8A;}
+  .hf-dl:active{transform:translateY(1px);}
+  .hf-dl:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .hf-dl[disabled]{background:#F2F4F7;color:#666E78;cursor:not-allowed;}
+  .hf-file{font-family:'JetBrains Mono',monospace;font-size:12px;color:#1E5AA8;text-decoration:none;padding:4px 8px;border-radius:6px;background:#F2F4F7;}
+  .hf-file:hover{background:#D8E6F6;color:#1A4A8A;}
+</style>
+</helmet>
+<div style="display:flex;align-items:flex-start;width:100%;min-height:100vh;background:#F7F9FB;">
+  <dc-import name="HandoffNav" active="assets" sections="{{ navSections }}" hint-size="268px,100vh"></dc-import>
+  <main style="flex:1;min-width:0;padding:28px 32px 80px;display:flex;flex-direction:column;gap:22px;max-width:1560px;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <h1 style="margin:0;font-size:36px;font-weight:700;line-height:1.15;letter-spacing:-.02em;">Assets ke stažení</h1>
+      <p style="margin:0;max-width:820px;font-size:18px;line-height:1.6;color:#5A626C;text-wrap:pretty;">Balíky se sestaví v prohlížeči a stáhnou jako ZIP. Jednotlivé soubory jsou pod každým balíkem — klik stáhne originál.</p>
+    </div>
+    <sc-for list="{{ packs }}" as="p" hint-placeholder-count="4">
+      <section style="background:#fff;border-radius:8px;padding:22px 24px;display:flex;flex-direction:column;gap:14px;">
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:4px;">
+            <h2 style="margin:0;font-size:22px;font-weight:700;line-height:1.25;">{{ p.title }}</h2>
+            <div style="font-size:14px;line-height:1.5;color:#5A626C;">{{ p.desc }}</div>
+          </div>
+          <button type="button" class="hf-dl" disabled="{{ p.busy }}" onClick="{{ p.onDownload }}"><dc-import name="Ikony" icon-name="download" size="24" hint-size="24px,24px"></dc-import>{{ p.btnLabel }}</button>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <sc-for list="{{ p.files }}" as="f" hint-placeholder-count="8">
+            <a class="hf-file" href="{{ f }}" download="{{ f }}">{{ f }}</a>
+          </sc-for>
+        </div>
+      </section>
+    </sc-for>
+    <section style="background:#fff;border-radius:8px;padding:22px 24px;display:flex;flex-direction:column;gap:10px;">
+      <h2 style="margin:0;font-size:22px;font-weight:700;line-height:1.25;">Pravidla pro obrazovost</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">
+        <div style="background:#F7F9FB;border-radius:8px;padding:16px;font-size:14px;line-height:1.6;color:#3A424C;"><strong>Ikony:</strong> inline SVG, viewBox 0 0 24 24, stroke-width 2, barva <span style="font-family:'JetBrains Mono',monospace;font-size:13px;">currentColor</span>, bez výplní. Kategorické ikony 44 × 44 v kruhu, ikony skladovosti 18 × 18.</div>
+        <div style="background:#F7F9FB;border-radius:8px;padding:16px;font-size:14px;line-height:1.6;color:#3A424C;"><strong>Produktové fotky:</strong> poměr 4:3, <span style="font-family:'JetBrains Mono',monospace;font-size:13px;">object-fit:contain</span>, bez ořezu, centrované, s paddingem. Nikdy <span style="font-family:'JetBrains Mono',monospace;font-size:13px;">cover</span> — přívěs se nesmí ořezat.</div>
+        <div style="background:#F7F9FB;border-radius:8px;padding:16px;font-size:14px;line-height:1.6;color:#3A424C;"><strong>Logo:</strong> <span style="font-family:'JetBrains Mono',monospace;font-size:13px;">vapp-logo.svg</span> v křivkách, barva <span style="font-family:'JetBrains Mono',monospace;font-size:13px;">#E41D32</span> — vyhrazená výhradně pro logo, nikdy v UI. Na tmavém podkladu <span style="font-family:'JetBrains Mono',monospace;font-size:13px;">filter:brightness(0) invert(1)</span>, ne druhý soubor.</div>
+        <div style="background:#F7F9FB;border-radius:8px;padding:16px;font-size:14px;line-height:1.6;color:#3A424C;"><strong>Náhledy kategorií:</strong> 64 × 64, <span style="font-family:'JetBrains Mono',monospace;font-size:13px;">object-fit:contain</span>, bez pozadí, paddingu i radiusu. Když fotka chybí, dlaždice se vrací k ikoně 44 × 44 v kruhu.</div>
+      </div>
+    </section>
+  </main>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { busy:'' };
+
+  crc32(u8){
+    if (!this._crcT){
+      const t = new Uint32Array(256);
+      for (let n=0;n<256;n++){ let c=n; for(let k=0;k<8;k++) c = (c & 1) ? (0xEDB88320 ^ (c>>>1)) : (c>>>1); t[n]=c>>>0; }
+      this._crcT = t;
+    }
+    const t = this._crcT;
+    let c = 0xFFFFFFFF;
+    for (let i=0;i<u8.length;i++) c = t[(c ^ u8[i]) & 255] ^ (c >>> 8);
+    return (c ^ 0xFFFFFFFF) >>> 0;
+  }
+
+  async makeZip(files){
+    const enc = new TextEncoder();
+    const parts = [], central = [];
+    let offset = 0;
+    for (const f of files){
+      const nameB = enc.encode(f.name);
+      const data = f.data;
+      const crc = this.crc32(data);
+      const lh = new Uint8Array(30 + nameB.length);
+      const lv = new DataView(lh.buffer);
+      lv.setUint32(0, 0x04034b50, true); lv.setUint16(4, 20, true);
+      lv.setUint32(14, crc, true); lv.setUint32(18, data.length, true); lv.setUint32(22, data.length, true);
+      lv.setUint16(26, nameB.length, true);
+      lh.set(nameB, 30);
+      parts.push(lh, data);
+      const ch = new Uint8Array(46 + nameB.length);
+      const cv = new DataView(ch.buffer);
+      cv.setUint32(0, 0x02014b50, true); cv.setUint16(4, 20, true); cv.setUint16(6, 20, true);
+      cv.setUint32(16, crc, true); cv.setUint32(20, data.length, true); cv.setUint32(24, data.length, true);
+      cv.setUint16(28, nameB.length, true); cv.setUint32(42, offset, true);
+      ch.set(nameB, 46);
+      central.push(ch);
+      offset += lh.length + data.length;
+    }
+    const cdSize = central.reduce((a,b)=>a+b.length,0);
+    const eocd = new Uint8Array(22);
+    const ev = new DataView(eocd.buffer);
+    ev.setUint32(0, 0x06054b50, true);
+    ev.setUint16(8, files.length, true); ev.setUint16(10, files.length, true);
+    ev.setUint32(12, cdSize, true); ev.setUint32(16, offset, true);
+    return new Blob([...parts, ...central, eocd], { type:'application/zip' });
+  }
+
+  async download(key, zipName, names){
+    if (this.state.busy) return;
+    this.setState({ busy:key });
+    try {
+      const files = [];
+      for (const n of names){
+        const r = await fetch(n);
+        if (!r.ok) continue;
+        files.push({ name:n, data:new Uint8Array(await r.arrayBuffer()) });
+      }
+      const blob = await this.makeZip(files);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = zipName;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url), 4000);
+    } catch(e){ console.warn('ZIP selhal', e); }
+    this.setState({ busy:'' });
+  }
+
+  renderVals(){
+    const S = this.state;
+    const icons = ['vapp-logo.svg','logo-alko.svg','logo-knott.png','logo-knott-bila.png','seznam-logo.svg',
+      'ikona-blatniky-a-zasterky.svg','ikona-bocnice-uzavery-panty.svg','ikona-boxy-na-naradi-a-drzaky-boxu.svg','ikona-chladirenske-privesy.svg','ikona-dily-naprav.svg','ikona-doplnky-k-privesum.svg','ikona-dvouose-valniky.svg','ikona-elektro-svitilny-odrazky.svg','ikona-hydraulika-privesu.svg','ikona-jednoose-valniky.svg','ikona-kliny-a-drzaky.svg','ikona-konstrukcni-dily.svg','ikona-najezdove-brzdy-a-dily.svg','ikona-najezdy.svg','ikona-napravy-kompletni.svg','ikona-navijaky-a-prislusenstvi.svg','ikona-operna-kolecka-nohy-drzaky.svg','ikona-plachty-a-prislusenstvi.svg','ikona-plynove-vzpery-a-prislusenstvi.svg','ikona-pneu-kola-disky.svg','ikona-pomucky-pro-udrzbu.svg','ikona-prepravniky-automobilu.svg','ikona-prepravniky-lodi.svg','ikona-prepravniky-motocyklu.svg','ikona-prepravniky-stroju.svg','ikona-prepravniky-zvirat.svg','ikona-sklopne-privesy.svg','ikona-skrinove-privesy.svg','ikona-spojovaci-zarizeni-a-zamky.svg','ikona-triose-valniky.svg','ikona-zabezpeceni-nakladu.svg'];
+    const produkty = ['prives-moto-profi-132-a.jpg','prives-moto-profi-132-b.jpg','prives-p3s-2-7-3618-a.jpg','prives-p3s-2-7-3618-b.jpg','prives-pap-2-0-4019-a.jpg','prives-pap-2-0-4019-b.jpg','prives-praktik-2-a.jpg','prives-praktik-2-b.jpg','prives-pvs-2-7-4021-a.jpg','prives-pvs-2-7-4021-b.jpg'];
+    const kategorie = ['privesy-kat-01.png','privesy-kat-02.png','privesy-kat-03.png','privesy-kat-04.png','privesy-kat-05.png','privesy-kat-06.png','privesy-kat-07.png','privesy-kat-08.png','privesy-kat-09.png','privesy-kat-10.png'];
+    const sekce = ['hero-privesy.jpg','hero-prives-panorama.png','pribeh-firmy.png','sekce-akce.png','sekce-nahradni-dily.png','sekce-poradna.png','sekce-privesy.png','sekce-pujcovna.png','sekce-servis.png'];
+
+    const pack = (key, title, desc, files, zipName) => ({
+      title, desc, files,
+      busy: S.busy === key,
+      btnLabel: S.busy === key ? 'Balím…' : ('Stáhnout ZIP (' + files.length + ')'),
+      onDownload: () => this.download(key, zipName, files),
+    });
+
+    return {
+      navSections: [],
+      packs: [
+        pack('ikony','Ikony a loga','Kategorické ikony ve formátu SVG, loga značek a logo VAPP v křivkách.', icons, 'vapp-ikony.zip'),
+        pack('produkty','Produktové fotky','Fotografie přívěsů z katalogu a detailů produktu.', produkty, 'vapp-produkty.zip'),
+        pack('kategorie','Náhledy kategorií','Fotky v dlaždicích kategorií a podkategorií.', kategorie, 'vapp-kategorie.zip'),
+        pack('sekce','Hero a sekční obrázky','Hero homepage, rozcestník sekcí a fotka k příběhu firmy.', sekce, 'vapp-sekce.zip'),
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

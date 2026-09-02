@@ -97,6 +97,28 @@ class Component extends DCLogic {
 
     // Historie: nejnovější den nahoře; items = {title, where, what, why, how}
     const log = [
+      { date: '2. 9. 2026', items: [
+        { title: 'Náhradní díly mají sdružovací kategorie — V1 (8) a V2 (6)',
+          where: 'Náhradní díly — rozcestník',
+          what: 'Nejvyšší úroveň Náhradních dílů už není 20 dnešních kategorií, ale sdružovací kategorie z klientského excelu. Lišta u spodní hrany přepíná dvě verze: V1 s osmi a V2 s šesti položkami. Klik na položku rozbalí přesně ten výčet podkategorií, který je v excelu, a dá se odtud projít až na výpis produktů. H1 hub stránky je cílový SEO výraz ze sloupce D, v drobečkové navigaci a dlaždici je krátký název. Dlaždice „Akce a slevy“ z rozcestníku zmizela.',
+          why: 'Dvacet kategorií na jedné úrovni zákazníka zahltí, nedává prostor pro růst sortimentu a nevytváří žádnou SEO landing stránku. Obě verze potřebuje klient vidět v reálném webu, ne v tabulce, aby se dalo rozhodnout.',
+          how: 'Struktura je přepsaná na jednom místě a názvy se nevymýšlejí — každá položka se automaticky napojí na dnešní kategorii nebo na její podkategorii, takže sedí na existující URL. Promo akce se podle zadání řeší Hero na homepage a filtrem, ne kategorií. Otevřené: V1 nepokrývá Hydrauliku, Blatníky, Bočnice a Plynové vzpěry — v excelu chybí.' },
+        { title: 'Nové desktopové megamenu s podkategoriemi a fotkami',
+          where: 'Hlavička — Náhradní díly',
+          what: 'Hover nebo fokus na tabu Náhradní díly rozbalí megamenu přes šířku obsahu webu. Každá sdružovací kategorie má náhledovou fotku 48 × 48, název jako odkaz na hub a pod ním max 6 podkategorií; když jich má víc, přidá se odkaz „Zobrazit vše (N)“ — třeba Elektro má 17. Struktura se řídí zvolenou verzí: V1 osm skupin ve čtyřech sloupcích, V2 šest ve třech. Zavírá Escape, odjezd myší i klik mimo.',
+          why: 'Do menu se nedala hierarchie ani prohlédnout — zákazník musel nejdřív na výpis. Vypsat u velkých kategorií všech 17 podkategorií by ale panel roztáhlo přes celou obrazovku.',
+          how: 'Pravidlo „6 + Zobrazit vše“ drží komponenta, takže platí všude stejně a nedá se obejít. Panel má změřenou maximální výšku podle dostupného místa v okně a vlastní rolování, takže spodní řada skupin je dosažitelná i na notebooku. Počty produktů se v megamenu nezobrazují — stejně jako v dlaždicích kategorií.' },
+        { title: 'Mobilní menu jede po stejné struktuře jako rozcestník',
+          where: 'Hlavička — mobilní menu',
+          what: 'Náhradní díly v mobilním menu rozbalí sdružovací kategorie podle zvolené verze (V1 osm, V2 šest), druhá úroveň je výčet z excelu a u položek, které jsou celé dnešní kategorie, se dá zajít ještě o úroveň hlouběji.',
+          why: 'Menu na mobilu ukazovalo starou plochou sadu 20 kategorií, takže se přepnutí verze projevilo všude jinde, jen ne tam, kde je hierarchie nejhůř čitelná.',
+          how: 'Menu i megamenu i rozcestník čtou tu samou strukturu z jednoho zdroje — nemůže se rozejít.' },
+        { title: 'Šest kategorií se na velkém monitoru dělí do dvou řad',
+          where: 'Náhradní díly — rozcestník, verze V2',
+          what: 'Ve verzi V2 se rozcestník od šířky 1150 px vypisuje ve třech sloupcích, tedy dvě řady po třech. V1 s osmi kategoriemi zůstává beze změny.',
+          why: 'Šest dlaždic v pěti sloupcích nechávalo šestou samotnou na druhém řádku.',
+          how: 'Platí v pásmech XL a XXL, užší pásma se nemění.' }
+      ] },
       { date: '27. 8. 2026', items: [
         { title: 'Breadcrumb jen na vnořených stránkách',
           where: 'O nás, Poradna',

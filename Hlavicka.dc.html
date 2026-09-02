@@ -106,10 +106,15 @@
     <nav class="hd-dt" aria-label="Hlavní navigace" style="border-top:1px solid #F2F4F7;">
       <div class="vp-in" style="display:flex;align-items:center;gap:26px;">
         <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
-          <a class="{{ t.cls }}" href="{{ t.href }}" aria-current="{{ t.current }}" onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</a>
+          <a class="{{ t.cls }}" href="{{ t.href }}" aria-current="{{ t.current }}" aria-expanded="{{ t.expanded }}" onClick="{{ t.onClick }}" onMouseEnter="{{ t.onEnter }}" onMouseLeave="{{ t.onLeave }}" onFocus="{{ t.onFocus }}" style="{{ t.style }}">{{ t.label }}</a>
         </sc-for>
       </div>
     </nav>
+    <sc-if value="{{ megaOpen }}" hint-placeholder-val="">
+      <div class="hd-dt" id="hd-mega" onMouseEnter="{{ onMegaEnter }}" onMouseLeave="{{ onMegaLeave }}" style="position:absolute;top:100%;left:0;right:0;z-index:60;box-shadow:0 10px 30px rgba(20,30,45,.14);">
+        <dc-import name="MegaMenu" groups="{{ megaGroups }}" heading="{{ megaTab }}" columns="{{ megaColumns }}" max-items="{{ megaMaxItems }}" debug="{{ debug }}" hint-size="100%,420px"></dc-import>
+      </div>
+    </sc-if>
     <sc-if value="{{ menuOpen }}" hint-placeholder-val="">
       <div class="hd-mb" id="hd-mobile-menu" role="navigation" aria-label="Hlavní menu" tabindex="-1" onKeyDown="{{ onMenuKey }}" style="position:absolute;top:100%;left:0;right:0;z-index:60;min-height:calc(100dvh - 100%);background:#fff;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;box-shadow:0 10px 30px rgba(20,30,45,.14);">
         <dc-import name="MobilniMenu" show-info="{{ mmInfo }}" show-contacts="{{ mmContacts }}" panel-open="{{ menuOpen }}" menu-tree="{{ menuTree }}" active="{{ menuActive }}" on-select="{{ onMenuSelect }}" info-links="{{ infoLinks }}" on-login="{{ onMenuLogin }}" currency="{{ currency }}" currencies="{{ currencyCodes }}" on-currency-change="{{ onMenuCurrency }}" debug="{{ debug }}" hint-size="100%,320px"></dc-import>
@@ -125,18 +130,58 @@
 </sc-if>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:220},&quot;contactPhone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;323 605 314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactPhoneHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;tel:+420323605314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactHours&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;8:30–16:30&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;contactEmail&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactEmailHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;mailto:obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;currency&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;CZK&quot;,&quot;EUR&quot;],&quot;default&quot;:&quot;CZK&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;currencies&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;onCurrencyChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(code:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;cartCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;},&quot;cartTotal&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1500,&quot;tsType&quot;:&quot;number&quot;},&quot;compareCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;tsType&quot;:&quot;number&quot;},&quot;tabs&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;menuTree&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;,&quot;default&quot;:null},&quot;searchValue&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;,&quot;default&quot;:null},&quot;onSearchChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCompare&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCart&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onTabClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onLogoClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;infoLinks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;megaTab&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Megamenu&quot;},&quot;megaGroups&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{name:string,href:string,items:{name:string,href:string}[]}[]&quot;,&quot;default&quot;:null},&quot;megaColumns&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;min&quot;:2,&quot;max&quot;:5,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Megamenu&quot;},&quot;megaMaxItems&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:6,&quot;min&quot;:3,&quot;max&quot;:12,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Megamenu&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:220},&quot;contactPhone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;323 605 314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactPhoneHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;tel:+420323605314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactHours&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;8:30–16:30&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;contactEmail&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactEmailHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;mailto:obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;currency&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;CZK&quot;,&quot;EUR&quot;],&quot;default&quot;:&quot;CZK&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;currencies&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;onCurrencyChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(code:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;cartCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;},&quot;cartTotal&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1500,&quot;tsType&quot;:&quot;number&quot;},&quot;compareCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;tsType&quot;:&quot;number&quot;},&quot;tabs&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;menuTree&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;,&quot;default&quot;:null},&quot;searchValue&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;,&quot;default&quot;:null},&quot;onSearchChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCompare&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCart&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onTabClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onLogoClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;infoLinks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null}}">
 class Component extends DCLogic {
-  state = { menuOpen:false, searchOpen:false, loginOpen:false, cartOpen:false, currency:'CZK' };
+  state = { menuOpen:false, searchOpen:false, loginOpen:false, cartOpen:false, currency:'CZK', megaOpen:false };
+  // megamenu: otevírá hover nebo fokus tabu, zavírá Escape, odjezd myší a klik mimo
+  openMega(){ clearTimeout(this._megaT); if(!this.state.megaOpen) this.setState({ megaOpen:true }, ()=>this.fitMega()); else this.fitMega(); }
+  fitMega(){
+    const apply = ()=>{
+      const el = document.getElementById('hd-mega');
+      if (!el) return;
+      const top = el.getBoundingClientRect().top;
+      const vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      el.style.maxHeight = Math.max(240, Math.round(vh - top - 16)) + 'px';
+      el.style.overflowY = 'auto';
+      el.style.overscrollBehavior = 'contain';
+    };
+    apply();
+    if (!this._onFitMega){
+      this._onFitMega = ()=>{ if (this.state.megaOpen) apply(); };
+      window.addEventListener('resize', this._onFitMega);
+      window.addEventListener('scroll', this._onFitMega, { passive:true });
+      if (window.visualViewport) window.visualViewport.addEventListener('resize', this._onFitMega);
+    }
+  }
+  unbindFitMega(){
+    if (!this._onFitMega) return;
+    window.removeEventListener('resize', this._onFitMega);
+    window.removeEventListener('scroll', this._onFitMega);
+    if (window.visualViewport) window.visualViewport.removeEventListener('resize', this._onFitMega);
+    this._onFitMega = null;
+  }
+  closeMega(delay){
+    clearTimeout(this._megaT);
+    this._megaT = setTimeout(()=>{ if(this.state.megaOpen){ this.unbindFitMega(); this.setState({ megaOpen:false }); } }, delay || 0);
+  }
   _menuWas = false;
   lockScroll(on){ try{ document.body.style.overflow = on ? 'hidden' : ''; }catch(e){} }
   componentDidMount(){
     this._onKey = (e)=>{ if(e.key!=='Escape') return;
+      if(this.state.megaOpen){ this.closeMega(0); const t=document.querySelector('.hd-tab[aria-expanded="true"]'); if(t&&t.focus) t.focus(); return; }
       if(this.state.menuOpen){ this.closeMenu(); }
       else if(this.state.searchOpen){ this.setState({ searchOpen:false }); const b=document.getElementById('hd-search-toggle'); if(b&&b.focus) b.focus(); } };
     document.addEventListener('keydown', this._onKey, true);
+    this._onMegaDoc = (e)=>{
+      if(!this.state.megaOpen) return;
+      const p = document.getElementById('hd-mega');
+      if(p && p.contains(e.target)) return;
+      if(e.target && e.target.closest && e.target.closest('.hd-tab')) return;
+      this.closeMega(0);
+    };
+    document.addEventListener('click', this._onMegaDoc, true);
   }
-  componentWillUnmount(){ this.lockScroll(false); this.unbindFit(); if(this._onKey) document.removeEventListener('keydown', this._onKey, true); }
+  componentWillUnmount(){ this.lockScroll(false); this.unbindFit(); clearTimeout(this._megaT); this.unbindFitMega(); if(this._onKey) document.removeEventListener('keydown', this._onKey, true); if(this._onMegaDoc) document.removeEventListener('click', this._onMegaDoc, true); }
   componentDidUpdate(prevProps, prevState){
 
     // runtime nedodává spolehlivý prevState — poslední stav si držíme na instanci
@@ -180,12 +225,21 @@ class Component extends DCLogic {
     const onTab = P.onTabClick;
     const infoLinks = P.infoLinks || ['Doprava a platba','Obchodní podmínky','O nás','Kontakty'];
     const TAB_HREF = { 'Přívěsy':'privesy-V1.dc.html', 'Náhradní díly':'nahradnidily.dc.html', 'Poradna':'poradna.dc.html' };
+    const megaGroups = Array.isArray(P.megaGroups) && P.megaGroups.length ? P.megaGroups : null;
+    const megaTab = P.megaTab || '';
+    const hasMega = !!(megaGroups && megaTab);
+    const megaOpen = hasMega && this.state.megaOpen;
     const tabs = labels.map(label=>{
       const on = label === active;
       const href = TAB_HREF[label] || '#';
+      const mega = hasMega && label === megaTab;
       return {
         label, cls: 'hd-tab hd-i', current: on ? 'page' : undefined, href,
-        onClick: (e)=>{ if(e&&e.preventDefault) e.preventDefault(); if (href !== '#' && !on){ window.location.href = href; return; } if(onTab) onTab(label); },
+        expanded: mega ? (megaOpen ? 'true' : 'false') : undefined,
+        onEnter: mega ? (()=>this.openMega()) : (()=>this.closeMega(0)),
+        onLeave: mega ? (()=>this.closeMega(160)) : undefined,
+        onFocus: mega ? (()=>this.openMega()) : (()=>this.closeMega(0)),
+        onClick: (e)=>{ if(e&&e.preventDefault) e.preventDefault(); this.closeMega(0); if (href !== '#' && !on){ window.location.href = href; return; } if(onTab) onTab(label); },
         style:'display:flex;align-items:center;align-self:stretch;font-size:18px;font-weight:700;padding:13px 2px;cursor:pointer;border-bottom:3px solid '+(on?'#1E5AA8':'transparent')+';color:'+(on?'#1E5AA8':'#3A424C')+';' };
     });
     const cartCount = P.cartCount;
@@ -249,6 +303,9 @@ class Component extends DCLogic {
       onLogoClick: P.onLogoClick || (()=>{}),
       cartCount, cartTotal: P.cartTotal, compareCount, showCompare: compareCount>0,
       tabs,
+      megaOpen, megaGroups, megaTab,
+      megaColumns: P.megaColumns ?? 4, megaMaxItems: P.megaMaxItems ?? 6,
+      onMegaEnter: ()=>this.openMega(), onMegaLeave: ()=>this.closeMega(160),
       menuOpen: this.state.menuOpen, menuClosed: !this.state.menuOpen,
       menuExpanded: this.state.menuOpen ? 'true' : 'false',
       menuLabel: this.state.menuOpen ? 'Zavřít menu' : 'Otevřít menu',

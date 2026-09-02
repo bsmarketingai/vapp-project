@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  .hn-nav{appearance:none;background:none;border:0;margin:0;font:inherit;text-align:left;display:block;width:100%;padding:9px 14px;border-radius:6px;font-size:14px;font-weight:500;color:#B4CEEC;text-decoration:none;transition:background .12s,color .12s;}
+  .hn-nav:hover{background:rgba(255,255,255,.10);color:#fff;}
+  .hn-nav.is-on{background:#1E5AA8;color:#fff;font-weight:700;}
+  .hn-nav.is-on:hover{background:#1E5AA8;color:#fff;}
+  .hn-nav:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+  .hn-sub{display:block;padding:6px 12px;border-radius:6px;font-size:13px;font-weight:500;color:#8FAFD8;text-decoration:none;transition:background .12s,color .12s;}
+  .hn-sub:hover{background:rgba(255,255,255,.10);color:#fff;}
+</style>
+</helmet>
+<aside style="flex:none;width:268px;align-self:stretch;position:sticky;top:0;height:100vh;overflow:auto;background:#142F56;padding:24px 16px 40px;display:flex;flex-direction:column;gap:22px;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;">
+  <a href="HandoffVAPP.dc.html" style="display:flex;flex-direction:column;gap:4px;padding:0 6px;text-decoration:none;">
+    <span style="font-size:18px;font-weight:700;color:#fff;letter-spacing:-.01em;">VAPP — Handoff</span>
+    <span style="font-size:13px;font-weight:500;color:#B4CEEC;line-height:1.4;">Dokumentace komponent pro vývoj</span>
+  </a>
+
+  <div style="display:flex;flex-direction:column;gap:4px;">
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#5A79A8;padding:0 6px 4px;">Komponenty</div>
+    <sc-for list="{{ items }}" as="i" hint-placeholder-count="8">
+      <a class="{{ i.cls }}" href="{{ i.href }}">{{ i.name }}</a>
+      <sc-if value="{{ i.on }}" hint-placeholder-val="">
+        <div style="display:flex;flex-direction:column;gap:2px;padding:2px 0 6px 10px;">
+          <sc-for list="{{ sections }}" as="s" hint-placeholder-count="5">
+            <a class="hn-sub" href="{{ s.href }}">{{ s.name }}</a>
+          </sc-for>
+        </div>
+      </sc-if>
+    </sc-for>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:4px;">
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#5A79A8;padding:0 6px 4px;">Podklady</div>
+    <a class="{{ assetsCls }}" href="HandoffAssets.dc.html">Assets ke stažení</a>
+  </div>
+
+  <div style="margin-top:auto;padding:12px 6px 0;font-size:12px;line-height:1.5;color:#5A79A8;border-top:1px solid rgba(255,255,255,.12);">
+    Zdroj pravdy: <span style="font-family:'JetBrains Mono',monospace;">*.dc.html</span> + <span style="font-family:'JetBrains Mono',monospace;">CLAUDE.md</span>
+  </div>
+</aside>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:268,&quot;height&quot;:900},&quot;active&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;tlacitko&quot;,&quot;mobilnimenu&quot;,&quot;chip&quot;,&quot;select&quot;,&quot;kvantifikator&quot;,&quot;produktovakarta&quot;,&quot;hlavicka&quot;,&quot;filtrdrawer&quot;,&quot;assets&quot;],&quot;default&quot;:&quot;tlacitko&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;sections&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;}}">
+class Component extends DCLogic {
+  renderVals(){
+    const active = this.props.active || '';
+    const defs = [
+      ['tlacitko','Tlačítko','HandoffVAPP.dc.html'],
+      ['mobilnimenu','Mobilní menu','HandoffMobilniMenu.dc.html'],
+      ['chip','Chip','HandoffChip.dc.html'],
+      ['select','Select','HandoffSelect.dc.html'],
+      ['kvantifikator','Kvantifikátor','HandoffKvantifikator.dc.html'],
+      ['produktovakarta','Produktová karta','HandoffProduktovaKarta.dc.html'],
+      ['hlavicka','Hlavička','HandoffHlavicka.dc.html'],
+      ['filtrdrawer','Filtr drawer','HandoffFiltrDrawer.dc.html'],
+    ];
+    const raw = this.props.sections;
+    const sections = (Array.isArray(raw) ? raw : []).map(s => ({
+      name: Array.isArray(s) ? s[0] : s.name,
+      href: Array.isArray(s) ? s[1] : s.href,
+    }));
+    return {
+      items: defs.map(([key,name,href]) => ({
+        name, href, on: key === active,
+        cls: 'hn-nav' + (key === active ? ' is-on' : ''),
+      })),
+      sections,
+      assetsCls: 'hn-nav' + (active === 'assets' ? ' is-on' : ''),
+    };
+  }
+}
+</script>
+</body>
+</html>

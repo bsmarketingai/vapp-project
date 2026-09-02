@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0!important;padding:0!important;}
+  #dc-root{margin:0!important;padding:0!important;width:100%!important;max-width:none!important;border:0!important;}
+  #dc-root>.sc-host{margin:0!important;padding:0!important;width:100%!important;}
+  *{box-sizing:border-box;}
+  body{background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  a{color:#1E5AA8;}
+  a:hover{color:#1A4A8A;}
+  .hf-sec{scroll-margin-top:80px;}
+  .hf-mono{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;color:#15181C;white-space:pre-line;overflow-wrap:anywhere;}
+  .hf-content{container-type:inline-size;}
+  @container (max-width:900px){ .hf-staterow{grid-template-columns:1fr!important;gap:12px!important;} }
+  .hf-tab{appearance:none;border:0;margin:0;font:inherit;cursor:pointer;padding:0 16px;height:38px;display:inline-flex;align-items:center;font-size:13px;font-weight:700;color:#666E78;background:transparent;border-radius:6px;transition:background .12s,color .12s;}
+  .hf-tab:hover{background:#F2F4F7;color:#15181C;}
+  .hf-tab.is-on{background:#15181C;color:#fff;}
+  .hf-copy{appearance:none;border:0;margin:0;font:inherit;cursor:pointer;padding:0 12px;height:30px;font-size:12px;font-weight:700;color:#B4CEEC;background:rgba(255,255,255,.10);border-radius:6px;transition:background .12s,color .12s;}
+  .hf-copy:hover{background:rgba(255,255,255,.20);color:#fff;}
+</style>
+<style id="vapp-chip-css">/* === VAPP — Chip =======================================================
+   Pill radius 999. Text 14/700, line-height 24 u VŠECH variant.
+   Dvě velikosti: Standard 40 (padding 8/16) · Small 32 (padding 4/12).
+   Výška je stejná s ikonou i bez ní. Další velikosti se nezavádějí.
+   href → <a> (navigace), bez něj <button type="button"> + onClick.
+   ------------------------------------------------------------------- */
+.vapp-chip{
+  position:relative;
+  display:inline-flex; align-items:center; gap:8px;
+  min-height:40px; padding:8px 16px;
+  font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;
+  font-size:14px; font-weight:700; line-height:24px;
+  border:0; border-radius:999px; margin:0;
+  text-decoration:none; cursor:pointer;
+  appearance:none; -webkit-appearance:none;
+  transition:background .12s ease, box-shadow .12s ease, color .12s ease;
+}
+/* klikací plocha na 44 px BEZ zásahu do layoutu */
+.vapp-chip::after{content:""; position:absolute; top:-4px; right:-2px; bottom:-4px; left:-2px;}
+.vapp-chip:focus-visible,.vapp-chip.is-focus{outline:2px solid #1E5AA8; outline-offset:2px;}
+
+/* --- velikost Small 32 --------------------------------------------- */
+.vapp-chip--sm{min-height:32px; padding:4px 12px;}
+
+/* --- ikona: levý padding 8 u obou velikostí ------------------------ */
+.vapp-chip--icon{padding-left:8px;}
+.vapp-chip > svg{flex:none; width:24px; height:24px; stroke-width:2;}
+.vapp-chip--sm > svg{width:18px; height:18px;}
+
+/* --- filtrační chip ------------------------------------------------ */
+.vapp-chip--filter{background:#F2F4F7; color:#3A424C;}
+.vapp-chip--filter:hover,.vapp-chip--filter.is-hover{box-shadow:inset 0 0 0 1px #5189CC;}
+.vapp-chip--filter.is-active{background:#1E5AA8; color:#FFFFFF; box-shadow:none; padding-right:8px;}
+.vapp-chip--filter.is-active:hover,.vapp-chip--filter.is-active.is-hover{background:#1A4A8A; box-shadow:none;}
+
+/* --- navigační chipy ----------------------------------------------- */
+.vapp-chip--primary{background:#1E5AA8; color:#FFFFFF;}
+.vapp-chip--primary:hover,.vapp-chip--primary.is-hover{background:#1A4A8A;}
+
+.vapp-chip--secondary{background:#EFF4FB; color:#1E5AA8;}
+.vapp-chip--secondary:hover,.vapp-chip--secondary.is-hover{background:#D8E6F6;}
+
+/* zvýraznění jen okrajem, plocha zůstává */
+.vapp-chip--secondary-outline{background:#EFF4FB; color:#1E5AA8; box-shadow:inset 0 0 0 1px #1E5AA8;}
+.vapp-chip--secondary-outline:hover,.vapp-chip--secondary-outline.is-hover{background:#D8E6F6;}
+
+/* vyhrazeno pro odkaz na článek v poradně — vždy s ikonou */
+.vapp-chip--guide{background:#FCF1DC; color:#7A4E00;}
+.vapp-chip--guide:hover,.vapp-chip--guide.is-hover{background:#F7E4BC;}
+
+.vapp-chip--accent{background:#142F56; color:#FFFFFF;}
+.vapp-chip--accent:hover,.vapp-chip--accent.is-hover{background:#1E5AA8;}
+
+/* značky ve filtru — bílá plocha s linkou */
+.vapp-chip--outline{background:#FFFFFF; color:#3A424C; box-shadow:inset 0 0 0 1px #91959B;}
+.vapp-chip--outline:hover,.vapp-chip--outline.is-hover{box-shadow:inset 0 0 0 1px #5189CC;}
+.vapp-chip__count{color:#666E78; margin-left:6px; font-weight:700;}
+
+/* --- skupina: vždy flex + gap, nikdy marginy ----------------------- */
+.vapp-chip-group{display:flex; flex-wrap:wrap; gap:8px; align-items:center;}
+</style>
+</helmet>
+
+<div style="display:flex;align-items:flex-start;width:100%;min-height:100vh;background:#F7F9FB;">
+  <dc-import name="HandoffNav" active="chip" sections="{{ navSections }}" hint-size="268px,100vh"></dc-import>
+
+  <main style="flex:1;min-width:0;padding:0 0 80px;">
+    <div style="position:sticky;top:0;z-index:20;background:rgba(247,249,251,.94);backdrop-filter:blur(6px);padding:14px 32px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-bottom:1px solid #F2F4F7;">
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Chip</div>
+      <div style="flex:1;"></div>
+      <div style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:#15181C;background:#fff;padding:7px 12px;border-radius:6px;">
+        <span style="color:#666E78;">container</span><span>{{ contW }} px</span>
+        <span style="display:inline-block;width:1px;height:14px;background:#D5DAE0;"></span>
+        <span style="color:#666E78;">pásmo</span><span style="font-weight:700;color:#1E5AA8;">{{ band }}</span><span style="color:#666E78;">{{ bandRange }}</span>
+      </div>
+    </div>
+
+    <div class="hf-content" style="padding:28px 32px 0;display:flex;flex-direction:column;gap:28px;max-width:1560px;">
+
+      <section class="hf-sec" style="display:flex;flex-direction:column;gap:10px;">
+        <h1 style="margin:0;font-size:36px;font-weight:700;line-height:1.15;letter-spacing:-.02em;">Chip</h1>
+        <p style="margin:0;max-width:820px;font-size:18px;line-height:1.6;color:#5A626C;text-wrap:pretty;">Pill prvek pro filtry, značky a navigaci do kategorií a poradny. Sedm variant, dvě velikosti. Text je <strong>14/700 u všech variant</strong> — velikost chipu se mění paddingem, ne písmem.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;padding-top:4px;">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#1E5AA8;background:#EFF4FB;padding:5px 10px;border-radius:6px;">Chip.dc.html</span>
+        </div>
+      </section>
+
+      <section class="hf-sec" id="ch-prehled" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:20px;">
+        <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Přehled a tokeny</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;">
+          <div style="background:#F7F9FB;border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Typografie</div>
+            <div class="hf-mono">font-size: 14px
+font-weight: 700
+line-height: 24px
+u VŠECH variant i velikostí</div>
+            <div style="font-size:13px;line-height:1.5;color:#5A626C;">Písmo se mezi velikostmi nemění — Small se zmenšuje jen paddingem.</div>
+          </div>
+          <div style="background:#F7F9FB;border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Geometrie</div>
+            <div class="hf-mono">border-radius: 999px
+Standard: 40px · padding 8/16
+Small: 32px · padding 4/12
+gap ikona↔text: 8px
+levý padding s ikonou: 8px</div>
+            <div style="font-size:13px;line-height:1.5;color:#5A626C;">Výška je identická s ikonou i bez ní.</div>
+          </div>
+          <div style="background:#F7F9FB;border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Ikony</div>
+            <div class="hf-mono">Standard: 24 × 24
+Small: 18 × 18
+stroke-width 2 · currentColor</div>
+            <div style="font-size:13px;line-height:1.5;color:#5A626C;">Varianta <span style="font-family:'JetBrains Mono',monospace;">guide</span> je vždy s ikonou <span style="font-family:'JetBrains Mono',monospace;">book</span>.</div>
+          </div>
+          <div style="background:#F7F9FB;border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Klikací plocha</div>
+            <div class="hf-mono">::after {
+  position:absolute;
+  top:-4px; right:-2px;
+  bottom:-4px; left:-2px;
+}</div>
+            <div style="font-size:13px;line-height:1.5;color:#5A626C;">Small 32 px se dorovnává pseudoprvkem, nikdy paddingem — layout se nesmí pohnout.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hf-sec" id="ch-varianty" style="display:flex;flex-direction:column;gap:14px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Varianty a jejich stavy</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">Stavy jsou vynucené třídou <span style="font-family:'JetBrains Mono',monospace;font-size:14px;">.is-hover / .is-focus / .is-active</span>. Poslední buňka je živý chip — najeď myší a projdi tabulátorem.</p>
+        </div>
+        <sc-for list="{{ variants }}" as="v" hint-placeholder-count="7">
+          <div style="background:#fff;border-radius:8px;padding:22px 24px;display:flex;flex-direction:column;gap:14px;">
+            <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;">
+              <span style="font-size:22px;font-weight:700;line-height:1.25;">{{ v.name }}</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#1E5AA8;background:#EFF4FB;padding:2px 8px;border-radius:6px;">.vapp-chip--{{ v.mod }}</span>
+              <span style="font-size:14px;font-weight:500;color:#5A626C;">{{ v.use }}</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;">
+              <sc-for list="{{ v.cells }}" as="c" hint-placeholder-count="4">
+                <div style="display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:8px;background:#F7F9FB;">
+                  <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">{{ c.state }}</div>
+                  <div style="min-height:48px;display:flex;align-items:center;">
+                    <button type="button" class="{{ c.cls }}">{{ v.label }}<sc-if value="{{ v.hasCount }}" hint-placeholder-val=""><span class="vapp-chip__count">(486)</span></sc-if></button>
+                  </div>
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.6;white-space:pre-line;overflow-wrap:anywhere;color:#5A626C;">{{ c.note }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </section>
+
+      <section class="hf-sec" id="ch-velikosti" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:20px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Velikosti a ikony</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">Živé chipy ze komponenty. Všimni si, že výška se s ikonou nemění.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:120px 1fr;gap:20px;align-items:center;padding-bottom:18px;border-bottom:1px solid #F2F4F7;">
+          <div style="display:flex;flex-direction:column;gap:2px;">
+            <div style="font-size:16px;font-weight:700;">Standard</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;color:#666E78;">40 px<br>padding 8/16<br>ikona 24</div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+            <dc-import name="Chip" kind="secondary" label="Plynové vzpěry" debug="{{ off }}" on-click="{{ noop }}" hint-size="160px,40px"></dc-import>
+            <dc-import name="Chip" kind="secondaryOutline" label="Nájezdy" icon-name="help-circle" debug="{{ off }}" on-click="{{ noop }}" hint-size="180px,40px"></dc-import>
+            <dc-import name="Chip" kind="guide" label="Schéma zapojení zásuvky" icon-name="book" debug="{{ off }}" on-click="{{ noop }}" hint-size="260px,40px"></dc-import>
+            <dc-import name="Chip" kind="outline" label="KNOTT" count="486" debug="{{ off }}" on-click="{{ noop }}" hint-size="140px,40px"></dc-import>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:120px 1fr;gap:20px;align-items:center;">
+          <div style="display:flex;flex-direction:column;gap:2px;">
+            <div style="font-size:16px;font-weight:700;">Small</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;color:#666E78;">32 px<br>padding 4/12<br>ikona 18</div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+            <dc-import name="Chip" kind="secondary" size="small" label="Plynové vzpěry" debug="{{ off }}" on-click="{{ noop }}" hint-size="150px,32px"></dc-import>
+            <dc-import name="Chip" kind="guide" size="small" label="Schéma zapojení zásuvky" icon-name="book" debug="{{ off }}" on-click="{{ noop }}" hint-size="250px,32px"></dc-import>
+            <dc-import name="Chip" kind="filter" size="small" label="Nápravy" active="{{ off }}" debug="{{ off }}" on-click="{{ noop }}" hint-size="110px,32px"></dc-import>
+          </div>
+        </div>
+      </section>
+
+      <section class="hf-sec" id="ch-skupiny" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:18px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Skupiny a responzivita</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">Chip sám žádnou media query nemá. Zalamování řeší skupina — <span style="font-family:'JetBrains Mono',monospace;font-size:14px;">display:flex; flex-wrap:wrap; gap:8px</span>, nikdy marginy. Zužuj okno a sleduj, jak se řádky přelévají.</p>
+        </div>
+        <div style="background:#F7F9FB;border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:12px;">
+          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Aktivní filtry nad výpisem</div>
+          <div class="vapp-chip-group">
+            <button type="button" class="vapp-chip vapp-chip--filter is-active">Nájezdové brzdy<span aria-hidden="true" style="display:inline-flex"><dc-import name="Ikony" icon-name="x" size="24" hint-size="24px,24px"></dc-import></span></button>
+            <button type="button" class="vapp-chip vapp-chip--filter is-active">KNOTT<span aria-hidden="true" style="display:inline-flex"><dc-import name="Ikony" icon-name="x" size="24" hint-size="24px,24px"></dc-import></span></button>
+            <button type="button" class="vapp-chip vapp-chip--filter">Brzdové čelisti</button>
+            <button type="button" class="vapp-chip vapp-chip--filter">Nápravy</button>
+            <button type="button" class="vapp-chip vapp-chip--outline">AL-KO<span class="vapp-chip__count">(312)</span></button>
+          </div>
+        </div>
+        <div style="background:#F7F9FB;border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:12px;">
+          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Nejhledanější — Small, první chip vede do poradny</div>
+          <div class="vapp-chip-group">
+            <button type="button" class="vapp-chip vapp-chip--sm vapp-chip--guide vapp-chip--icon"><dc-import name="Ikony" icon-name="book" size="18" hint-size="18px,18px"></dc-import>Schéma zapojení zásuvky</button>
+            <button type="button" class="vapp-chip vapp-chip--sm vapp-chip--secondary">Blinkry</button>
+            <button type="button" class="vapp-chip vapp-chip--sm vapp-chip--secondary">Brzdové svítilny</button>
+            <button type="button" class="vapp-chip vapp-chip--sm vapp-chip--secondary">Kabely a kabeláže</button>
+          </div>
+          <div style="font-size:13px;line-height:1.5;color:#5A626C;">Gap 8 px řádkový i sloupcový. Pod 820 px jde label „Nejhledanější“ nad chipsy a chipsy se zalamují.</div>
+        </div>
+      </section>
+
+      <section class="hf-sec" id="ch-kod" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Kód</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">CSS je přesně to, co vykresluje ukázky na této stránce.</p>
+        </div>
+        <div style="display:flex;gap:6px;background:#F7F9FB;padding:6px;border-radius:8px;align-self:flex-start;flex-wrap:wrap;">
+          <button type="button" class="{{ tabHtmlCls }}" onClick="{{ pickHtml }}">HTML</button>
+          <button type="button" class="{{ tabCssCls }}" onClick="{{ pickCss }}">CSS</button>
+          <button type="button" class="{{ tabJsCls }}" onClick="{{ pickJs }}">JavaScript</button>
+        </div>
+        <div style="background:#15181C;border-radius:8px;overflow:hidden;">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;background:rgba(255,255,255,.06);">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#B4CEEC;">{{ codeFile }}</span>
+            <button type="button" class="hf-copy" onClick="{{ copyCode }}">{{ copyLabel }}</button>
+          </div>
+          <pre style="margin:0;padding:18px;overflow:auto;max-height:640px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.75;color:#E6ECF5;white-space:pre;">{{ code }}</pre>
+        </div>
+      </section>
+
+      <section class="hf-sec" id="ch-vyvojar" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:16px;">
+        <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Pozor při implementaci</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;">
+          <sc-for list="{{ warnings }}" as="w" hint-placeholder-count="6">
+            <div style="{{ w.style }}">
+              <div style="{{ w.titleStyle }}">{{ w.title }}</div>
+              <div style="font-size:14px;line-height:1.6;color:#3A424C;text-wrap:pretty;">{{ w.body }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { tab:'html', copied:false, contW:0, css:'' };
+
+  componentDidMount(){
+    this._m = () => {
+      const host = document.querySelector('#ch-varianty');
+      this.setState({ contW: host ? Math.round(host.getBoundingClientRect().width) : 0 });
+    };
+    this._m();
+    window.addEventListener('resize', this._m);
+    const st = document.getElementById('vapp-chip-css');
+    if (st) this.setState({ css: st.textContent.trim() });
+  }
+  componentWillUnmount(){ window.removeEventListener('resize', this._m); }
+
+  bandOf(w){
+    if (w >= 1560) return ['XXL','≥ 1560']; if (w >= 1150) return ['XL','1150–1559'];
+    if (w >= 1000) return ['L','1000–1149']; if (w >= 820) return ['M','820–999'];
+    if (w >= 550) return ['S','550–819']; if (w >= 420) return ['XS','420–549'];
+    return ['XXS','≤ 419'];
+  }
+
+  htmlCode(){
+    return [
+'<!-- Skupina chipů: VŽDY flex + gap, nikdy marginy mezi chipy -->',
+'<div class="vapp-chip-group">',
+'',
+'  <!-- Filtrační chip, neaktivní — přidává filtr -->',
+'  <button type="button" class="vapp-chip vapp-chip--filter"',
+'          aria-label="Brzdové čelisti — přidat filtr">Brzdové čelisti</button>',
+'',
+'  <!-- Filtrační chip, aktivní — ✕ odebírá filtr -->',
+'  <button type="button" class="vapp-chip vapp-chip--filter is-active"',
+'          aria-label="Nájezdové brzdy — odebrat filtr">',
+'    Nájezdové brzdy',
+'    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"',
+'         stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>',
+'  </button>',
+'',
+'  <!-- Značka: bílá plocha s linkou, počet JEN u outline -->',
+'  <button type="button" class="vapp-chip vapp-chip--outline">',
+'    KNOTT <span class="vapp-chip__count">(486)</span>',
+'  </button>',
+'</div>',
+'',
+'<!-- Navigační chipy: href → <a>, ne button -->',
+'<a class="vapp-chip vapp-chip--secondary" href="/nahradni-dily/plynove-vzpery/">Plynové vzpěry</a>',
+'<a class="vapp-chip vapp-chip--primary" href="/nahradni-dily/najezdove-brzdy/">Nájezdové brzdy</a>',
+'',
+'<!-- secondaryOutline: zvýraznění jen okrajem -->',
+'<a class="vapp-chip vapp-chip--secondary-outline" href="/…/najezdy/">Nájezdy</a>',
+'',
+'<!-- guide: VYHRAZENO pro odkaz do poradny, vždy s ikonou book -->',
+'<a class="vapp-chip vapp-chip--guide vapp-chip--icon" href="/poradna/schema-zapojeni/">',
+'  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">…</svg>',
+'  Schéma zapojení zásuvky',
+'</a>',
+'',
+'<!-- accent: tmavý chip. NE pro kategorie. -->',
+'<a class="vapp-chip vapp-chip--accent" href="/akce/">Výprodej</a>',
+'',
+'<!-- Small 32 px — sekce Nejhledanější, hutná místa -->',
+'<a class="vapp-chip vapp-chip--sm vapp-chip--secondary" href="/…/blinkry/">Blinkry</a>',
+'<a class="vapp-chip vapp-chip--sm vapp-chip--guide vapp-chip--icon" href="/poradna/…/">',
+'  <svg width="18" height="18" viewBox="0 0 24 24" …>…</svg> Schéma zapojení',
+'</a>'
+    ].join('\n');
+  }
+
+  jsCode(){
+    return [
+'/* === Chip — JS ========================================================',
+'   Chip sám nepotřebuje nic. JS řeší až filtrační lišta nad výpisem:',
+'   přepínání filtru, odebrání a synchronizaci s URL.',
+'   ------------------------------------------------------------------- */',
+'',
+'const group = document.querySelector(\'.vapp-chip-group\');',
+'',
+'group.addEventListener(\'click\', (e) => {',
+'  const chip = e.target.closest(\'.vapp-chip--filter\');',
+'  if (!chip) return;',
+'  const active = chip.classList.toggle(\'is-active\');',
+'',
+'  /* aria-label se musí měnit se stavem — jinak odečítač po kliknutí',
+'     stále čte „přidat filtr“. */',
+'  const name = chip.dataset.label;',
+'  chip.setAttribute(\'aria-label\', name + (active ? \' — odebrat filtr\' : \' — přidat filtr\'));',
+'',
+'  /* ✕ se vykresluje JEN na aktivním chipu a jen když je handler. */',
+'  chip.querySelector(\'.vapp-chip__x\')?.toggleAttribute(\'hidden\', !active);',
+'',
+'  applyFilter(chip.dataset.facet, name, active);   // stav filtrace webu',
+'});',
+'',
+'/* Co NEDĚLAT:',
+'   — nepřidávat ✕ na neaktivní chip (nemá co odebrat),',
+'   — nepřepínat stav třídou bez aria-pressed/aria-label u navigačních chipů,',
+'   — nevázat hover v JS, je v CSS,',
+'   — chip s href je <a> a nesmí mít onClick, který navigaci ruší. */'
+    ].join('\n');
+  }
+
+  renderVals(){
+    const S = this.state;
+    const [band, bandRange] = this.bandOf(S.contW || 0);
+
+    const cell = (state, cls, note) => ({ state, note, cls });
+    const mk = (name, mod, label, use, notes, hasCount) => {
+      const base = 'vapp-chip vapp-chip--' + mod + ' ';
+      return { name, mod, label, use, hasCount: !!hasCount, cells: [
+        cell('Default', base.trim(), notes.def),
+        cell('Hover', base + 'is-hover', notes.hov),
+        cell('Focus-visible', base + 'is-focus', 'outline 2px solid #1E5AA8\noffset 2px'),
+        cell('Živě — vyzkoušej', base.trim(), 'skutečný :hover\na :focus-visible'),
+      ] };
+    };
+
+    const variants = [
+      { name:'filter — neaktivní', mod:'filter', label:'Brzdové čelisti', use:'Nabízená volba ve filtraci.', hasCount:false, cells:[
+        cell('Default','vapp-chip vapp-chip--filter','bg #F2F4F7\ntext #3A424C'),
+        cell('Hover','vapp-chip vapp-chip--filter is-hover','inset ring 1px #5189CC\n(blue.300 má jen 2,1:1)'),
+        cell('Focus-visible','vapp-chip vapp-chip--filter is-focus','outline 2px #1E5AA8\noffset 2px'),
+        cell('Živě — vyzkoušej','vapp-chip vapp-chip--filter','aria-label: „… — přidat filtr“'),
+      ]},
+      { name:'filter — aktivní', mod:'filter.is-active', label:'Nájezdové brzdy', use:'Zapnutý filtr. Jen tady je ✕.', hasCount:false, cells:[
+        cell('Default','vapp-chip vapp-chip--filter is-active','bg #1E5AA8 · text #fff\npadding-right 8 (kvůli ✕)'),
+        cell('Hover','vapp-chip vapp-chip--filter is-active is-hover','bg #1A4A8A'),
+        cell('Focus-visible','vapp-chip vapp-chip--filter is-active is-focus','outline 2px #1E5AA8'),
+        cell('Živě — vyzkoušej','vapp-chip vapp-chip--filter is-active','aria-label: „… — odebrat filtr“'),
+      ]},
+      mk('primary','primary','Nájezdové brzdy','Zvýrazněná navigace do kategorie.',{def:'bg #1E5AA8\ntext #fff',hov:'bg #1A4A8A'}),
+      mk('secondary','secondary','Plynové vzpěry','Výchozí navigační chip.',{def:'bg #EFF4FB\ntext #1E5AA8',hov:'bg #D8E6F6'}),
+      mk('secondary-outline','secondary-outline','Nájezdy','Zvýraznění jen okrajem — plocha zůstává.',{def:'bg #EFF4FB · text #1E5AA8\ninset ring 1px #1E5AA8',hov:'bg #D8E6F6'}),
+      mk('guide','guide','Schéma zapojení','Vyhrazeno pro odkaz do poradny, vždy s ikonou.',{def:'bg #FCF1DC\ntext #7A4E00 (6,4:1)',hov:'bg #F7E4BC'}),
+      mk('accent','accent','Výprodej','Tmavý chip. Pro kategorie se nepoužívá.',{def:'bg #142F56\ntext #fff',hov:'bg #1E5AA8'}),
+      mk('outline','outline','KNOTT','Značky ve filtraci. Jediná varianta s počtem.',{def:'bg #fff · text #3A424C\ninset ring 1px #91959B\npočet #666E78',hov:'inset ring 1px #5189CC'}, true),
+    ];
+
+    const tabCls = (t) => 'hf-tab' + (S.tab === t ? ' is-on' : '');
+    const codeMap = { html:this.htmlCode(), css:S.css || '/* načítám… */', js:this.jsCode() };
+    const fileMap = { html:'chip.html', css:'vapp-chip.css', js:'vapp-chip.js' };
+    const code = codeMap[S.tab];
+
+    const warn = (title, body, tone) => ({ title, body,
+      style: 'background:' + (tone==='no' ? '#FDF1F1' : '#F7F9FB') + ';border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:8px;',
+      titleStyle: 'font-size:16px;font-weight:700;color:' + (tone==='no' ? '#80181D' : '#15181C') + ';' });
+
+    return {
+      navSections: [['Přehled a tokeny','#ch-prehled'],['Varianty a stavy','#ch-varianty'],['Velikosti a ikony','#ch-velikosti'],['Skupiny a responzivita','#ch-skupiny'],['Kód (HTML / CSS / JS)','#ch-kod'],['Pozor při implementaci','#ch-vyvojar']],
+      contW: S.contW, band, bandRange: '(' + bandRange + ' px)',
+      off: false, noop: () => {},
+      variants,
+      tabHtmlCls: tabCls('html'), tabCssCls: tabCls('css'), tabJsCls: tabCls('js'),
+      pickHtml: () => this.setState({ tab:'html', copied:false }),
+      pickCss: () => this.setState({ tab:'css', copied:false }),
+      pickJs: () => this.setState({ tab:'js', copied:false }),
+      code, codeFile: fileMap[S.tab],
+      copyLabel: S.copied ? 'Zkopírováno' : 'Kopírovat',
+      copyCode: () => { navigator.clipboard.writeText(code).then(() => { this.setState({ copied:true }); setTimeout(() => this.setState({ copied:false }), 1600); }).catch(()=>{}); },
+      warnings: [
+        warn('✕ jen na aktivním filtru', 'Neaktivní chip nemá co odebrat — ✕ na něm nesmí být. A když chybí handler onRemove, ✕ se nevykresluje vůbec, jinak by klik nic nedělal.', 'no'),
+        warn('aria-label se mění se stavem', 'Aktivní chip má „… — odebrat filtr“, neaktivní „… — přidat filtr“. Bez toho odečítač po kliknutí čte starou instrukci.', 'no'),
+        warn('Počet jen u outline', 'Číslo v závorce se zobrazuje výhradně u varianty outline (značky). U kategorií se počty nezobrazují — informace nepomáhá rozhodnutí a bere výšku.'),
+        warn('Zelená a červená plocha nikdy', 'Chip nemá zelenou ani červenou variantu — obě barvy jsou vyhrazené konverzi a akcím. Varianta accent se nepoužívá pro kategorie.', 'no'),
+        warn('Klikací plocha pseudoprvkem', 'Small 32 px je pod 44 px. Dorovnává se ::after se zápornými offsety, nikdy paddingem — jinak se posune celá skupina.'),
+        warn('href = odkaz, jinak button', 'Navigační chip je <a href> a musí být dosažitelný přímo (nový panel, kopírování odkazu). Akční chip je <button type="button">. Nikdy <span onclick>.'),
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

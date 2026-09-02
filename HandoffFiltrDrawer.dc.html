@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0!important;padding:0!important;}
+  #dc-root{margin:0!important;padding:0!important;width:100%!important;max-width:none!important;border:0!important;}
+  #dc-root>.sc-host{margin:0!important;padding:0!important;width:100%!important;}
+  *{box-sizing:border-box;}
+  body{background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
+  .hf-sec{scroll-margin-top:80px;}
+  .hf-mono{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;color:#15181C;white-space:pre-line;overflow-wrap:anywhere;}
+  .hf-content{container-type:inline-size;}
+  @container (max-width:900px){ .hf-2col{grid-template-columns:1fr!important;} }
+  .hf-tab{appearance:none;border:0;margin:0;font:inherit;cursor:pointer;padding:0 16px;height:38px;display:inline-flex;align-items:center;font-size:13px;font-weight:700;color:#666E78;background:transparent;border-radius:6px;transition:background .12s,color .12s;}
+  .hf-tab:hover{background:#F2F4F7;color:#15181C;}
+  .hf-tab.is-on{background:#15181C;color:#fff;}
+  .hf-copy{appearance:none;border:0;margin:0;font:inherit;cursor:pointer;padding:0 12px;height:30px;font-size:12px;font-weight:700;color:#B4CEEC;background:rgba(255,255,255,.10);border-radius:6px;transition:background .12s,color .12s;}
+  .hf-copy:hover{background:rgba(255,255,255,.20);color:#fff;}
+  .hf-open{appearance:none;border:0;margin:0;font:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;transition:background .12s,transform .06s;}
+  .hf-open:hover{background:#1A4A8A;}
+  .hf-open:active{transform:translateY(1px);}
+  /* --- statická replika panelu pro anotace (stejné hodnoty jako komponenta) --- */
+  .vd{position:relative;width:100%;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 10px 30px rgba(20,30,45,.14);display:flex;flex-direction:column;}
+  .vd__head{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid #F2F4F7;}
+  .vd__title{margin:0;display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#142F56;}
+  .vd__close{width:36px;height:36px;display:flex;align-items:center;justify-content:center;flex:none;color:#5A626C;background:#F2F4F7;border-radius:8px;}
+  .vd__body{padding:2px 18px;display:flex;flex-direction:column;}
+  .vd__block{border-bottom:1px solid #F2F4F7;padding:12px 0;}
+  .vd__over{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;margin-bottom:8px;}
+  .vd__sec{display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;min-height:48px;font-size:14px;font-weight:700;color:#15181C;border-bottom:1px solid #F2F4F7;}
+  .vd__opt{display:flex;width:100%;align-items:center;gap:10px;min-height:32px;font-size:14px;color:#3A424C;}
+  .vd__box{flex:none;width:21px;height:21px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:1px solid #91959B;background:#fff;}
+  .vd__box--on{border-color:#1E5AA8;background:#1E5AA8;color:#fff;}
+  .vd__box--stock{border-color:#0E7F43;background:#0E7F43;color:#fff;}
+  .vd__foot{display:flex;gap:10px;padding:14px 18px;border-top:1px solid #F2F4F7;background:#F7F9FB;}
+  .vd__badge{flex:none;font-size:13px;font-weight:700;border-radius:6px;padding:3px 9px;}
+</style>
+</helmet>
+
+<div style="display:flex;align-items:flex-start;width:100%;min-height:100vh;background:#F7F9FB;">
+  <dc-import name="HandoffNav" active="filtrdrawer" sections="{{ navSections }}" hint-size="268px,100vh"></dc-import>
+
+  <main style="flex:1;min-width:0;padding:0 0 80px;">
+    <div style="position:sticky;top:0;z-index:20;background:rgba(247,249,251,.94);backdrop-filter:blur(6px);padding:14px 32px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-bottom:1px solid #F2F4F7;">
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Filtr drawer</div>
+      <div style="flex:1;"></div>
+      <div style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:#15181C;background:#fff;padding:7px 12px;border-radius:6px;">
+        <span style="color:#666E78;">šířka panelu</span><span style="font-weight:700;color:#1E5AA8;">min(400px, 92vw)</span>
+        <span style="display:inline-block;width:1px;height:14px;background:#D5DAE0;"></span>
+        <span style="color:#666E78;">viewport</span><span>{{ vpW }} px</span>
+        <span style="display:inline-block;width:1px;height:14px;background:#D5DAE0;"></span>
+        <span style="color:#666E78;">reálně</span><span style="font-weight:700;">{{ realW }} px</span>
+      </div>
+    </div>
+
+    <div class="hf-content" style="padding:28px 32px 0;display:flex;flex-direction:column;gap:28px;max-width:1560px;">
+
+      <section class="hf-sec" style="display:flex;flex-direction:column;gap:10px;">
+        <h1 style="margin:0;font-size:36px;font-weight:700;line-height:1.15;letter-spacing:-.02em;">Filtr drawer</h1>
+        <p style="margin:0;max-width:820px;font-size:18px;line-height:1.6;color:#5A626C;text-wrap:pretty;">Fasetový panel filtrů, který přijíždí zprava. Na rozdíl od mobilního menu si <strong>drží pozicování, overlay, animaci, Escape, focus trap i zámek scrollu sám</strong> — je to modální dialog, ne kus obsahu.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;padding-top:4px;">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#1E5AA8;background:#EFF4FB;padding:5px 10px;border-radius:6px;">FiltrDrawer.dc.html</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#666E78;background:#F2F4F7;padding:5px 10px;border-radius:6px;">skládá: Chip · CenovyFiltr · Tlacitko · Ikony</span>
+        </div>
+      </section>
+
+      <section class="hf-sec" id="fd-zive" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Živě — otevři panel</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">Skutečná komponenta přes celou obrazovku, jak ji uvidí uživatel. Vyzkoušej: <strong>Escape</strong>, klik do overlaye, Tab dokola (focus se nedostane za panel) a scroll stránky pod panelem (je zamčený).</p>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+          <button type="button" class="hf-open" onClick="{{ openDrawer }}"><dc-import name="Ikony" icon-name="filter" size="24" hint-size="24px,24px"></dc-import>Otevřít filtry</button>
+          <span style="font-size:13px;color:#666E78;">Panel se otevře přes tuto stránku. Zavře se Escapem, ✕, klikem mimo nebo tlačítkem Zobrazit produkty.</span>
+        </div>
+        <dc-import name="FiltrDrawer" open="{{ drawerOpen }}" title="Filtry" result-count="1 248" groups="{{ groups }}" flags="{{ flags }}" only-stock="{{ stockOn }}" price-from="{{ pFrom }}" price-to="{{ pTo }}" on-close="{{ closeDrawer }}" on-toggle-option="{{ toggleOpt }}" on-toggle-flag="{{ toggleFlag }}" on-toggle-stock="{{ toggleStock }}" on-price-change="{{ setPrice }}" on-clear="{{ clearAll }}" debug="{{ off }}" hint-size="0px,0px"></dc-import>
+      </section>
+
+      <section class="hf-sec" id="fd-anatomie" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:20px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Anatomie</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">Statická replika ve skutečné šířce 400 px — stejné hodnoty jako komponenta, jen bez fixního pozicování, aby šla anotovat.</p>
+        </div>
+        <div class="hf-2col" style="display:grid;grid-template-columns:400px 1fr;gap:28px;align-items:start;">
+          <div class="vd" style="width:400px;">
+            <div class="vd__head">
+              <h3 class="vd__title"><span style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="filter" size="24" hint-size="24px,24px"></dc-import></span>Filtry</h3>
+              <span class="vd__close"><dc-import name="Ikony" icon-name="x" size="24" hint-size="24px,24px"></dc-import></span>
+            </div>
+            <div class="vd__body">
+              <div class="vd__block">
+                <div class="vd__over">Aktivní filtry</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                  <span style="display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:4px 8px 4px 12px;border-radius:999px;font-size:14px;font-weight:700;line-height:24px;background:#EFF4FB;color:#1E5AA8;">AL-KO<span style="display:inline-flex"><dc-import name="Ikony" icon-name="x" size="18" hint-size="18px,18px"></dc-import></span></span>
+                  <span style="display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:4px 8px 4px 12px;border-radius:999px;font-size:14px;font-weight:700;line-height:24px;background:#C5232B;color:#fff;">Zrušit vše<span style="display:inline-flex"><dc-import name="Ikony" icon-name="x" size="18" hint-size="18px,18px"></dc-import></span></span>
+                </div>
+              </div>
+              <div class="vd__block" style="padding:10px 0;">
+                <div class="vd__opt" style="font-weight:700;color:#0B6937;">
+                  <span class="vd__box vd__box--stock"><dc-import name="Ikony" icon-name="check" size="16" hint-size="16px,16px"></dc-import></span>Skladem
+                </div>
+              </div>
+              <div class="vd__sec">Ceny a štítky<span style="display:inline-flex;color:#5189CC;transform:rotate(180deg);"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></span></div>
+              <div style="padding:10px 0 16px;display:flex;flex-direction:column;gap:12px;">
+                <div style="display:flex;gap:8px;">
+                  <span style="flex:1;min-width:0;display:flex;align-items:center;min-height:44px;padding:0 12px;border-radius:6px;background:#F2F4F7;font-size:15px;font-weight:700;">0 Kč</span>
+                  <span style="flex:1;min-width:0;display:flex;align-items:center;min-height:44px;padding:0 12px;border-radius:6px;background:#F2F4F7;font-size:15px;font-weight:700;">8 000 Kč</span>
+                </div>
+                <div style="height:4px;border-radius:999px;background:#D8E6F6;position:relative;"><span style="position:absolute;left:10%;right:20%;top:0;bottom:0;background:#1E5AA8;border-radius:999px;"></span></div>
+                <div>
+                  <div class="vd__over">Příznaky</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                    <span style="display:inline-flex;align-items:center;gap:8px;min-height:32px;"><span class="vd__box vd__box--on"><dc-import name="Ikony" icon-name="check" size="16" hint-size="16px,16px"></dc-import></span><span class="vd__badge" style="background:#C5232B;color:#fff;">Sleva</span></span>
+                    <span style="display:inline-flex;align-items:center;gap:8px;min-height:32px;"><span class="vd__box"></span><span class="vd__badge" style="background:#E9F8EF;color:#0B6937;">Doprava zdarma</span></span>
+                    <span style="display:inline-flex;align-items:center;gap:8px;min-height:32px;"><span class="vd__box"></span><span class="vd__badge" style="background:#F2F4F7;color:#5A626C;">Skladem u dodavatele</span></span>
+                  </div>
+                </div>
+              </div>
+              <div class="vd__sec">Výrobce<span style="display:inline-flex;color:#5189CC;transform:rotate(180deg);"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></span></div>
+              <div style="padding:8px 0 12px;display:flex;flex-direction:column;gap:8px;">
+                <div class="vd__opt"><span class="vd__box vd__box--on"><dc-import name="Ikony" icon-name="check" size="16" hint-size="16px,16px"></dc-import></span>AL-KO <span style="color:#666E78;font-size:13px;">(214)</span></div>
+                <div class="vd__opt"><span class="vd__box"></span>KNOTT <span style="color:#666E78;font-size:13px;">(186)</span></div>
+                <div class="vd__opt"><span class="vd__box"></span>BPW <span style="color:#666E78;font-size:13px;">(132)</span></div>
+              </div>
+              <div class="vd__sec" style="border-bottom:0;">Průměr<span style="display:inline-flex;color:#5189CC;"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></span></div>
+            </div>
+            <div class="vd__foot">
+              <span style="display:inline-flex;align-items:center;min-height:52px;padding:0 24px;border-radius:8px;font-size:16px;font-weight:700;background:#EFF4FB;color:#1E5AA8;">Zrušit vše</span>
+              <span style="flex:1;display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 24px;border-radius:8px;font-size:16px;font-weight:700;background:#0E7F43;color:#fff;">Zobrazit 1 248 produktů</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <sc-for list="{{ anatomy }}" as="a" hint-placeholder-count="7">
+              <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:#F7F9FB;border-radius:8px;">
+                <span style="flex:none;width:22px;height:22px;border-radius:999px;background:#1E5AA8;color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;">{{ a.n }}</span>
+                <div style="min-width:0;display:flex;flex-direction:column;gap:4px;">
+                  <div style="font-size:15px;font-weight:700;">{{ a.name }}</div>
+                  <div class="hf-mono">{{ a.spec }}</div>
+                  <div style="font-size:13px;line-height:1.5;color:#5A626C;text-wrap:pretty;">{{ a.note }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <section class="hf-sec" id="fd-stavy" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:18px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Stavy — popis po jednom</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">Devět stavů. Většinu z nich není v klidovém návrhu vidět a přesto na nich stojí, jestli panel projde přístupností.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;">
+          <sc-for list="{{ states }}" as="s" hint-placeholder-count="9">
+            <div style="{{ s.style }}">
+              <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;">
+                <span style="font-size:16px;font-weight:700;">{{ s.name }}</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#1E5AA8;">{{ s.selector }}</span>
+              </div>
+              <div class="hf-mono">{{ s.css }}</div>
+              <div style="font-size:13px;line-height:1.6;color:#3A424C;text-wrap:pretty;">{{ s.note }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <section class="hf-sec" id="fd-responzivita" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:18px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Responzivita</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">Panel má <strong>jedinou</strong> responzivní hodnotu: <span style="font-family:'JetBrains Mono',monospace;font-size:14px;">width:min(400px, 92vw)</span>. Žádná media query. Na úzkém telefonu zbyde 8 % šířky na overlay, aby bylo vidět, že jde o vrstvu nad obsahem — a bylo kam kliknout pro zavření.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;">
+          <sc-for list="{{ widths }}" as="w" hint-placeholder-count="6">
+            <div style="{{ w.style }}">
+              <div style="font-size:16px;font-weight:700;">{{ w.vp }}</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:{{ w.sub }};">{{ w.band }}</div>
+              <div style="font-size:20px;font-weight:700;">{{ w.panel }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="background:#EFF4FB;border-radius:8px;padding:16px 18px;font-size:13px;line-height:1.6;color:#173C70;"><strong>Sticky filtrační lišta</strong>, která drawer otevírá, platí na všech šířkách včetně M, S, XS a XXS. Vypínání sticky pod 900 px je zrušené.</div>
+      </section>
+
+      <section class="hf-sec" id="fd-kod" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Kód</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">JavaScript je tady <strong>povinná část komponenty</strong>, ne doplněk — bez focus trapu, Escape a zámku scrollu panel neprojde WCAG.</p>
+        </div>
+        <div style="display:flex;gap:6px;background:#F7F9FB;padding:6px;border-radius:8px;align-self:flex-start;flex-wrap:wrap;">
+          <button type="button" class="{{ tabHtmlCls }}" onClick="{{ pickHtml }}">HTML</button>
+          <button type="button" class="{{ tabCssCls }}" onClick="{{ pickCss }}">CSS</button>
+          <button type="button" class="{{ tabJsCls }}" onClick="{{ pickJs }}">JavaScript</button>
+        </div>
+        <div style="background:#15181C;border-radius:8px;overflow:hidden;">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;background:rgba(255,255,255,.06);">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#B4CEEC;">{{ codeFile }}</span>
+            <button type="button" class="hf-copy" onClick="{{ copyCode }}">{{ copyLabel }}</button>
+          </div>
+          <pre style="margin:0;padding:18px;overflow:auto;max-height:680px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.75;color:#E6ECF5;white-space:pre;">{{ code }}</pre>
+        </div>
+        <sc-if value="{{ isJs }}" hint-placeholder-val="">
+          <div style="background:#FDF1F1;border-radius:8px;padding:16px 18px;font-size:13px;line-height:1.6;color:#80181D;"><strong>Pozor na dvě definice</strong> <span style="font-family:'JetBrains Mono',monospace;">componentWillUnmount</span> / <span style="font-family:'JetBrains Mono',monospace;">destroy()</span> v jedné třídě — pozdější přepíše dřívější a listener na <span style="font-family:'JetBrains Mono',monospace;">document</span> zůstane viset i po zavření panelu.</div>
+        </sc-if>
+      </section>
+
+      <section class="hf-sec" id="fd-vyvojar" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:16px;">
+        <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Pozor při implementaci</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;">
+          <sc-for list="{{ warnings }}" as="w" hint-placeholder-count="7">
+            <div style="{{ w.style }}">
+              <div style="{{ w.titleStyle }}">{{ w.title }}</div>
+              <div style="font-size:14px;line-height:1.6;color:#3A424C;text-wrap:pretty;">{{ w.body }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = {
+    tab:'html', copied:false, vpW:0, drawerOpen:false, stockOn:false, pFrom:800, pTo:6400,
+    groups:[
+      { h:'Výrobce', opts:[{t:'AL-KO',c:'(214)',on:true},{t:'KNOTT',c:'(186)',on:false},{t:'BPW',c:'(132)',on:false}] },
+      { h:'Průměr', opts:[{t:'⌀ 48 mm',c:'(94)',on:false},{t:'⌀ 60 mm',c:'(71)',on:false}] },
+    ],
+    flags:[{t:'Sleva',on:true},{t:'Doprava zdarma',on:false},{t:'Skladem u dodavatele',on:false}],
+  };
+
+  componentDidMount(){
+    this._m = () => this.setState({ vpW: document.documentElement.clientWidth });
+    this._m();
+    window.addEventListener('resize', this._m);
+  }
+  componentWillUnmount(){ window.removeEventListener('resize', this._m); }
+
+  htmlCode(){
+    return [
+'<!-- Overlay a panel jsou SOUROZENCI, ne vnořené — overlay nesmí být',
+'     rodičem panelu, jinak jeho klik-na-zavření chytá i kliky v panelu. -->',
+'<div class="vapp-drawer__overlay" aria-hidden="true"></div>',
+'',
+'<aside class="vapp-drawer" role="dialog" aria-modal="true"',
+'       aria-label="Filtry" tabindex="-1">',
+'',
+'  <!-- 1) Hlavička: nadpis + zavírací tlačítko -->',
+'  <div class="vapp-drawer__head">',
+'    <h2 class="vapp-drawer__title">',
+'      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">…</svg>',
+'      Filtry',
+'    </h2>',
+'    <button type="button" class="vapp-drawer__close" aria-label="Zavřít filtry">',
+'      <svg …>…</svg>',
+'    </button>',
+'  </div>',
+'',
+'  <!-- 2) Tělo — jediná scrollovaná část -->',
+'  <div class="vapp-drawer__body">',
+'',
+'    <!-- Aktivní filtry: chipy secondary/small + „Zrušit vše“ červený -->',
+'    <div class="vapp-drawer__block">',
+'      <p class="vapp-drawer__over">Aktivní filtry</p>',
+'      <div class="vapp-chip-group"> … </div>',
+'    </div>',
+'',
+'    <!-- Skladem: JEDINÝ zelený checkbox v celém filtru -->',
+'    <div class="vapp-drawer__block">',
+'      <button type="button" class="vapp-drawer__opt vapp-drawer__opt--stock"',
+'              role="checkbox" aria-checked="false">',
+'        <span class="vapp-drawer__box"></span> Skladem',
+'      </button>',
+'    </div>',
+'',
+'    <!-- Skupina faset: nadpis je <h3> obalující <button> -->',
+'    <div class="vapp-drawer__group">',
+'      <h3><button type="button" class="vapp-drawer__sec"',
+'                  aria-expanded="true" aria-controls="fd-vyrobce">',
+'        <span>Výrobce</span>',
+'        <span class="vapp-drawer__chev" aria-hidden="true"><svg …>…</svg></span>',
+'      </button></h3>',
+'      <div id="fd-vyrobce" class="vapp-drawer__opts">',
+'        <button type="button" class="vapp-drawer__opt" role="checkbox" aria-checked="true">',
+'          <span class="vapp-drawer__box"></span>',
+'          AL-KO <span class="vapp-drawer__count">(214)</span>',
+'        </button>',
+'      </div>',
+'    </div>',
+'',
+'    <!-- Příznaky: checkbox + badge v barvě jako na kartě -->',
+'    <button type="button" class="vapp-drawer__flag" role="checkbox" aria-checked="true">',
+'      <span class="vapp-drawer__box"></span>',
+'      <span class="vapp-badge vapp-badge--sale">Sleva</span>',
+'    </button>',
+'  </div>',
+'',
+'  <!-- 3) Patička: nescrolluje, drží se dna -->',
+'  <div class="vapp-drawer__foot">',
+'    <button type="button" class="vapp-btn vapp-btn--secondary vapp-btn--lg">Zrušit vše</button>',
+'    <button type="button" class="vapp-btn vapp-btn--buy vapp-btn--lg vapp-btn--block">',
+'      Zobrazit 1 248 produktů',
+'    </button>',
+'  </div>',
+'</aside>'
+    ].join('\n');
+  }
+
+  cssCode(){
+    return [
+'/* === VAPP — Filtr drawer ==============================================',
+'   Modální panel zprava. Jediná responzivní hodnota je šířka panelu.',
+'   z-index: overlay 80 · panel 90 (globální stupnice projektu).',
+'   ------------------------------------------------------------------- */',
+'.vapp-drawer__overlay{',
+'  position:fixed; inset:0; z-index:80;',
+'  background:rgba(20,30,45,.45);',
+'  animation:vappFadeIn 400ms ease;',
+'}',
+'.vapp-drawer{',
+'  position:fixed; top:0; right:0; bottom:0; z-index:90;',
+'  width:min(400px, 92vw);       /* na úzkém telefonu zbyde 8 % na overlay */',
+'  display:flex; flex-direction:column;',
+'  background:#FFFFFF;',
+'  box-shadow:-10px 0 40px rgba(20,30,45,.2);',
+'  font-family:\'Exo 2\',\'Helvetica Neue\',Arial,sans-serif;',
+'  animation:vappSlideIn 400ms ease;   /* motion.panel = 400 ms */',
+'}',
+'.vapp-drawer--closing{animation:vappSlideOut 400ms ease forwards;}',
+'.vapp-drawer__overlay--closing{animation:vappFadeOut 400ms ease forwards;}',
+'',
+'@keyframes vappSlideIn{from{transform:translateX(100%)}to{transform:translateX(0)}}',
+'@keyframes vappSlideOut{from{transform:translateX(0)}to{transform:translateX(100%)}}',
+'@keyframes vappFadeIn{from{opacity:0}to{opacity:1}}',
+'@keyframes vappFadeOut{from{opacity:1}to{opacity:0}}',
+'@media (prefers-reduced-motion:reduce){',
+'  .vapp-drawer,.vapp-drawer__overlay{animation:none !important;}',
+'}',
+'',
+'/* --- hlavička ------------------------------------------------------- */',
+'.vapp-drawer__head{',
+'  display:flex; align-items:center; justify-content:space-between;',
+'  padding:15px 18px; border-bottom:1px solid #F2F4F7;',
+'}',
+'.vapp-drawer__title{',
+'  margin:0; display:flex; align-items:center; gap:8px; min-width:0;',
+'  font-size:16px; font-weight:700; color:#142F56;',
+'}',
+'.vapp-drawer__title > svg{flex:none; width:24px; height:24px; color:#1E5AA8;}',
+'.vapp-drawer__close{',
+'  appearance:none; border:0; margin:0; padding:0; cursor:pointer;',
+'  flex:none; width:36px; height:36px; border-radius:8px;',
+'  display:flex; align-items:center; justify-content:center;',
+'  background:#F2F4F7; color:#5A626C;',
+'  transition:background .12s ease;',
+'}',
+'.vapp-drawer__close:hover{background:#D5DAE0;}',
+'.vapp-drawer__close:focus-visible{outline:2px solid #1E5AA8; outline-offset:2px;}',
+'',
+'/* --- tělo: JEDINÁ scrollovaná část --------------------------------- */',
+'.vapp-drawer__body{flex:1; overflow-y:auto; padding:2px 18px;}',
+'.vapp-drawer__block,.vapp-drawer__group{border-bottom:1px solid #F2F4F7;}',
+'.vapp-drawer__block{padding:12px 0;}',
+'.vapp-drawer__over{',
+'  margin:0 0 8px; font-size:13px; font-weight:700;',
+'  text-transform:uppercase; letter-spacing:.06em; color:#666E78;',
+'}',
+'',
+'/* --- rozbalovací skupina ------------------------------------------- */',
+'.vapp-drawer__sec{',
+'  appearance:none; background:none; border:0; margin:0; padding:0; cursor:pointer;',
+'  display:flex; width:100%;          /* button je shrink-to-fit */',
+'  align-items:center; justify-content:space-between; gap:12px;',
+'  min-height:48px;                   /* size.row */',
+'  font-family:inherit; font-size:14px; font-weight:700; color:#15181C;',
+'}',
+'.vapp-drawer__sec:focus-visible{outline:2px solid #1E5AA8; outline-offset:2px;}',
+'.vapp-drawer__chev{display:inline-flex; flex:none; color:#5189CC; transition:transform .12s ease;}',
+'.vapp-drawer__sec[aria-expanded="true"] .vapp-drawer__chev{transform:rotate(180deg);}',
+'.vapp-drawer__opts{padding:0 0 12px; display:flex; flex-direction:column; gap:8px;}',
+'',
+'/* --- volba: button s role="checkbox", ne <input> -------------------- */',
+'.vapp-drawer__opt{',
+'  appearance:none; background:none; border:0; margin:0; padding:0; cursor:pointer;',
+'  display:flex; width:100%; align-items:center; gap:10px;',
+'  min-height:32px; font-family:inherit; font-size:14px; color:#3A424C;',
+'  transition:color .12s ease;',
+'}',
+'.vapp-drawer__opt:hover{color:#1E5AA8;}',
+'.vapp-drawer__opt:focus-visible{outline:2px solid #1E5AA8; outline-offset:2px;}',
+'.vapp-drawer__count{color:#666E78; font-size:13px;}',
+'',
+'.vapp-drawer__box{',
+'  flex:none; width:21px; height:21px; border-radius:6px;',
+'  display:flex; align-items:center; justify-content:center;',
+'  border:1px solid #91959B; background:#FFFFFF;',
+'  transition:background .12s ease, border-color .12s ease;',
+'}',
+'.vapp-drawer__box > svg{width:16px; height:16px; color:#fff;}',
+'[aria-checked="true"] > .vapp-drawer__box{border-color:#1E5AA8; background:#1E5AA8;}',
+'',
+'/* Skladem je JEDINÝ zelený checkbox v celém filtru */',
+'.vapp-drawer__opt--stock{font-weight:700; color:#15181C;}',
+'.vapp-drawer__opt--stock:hover{color:#0B6937;}',
+'.vapp-drawer__opt--stock[aria-checked="true"]{color:#0B6937;}',
+'.vapp-drawer__opt--stock[aria-checked="true"] > .vapp-drawer__box{border-color:#0E7F43; background:#0E7F43;}',
+'',
+'/* --- příznaky: badge ve stejné barvě jako na kartě ------------------ */',
+'.vapp-badge{flex:none; font-size:13px; font-weight:700; border-radius:6px; padding:3px 9px;}',
+'.vapp-badge--sale{background:#C5232B; color:#FFFFFF;}',
+'.vapp-badge--ship,.vapp-badge--stock{background:#E9F8EF; color:#0B6937;}',
+'.vapp-badge--supplier{background:#F2F4F7; color:#5A626C;}',
+'',
+'/* --- patička: nescrolluje ------------------------------------------ */',
+'.vapp-drawer__foot{',
+'  display:flex; gap:10px; padding:14px 18px;',
+'  border-top:1px solid #F2F4F7; background:#F7F9FB;',
+'}',
+'.vapp-drawer__foot > .vapp-btn--block{flex:1; min-width:0;}'
+    ].join('\n');
+  }
+
+  jsCode(){
+    return [
+'/* === Filtr drawer — JS ================================================',
+'   Tady JS NENÍ doplněk. Bez focus trapu, Escape a zámku scrollu',
+'   panel neprojde WCAG 2.1.2 a 2.4.3.',
+'   ------------------------------------------------------------------- */',
+'',
+'const SEL = \'a[href],button:not([disabled]),input,select,[tabindex]:not([tabindex="-1"])\';',
+'',
+'function openDrawer(panel, overlay, trigger) {',
+'  panel.hidden = false;',
+'  overlay.hidden = false;',
+'',
+'  /* 1) Zámek scrollu stránky. Pozor: scrollbar zmizí a obsah poskočí —',
+'        dorovnáme padlingem o šířku scrollbaru. */',
+'  const sb = window.innerWidth - document.documentElement.clientWidth;',
+'  document.body.style.overflow = \'hidden\';',
+'  document.body.style.paddingRight = sb + \'px\';',
+'',
+'  /* 2) Fokus DOVNITŘ panelu. Na panel samotný (tabindex="-1"),',
+'        ne na první tlačítko — jinak odečítač přeskočí nadpis dialogu. */',
+'  panel.focus();',
+'',
+'  /* 3) Escape a klik do overlaye */',
+'  document.addEventListener(\'keydown\', onKey);',
+'  overlay.addEventListener(\'click\', close);',
+'',
+'  function onKey(e) {',
+'    if (e.key === \'Escape\') { close(); return; }',
+'    if (e.key !== \'Tab\') return;',
+'',
+'    /* 4) Focus trap OBĚMA směry */',
+'    const items = [...panel.querySelectorAll(SEL)].filter((el) => el.offsetParent);',
+'    if (!items.length) return;',
+'    const first = items[0], last = items[items.length - 1];',
+'    if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }',
+'    if (e.shiftKey && (document.activeElement === first || document.activeElement === panel)) {',
+'      e.preventDefault(); last.focus();',
+'    }',
+'  }',
+'',
+'  function close() {',
+'    /* 5) Odletová animace: panel musí zůstat v DOM 400 ms */',
+'    panel.classList.add(\'vapp-drawer--closing\');',
+'    overlay.classList.add(\'vapp-drawer__overlay--closing\');',
+'    setTimeout(() => {',
+'      panel.hidden = true; overlay.hidden = true;',
+'      panel.classList.remove(\'vapp-drawer--closing\');',
+'      overlay.classList.remove(\'vapp-drawer__overlay--closing\');',
+'    }, 400);',
+'',
+'    /* 6) ÚKLID: odregistrovat vše, co bylo na document */',
+'    document.removeEventListener(\'keydown\', onKey);',
+'    overlay.removeEventListener(\'click\', close);',
+'    document.body.style.overflow = \'\';',
+'    document.body.style.paddingRight = \'\';',
+'',
+'    /* 7) Fokus ZPĚT na spouštěč, jinak uživatel skončí na začátku stránky */',
+'    trigger?.focus();',
+'  }',
+'',
+'  return close;',
+'}',
+'',
+'/* Skupiny: akordeon přes aria-expanded + hidden na .vapp-drawer__opts.',
+'   Rozbalených smí být víc současně — nezavírají se navzájem. */',
+'',
+'/* Data: facety a počty POSÍLÁ STRÁNKA. Drawer nepočítá výsledky',
+'   ani neřeší řazení — jen hlásí, co uživatel přepnul:',
+'     onToggleOption(indexSkupiny, indexVolby)',
+'     onToggleFlag(index) · onToggleStock() · onPriceChange(od, do) */'
+    ].join('\n');
+  }
+
+  renderVals(){
+    const S = this.state;
+    const realW = Math.min(400, Math.round((S.vpW || 0) * 0.92));
+
+    const anatomy = [
+      { n:1, name:'Overlay', spec:'position:fixed · inset:0 · z-index 80\nbackground rgba(20,30,45,.45)\nfade 400 ms', note:'Sourozenec panelu, ne rodič. Klik do overlaye zavírá; je aria-hidden, protože nenese obsah.' },
+      { n:2, name:'Panel', spec:'fixed top/right/bottom · z-index 90\nwidth min(400px, 92vw)\nshadow −10px 0 40px rgba(20,30,45,.2)\nslide-in 400 ms (motion.panel)', note:'role="dialog" + aria-modal="true" + aria-label="Filtry" + tabindex="-1". Bez radiusu — panel drží pravou hranu okna.' },
+      { n:3, name:'Hlavička', spec:'padding 15/18 · linka 1px #F2F4F7\nnadpis 16 / 700 · #142F56 · ikona filter 24\nzavřít 36 × 36 · #F2F4F7 · radius 8', note:'Nadpis je skutečný <h2>. Zavírací tlačítko má aria-label „Zavřít filtry“ — ✕ samo nestačí.' },
+      { n:4, name:'Aktivní filtry', spec:'overline 13 / 700 UPPER · #666E78\nchip secondary size small\n„Zrušit vše“ #C5232B / bílá, hover #A21B22', note:'Blok se skryje, když není žádný aktivní filtr. Chipy nesou ✕, protože jsou zapnuté.' },
+      { n:5, name:'Skladem', spec:'checkbox 21 × 21 · radius 6\nzapnuto #0E7F43 plocha, text #0B6937\nikona check 16 bílá', note:'Jediný zelený checkbox v celém filtru — všechny ostatní jsou modré #1E5AA8. Shodně se sticky lištou.' },
+      { n:6, name:'Skupina faset', spec:'hlavička min-height 48 (size.row)\n14 / 700 · #15181C\nchevron 24 · #5189CC · rotace 180°\nvolba min-height 32 · 14 / 400 · #3A424C\npočet 13 · #666E78', note:'Hlavička je <h3> obalující <button aria-expanded>. Rozbalených skupin může být víc současně.' },
+      { n:7, name:'Patička', spec:'padding 14/18 · bg #F7F9FB · linka nahoře\nZrušit vše: secondary Large\nZobrazit N produktů: buy Large, flex:1', note:'Nescrolluje — tělo je jediná scrollovaná část. Počet v tlačítku posílá stránka, drawer nic nepočítá.' },
+    ];
+
+    const box = (tone) => ({
+      style:'background:' + (tone==='no' ? '#FDF1F1' : '#F7F9FB') + ';border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:8px;',
+    });
+
+    const st = (name, selector, css, note, tone) => Object.assign({ name, selector, css, note }, box(tone));
+
+    const states = [
+      st('Zavřeno', 'hidden', 'panel i overlay: hidden\nbody: overflow normální', 'Panel není v DOM, nebo je hidden — a hlavně není dosažitelný tabulátorem. Skrytý prvek s tabindex je klasická chyba.'),
+      st('Přílet', '@keyframes vappSlideIn', 'transform:translateX(100%) → 0\n400 ms ease\noverlay: opacity 0 → 1', 'motion.panel je 400 ms — stejně jako drill-down v menu. Kratší doba působí trhaně, delší pomalu.'),
+      st('Otevřeno', 'role="dialog" aria-modal', 'body{overflow:hidden}\npadding-right = šířka scrollbaru', 'Zámek scrollu musí dorovnat zmizelý scrollbar, jinak obsah pod panelem poskočí o ~15 px.', 'no'),
+      st('Fokus při otevření', 'panel.focus()', 'tabindex="-1" na panelu', 'Fokus jde na panel, ne na první tlačítko — jinak odečítač přeskočí nadpis dialogu a uživatel neví, kam se dostal.', 'no'),
+      st('Focus trap', 'keydown Tab / Shift+Tab', 'poslední → první\nprvní → poslední', 'Trap musí fungovat oběma směry. Shift+Tab z prvního prvku (i z panelu samotného) skočí na poslední.', 'no'),
+      st('Odlet a úklid', '.vapp-drawer--closing', 'animation … forwards\nsetTimeout 400 ms', 'Panel zůstává v DOM po dobu animace. Zároveň se odregistrují listenery na document a odemkne scroll — v tomto pořadí.'),
+      st('Fokus po zavření', 'trigger.focus()', '—', 'Fokus se vrací na tlačítko, které panel otevřelo. Bez toho skončí uživatel na začátku stránky.', 'no'),
+      st('Rozbalená skupina', '[aria-expanded="true"]', 'chevron: rotate(180deg)\nopts: hidden odebráno', 'Chevron se otáčí, nemění se na jinou ikonu. Víc skupin může být rozbalených současně.'),
+      st('prefers-reduced-motion', '@media (prefers-reduced-motion:reduce)', 'animation:none !important', 'Panel se objeví skokem. Nikdy nenechat animaci běžet — u modálního panelu přes celou výšku je to pro citlivé uživatele nejhorší případ.'),
+    ];
+
+    const wRaw = [[320,'XXS'],[392,'XS'],[560,'S'],[820,'M'],[1024,'L'],[1440,'XL']];
+    const widths = wRaw.map(([vp,b]) => {
+      const p = Math.min(400, Math.round(vp * 0.92));
+      const on = (S.vpW >= vp - 40 && S.vpW <= vp + 40);
+      return { vp: vp + ' px', band: 'pásmo ' + b, panel: p + ' px',
+        style:'display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-radius:8px;background:' + (on ? '#1E5AA8' : '#F7F9FB') + ';color:' + (on ? '#fff' : '#15181C') + ';',
+        sub: on ? '#B4CEEC' : '#666E78' };
+    });
+
+    const tabCls = (t) => 'hf-tab' + (S.tab === t ? ' is-on' : '');
+    const codeMap = { html:this.htmlCode(), css:this.cssCode(), js:this.jsCode() };
+    const fileMap = { html:'filtr-drawer.html', css:'vapp-drawer.css', js:'vapp-drawer.js' };
+    const code = codeMap[S.tab];
+
+    const warn = (title, body, tone) => ({ title, body,
+      style: 'background:' + (tone==='no' ? '#FDF1F1' : '#F7F9FB') + ';border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:8px;',
+      titleStyle: 'font-size:16px;font-weight:700;color:' + (tone==='no' ? '#80181D' : '#15181C') + ';' });
+
+    return {
+      navSections: [['Živě — otevři panel','#fd-zive'],['Anatomie','#fd-anatomie'],['Stavy','#fd-stavy'],['Responzivita','#fd-responzivita'],['Kód (HTML / CSS / JS)','#fd-kod'],['Pozor při implementaci','#fd-vyvojar']],
+      vpW: S.vpW, realW,
+      off: false,
+      drawerOpen: S.drawerOpen,
+      openDrawer: () => this.setState({ drawerOpen:true }),
+      closeDrawer: () => this.setState({ drawerOpen:false }),
+      groups: S.groups, flags: S.flags, stockOn: S.stockOn, pFrom: S.pFrom, pTo: S.pTo,
+      toggleOpt: (gi, oi) => this.setState(s => ({
+        groups: s.groups.map((g, i) => i !== gi ? g : Object.assign({}, g, {
+          opts: g.opts.map((o, j) => j !== oi ? o : Object.assign({}, o, { on: !o.on })),
+        })),
+      })),
+      toggleFlag: (i) => this.setState(s => ({ flags: s.flags.map((f, j) => j !== i ? f : Object.assign({}, f, { on: !f.on })) })),
+      toggleStock: () => this.setState(s => ({ stockOn: !s.stockOn })),
+      setPrice: (a, b) => this.setState({ pFrom:a, pTo:b }),
+      clearAll: () => this.setState(s => ({
+        stockOn:false, pFrom:0, pTo:8000,
+        flags: s.flags.map(f => Object.assign({}, f, { on:false })),
+        groups: s.groups.map(g => Object.assign({}, g, { opts: g.opts.map(o => Object.assign({}, o, { on:false })) })),
+      })),
+      anatomy, states, widths,
+      tabHtmlCls: tabCls('html'), tabCssCls: tabCls('css'), tabJsCls: tabCls('js'),
+      pickHtml: () => this.setState({ tab:'html', copied:false }),
+      pickCss: () => this.setState({ tab:'css', copied:false }),
+      pickJs: () => this.setState({ tab:'js', copied:false }),
+      isJs: S.tab === 'js',
+      code, codeFile: fileMap[S.tab],
+      copyLabel: S.copied ? 'Zkopírováno' : 'Kopírovat',
+      copyCode: () => { navigator.clipboard.writeText(code).then(() => { this.setState({ copied:true }); setTimeout(() => this.setState({ copied:false }), 1600); }).catch(()=>{}); },
+      warnings: [
+        warn('Overlay a panel jsou sourozenci', 'Když je overlay rodičem panelu, jeho „klik zavírá“ chytá i kliky uvnitř panelu a filtr se zavře při každém zaškrtnutí.', 'no'),
+        warn('Zámek scrollu dorovnat', 'overflow:hidden na body odstraní scrollbar a obsah poskočí do strany. Dorovnej padding-right o window.innerWidth − documentElement.clientWidth.', 'no'),
+        warn('Fokus na panel, ne na tlačítko', 'panel.focus() s tabindex="-1". Fokus na první tlačítko přeskočí nadpis dialogu a odečítač neřekne, kde uživatel je.'),
+        warn('Focus trap oběma směry', 'Tab z posledního na první A Shift+Tab z prvního na poslední. Jednosměrný trap vypustí fokus do stránky pod panelem.', 'no'),
+        warn('Úklid listenerů', 'Handlery na document se odregistrují při zavření i při odmountování. Pozor na dvě definice componentWillUnmount v jedné třídě — pozdější přepíše dřívější a listener zůstane viset.', 'no'),
+        warn('Panel nepočítá', 'Facety, počty i výsledek posílá stránka. Drawer hlásí jen skalární změny: onToggleOption(indexSkupiny, indexVolby), onToggleFlag(index), onToggleStock(), onPriceChange(od, do).'),
+        warn('Skladem je zelený, ostatní modré', 'Zaškrtnutý „Skladem“ má zelenou plochu #0E7F43 a text #0B6937 — shodně ve sticky liště i tady. Všechny ostatní checkboxy filtru jsou modré #1E5AA8.'),
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

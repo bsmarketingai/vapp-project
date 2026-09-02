@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0!important;padding:0!important;}
+  #dc-root{margin:0!important;padding:0!important;width:100%!important;max-width:none!important;border:0!important;}
+  #dc-root>.sc-host{margin:0!important;padding:0!important;width:100%!important;}
+  *{box-sizing:border-box;}
+  body{background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  a{color:#1E5AA8;}
+  a:hover{color:#1A4A8A;}
+  .hf-sec{scroll-margin-top:16px;}
+  .hf-nav{appearance:none;background:none;border:0;margin:0;font:inherit;color:inherit;text-align:left;cursor:pointer;display:block;width:100%;padding:8px 14px;border-radius:6px;font-size:14px;font-weight:500;color:#B4CEEC;text-decoration:none;transition:background .12s,color .12s;}
+  .hf-nav:hover{background:rgba(255,255,255,.10);color:#fff;}
+  .hf-nav.is-on{background:#1E5AA8;color:#fff;font-weight:700;}
+  .hf-nav.is-off{color:#5A79A8;cursor:default;}
+  .hf-nav.is-off:hover{background:none;color:#5A79A8;}
+  .hf-tab{appearance:none;border:0;margin:0;font:inherit;cursor:pointer;padding:0 16px;height:38px;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#666E78;background:transparent;border-radius:6px;transition:background .12s,color .12s;}
+  .hf-tab:hover{background:#F2F4F7;color:#15181C;}
+  .hf-tab.is-on{background:#15181C;color:#fff;}
+  .hf-tab.is-on:hover{background:#15181C;color:#fff;}
+  .hf-copy{appearance:none;border:0;margin:0;font:inherit;cursor:pointer;padding:0 12px;height:30px;font-size:12px;font-weight:700;color:#B4CEEC;background:rgba(255,255,255,.10);border-radius:6px;transition:background .12s,color .12s;}
+  .hf-copy:hover{background:rgba(255,255,255,.20);color:#fff;}
+  .hf-dl{appearance:none;border:0;margin:0;font:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 20px;font-size:15px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;transition:background .12s,transform .06s;text-decoration:none;}
+  .hf-dl:hover{background:#1A4A8A;color:#fff;}
+  .hf-dl:active{transform:translateY(1px);}
+  .hf-dl[disabled]{background:#F2F4F7;color:#666E78;cursor:not-allowed;}
+  .hf-file{font-family:'JetBrains Mono',monospace;font-size:12px;color:#1E5AA8;text-decoration:none;padding:4px 8px;border-radius:6px;background:#F2F4F7;}
+  .hf-file:hover{background:#D8E6F6;color:#1A4A8A;}
+  .hf-mono{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;color:#15181C;white-space:pre-line;overflow-wrap:anywhere;}
+  .hf-content{container-type:inline-size;}
+  /* Pásmo se řídí šířkou containeru, ne okna — sidebar 268 px sem nepatří. */
+  @container (max-width:900px){
+    .hf-staterow,.hf-sizerow{grid-template-columns:1fr!important;gap:12px!important;}
+  }
+</style>
+<style id="vapp-btn-css">/* === VAPP — Tlačítko (Button) ============================================
+   Font: Exo 2, 700. Radius 8. Přechody: barva 120 ms, stisk 60 ms.
+   Velikosti: sm 36 / md 44 (výchozí) / lg 52. Padding X: 16 / 20 / 24.
+   ------------------------------------------------------------------- */
+.vapp-btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  min-height:44px; padding:0 20px;
+  font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;
+  font-size:15px; font-weight:700; line-height:1.2; letter-spacing:0;
+  color:#FFFFFF; background:#1E5AA8;
+  border:0; border-radius:8px; margin:0;
+  text-decoration:none; white-space:nowrap; cursor:pointer;
+  appearance:none; -webkit-appearance:none;
+  transition:background .12s ease, color .12s ease, transform .06s ease;
+}
+.vapp-btn:active,.vapp-btn.is-active{transform:translateY(1px);}
+.vapp-btn:focus-visible,.vapp-btn.is-focus{outline:2px solid #1E5AA8; outline-offset:2px;}
+.vapp-btn[disabled],.vapp-btn.is-disabled{
+  background:#F2F4F7; color:#666E78; cursor:not-allowed; transform:none; box-shadow:none;
+}
+
+/* --- velikosti ---------------------------------------------------- */
+.vapp-btn--sm{min-height:36px; padding:0 16px; font-size:14px;}
+.vapp-btn--lg{min-height:52px; padding:0 24px; font-size:16px;}
+
+/* --- icon-only: čtverec, povinný aria-label ------------------------ */
+.vapp-btn--icon{width:44px; height:44px; padding:0;}
+.vapp-btn--icon.vapp-btn--sm{width:36px; height:36px;}
+.vapp-btn--icon.vapp-btn--lg{width:52px; height:52px;}
+
+.vapp-btn--block{width:100%;}
+.vapp-btn > svg{flex:none; width:24px; height:24px; stroke-width:2;}
+.vapp-btn--sm > svg{width:18px; height:18px;}
+
+/* --- varianty ------------------------------------------------------ */
+.vapp-btn--primary{background:#1E5AA8; color:#FFFFFF;}
+.vapp-btn--primary:hover,.vapp-btn--primary.is-hover{background:#1A4A8A;}
+.vapp-btn--primary:active,.vapp-btn--primary.is-active{background:#1A4A8A;}
+
+.vapp-btn--secondary{background:#EFF4FB; color:#1E5AA8;}
+.vapp-btn--secondary:hover,.vapp-btn--secondary.is-hover{background:#D8E6F6;}
+.vapp-btn--secondary:active,.vapp-btn--secondary.is-active{background:#D8E6F6;}
+
+.vapp-btn--buy{background:#0E7F43; color:#FFFFFF;}
+.vapp-btn--buy:hover,.vapp-btn--buy.is-hover{background:#0B6937;}
+.vapp-btn--buy:active,.vapp-btn--buy.is-active{background:#0B6937;}
+
+.vapp-btn--danger{background:#C5232B; color:#FFFFFF;}
+.vapp-btn--danger:hover,.vapp-btn--danger.is-hover{background:#A21B22;}
+.vapp-btn--danger:active,.vapp-btn--danger.is-active{background:#A21B22;}
+
+.vapp-btn--guide{background:#FCF1DC; color:#7A4E00;}
+.vapp-btn--guide:hover,.vapp-btn--guide.is-hover{background:#F7E4BC;}
+.vapp-btn--guide:active,.vapp-btn--guide.is-active{background:#F7E4BC;}
+
+.vapp-btn--ghost{background:transparent; color:#1E5AA8;}
+.vapp-btn--ghost:hover,.vapp-btn--ghost.is-hover{background:#EFF4FB;}
+.vapp-btn--ghost:active,.vapp-btn--ghost.is-active{background:#EFF4FB;}
+
+.vapp-btn--text{background:transparent; color:#1E5AA8; padding:0 4px; text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px;}
+.vapp-btn--text:hover,.vapp-btn--text.is-hover{text-decoration-thickness:2px;}
+
+.vapp-btn--text-danger{background:transparent; color:#C5232B; padding:0 4px; text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px;}
+.vapp-btn--text-danger:hover,.vapp-btn--text-danger.is-hover{color:#A21B22; background:#FDF1F1; text-decoration-thickness:2px;}
+.vapp-btn--text-danger:active,.vapp-btn--text-danger.is-active{color:#A21B22; background:#FDF1F1;}
+
+/* na podbarvené ploše #EFF4FB — místo secondary, které by splynulo */
+.vapp-btn--ontint{background:#FFFFFF; color:#1E5AA8;}
+.vapp-btn--ontint:hover,.vapp-btn--ontint.is-hover{background:#EFF4FB;}
+.vapp-btn--ontint:active,.vapp-btn--ontint.is-active{background:#EFF4FB;}
+
+/* na tmavé ploše #142F56 — patička, topbar */
+.vapp-btn--ondark{background:rgba(255,255,255,.12); color:#FFFFFF;}
+.vapp-btn--ondark:hover,.vapp-btn--ondark.is-hover{background:rgba(255,255,255,.20);}
+.vapp-btn--ondark:active,.vapp-btn--ondark.is-active{background:rgba(255,255,255,.20);}
+.vapp-btn--ondark:focus-visible,.vapp-btn--ondark.is-focus{outline:2px solid #FFFFFF;}
+
+/* Dotyk: nedávat hover efekty na zařízeních bez myši */
+@media not all and (hover:hover){
+  .vapp-btn:hover{background:inherit;}
+}
+</style>
+</helmet>
+
+<div style="display:flex;align-items:flex-start;width:100%;min-height:100vh;background:#F7F9FB;">
+
+  <dc-import name="HandoffNav" active="tlacitko" sections="{{ navSections }}" hint-size="268px,100vh"></dc-import>
+
+  <main style="flex:1;min-width:0;padding:0 0 80px;">
+
+    <div style="position:sticky;top:0;z-index:20;background:rgba(247,249,251,.94);backdrop-filter:blur(6px);padding:14px 32px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-bottom:1px solid #F2F4F7;">
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Handoff komponent</div>
+      <div style="flex:1;"></div>
+      <div style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:#15181C;background:#fff;padding:7px 12px;border-radius:6px;">
+        <span style="color:#666E78;">container</span>
+        <span>{{ contW }} px</span>
+        <span style="display:inline-block;width:1px;height:14px;background:#D5DAE0;"></span>
+        <span style="color:#666E78;">pásmo</span>
+        <span style="font-weight:700;color:#1E5AA8;">{{ band }}</span>
+        <span style="color:#666E78;">{{ bandRange }}</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:#666E78;background:#fff;padding:7px 12px;border-radius:6px;">
+        <span>viewport {{ vpW }} × {{ vpH }}</span>
+      </div>
+    </div>
+
+    <div class="hf-content" style="padding:28px 32px 0;display:flex;flex-direction:column;gap:28px;max-width:1560px;">
+
+      <section class="hf-sec" id="c-tlacitko" style="display:flex;flex-direction:column;gap:10px;">
+        <h1 style="margin:0;font-size:36px;font-weight:700;line-height:1.15;letter-spacing:-.02em;">Tlačítko</h1>
+        <p style="margin:0;max-width:820px;font-size:18px;line-height:1.6;color:#5A626C;text-wrap:pretty;">Jediný zdroj tlačítek v systému. Deset variant, tři velikosti, čtyři ikonové konfigurace. Interaktivní prvek je vždy <code style="font-family:'JetBrains Mono',monospace;font-size:15px;background:#F2F4F7;padding:1px 5px;border-radius:4px;">&lt;button type="button"&gt;</code> pro akci nebo <code style="font-family:'JetBrains Mono',monospace;font-size:15px;background:#F2F4F7;padding:1px 5px;border-radius:4px;">&lt;a href&gt;</code> pro navigaci — nikdy <code style="font-family:'JetBrains Mono',monospace;font-size:15px;background:#F2F4F7;padding:1px 5px;border-radius:4px;">&lt;span&gt;</code>.</p>
+      </section>
+
+      <section class="hf-sec" id="s-prehled" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:20px;">
+        <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Přehled a tokeny</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">
+          <div style="background:#F7F9FB;border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Typografie</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.9;color:#15181C;">font-family: 'Exo 2'<br>font-weight: 700<br>line-height: 1.2<br>letter-spacing: 0<br>text-transform: none</div>
+            <div style="font-size:13px;line-height:1.5;color:#5A626C;">Fallback <span style="font-family:'JetBrains Mono',monospace;">'Helvetica Neue', Arial, sans-serif</span>. Tučnost 700 je pro tlačítka závazná, jiná se nepoužívá.</div>
+          </div>
+          <div style="background:#F7F9FB;border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Geometrie</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.9;color:#15181C;">border-radius: 8px<br>border: 0<br>gap (ikona↔text): 8px<br>ikona: 24 × 24, stroke 2<br>ikona v sm: 18 × 18</div>
+            <div style="font-size:13px;line-height:1.5;color:#5A626C;">Tlačítka nemají obrys ani stín. Rádius 8 = <span style="font-family:'JetBrains Mono',monospace;">radius.md</span>.</div>
+          </div>
+          <div style="background:#F7F9FB;border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Motion</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.9;color:#15181C;">background: 120ms ease<br>color: 120ms ease<br>transform: 60ms ease<br>:active → translateY(1px)</div>
+            <div style="font-size:13px;line-height:1.5;color:#5A626C;">Žádné škálování, žádné ripple. Stisk je posun o 1 px dolů + tmavší plocha.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hf-sec" id="s-varianty" style="display:flex;flex-direction:column;gap:14px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Varianty a jejich stavy</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">Každá varianta je vypsaná ve všech stavech vedle sebe — stavy jsou vynucené třídou <span style="font-family:'JetBrains Mono',monospace;font-size:14px;">.is-hover / .is-active / .is-focus</span>, aby byly vidět bez interakce. Poslední sloupec je živé tlačítko: najeď myší, podrž stisk, projdi tabulátorem.</p>
+        </div>
+
+        <sc-for list="{{ variants }}" as="v" hint-placeholder-count="10">
+          <div style="{{ v.cardStyle }}">
+            <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:4px;">
+              <span style="{{ v.nameStyle }}">{{ v.name }}</span>
+              <span style="{{ v.clsStyle }}">.vapp-btn--{{ v.mod }}</span>
+              <span style="{{ v.useStyle }}">{{ v.use }}</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:12px;">
+              <sc-for list="{{ v.cells }}" as="c" hint-placeholder-count="6">
+                <div style="{{ c.cellStyle }}">
+                  <div style="{{ c.stateStyle }}">{{ c.state }}</div>
+                  <div style="min-height:56px;display:flex;align-items:center;">
+                    <button type="button" class="{{ c.btnCls }}" disabled="{{ c.dis }}" aria-label="{{ v.label }}">{{ v.label }}</button>
+                  </div>
+                  <div style="{{ c.noteStyle }}">{{ c.note }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </section>
+
+      <section class="hf-sec" id="s-velikosti" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:20px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Velikosti</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">Tři velikosti. Výška je <span style="font-family:'JetBrains Mono',monospace;font-size:14px;">min-height</span>, ne pevná — tlačítko se smí zvětšit při zalomení textu.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:18px;">
+          <div class="hf-sizerow" style="display:grid;grid-template-columns:minmax(120px,150px) minmax(0,1fr);gap:20px;align-items:center;padding-bottom:18px;border-bottom:1px solid #F2F4F7;">
+            <div style="display:flex;flex-direction:column;gap:2px;">
+              <div style="font-size:16px;font-weight:700;">Standard</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;color:#666E78;">36 px · fs 14<br>padding 0 16<br>ikona 18</div>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+              <button type="button" class="vapp-btn vapp-btn--primary vapp-btn--sm">Primární akce</button>
+              <button type="button" class="vapp-btn vapp-btn--secondary vapp-btn--sm">Sekundární</button>
+              <button type="button" class="vapp-btn vapp-btn--ghost vapp-btn--sm">Ghost</button>
+              <button type="button" class="vapp-btn vapp-btn--primary vapp-btn--sm vapp-btn--icon" aria-label="Do košíku"><dc-import name="Ikony" icon-name="shopping-cart" size="18" hint-size="18px,18px"></dc-import></button>
+            </div>
+          </div>
+          <div class="hf-sizerow" style="display:grid;grid-template-columns:minmax(120px,150px) minmax(0,1fr);gap:20px;align-items:center;padding-bottom:18px;border-bottom:1px solid #F2F4F7;">
+            <div style="display:flex;flex-direction:column;gap:2px;">
+              <div style="font-size:16px;font-weight:700;">Medium <span style="font-size:13px;font-weight:500;color:#666E78;">výchozí</span></div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;color:#666E78;">44 px · fs 15<br>padding 0 20<br>ikona 24</div>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+              <button type="button" class="vapp-btn vapp-btn--primary">Primární akce</button>
+              <button type="button" class="vapp-btn vapp-btn--secondary">Sekundární</button>
+              <button type="button" class="vapp-btn vapp-btn--ghost">Ghost</button>
+              <button type="button" class="vapp-btn vapp-btn--primary vapp-btn--icon" aria-label="Do košíku"><dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import></button>
+            </div>
+          </div>
+          <div class="hf-sizerow" style="display:grid;grid-template-columns:minmax(120px,150px) minmax(0,1fr);gap:20px;align-items:center;">
+            <div style="display:flex;flex-direction:column;gap:2px;">
+              <div style="font-size:16px;font-weight:700;">Large</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;color:#666E78;">52 px · fs 16<br>padding 0 24<br>ikona 24</div>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+              <button type="button" class="vapp-btn vapp-btn--primary vapp-btn--lg">Primární akce</button>
+              <button type="button" class="vapp-btn vapp-btn--buy vapp-btn--lg"><dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import>Koupit</button>
+              <button type="button" class="vapp-btn vapp-btn--ghost vapp-btn--lg">Ghost</button>
+              <button type="button" class="vapp-btn vapp-btn--primary vapp-btn--lg vapp-btn--icon" aria-label="Do košíku"><dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import></button>
+            </div>
+          </div>
+        </div>
+        <div style="background:#FDF1F1;border-radius:8px;padding:14px 16px;font-size:13px;line-height:1.5;color:#80181D;"><strong>Klikací plocha:</strong> Standard 36 px je pod doporučeným minimem 44 px. Používej ho jen v hutných místech (karta produktu, toolbar) a klikací plochu dorovnej pseudoprvkem <span style="font-family:'JetBrains Mono',monospace;">::after</span> se zápornými offsety — nikdy paddingem, layout se nesmí pohnout.</div>
+      </section>
+
+      <section class="hf-sec" id="s-stavy" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:18px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Stavy — popis po jednom</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">Šest stavů. Tři z nich se v návrhu snadno přehlédnou: <strong>focus-visible</strong>, <strong>disabled</strong> a chování na dotykových zařízeních.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0;">
+          <sc-for list="{{ states }}" as="s" hint-placeholder-count="6">
+            <div class="hf-staterow" style="{{ s.rowStyle }}">
+              <div style="display:flex;flex-direction:column;gap:4px;">
+                <div style="font-size:16px;font-weight:700;">{{ s.name }}</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#1E5AA8;">{{ s.selector }}</div>
+              </div>
+              <div style="display:flex;align-items:center;min-height:52px;">
+                <button type="button" class="{{ s.btnCls }}" disabled="{{ s.dis }}">Primární akce</button>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <div class="hf-mono">{{ s.css }}</div>
+                <div style="font-size:13px;line-height:1.5;color:#5A626C;text-wrap:pretty;">{{ s.note }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <section class="hf-sec" id="s-ikony" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:18px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Ikonové konfigurace</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">Čtyři konfigurace v každé variantě i velikosti. Ikony jsou inline SVG ze sady Tabler, 24 × 24, <span style="font-family:'JetBrains Mono',monospace;font-size:14px;">stroke-width:2</span>, barva <span style="font-family:'JetBrains Mono',monospace;font-size:14px;">currentColor</span> — nikdy vlastní fill.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;">
+          <div style="background:#F7F9FB;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Ikona vlevo</div>
+            <button type="button" class="vapp-btn vapp-btn--buy"><dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import>Koupit</button>
+            <div style="font-size:13px;line-height:1.5;color:#5A626C;">Akce s předmětem — košík, stažení, tisk.</div>
+          </div>
+          <div style="background:#F7F9FB;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Jen text</div>
+            <button type="button" class="vapp-btn vapp-btn--primary">Odeslat poptávku</button>
+            <div style="font-size:13px;line-height:1.5;color:#5A626C;">Výchozí volba. Ikona jen když něco přidává.</div>
+          </div>
+          <div style="background:#F7F9FB;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Ikona vpravo</div>
+            <button type="button" class="vapp-btn vapp-btn--secondary">Zobrazit vše<dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></button>
+            <div style="font-size:13px;line-height:1.5;color:#5A626C;">Posun dál — chevron, šipka, externí odkaz.</div>
+          </div>
+          <div style="background:#F7F9FB;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Icon-only</div>
+            <button type="button" class="vapp-btn vapp-btn--ghost vapp-btn--icon" aria-label="Zpět na hlavní menu"><dc-import name="Ikony" icon-name="chevron-left" size="24" hint-size="24px,24px"></dc-import></button>
+            <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Povinný</strong> <span style="font-family:'JetBrains Mono',monospace;">aria-label</span>. Bez něj je tlačítko pro odečítač prázdné.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hf-sec" id="s-responzivita" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:18px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Responzivita a breakpointy</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">Tlačítko samo <strong>nemá žádnou media query</strong> — velikost i padding jsou na všech pásmech stejné. Mění se jen to, jak se tlačítka skládají v rodiči. Pásmo určuje šířka containeru, ve kterém tlačítko leží, ne šířka okna. Živý ukazatel je v liště nahoře; ověř zužováním okna.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;">
+          <sc-for list="{{ bands }}" as="b" hint-placeholder-count="7">
+            <div style="{{ b.style }}">
+              <div style="font-size:16px;font-weight:700;">{{ b.name }}</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:{{ b.subColor }};">{{ b.range }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Skládání v rodiči — závazná pravidla</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">
+            <div style="background:#F7F9FB;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:8px;">
+              <div style="font-size:16px;font-weight:700;">Skupina tlačítek</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;color:#15181C;">display:flex; gap:12px;<br>flex-wrap:wrap;</div>
+              <div style="font-size:13px;line-height:1.5;color:#5A626C;">Nikdy mezerami mezi tagy ani marginy — jen flex + gap.</div>
+            </div>
+            <div style="background:#F7F9FB;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:8px;">
+              <div style="font-size:16px;font-weight:700;">Plná šířka pod 550 px</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;color:#15181C;">@media (max-width:549px){<br>&nbsp;&nbsp;.vapp-btn--block-xs{width:100%}<br>}</div>
+              <div style="font-size:13px;line-height:1.5;color:#5A626C;">Pásma XS a XXS: hlavní akce ve formuláři a v drawer patičce jde přes celou šířku.</div>
+            </div>
+            <div style="background:#F7F9FB;border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:8px;">
+              <div style="font-size:16px;font-weight:700;">Tlačítko jako řádek</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;color:#15181C;">width:100%;<br>justify-content:space-between;</div>
+              <div style="font-size:13px;line-height:1.5;color:#5A626C;">Button má shrink-to-fit šířku. Bez <span style="font-family:'JetBrains Mono',monospace;">width:100%</span> podbarvení nesahá k okraji.</div>
+            </div>
+          </div>
+        </div>
+        <div style="background:#F7F9FB;border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:12px;">
+          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Živá zkouška — zužuj okno a sleduj zalomení</div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;background:#fff;border-radius:8px;padding:16px;">
+            <button type="button" class="vapp-btn vapp-btn--buy"><dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import>Koupit</button>
+            <button type="button" class="vapp-btn vapp-btn--secondary">Přidat k porovnání</button>
+            <button type="button" class="vapp-btn vapp-btn--ghost">Zeptat se na dostupnost</button>
+            <button type="button" class="vapp-btn vapp-btn--text">Zpět na výpis</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="hf-sec" id="s-kod" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Kód</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">Kompletní podklad k převzetí. CSS je přesně to, co běží na této stránce — vykresluje všechny ukázky výše.</p>
+        </div>
+        <div style="display:flex;gap:6px;background:#F7F9FB;padding:6px;border-radius:8px;align-self:flex-start;">
+          <button type="button" class="{{ tabHtmlCls }}" onClick="{{ pickHtml }}">HTML</button>
+          <button type="button" class="{{ tabCssCls }}" onClick="{{ pickCss }}">CSS</button>
+          <button type="button" class="{{ tabJsCls }}" onClick="{{ pickJs }}">JavaScript</button>
+        </div>
+        <div style="background:#15181C;border-radius:8px;overflow:hidden;">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;background:rgba(255,255,255,.06);">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#B4CEEC;">{{ codeFile }}</span>
+            <button type="button" class="hf-copy" onClick="{{ copyCode }}">{{ copyLabel }}</button>
+          </div>
+          <pre style="margin:0;padding:18px;overflow:auto;max-height:620px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.75;color:#E6ECF5;white-space:pre;">{{ code }}</pre>
+        </div>
+        <sc-if value="{{ isJs }}" hint-placeholder-val="">
+          <div style="background:#E9F8EF;border-radius:8px;padding:16px 18px;font-size:13px;line-height:1.6;color:#084324;"><strong>Shrnutí:</strong> tlačítko nepotřebuje žádný JavaScript. Výše je jen volitelný helper pro stav „odesílá se“ a hlídač chybějícího <span style="font-family:'JetBrains Mono',monospace;">aria-label</span> u icon-only tlačítek ve vývojovém buildu.</div>
+        </sc-if>
+      </section>
+
+      <section class="hf-sec" id="s-vyvojar" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:16px;">
+        <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Pozor při implementaci</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;">
+          <sc-for list="{{ warnings }}" as="w" hint-placeholder-count="6">
+            <div style="{{ w.style }}">
+              <div style="{{ w.titleStyle }}">{{ w.title }}</div>
+              <div style="font-size:14px;line-height:1.6;color:#3A424C;">{{ w.body }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      
+
+    </div>
+  </main>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { tab:'html', copied:false, contW:0, vpW:0, vpH:0, css:'', busy:'', code:{} };
+
+  componentDidMount(){
+    const el = document.querySelector('#s-kod') || document.body;
+    this._measure = () => {
+      const host = document.querySelector('#s-varianty');
+      this.setState({
+        contW: host ? Math.round(host.getBoundingClientRect().width) : 0,
+        vpW: document.documentElement.clientWidth,
+        vpH: window.innerHeight,
+      });
+    };
+    this._measure();
+    window.addEventListener('resize', this._measure);
+    const style = document.getElementById('vapp-btn-css');
+    if (style) this.setState({ css: style.textContent.trim() });
+    void el;
+  }
+  componentWillUnmount(){ window.removeEventListener('resize', this._measure); }
+
+  bandOf(w){
+    if (w >= 1560) return ['XXL','≥ 1560'];
+    if (w >= 1150) return ['XL','1150–1559'];
+    if (w >= 1000) return ['L','1000–1149'];
+    if (w >= 820)  return ['M','820–999'];
+    if (w >= 550)  return ['S','550–819'];
+    if (w >= 420)  return ['XS','420–549'];
+    return ['XXS','≤ 419'];
+  }
+
+  htmlCode(){
+    return [
+'<!-- Základní tlačítko: akce = <button type="button">, navigace = <a href> -->',
+'<button type="button" class="vapp-btn vapp-btn--primary">Primární akce</button>',
+'<a href="/privesy" class="vapp-btn vapp-btn--secondary">Sekundární</a>',
+'',
+'<!-- Konverze: zelená JEN pro Koupit -->',
+'<button type="button" class="vapp-btn vapp-btn--buy">',
+'  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">…</svg>',
+'  Koupit',
+'</button>',
+'',
+'<!-- Akce a slevy -->',
+'<button type="button" class="vapp-btn vapp-btn--danger">Akce a slevy</button>',
+'',
+'<!-- Poradna: vždy s ikonou book -->',
+'<a href="/poradna" class="vapp-btn vapp-btn--guide">',
+'  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">…</svg>',
+'  Poradna',
+'</a>',
+'',
+'<!-- Terciární akce bez plochy -->',
+'<button type="button" class="vapp-btn vapp-btn--ghost">Zeptat se na dostupnost</button>',
+'<button type="button" class="vapp-btn vapp-btn--text">Zpět na výpis</button>',
+'<button type="button" class="vapp-btn vapp-btn--text-danger">Odebrat z porovnání</button>',
+'',
+'<!-- Na podbarvené ploše #EFF4FB -->',
+'<button type="button" class="vapp-btn vapp-btn--ontint">Napsat e-mail</button>',
+'',
+'<!-- Na tmavé ploše #142F56 (patička, topbar) -->',
+'<a href="/kontakty" class="vapp-btn vapp-btn--ondark">Všechny kontakty</a>',
+'',
+'<!-- Velikosti: sm 36 / výchozí 44 / lg 52 -->',
+'<button type="button" class="vapp-btn vapp-btn--primary vapp-btn--sm">Standard</button>',
+'<button type="button" class="vapp-btn vapp-btn--primary">Medium</button>',
+'<button type="button" class="vapp-btn vapp-btn--primary vapp-btn--lg">Large</button>',
+'',
+'<!-- Ikona vpravo -->',
+'<button type="button" class="vapp-btn vapp-btn--secondary">',
+'  Zobrazit vše',
+'  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">…</svg>',
+'</button>',
+'',
+'<!-- Icon-only: aria-label je POVINNÝ -->',
+'<button type="button" class="vapp-btn vapp-btn--ghost vapp-btn--icon" aria-label="Zpět na hlavní menu">',
+'  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">…</svg>',
+'</button>',
+'',
+'<!-- Disabled: atribut, ne třída. Třída .is-disabled je jen pro dokumentaci. -->',
+'<button type="button" class="vapp-btn vapp-btn--primary" disabled>Nedostupné</button>',
+'',
+'<!-- Tlačítko jako řádek seznamu (dropdown, navigace) -->',
+'<button type="button" class="vapp-btn vapp-btn--ghost vapp-btn--block" style="justify-content:space-between">',
+'  Přívěsy',
+'  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">…</svg>',
+'</button>'
+    ].join('\n');
+  }
+
+  jsCode(){
+    return [
+'/* Tlačítko nepotřebuje ke svému chování žádný JavaScript.',
+'   Hover, active i focus řeší CSS. Níže jsou dva volitelné helpery. */',
+'',
+'/* 1) Stav „odesílá se“ — zamkne tlačítko proti dvojkliku.',
+'      Šířku podržíme, aby se layout nehnul při změně textu. */',
+'export function setBusy(btn, busy, busyLabel = \'Odesílám…\') {',
+'  if (busy) {',
+'    btn.dataset.label = btn.textContent.trim();',
+'    btn.style.minWidth = btn.offsetWidth + \'px\';',
+'    btn.textContent = busyLabel;',
+'    btn.disabled = true;',
+'    btn.setAttribute(\'aria-busy\', \'true\');',
+'  } else {',
+'    btn.textContent = btn.dataset.label || btn.textContent;',
+'    btn.style.minWidth = \'\';',
+'    btn.disabled = false;',
+'    btn.removeAttribute(\'aria-busy\');',
+'  }',
+'}',
+'',
+'/* 2) Vývojový hlídač: icon-only tlačítko bez aria-label je pro',
+'      odečítač prázdné. Spouštěj jen v dev buildu. */',
+'if (process.env.NODE_ENV !== \'production\') {',
+'  document.querySelectorAll(\'.vapp-btn--icon\').forEach((b) => {',
+'    if (!b.getAttribute(\'aria-label\')) {',
+'      console.warn(\'[vapp-btn] icon-only tlačítko bez aria-label:\', b);',
+'    }',
+'  });',
+'}',
+'',
+'/* Co NEDĚLAT:',
+'   — neřešit hover v JS (mousedown/mouseover třídy), je to v CSS,',
+'   — nepřidávat ripple ani škálování, motion systému to nepatří,',
+'   — nepoužívat <span onclick>; :focus-visible pak nefunguje a prvek',
+'     není dosažitelný tabulátorem. */'
+    ].join('\n');
+  }
+
+  crc32(u8){
+    if (!this._crcT){
+      const t = new Uint32Array(256);
+      for (let n=0;n<256;n++){ let c=n; for(let k=0;k<8;k++) c = (c & 1) ? (0xEDB88320 ^ (c>>>1)) : (c>>>1); t[n]=c>>>0; }
+      this._crcT = t;
+    }
+    const t = this._crcT;
+    let c = 0xFFFFFFFF;
+    for (let i=0;i<u8.length;i++) c = t[(c ^ u8[i]) & 255] ^ (c >>> 8);
+    return (c ^ 0xFFFFFFFF) >>> 0;
+  }
+
+  async makeZip(files){
+    const enc = new TextEncoder();
+    const parts = [], central = [];
+    let offset = 0;
+    for (const f of files){
+      const nameB = enc.encode(f.name);
+      const data = f.data;
+      const crc = this.crc32(data);
+      const lh = new Uint8Array(30 + nameB.length);
+      const lv = new DataView(lh.buffer);
+      lv.setUint32(0, 0x04034b50, true); lv.setUint16(4, 20, true); lv.setUint16(6, 0, true);
+      lv.setUint16(8, 0, true); lv.setUint16(10, 0, true); lv.setUint16(12, 0, true);
+      lv.setUint32(14, crc, true); lv.setUint32(18, data.length, true); lv.setUint32(22, data.length, true);
+      lv.setUint16(26, nameB.length, true); lv.setUint16(28, 0, true);
+      lh.set(nameB, 30);
+      parts.push(lh, data);
+      const ch = new Uint8Array(46 + nameB.length);
+      const cv = new DataView(ch.buffer);
+      cv.setUint32(0, 0x02014b50, true); cv.setUint16(4, 20, true); cv.setUint16(6, 20, true);
+      cv.setUint16(8, 0, true); cv.setUint16(10, 0, true); cv.setUint16(12, 0, true); cv.setUint16(14, 0, true);
+      cv.setUint32(16, crc, true); cv.setUint32(20, data.length, true); cv.setUint32(24, data.length, true);
+      cv.setUint16(28, nameB.length, true); cv.setUint32(42, offset, true);
+      ch.set(nameB, 46);
+      central.push(ch);
+      offset += lh.length + data.length;
+    }
+    const cdSize = central.reduce((a,b)=>a+b.length,0);
+    const eocd = new Uint8Array(22);
+    const ev = new DataView(eocd.buffer);
+    ev.setUint32(0, 0x06054b50, true);
+    ev.setUint16(8, files.length, true); ev.setUint16(10, files.length, true);
+    ev.setUint32(12, cdSize, true); ev.setUint32(16, offset, true);
+    return new Blob([...parts, ...central, eocd], { type:'application/zip' });
+  }
+
+  async download(key, zipName, names){
+    if (this.state.busy) return;
+    this.setState({ busy:key });
+    try {
+      const files = [];
+      for (const n of names){
+        const r = await fetch(n);
+        if (!r.ok) continue;
+        files.push({ name:n, data:new Uint8Array(await r.arrayBuffer()) });
+      }
+      const blob = await this.makeZip(files);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = zipName;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url), 4000);
+    } catch(e){ console.warn('ZIP selhal', e); }
+    this.setState({ busy:'' });
+  }
+
+  renderVals(){
+    const S = this.state;
+    const [band, bandRange] = this.bandOf(S.contW || 0);
+
+    const cell = (state, cls, note, dis, tone) => ({
+      state, note, dis: !!dis,
+      btnCls: cls,
+      cellStyle: 'display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:8px;background:' + (tone==='dark' ? '#142F56' : tone==='tint' ? '#EFF4FB' : '#F7F9FB') + ';',
+      stateStyle: 'font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:' + (tone==='dark' ? '#B4CEEC' : '#666E78') + ';',
+      noteStyle: "font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.6;white-space:pre-line;overflow-wrap:anywhere;color:" + (tone==='dark' ? '#B4CEEC' : '#5A626C') + ';',
+    });
+
+    const mk = (name, mod, label, use, c, tone) => {
+      const base = 'vapp-btn vapp-btn--' + mod + ' ';
+      return {
+        name, mod, label, use,
+        cardStyle: 'background:#fff;border-radius:8px;padding:22px 24px;display:flex;flex-direction:column;gap:14px;',
+        nameStyle: 'font-size:22px;font-weight:700;line-height:1.25;',
+        clsStyle: "font-family:'JetBrains Mono',monospace;font-size:13px;color:#1E5AA8;background:#EFF4FB;padding:2px 8px;border-radius:6px;",
+        useStyle: 'font-size:14px;font-weight:500;color:#5A626C;',
+        cells: [
+          cell('Default',  base.trim(),               c.def,   false, tone),
+          cell('Hover',    base + 'is-hover',         c.hov,   false, tone),
+          cell('Active / pressed', base + 'is-active',c.act,   false, tone),
+          cell('Focus-visible', base + 'is-focus',    c.foc,   false, tone),
+          cell('Disabled', base.trim(),               'background #F2F4F7\ncolor #666E78\ncursor not-allowed', true, tone),
+          cell('Živě — vyzkoušej', base.trim(),       'skutečné :hover, :active\na :focus-visible', false, tone),
+        ],
+      };
+    };
+
+    const focusRing = 'outline 2px solid #1E5AA8\noffset 2px';
+    const focusRingW = 'outline 2px solid #FFFFFF\noffset 2px';
+
+    const variants = [
+      mk('primary','primary','Primární akce','Hlavní akce na obrazovce — jedna na blok.',{
+        def:'bg #1E5AA8\ntext #FFFFFF', hov:'bg #1A4A8A\ntext #FFFFFF', act:'bg #1A4A8A\ntranslateY(1px)', foc:focusRing }),
+      mk('secondary','secondary','Sekundární','Doplňková akce vedle primární. Na ploše #EFF4FB splývá — použij ontint.',{
+        def:'bg #EFF4FB\ntext #1E5AA8', hov:'bg #D8E6F6', act:'bg #D8E6F6\ntranslateY(1px)', foc:focusRing }),
+      mk('buy','buy','Koupit','Vyhrazeno pro konverzi. Zelená nikde jinde.',{
+        def:'bg #0E7F43\ntext #FFFFFF', hov:'bg #0B6937', act:'bg #0B6937\ntranslateY(1px)', foc:focusRing }),
+      mk('danger','danger','Akce a slevy','Slevové a destruktivní akce.',{
+        def:'bg #C5232B\ntext #FFFFFF', hov:'bg #A21B22', act:'bg #A21B22\ntranslateY(1px)', foc:focusRing }),
+      mk('guide','guide','Poradna','Okrová rodina poradny — vždy s ikonou book. Jinde se nepoužívá.',{
+        def:'bg #FCF1DC\ntext #7A4E00', hov:'bg #F7E4BC', act:'bg #F7E4BC\ntranslateY(1px)', foc:focusRing }),
+      mk('ghost','ghost','Ghost','Terciární akce bez plochy — hutná místa, navigační řádky.',{
+        def:'bg transparent\ntext #1E5AA8', hov:'bg #EFF4FB', act:'bg #EFF4FB\ntranslateY(1px)', foc:focusRing }),
+      mk('text','text','Zpět na výpis','Odkazová akce v textovém toku. padding 0 4px, podtržení.',{
+        def:'text #1E5AA8\nunderline 1px', hov:'underline 2px', act:'translateY(1px)', foc:focusRing }),
+      mk('text-danger','text-danger','Odebrat','Textová akce, která má vyniknout nebo něco maže.',{
+        def:'text #C5232B\nunderline 1px', hov:'text #A21B22\nbg #FDF1F1', act:'text #A21B22\nbg #FDF1F1', foc:focusRing }),
+      mk('ontint','ontint','Napsat e-mail','Na podbarvené ploše #EFF4FB místo secondary.','',''),
+      mk('ondark','ondark','Všechny kontakty','Na tmavé ploše #142F56 — patička, topbar.','',''),
+    ];
+    variants[8] = mk('ontint','ontint','Napsat e-mail','Na podbarvené ploše #EFF4FB místo secondary.',{
+      def:'bg #FFFFFF\ntext #1E5AA8', hov:'bg #EFF4FB', act:'bg #EFF4FB\ntranslateY(1px)', foc:focusRing }, 'tint');
+    variants[9] = mk('ondark','ondark','Všechny kontakty','Na tmavé ploše #142F56 — patička, topbar.',{
+      def:'bg rgba(255,255,255,.12)\ntext #FFFFFF', hov:'bg rgba(255,255,255,.20)', act:'bg rgba(255,255,255,.20)\ntranslateY(1px)', foc:focusRingW }, 'dark');
+
+    const rowStyle = 'display:grid;grid-template-columns:minmax(140px,200px) minmax(150px,220px) minmax(0,1fr);gap:20px;align-items:center;padding:18px 0;border-bottom:1px solid #F2F4F7;';
+    const states = [
+      { name:'Default', selector:'.vapp-btn--primary', btnCls:'vapp-btn vapp-btn--primary', dis:false, rowStyle,
+        css:'background:#1E5AA8; color:#FFFFFF;', note:'Klidový stav. Barva plochy nese variantu, text je vždy 700.' },
+      { name:'Hover', selector:':hover', btnCls:'vapp-btn vapp-btn--primary is-hover', dis:false, rowStyle,
+        css:'background:#1A4A8A; /* o krok tmavší */', note:'Plocha o jeden krok škály tmavší (600 → 700). Přechod 120 ms. Na dotyku se hover neaplikuje.' },
+      { name:'Active / pressed', selector:':active', btnCls:'vapp-btn vapp-btn--primary is-active', dis:false, rowStyle,
+        css:'background:#1A4A8A;\ntransform:translateY(1px);', note:'Stisk = posun o 1 px dolů + tmavší plocha. Trvání 60 ms. Platí i pro dotyk.' },
+      { name:'Focus-visible', selector:':focus-visible', btnCls:'vapp-btn vapp-btn--primary is-focus', dis:false, rowStyle,
+        css:'outline:2px solid #1E5AA8;\noutline-offset:2px;', note:'Jen pro klávesnici — :focus-visible, ne :focus. Ring se nikdy neruší přes outline:none. Na tmavém podkladu je ring bílý.' },
+      { name:'Disabled', selector:'[disabled]', btnCls:'vapp-btn vapp-btn--primary', dis:true, rowStyle,
+        css:'background:#F2F4F7;\ncolor:#666E78;\ncursor:not-allowed;', note:'Atribut disabled, ne třída. Barva plochy je stejná pro všechny varianty — disabled tlačítko nenese barvu varianty.' },
+      { name:'Loading / busy', selector:'[aria-busy="true"]', btnCls:'vapp-btn vapp-btn--primary', dis:true, rowStyle:rowStyle.replace('border-bottom:1px solid #F2F4F7;',''),
+        css:'aria-busy="true" + disabled\nmin-width: zamrzlá šířka', note:'Volitelný stav pro odesílání formuláře. Text se vymění za „Odesílám…“, šířka se podrží, aby layout neposkočil. Spinner systém nemá.' },
+    ];
+
+    const bandsRaw = [['XXL','≥ 1560'],['XL','1150–1559'],['L','1000–1149'],['M','820–999'],['S','550–819'],['XS','420–549'],['XXS','≤ 419']];
+    const bands = bandsRaw.map(([n,r]) => {
+      const on = n === band;
+      return { name:n, range:r + ' px',
+        style: 'display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-radius:8px;background:' + (on ? '#1E5AA8' : '#F7F9FB') + ';color:' + (on ? '#fff' : '#15181C') + ';',
+        subColor: on ? '#B4CEEC' : '#666E78' };
+    });
+
+    const warn = (title, body, tone) => ({ title, body,
+      style: 'background:' + (tone==='no' ? '#FDF1F1' : '#F7F9FB') + ';border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:8px;',
+      titleStyle: 'font-size:16px;font-weight:700;color:' + (tone==='no' ? '#80181D' : '#15181C') + ';' });
+
+    const warnings = [
+      warn('Nikdy <button> uvnitř <button> nebo <a>', 'Klikací karta se řeší odkazem v názvu, který přes ::after { position:absolute; inset:0 } pokrývá plochu. Vnitřní tlačítka mají position:relative a vyšší z-index. Klik pak do krycího odkazu neprobublá, protože prvky nejsou vnořené — preventDefault s tím nemá nic společného.', 'no'),
+      warn('Shrink-to-fit šířka', 'Button má shrink-to-fit šířku i s display:flex. Tlačítko použité jako řádek seznamu musí mít width:100%, jinak justify-content:space-between nemá co rozestoupit a podbarvení nesahá k okraji.'),
+      warn('Ikony jen z registru', 'Ikony se nekreslí inline ad hoc — berou se ze sady Tabler, 24 × 24, viewBox 0 0 24 24, stroke-width 2, barva currentColor, bez výplní. Ikona v poradně je vždy book.'),
+      warn('Zelená jen pro konverzi', 'Varianta buy je vyhrazená pro „Koupit“ a dostupnost. Zelená se nikdy nepoužívá dekorativně ani pro jiné potvrzovací akce.', 'no'),
+      warn('Hlavní menu nejsou tlačítka', 'Záložky hlavního menu jsou odkazy s podtržením aktivní položky, ne tlačítka. Tuto komponentu tam nepoužívej.'),
+      warn('Focus ring se neruší', 'outline:none bez náhrady je porušení WCAG 2.4.7. Pokud ring koliduje s ořezem rodiče, použij box-shadow variantu, ne zrušení.', 'no'),
+    ];
+
+    const tabCls = (t) => 'hf-tab' + (S.tab === t ? ' is-on' : '');
+    const codeMap = { html:this.htmlCode(), css:S.css || '/* načítám… */', js:this.jsCode() };
+    const fileMap = { html:'tlacitko.html', css:'vapp-button.css', js:'vapp-button.js' };
+    const code = codeMap[S.tab];
+
+    const icons = ['vapp-logo.svg','logo-alko.svg','logo-knott.png','logo-knott-bila.png','seznam-logo.svg',
+      'ikona-blatniky-a-zasterky.svg','ikona-bocnice-uzavery-panty.svg','ikona-boxy-na-naradi-a-drzaky-boxu.svg','ikona-chladirenske-privesy.svg','ikona-dily-naprav.svg','ikona-doplnky-k-privesum.svg','ikona-dvouose-valniky.svg','ikona-elektro-svitilny-odrazky.svg','ikona-hydraulika-privesu.svg','ikona-jednoose-valniky.svg','ikona-kliny-a-drzaky.svg','ikona-konstrukcni-dily.svg','ikona-najezdove-brzdy-a-dily.svg','ikona-najezdy.svg','ikona-napravy-kompletni.svg','ikona-navijaky-a-prislusenstvi.svg','ikona-operna-kolecka-nohy-drzaky.svg','ikona-plachty-a-prislusenstvi.svg','ikona-plynove-vzpery-a-prislusenstvi.svg','ikona-pneu-kola-disky.svg','ikona-pomucky-pro-udrzbu.svg','ikona-prepravniky-automobilu.svg','ikona-prepravniky-lodi.svg','ikona-prepravniky-motocyklu.svg','ikona-prepravniky-stroju.svg','ikona-prepravniky-zvirat.svg','ikona-sklopne-privesy.svg','ikona-skrinove-privesy.svg','ikona-spojovaci-zarizeni-a-zamky.svg','ikona-triose-valniky.svg','ikona-zabezpeceni-nakladu.svg'];
+    const produkty = ['prives-moto-profi-132-a.jpg','prives-moto-profi-132-b.jpg','prives-p3s-2-7-3618-a.jpg','prives-p3s-2-7-3618-b.jpg','prives-pap-2-0-4019-a.jpg','prives-pap-2-0-4019-b.jpg','prives-praktik-2-a.jpg','prives-praktik-2-b.jpg','prives-pvs-2-7-4021-a.jpg','prives-pvs-2-7-4021-b.jpg'];
+    const kategorie = ['privesy-kat-01.png','privesy-kat-02.png','privesy-kat-03.png','privesy-kat-04.png','privesy-kat-05.png','privesy-kat-06.png','privesy-kat-07.png','privesy-kat-08.png','privesy-kat-09.png','privesy-kat-10.png'];
+    const sekce = ['hero-privesy.jpg','hero-prives-panorama.png','pribeh-firmy.png','sekce-akce.png','sekce-nahradni-dily.png','sekce-poradna.png','sekce-privesy.png','sekce-pujcovna.png','sekce-servis.png'];
+
+    const pack = (key, title, desc, files, zipName) => ({
+      title, desc, files,
+      busy: S.busy === key,
+      btnLabel: S.busy === key ? 'Balím…' : ('Stáhnout ZIP (' + files.length + ')'),
+      onDownload: () => this.download(key, zipName, files),
+    });
+
+    return {
+      navSections: [['Přehled a tokeny','#s-prehled'],['Varianty','#s-varianty'],['Velikosti','#s-velikosti'],['Stavy','#s-stavy'],['Ikonové konfigurace','#s-ikony'],['Responzivita','#s-responzivita'],['Kód (HTML / CSS / JS)','#s-kod'],['Pozor při implementaci','#s-vyvojar']],
+      contW: S.contW, vpW: S.vpW, vpH: S.vpH, band, bandRange: '(' + bandRange + ' px)',
+      variants, states, bands, warnings,
+      tabHtmlCls: tabCls('html'), tabCssCls: tabCls('css'), tabJsCls: tabCls('js'),
+      pickHtml: () => this.setState({ tab:'html', copied:false }),
+      pickCss: () => this.setState({ tab:'css', copied:false }),
+      pickJs: () => this.setState({ tab:'js', copied:false }),
+      isJs: S.tab === 'js',
+      code, codeFile: fileMap[S.tab],
+      copyLabel: S.copied ? 'Zkopírováno' : 'Kopírovat',
+      copyCode: () => {
+        navigator.clipboard.writeText(code).then(() => {
+          this.setState({ copied:true });
+          setTimeout(() => this.setState({ copied:false }), 1600);
+        }).catch(()=>{});
+      },
+      packs: [
+        pack('ikony','Ikony a loga','Kategorické ikony ve formátu SVG, loga značek a logo VAPP v křivkách.', icons, 'vapp-ikony.zip'),
+        pack('produkty','Produktové fotky','Fotografie přívěsů použité v katalogu a detailech. Poměr 4:3, object-fit: contain.', produkty, 'vapp-produkty.zip'),
+        pack('kategorie','Náhledy kategorií','Fotky v dlaždicích kategorií (64 × 64, object-fit: contain, bez pozadí).', kategorie, 'vapp-kategorie.zip'),
+        pack('sekce','Hero a sekční obrázky','Hero homepage, rozcestník sekcí a fotka k příběhu firmy.', sekce, 'vapp-sekce.zip'),
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

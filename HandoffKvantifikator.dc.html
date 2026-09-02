@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0!important;padding:0!important;}
+  #dc-root{margin:0!important;padding:0!important;width:100%!important;max-width:none!important;border:0!important;}
+  #dc-root>.sc-host{margin:0!important;padding:0!important;width:100%!important;}
+  *{box-sizing:border-box;}
+  body{background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
+  a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
+  .hf-sec{scroll-margin-top:80px;}
+  .hf-mono{font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;color:#15181C;white-space:pre-line;overflow-wrap:anywhere;}
+  .hf-content{container-type:inline-size;}
+  @container (max-width:900px){ .hf-staterow{grid-template-columns:1fr!important;gap:12px!important;} }
+  .hf-tab{appearance:none;border:0;margin:0;font:inherit;cursor:pointer;padding:0 16px;height:38px;display:inline-flex;align-items:center;font-size:13px;font-weight:700;color:#666E78;background:transparent;border-radius:6px;transition:background .12s,color .12s;}
+  .hf-tab:hover{background:#F2F4F7;color:#15181C;}
+  .hf-tab.is-on{background:#15181C;color:#fff;}
+  .hf-copy{appearance:none;border:0;margin:0;font:inherit;cursor:pointer;padding:0 12px;height:30px;font-size:12px;font-weight:700;color:#B4CEEC;background:rgba(255,255,255,.10);border-radius:6px;transition:background .12s,color .12s;}
+  .hf-copy:hover{background:rgba(255,255,255,.20);color:#fff;}
+</style>
+<style id="vapp-qty-css">/* === VAPP — Kvantifikátor =============================================
+   Standard 44 (karta, detail) · Compact 36 (košík, seznamy).
+   Pozadí #F2F4F7, radius 6, střední pole bílé. Menší než 36 se nezavádí.
+   ------------------------------------------------------------------- */
+.vapp-qty{
+  display:inline-flex; align-items:stretch;
+  height:44px; border-radius:6px; overflow:hidden;
+  background:#F2F4F7;                      /* surface.subtle */
+  font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;
+}
+.vapp-qty__btn{
+  appearance:none; -webkit-appearance:none;
+  border:0; margin:0; padding:0; background:transparent;
+  font-family:inherit; font-size:17px; color:#5A626C;
+  width:36px; display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+  transition:background .12s ease;
+}
+.vapp-qty__btn:not(:disabled):hover{background:#E4E7EB;}
+/* ring uvnitř — prvek je v overflow:hidden obalu, vně by se odřízl */
+.vapp-qty__btn:focus-visible{outline:2px solid #1E5AA8; outline-offset:-2px;}
+.vapp-qty__btn:disabled{color:#91959B; cursor:not-allowed;}
+
+.vapp-qty__value{
+  min-width:28px; padding:0 6px;          /* min-width + padding pojme 3 číslice */
+  display:flex; align-items:center; justify-content:center;
+  font-size:15px; font-weight:700; color:#15181C;
+  background:#FFFFFF;
+  border-top:1px solid #F2F4F7;
+  border-bottom:1px solid #F2F4F7;
+}
+
+/* --- Compact 36 ----------------------------------------------------- */
+.vapp-qty--compact{height:36px;}
+.vapp-qty--compact .vapp-qty__btn{width:30px; font-size:15px;}
+.vapp-qty--compact .vapp-qty__value{font-size:14px;}
+</style>
+</helmet>
+
+<div style="display:flex;align-items:flex-start;width:100%;min-height:100vh;background:#F7F9FB;">
+  <dc-import name="HandoffNav" active="kvantifikator" sections="{{ navSections }}" hint-size="268px,100vh"></dc-import>
+
+  <main style="flex:1;min-width:0;padding:0 0 80px;">
+    <div style="position:sticky;top:0;z-index:20;background:rgba(247,249,251,.94);backdrop-filter:blur(6px);padding:14px 32px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-bottom:1px solid #F2F4F7;">
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Kvantifikátor</div>
+      <div style="flex:1;"></div>
+      <div style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:#15181C;background:#fff;padding:7px 12px;border-radius:6px;">
+        <span style="color:#666E78;">container</span><span>{{ contW }} px</span>
+        <span style="display:inline-block;width:1px;height:14px;background:#D5DAE0;"></span>
+        <span style="color:#666E78;">pásmo</span><span style="font-weight:700;color:#1E5AA8;">{{ band }}</span><span style="color:#666E78;">{{ bandRange }}</span>
+      </div>
+    </div>
+
+    <div class="hf-content" style="padding:28px 32px 0;display:flex;flex-direction:column;gap:28px;max-width:1560px;">
+
+      <section class="hf-sec" style="display:flex;flex-direction:column;gap:10px;">
+        <h1 style="margin:0;font-size:36px;font-weight:700;line-height:1.15;letter-spacing:-.02em;">Kvantifikátor</h1>
+        <p style="margin:0;max-width:820px;font-size:18px;line-height:1.6;color:#5A626C;text-wrap:pretty;">Počet kusů u produktu. Dvě velikosti, žádná jiná. Na hranicích min a max se tlačítko <strong>zablokuje</strong> — nikdy jen tiše nereaguje.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;padding-top:4px;">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#1E5AA8;background:#EFF4FB;padding:5px 10px;border-radius:6px;">Kvantifikator.dc.html</span>
+        </div>
+      </section>
+
+      <section class="hf-sec" id="kv-prehled" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:20px;">
+        <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Přehled a tokeny</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;">
+          <div style="background:#F7F9FB;border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Standard 44</div>
+            <div class="hf-mono">výška: 44px (size.control)
+tlačítko: 36 × 44
+znak: 17px
+hodnota: 15 / 700
+min-width hodnoty: 28 + padding 6</div>
+            <div style="font-size:13px;line-height:1.5;color:#5A626C;">Karta produktu a detail.</div>
+          </div>
+          <div style="background:#F7F9FB;border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Compact 36</div>
+            <div class="hf-mono">výška: 36px
+tlačítko: 30 × 36
+znak: 15px
+hodnota: 14 / 700</div>
+            <div style="font-size:13px;line-height:1.5;color:#5A626C;">Košík a seznamy. Pod 36 px se nejde.</div>
+          </div>
+          <div style="background:#F7F9FB;border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Barvy</div>
+            <div class="hf-mono">plocha: #F2F4F7
+střední pole: #FFFFFF
+linky pole: 1px #F2F4F7
+znaky: #5A626C
+hodnota: #15181C
+hover tlačítka: #E4E7EB
+disabled znak: #91959B</div>
+          </div>
+          <div style="background:#F7F9FB;border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Geometrie</div>
+            <div class="hf-mono">radius: 6px (radius.sm)
+overflow: hidden
+focus ring: outline 2px #1E5AA8
+  outline-offset: -2px</div>
+            <div style="font-size:13px;line-height:1.5;color:#5A626C;">Ring je <strong>uvnitř</strong> — obal má overflow:hidden a vnější ring by se odřízl.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hf-sec" id="kv-velikosti" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:20px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Velikosti — živě</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">Skutečná komponenta. Sjeď na 1 a sleduj, jak se minus zablokuje; vyjeď na max (5) a zablokuje se plus.</p>
+        </div>
+        <div style="display:flex;gap:36px;flex-wrap:wrap;align-items:center;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <dc-import name="Kvantifikator" size="standard" value="{{ qA }}" min="1" max="5" on-change="{{ setA }}" debug="{{ off }}" hint-size="110px,44px"></dc-import>
+            <span style="font-size:13px;color:#666E78;">Standard 44 · min 1, max 5</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <dc-import name="Kvantifikator" size="compact" value="{{ qB }}" min="1" max="99" on-change="{{ setB }}" debug="{{ off }}" hint-size="94px,36px"></dc-import>
+            <span style="font-size:13px;color:#666E78;">Compact 36 · min 1, max 99</span>
+          </div>
+        </div>
+        <div style="background:#F7F9FB;border-radius:8px;padding:16px 18px;font-size:13px;line-height:1.6;color:#3A424C;">Střední pole má <span style="font-family:'JetBrains Mono',monospace;">min-width:28px</span> + padding 6 — pojme tři číslice, aniž by se prvek při přepočtu roztáhl a posunul tlačítko Koupit vedle sebe.</div>
+      </section>
+
+      <section class="hf-sec" id="kv-stavy" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:18px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Stavy — popis po jednom</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">Šest stavů. Dva z nich se v návrhu snadno přehlédnou: zablokované tlačítko na hranici a ohlášení změny odečítači.</p>
+        </div>
+        <sc-for list="{{ states }}" as="s" hint-placeholder-count="6">
+          <div class="hf-staterow" style="display:grid;grid-template-columns:minmax(140px,200px) minmax(140px,220px) minmax(0,1fr);gap:20px;align-items:center;padding:16px 0;border-bottom:1px solid #F2F4F7;">
+            <div style="display:flex;flex-direction:column;gap:4px;">
+              <div style="font-size:16px;font-weight:700;">{{ s.name }}</div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#1E5AA8;">{{ s.selector }}</div>
+            </div>
+            <div style="display:flex;align-items:center;min-height:52px;">
+              <div class="{{ s.boxCls }}">
+                <span style="{{ s.minusStyle }}">−</span>
+                <span class="vapp-qty__value">{{ s.value }}</span>
+                <span style="{{ s.plusStyle }}">+</span>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div class="hf-mono">{{ s.css }}</div>
+              <div style="font-size:13px;line-height:1.5;color:#5A626C;text-wrap:pretty;">{{ s.note }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </section>
+
+      <section class="hf-sec" id="kv-kontext" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:18px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">V kontextu a responzivita</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">Kvantifikátor sám žádnou media query nemá — mění se jen řádek, ve kterém sedí. Na kartě produktu je vedle tlačítka Koupit; pod 380 px šířky <strong>karty</strong> (container query, ne viewport) se řádek zalomí.</p>
+        </div>
+        <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;">
+          <div style="flex:none;width:300px;display:flex;flex-direction:column;gap:8px;">
+            <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Karta 300 px — řádek</div>
+            <div style="background:#fff;border-radius:8px;padding:16px;box-shadow:0 6px 20px rgba(20,47,86,.10);display:flex;gap:8px;align-items:center;">
+              <dc-import name="Kvantifikator" size="standard" value="{{ qC }}" min="1" max="99" on-change="{{ setC }}" debug="{{ off }}" hint-size="110px,44px"></dc-import>
+              <div style="flex:1;min-width:0;display:flex;"><dc-import name="Tlacitko" variant="buy" size="medium" label="Koupit" icon="shopping-cart" full-width="{{ on }}" on-click="{{ noop }}" style="width:100%;" hint-size="100%,44px"></dc-import></div>
+            </div>
+          </div>
+          <div style="flex:none;width:340px;display:flex;flex-direction:column;gap:8px;">
+            <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Košík — Compact v řádku</div>
+            <div style="background:#fff;border-radius:8px;padding:16px;box-shadow:0 6px 20px rgba(20,47,86,.10);display:flex;gap:12px;align-items:center;justify-content:space-between;">
+              <span style="font-size:15px;font-weight:700;min-width:0;">Brzdový buben KNOTT</span>
+              <dc-import name="Kvantifikator" size="compact" value="{{ qD }}" min="1" max="99" on-change="{{ setD }}" debug="{{ off }}" hint-size="94px,36px"></dc-import>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hf-sec" id="kv-kod" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Kód</h2>
+          <p style="margin:0;max-width:900px;font-size:16px;line-height:1.6;color:#5A626C;">CSS je stylopis, který vykresluje ukázky na této stránce. JS řeší hranice, ohlášení odečítači a držení šířky.</p>
+        </div>
+        <div style="display:flex;gap:6px;background:#F7F9FB;padding:6px;border-radius:8px;align-self:flex-start;flex-wrap:wrap;">
+          <button type="button" class="{{ tabHtmlCls }}" onClick="{{ pickHtml }}">HTML</button>
+          <button type="button" class="{{ tabCssCls }}" onClick="{{ pickCss }}">CSS</button>
+          <button type="button" class="{{ tabJsCls }}" onClick="{{ pickJs }}">JavaScript</button>
+        </div>
+        <div style="background:#15181C;border-radius:8px;overflow:hidden;">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;background:rgba(255,255,255,.06);">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#B4CEEC;">{{ codeFile }}</span>
+            <button type="button" class="hf-copy" onClick="{{ copyCode }}">{{ copyLabel }}</button>
+          </div>
+          <pre style="margin:0;padding:18px;overflow:auto;max-height:620px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.75;color:#E6ECF5;white-space:pre;">{{ code }}</pre>
+        </div>
+      </section>
+
+      <section class="hf-sec" id="kv-vyvojar" style="background:#fff;border-radius:8px;padding:28px;display:flex;flex-direction:column;gap:16px;">
+        <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-.01em;">Pozor při implementaci</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;">
+          <sc-for list="{{ warnings }}" as="w" hint-placeholder-count="5">
+            <div style="{{ w.style }}">
+              <div style="{{ w.titleStyle }}">{{ w.title }}</div>
+              <div style="font-size:14px;line-height:1.6;color:#3A424C;text-wrap:pretty;">{{ w.body }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { tab:'html', copied:false, contW:0, css:'', qA:2, qB:1, qC:1, qD:3 };
+
+  componentDidMount(){
+    this._m = () => {
+      const host = document.querySelector('#kv-velikosti');
+      this.setState({ contW: host ? Math.round(host.getBoundingClientRect().width) : 0 });
+    };
+    this._m();
+    window.addEventListener('resize', this._m);
+    const st = document.getElementById('vapp-qty-css');
+    if (st) this.setState({ css: st.textContent.trim() });
+  }
+  componentWillUnmount(){ window.removeEventListener('resize', this._m); }
+
+  bandOf(w){
+    if (w >= 1560) return ['XXL','≥ 1560']; if (w >= 1150) return ['XL','1150–1559'];
+    if (w >= 1000) return ['L','1000–1149']; if (w >= 820) return ['M','820–999'];
+    if (w >= 550) return ['S','550–819']; if (w >= 420) return ['XS','420–549'];
+    return ['XXS','≤ 419'];
+  }
+
+  htmlCode(){
+    return [
+'<!-- Standard 44 — karta produktu, detail -->',
+'<div class="vapp-qty">',
+'  <button type="button" class="vapp-qty__btn" aria-label="Snížit počet" disabled>−</button>',
+'  <span class="vapp-qty__value" role="status" aria-live="polite" aria-label="Počet kusů">1</span>',
+'  <button type="button" class="vapp-qty__btn" aria-label="Zvýšit počet">+</button>',
+'</div>',
+'',
+'<!-- Compact 36 — košík, seznamy -->',
+'<div class="vapp-qty vapp-qty--compact"> … </div>',
+'',
+'<!-- Poznámky ke struktuře:',
+'     — hodnota je <span role="status" aria-live="polite">, ne <input>:',
+'       odečítač změnu ohlásí sám, bez potvrzování,',
+'     — znaky jsou − (U+2212 minus) a +, ne pomlčka „-“,',
+'     — aria-label na obou tlačítkách je povinný, znak sám nestačí,',
+'     — na hranici je disabled ATRIBUT, ne jen šedý vzhled. -->',
+'',
+'<!-- V řádku s tlačítkem Koupit (karta produktu) -->',
+'<div style="display:flex; gap:8px; align-items:center">',
+'  <div class="vapp-qty"> … </div>',
+'  <button type="button" class="vapp-btn vapp-btn--buy vapp-btn--block">',
+'    <svg …>…</svg> Koupit',
+'  </button>',
+'</div>',
+'',
+'<!-- Když má být počet součástí formuláře, přidej skryté pole -->',
+'<input type="hidden" name="qty" value="1">'
+    ].join('\n');
+  }
+
+  jsCode(){
+    return [
+'/* === Kvantifikátor — JS ===============================================',
+'   Clamp na min/max, blokace tlačítek na hranicích a ohlášení změny.',
+'   ------------------------------------------------------------------- */',
+'',
+'function initQty(root, { min = 1, max = 99, value = 1, onChange } = {}) {',
+'  const [minus, val, plus] = [',
+'    root.querySelector(\'.vapp-qty__btn:first-child\'),',
+'    root.querySelector(\'.vapp-qty__value\'),',
+'    root.querySelector(\'.vapp-qty__btn:last-child\'),',
+'  ];',
+'  let q = value;',
+'',
+'  const render = () => {',
+'    val.textContent = q;',
+'    /* Na hranici se tlačítko ZABLOKUJE. Tiché nereagování je horší:',
+'       uživatel klika a neví, jestli je to rozbité, nebo je to max. */',
+'    minus.disabled = q <= min;',
+'    plus.disabled = q >= max;',
+'  };',
+'',
+'  const set = (n) => {',
+'    const next = Math.max(min, Math.min(max, n));   // clamp vždy, i z API',
+'    if (next === q) return;',
+'    q = next;',
+'    render();',
+'    onChange?.(q);',
+'  };',
+'',
+'  minus.addEventListener(\'click\', () => set(q - 1));',
+'  plus.addEventListener(\'click\', () => set(q + 1));',
+'  render();',
+'  return { get value(){ return q; }, set: set };',
+'}',
+'',
+'/* Řízený vs. neřízený:',
+'   — řízený: value + onChange přicházejí zvenku (košík, detail s cenou),',
+'   — neřízený: drží si stav sám (karta ve výpisu).',
+'   Nemíchat — jinak počet po kliknutí poskočí zpět. */',
+'',
+'/* Co NEDĚLAT:',
+'   — nedávat autorepeat na podržení: u max 99 to vede k nechtěné objednávce,',
+'   — neměnit šířku prvku podle počtu číslic (posune tlačítko Koupit),',
+'   — nepoužívat <input type="number">: spinnery se v prohlížečích liší',
+'     a na mobilu vyvolají numerickou klávesnici uprostřed karty. */'
+    ].join('\n');
+  }
+
+  renderVals(){
+    const S = this.state;
+    const [band, bandRange] = this.bandOf(S.contW || 0);
+
+    const btn = (dis, hover, focus) => 'width:36px;display:flex;align-items:center;justify-content:center;font-size:17px;color:' + (dis ? '#91959B' : '#5A626C') + ';' + (hover ? 'background:#E4E7EB;' : '') + (focus ? 'outline:2px solid #1E5AA8;outline-offset:-2px;' : '') + (dis ? 'cursor:not-allowed;' : 'cursor:pointer;');
+
+    const states = [
+      { name:'Default', selector:'.vapp-qty', value:'2', boxCls:'vapp-qty',
+        minusStyle:btn(false,false,false), plusStyle:btn(false,false,false),
+        css:'bg #F2F4F7 · radius 6\nstřední pole #FFFFFF\nznaky #5A626C', note:'Klidový stav. Obal je jeden pill, střední pole je bílé s linkami 1 px nahoře a dole.' },
+      { name:'Hover tlačítka', selector:'.vapp-qty__btn:hover', value:'2', boxCls:'vapp-qty',
+        minusStyle:btn(false,true,false), plusStyle:btn(false,false,false),
+        css:'background:#E4E7EB;', note:'Podbarví se jen to tlačítko, nad kterým je kurzor — ne celý prvek. Přechod 120 ms.' },
+      { name:'Focus-visible', selector:'.vapp-qty__btn:focus-visible', value:'2', boxCls:'vapp-qty',
+        minusStyle:btn(false,false,false), plusStyle:btn(false,false,true),
+        css:'outline:2px solid #1E5AA8;\noutline-offset:-2px;', note:'Offset je záporný — obal má overflow:hidden, takže vnější ring by se odřízl. Toto je odchylka od globálního pravidla offset 2px a je záměrná.' },
+      { name:'Minimum — minus disabled', selector:'[disabled]', value:'1', boxCls:'vapp-qty',
+        minusStyle:btn(true,false,false), plusStyle:btn(false,false,false),
+        css:'color:#91959B;\ncursor:not-allowed;', note:'Na min se minus zablokuje atributem disabled. Nesmí být klikatelné a tiše nic nedělat — uživatel by nevěděl, jestli je to rozbité.' },
+      { name:'Maximum — plus disabled', selector:'[disabled]', value:'99', boxCls:'vapp-qty',
+        minusStyle:btn(false,false,false), plusStyle:btn(true,false,false),
+        css:'color:#91959B;\ncursor:not-allowed;', note:'Stejně na max. Hodnota 99 ukazuje, že tři číslice se do pole vejdou bez roztažení prvku.' },
+      { name:'Compact', selector:'.vapp-qty--compact', value:'3', boxCls:'vapp-qty vapp-qty--compact',
+        minusStyle:'width:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#5A626C;cursor:pointer;', plusStyle:'width:30px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#5A626C;cursor:pointer;',
+        css:'height:36px\ntlačítko 30px · znak 15px\nhodnota 14 / 700', note:'Košík a seznamy. Klikací plocha 30 × 36 je pod 44 px — v košíku je to přijaté, protože prvek stojí samostatně a chybný klik nic neztratí.' },
+    ];
+
+    const tabCls = (t) => 'hf-tab' + (S.tab === t ? ' is-on' : '');
+    const codeMap = { html:this.htmlCode(), css:S.css || '/* načítám… */', js:this.jsCode() };
+    const fileMap = { html:'kvantifikator.html', css:'vapp-qty.css', js:'vapp-qty.js' };
+    const code = codeMap[S.tab];
+
+    const warn = (title, body, tone) => ({ title, body,
+      style: 'background:' + (tone==='no' ? '#FDF1F1' : '#F7F9FB') + ';border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:8px;',
+      titleStyle: 'font-size:16px;font-weight:700;color:' + (tone==='no' ? '#80181D' : '#15181C') + ';' });
+
+    return {
+      navSections: [['Přehled a tokeny','#kv-prehled'],['Velikosti','#kv-velikosti'],['Stavy','#kv-stavy'],['V kontextu','#kv-kontext'],['Kód (HTML / CSS / JS)','#kv-kod'],['Pozor při implementaci','#kv-vyvojar']],
+      contW: S.contW, band, bandRange: '(' + bandRange + ' px)',
+      on: true, off: false, noop: () => {},
+      qA:S.qA, qB:S.qB, qC:S.qC, qD:S.qD,
+      setA:(v)=>this.setState({qA:v}), setB:(v)=>this.setState({qB:v}), setC:(v)=>this.setState({qC:v}), setD:(v)=>this.setState({qD:v}),
+      states,
+      tabHtmlCls: tabCls('html'), tabCssCls: tabCls('css'), tabJsCls: tabCls('js'),
+      pickHtml: () => this.setState({ tab:'html', copied:false }),
+      pickCss: () => this.setState({ tab:'css', copied:false }),
+      pickJs: () => this.setState({ tab:'js', copied:false }),
+      code, codeFile: fileMap[S.tab],
+      copyLabel: S.copied ? 'Zkopírováno' : 'Kopírovat',
+      copyCode: () => { navigator.clipboard.writeText(code).then(() => { this.setState({ copied:true }); setTimeout(() => this.setState({ copied:false }), 1600); }).catch(()=>{}); },
+      warnings: [
+        warn('Na hranici blokovat, ne ignorovat', 'Na min a max dostane tlačítko atribut disabled. Klikatelné tlačítko, které nic nedělá, uživatel čte jako rozbitý web.', 'no'),
+        warn('Šířka se nesmí měnit', 'Střední pole má min-width 28 px + padding 6 a pojme tři číslice. Kdyby se prvek při přepočtu roztahoval, posouval by tlačítko Koupit vedle sebe.'),
+        warn('Focus ring dovnitř', 'outline-offset je −2px, protože obal má overflow:hidden. Je to jediná komponenta, kde se od globálního offsetu +2px odchylujeme.'),
+        warn('Není to <input type="number">', 'Nativní spinnery se v prohlížečích liší a na mobilu vyvolají numerickou klávesnici. Hodnota je <span role="status" aria-live="polite"> — odečítač změnu ohlásí sám.'),
+        warn('aria-label na obou tlačítkách', '„Snížit počet“ a „Zvýšit počet“. Samotné znaky − a + odečítač přečte jako interpunkci nebo je přeskočí.', 'no'),
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

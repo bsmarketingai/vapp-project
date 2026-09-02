@@ -14,6 +14,7 @@
   - `CenovyFiltr.dc.html` — jediný zdroj rozsahu ceny (dva inputy 44 px + dvojitý slider). Bezstavová vůči stránce: hodnoty přicházejí v `valueFrom` / `valueTo`, změna se hlásí přes `onChange(od, do)`.
   - `Hlavicka.dc.html` — jediný zdroj hlavičky. **Platná je jedna verze: V3** = tmavý pás USP nad hlavičkou (`Usp` `variant="pas" tone="tmavy"`) + hlavička bez tmavého topbaru, prop `variant="V4"` (interní název kódu, v UI se jí říká V3). Varianty V1–V3 jsou **smazané** (markup, CSS i tweak `variant`) — komponenta umí jednu hlavičku a stránky jí variantu nepředávají. Přepínač hlavičky na stránkách i v prezentační liště je zrušený.
   - `Kosik.dc.html` — box košíku v hlavičce a **jediné místo výběru měny**. Box drží cenu (tlačítko do košíku), za vertikálním oddělovačem `#D5DAE0` je přepínač měny ve formě `CZK` + chevron 18 px, který otevírá seznam `CZK / EUR`. Ikona měny (`coin`) v akční skupině hlavičky je zrušená. Bezstavový vůči stránce: `currency`, `currencies` jsou data, změna se hlásí `onCurrencyChange(code)`; otevřeno/zavřeno drží komponenta (Escape a klik mimo zavírají).
+  - `MegaMenu.dc.html` — jediný zdroj rozbaleného desktopového megamenu. Bezstavová: `groups` jsou čistá data (`{name, href, items:[{name, href}]}`), navigace jde přes `href` (odkazy, ne callbacky). Komponenta drží pravidlo **max `maxItems` (default 6) podkategorií na skupinu + odkaz „Zobrazit vše (N)"** na hub, mřížku sloupců (`columns` v XL/XXL, pod 1150 px tři, pod 820 dva, pod 550 jeden) a šířku obsahu webu (`max-width:1560`, padding 32/16). Otevírání, zavírání a pozicování drží `Hlavicka` (props `megaTab`, `megaGroups`, `megaColumns`, `megaMaxItems`) — hover nebo fokus tabu otevře, Escape, odjezd myší (160 ms) a klik mimo zavřou. Panel má z-index 60 uvnitř stohovacího kontextu hlavičky, stejně jako mobilní menu. Počty produktů se v megamenu nezobrazují.
   - `MobilniMenu.dc.html` — jediný zdroj obsahu rozbaleného mobilního menu. Pozicování, `z-index`, `max-height`, `overflow`, `box-shadow`, Escape, focus trap a zámek scrollu drží `Hlavicka`, ne komponenta.
   - `VypisKategorii.dc.html` — mřížka kategorií složená z `KategorickaDlazdice`. Bezstavová; která kategorie je otevřená drží stránka. Prop `layout` (`dlazdice` / `kompaktni`) přepíná vzhled dlaždic; prázdná hodnota = vlastní default komponenty (`DEFAULT_LAYOUT`, dnes `kompaktni` — drž ho shodný s defaultem v `data-props`). Stránka Náhradních dílů má vlastní tweak `categoryLayout` s volbou „podle komponenty“.
   - `ArchivBarevnaPaletaVAPP.dc.html` — **archiv, nepoužívat.** Obsahuje starý styl (Hanken Grotesk, borders, rádiusy 11–14).
@@ -296,4 +297,18 @@ Systém prošel auditem a splňuje AA. Nové komponenty i změny musí tuto úro
 - Barvy jen `#142F56`, `#1E5AA8`, `#B4CEEC`, `#FFFFFF`. Jediná media query je `max-width:419px` (skryje popisek, zúží tlačítka), aby se lišta vešla na 320 px.
 - Props: `label`, `variants` (data, prázdné = vlastní default), `active`, `onSelect(id)`, `debugOn`, `onToggleDebug()`. Pole `variants` nese **jen data** — per-položkové `onClick` si komponenta vyrábí sama.
 - **Závazné mapování, nikdy se nepřečísluje:** `v1` = `kompaktni` (dnešní stav webu, výchozí volba), `v2` = `dlazdice` (návrh redukce). V UI lišty jsou vidět jen čísla, ne názvy variant.
+- **Výjimka `nahradnidily.dc.html`:** tam lišta nepřepíná layout dlaždic, ale **strukturu sdružovacích kategorií** — `v1` = 8 kategorií, `v2` = 6 kategorií (viz §12). Layout dlaždic zůstává na tweaku `categoryLayout`.
 - Na stránce je zdrojem pravdy stav (`catLayout`, `debugOverride`); prop `categoryLayout` zůstává výchozí hodnotou pro tweak, stav ho přebíjí. `DEFAULT_CATEGORY_LAYOUT` zůstává `kompaktni`.
+
+---
+
+## 12. Sdružovací kategorie Náhradních dílů (V1 / V2)
+
+Zdroj: klientský excel `uploads/vapp-sdruzovaci-kategorie-nahradni-dily_edit VAPP.xlsx` (listy „8 kategorií" = V1, „6 kategorií" = V2). Přepis leží v `nahradnidily.dc.html` ve `HUBS` — **jediné místo**, kde se struktura mění.
+
+- Nejvyšší úroveň Náhradních dílů = huby. `type:'sdruzovaci'` = nová nadřazená položka nad stávajícími kategoriemi; `type:'hub'` = velká stávající kategorie zůstává samostatně a nabízí svoje podkategorie (zachovává URL i SEO té větve).
+- `items` je přesně sloupec C excelu. `resolveItem()` název rozřeší na dnešní kategorii nebo na její podkategorii (rozpady ID 610 / 574 / 603) — nové názvy se nevymýšlejí.
+- `seo` = sloupec D; slouží jako **H1 hub stránky**. V drobečkové navigaci a dlaždici je `name`.
+- **Akce a slevy ani Výprodej nejsou kategorie** — řeší se Hero na HP + filtr/badge. Dlaždice „Akce a slevy %" je z rozcestníku odstraněná.
+- Názvosloví: vždy „přívěs", nikdy „vozík" / „přívěsný vozík".
+- **Otevřené body:** V1 nepokrývá stávající kategorie Hydraulika přívěsů, Blatníky a zástěrky, Bočnice/uzávěry/panty a Plynové vzpěry — v listu chybí. V1 řádek 5 (Spojovací zařízení a zámky) je zařazený pod hub 2, protože sloupec A je prázdný, ale nese vlastní cílový výraz.
