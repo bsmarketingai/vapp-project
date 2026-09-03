@@ -80,8 +80,12 @@
 .hvx8{transition:color .12s,border-color .12s;} .hvx8:hover{color:#fff !important;border-color:#fff !important;}
 .hvx9{transition:color .12s;} .hvx9:hover{color:#fff !important;}
 @media (max-width:999px){ .hd-sep{display:none !important;} }
-/* V2 (6 hubů): v XL a XXL tři sloupce ve dvou řádcích, aby 6. dlaždice nezůstala sama na řádku */
-@media (min-width:1150px){ .hub-6 .vk-grid{grid-template-columns:repeat(3,1fr) !important;} }
+/* Rozcestník včetně dlaždice Akce a slevy: V1 devět, V2 sedm dlaždic.
+   Počet sloupců je volený tak, aby na posledním řádku nikdy nezbyla jediná dlaždice —
+   dlaždice se nikdy neroztahuje přes víc sloupců. */
+@media (min-width:1560px){ .hub-9 .vk-grid{grid-template-columns:repeat(5,1fr) !important;} } /* 5 + 4 */
+@media (min-width:1150px) and (max-width:1559px){ .hub-9 .vk-grid{grid-template-columns:repeat(3,1fr) !important;} } /* 3 + 3 + 3 */
+@media (min-width:1000px){ .hub-7 .vk-grid{grid-template-columns:repeat(4,1fr) !important;} } /* 4 + 3 */
 /* XS a XXS: sloupec Nejhledanější jde přes celou šířku a začíná u levého okraje */
 @media (max-width:549px){ .pg-topcol{display:none !important;} }
 </style>
@@ -90,7 +94,7 @@
 
   <dc-import name="Usp" variant="pas" tone="tmavy" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,48px"></dc-import>
 
-  <dc-import name="Hlavicka" active="Náhradní díly" currency="{{ currency }}" on-currency-change="{{ onCurrency }}" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:30–16:30" contact-open="{{ true }}" menu-tree="{{ menuTree }}" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" mega-tab="Náhradní díly" mega-groups="{{ megaGroups }}" mega-columns="{{ megaColumns }}" mega-max-items="{{ megaMaxItems }}" hint-size="100%,150px"></dc-import>
+  <dc-import name="Hlavicka" active="Náhradní díly" currency="{{ currency }}" on-currency-change="{{ onCurrency }}" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:30–16:30" contact-open="{{ true }}" menu-tree="{{ menuTree }}" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" mega-tab="Náhradní díly" mega-groups="{{ megaGroups }}" mega-rail="{{ megaRail }}" mega-columns="{{ megaColumns }}" mega-max-items="{{ megaMaxItems }}" hint-size="100%,150px"></dc-import>
 
   <!-- CONTENT -->
   <main class="vp-in" style="padding-top:14px;padding-bottom:40px;">
@@ -248,7 +252,7 @@
   <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;categoryLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;podle komponenty&quot;,&quot;dlazdice&quot;,&quot;kompaktni&quot;,&quot;kompaktni-akordeon&quot;],&quot;default&quot;:&quot;podle komponenty&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:844},&quot;freeShippingThreshold&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1500,&quot;min&quot;:0,&quot;max&quot;:5000,&quot;step&quot;:100,&quot;unit&quot;:&quot;Kč&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;defaultOnlyStock&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;defaultSort&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;pop&quot;,&quot;cheap&quot;,&quot;exp&quot;,&quot;az&quot;],&quot;default&quot;:&quot;pop&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;showConsultancy&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;categoryLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;podle komponenty&quot;,&quot;dlazdice&quot;,&quot;kompaktni&quot;,&quot;kompaktni-akordeon&quot;],&quot;default&quot;:&quot;podle komponenty&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;hubOrder&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;prodeje&quot;,&quot;excel&quot;],&quot;default&quot;:&quot;prodeje&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:844},&quot;freeShippingThreshold&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1500,&quot;min&quot;:0,&quot;max&quot;:5000,&quot;step&quot;:100,&quot;unit&quot;:&quot;Kč&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;defaultOnlyStock&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;defaultSort&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;pop&quot;,&quot;cheap&quot;,&quot;exp&quot;,&quot;az&quot;],&quot;default&quot;:&quot;pop&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Chování&quot;},&quot;showConsultancy&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Chování&quot;}}">
 class Component extends DCLogic {
   FLAGS = [{t:'Sleva',on:false},{t:'Doprava zdarma',on:false},{t:'Skladem',on:false},{t:'Skladem u dodavatele',on:false}];
   closePanel(){ if(this.state.filterOpen) this.setState({ filterOpen:false }); }
@@ -266,7 +270,7 @@ class Component extends DCLogic {
     this.state = {
       menuOpen:false, descOpen:false, filterOpen:false, sortOpen:false,
       priceFrom:0, priceTo:8000, flags:null,
-      hubVer:'v1', view:'groups', path:[], leafPath:null, subcat:null, onlyStock: props.defaultOnlyStock ?? false, sort: props.defaultSort ?? 'pop',
+      hubVer:'v1', hubOrder: props.hubOrder === 'excel' ? 'excel' : 'prodeje', view:'groups', path:[], leafPath:null, subcat:null, onlyStock: props.defaultOnlyStock ?? false, sort: props.defaultSort ?? 'pop',
       cart:{}, brands:{}, params:{}, accOpen:{ 'Výrobce':true }, compare:{}, qty:{}, pageFrom:1, pageTo:1, catLayout:null, debugOverride:null, hoverCard:null,
       searchQ:'', searchFocus:false, loading:false, macro:null, brandFocus:null, saleOnly:false,
       currency:'CZK',
@@ -363,30 +367,61 @@ class Component extends DCLogic {
 
   HUB_LABEL = { v1:'V1 — 8 kategorií', v2:'V2 — 6 kategorií' };
 
+  /* Prodeje podle klientského reportu (Item Category 3 → Item Sales, celkem 211 770).
+     Kategorie, které v reportu nejsou, mají 0 a řadí se nakonec. */
+  SALES = {
+    'Elektro, svítilny, odrazky': 65071,
+    'Plachty a příslušenství': 20369,
+    'Díly náprav': 19345,
+    'Bočnice, uzávěry, panty': 15061,
+    'Zabezpečení nákladu': 14834,
+    'Konstrukční díly': 10833,
+    'Spojovací zařízení a zámky': 9812,
+    'Pneu, kola, disky': 9006,
+    'Opěrná kolečka, nohy, držáky': 8686,
+    'Blatníky a zástěrky': 6972,
+    'Nájezdové brzdy a díly': 6601,
+    'Doplňky k přívěsům': 5829,
+    'Klíny a držáky': 5642,
+    'Pomůcky pro údržbu': 4201,
+    'Nájezdy': 2648
+  };
+
   // rozřeší název položky z excelu na dnešní kategorii (path [])
   // nebo na její podkategorii (path [název])
   resolveItem(nm){
     const g = this.GROUPS.find(x=>x.name === nm);
-    if (g) return { name:nm, gKey:g.key, path:[], count:g.count, image:g.image, icon:g.icon, level:'kategorie' };
+    if (g) return { name:nm, gKey:g.key, path:[], count:g.count, image:g.image, icon:g.icon, level:'kategorie', sales: this.SALES[g.name] || 0 };
     for (const gg of this.GROUPS){
       const c = (gg.children||[]).find(x=>x.name === nm);
-      if (c) return { name:nm, gKey:gg.key, path:[c.name], count:c.count, image:gg.image, icon:gg.icon, level:'podkategorie' };
+      // podkategorie nemá vlastní číslo — nese prodeje své kategorie, pořadí v rámci
+      // kategorie tak zůstává podle excelu
+      if (c) return { name:nm, gKey:gg.key, path:[c.name], count:c.count, image:gg.image, icon:gg.icon, level:'podkategorie', sales: this.SALES[gg.name] || 0 };
     }
-    return { name:nm, gKey:null, path:[], count:0, image:'', icon:'', level:'chybí' };
+    return { name:nm, gKey:null, path:[], count:0, image:'', icon:'', level:'chybí', sales:0 };
   }
 
   hubList(){
     const ver = this.state.hubVer === 'v2' ? 'v2' : 'v1';
-    return this.HUBS[ver].map((h,i)=>{
-      const items = h.items.map(nm=>this.resolveItem(nm));
+    const bySales = (this.state.hubOrder || 'prodeje') === 'prodeje';
+    // stabilní řazení: shodná hodnota drží původní pořadí z excelu
+    const rank = (arr, val)=>arr.map((x,i)=>[x,i]).sort((a,b)=>(val(b[0]) - val(a[0])) || (a[1] - b[1])).map(x=>x[0]);
+    const hubs = this.HUBS[ver].map((h,i)=>{
+      let items = h.items.map(nm=>this.resolveItem(nm));
+      if (bySales) items = rank(items, x=>x.sales);
       const withImg = items.find(x=>x.image);
+      // prodeje hubu = součet přes unikátní kategorie (podkategorie téže kategorie se nesčítají dvakrát)
+      const seen = {};
+      let sales = 0;
+      items.forEach(x=>{ if(x.gKey && !seen[x.gKey]){ seen[x.gKey] = 1; sales += x.sales; } });
       return {
         key: 'h' + (i+1) + '-' + this.slug(h.name),
         name: h.name, type: h.type, seo: h.seo || h.name,
         image: withImg ? withImg.image : '', icon: withImg ? withImg.icon : '',
-        items, count: items.reduce((a,x)=>a + x.count, 0)
+        items, count: items.reduce((a,x)=>a + x.count, 0), sales
       };
     });
+    return bySales ? rank(hubs, x=>x.sales) : hubs;
   }
 
   reload(patch){ this.setState(Object.assign({ loading:true }, patch||{})); clearTimeout(this._rt); this._rt=setTimeout(()=>this.setState({ loading:false }), 400); }
@@ -691,6 +726,7 @@ class Component extends DCLogic {
     const raw = (location.hash||'').replace(/^#\/?/,'').replace(/\/+$/,'');
     const parts = raw ? raw.split('/') : [];
     if(parts[0] !== 'nahradni-dily' || parts.length < 2){ this.setState({ view:'groups', path:[], leafPath:null, subcat:null }); return; }
+    if((parts[1] === 'akce' || parts[1] === 'akce-a-slevy') && !parts[2]){ this.setState({ view:'groups', path:[], leafPath:null, subcat:null, macro:null, brandFocus:null, saleOnly:true }); return; }
     if(parts[1] === 'akce' && parts[2]){
       const sg = this.GROUPS.find(x=>this.slug(x.name)===parts[2]);
       if(sg){ this.setState({ view:sg.key, path:[], leafPath:null, subcat:null, macro:null, brandFocus:null, saleOnly:true }); return; }
@@ -805,16 +841,23 @@ class Component extends DCLogic {
     const activeHub = hubs.find(h=>h.key===s.macro) || null;
     const hubHref = (h)=>'#/nahradni-dily/'+h.key+'/';
     const itemHref = (k)=> k.gKey ? this.urlFor(k.gKey, k.path) : '#/nahradni-dily/';
+    const SALE_NAME = 'Akce a slevy';
+    const saleHref = '#/nahradni-dily/akce/';
     const categoriesData = hubs.map(h=>({
       name:h.name, count:h.count, image:h.image, icon:h.icon, href:hubHref(h),
       subs: h.items.slice(0,4).map(k=>({ name:k.name, count:k.count, href:itemHref(k) }))
-    }));
+    })).concat([{
+      name: SALE_NAME, sale:true, href: saleHref, subs: [],
+      count: this.PRODUCTS.filter(pr=>pr.sale).length * 12
+    }]);
     const openGroup = (g)=>this.go({ view:g.key, path:[], leafPath:null, subcat:null, macro:null, brandFocus:null, saleOnly:false, pageFrom:1, pageTo:1 }, this.urlFor(g.key,[]));
     const openItem = (k)=>{
       if(!k || !k.gKey) return;
       this.go({ view:k.gKey, path:k.path, leafPath:null, subcat:null, subcatGroup:k.gKey, macro:null, brandFocus:null, saleOnly:false, pageFrom:1, pageTo:1 }, this.urlFor(k.gKey, k.path));
     };
+    const openSale = ()=>this.go({ view:'groups', path:[], leafPath:null, subcat:null, macro:null, brandFocus:null, saleOnly:true, pageFrom:1, pageTo:1 }, saleHref);
     const onOpenCategory = (name)=>{
+      if (name === SALE_NAME){ openSale(); return; }
       const h = hubs.find(x=>x.name===name);
       if (h){ this.go({ macro:h.key }, hubHref(h)); return; }
       const g = this.GROUPS.find(x=>x.name===name); if(g) openGroup(g);
@@ -913,6 +956,7 @@ class Component extends DCLogic {
       if (guideChip) topChips = [GUIDE].concat(topChips.slice(0,3));
     } else {
       topChips = [
+        { kind:'sale', label:'Akce a slevy', iconName:'discount', href:'#/nahradni-dily/akce/' },
         { kind:'secondary', label:'Plynové vzpěry', href:this.urlFor('vzpery',[]) },
         { kind:'secondary', label:'Nájezdové brzdy', href:this.urlFor('napravy',[]) },
         { kind:'secondary', label:'Kabeláž a zásuvky', href:this.urlFor('elektro',['Kabely a kabeláže']) },
@@ -979,14 +1023,17 @@ class Component extends DCLogic {
       descLabel: s.descOpen ? 'Skrýt' : 'Zobrazit celý popis',
       descExpanded: s.descOpen ? 'true' : 'false',
       inGroups: s.view==='groups' && !activeHub && !s.brandFocus,
-      hubGridCls: hubs.length === 6 ? 'hub-6' : '',
+      hubGridCls: hubs.length === 6 ? 'hub-7' : (hubs.length === 8 ? 'hub-9' : ''),
       // megamenu drží stejnou strukturu jako rozcestník — V1 osm hubů, V2 šest
       megaGroups: hubs.map(h=>({ name:h.name, href:hubHref(h), image:h.image, icon:h.icon, items:h.items.map(k=>({ name:k.name, href:itemHref(k) })) })),
+      megaRail: topChips.filter(x=>x.kind !== 'guide')
+        .map(x=>({ name:x.label, href:x.href, tone: x.kind === 'sale' ? 'sale' : undefined, iconName: x.iconName }))
+        .sort((a,b)=>(a.tone === 'sale' ? 1 : 0) - (b.tone === 'sale' ? 1 : 0)),
       megaColumns: hubs.length === 6 ? 3 : 4,
       megaMaxItems: 6,
       inSubcats: inSubcatsAny,
       inLeaf: inCat || !!activeHub, notLeaf: !inCat && !activeHub,
-      pageTitle: s.brandFocus ? ('Díly ' + s.brandFocus) : (activeHub ? activeHub.seo : (inCat ? curName : 'Náhradní díly')),
+      pageTitle: s.brandFocus ? ('Díly ' + s.brandFocus) : (s.saleOnly && !inCat ? 'Akce a slevy' : (activeHub ? activeHub.seo : (inCat ? curName : 'Náhradní díly'))),
       pageCountText: activeHub ? (macroSubcats.reduce((a,x)=>a+x.count,0).toLocaleString('cs-CZ')+' produktů') : (inCat ? (resultCount.toLocaleString('cs-CZ')+' produktů') : '2 418 produktů'),
       leafDesc: activeHub ? (activeHub.name + ' — ' + (activeHub.type === 'sdruzovaci' ? 'sdružovací kategorie' : 'samostatná kategorie') + ' nad ' + activeHub.items.length + ' skupinami dílů pro přívěsy všech značek. ' + activeHub.count.toLocaleString('cs-CZ') + ' položek skladem i na dotaz, expedice do 24 hodin. Vyberte si přesnější zařazení níže.') : inCat ? (curName+' — '+(path.length ? ('podkategorie '+(path.length>1?path[path.length-2]:ag.name)) : 'kategorie náhradních dílů')+' pro přívěsy všech značek. '+resultCount.toLocaleString('cs-CZ')+' položek skladem i na dotaz, expedice do 24 hodin. '+(hasKids?'Vyberte si přesnější zařazení níže, nebo procházejte celý výpis.':'Nevíte si rady s výběrem? Zavolejte nám.')) : '',
       crumbItems, onCrumbNav,
@@ -1010,7 +1057,7 @@ class Component extends DCLogic {
                 children: kids.length ? kids.map(c=>({ name:c.name, href:this.urlFor(g.key,[c.name]) })) : undefined
               };
             })
-          })) },
+          })).concat([{ name: SALE_NAME, href: saleHref, tone:'sale' }]) },
         { name:'Příslušenství', href:'#' },
         { name:'Servis', href:'#' },
         { name:'Půjčovna', href:'#' },

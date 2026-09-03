@@ -19,6 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<script src="./vapp-menu.js"></script>
 <style>
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
@@ -96,11 +97,11 @@
       </div>
       <sc-if value="{{ searchOpen }}" hint-placeholder-val="">
         <div class="hd-mb" id="hd-search-panel" style="flex-basis:100%;padding-top:4px;">
-          <dc-import name="Vyhledavani" bare="true" autofocus="{{ true }}" height="44" value="{{ searchValue }}" on-change="{{ onSearchChange }}" placeholder="Hledat díly podle názvu, čísla nebo modelu…" hint-size="100%,44px"></dc-import>
+          <dc-import name="Vyhledavani" bare="true" autofocus="{{ true }}" height="44" value="{{ searchValue }}" on-change="{{ onSearchChange }}" on-field-focus="{{ onSearchFieldFocus }}" placeholder="Hledat díly podle názvu, čísla nebo modelu…" hint-size="100%,44px"></dc-import>
         </div>
       </sc-if>
       <div class="hd-mb hd-mbsearch" style="flex-basis:100%;">
-        <dc-import name="Vyhledavani" bare="true" height="42" value="{{ searchValue }}" on-change="{{ onSearchChange }}" placeholder="Hledat díly, přívěsy…" hint-size="100%,42px"></dc-import>
+        <dc-import name="Vyhledavani" bare="true" height="42" value="{{ searchValue }}" on-change="{{ onSearchChange }}" on-field-focus="{{ onSearchFieldFocus }}" placeholder="Hledat díly, přívěsy…" hint-size="100%,42px"></dc-import>
       </div>
     </div>
     <nav class="hd-dt" aria-label="Hlavní navigace" style="border-top:1px solid #F2F4F7;">
@@ -112,7 +113,7 @@
     </nav>
     <sc-if value="{{ megaOpen }}" hint-placeholder-val="">
       <div class="hd-dt" id="hd-mega" onMouseEnter="{{ onMegaEnter }}" onMouseLeave="{{ onMegaLeave }}" style="position:absolute;top:100%;left:0;right:0;z-index:60;box-shadow:0 10px 30px rgba(20,30,45,.14);">
-        <dc-import name="MegaMenu" groups="{{ megaGroups }}" heading="{{ megaTab }}" columns="{{ megaColumns }}" max-items="{{ megaMaxItems }}" debug="{{ debug }}" hint-size="100%,420px"></dc-import>
+        <dc-import name="MegaMenu" groups="{{ megaGroups }}" rail-items="{{ megaRail }}" heading="{{ megaTab }}" columns="{{ megaColumns }}" max-items="{{ megaMaxItems }}" debug="{{ debug }}" hint-size="100%,420px"></dc-import>
       </div>
     </sc-if>
     <sc-if value="{{ menuOpen }}" hint-placeholder-val="">
@@ -132,9 +133,14 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;megaTab&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Megamenu&quot;},&quot;megaGroups&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{name:string,href:string,items:{name:string,href:string}[]}[]&quot;,&quot;default&quot;:null},&quot;megaColumns&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;min&quot;:2,&quot;max&quot;:5,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Megamenu&quot;},&quot;megaMaxItems&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:6,&quot;min&quot;:3,&quot;max&quot;:12,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Megamenu&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:220},&quot;contactPhone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;323 605 314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactPhoneHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;tel:+420323605314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactHours&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;8:30–16:30&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;contactEmail&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactEmailHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;mailto:obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;currency&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;CZK&quot;,&quot;EUR&quot;],&quot;default&quot;:&quot;CZK&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;currencies&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;onCurrencyChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(code:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;cartCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;},&quot;cartTotal&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1500,&quot;tsType&quot;:&quot;number&quot;},&quot;compareCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;tsType&quot;:&quot;number&quot;},&quot;tabs&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;menuTree&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;,&quot;default&quot;:null},&quot;searchValue&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;,&quot;default&quot;:null},&quot;onSearchChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCompare&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCart&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onTabClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onLogoClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;infoLinks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null}}">
 class Component extends DCLogic {
-  state = { menuOpen:false, searchOpen:false, loginOpen:false, cartOpen:false, currency:'CZK', megaOpen:false };
-  // megamenu: otevírá hover nebo fokus tabu, zavírá Escape, odjezd myší a klik mimo
-  openMega(){ clearTimeout(this._megaT); if(!this.state.megaOpen) this.setState({ megaOpen:true }, ()=>this.fitMega()); else this.fitMega(); }
+  state = { menuOpen:false, searchOpen:false, loginOpen:false, cartOpen:false, currency:'CZK', megaTab:null };
+  // megamenu: otevírá hover nebo fokus tabu, zavírá Escape, odjezd myší a klik mimo.
+  // Otevřený je vždy nejvýš jeden tab — drží se jeho label, ne boolean.
+  openMega(label){
+    clearTimeout(this._megaT);
+    if(this.state.megaTab !== label) this.setState({ megaTab: label }, ()=>this.fitMega());
+    else this.fitMega();
+  }
   fitMega(){
     const apply = ()=>{
       const el = document.getElementById('hd-mega');
@@ -147,7 +153,7 @@ class Component extends DCLogic {
     };
     apply();
     if (!this._onFitMega){
-      this._onFitMega = ()=>{ if (this.state.megaOpen) apply(); };
+      this._onFitMega = ()=>{ if (this.state.megaTab) apply(); };
       window.addEventListener('resize', this._onFitMega);
       window.addEventListener('scroll', this._onFitMega, { passive:true });
       if (window.visualViewport) window.visualViewport.addEventListener('resize', this._onFitMega);
@@ -162,26 +168,29 @@ class Component extends DCLogic {
   }
   closeMega(delay){
     clearTimeout(this._megaT);
-    this._megaT = setTimeout(()=>{ if(this.state.megaOpen){ this.unbindFitMega(); this.setState({ megaOpen:false }); } }, delay || 0);
+    this._megaT = setTimeout(()=>{ if(this.state.megaTab){ this.unbindFitMega(); this.setState({ megaTab:null }); } }, delay || 0);
   }
   _menuWas = false;
   lockScroll(on){ try{ document.body.style.overflow = on ? 'hidden' : ''; }catch(e){} }
   componentDidMount(){
     this._onKey = (e)=>{ if(e.key!=='Escape') return;
-      if(this.state.megaOpen){ this.closeMega(0); const t=document.querySelector('.hd-tab[aria-expanded="true"]'); if(t&&t.focus) t.focus(); return; }
+      if(this.state.megaTab){ this.closeMega(0); const t=document.querySelector('.hd-tab[aria-expanded="true"]'); if(t&&t.focus) t.focus(); return; }
       if(this.state.menuOpen){ this.closeMenu(); }
       else if(this.state.searchOpen){ this.setState({ searchOpen:false }); const b=document.getElementById('hd-search-toggle'); if(b&&b.focus) b.focus(); } };
     document.addEventListener('keydown', this._onKey, true);
     this._onMegaDoc = (e)=>{
-      if(!this.state.megaOpen) return;
+      if(!this.state.megaTab) return;
       const p = document.getElementById('hd-mega');
       if(p && p.contains(e.target)) return;
       if(e.target && e.target.closest && e.target.closest('.hd-tab')) return;
       this.closeMega(0);
     };
     document.addEventListener('click', this._onMegaDoc, true);
+    this._onMegaReady = ()=>this.forceUpdate();
+    window.addEventListener('vapp-mega-ready', this._onMegaReady);
+    if (!window.VAPP_MEGA) this._megaPoll = setInterval(()=>{ if(window.VAPP_MEGA){ clearInterval(this._megaPoll); this.forceUpdate(); } }, 120);
   }
-  componentWillUnmount(){ this.lockScroll(false); this.unbindFit(); clearTimeout(this._megaT); this.unbindFitMega(); if(this._onKey) document.removeEventListener('keydown', this._onKey, true); if(this._onMegaDoc) document.removeEventListener('click', this._onMegaDoc, true); }
+  componentWillUnmount(){ this.lockScroll(false); this.unbindFit(); clearTimeout(this._megaT); clearInterval(this._megaPoll); if(this._onMegaReady) window.removeEventListener('vapp-mega-ready', this._onMegaReady); this.unbindFitMega(); if(this._onKey) document.removeEventListener('keydown', this._onKey, true); if(this._onMegaDoc) document.removeEventListener('click', this._onMegaDoc, true); }
   componentDidUpdate(prevProps, prevState){
 
     // runtime nedodává spolehlivý prevState — poslední stav si držíme na instanci
@@ -190,7 +199,7 @@ class Component extends DCLogic {
     this._menuWas = now;
     this.lockScroll(now);
     const el = document.getElementById(now ? 'hd-mobile-menu' : 'hd-burger');
-    if (el && el.focus) el.focus();
+    if (el && el.focus) { try { el.focus({ preventScroll:true }); } catch(e){ el.focus(); } }
     if (now) this.fitMenu(); else this.unbindFit();
   }
   closeMenu(){ this.setState({ menuOpen:false }); }
@@ -225,20 +234,41 @@ class Component extends DCLogic {
     const onTab = P.onTabClick;
     const infoLinks = P.infoLinks || ['Doprava a platba','Obchodní podmínky','O nás','Kontakty'];
     const TAB_HREF = { 'Přívěsy':'privesy-V1.dc.html', 'Náhradní díly':'nahradnidily.dc.html', 'Poradna':'poradna.dc.html' };
-    const megaGroups = Array.isArray(P.megaGroups) && P.megaGroups.length ? P.megaGroups : null;
-    const megaTab = P.megaTab || '';
-    const hasMega = !!(megaGroups && megaTab);
-    const megaOpen = hasMega && this.state.megaOpen;
+    // data megamenu: prop pro svůj tab (stránka má strukturu živě) přebije společný default
+    const MEGA = (window.VAPP_MEGA && typeof window.VAPP_MEGA === 'object') ? window.VAPP_MEGA : {};
+    const ownTab = P.megaTab || '';
+    const ownGroups = Array.isArray(P.megaGroups) && P.megaGroups.length ? P.megaGroups : null;
+    // záznam v datech smí být pole skupin, nebo objekt { groups, rail }
+    const entry = (label)=>{
+      const e = MEGA[label];
+      if (Array.isArray(e)) return { groups:e, rail:null };
+      return (e && typeof e === 'object') ? { groups: e.groups, rail: e.rail } : { groups:null, rail:null };
+    };
+    const groupsFor = (label)=>{
+      if (label && label === ownTab && ownGroups) return ownGroups;
+      const g = entry(label).groups;
+      return (Array.isArray(g) && g.length) ? g : null;
+    };
+    const railFor = (label)=>{
+      const own = Array.isArray(P.megaRail) && P.megaRail.length ? P.megaRail : null;
+      if (label && label === ownTab && own) return own;
+      const r = entry(label).rail;
+      return (Array.isArray(r) && r.length) ? r : null;
+    };
+    const megaTabOpen = this.state.megaTab;
+    const megaGroups = groupsFor(megaTabOpen);
+    const megaRail = railFor(megaTabOpen);
+    const megaOpen = !!megaGroups;
     const tabs = labels.map(label=>{
       const on = label === active;
       const href = TAB_HREF[label] || '#';
-      const mega = hasMega && label === megaTab;
+      const mega = !!groupsFor(label);
       return {
         label, cls: 'hd-tab hd-i', current: on ? 'page' : undefined, href,
-        expanded: mega ? (megaOpen ? 'true' : 'false') : undefined,
-        onEnter: mega ? (()=>this.openMega()) : (()=>this.closeMega(0)),
+        expanded: mega ? (megaTabOpen === label ? 'true' : 'false') : undefined,
+        onEnter: mega ? (()=>this.openMega(label)) : (()=>this.closeMega(0)),
         onLeave: mega ? (()=>this.closeMega(160)) : undefined,
-        onFocus: mega ? (()=>this.openMega()) : (()=>this.closeMega(0)),
+        onFocus: mega ? (()=>this.openMega(label)) : (()=>this.closeMega(0)),
         onClick: (e)=>{ if(e&&e.preventDefault) e.preventDefault(); this.closeMega(0); if (href !== '#' && !on){ window.location.href = href; return; } if(onTab) onTab(label); },
         style:'display:flex;align-items:center;align-self:stretch;font-size:18px;font-weight:700;padding:13px 2px;cursor:pointer;border-bottom:3px solid '+(on?'#1E5AA8':'transparent')+';color:'+(on?'#1E5AA8':'#3A424C')+';' };
     });
@@ -265,9 +295,10 @@ class Component extends DCLogic {
       closeLogin: ()=>{ this.setState({ loginOpen:false }); setTimeout(()=>{ const b=document.getElementById('hd-login'); if(b&&b.offsetParent!==null&&b.focus) b.focus(); },0); },
       onMenuLogin: ()=>{ const f = P.onLogin; this.setState({ menuOpen:false, loginOpen: typeof f === 'function' ? false : true }); if (typeof f === 'function') f(); },
       searchOpen, searchExpanded: searchOpen ? 'true' : 'false',
+      onSearchFieldFocus: ()=>{ if (this.state.menuOpen) this.closeMenu(); },
       toggleSearch: ()=>{
         const next = !this.state.searchOpen;
-        this.setState({ searchOpen: next });
+        this.setState({ searchOpen: next, menuOpen: next ? false : this.state.menuOpen });
         if (!next) return;
         // fokus si při mountu nastaví samo Vyhledavani (prop autofocus)
       },
@@ -303,7 +334,7 @@ class Component extends DCLogic {
       onLogoClick: P.onLogoClick || (()=>{}),
       cartCount, cartTotal: P.cartTotal, compareCount, showCompare: compareCount>0,
       tabs,
-      megaOpen, megaGroups, megaTab,
+      megaOpen, megaGroups, megaRail, megaTab: megaTabOpen || '',
       megaColumns: P.megaColumns ?? 4, megaMaxItems: P.megaMaxItems ?? 6,
       onMegaEnter: ()=>this.openMega(), onMegaLeave: ()=>this.closeMega(160),
       menuOpen: this.state.menuOpen, menuClosed: !this.state.menuOpen,

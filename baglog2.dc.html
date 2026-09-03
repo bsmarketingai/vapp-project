@@ -97,17 +97,34 @@ class Component extends DCLogic {
 
     // Historie: nejnovější den nahoře; items = {title, where, what, why, how}
     const log = [
+      { date: '3. 9. 2026', items: [
+        { title: 'Megamenu má pravý sloupec Nejhledanější s akcemi na konci',
+          where: 'Hlavička — megamenu Náhradní díly',
+          what: 'Vpravo v rozbaleném megamenu stojí samostatný sloupec přes celou výšku panelu, oddělený svislou linkou: overline „Nejhledanější“ a pod ním seznam nejžádanějších odkazů. Poslední položka je „Akce a slevy“ — červeně zvýrazněná, s ikonou slevy. Mřížka skupin se tím zúžila, ale zůstává čtyřsloupcová u dílů a třísloupcová u přívěsů.',
+          why: 'Nejhledanější dotazy a akce nejsou kategorie sortimentu, takže do mřížky skupin nepatří — dřív buď zabíraly v mřížce další řádek, nebo v megamenu nebyly vůbec. Zákazník, který jde po konkrétním dílu nebo po slevách, má zkratku hned vedle struktury, a ne až na výpisu.',
+          how: 'Sloupec je součástí komponenty megamenu, ne jednotlivých stránek — obsah i popisek se dají přebít, ale rozvržení a chování drží jedno místo. Na užších šířkách, kde se mřížka skupin sbaluje, se sloupec chová jako poslední blok panelu. Červená položka je stejná rodina jako dlaždice a chip Akce a slevy — světle červená plocha, červený text.' }
+      ] },
       { date: '2. 9. 2026', items: [
         { title: 'Náhradní díly mají sdružovací kategorie — V1 (8) a V2 (6)',
           where: 'Náhradní díly — rozcestník',
           what: 'Nejvyšší úroveň Náhradních dílů už není 20 dnešních kategorií, ale sdružovací kategorie z klientského excelu. Lišta u spodní hrany přepíná dvě verze: V1 s osmi a V2 s šesti položkami. Klik na položku rozbalí přesně ten výčet podkategorií, který je v excelu, a dá se odtud projít až na výpis produktů. H1 hub stránky je cílový SEO výraz ze sloupce D, v drobečkové navigaci a dlaždici je krátký název. Dlaždice „Akce a slevy“ z rozcestníku zmizela.',
           why: 'Dvacet kategorií na jedné úrovni zákazníka zahltí, nedává prostor pro růst sortimentu a nevytváří žádnou SEO landing stránku. Obě verze potřebuje klient vidět v reálném webu, ne v tabulce, aby se dalo rozhodnout.',
           how: 'Struktura je přepsaná na jednom místě a názvy se nevymýšlejí — každá položka se automaticky napojí na dnešní kategorii nebo na její podkategorii, takže sedí na existující URL. Promo akce se podle zadání řeší Hero na homepage a filtrem, ne kategorií. Otevřené: V1 nepokrývá Hydrauliku, Blatníky, Bočnice a Plynové vzpěry — v excelu chybí.' },
+        { title: 'Akce a slevy jsou zpátky — červený pás pod kategoriemi',
+          where: 'Náhradní díly — rozcestník',
+          what: 'Za sdružovacími kategoriemi stojí v obou verzích poslední dlaždice „Akce a slevy“ — světle červená plocha s červeným názvem a ikonou slevy. Stejný vstup je i v řádku Nejhledanější jako červený chip s ikonou a v mobilním menu jako poslední položka Náhradních dílů. Klik zapne výpis zlevněných dílů.',
+          why: 'Akce jsou pro zákazníka nejsilnější důvod k návštěvě, ale nejsou to kategorie sortimentu — nemají podkategorie a v menu ani megamenu nemají co nabídnout. Rozcestník je správné místo: je vidět, ale nemíchá se do struktury.',
+          how: 'Dlaždice se nikdy neroztahuje přes víc sloupců — místo toho je zvolený takový počet sloupců, aby na posledním řádku nezbyla jediná dlaždice: V1 s devíti dlaždicemi jede na velkém monitoru 5 + 4, na menším 3 + 3 + 3, V2 se sedmi 4 + 3. Chip dostal novou variantu sale — světle červená plocha s červeným textem, stejná rodina jako dlaždice; plná červená plocha zůstává vyhrazená tlačítkům.' },
+        { title: 'Kategorie jsou srovnané podle prodejů',
+          where: 'Náhradní díly — rozcestník, megamenu, mobilní menu',
+          what: 'Pořadí sdružovacích kategorií i položek v nich se řídí reportem prodejů od klienta (Item Sales, celkem 211 770). V obou verzích je tak první Elektro, svítilny, odrazky s 31 % obratu. Kategorie, které v reportu nejsou (Nápravy kompletní, Hydraulika, Plynové vzpěry, Boxy na nářadí, Navijáky), se řadí nakonec. Abecední pořadí z excelu je dostupné jako volba pro srovnání.',
+          why: 'Excel měl kategorie v pořadí, jak je klient psal, ne podle toho, co se prodává. Zákazník má nejžádanější sortiment vidět první — u Elektra jde o téměř třetinu obratu.',
+          how: 'Pořadí sdružovací kategorie je dané součtem prodejů kategorií, které pod ní patří, takže se do popředí dostane i skupina složená z menších kategorií (Karoserie a nástavba ve V2). Podkategorie vlastní číslo nemají, v rámci své kategorie tedy drží pořadí z excelu. Řadí se jen zobrazení — struktura zůstává beze změny.' },
         { title: 'Nové desktopové megamenu s podkategoriemi a fotkami',
           where: 'Hlavička — Náhradní díly',
-          what: 'Hover nebo fokus na tabu Náhradní díly rozbalí megamenu přes šířku obsahu webu. Každá sdružovací kategorie má náhledovou fotku 48 × 48, název jako odkaz na hub a pod ním max 6 podkategorií; když jich má víc, přidá se odkaz „Zobrazit vše (N)“ — třeba Elektro má 17. Struktura se řídí zvolenou verzí: V1 osm skupin ve čtyřech sloupcích, V2 šest ve třech. Zavírá Escape, odjezd myší i klik mimo.',
+          what: 'Hover nebo fokus na tabu Náhradní díly i Přívěsy rozbalí megamenu přes šířku obsahu webu — na každé stránce webu, ne jen na výpisu dílů. Přívěsy nabízejí svých 11 kategorií s podkategoriemi. Každá sdružovací kategorie má náhledovou fotku 48 × 48, název jako odkaz na hub a pod ním max 6 podkategorií; když jich má víc, přidá se odkaz „Zobrazit vše (N)“ — třeba Elektro má 17. Struktura se řídí zvolenou verzí: V1 osm skupin ve čtyřech sloupcích, V2 šest ve třech. Zavírá Escape, odjezd myší i klik mimo.',
           why: 'Do menu se nedala hierarchie ani prohlédnout — zákazník musel nejdřív na výpis. Vypsat u velkých kategorií všech 17 podkategorií by ale panel roztáhlo přes celou obrazovku.',
-          how: 'Pravidlo „6 + Zobrazit vše“ drží komponenta, takže platí všude stejně a nedá se obejít. Panel má změřenou maximální výšku podle dostupného místa v okně a vlastní rolování, takže spodní řada skupin je dosažitelná i na notebooku. Počty produktů se v megamenu nezobrazují — stejně jako v dlaždicích kategorií.' },
+          how: 'Pravidlo „6 + Zobrazit vše“ drží komponenta, takže platí všude stejně a nedá se obejít. Panel má změřenou maximální výšku podle dostupného místa v okně a vlastní rolování, takže spodní řada skupin je dosažitelná i na notebooku. Počty produktů se v megamenu nezobrazují — stejně jako v dlaždicích kategorií. Data menu leží v jednom společném souboru, takže je hlavička má k dispozici všude; výpis dílů si strukturu drží živě kvůli přepínači V1/V2 a svůj tab přebije. Akce a slevy nezabírají v mřížce další řádek — mají místo v pravém sloupci Nejhledanější, oddělené svislou linkou, kde stojí jako zvýrazněná červená položka na konci.' },
         { title: 'Mobilní menu jede po stejné struktuře jako rozcestník',
           where: 'Hlavička — mobilní menu',
           what: 'Náhradní díly v mobilním menu rozbalí sdružovací kategorie podle zvolené verze (V1 osm, V2 šest), druhá úroveň je výčet z excelu a u položek, které jsou celé dnešní kategorie, se dá zajít ještě o úroveň hlouběji.',

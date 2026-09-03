@@ -31,6 +31,7 @@
   .c-secondary{transition:background .12s;} .c-secondary:hover{background:#D8E6F6 !important;}
   .c-accent{transition:background .12s;} .c-accent:hover{background:#1E5AA8 !important;}
   .c-guide{transition:background .12s;} .c-guide:hover{background:#F7E4BC !important;}
+  .c-sale{transition:background .12s;} .c-sale:hover{background:#FAD9DA !important;}
   /* klikací plocha bez zásahu do layoutu */
   .c-hit{position:relative;} .c-hit::after{content:'';position:absolute;top:-4px;right:-2px;bottom:-4px;left:-2px;}
 </style>
@@ -81,14 +82,14 @@
   </div>
   <div style="display:flex;flex-direction:column;gap:5px;padding:2px 4px;">
     <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> pill radius 999, fs 14/700, dvě velikosti — <strong>Standard 40 px</strong> (padding 8/16) a <strong>Small 32 px</strong> (padding 4/12). Ikona: Standard 24×24 (levý padding 8), Small 18×18 (levý padding 8). Výška je stejná s ikonou i bez ní. <code>filter</code> aktivní = plný modrý s ✕, neaktivní = #F2F4F7. Navigační: <code>primary</code> #1E5AA8/bílá, <code>secondary</code> #EFF4FB/#1E5AA8, <code>secondaryOutline</code> totéž + linka #1E5AA8, <code>guide</code> #FCF1DC/#7A4E00 (poradna), <code>accent</code> #142F56/bílá. Pro <strong>odkaz na článek v poradně</strong> je vyhrazený <code>guide</code> (vždy s ikonou) — okrová rodina ho odliší od modré navigace. <code>outline</code> = bílý s linkou #91959B (dřív <code>brand</code>).</div>
-    <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nemíchat s hranatými bloky; ✕ jen na aktivním filtru; žádná zelená ani červená plocha (vyhrazené konverzi a akcím); <code>accent</code> nepoužívat pro kategorie.</div>
+    <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nemíchat s hranatými bloky; ✕ jen na aktivním filtru; zelená plocha se nezavádí; červená jen jako varianta <code>sale</code> pro akce (red.50 plocha, red.600 text), nikdy jako plná červená konverzi a akcím); <code>accent</code> nepoužívat pro kategorie.</div>
     <div style="font-size:13px;line-height:1.5;color:#5A626C;"><strong>Kontrakt:</strong> <code>kind</code> + <code>label</code>; <code>href</code> vykreslí <code>&lt;a&gt;</code> (navigace), bez něj <code>&lt;button&gt;</code> + <code>onClick</code>. <code>iconName</code> vkládá ikonu z <code>Ikony</code> (24×24). <code>count</code> se zobrazí jen u <code>outline</code>. <code>size</code> = <code>standard</code> (default) nebo <code>small</code>.</div>
   </div>
 </div>
 </sc-if>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:760,&quot;height&quot;:420},&quot;kind&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;filter&quot;,&quot;primary&quot;,&quot;secondary&quot;,&quot;secondaryOutline&quot;,&quot;guide&quot;,&quot;accent&quot;,&quot;outline&quot;,&quot;brand&quot;],&quot;default&quot;:&quot;filter&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;standard&quot;,&quot;small&quot;],&quot;default&quot;:&quot;standard&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;active&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Nájezdové brzdy&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;count&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:486,&quot;tsType&quot;:&quot;number&quot;},&quot;iconName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;href&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onRemove&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:760,&quot;height&quot;:420},&quot;kind&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;sale&quot;,&quot;filter&quot;,&quot;primary&quot;,&quot;secondary&quot;,&quot;secondaryOutline&quot;,&quot;guide&quot;,&quot;accent&quot;,&quot;outline&quot;,&quot;brand&quot;],&quot;default&quot;:&quot;filter&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;standard&quot;,&quot;small&quot;],&quot;default&quot;:&quot;standard&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;active&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Nájezdové brzdy&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;count&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:486,&quot;tsType&quot;:&quot;number&quot;},&quot;iconName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;href&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onRemove&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 class Component extends DCLogic {
   // Standard 40 px (padding 8/16) · Small 32 px (padding 4/12). Ikona zůstává 24×24,
   // proto je s ikonou levý padding stejný jako vertikální — mezera kolem ikony je shodná.
@@ -104,6 +105,9 @@ class Component extends DCLogic {
     secondaryOutline: { cls:'c-secondary', css:'color:#1E5AA8;background:#EFF4FB;box-shadow:inset 0 0 0 1px #1E5AA8;' },
     guide:            { cls:'c-guide',     css:'color:#7A4E00;background:#FCF1DC;' },
     accent:           { cls:'c-accent',    css:'color:#fff;background:#142F56;' },
+    // sale = okrajová červená rodina akcí, shodná s dlaždicí Akce a slevy (red.50 / red.600);
+    // plná červená plocha se u chipu nezavádí, ta patří tlačítku danger
+    sale:             { cls:'c-sale',      css:'color:#C5232B;background:#FDF1F1;' },
     outline:          { cls:'c-brand',     css:'color:#3A424C;background:#fff;box-shadow:inset 0 0 0 1px #91959B;' }
   };
   renderVals(){

@@ -25,6 +25,10 @@
   /* iOS Safari zoomuje na input s písmem pod 16 px a po zavření klávesnice zoom nevrátí —
      stránka pak zůstane přeteklá do šířky. Pod 550 px proto 16 px. */
   @media (max-width:549px){ .s-input{font-size:16px !important;} }
+  /* nativní křížek prohlížeče — máme vlastní tlačítko s ikonou ze sady Tabler */
+  .s-input::-webkit-search-cancel-button,
+  .s-input::-webkit-search-decoration{-webkit-appearance:none;appearance:none;display:none;}
+  .s-input::-ms-clear{display:none;width:0;height:0;}
   .s-sug{max-width:100%;overflow-wrap:anywhere;}
 
   html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
@@ -67,7 +71,7 @@
 </div>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:620,&quot;height&quot;:480},&quot;value&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;bare&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;height&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:48,&quot;tsType&quot;:&quot;number&quot;},&quot;placeholder&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;onFieldFocus&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:620,&quot;height&quot;:480},&quot;value&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;bare&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;height&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:48,&quot;tsType&quot;:&quot;number&quot;},&quot;placeholder&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
   state = { q:'', focus:false };
   SEARCH = [
@@ -104,7 +108,7 @@ class Component extends DCLogic {
       q, hasQ: !!q, autofocus,
       searchRing: s.focus ? 'inset 0 0 0 2px #1E5AA8' : 'inset 0 0 0 0 transparent',
       onSearch:(e)=>setQ(e.target.value),
-      onFocus:()=>this.setState({ focus:true }),
+      onFocus:()=>{ this.setState({ focus:true }); const f = this.props.onFieldFocus; if (typeof f === 'function') f(); },
       onBlur:()=>this.setState({ focus:false }),
       clearSearch:()=>setQ(''),
       showSuggest: s.focus,

@@ -102,6 +102,7 @@ const MM_BASES = {
 const MM_LINK = (nodes, base, segs)=>(nodes||[]).map(n=>{
   const path = segs.concat(MM_SLUG(n.name));
   const out = { name:n.name, href: base ? base.file + base.route + path.join('/') + '/' : (n.href || '#') };
+  if (n.tone) out.tone = n.tone;
   if (Array.isArray(n.children) && n.children.length) out.children = MM_LINK(n.children, base, path);
   return out;
 });
@@ -361,7 +362,7 @@ class Component extends DCLogic {
           expanded: isOpen ? 'true' : 'false',
           style: 'font-size:' + (root ? 20 : 18) + 'px;font-weight:700;line-height:1.35;min-width:0;'
             + (depth ? 'padding-left:' + (depth * 16) + 'px;' : '') + 'color:'
-            + (root ? '#15181C' : '#5A626C') + ';',
+            + (n.tone === 'sale' ? '#C5232B' : (root ? '#15181C' : '#5A626C')) + ';',
           onClick: branch ? toggle(key) : goHref(n.href || '#', n.name),
         });
         if (branch && isOpen) walk(n.children, depth + 1, key);
