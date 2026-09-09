@@ -94,7 +94,7 @@
 
   <dc-import name="Usp" variant="pas" tone="tmavy" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,48px"></dc-import>
 
-  <dc-import name="Hlavicka" active="Náhradní díly" currency="{{ currency }}" on-currency-change="{{ onCurrency }}" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:30–16:30" contact-open="{{ true }}" menu-tree="{{ menuTree }}" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" mega-tab="Náhradní díly" mega-groups="{{ megaGroups }}" mega-rail="{{ megaRail }}" mega-columns="{{ megaColumns }}" mega-max-items="{{ megaMaxItems }}" hint-size="100%,150px"></dc-import>
+  <dc-import name="Hlavicka" active="Náhradní díly" currency="{{ currency }}" on-currency-change="{{ onCurrency }}" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:30–16:30" contact-open="{{ true }}" menu-tree="{{ menuTree }}" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" mega-tab="Náhradní díly" mega-variant="{{ megaVer }}" mega-groups="{{ megaGroups }}" mega-rail="{{ megaRail }}" mega-columns="{{ megaColumns }}" mega-max-items="{{ megaMaxItems }}" hint-size="100%,150px"></dc-import>
 
   <!-- CONTENT -->
   <main class="vp-in" style="padding-top:14px;padding-bottom:40px;">
@@ -247,7 +247,7 @@
 
   <dc-import name="FiltrDrawer" open="{{ filterOpen }}" currency="{{ currency }}" price-from="{{ priceFrom }}" price-to="{{ priceTo }}" on-price-change="{{ onPriceChange }}" flags="{{ filterFlags }}" on-toggle-flag="{{ onToggleFlag }}" only-stock="{{ onlyStock }}" on-toggle-stock="{{ toggleStock }}" groups="{{ filterGroups }}" result-count="{{ resultCount }}" on-toggle-option="{{ onFilterOption }}" on-clear="{{ clearFilters }}" on-close="{{ closeFilter }}" debug="{{ debug }}" hint-size="0px,0px"></dc-import>
 
-  <dc-import name="PrezentacniLista" label="{{ plLabel }}" variants="{{ plVariants }}" active="{{ plActive }}" on-select="{{ plSelect }}" debug-on="{{ plDebugOn }}" on-toggle-debug="{{ plToggleDebug }}" hint-size="0px,0px"></dc-import>
+  <dc-import name="PrezentacniLista" label="{{ plLabel }}" variants="{{ plVariants }}" active="{{ plActive }}" on-select="{{ plSelect }}" label2="{{ pl2Label }}" variants2="{{ pl2Variants }}" active2="{{ pl2Active }}" on-select2="{{ pl2Select }}" debug-on="{{ plDebugOn }}" on-toggle-debug="{{ plToggleDebug }}" hint-size="0px,0px"></dc-import>
 
   <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </div>
@@ -270,7 +270,7 @@ class Component extends DCLogic {
     this.state = {
       menuOpen:false, descOpen:false, filterOpen:false, sortOpen:false,
       priceFrom:0, priceTo:8000, flags:null,
-      hubVer:'v1', hubOrder: props.hubOrder === 'excel' ? 'excel' : 'prodeje', view:'groups', path:[], leafPath:null, subcat:null, onlyStock: props.defaultOnlyStock ?? false, sort: props.defaultSort ?? 'pop',
+      hubVer:'v1', megaVer: (function(){ try { return localStorage.getItem('vapp-mega-variant') === 'M2' ? 'M2' : 'M1'; } catch(e){ return 'M1'; } })(), hubOrder: props.hubOrder === 'excel' ? 'excel' : 'prodeje', view:'groups', path:[], leafPath:null, subcat:null, onlyStock: props.defaultOnlyStock ?? false, sort: props.defaultSort ?? 'pop',
       cart:{}, brands:{}, params:{}, accOpen:{ 'Výrobce':true }, compare:{}, qty:{}, pageFrom:1, pageTo:1, catLayout:null, debugOverride:null, hoverCard:null,
       searchQ:'', searchFocus:false, loading:false, macro:null, brandFocus:null, saleOnly:false,
       currency:'CZK',
@@ -1071,6 +1071,11 @@ class Component extends DCLogic {
       brandCategories: [],
       onOpenBrand: (b)=>openBrand(b),
       debug: effDebug,
+      megaVer: s.megaVer === 'M2' ? 'M2' : 'M1',
+      pl2Label: 'Megamenu:',
+      pl2Active: s.megaVer === 'M2' ? 'M2' : 'M1',
+      pl2Variants: [{ id:'M1', label:'M1 · kategorie' }, { id:'M2', label:'M2 · sloupce' }],
+      pl2Select: (id)=>{ const v = id === 'M2' ? 'M2' : 'M1'; try { localStorage.setItem('vapp-mega-variant', v); } catch(e){} this.setState({ megaVer: v }); },
       plLabel: 'Struktura:',
       plActive: s.hubVer === 'v2' ? 'v2' : 'v1',
       plVariants: [{ id:'v1', label:'V1 · 8 kategorií' }, { id:'v2', label:'V2 · 6 kategorií' }],

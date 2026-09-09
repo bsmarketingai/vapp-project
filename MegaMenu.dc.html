@@ -37,11 +37,25 @@
   .mm-railrow:hover{background:#F2F4F7 !important;color:#1E5AA8 !important;}
   .mm-salerow{transition:background .12s;}
   .mm-salerow:hover{background:#FAD9DA !important;}
+  /* M2 — sloupcová verze: sloupce s kickery, bez fotek a bez railu */
+  .mm2-grid{display:grid;gap:28px 32px;grid-template-columns:repeat(var(--mm-cols,4),1fr);}
+  @media (max-width:1149px){ .mm2-grid{grid-template-columns:repeat(3,1fr);} }
+  @media (max-width:819px){ .mm2-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:549px){ .mm2-grid{grid-template-columns:1fr;} }
+  .mm2-col{display:flex;flex-direction:column;gap:24px;min-width:0;border-left:1px solid #F2F4F7;padding-left:32px;}
+  .mm2-col:nth-child(4n+1){border-left:0;padding-left:0;}
+  @media (max-width:1149px){ .mm2-col{padding-left:24px;} .mm2-col{border-left:1px solid #F2F4F7;} .mm2-col:nth-child(4n+1){border-left:1px solid #F2F4F7;padding-left:24px;} .mm2-col:nth-child(3n+1){border-left:0;padding-left:0;} }
+  @media (max-width:819px){ .mm2-col:nth-child(3n+1){border-left:1px solid #F2F4F7;padding-left:24px;} .mm2-col:nth-child(2n+1){border-left:0;padding-left:0;} }
+  @media (max-width:549px){ .mm2-col:nth-child(n){border-left:0;padding-left:0;} }
+  .mm2-foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:24px;padding-top:16px;border-top:1px solid #F2F4F7;}
+  .mm2-all{transition:background .12s,color .12s;} .mm2-all:hover{background:#EFF4FB !important;color:#1A4A8A !important;}
+  .mm2-cats{transition:background .12s;} .mm2-cats:hover{background:#D8E6F6 !important;}
 </style>
 </helmet>
 <div style="background:#FFFFFF;border-top:1px solid #F2F4F7;box-shadow:0 10px 30px rgba(20,30,45,.14);">
   <div class="mm-in" style="padding-top:24px;padding-bottom:24px;">
     <h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;margin:0;">{{ heading }}</h2>
+    <sc-if value="{{ isM1 }}" hint-placeholder-val="{{ true }}">
     <div class="mm-body">
     <div class="mm-grid" style="flex:1;min-width:0;{{ gridStyle }}">
       <sc-for list="{{ blocks }}" as="blk" hint-placeholder-count="8">
@@ -75,11 +89,41 @@
       </nav>
     </sc-if>
     </div>
+    </sc-if>
+    <sc-if value="{{ isM2 }}" hint-placeholder-val="">
+      <div class="mm2-grid" style="{{ gridStyle }}">
+        <sc-for list="{{ m2cols }}" as="col" hint-placeholder-count="4">
+          <div class="mm2-col">
+            <sc-for list="{{ col.sections }}" as="sec" hint-placeholder-count="2">
+              <div style="display:flex;flex-direction:column;min-width:0;">
+                <div style="display:flex;align-items:center;gap:10px;min-width:0;padding-bottom:10px;border-bottom:1px solid #F2F4F7;">
+                  <sc-if value="{{ sec.hasPhoto }}" hint-placeholder-val="{{ true }}">
+                    <img src="{{ sec.image }}" alt="" width="40" height="40" loading="lazy" style="flex:none;width:40px;height:40px;object-fit:contain;">
+                  </sc-if>
+                  <sc-if value="{{ sec.hasIcon }}" hint-placeholder-val="">
+                    <span aria-hidden="true" style="flex:none;width:40px;height:40px;display:flex;align-items:center;justify-content:center;color:#C5232B;"><dc-import name="Ikony" icon-name="{{ sec.icon }}" size="24" hint-size="24px,24px"></dc-import></span>
+                  </sc-if>
+                  <span style="font-size:13px;font-weight:700;line-height:1.4;text-transform:uppercase;letter-spacing:.06em;color:#1E5AA8;">{{ sec.kicker }}</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:2px;padding-top:10px;">
+                  <sc-for list="{{ sec.items }}" as="it" hint-placeholder-count="5">
+                    <a class="mm-i {{ it.cls }}" href="{{ it.href }}" style="{{ it.style }}"><sc-if value="{{ it.sale }}" hint-placeholder-val=""><span aria-hidden="true" style="display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="discount" size="18" hint-size="18px,18px"></dc-import></span></sc-if>{{ it.name }}</a>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+      <div class="mm2-foot" style="justify-content:flex-end;">
+        <a class="mm-i mm2-all" href="{{ allHref }}" style="display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;margin:0 -12px;border-radius:8px;font-size:14px;font-weight:700;color:#1E5AA8;">{{ allLabel }}<span aria-hidden="true" style="display:inline-flex;"><dc-import name="Ikony" icon-name="arrow-right" size="18" hint-size="18px,18px"></dc-import></span></a>
+      </div>
+    </sc-if>
   </div>
 </div>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:420},&quot;groups&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{name:string,href:string,items:{name:string,href:string}[]}[]&quot;,&quot;default&quot;:null},&quot;heading&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;maxItems&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:6,&quot;min&quot;:3,&quot;max&quot;:12,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;columns&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;min&quot;:2,&quot;max&quot;:5,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;showThumbs&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;railItems&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{name:string,href:string,tone?:string,iconName?:string}[]&quot;,&quot;default&quot;:null},&quot;railLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Nejhledanější&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:460},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;M1&quot;,&quot;M2&quot;],&quot;default&quot;:&quot;M1&quot;,&quot;tsType&quot;:&quot;'M1'|'M2'&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;groups&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{name:string,href:string,items:{name:string,href:string}[]}[]&quot;,&quot;default&quot;:null},&quot;m2Columns&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{sections:{kicker:string,items:{name:string,href:string,tone?:'sale'}[]}[]}[]&quot;,&quot;default&quot;:null},&quot;heading&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;maxItems&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:6,&quot;min&quot;:3,&quot;max&quot;:12,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;columns&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;min&quot;:2,&quot;max&quot;:5,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;showThumbs&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;railItems&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{name:string,href:string,tone?:string,iconName?:string}[]&quot;,&quot;default&quot;:null},&quot;railLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Nejhledanější&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;allLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Všechny náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;M2 — pata&quot;},&quot;allHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;#&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;M2 — pata&quot;},&quot;catsLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Všechny kategorie&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;M2 — pata&quot;},&quot;catsHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;#&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;M2 — pata&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 class Component extends DCLogic {
   DEMO = [
     { name:'Nápravy a díly náprav', href:'#', image:'uploads/napravy-a-brzdy.jpg', icon:'ikona-napravy-kompletni.svg', items:[
@@ -105,6 +149,39 @@ class Component extends DCLogic {
     { name:'Pneumatiky s diskem', href:'#' },
     { name:'Akce a slevy', href:'#', tone:'sale', iconName:'discount' }
   ];
+  /* M2 — sloupcová verze. Sloupce jsou čistá data: [{ sections:[{kicker, items:[{name,href,tone}]}] }].
+     Řazení sloupců i položek přichází z dat (podle sales share), komponenta nepřerovnává. */
+  DEMO_M2 = [
+    { sections:[
+      { kicker:'Elektro a osvětlení', image:'uploads/elektro-a-osvetleni.jpg', items:[{ name:'Elektro, svítilny, odrazky', href:'#' }] },
+      { kicker:'Podvozek', image:'uploads/napravy-a-brzdy.jpg', items:[
+        { name:'Díly náprav', href:'#' }, { name:'Nápravy kompletní', href:'#' },
+        { name:'Pneu, kola, disky', href:'#' }, { name:'Nájezdové brzdy a díly', href:'#' },
+        { name:'Hydraulika přívěsů', href:'#' } ] }
+    ] },
+    { sections:[
+      { kicker:'Karoserie a nástavba', image:'uploads/plachty.jpg', items:[
+        { name:'Plachty a příslušenství', href:'#' }, { name:'Bočnice, uzávěry, panty', href:'#' },
+        { name:'Konstrukční díly', href:'#' }, { name:'Blatníky a zástěrky', href:'#' },
+        { name:'Plynové vzpěry a příslušenství', href:'#' } ] },
+      { kicker:'Spojení s vozidlem', image:'uploads/spojovaci-zarizeni.jpg', items:[
+        { name:'Spojovací zařízení a zámky', href:'#' }, { name:'Opěrná kolečka, nohy, držáky', href:'#' } ] }
+    ] },
+    { sections:[
+      { kicker:'Manipulace a nakládání', image:'uploads/zabezpeceni_nakladu.jpg', items:[
+        { name:'Zabezpečení nákladu', href:'#' }, { name:'Klíny a držáky', href:'#' },
+        { name:'Nájezdy', href:'#' }, { name:'Navijáky a příslušenství', href:'#' },
+        { name:'Boxy na nářadí a držáky boxů', href:'#' } ] },
+      { kicker:'Doplňky a údržba', image:'uploads/doplnky.jpg', items:[
+        { name:'Doplňky k přívěsům', href:'#' }, { name:'Pomůcky pro údržbu', href:'#' } ] }
+    ] },
+    { sections:[
+      { kicker:'Díly podle výrobce', items:[
+        { name:'KNOTT', href:'#' }, { name:'AL-KO', href:'#' }, { name:'BPW', href:'#' },
+        { name:'Jokon', href:'#' }, { name:'VAPP', href:'#' } ] },
+      { kicker:'Akce', items:[{ name:'Akce a slevy %', href:'#', tone:'sale' }] }
+    ] }
+  ];
   renderVals(){
     const P = this.props;
     const src = (Array.isArray(P.groups) && P.groups.length) ? P.groups : this.DEMO;
@@ -112,8 +189,33 @@ class Component extends DCLogic {
     const cols = Math.min(5, Math.max(2, P.columns ?? 4));
     const thumbs = (P.showThumbs ?? true) !== false;
     const rail = Array.isArray(P.railItems) ? P.railItems : (src === this.DEMO ? this.DEMO_RAIL : []);
+    const m2src = (Array.isArray(P.m2Columns) && P.m2Columns.length) ? P.m2Columns : null;
+    // M2 bez vlastních dat spadne na M1 — stránka bez sloupcové struktury zůstane funkční
+    const m2 = P.variant === 'M2' && (m2src || !(Array.isArray(P.groups) && P.groups.length));
+    const m2cols = m2src || this.DEMO_M2;
     return {
       heading: P.heading || 'Náhradní díly',
+      isM2: m2, isM1: !m2,
+      m2cols: m2cols.map(c=>({
+        sections: (Array.isArray(c.sections) ? c.sections : []).map(s=>({
+          kicker: s.kicker || '', image: s.image || '', hasPhoto: !!s.image && !s.icon,
+          icon: s.icon || '', hasIcon: !!s.icon,
+          items: (Array.isArray(s.items) ? s.items : []).map(it=>{
+            const sale = it.tone === 'sale';
+            return {
+              name: it.name, href: it.href || '#', sale,
+              cls: sale ? 'mm-salerow' : 'mm-row',
+              style: sale
+                ? 'display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;line-height:1.5;padding:5px 8px;margin:0 -8px;border-radius:6px;color:#C5232B;background:#FDF1F1;'
+                : 'display:block;font-size:14px;font-weight:500;line-height:1.5;padding:5px 8px;margin:0 -8px;border-radius:6px;color:#5A626C;'
+            };
+          })
+        }))
+      })),
+      allLabel: P.allLabel || 'Všechny náhradní díly',
+      allHref: P.allHref || '#',
+      catsLabel: P.catsLabel || 'Všechny kategorie',
+      catsHref: P.catsHref || P.allHref || '#',
       gridStyle: '--mm-cols:' + cols + ';',
       hasRail: rail.length > 0,
       railLabel: P.railLabel || 'Nejhledanější',
