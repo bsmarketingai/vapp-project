@@ -74,7 +74,7 @@
                 <button type="button" class="ft-acc a11y-i" aria-expanded="{{ col.expanded }}" onClick="{{ col.onToggle }}" style="display:none;width:100%;align-items:center;justify-content:space-between;gap:12px;min-height:52px;font-size:20px;font-weight:700;line-height:1.35;color:#fff;cursor:pointer;">{{ col.title }}<span aria-hidden="true" style="{{ col.chevStyle }}"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></span></button>
                 <div class="ft-links {{ col.cls }}" style="display:flex;flex-direction:column;gap:14px;min-width:0;">
                   <sc-for list="{{ col.links }}" as="l" hint-placeholder-count="4">
-                    <a class="ft-link a11y-i ft-hit" href="#" onClick="{{ onNav }}" style="font-size:16px;font-weight:700;line-height:1.35;color:#B4CEEC;cursor:pointer;">{{ l }}</a>
+                    <a class="ft-link a11y-i ft-hit" href="{{ l.href }}" onClick="{{ onNav }}" style="font-size:16px;font-weight:700;line-height:1.35;color:#B4CEEC;cursor:pointer;">{{ l.t }}</a>
                   </sc-for>
                 </div>
               </div>
@@ -111,15 +111,14 @@
         </div>
         <div class="ft-contact" style="display:flex;flex-direction:column;gap:12px;background:rgba(255,255,255,.06);border-radius:8px;padding:24px;">
           <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#B4CEEC;">Kontakt</span>
-          <span style="font-size:15px;font-weight:700;color:#fff;">VAPP s.r.o.</span>
-          <span style="display:flex;flex-direction:column;gap:2px;font-size:15px;color:#B4CEEC;line-height:1.5;"><span>Popovičky 50, 251 01 Říčany</span></span>
-          <a class="ft-clink a11y-i" href="https://www.google.cz/maps/dir//VAPP+-+p%C5%99%C3%ADv%C4%9Bsy,+p%C5%99%C3%ADslu%C5%A1enstv%C3%AD,+n%C3%A1hradn%C3%AD+d%C3%ADly+a+servis,+38,+251+01+Popovi%C4%8Dky/@49.9695313,14.6010162,13z/data=!4m9!4m8!1m0!1m5!1m1!1s0x470b8f238df097eb:0x94157206222d85f7!2m2!1d14.6005557!2d49.9599557!3e0?entry=ttu&amp;g_ep=EgoyMDI2MDgyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#fff;line-height:1.5;text-decoration:underline;cursor:pointer;"><span aria-hidden="true" style="display:inline-flex;align-items:center;flex:none;"><dc-import name="Ikony" icon-name="map-pin" size="24" hint-size="24px,24px"></dc-import></span>Popovičky 38, 251 01 Říčany, Praha-východ</a>
           <a class="ft-clink a11y-i" href="mailto:obchod&#64;vapp.cz" style="display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#fff;text-decoration:underline;cursor:pointer;"><span style="display:inline-flex;align-items:center;flex:none;"><dc-import name="Ikony" icon-name="mail" size="24" hint-size="24px,24px"></dc-import></span>obchod&#64;vapp.cz</a>
           <a class="ft-clink a11y-i" href="tel:+420323605314" style="display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#fff;text-decoration:underline;cursor:pointer;"><span style="display:inline-flex;align-items:center;flex:none;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import></span>323 605 314</a>
           <span style="display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#fff;line-height:1.5;"><span aria-hidden="true" style="display:inline-flex;align-items:center;flex:none;"><dc-import name="Ikony" icon-name="clock" size="24" hint-size="24px,24px"></dc-import></span>Po–Pá 8:30–16:30<span class="vapp-led" style="--led:rgba(151,219,180,.5);width:9px;height:9px;background:#97DBB4;flex:none;margin-left:1px;"></span><span style="font-weight:400;color:#97DBB4;">právě otevřeno</span></span>
           <div style="height:1px;background:rgba(255,255,255,.12);margin:4px 0;"></div>
+          <span style="font-size:15px;font-weight:700;color:#fff;">VAPP s.r.o.</span>
+          <span style="font-size:13px;color:#B4CEEC;margin-top:-6px;">IČO 12345678 · DIČ CZ12345678</span>
+          <a class="ft-clink a11y-i" href="https://www.google.cz/maps/dir//VAPP+-+p%C5%99%C3%ADv%C4%9Bsy,+p%C5%99%C3%ADslu%C5%A1enstv%C3%AD,+n%C3%A1hradn%C3%AD+d%C3%ADly+a+servis,+38,+251+01+Popovi%C4%8Dky/@49.9695313,14.6010162,13z/data=!4m9!4m8!1m0!1m5!1m1!1s0x470b8f238df097eb:0x94157206222d85f7!2m2!1d14.6005557!2d49.9599557!3e0?entry=ttu&amp;g_ep=EgoyMDI2MDgyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#fff;line-height:1.5;text-decoration:underline;cursor:pointer;"><span aria-hidden="true" style="display:inline-flex;align-items:center;flex:none;"><dc-import name="Ikony" icon-name="map-pin" size="24" hint-size="24px,24px"></dc-import></span>Popovičky 38, 251 01 Říčany, Praha-východ</a>
           <dc-import name="Tlacitko" variant="ondark" size="medium" icon="address-book" label="Všechny kontakty" full-width="true" style="width:100%;" hint-size="100%,44px"></dc-import>
-          <span style="font-size:13px;color:#B4CEEC;margin-top:2px;">IČO 12345678 · DIČ CZ12345678</span>
           <div style="height:1px;background:rgba(255,255,255,.12);margin:4px 0;"></div>
           <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#B4CEEC;">Sledujte nás</span>
           <div style="display:flex;gap:12px;">
@@ -131,7 +130,7 @@
       </div>
       <div style="height:1px;background:rgba(255,255,255,.10);"></div>
       <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-        <span style="font-size:14px;color:#B4CEEC;">© 2026 VAPP s.r.o. · <a class="ft-link a11y-i ft-hit" href="#" onClick="{{ onNav }}" style="cursor:pointer;color:#B4CEEC;">Ochrana osobních údajů</a> · <a class="ft-link a11y-i ft-hit" href="#" onClick="{{ onNav }}" style="text-decoration:underline;cursor:pointer;color:#B4CEEC;">Nastavení cookies</a></span>
+        <span style="font-size:14px;color:#B4CEEC;">© 2026 VAPP s.r.o. · <a class="ft-link a11y-i ft-hit" href="#" onClick="{{ onNav }}" style="text-decoration:underline;cursor:pointer;color:#B4CEEC;">Nastavení cookies</a></span>
         <span style="margin-left:auto;font-size:14px;color:#B4CEEC;">Powered by <a class="ft-link a11y-i ft-hit" href="#" onClick="{{ onNav }}" style="font-weight:700;color:#B4CEEC;cursor:pointer;">BSSHOP</a></span>
       </div>
     </div>
@@ -152,7 +151,9 @@ class Component extends DCLogic {
     const open = this.state.openCols || {};
     const toggle = (i)=>this.setState({ openCols: Object.assign({}, open, { [i]: !open[i] }) });
     // na mobilu jsou sloupce defaultně zabalené; na desktopu CSS akordeon vypne
+    const HREF = { 'Servis':'servis.dc.html', 'Přívěsy':'privesy-V1.dc.html', 'Náhradní díly':'nahradnidily.dc.html', 'Poradna':'poradna.dc.html', 'O nás':'onas.dc.html' };
     const decorate = (cols)=>cols.map((c,i)=>Object.assign({}, c, {
+      links: (c.links||[]).map(t=>({ t, href: HREF[t] || '#' })),
       expanded: open[i] ? 'true' : 'false',
       cls: open[i] ? '' : 'ft-closed',
       chevStyle: 'display:inline-flex;flex:none;transition:transform .12s ease;' + (open[i] ? 'transform:rotate(180deg);' : ''),
@@ -160,7 +161,8 @@ class Component extends DCLogic {
     }));
     const logoStyle=(file)=>'display:block;flex:none;width:65px;height:40px;background:url("./uploads/DeliveryPaymentSelectorView_'+file+'.svg") center/contain no-repeat;';
     return {
-      onNav:(e)=>{ if(e&&e.preventDefault) e.preventDefault(); },
+      // odkaz s reálným cílem se nechá na prohlížeči; zbytek prototypu je zatím bez cíle
+      onNav:(e)=>{ const h = e && e.currentTarget && e.currentTarget.getAttribute('href'); if(h && h !== '#') return; if(e&&e.preventDefault) e.preventDefault(); },
       showNote: !this.props.bare,
       footerCols: decorate([
         { title:'Sortiment', links:['Přívěsy','Náhradní díly','Příslušenství','Akce a slevy'] },

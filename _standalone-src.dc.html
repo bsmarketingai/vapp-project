@@ -634,7 +634,7 @@ class Component extends DCLogic {
       const sen = document.querySelector('.p-sentinel');
       if (!hdr || !sen) return;
       const hdrH = hdr.offsetHeight;
-      const pinned = hdrH - 35;            // spodní hrana přilepené hlavičky
+      const pinned = hdrH;                 // hlavička zůstává přilepená celá
       const bar = document.querySelector('.p-sticky');
       const senTop = sen.getBoundingClientRect().top;
       if (bar) { const bt = bar.getBoundingClientRect().top; if (bt > 1) this._gap = bt - senTop; }
@@ -990,7 +990,7 @@ class Component extends DCLogic {
             return walk(g, []);
           }) },
         { name:'Příslušenství', href:'#' },
-        { name:'Servis', href:'#' },
+        { name:'Servis', href:'servis.dc.html', children:[{ name:'AL-KO servis', href:'servis.dc.html' },{ name:'BPW servis', href:'servis.dc.html' },{ name:'KNOTT servis', href:'servis.dc.html' },{ name:'Garanční prohlídky', href:'servis.dc.html' },{ name:'Pneuservis', href:'servis.dc.html' }] },
         { name:'Půjčovna', href:'#' },
       ],
       groups, subcats, categoriesData, onOpenCategory, onPickSub,

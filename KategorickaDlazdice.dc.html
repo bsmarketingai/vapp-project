@@ -42,6 +42,7 @@
       <a class="k-cover a11y-i" href="{{ catHref }}" onClick="{{ cat.onOpen }}" style="{{ nameStyle }}">{{ cat.name }}</a>
       
     </span>
+    <sc-if value="{{ noMedia }}" hint-placeholder-val=""><span aria-hidden="true" style="flex:none;display:inline-flex;color:#5189CC;"><dc-import name="Ikony" icon-name="chevron-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span></sc-if>
   </div>
 </sc-if>
 <sc-if value="{{ single }}" hint-placeholder-val="">
@@ -130,13 +131,15 @@ class Component extends DCLogic {
       cat.onOpen = this.nav(P.cat.onOpen);
       const isCompact = P.variant === 'kompaktni';
       const isSale = !!cat.sale;
-      const media = this.props.media === 'ikony' ? 'ikony' : 'fotky';
+      const media = (this.props.media === 'ikony' || this.props.media === 'zadne') ? this.props.media : 'fotky';
       return { single: !isCompact, compact: isCompact, gallery:false, cat, catHref: cat.href || '#',
         isSale, saleCls: isSale ? 'k-sale' : '',
         // media: 'fotky' (náhledová fotka) | 'ikony' (ikona 60×60 z cat.icon); bez zdroje se vrací k ikoně v kruhu
+        // media 'zadne' = dlaždice bez média (jen text) — stránka Servis
         hasImage: !isSale && media === 'fotky' && !!cat.image,
         hasIcon: !isSale && media === 'ikony' && !!cat.icon,
-        noImage: !isSale && !(media === 'fotky' ? cat.image : cat.icon),
+        noImage: !isSale && media !== 'zadne' && !(media === 'fotky' ? cat.image : cat.icon),
+        noMedia: media === 'zadne',
         hasSubs: cat.subs.length > 0,
         nameStyle: 'display:block;font-size:16px;font-weight:700;line-height:1.3;color:' + (isSale ? '#C5232B' : '#15181C') + ';' };
     }

@@ -42,10 +42,10 @@
         <dc-import name="Ikony" icon-name="arrow-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
       </a>
       <div class="pkr-navwrap" style="align-items:center;gap:4px;">
-        <button type="button" class="pkr-btn" aria-label="Předchozí produkty" onClick="{{ onPrev }}" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:999px;background:#FFFFFF;color:#C5232B;transition:background 120ms ease;" style-hover="background:#FDF1F1;" style-active="transform:translateY(1px);">
+        <button type="button" class="pkr-btn" aria-label="Předchozí produkty" disabled="{{ atStart }}" onClick="{{ onPrev }}" style="{{ prevStyle }}" style-hover="background:#FDF1F1;" style-active="transform:translateY(1px);">
           <dc-import name="Ikony" icon-name="chevron-left" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
         </button>
-        <button type="button" class="pkr-btn" aria-label="Další produkty" onClick="{{ onNext }}" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:999px;background:#FFFFFF;color:#C5232B;transition:background 120ms ease;" style-hover="background:#FDF1F1;" style-active="transform:translateY(1px);">
+        <button type="button" class="pkr-btn" aria-label="Další produkty" disabled="{{ atEnd }}" onClick="{{ onNext }}" style="{{ nextStyle }}" style-hover="background:#FDF1F1;" style-active="transform:translateY(1px);">
           <dc-import name="Ikony" icon-name="chevron-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
         </button>
       </div>
@@ -63,7 +63,8 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:600},&quot;title&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Nejprodávanější náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;allLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Zobrazit celou kategorii&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;allHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;#&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;detailHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;#&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;currency&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;CZK&quot;,&quot;EUR&quot;],&quot;default&quot;:&quot;CZK&quot;,&quot;tsType&quot;:&quot;'CZK'|'EUR'&quot;},&quot;items&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;object[]&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 class Component extends DCLogic {
-  state = { qty:{}, cart:{} };
+  NAV = 'width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:999px;background:#FFFFFF;color:#C5232B;transition:background 120ms ease,opacity 120ms ease;';
+  NAV_OFF = 'opacity:.4;cursor:not-allowed;';
   DEMO = [
     { name:'Opěrné kolečko ⌀48 mm, nosnost 150 kg', objNum:'404815', net:'397 Kč', gross:'480 Kč', stock:22, sale:15 },
     { name:'Nájezdová brzda KNOTT KF13', objNum:'901301', net:'4 876 Kč', gross:'5 900 Kč', stock:12 },
@@ -72,11 +73,43 @@ class Component extends DCLogic {
     { name:'Kolo 195/50 R13C, 5 × 112', objNum:'220513', net:'1 940 Kč', gross:'2 347 Kč', stock:16 },
     { name:'Zámek kulového čepu Winterhoff WS 3000', objNum:'770300', net:'2 390 Kč', gross:'2 892 Kč', stock:0 }
   ];
+  state = { qty:{}, cart:{}, atStart:true, atEnd:false };
   trackRef = React.createRef();
+  componentDidMount(){
+    const el = this.trackRef.current;
+    if (!el) return;
+    this._onScroll = ()=>this.syncEnds();
+    el.addEventListener('scroll', this._onScroll, { passive:true });
+    this._onResize = ()=>this.syncEnds();
+    window.addEventListener('resize', this._onResize);
+    this.syncEnds();
+  }
+  componentWillUnmount(){
+    const el = this.trackRef.current;
+    if (el && this._onScroll) el.removeEventListener('scroll', this._onScroll);
+    if (this._onResize) window.removeEventListener('resize', this._onResize);
+  }
+  syncEnds(){
+    const el = this.trackRef.current;
+    if (!el) return;
+    const max = el.scrollWidth - el.clientWidth;
+    const atStart = el.scrollLeft <= 1;
+    const atEnd = el.scrollLeft >= max - 1;
+    if (atStart !== this.state.atStart || atEnd !== this.state.atEnd) this.setState({ atStart, atEnd });
+  }
+  // krok karuselu = přesně jedna karta (šířka položky + mezera)
+  step(){
+    const el = this.trackRef.current;
+    if (!el) return 0;
+    const item = el.querySelector('.pkr-item');
+    if (!item) return Math.round(el.clientWidth * 0.9);
+    const gap = parseFloat(getComputedStyle(el).columnGap || getComputedStyle(el).gap || '0') || 0;
+    return Math.round(item.getBoundingClientRect().width + gap);
+  }
   scroll(dir){
     const el = this.trackRef.current;
     if (!el) return;
-    el.scrollBy({ left: dir * Math.round(el.clientWidth * 0.9), behavior:'smooth' });
+    el.scrollBy({ left: dir * this.step(), behavior:'smooth' });
   }
   card(raw, i){
     const st = this.state;
@@ -122,6 +155,9 @@ class Component extends DCLogic {
       currency: P.currency ?? 'CZK',
       products: src.map((r,i)=>this.card(r,i)),
       trackRef: this.trackRef,
+      atStart: this.state.atStart, atEnd: this.state.atEnd,
+      prevStyle: this.NAV + (this.state.atStart ? this.NAV_OFF : ''),
+      nextStyle: this.NAV + (this.state.atEnd ? this.NAV_OFF : ''),
       onPrev: ()=>this.scroll(-1),
       onNext: ()=>this.scroll(1),
       debug: P.debug ?? true

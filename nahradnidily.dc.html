@@ -88,6 +88,7 @@
 @media (min-width:1000px){ .hub-7 .vk-grid{grid-template-columns:repeat(4,1fr) !important;} } /* 4 + 3 */
 /* XS a XXS: sloupec Nejhledanější jde přes celou šířku a začíná u levého okraje */
 @media (max-width:549px){ .pg-topcol{display:none !important;} }
+@media (min-width:550px){ .pg-toprow-xs{display:none !important;} }
 </style>
 </helmet>
 <div data-screen-label="Náhradní díly" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
@@ -120,6 +121,16 @@
         </div>
       </sc-if>
     </div>
+    <sc-if value="{{ showTopRowXs }}" hint-placeholder-val="{{ true }}">
+      <div class="pg-toprow-xs" style="margin-top:22px;margin-bottom:8px;">
+        <dc-import name="VypisKategorii" top-only="{{ true }}" top-searched="{{ topSearchedData }}" show-guide-chip="{{ showGuideChip }}" debug="{{ debug }}" hint-size="100%,40px"></dc-import>
+      </div>
+    </sc-if>
+    <sc-if value="{{ showTopRow }}" hint-placeholder-val="">
+      <div style="margin-top:22px;margin-bottom:8px;">
+        <dc-import name="VypisKategorii" top-only="{{ true }}" top-searched="{{ topSearchedData }}" show-guide-chip="{{ showGuideChip }}" debug="{{ debug }}" hint-size="100%,40px"></dc-import>
+      </div>
+    </sc-if>
 
     <!-- ===== KATEGORIE (Datart/Alza drill-down) ===== -->
     <div style="margin-top:14px;">
@@ -247,7 +258,7 @@
 
   <dc-import name="FiltrDrawer" open="{{ filterOpen }}" currency="{{ currency }}" price-from="{{ priceFrom }}" price-to="{{ priceTo }}" on-price-change="{{ onPriceChange }}" flags="{{ filterFlags }}" on-toggle-flag="{{ onToggleFlag }}" only-stock="{{ onlyStock }}" on-toggle-stock="{{ toggleStock }}" groups="{{ filterGroups }}" result-count="{{ resultCount }}" on-toggle-option="{{ onFilterOption }}" on-clear="{{ clearFilters }}" on-close="{{ closeFilter }}" debug="{{ debug }}" hint-size="0px,0px"></dc-import>
 
-  <dc-import name="PrezentacniLista" label="{{ plLabel }}" variants="{{ plVariants }}" active="{{ plActive }}" on-select="{{ plSelect }}" label2="{{ pl2Label }}" variants2="{{ pl2Variants }}" active2="{{ pl2Active }}" on-select2="{{ pl2Select }}" debug-on="{{ plDebugOn }}" on-toggle-debug="{{ plToggleDebug }}" hint-size="0px,0px"></dc-import>
+  <dc-import name="PrezentacniLista" label="{{ plLabel }}" variants="{{ plVariants }}" active="{{ plActive }}" on-select="{{ plSelect }}" label2="{{ pl2Label }}" variants2="{{ pl2Variants }}" active2="{{ pl2Active }}" on-select2="{{ pl2Select }}" label3="{{ pl3Label }}" variants3="{{ pl3Variants }}" active3="{{ pl3Active }}" on-select3="{{ pl3Select }}" debug-on="{{ plDebugOn }}" on-toggle-debug="{{ plToggleDebug }}" hint-size="0px,0px"></dc-import>
 
   <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </div>
@@ -270,7 +281,7 @@ class Component extends DCLogic {
     this.state = {
       menuOpen:false, descOpen:false, filterOpen:false, sortOpen:false,
       priceFrom:0, priceTo:8000, flags:null,
-      hubVer:'v1', megaVer: (function(){ try { return localStorage.getItem('vapp-mega-variant') === 'M2' ? 'M2' : 'M1'; } catch(e){ return 'M1'; } })(), hubOrder: props.hubOrder === 'excel' ? 'excel' : 'prodeje', view:'groups', path:[], leafPath:null, subcat:null, onlyStock: props.defaultOnlyStock ?? false, sort: props.defaultSort ?? 'pop',
+      hubVer:'v1', hdrVer: (function(){ try { return localStorage.getItem('vapp-header-variant') === 'H2' ? 'H2' : 'H1'; } catch(e){ return 'H1'; } })(), megaVer: (function(){ try { return localStorage.getItem('vapp-mega-variant') === 'M2' ? 'M2' : 'M1'; } catch(e){ return 'M1'; } })(), hubOrder: props.hubOrder === 'excel' ? 'excel' : 'prodeje', view:'groups', path:[], leafPath:null, subcat:null, onlyStock: props.defaultOnlyStock ?? false, sort: props.defaultSort ?? 'pop',
       cart:{}, brands:{}, params:{}, accOpen:{ 'Výrobce':true }, compare:{}, qty:{}, pageFrom:1, pageTo:1, catLayout:null, debugOverride:null, hoverCard:null,
       searchQ:'', searchFocus:false, loading:false, macro:null, brandFocus:null, saleOnly:false,
       currency:'CZK',
@@ -664,7 +675,7 @@ class Component extends DCLogic {
       const sen = document.querySelector('.p-sentinel');
       if (!hdr || !sen) return;
       const hdrH = hdr.offsetHeight;
-      const pinned = hdrH - 35;            // spodní hrana přilepené hlavičky
+      const pinned = hdrH;                 // hlavička zůstává přilepená celá
       const bar = document.querySelector('.p-sticky');
       const senTop = sen.getBoundingClientRect().top;
       if (bar) { const bt = bar.getBoundingClientRect().top; if (bt > 1) this._gap = bt - senTop; }
@@ -1037,7 +1048,10 @@ class Component extends DCLogic {
       pageCountText: activeHub ? (macroSubcats.reduce((a,x)=>a+x.count,0).toLocaleString('cs-CZ')+' produktů') : (inCat ? (resultCount.toLocaleString('cs-CZ')+' produktů') : '2 418 produktů'),
       leafDesc: activeHub ? (activeHub.name + ' — ' + (activeHub.type === 'sdruzovaci' ? 'sdružovací kategorie' : 'samostatná kategorie') + ' nad ' + activeHub.items.length + ' skupinami dílů pro přívěsy všech značek. ' + activeHub.count.toLocaleString('cs-CZ') + ' položek skladem i na dotaz, expedice do 24 hodin. Vyberte si přesnější zařazení níže.') : inCat ? (curName+' — '+(path.length ? ('podkategorie '+(path.length>1?path[path.length-2]:ag.name)) : 'kategorie náhradních dílů')+' pro přívěsy všech značek. '+resultCount.toLocaleString('cs-CZ')+' položek skladem i na dotaz, expedice do 24 hodin. '+(hasKids?'Vyberte si přesnější zařazení níže, nebo procházejte celý výpis.':'Nevíte si rady s výběrem? Zavolejte nám.')) : '',
       crumbItems, onCrumbNav,
-      showTopCol: topChips.length > 0, topSearchedData: topChips, showGuideChip: guideChip,
+      showTopCol: topChips.length > 0 && s.hdrVer !== 'H2',
+      showTopRow: topChips.length > 0 && s.hdrVer === 'H2',
+      showTopRowXs: topChips.length > 0 && s.hdrVer !== 'H2',
+      topSearchedData: topChips, showGuideChip: guideChip,
       currency: s.currency || 'CZK', onCurrency: (code)=>this.setState({ currency: code }),
       backFromLeaf: this.link(()=>{ if(path.length>0) this.go({ path: path.slice(0,-1), leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, this.urlFor(ag.key, path.slice(0,-1))); else this.go({ view:'groups', path:[], leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, '#/nahradni-dily/'); }),
       backFromLeafHref: ag ? (path.length>0 ? this.urlFor(ag.key, path.slice(0,-1)) : '#/nahradni-dily/') : '#/nahradni-dily/',
@@ -1059,7 +1073,13 @@ class Component extends DCLogic {
             })
           })).concat([{ name: SALE_NAME, href: saleHref, tone:'sale' }]) },
         { name:'Příslušenství', href:'#' },
-        { name:'Servis', href:'#' },
+        { name:'Servis', href:'servis.dc.html', children:[
+          { name:'AL-KO servis', href:'servis.dc.html' },
+          { name:'BPW servis', href:'servis.dc.html' },
+          { name:'KNOTT servis', href:'servis.dc.html' },
+          { name:'Garanční prohlídky', href:'servis.dc.html' },
+          { name:'Pneuservis', href:'servis.dc.html' },
+        ] },
         { name:'Půjčovna', href:'#' },
       ],
       groups, subcats, categoriesData, onOpenCategory, onPickSub,
@@ -1076,6 +1096,10 @@ class Component extends DCLogic {
       pl2Active: s.megaVer === 'M2' ? 'M2' : 'M1',
       pl2Variants: [{ id:'M1', label:'M1 · kategorie' }, { id:'M2', label:'M2 · sloupce' }],
       pl2Select: (id)=>{ const v = id === 'M2' ? 'M2' : 'M1'; try { localStorage.setItem('vapp-mega-variant', v); } catch(e){} this.setState({ megaVer: v }); },
+      pl3Label: 'Nadpis:',
+      pl3Active: s.hdrVer === 'H2' ? 'H2' : 'H1',
+      pl3Variants: [{ id:'H1', label:'H1 · dva sloupce' }, { id:'H2', label:'H2 · jeden sloupec' }],
+      pl3Select: (id)=>{ const v = id === 'H2' ? 'H2' : 'H1'; try { localStorage.setItem('vapp-header-variant', v); } catch(e){} this.setState({ hdrVer: v }); },
       plLabel: 'Struktura:',
       plActive: s.hubVer === 'v2' ? 'v2' : 'v1',
       plVariants: [{ id:'v1', label:'V1 · 8 kategorií' }, { id:'v2', label:'V2 · 6 kategorií' }],

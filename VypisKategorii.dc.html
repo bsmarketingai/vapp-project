@@ -182,7 +182,7 @@ class Component extends DCLogic {
     // v režimu topOnly jde o výřez pro stránku, ne o samostatný náhled — dokumentace se nevykresluje
     return { cats, brandCats, showBrands: brandCats.length > 0, showDocs: demo && this.props.topOnly !== true,
       tileVariant: (layout === 'dlazdice' ? 'standard' : 'kompaktni'),
-      tileMedia: P.media === 'ikony' ? 'ikony' : 'fotky',
+      tileMedia: (P.media === 'ikony' || P.media === 'zadne') ? P.media : 'fotky',
       showTop: (P.nejhledanejsi ?? true) && topItems.length > 0, topItems,
       // topOnly: jen sekce Nejhledanější (stránka si ji umístí vedle nadpisu)
       showRest: P.topOnly !== true,

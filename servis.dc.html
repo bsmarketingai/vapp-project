@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<script src="./vapp-menu.js"></script>
+<script src="./image-slot.js"></script>
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0!important;padding:0!important;background:#F7F9FB;}
+  #dc-root{margin:0!important;padding:0!important;width:100%!important;max-width:none!important;border:0!important;}
+  #dc-root>.sc-host{margin:0!important;padding:0!important;width:100%!important;}
+  a{color:#1E5AA8;text-decoration:none;} a:hover{color:#1A4A8A;}
+  .a11y-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
+  .a11y-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
+  @media (max-width:819px){ .vp-in{padding-left:16px;padding-right:16px;} }
+  @media (max-width:819px){ .pg-h1{font-size:26px !important;} .pg-lead{font-size:14px !important;} }
+  .p-grid{display:grid;gap:16px;grid-template-columns:repeat(4,1fr);}
+  @media (min-width:1560px){ .p-grid{grid-template-columns:repeat(5,1fr);} }
+  @media (max-width:999px){ .p-grid{grid-template-columns:repeat(3,1fr);} }
+  @media (max-width:819px){ .p-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:549px){ .p-grid{grid-template-columns:1fr;} }
+  .sv-two{display:grid;gap:20px;grid-template-columns:1.15fr .85fr;align-items:stretch;}
+  @media (max-width:999px){ .sv-two{grid-template-columns:1fr;} .sv-map{min-height:320px;} }
+  @media (min-width:1000px){ .sv-map{min-height:0;} }
+  .sv-lists{display:grid;gap:20px;grid-template-columns:repeat(2,minmax(0,1fr));}
+  @media (max-width:819px){ .sv-lists{grid-template-columns:1fr;} }
+  @keyframes vapp-led{0%{box-shadow:0 0 0 0 var(--led);}70%{box-shadow:0 0 0 7px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
+  .vapp-led{border-radius:999px;animation:vapp-led 1.8s ease-out infinite;}
+</style>
+</helmet>
+<div data-screen-label="Servis" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
+
+  <dc-import name="Usp" variant="pas" tone="tmavy" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,32px"></dc-import>
+  <dc-import name="Hlavicka" active="Servis" currency="{{ currency }}" on-currency-change="{{ onCurrency }}" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:30–16:30" contact-open="{{ true }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
+
+  <main class="vp-in" style="padding-top:14px;padding-bottom:40px;">
+
+    <h1 class="pg-h1" style="margin:16px 0 0;font-size:36px;font-weight:700;letter-spacing:-0.02em;color:#142F56;">Servis přívěsů</h1>
+    <p class="pg-lead" style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;text-wrap:pretty;">Autorizovaný servis brzdových systémů AL-KO, BPW a KNOTT. Servisujeme brzděné i nebrzděné přívěsy do 3 500 kg, podvozky karavanů, elektrocentrál a kompresorů Atlas Copco. Zajistíme přípravu i provedení STK.</p>
+
+    <div style="margin-top:22px;">
+      <dc-import name="VypisKategorii" layout="kompaktni" media="zadne" nejhledanejsi="{{ false }}" categories="{{ categoriesData }}" debug="{{ debug }}" hint-size="100%,160px"></dc-import>
+    </div>
+
+    <div class="sv-two" style="margin-top:24px;">
+      <div style="background:#FFFFFF;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:16px;">
+        <h2 style="margin:0;font-size:22px;font-weight:700;line-height:1.25;">Objednání do servisu</h2>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <a class="a11y-i" target="_blank" rel="noopener noreferrer" href="https://www.google.cz/maps/dir//VAPP+-+p%C5%99%C3%ADv%C4%9Bsy,+p%C5%99%C3%ADslu%C5%A1enstv%C3%AD,+n%C3%A1hradn%C3%AD+d%C3%ADly+a+servis,+38,+251+01+Popovi%C4%8Dky/@49.9695313,14.6010162,13z" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#15181C;text-decoration:underline;"><span aria-hidden="true" style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="map-pin" size="24" hint-size="24px,24px"></dc-import></span>Popovičky 38, 251 01 Říčany, Praha-východ</a>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span aria-hidden="true" style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="clock" size="24" hint-size="24px,24px"></dc-import></span>
+            <span style="font-size:16px;font-weight:700;color:#15181C;">Po–Pá 8:30–16:00</span>
+            <span class="vapp-led" aria-hidden="true" style="--led:rgba(46,170,106,.45);width:9px;height:9px;background:#2EAA6A;flex:none;"></span>
+            <span style="font-size:15px;font-weight:400;color:#0B6937;">právě otevřeno</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span aria-hidden="true" style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import></span>
+            <a class="a11y-i" href="tel:+420603924555" style="font-size:16px;font-weight:700;color:#15181C;text-decoration:underline;">603 924 555</a>
+            <span style="font-size:15px;font-weight:400;color:#5A626C;">Jiří Balzer, objednávky</span>
+          </div>
+        </div>
+        <div style="height:1px;background:#F2F4F7;"></div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="font-size:16px;font-weight:700;color:#15181C;">Rezervujte si termín on-line</div>
+          <p style="margin:0;font-size:15px;line-height:1.6;color:#5A626C;max-width:52ch;text-wrap:pretty;">Vyberte službu ve výpisu níž a odešlete poptávku — ozveme se s termínem do jednoho pracovního dne.</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <dc-import name="Tlacitko" variant="primary" size="medium" icon="calendar" label="Rezervovat termín" on-click="{{ openForm }}" hint-size="200px,44px"></dc-import>
+            <dc-import name="Tlacitko" variant="secondary" size="medium" icon="phone" label="Zavolat" href="tel:+420603924555" hint-size="140px,44px"></dc-import>
+          </div>
+        </div>
+      </div>
+      <div class="sv-map" style="position:relative;background:#FFFFFF;border-radius:8px;padding:12px;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;overflow:hidden;">
+        <div class="sv-mapimg" style="position:absolute;left:12px;right:12px;top:12px;bottom:56px;">
+          <img src="uploads/Sni%CC%81mek%20obrazovky%202026-09-10%20v%2015.34.34.png" alt="Mapa — trasa do VAPP v Popovičkách" style="width:100%;height:100%;object-fit:cover;border-radius:6px;display:block;">
+        </div>
+        <div style="position:relative;z-index:1;display:flex;padding:2px 0 0;"><dc-import name="Tlacitko" variant="textDanger" size="standard" icon-trailing="chevron-right" label="Naplánovat trasu" href="https://www.google.cz/maps/dir//VAPP+-+p%C5%99%C3%ADv%C4%9Bsy,+p%C5%99%C3%ADslu%C5%A1enstv%C3%AD,+n%C3%A1hradn%C3%AD+d%C3%ADly+a+servis,+38,+251+01+Popovi%C4%8Dky/@49.9695313,14.6010162,13z" hint-size="180px,36px"></dc-import></div>
+      </div>
+    </div>
+
+    <div class="sv-lists" style="margin-top:20px;">
+      <section style="background:#FFFFFF;border-radius:8px;padding:24px;">
+        <h2 style="margin:0 0 12px;font-size:22px;font-weight:700;line-height:1.25;">Co pro vás můžeme udělat</h2>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;">
+          <sc-for list="{{ canDo }}" as="t" hint-placeholder-count="5">
+            <li style="display:flex;align-items:flex-start;gap:10px;font-size:15px;line-height:1.6;color:#5A626C;">
+              <span aria-hidden="true" style="flex:none;margin-top:3px;display:inline-flex;color:#0E7F43;"><dc-import name="Ikony" icon-name="circle-check" size="18" hint-size="18px,18px"></dc-import></span>
+              <span style="min-width:0;text-wrap:pretty;">{{ t.text }}</span>
+            </li>
+          </sc-for>
+        </ul>
+      </section>
+      <section style="background:#FFFFFF;border-radius:8px;padding:24px;">
+        <h2 style="margin:0 0 12px;font-size:22px;font-weight:700;line-height:1.25;">Proč právě k nám?</h2>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;">
+          <sc-for list="{{ whyUs }}" as="t" hint-placeholder-count="5">
+            <li style="display:flex;align-items:flex-start;gap:10px;font-size:15px;line-height:1.6;color:#5A626C;">
+              <span aria-hidden="true" style="flex:none;margin-top:3px;display:inline-flex;color:#1E5AA8;"><dc-import name="Ikony" icon-name="circle-check" size="18" hint-size="18px,18px"></dc-import></span>
+              <span style="min-width:0;text-wrap:pretty;">{{ t.text }}</span>
+            </li>
+          </sc-for>
+        </ul>
+      </section>
+    </div>
+
+    <section style="margin-top:20px;background:#FFFFFF;border-radius:8px;padding:20px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+      <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Autorizovaný servis</span>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <img src="uploads/al-ko_logo.svg" alt="AL-KO" style="width:120px;height:44px;object-fit:contain;display:block;">
+        <img src="uploads/bpw-logo.svg" alt="BPW" style="width:120px;height:44px;object-fit:contain;display:block;">
+        <img src="uploads/knott_logo.svg" alt="KNOTT" style="width:120px;height:44px;object-fit:contain;display:block;">
+        <img src="uploads/atlas_copco_logo.svg" alt="Atlas Copco" style="width:120px;height:44px;object-fit:contain;display:block;">
+      </div>
+    </section>
+
+    <h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;margin:0;">Ceník servisních úkonů</h2>
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:12px;flex-wrap:wrap;margin:26px 0 10px;">
+      <div style="min-width:220px;"><dc-import name="Select" options="{{ sortOptions }}" value="{{ sortKey }}" on-change="{{ onSort }}" size="compact" hint-size="220px,36px"></dc-import></div>
+    </div>
+
+    <div class="p-grid">
+      <sc-for list="{{ shownItems }}" as="p" hint-placeholder-count="8">
+        <dc-import name="KartaServis" p="{{ p }}" currency="{{ currency }}" on-order="{{ openForm }}" debug="{{ debug }}" hint-size="100%,400px"></dc-import>
+      </sc-for>
+    </div>
+
+    <div style="padding:22px 0 6px;">
+      <dc-import name="Paginace" page="{{ pgPage }}" page-count="{{ pgCount }}" shown-count="{{ shownCount }}" total-count="{{ pgTotal }}" next-batch="{{ nextBatch }}" item-word="služeb" on-page="{{ onPageChange }}" on-load-more="{{ loadMore }}" debug="{{ debug }}" hint-size="100%,180px"></dc-import>
+    </div>
+
+    <div style="margin-top:22px;">
+      <dc-import name="PoradenskyBlok" variant="compact" hint-size="100%,90px"></dc-import>
+    </div>
+
+  </main>
+
+  <div class="vp-in" style="margin-top:8px;">
+    <dc-import name="Usp" variant="sloupce" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
+  </div>
+  <div style="margin-top:10px;">
+    <dc-import name="Paticka" bare="{{ true }}" hint-size="100%,600px"></dc-import>
+  </div>
+  <dc-import name="RezervaceModal" open="{{ formOpen }}" options="{{ rezOptions }}" active-index="{{ rezIndex }}" on-pick="{{ onRezPick }}" on-close="{{ closeForm }}" on-next="{{ closeForm }}" debug="{{ debug }}" hint-size="0px,0px"></dc-import>
+  <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  state = { currency:'CZK', sortKey:'Výchozí řazení', shown:16, formOpen:false, rezIndex:0 };
+
+  CATS = ['AL-KO servis','BPW servis','KNOTT servis','Garanční prohlídky','Pneuservis'];
+
+  CAN_DO = [
+    'Servis brzděných i nebrzděných přívěsů do celkové hmotnosti 3 500 kg',
+    'Podvozkové části karavanů, elektrocentrál a speciálních přívěsů s brzdami AL-KO, BPW a KNOTT',
+    'Podvozkové části kompresorů Atlas Copco',
+    'Přívěsy Agados, Brenderup, Eurotrailers, Maro, Pongratz, UNSINN, VAPP, Vezeko a dalších značek',
+    'Příprava přívěsu na STK a provedení STK'
+  ];
+
+  WHY_US = [
+    'Skladem držíme velké množství dílů i pro méně rozšířené modely — nečeká se na dodávku',
+    'Většinu oprav zvládneme během jednoho dne',
+    'Používáme výhradně originální díly a mechaniky pravidelně školíme',
+    'Pravidelná údržba snižuje provozní náklady a zvyšuje bezpečnost soupravy',
+    'Starosti o přívěs nechte na nás a věnujte se tomu, co vás baví'
+  ];
+
+  // ceník podle vapp.cz — [název, obj. č., cena bez DPH, cena s DPH]
+  ITEMS = [
+    ['Celková prohlídka před STK — přívěs do 750 kg nebrzděný (1,1 h)','s30038',990,1198],
+    ['Celková prohlídka před STK vč. seřízení brzd — do 1800 kg brzděný (1 náprava, 2,2 h)','s30039',1990,2408],
+    ['Celková prohlídka před STK vč. seřízení brzd — do 3500 kg brzděný (2 nápravy, 3 h)','s30040',2690,3255],
+    ['Celková prohlídka před STK vč. seřízení brzd — do 3500 kg brzděný (3 nápravy, 4,4 h)','s30041',3890,4707],
+    ['Garanční prohlídka VAPP/Agados — do 750 kg nebrzděný (1,1 h)','s30002',990,1198],
+    ['Garanční prohlídka VAPP/Agados — do 1800 kg brzděný (2,2 h)','s30003',1990,2408],
+    ['Garanční prohlídka VAPP/Agados — do 3500 kg brzděný (3 h)','s30005',2690,3255],
+    ['Kontrola a seřízení brzd GO — 2 kola AL-KO, BPW, KNOTT (2 h)','s30018',1890,2287],
+    ['Kontrola a seřízení brzd GO — 4 kola AL-KO, BPW, KNOTT (2,8 h)','s30021',2590,3134],
+    ['Kontrola a seřízení brzd GO — 6 kol AL-KO, BPW, KNOTT (4,5 h)','s30034',3890,4707],
+    ['Kontrola a seřízení brzd GO — 2 kola karavan (2,5 h)','s30028',2190,2650],
+    ['Kontrola a seřízení brzd GO — 4 kola karavan (3,4 h)','s30036',2990,3618],
+    ['Kontrola sbíhavosti a rozbíhavosti náprav (1 h)','s30016',875,1059],
+    ['Kontrola a seřízení geometrie náprav AL-KO plus vč. dopravy','s30035',3800,4598],
+    ['Demontáž — montáž (1 h)','s30006',870,1053],
+    ['Demontáž — montáž — sváření','s30027',1020,1234],
+    ['Demontáž — montáž ložiska (0,3 h)','s30007',297,359],
+    ['Demontáž — montáž zadního nárazníku PA/PAV (2,8 h)','s30010',2482,3003],
+    ['Demontáž kola a montáž zpět na vozidlo (1 kolo, 0,1 h)','s33028',98,119],
+    ['Demontáž pneu z disku (ocelový disk, 0,1 h)','s33030',98,119],
+    ['Montáž pneu na disk (ocelový disk, 0,1 h)','s33033',98,119],
+    ['Oprava průpichu bezdušové pneu (0,2 h)','s33041',174,211],
+    ['Demontáž a montáž elektroinstalace na přívěs VAPP (bez světel, 1,3 h)','s30011',1150,1392],
+    ['Montáž zástrčky 7 nebo 13 pólů (0,3 h)','s30025',290,351],
+    ['Demontáž a montáž gumového dorazu nájezdové brzdy (0,3 h)','s30012',293,355],
+    ['Demontáž a montáž tažné spojky (0,3 h)','s30013',271,328],
+    ['Demontáž a montáž tlumiče nájezdové brzdy do 2700 kg (0,4 h)','s30014',371,449],
+    ['Demontáž a montáž tlumiče nájezdové brzdy do 3500 kg (0,4 h)','s30015',371,449],
+    ['Přepouzdření nájezdové brzdy (1,1 h)','s30777',1150,1392],
+    ['Přetěsnění hydrauliky (bez těsnění a oleje, 1 h)','s30150',1000,1210],
+    ['Montáž šuplíku na nájezdy pod nový přívěs PVV (1,1 h)','s30024',980,1186],
+    ['Montáž příslušenství','s300000',870,1053],
+    ['Posouzení a cenová kalkulace opravy (1 h)','s3000',950,1150],
+    ['Ražení VIN','s30557',1500,1815],
+    ['Řez z tabule překližky do 3 m na formátovací pile','s30053',50,61],
+    ['Likvidace překližky — tabule (0,2 h)','s33053',200,242]
+  ];
+
+  SORTS = ['Výchozí řazení','Od nejlevnějšího','Od nejdražšího','Podle názvu'];
+
+  renderVals(){
+    const s = this.state;
+    const all = this.ITEMS.map(([name, objNum, net, gross])=>({
+      name, objNum, priceNet:net, price:gross, href:'#'
+    }));
+    const sorted = all.slice();
+    if (s.sortKey === 'Od nejlevnějšího') sorted.sort((a,b)=>a.priceNet-b.priceNet);
+    else if (s.sortKey === 'Od nejdražšího') sorted.sort((a,b)=>b.priceNet-a.priceNet);
+    else if (s.sortKey === 'Podle názvu') sorted.sort((a,b)=>a.name.localeCompare(b.name,'cs'));
+
+    const total = sorted.length;
+    const shown = Math.min(s.shown, total);
+    const perPage = 16;
+
+    return {
+      debug: this.props.debug ?? true,
+      currency: s.currency,
+      onCurrency: (code)=>this.setState({ currency: code }),
+      categoriesData: this.CATS.map(n=>({ name:n, href:'#', subs:[] })),
+      canDo: this.CAN_DO.map(text=>({ text })),
+      whyUs: this.WHY_US.map(text=>({ text })),
+      sortOptions: this.SORTS.map(v=>({ value:v, label:v })),
+      sortKey: s.sortKey,
+      onSort: (v)=>this.setState({ sortKey:v, shown:perPage }),
+      totalLabel: total + ' služeb',
+      shownItems: sorted.slice(0, shown),
+      pgPage: 1,
+      pgCount: Math.max(1, Math.ceil(total / perPage)),
+      shownCount: shown,
+      pgTotal: total,
+      nextBatch: Math.max(0, Math.min(perPage, total - shown)),
+      onPageChange: (n)=>this.setState({ shown: Math.min(total, n * perPage) }),
+      loadMore: ()=>this.setState(st=>({ shown: Math.min(total, st.shown + perPage) })),
+      formOpen: s.formOpen === true,
+      rezOptions: [
+        { label:'Celková kontrola přívěsu' },
+        { label:'Kontrola a seřízení brzd' },
+        { label:'Kontrola a oprava elektroinstalace' },
+        { label:'Jiné — možnost dopsat poznámku' }
+      ],
+      rezIndex: s.rezIndex || 0,
+      onRezPick: (i)=>this.setState({ rezIndex:i }),
+      openForm: ()=>this.setState({ formOpen:true }),
+      closeForm: ()=>this.setState({ formOpen:false })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0!important;padding:0!important;}
+  #dc-root{margin:0!important;padding:0!important;width:100%!important;max-width:none!important;border:0!important;}
+  #dc-root>.sc-host{margin:0!important;padding:0!important;width:100%!important;}
+  .rz-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
+  .rz-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .rz-close{transition:background .12s,color .12s;} .rz-close:hover{background:#F2F4F7;color:#15181C;}
+  .rz-link{color:#1E5AA8;text-decoration:underline;transition:color .12s;} .rz-link:hover{color:#1A4A8A;}
+  @keyframes rz-in{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+  .rz-panel{animation:rz-in .4s ease;}
+  @media (max-width:549px){ .rz-wrap{padding:0 !important;align-items:stretch !important;} .rz-panel{max-height:100dvh !important;border-radius:0 !important;} }
+</style>
+</helmet>
+<sc-if value="{{ isOpen }}" hint-placeholder-val="">
+  <div class="rz-wrap" onClick="{{ onBackdrop }}" style="position:fixed;inset:0;z-index:80;background:rgba(20,30,45,.55);display:flex;align-items:center;justify-content:center;padding:24px;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;">
+    <div role="dialog" aria-modal="true" aria-labelledby="rz-title" tabindex="-1" ref="{{ panelRef }}" onClick="{{ stop }}" onKeyDown="{{ onKey }}" class="rz-panel" style="position:relative;z-index:90;background:#FFFFFF;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);width:100%;max-width:720px;max-height:86vh;display:flex;flex-direction:column;overflow:hidden;">
+
+      <div style="display:flex;align-items:center;gap:16px;padding:20px 24px 0;">
+        <span style="flex:1;min-width:0;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1E5AA8;">Online rezervace</span>
+        <img src="vapp-logo.svg" alt="VAPP" style="flex:none;height:28px;width:auto;display:block;">
+        <button type="button" class="rz-i rz-close" aria-label="Zavřít rezervaci" onClick="{{ onClose }}" style="flex:none;width:36px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#5A626C;"><dc-import name="Ikony" icon-name="x" size="24" hint-size="24px,24px"></dc-import></button>
+      </div>
+
+      <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;padding:12px 24px 16px;border-bottom:1px solid #F2F4F7;">
+        <h2 id="rz-title" style="flex:1;min-width:0;margin:0;font-size:22px;font-weight:700;line-height:1.25;color:#15181C;">Zvolte požadovanou službu</h2>
+        <span style="font-size:14px;font-weight:500;color:#5A626C;">{{ loginLabel }} <a class="rz-link" href="#">Přihlásit</a></span>
+      </div>
+
+      <div style="flex:1;min-height:0;overflow:auto;padding:20px 24px;">
+        <dc-import name="VyberVariant" label="Servis" icon="tool" layout="radky" value-size="{{ 16 }}" options="{{ options }}" active-index="{{ activeIndex }}" on-pick="{{ onPick }}" hint-size="100%,240px"></dc-import>
+        <sc-if value="{{ showNote }}" hint-placeholder-val="">
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:6px;">
+            <label for="rz-note" style="font-size:14px;font-weight:700;color:#15181C;">Popište, co potřebujete</label>
+            <textarea id="rz-note" rows="3" placeholder="Např. přívěs Agados, tahá do strany při brzdění" style="width:100%;font:inherit;font-size:15px;color:#15181C;background:#F2F4F7;border:0;border-radius:6px;padding:12px 14px;resize:vertical;"></textarea>
+          </div>
+        </sc-if>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:16px 24px;border-top:1px solid #F2F4F7;background:#F7F9FB;">
+        <span style="font-size:13px;font-weight:500;color:#666E78;">Krok 1 ze 3 — služba</span>
+        <dc-import name="Tlacitko" variant="primary" size="medium" icon-trailing="chevron-right" label="Další krok" on-click="{{ onNext }}" hint-size="160px,44px"></dc-import>
+      </div>
+
+    </div>
+  </div>
+</sc-if>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:900,&quot;height&quot;:620},&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;options&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{label:string,note?:string,meta?:string,disabled?:boolean}[]&quot;,&quot;default&quot;:null},&quot;activeIndex&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;number&quot;,&quot;default&quot;:0},&quot;loggedIn&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onPick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(index:number)=&gt;void&quot;,&quot;default&quot;:null},&quot;onClose&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null},&quot;onNext&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  DEMO = [
+    { label:'Celková kontrola přívěsu' },
+    { label:'Kontrola a seřízení brzd' },
+    { label:'Kontrola a oprava elektroinstalace' },
+    { label:'Jiné — možnost dopsat poznámku' }
+  ];
+
+  componentDidMount(){
+    this._onDocKey = (e)=>{ if(e.key === 'Escape' && this.props.open){ e.preventDefault(); this.close(); } };
+    document.addEventListener('keydown', this._onDocKey);
+    this.syncOpen();
+  }
+  componentDidUpdate(){ this.syncOpen(); }
+  componentWillUnmount(){
+    document.removeEventListener('keydown', this._onDocKey);
+    this.unlock();
+  }
+
+  lock(){
+    if (this._locked) return;
+    this._locked = true;
+    this._prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+  }
+  unlock(){
+    if (!this._locked) return;
+    this._locked = false;
+    document.body.style.overflow = this._prevOverflow || '';
+  }
+  syncOpen(){
+    const open = this.props.open === true;
+    if (open && !this._wasOpen){
+      this._trigger = document.activeElement;
+      this.lock();
+      if (this._panel) setTimeout(()=>{ if(this._panel) this._panel.focus(); }, 0);
+    }
+    if (!open && this._wasOpen){
+      this.unlock();
+      const t = this._trigger;
+      if (t && t.focus) setTimeout(()=>t.focus(), 0);
+      this._trigger = null;
+    }
+    this._wasOpen = open;
+  }
+  close(){ const f = this.props.onClose; if (f) f(); }
+
+  renderVals(){
+    const P = this.props;
+    const opts = (Array.isArray(P.options) && P.options.length) ? P.options : this.DEMO;
+    const idx = Number.isInteger(P.activeIndex) ? P.activeIndex : 0;
+    const focusables = (root)=>Array.from(root.querySelectorAll('a[href],button:not([disabled]),textarea,input,select,[tabindex]:not([tabindex="-1"])'))
+      .filter(el=>el.offsetParent !== null || el === document.activeElement);
+    return {
+      debug: P.debug ?? true,
+      isOpen: P.open === true,
+      options: opts,
+      activeIndex: idx,
+      showNote: /jin/i.test(String(opts[idx] && opts[idx].label || '')),
+      loginLabel: P.loggedIn ? 'Přihlášen' : 'Nepřihlášen',
+      panelRef: (el)=>{ this._panel = el; },
+      stop: (e)=>{ if(e && e.stopPropagation) e.stopPropagation(); },
+      onBackdrop: ()=>this.close(),
+      onClose: ()=>this.close(),
+      onPick: P.onPick || (()=>{}),
+      onNext: P.onNext || (()=>{}),
+      onKey: (e)=>{
+        if (e.key !== 'Tab' || !this._panel) return;
+        const list = focusables(this._panel);
+        if (!list.length) return;
+        const first = list[0], last = list[list.length - 1];
+        if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
