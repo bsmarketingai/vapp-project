@@ -122,12 +122,12 @@
       </sc-if>
     </div>
     <sc-if value="{{ showTopRowXs }}" hint-placeholder-val="{{ true }}">
-      <div class="pg-toprow-xs" style="margin-top:22px;margin-bottom:8px;">
+      <div class="pg-toprow-xs" style="margin-top:22px;margin-bottom:22px;">
         <dc-import name="VypisKategorii" top-only="{{ true }}" top-searched="{{ topSearchedData }}" show-guide-chip="{{ showGuideChip }}" debug="{{ debug }}" hint-size="100%,40px"></dc-import>
       </div>
     </sc-if>
     <sc-if value="{{ showTopRow }}" hint-placeholder-val="">
-      <div style="margin-top:22px;margin-bottom:8px;">
+      <div style="margin-top:22px;margin-bottom:22px;">
         <dc-import name="VypisKategorii" top-only="{{ true }}" top-searched="{{ topSearchedData }}" show-guide-chip="{{ showGuideChip }}" debug="{{ debug }}" hint-size="100%,40px"></dc-import>
       </div>
     </sc-if>
@@ -407,7 +407,7 @@ class Component extends DCLogic {
       const c = (gg.children||[]).find(x=>x.name === nm);
       // podkategorie nemá vlastní číslo — nese prodeje své kategorie, pořadí v rámci
       // kategorie tak zůstává podle excelu
-      if (c) return { name:nm, gKey:gg.key, path:[c.name], count:c.count, image:gg.image, icon:gg.icon, level:'podkategorie', sales: this.SALES[gg.name] || 0 };
+      if (c) return { name:nm, gKey:gg.key, path:[c.name], count:c.count, image:c.image||gg.image, icon:gg.icon, level:'podkategorie', sales: this.SALES[gg.name] || 0 };
     }
     return { name:nm, gKey:null, path:[], count:0, image:'', icon:'', level:'chybí', sales:0 };
   }
@@ -420,7 +420,8 @@ class Component extends DCLogic {
     const hubs = this.HUBS[ver].map((h,i)=>{
       let items = h.items.map(nm=>this.resolveItem(nm));
       if (bySales) items = rank(items, x=>x.sales);
-      const withImg = items.find(x=>x.image);
+      // dlaždice hubu nese fotku kategorie, ne fotku podkategorie
+      const withImg = items.map(x=>x.gKey ? this.GROUPS.find(g=>g.key===x.gKey) : null).find(g=>g && g.image);
       // prodeje hubu = součet přes unikátní kategorie (podkategorie téže kategorie se nesčítají dvakrát)
       const seen = {};
       let sales = 0;
@@ -453,23 +454,23 @@ class Component extends DCLogic {
 
   GROUPS = [
     { key:'elektro', icon:'ikona-elektro-svitilny-odrazky.svg', image:'uploads/elektro-a-osvetleni.jpg', name:'Elektro, svítilny, odrazky', preview:'Světla, kabeláž, zástrčky…', count:474, children:[
-      { name:'Baterie, nabíječky a příslušenství', count:26 },
-      { name:'Blinkry', count:28 },
-      { name:'Brzdové svítilny', count:28 },
-      { name:'Couvačky a mlhovky', count:28 },
-      { name:'Držáky svítilen a odrazek', count:28 },
-      { name:'Kabely a kabeláže', count:28 },
-      { name:'Majáky a výstražné svítilny', count:28 },
-      { name:'Montážní materiál', count:28 },
-      { name:'Obrysové svítilny', count:28 },
-      { name:'Odrazky a odrazové desky', count:28 },
-      { name:'Osvětlení registrační značky', count:28 },
-      { name:'Pracovní světlomety', count:28 },
-      { name:'Sdružené zadní svítilny', count:28 },
-      { name:'Skla svítilen náhradní', count:28 },
-      { name:'Vnitřní osvětlení', count:28 },
-      { name:'Zásuvky, zástrčky, konektory', count:28 },
-      { name:'Žárovky, náhradní LED moduly', count:28 }
+      { name:'Baterie, nabíječky a příslušenství', count:26, image:'uploads/autobaterie.jpg' },
+      { name:'Blinkry', count:28, image:'uploads/blinkry.jpg' },
+      { name:'Brzdové svítilny', count:28, image:'uploads/brzdove-svitilny.jpg' },
+      { name:'Couvačky a mlhovky', count:28, image:'uploads/mhlovky-couvacky.jpg' },
+      { name:'Držáky svítilen a odrazek', count:28, image:'uploads/drzajky.png' },
+      { name:'Kabely a kabeláže', count:28, image:'uploads/kabely-a-kabelaze.jpg' },
+      { name:'Majáky a výstražné svítilny', count:28, image:'uploads/majaky.jpg' },
+      { name:'Montážní materiál', count:28, image:'uploads/spojovaci-material.jpg' },
+      { name:'Obrysové svítilny', count:28, image:'uploads/pozicni-svetla.jpg' },
+      { name:'Odrazky a odrazové desky', count:28, image:'uploads/odrazky.jpg' },
+      { name:'Osvětlení registrační značky', count:28, image:'uploads/spz.jpg' },
+      { name:'Pracovní světlomety', count:28, image:'uploads/pracovni-svitilny.jpg' },
+      { name:'Sdružené zadní svítilny', count:28, image:'uploads/sdruzene-zadni-svitil.jpg' },
+      { name:'Skla svítilen náhradní', count:28, image:'uploads/skla.jpg' },
+      { name:'Vnitřní osvětlení', count:28, image:'uploads/vnitrni-osvetleni.jpg' },
+      { name:'Zásuvky, zástrčky, konektory', count:28, image:'uploads/konektroy.jpg' },
+      { name:'Žárovky, náhradní LED moduly', count:28, image:'uploads/zarovky.jpg' }
     ] },
     { key:'kola', icon:'ikona-pneu-kola-disky.svg', image:'uploads/kola-a-pneumatiky.jpg', name:'Pneu, kola, disky', preview:'Pneu, disky, šrouby…', count:296, children:[
       { name:'Disky kol', count:34 },
@@ -615,25 +616,25 @@ class Component extends DCLogic {
   ];
 
   PRODUCTS = [
-    { name:'Nájezdová brzda KNOTT KF13', g:'napravy', brand:'KNOTT', p:[['Pro hmotnost','750–1350 kg'],['Oj','čtyřhran 70 mm'],['Kód','90-1301']], net:'4 876 Kč', gross:'5 900 Kč', stock:12 },
+    { name:'Nájezdová brzda KNOTT KF13', g:'napravy', brand:'KNOTT', p:[['Pro hmotnost','750–1350 kg'],['Oj','čtyřhran 70 mm'],['Kód','90-1301']], net:'4 876 Kč', gross:'5 900 Kč', stock:12, img:'uploads/najezdova-brzda-knott-kf13-e-gf.jpg', img2:'uploads/najezdova-brzda-knott-kf13-c-gf-1.jpg' },
     { name:'Manžeta gumová KNOTT KF/KR 7,5 až 27', g:'napravy', brand:'KNOTT', p:[['Pro brzdy','KF/KR 7,5–27'],['Materiál','pryž'],['Kód','90-7527']], net:'157 Kč', gross:'190 Kč', stock:44, img:'uploads/manzeta-gumova-knott-kf-kr-7-5-az-27.jpg' },
     { name:'Brzdové čelisti KNOTT 200×50 — malá sada na 2 kola', g:'napravy', brand:'KNOTT', p:[['Průměr bubnu','200 mm'],['Šířka','50 mm'],['Kód','20-2050']], net:'405 Kč', gross:'490 Kč', stock:46, sale:15, img:'uploads/celisti-brzdove-knott-200x50-mala-sada-na-2-kola.jpg' },
-    { name:'Náboj kola KNOTT 112×5', g:'napravy', brand:'KNOTT', p:[['Rozteč','112×5 mm'],['Ložisko','kompaktní'],['Kód','30-1125']], net:'1 397 Kč', gross:'1 690 Kč', stock:8 },
+    { name:'Náboj kola KNOTT 112×5', g:'napravy', brand:'KNOTT', p:[['Rozteč','112×5 mm'],['Ložisko','kompaktní'],['Kód','30-1125']], net:'1 397 Kč', gross:'1 690 Kč', stock:8, img:'uploads/naboj-nebrzdeny-knott-112x5-l-lv-vc-loziska.jpg', img2:'uploads/naboj-nebrzdeny-knott-112x5-l-lv-vc-loziska-1.jpg' },
     { name:'Krytka náboje KNOTT ⌀64,2 mm pro buben 200×50', g:'napravy', brand:'KNOTT', p:[['Průměr','64,2 mm'],['Pro buben','200×50'],['Kód','30-6420']], net:'62 Kč', gross:'75 Kč', stock:120, img:'uploads/krytka-naboje-knott-pr-64-2-mm-pro-buben-200x50.jpg' },
     { name:'Klín zakládací plastový Jokon-Tripus', g:'upinani', brand:'Jokon', p:[['Materiál','plast'],['Homologace','E'],['Kód','70-0100']], net:'157 Kč', gross:'190 Kč', stock:64, sale:20, img:'uploads/jokon-tripus-klin-zakladaci-plastovy.jpg' },
     { name:'Matice samojistná M8-8 ZN DIN 985', g:'napravy', brand:'KNOTT', p:[['Závit','M8'],['Norma','DIN 985'],['Kód','30-0885']], net:'4 Kč', gross:'5 Kč', stock:500, img:'uploads/matice-samojistna-m8-8-zn-din-985.jpg' },
     { name:'Matice M8 kulová ZN', g:'napravy', brand:'VAPP', p:[['Závit','M8'],['Povrch','zinek'],['Kód','30-0899']], net:'12 Kč', gross:'15 Kč', stock:340, img:'uploads/matice-m8-kulova-zn.jpg' },
     { name:'Zámek ALBE Safety Box XL-K rozvírací', g:'spojovaci', brand:'AL-KO', p:[['Typ','Safety Box XL-K'],['Certifikace','SCM'],['Kód','40-3001']], net:'1 240 Kč', gross:'1 500 Kč', stock:9, img:'uploads/zamek-albe-safety-box-xl-k-rozviraci.jpg' },
-    { name:'Kulová spojka Winterhoff WW 8', g:'spojovaci', brand:'Winterhoff', p:[['Pro hmotnost','do 800 kg'],['Oj','kulatá 60 mm'],['Kód','40-0860']], net:'645 Kč', gross:'780 Kč', stock:21 },
-    { name:'Zadní sdružené světlo Jokon BBSK 550 s bajonetovým konektorem', g:'elektro', brand:'Jokon', p:[['Funkce','5 komor'],['Připojení','bajonet'],['Kód','50-5501']], net:'810 Kč', gross:'980 Kč', stock:17 },
-    { name:'Blatník plastový jednoosý 750', g:'karoserie', brand:'VAPP', p:[['Pro kola','13"'],['Šířka','200 mm'],['Kód','10-2240']], net:'405 Kč', gross:'490 Kč', stock:34 },
+    { name:'Kulová spojka Winterhoff WW 8', g:'spojovaci', brand:'Winterhoff', p:[['Pro hmotnost','do 800 kg'],['Oj','kulatá 60 mm'],['Kód','40-0860']], net:'645 Kč', gross:'780 Kč', stock:21, img:'uploads/kulova-spojka-ww8-1.jpg', img2:'uploads/kulova-spojka-ww8-2.jpg' },
+    { name:'Zadní sdružené světlo Jokon BBSK 550 s bajonetovým konektorem', g:'elektro', brand:'Jokon', p:[['Funkce','5 komor'],['Připojení','bajonet'],['Kód','50-5501']], net:'810 Kč', gross:'980 Kč', stock:17, img:'uploads/svitilna-aspock-multiled-iv-sdruzena-l-bl-br-ko-ml-baj5.jpg', img2:'uploads/svitilna-aspock-multiled-iv-sdruzena-l-bl-br-ko-ml-baj5-1.jpg' },
+    { name:'Blatník plastový jednoosý 750', g:'karoserie', brand:'VAPP', p:[['Pro kola','13"'],['Šířka','200 mm'],['Kód','10-2240']], net:'405 Kč', gross:'490 Kč', stock:34, img:'uploads/blatnik-puleny-plastovy-s-200-mm-2-ks-domar.jpg', img2:'uploads/blatnik-puleny-plastovy-s-200-mm-2-ks-domar-1.jpg' },
     { name:'Ložisko do bubnu KNOTT 200×50, 64×34×37 mm originál', g:'napravy', brand:'KNOTT', p:[['Rozměr','64×34×37 mm'],['Typ','do bubnu'],['Kód','30-6434']], net:'950 Kč', gross:'1 150 Kč', stock:0, img:'uploads/lozisko-do-bubnu-knott-200x50-64x34-h37-original.jpg' },
     { name:'Držák opěrného kolečka 48 mm KLE 48, plech', g:'spojovaci', brand:'KNOTT', p:[['Pro trubku','48 mm'],['Materiál','plech, zinek'],['Kód','40-4848']], net:'240 Kč', gross:'290 Kč', stock:37, img:'uploads/drzak-operneho-kolecka-48-mm-kle-48-plech.jpg' },
     { name:'Opěrné kolečko ⌀48 mm, nosnost 150 kg', g:'spojovaci', brand:'AL-KO', p:[['Trubka','48 mm'],['Nosnost','150 kg'],['Kód','40-4815']], net:'397 Kč', gross:'480 Kč', stock:52, img:'uploads/kolecko-operne-dtr-prum-48-150-kg.jpg' },
     { name:'Kolečko samostatné Winterhoff K ST 48, 200×50, ocelový disk', g:'spojovaci', brand:'Winterhoff', p:[['Rozměr','200×50 mm'],['Disk','ocelový'],['Kód','40-2051']], net:'314 Kč', gross:'380 Kč', stock:22, sale:10, img:'uploads/kolecko-samostatne-winterhoff-k-st-48-200-vb-200x50-ocelovy-disk.jpg' },
     { name:'Pneumatika 165 R13 C 96N (710 kg) Kenda M+S', g:'kola', brand:'VAPP', p:[['Rozměr','165 R13 C'],['Nosnost','710 kg'],['Kód','60-1653']], net:'1 645 Kč', gross:'1 990 Kč', stock:14, img:'uploads/pneu-165-r13-c-96n-710-kg-kenda-m-s.jpg' },
     { name:'Kabel 7×1 sedmibarevný — metráž', g:'elektro', brand:'VAPP', p:[['Průřez','7×1 mm²'],['Prodej','po metrech'],['Kód','50-0701']], net:'57 Kč', gross:'69 Kč', stock:200, img:'uploads/kabel-7x1-sedmibarevny-metraz.jpg' },
-    { name:'Naviják ruční 900 kg s pásem', g:'upinani', brand:'AL-KO', p:[['Tažná síla','900 kg'],['Pás','7 m'],['Kód','70-0900']], net:'1 810 Kč', gross:'2 190 Kč', stock:6 },
+    { name:'Naviják ruční 900 kg s pásem', g:'upinani', brand:'AL-KO', p:[['Tažná síla','900 kg'],['Pás','7 m'],['Kód','70-0900']], net:'1 810 Kč', gross:'2 190 Kč', stock:6, img:'uploads/navijak-knott-702007-900kg-bez-lana.jpg', img2:'uploads/navijak-knott-702007-900kg-bez-lana-1.jpg' },
     { name:'Držák boxu univerzální na V-oj — sada pro 1 box', g:'upinani', brand:'VAPP', p:[['Montáž','V-oj'],['Sada','pro 1 box'],['Kód','70-1001']], net:'570 Kč', gross:'690 Kč', stock:16, img:'uploads/drzak-boxu-univerzalni-na-v-oj-sada-pro-1-box.jpg' },
     { name:'Lanko bezpečnostní záchytné s karabinou KNOTT 750 kg', g:'spojovaci', brand:'KNOTT', p:[['Nosnost','750 kg'],['Zakončení','karabina'],['Kód','40-0750']], net:'96 Kč', gross:'116 Kč', stock:73, img:'uploads/lanko-bezpecnostni-zachytne-s-karabinou-knott-750-kg.jpg' },
     { name:'Lanko pojistné AL-KO 1005 mm pro 60S/90S/161S/251S', g:'napravy', brand:'AL-KO', p:[['Délka','1005 mm'],['Zakončení','hák'],['Kód','20-1005']], net:'240 Kč', gross:'290 Kč', stock:63, img:'uploads/lanko-pojistne-al-ko-1005-mm-pro-60s-90s-161s-251s.jpg' },
@@ -641,10 +642,13 @@ class Component extends DCLogic {
     { name:'Odrazka oranžová ⌀61 mm s otvorem (VAPP PAV, PA)', g:'elektro', brand:'VAPP', p:[['Průměr','61 mm'],['Uchycení','otvor'],['Kód','50-0610']], net:'21 Kč', gross:'25 Kč', stock:600, img:'uploads/odrazka-oranzova-pr-61-mm-s-otvorem-vapp-pav-pa.jpg' },
     { name:'Žárovka P21/5W 12 V, patice BAY15d, dvouvláknová', g:'elektro', brand:'Jokon', p:[['Patice','BAY15d'],['Napětí','12 V'],['Kód','50-2155']], net:'17 Kč', gross:'21 Kč', stock:800, img:'uploads/zarovka-p21-5w-12-v-s-patici-bay15d-dvouvlaknova.jpg' },
     { name:'Zástrčka (vidlice) 7pól 12 V kovová JAEGER', g:'elektro', brand:'JAEGER', p:[['Póly','7'],['Materiál','kov'],['Kód','50-0712']], net:'236 Kč', gross:'285 Kč', stock:28, img:'uploads/zastrcka-vidlice-7-pol-12v-kovova-jaeger.jpg' },
-    { name:'Upínací pás 2 t s ráčnou 6 m', g:'upinani', brand:'VAPP', p:[['Nosnost','2 000 kg'],['Délka','6 m'],['Kód','70-2006']], net:'236 Kč', gross:'285 Kč', stock:41 },
-    { name:'Plynová vzpěra 500 N', g:'upinani', brand:'STEMA', p:[['Síla','500 N'],['Zdvih','195 mm'],['Kód','70-0500']], net:'314 Kč', gross:'380 Kč', stock:0 },
-    { name:'Blatník pozink dvouosý 2700', g:'karoserie', brand:'VAPP', p:[['Pro kola','14"'],['Šířka','220 mm'],['Kód','10-2700']], net:'1 066 Kč', gross:'1 290 Kč', stock:5 },
-    { name:'Disk 13" 112×5 stříbrný', g:'kola', brand:'VAPP', p:[['Rozměr','4.5J×13'],['Rozteč','112×5'],['Kód','60-1345']], net:'736 Kč', gross:'890 Kč', stock:19 },
+    { name:'Upínací pás 2 t s ráčnou 6 m', g:'upinani', brand:'VAPP', p:[['Nosnost','2 000 kg'],['Délka','6 m'],['Kód','70-2006']], net:'236 Kč', gross:'285 Kč', stock:41, img:'uploads/upinaci-souprava-50-mm-10-m-5-t-dvojite-haky-ergo-racna.jpg' },
+    { name:'Plynová vzpěra 500 N', g:'upinani', brand:'STEMA', p:[['Síla','500 N'],['Zdvih','195 mm'],['Kód','70-0500']], net:'314 Kč', gross:'380 Kč', stock:0, img:'uploads/vzpera-plynova-k-pace-rucni-brzdy-al-ko-2-8vb.jpg' },
+    { name:'Blatník pozink dvouosý 2700', g:'karoserie', brand:'VAPP', p:[['Pro kola','14"'],['Šířka','220 mm'],['Kód','10-2700']], net:'1 066 Kč', gross:'1 290 Kč', stock:5, img:'uploads/blatnik-plechovy-obly-13-200-mm-pozink-2-jakost.jpg' },
+    { name:'Disk 13" 112×5 stříbrný', g:'kola', brand:'VAPP', p:[['Rozměr','4.5J×13'],['Rozteč','112×5'],['Kód','60-1345']], net:'736 Kč', gross:'890 Kč', stock:19, img:'uploads/disk-4-5jx13-et30-625kg-112x5.jpg' },
+    { name:'Disk 4J×13 ET30 100×4', g:'kola', brand:'VAPP', p:[['Rozměr','4J×13'],['Rozteč','100×4'],['Kód','60-1340']], net:'620 Kč', gross:'750 Kč', stock:26, img:'uploads/disk-4jx13-et30-100x4.jpg' },
+    { name:'Disk 4.5J×13 ET30 100×4 Trailertop', g:'kola', brand:'Trailertop', p:[['Rozměr','4.5J×13'],['Rozteč','100×4'],['Kód','60-1344']], net:'690 Kč', gross:'835 Kč', stock:12, img:'uploads/disk-4-5jx13-et30-100x4-trailertop.jpg' },
+    { name:'Tlumič KNOTT k polonápravě Pullman', g:'napravy', brand:'KNOTT', p:[['Použití','polonáprava Pullman'],['Typ','originál'],['Kód','99-0082']], net:'1 149 Kč', gross:'1 390 Kč', stock:11, img:'uploads/tlumic-knott-k-polonaprave-pullman.jpg' },
   ];
 
   BRANDS = [['KNOTT',486],['AL-KO',612],['Agados',274],['Sport Jacht',196],['BPW',248],['Fristom',182],['JAEGER',16],['Jokon',196],['Winterhoff',124],['VAPP',384],['STEMA',88]];
@@ -822,10 +826,11 @@ class Component extends DCLogic {
         onMinus:()=>{ this.setState(prev=>{ const q=Object.assign({}, prev.qty||{}); q[p.name]=Math.max(1,((q[p.name]||1)-1)); return { qty:q }; }); },
         onPlus:()=>{ this.setState(prev=>{ const q=Object.assign({}, prev.qty||{}); q[p.name]=(q[p.name]||1)+1; return { qty:q }; }); },
         onQty:(v)=>{ this.setState(prev=>{ const q=Object.assign({}, prev.qty||{}); q[p.name]=Math.max(1,v); return { qty:q }; }); },
-        img:p.img||'', noImg:!p.img,
+        img:p.img||'', noImg:!p.img, img2:p.img2||'',
         badge: p.sale ? '−'+p.sale+' %' : (this.priceNum(p)>=freeShip ? 'Doprava zdarma' : ''),
         badgeStyle:'position:absolute;top:8px;left:8px;font-size:13px;font-weight:700;border-radius:6px;padding:4px 9px;'+(p.sale?'color:#fff;background:#C5232B;':'color:#0B6937;background:#E9F8EF;'),
         imgBgStyle:'aspect-ratio:4/3;background:#fff url("./'+(p.img||'')+'") center/contain no-repeat;background-origin:content-box;padding:18px 12px;',
+        imgBg2Style:'position:absolute;inset:0;box-sizing:border-box;background:#fff url("./'+(p.img2||'')+'") center/contain no-repeat;background-origin:content-box;padding:18px 12px;pointer-events:none;',
         phStyle:'aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;color:#666E78;font-size:13px;font-weight:600;background:repeating-linear-gradient('+(hov?'-45deg,#D8E6F6,#D8E6F6 11px,#CFDFF2 11px,#CFDFF2 22px':'45deg,#E9ECEF,#E9ECEF 11px,#E3E6EA 11px,#E3E6EA 22px')+');',
         imgLabel: hov ? 'FOTO 2' : 'FOTO 1',
         dot1:(p.img?'display:none;':'')+'width:6px;height:6px;border-radius:50%;background:'+(hov?'#B4CEEC':'#1E5AA8')+';',
@@ -904,7 +909,7 @@ class Component extends DCLogic {
     }) : [];
     // úroveň velké skupiny (layout dlazdice): jejími "podkategoriemi" jsou dnešní kategorie
     const macroSubcats = activeHub ? activeHub.items.map(k=>({
-      name:k.name, count:k.count, countText: k.count+' produktů',
+      name:k.name, count:k.count, countText: k.count+' produktů', image:k.image||'',
       href: itemHref(k),
       onPick: this.link(()=>openItem(k)),
       style:'width:100%;display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:0 16px;border-bottom:1px solid #F2F4F7;cursor:pointer;',
@@ -916,7 +921,7 @@ class Component extends DCLogic {
     const subcatsOwn = curNode ? (curNode.children||[]).map(c=>{
       const on = false;
       return {
-        name:c.name, count:c.count, countText: c.count+' produktů',
+        name:c.name, count:c.count, countText: c.count+' produktů', image:c.image||'',
         href: this.urlFor(ag.key, path.concat([c.name])),
         onPick: this.link(()=>this.go({ path: path.concat([c.name]), leafPath:null, subcat:null, subcatGroup:ag.key, pageFrom:1, pageTo:1 }, this.urlFor(ag.key, path.concat([c.name])))),
         style:'width:100%;display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:0 16px;border-bottom:1px solid #F2F4F7;cursor:pointer;'+(on?'background:#EFF4FB;':''),
@@ -1085,7 +1090,7 @@ class Component extends DCLogic {
       groups, subcats, categoriesData, onOpenCategory, onPickSub,
       inSubcatsCompact: inSubcatsAny && effLayout !== 'dlazdice',
       inSubcatsTiles: inSubcatsAny && effLayout === 'dlazdice',
-      subcatCategories: subcats.map(x=>({ name:x.name, count:x.count, href:x.href, subs:[] })),
+      subcatCategories: subcats.map(x=>({ name:x.name, count:x.count, href:x.href, image:x.image||'', subs:[] })),
       onOpenSubcat: (name)=>{ const hit = subcats.find(x=>x.name===name); if (hit && hit.onPick) hit.onPick(); },
       categoryLayout: effLayout,
       brandCategories: [],
