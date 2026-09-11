@@ -141,14 +141,23 @@ class Component extends DCLogic {
       if (!n || (Array.isArray(n.children) && n.children.length)) return n;
       const src = MEGA && MEGA[n.name] && Array.isArray(MEGA[n.name].groups) ? MEGA[n.name].groups : null;
       if (!src || !src.length) return n;
+      // Akce a slevy nejsou sdružovací kategorie — v mobilním menu stojí jako poslední položka
+      const rail = (MEGA[n.name] && Array.isArray(MEGA[n.name].rail)) ? MEGA[n.name].rail : [];
+      const sale = rail.filter(r=>r && r.tone === 'sale').map(r=>({ name:r.name, href:r.href }));
       return Object.assign({}, n, {
         href: n.href && n.href !== '#' ? n.href : ((TAB_HREF && TAB_HREF[n.name]) || n.href),
         children: src.map(g=>({
           name: g.name, href: g.href,
           children: Array.isArray(g.items) && g.items.length ? g.items.map(i=>({ name:i.name, href:i.href })) : undefined
-        }))
+        })).concat(sale)
       });
     });
+  }
+  // Stránka bez vlastního menuTree (homepage, servis, poradna…) dostane strom
+  // poskládaný ze společných dat megamenu, aby mobilní menu bylo všude stejné.
+  treeFromMega(labels, MEGA, TAB_HREF){
+    if (!MEGA || !Object.keys(MEGA).length) return null;
+    return (labels || []).map(name=>({ name, href: (TAB_HREF && TAB_HREF[name]) || '#' }));
   }
   state = { menuOpen:false, searchOpen:false, loginOpen:false, cartOpen:false, currency:'CZK', megaTab:null };
   // megamenu: otevírá hover nebo fokus tabu, zavírá Escape, odjezd myší a klik mimo.
@@ -381,7 +390,7 @@ class Component extends DCLogic {
 
       onMenuKey:(e)=>{ if(e.key==='Escape'){ e.preventDefault(); this.closeMenu(); } },
       infoLinks, infoItems: infoLinks.map(t=>({ t, onClick:(e)=>{ if(e&&e.preventDefault) e.preventDefault(); } })),
-      menuTree: this.fillFromMega(P.menuTree || null, MEGA, TAB_HREF), menuActive: active,
+      menuTree: this.fillFromMega(P.menuTree || this.treeFromMega(labels, MEGA, TAB_HREF), MEGA, TAB_HREF), menuActive: active,
       onMenuSelect: (t)=>{ this.closeMenu(); if(onTab) onTab(t); },
     };
   }

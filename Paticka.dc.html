@@ -165,7 +165,7 @@ class Component extends DCLogic {
       onNav:(e)=>{ const h = e && e.currentTarget && e.currentTarget.getAttribute('href'); if(h && h !== '#') return; if(e&&e.preventDefault) e.preventDefault(); },
       showNote: !this.props.bare,
       footerCols: decorate([
-        { title:'Sortiment', links:['Přívěsy','Náhradní díly','Příslušenství','Akce a slevy'] },
+        { title:'Sortiment', links:['Přívěsy','Náhradní díly','Akce a slevy'] },
         { title:'Služby', links:['Servis','Půjčovna','Poradna'] },
         { title:'O firmě', links:['O nás','Kontakty','Náš příběh','Reference','Kariéra'] },
         { title:'Zákazník', links:['Obchodní podmínky','Podmínky půjčovny','Reklamace a vrácení zboží','Doprava a platba','Nákup na splátky ESSOX','Ochrana osobních údajů'] },

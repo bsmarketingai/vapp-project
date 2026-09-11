@@ -46,7 +46,7 @@
     <section aria-labelledby="hp-h1" class="hp-sec" style="padding-top:64px;padding-bottom:56px;">
       <div class="vp-in" style="display:flex;flex-direction:column;gap:20px;">
         <div class="hp-h1row" style="display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;">
-          <h1 id="hp-h1" class="hp-h1" style="margin:0;font-weight:700;color:#15181C;text-wrap:pretty;text-align:center;">Přívěsy, příslušenství a náhradní díly</h1>
+          <h1 id="hp-h1" class="hp-h1" style="margin:0;font-weight:700;color:#15181C;text-wrap:pretty;text-align:center;">Přívěsy a náhradní díly</h1>
           <a href="onas.dc.html" style="display:inline-flex;align-items:center;gap:12px;background:#FFFFFF;border-radius:999px;padding:10px 20px;text-decoration:none;box-shadow:0 6px 20px rgba(20,47,86,.10);">
             <span style="display:inline-flex;color:#F5A623;">
               <dc-import name="Ikony" icon-name="star-filled" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
@@ -56,6 +56,13 @@
           </a>
         </div>
         <dc-import name="Usp" variant="sloupce" items="{{ uspGrid }}" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
+      </div>
+    </section>
+
+    <section aria-label="Karusely produktů" class="hp-sec" style="background:#EFF4FB;margin-bottom:40px;">
+      <div class="vp-in" style="display:flex;flex-direction:column;gap:40px;">
+        <dc-import name="ProduktovyKarusel" title="Přívěsy" items="{{ privesyItems }}" all-label="Zobrazit vše" all-href="privesy-V1.dc.html" detail-href="detail-prives-V1.dc.html" debug="{{ debug }}" hint-size="100%,620px"></dc-import>
+        <dc-import name="ProduktovyKarusel" title="Náhradní díly" items="{{ dilyItems }}" all-label="Zobrazit vše" all-href="nahradnidily.dc.html" detail-href="detail-nahradnidil-V1.dc.html" debug="{{ debug }}" hint-size="100%,620px"></dc-import>
       </div>
     </section>
 
@@ -72,13 +79,6 @@
           <span style="font-size:16px;font-weight:400;color:#666E78;">Rozcestník hlavních sekcí e-shopu</span>
         </div>
         <dc-import name="RozcestnikSekci" items="{{ categories }}" debug="{{ debug }}" hint-size="100%,760px"></dc-import>
-      </div>
-    </section>
-
-    <section aria-label="Karusely produktů" class="hp-sec" style="background:#EFF4FB;margin-bottom:40px;">
-      <div class="vp-in" style="display:flex;flex-direction:column;gap:40px;">
-        <dc-import name="ProduktovyKarusel" title="Přívěsy" items="{{ privesyItems }}" all-label="Zobrazit vše" all-href="privesy-V1.dc.html" detail-href="detail-prives-V1.dc.html" debug="{{ debug }}" hint-size="100%,620px"></dc-import>
-        <dc-import name="ProduktovyKarusel" title="Náhradní díly" items="{{ dilyItems }}" all-label="Zobrazit vše" all-href="nahradnidily.dc.html" detail-href="detail-nahradnidil-V1.dc.html" debug="{{ debug }}" hint-size="100%,620px"></dc-import>
       </div>
     </section>
 
