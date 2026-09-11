@@ -46,13 +46,13 @@
       <h2 class="hh-h1" style="margin:0;font-weight:700;color:#15181C;text-wrap:pretty;">Zlevněné přívěsy a díly od výrobce</h2>
       <p class="hh-lead" style="margin:0;font-weight:400;color:#5A626C;text-wrap:pretty;">Doprodej modelů, zlevněné náhradní díly a bazar přívěsů. Stejná záruka i autorizovaný servis AL-KO a KNOTT jako u zboží za plnou cenu — jen za méně.</p>
       <div class="hh-tiles" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;">
-        <a class="hh-tile" href="#/akce/vyprodej-privesu/" tabindex="{{ tab0 }}" style="display:flex;flex-direction:column;gap:6px;background:#FDF1F1;border-radius:8px;padding:20px;box-shadow:inset 0 0 0 1px #C5232B;transition:box-shadow 150ms ease,background 120ms ease;" style-hover="background:#FAD9DA;box-shadow:inset 0 0 0 1px #A21B22,0 6px 20px rgba(20,47,86,.10);">
+        <a class="hh-tile" href="{{ saleTrailersHref }}" tabindex="{{ tab0 }}" style="display:flex;flex-direction:column;gap:6px;background:#FDF1F1;border-radius:8px;padding:20px;box-shadow:inset 0 0 0 1px #C5232B;transition:box-shadow 150ms ease,background 120ms ease;" style-hover="background:#FAD9DA;box-shadow:inset 0 0 0 1px #A21B22,0 6px 20px rgba(20,47,86,.10);">
           <span style="display:flex;align-items:center;gap:8px;font-size:18px;font-weight:700;line-height:1.35;color:#C5232B;">Výprodej přívěsů
             <dc-import name="Ikony" icon-name="arrow-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
           </span>
           <span style="font-size:14px;font-weight:500;line-height:1.5;color:#5A626C;">Doprodej modelů a bazar — sleva až 22 %</span>
         </a>
-        <a class="hh-tile" href="#/akce/dily-v-akci/" tabindex="{{ tab0 }}" style="display:flex;flex-direction:column;gap:6px;background:#FDF1F1;border-radius:8px;padding:20px;box-shadow:inset 0 0 0 1px #C5232B;transition:box-shadow 150ms ease,background 120ms ease;" style-hover="background:#FAD9DA;box-shadow:inset 0 0 0 1px #A21B22,0 6px 20px rgba(20,47,86,.10);">
+        <a class="hh-tile" href="{{ salePartsHref }}" tabindex="{{ tab0 }}" style="display:flex;flex-direction:column;gap:6px;background:#FDF1F1;border-radius:8px;padding:20px;box-shadow:inset 0 0 0 1px #C5232B;transition:box-shadow 150ms ease,background 120ms ease;" style-hover="background:#FAD9DA;box-shadow:inset 0 0 0 1px #A21B22,0 6px 20px rgba(20,47,86,.10);">
           <span style="display:flex;align-items:center;gap:8px;font-size:18px;font-weight:700;line-height:1.35;color:#C5232B;">Náhradní díly v akci
             <dc-import name="Ikony" icon-name="arrow-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
           </span>
@@ -69,8 +69,8 @@
       <h2 class="hh-h1" style="margin:0;font-weight:700;color:#15181C;text-wrap:pretty;">Přívěsy, díly a servis na jednom místě</h2>
       <p class="hh-lead" style="margin:0;font-weight:400;color:#5A626C;text-wrap:pretty;">Vyrábíme, prodáváme, půjčujeme i opravujeme. Náhradní díly máme skladem a autorizovaný servis AL-KO a KNOTT přímo u nás.</p>
       <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;">
-        <dc-import name="Tlacitko" variant="primary" size="large" label="Prohlédnout přívěsy" icon-trailing="arrow-right" on-click="{{ onPrimary }}" hint-size="220px,52px"></dc-import>
-        <dc-import name="Tlacitko" variant="secondary" size="large" label="Poptat přívěs na míru" on-click="{{ onSecondary }}" hint-size="200px,52px"></dc-import>
+        <dc-import name="Tlacitko" variant="primary" size="large" label="Prohlédnout přívěsy" icon-trailing="arrow-right" href="{{ primaryHref }}" on-click="{{ onPrimary }}" hint-size="220px,52px"></dc-import>
+        <dc-import name="Tlacitko" variant="secondary" size="large" label="Poptat přívěs na míru" href="{{ secondaryHref }}" on-click="{{ onSecondary }}" hint-size="200px,52px"></dc-import>
       </div>
     </div>
   </div>
@@ -132,6 +132,10 @@ class Component extends DCLogic {
       })),
       onPrev: () => this.go(i - 1),
       onNext: () => this.go(i + 1),
+      primaryHref: P.primaryHref ?? 'privesy-V1.dc.html',
+      secondaryHref: P.secondaryHref ?? 'onas.dc.html',
+      saleTrailersHref: P.saleTrailersHref ?? 'privesy-V1.dc.html#/privesy/vyprodej-privesu/',
+      salePartsHref: P.salePartsHref ?? 'nahradnidily.dc.html#/nahradni-dily/akce/',
       onPrimary: P.onPrimary || (()=>{}),
       onSecondary: P.onSecondary || (()=>{}),
       debug: P.debug ?? true

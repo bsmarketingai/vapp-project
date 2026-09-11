@@ -47,7 +47,7 @@
       <div class="vp-in" style="display:flex;flex-direction:column;gap:20px;">
         <div class="hp-h1row" style="display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;">
           <h1 id="hp-h1" class="hp-h1" style="margin:0;font-weight:700;color:#15181C;text-wrap:pretty;text-align:center;">Přívěsy, příslušenství a náhradní díly</h1>
-          <a href="#/hodnoceni/" style="display:inline-flex;align-items:center;gap:12px;background:#FFFFFF;border-radius:999px;padding:10px 20px;text-decoration:none;box-shadow:0 6px 20px rgba(20,47,86,.10);">
+          <a href="onas.dc.html" style="display:inline-flex;align-items:center;gap:12px;background:#FFFFFF;border-radius:999px;padding:10px 20px;text-decoration:none;box-shadow:0 6px 20px rgba(20,47,86,.10);">
             <span style="display:inline-flex;color:#F5A623;">
               <dc-import name="Ikony" icon-name="star-filled" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
             </span>
@@ -112,11 +112,11 @@ class Component extends DCLogic {
       subs:['Valníkové přívěsy','Sklopné přívěsy','Skříňové přívěsy','Přepravníky aut','Přepravníky lodí'] },
     { key:'nahradni-dily', name:'Náhradní díly', href:'nahradnidily.dc.html', image:'./sekce-nahradni-dily.png', count:4218, countText:'4 218 produktů skladem',
       subs:['Díly náprav','Nájezdové brzdy a díly','Elektro, svítilny, odrazky','Pneu, kola, disky','Spojovací zařízení a zámky'] },
-    { key:'servis', name:'Servis', image:'./sekce-servis.png', count:9, countText:'9 servisních úkonů',
+    { key:'servis', name:'Servis', href:'servis.dc.html', image:'./sekce-servis.png', count:9, countText:'9 servisních úkonů',
       subs:['Servis přívěsů','Servis náprav AL-KO','Servis KNOTT','Příprava na STK','Rezervace termínu'] },
     { key:'pujcovna', name:'Půjčovna', image:'./sekce-pujcovna.png', count:14, countText:'14 přívěsů k zapůjčení',
       subs:['Půjčovna přívěsů','Denní pronájem','Víkendový pronájem','Ceník půjčovny'] },
-    { key:'poradna', name:'Poradna', image:'./sekce-poradna.png', count:32, countText:'32 článků a návodů',
+    { key:'poradna', name:'Poradna', href:'poradna.dc.html', image:'./sekce-poradna.png', count:32, countText:'32 článků a návodů',
       subs:['Jak vybrat přívěs','Zapojení zásuvky 7 a 13 pin','Seřízení nájezdové brzdy','Výměna ložisek náprav'] },
     { key:'akce', name:'Akce a slevy', image:'./sekce-akce.png', count:148, countText:'148 zlevněných položek', badge:'Sleva',
       subs:['Zlevněné přívěsy','Doprodej dílů','Bazar přívěsů'] }
@@ -138,7 +138,17 @@ class Component extends DCLogic {
     { name:'VAPP P3S 2.7 3618 třístranný sklápěč', objNum:'P3S2736', img:'uploads/prives-vapp-p3s-2-7-3618.jpg', net:'149 587 Kč', gross:'181 000 Kč', stock:0, reviews:5, rating:5,
       specs:[{label:'Ložná plocha',value:'3600 × 1800 mm'},{label:'Celková hmotnost',value:'2 700 kg'},{label:'Nosnost',value:'1 950 kg'}] },
     { name:'VAPP Moto Profi 132', objNum:'MOT132', img:'uploads/prives-vapp-moto-profi-132.jpg', net:'38 843 Kč', gross:'47 000 Kč', stock:6, reviews:24, rating:4,
-      specs:[{label:'Ložná plocha',value:'2200 × 1320 mm'},{label:'Celková hmotnost',value:'750 kg'},{label:'Nosnost',value:'540 kg'}] }
+      specs:[{label:'Ložná plocha',value:'2200 × 1320 mm'},{label:'Celková hmotnost',value:'750 kg'},{label:'Nosnost',value:'540 kg'}] },
+    { name:'VAPP PAV 2.7 4220 dvouosý valník', objNum:'PAV2742', img:'uploads/prives-vapp-pap-2-0-4019.jpg', net:'88 430 Kč', gross:'107 000 Kč', stock:3, reviews:9, rating:4,
+      specs:[{label:'Ložná plocha',value:'4210 × 2020 mm'},{label:'Celková hmotnost',value:'2 700 kg'},{label:'Nosnost',value:'2 100 kg'}] },
+    { name:'VAPP Praktik 1 jednoosý valník', objNum:'PRA1', img:'uploads/prives-vapp-praktik-2-1.jpg', net:'34 711 Kč', gross:'42 000 Kč', stock:7, reviews:12, rating:4,
+      specs:[{label:'Ložná plocha',value:'2030 × 1230 mm'},{label:'Celková hmotnost',value:'750 kg'},{label:'Nosnost',value:'580 kg'}] },
+    { name:'VAPP Moto Sport 1 přepravník', objNum:'MOTS1', img:'uploads/prives-vapp-moto-profi-132-1.jpg', net:'29 752 Kč', gross:'36 000 Kč', stock:5, sale:10, reviews:16, rating:5,
+      specs:[{label:'Ložná plocha',value:'2110 × 1550 mm'},{label:'Celková hmotnost',value:'750 kg'},{label:'Kapacita',value:'1 motocykl'}] },
+    { name:'VAPP PVS 2.0 3618 sklopný', objNum:'PVS2036', img:'uploads/prives-vapp-pvs-2-7-4021-1.jpg', net:'79 339 Kč', gross:'96 000 Kč', stock:2, reviews:4, rating:5,
+      specs:[{label:'Ložná plocha',value:'3600 × 1800 mm'},{label:'Celková hmotnost',value:'2 000 kg'},{label:'Nosnost',value:'1 490 kg'}] },
+    { name:'VAPP P3S 2.0 3018 třístranný sklápěč', objNum:'P3S2030', img:'uploads/prives-vapp-p3s-2-7-3618-1.jpg', net:'119 008 Kč', gross:'144 000 Kč', stock:1, reviews:6, rating:5,
+      specs:[{label:'Ložná plocha',value:'3000 × 1800 mm'},{label:'Celková hmotnost',value:'2 000 kg'},{label:'Nosnost',value:'1 420 kg'}] }
   ];
   DILY = [
     { name:'Opěrné kolečko DTR ⌀48 mm, nosnost 150 kg', objNum:'404815', img:'uploads/kolecko-operne-dtr-prum-48-150-kg.jpg', net:'397 Kč', gross:'480 Kč', stock:22, sale:15, reviews:23, rating:4 },
@@ -146,11 +156,24 @@ class Component extends DCLogic {
     { name:'Čelisti brzdové KNOTT 200×50, sada na 2 kola', objNum:'902005', img:'uploads/celisti-brzdove-knott-200x50-mala-sada-na-2-kola.jpg', net:'1 190 Kč', gross:'1 440 Kč', stock:17, reviews:31, rating:5 },
     { name:'Pneu 165 R13 C 96N, 710 kg, Kenda M+S', objNum:'165130', img:'uploads/pneu-165-r13-c-96n-710-kg-kenda-m-s.jpg', net:'1 149 Kč', gross:'1 390 Kč', stock:12, reviews:14, rating:4 },
     { name:'Zástrčka 7pólová 12 V kovová Jaeger', objNum:'701207', img:'uploads/zastrcka-vidlice-7-pol-12v-kovova-jaeger.jpg', net:'289 Kč', gross:'350 Kč', stock:38, reviews:6, rating:4 },
-    { name:'Zámek Albe Safety Box XL k rozvírací spojce', objNum:'ALBEXL', img:'uploads/zamek-albe-safety-box-xl-k-rozviraci.jpg', net:'2 314 Kč', gross:'2 800 Kč', stock:0, reviews:3, rating:5 }
+    { name:'Zámek Albe Safety Box XL k rozvírací spojce', objNum:'ALBEXL', img:'uploads/zamek-albe-safety-box-xl-k-rozviraci.jpg', net:'2 314 Kč', gross:'2 800 Kč', stock:0, reviews:3, rating:5 },
+    { name:'Náboj nebrzděný KNOTT 112×5 vč. ložisek', objNum:'301125', img:'uploads/naboj-nebrzdeny-knott-112x5-l-lv-vc-loziska.jpg', net:'1 397 Kč', gross:'1 690 Kč', stock:8, reviews:11, rating:5 },
+    { name:'Nájezdová brzda KNOTT KF13', objNum:'901301', img:'uploads/najezdova-brzda-knott-kf13-e-gf.jpg', net:'4 876 Kč', gross:'5 900 Kč', stock:12, reviews:7, rating:5 },
+    { name:'Kulová spojka Winterhoff WW 8', objNum:'400860', img:'uploads/kulova-spojka-ww8-1.jpg', net:'645 Kč', gross:'780 Kč', stock:21, reviews:5, rating:4 },
+    { name:'Naviják ruční KNOTT 900 kg bez lana', objNum:'702007', img:'uploads/navijak-knott-702007-900kg-bez-lana.jpg', net:'1 810 Kč', gross:'2 190 Kč', stock:6, reviews:8, rating:4 },
+    { name:'Blatník půlený plastový 200 mm, 2 ks', objNum:'102240', img:'uploads/blatnik-puleny-plastovy-s-200-mm-2-ks-domar.jpg', net:'405 Kč', gross:'490 Kč', stock:34, reviews:12, rating:4 }
   ];
   slug(s){
     return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
       .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  }
+  // podkategorie rozcestníku míří na hotové stránky prototypu, jinak na hash cestu
+  subHref(c, s){
+    if (c.key === 'privesy') return 'privesy-V1.dc.html';
+    if (c.key === 'nahradni-dily') return 'nahradnidily.dc.html#/nahradni-dily/' + this.slug(s) + '/';
+    if (c.key === 'servis') return 'servis.dc.html';
+    if (c.key === 'poradna') return 'poradna.dc.html';
+    return '#/' + c.key + '/' + this.slug(s) + '/';
   }
   renderVals(){
     const P = this.props;
@@ -159,7 +182,7 @@ class Component extends DCLogic {
     const categories = this.CATS.filter(c=>!HIDDEN.includes(c.key)).map(c=>({
       name: c.name, count: c.count, countText: c.countText, image: c.image, badge: c.badge,
       href: c.href || ('#/' + c.key + '/'),
-      subs: c.subs.map(s=>({ name:s, href:'#/' + c.key + '/' + this.slug(s) + '/' }))
+      subs: c.subs.map(s=>({ name:s, href: this.subHref(c, s) }))
     }));
     return {
       categories,
