@@ -47,11 +47,11 @@
       <sc-if value="{{ showCur }}" hint-placeholder-val="{{ true }}">
         <span class="ks-sep" aria-hidden="true" style="flex:none;width:1px;align-self:stretch;margin:8px 0;background:#D5DAE0;"></span>
         <div class="ks-curwrap" style="position:relative;flex:none;">
-          <button type="button" class="a11y-i ks-cur" aria-haspopup="listbox" aria-expanded="{{ curExpanded }}" aria-label="{{ curAria }}" onClick="{{ toggleCur }}" style="display:inline-flex;align-items:center;gap:2px;min-height:44px;padding:0 10px 0 12px;font-size:14px;font-weight:700;color:#15181C;white-space:nowrap;cursor:pointer;">{{ curCode }}<span aria-hidden="true" style="{{ curChevronStyle }}"><dc-import name="Ikony" icon-name="chevron-down" size="18" hint-size="18px,18px"></dc-import></span></button>
+          <button type="button" class="a11y-i ks-cur" aria-haspopup="listbox" aria-expanded="{{ curExpanded }}" aria-label="{{ curAria }}" onClick="{{ toggleCur }}" style="display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 10px 0 12px;cursor:pointer;"><img src="{{ langFlag }}" alt="" aria-hidden="true" style="display:block;flex:none;height:16px;width:25px;border-radius:4px;"><span aria-hidden="true" style="{{ curChevronStyle }}"><dc-import name="Ikony" icon-name="chevron-down" size="18" hint-size="18px,18px"></dc-import></span></button>
           <sc-if value="{{ curOpen }}" hint-placeholder-val="">
-            <div role="listbox" aria-label="Měna" style="position:absolute;top:calc(100% + 8px);right:0;min-width:112px;padding:4px;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);z-index:90;">
-              <sc-for list="{{ currencyItems }}" as="c" hint-placeholder-count="2">
-                <button type="button" class="a11y-i ks-curitem" role="option" aria-selected="{{ c.selected }}" onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.code }}</button>
+            <div role="listbox" aria-label="Jazyk a měna" style="position:absolute;top:calc(100% + 8px);right:0;min-width:132px;padding:4px;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);z-index:90;">
+              <sc-for list="{{ langItems }}" as="c" hint-placeholder-count="2">
+                <button type="button" class="a11y-i ks-curitem" role="option" aria-selected="{{ c.selected }}" onClick="{{ c.onClick }}" style="{{ c.style }}"><img src="{{ c.flag }}" alt="" aria-hidden="true" style="display:block;flex:none;height:16px;width:25px;border-radius:4px;">{{ c.code }}</button>
               </sc-for>
             </div>
           </sc-if>
@@ -148,7 +148,16 @@ class Component extends DCLogic {
         onHoverEnter: typeof P.onHoverEnter === 'function' ? P.onHoverEnter : (()=>{}),
         onHoverLeave: typeof P.onHoverLeave === 'function' ? P.onHoverLeave : (()=>{}),
         showCur: !!setCur && codes.length > 1,
-        curCode: cur, curOpen, curExpanded: curOpen ? 'true' : 'false', curAria: 'Měna: ' + cur,
+        curCode: cur, curOpen, curExpanded: curOpen ? 'true' : 'false',
+        // přepínač jazyka: CZ = ceny v Kč, SK = ceny v EUR
+        curAria: 'Jazyk: ' + (cur === 'EUR' ? 'SK' : 'CZ'),
+        langFlag: cur === 'EUR' ? './vapp-flag-sk.svg' : './vapp-flag-cz.svg',
+        langItems: [['CZ','CZK','./vapp-flag-cz.svg'],['SK','EUR','./vapp-flag-sk.svg']].map(([code,curCode,flag])=>({
+          code, flag, selected: curCode === cur ? 'true' : 'false',
+          style: 'width:100%;min-height:44px;padding:0 12px;border-radius:6px;display:flex;align-items:center;gap:10px;font-size:14px;font-weight:'
+            + (curCode === cur ? '700' : '500') + ';color:' + (curCode === cur ? '#1E5AA8' : '#5A626C') + ';cursor:pointer;',
+          onClick: ()=>{ this.setState({ curOpen:false }); if (setCur) setCur(curCode); }
+        })),
         curChevronStyle: 'display:inline-flex;flex:none;color:#5189CC;transition:transform .12s ease;' + (curOpen ? 'transform:rotate(180deg);' : ''),
         toggleCur: ()=>this.setState({ curOpen: !this.state.curOpen }),
         currencyItems: codes.map(code=>({

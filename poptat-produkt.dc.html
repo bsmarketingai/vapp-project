@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&amp;display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0!important;padding:0!important;background:#F7F9FB;}
+  #dc-root{margin:0!important;padding:0!important;width:100%!important;max-width:none!important;border:0!important;}
+  #dc-root>.sc-host{margin:0!important;padding:0!important;width:100%!important;}
+  a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
+  .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
+  @media (max-width:819px){ .vp-in{padding-left:16px;padding-right:16px;} }
+  .pq-h1{font-size:36px;font-weight:700;line-height:1.15;letter-spacing:-0.02em;}
+  @media (max-width:819px){ .pq-h1{font-size:26px;line-height:1.2;} }
+  .pq-lead{font-size:18px;font-weight:400;line-height:1.6;color:#5A626C;}
+  @media (max-width:819px){ .pq-lead{font-size:16px;} }
+  .pq-card{background:#FFFFFF;border-radius:8px;padding:32px;display:flex;flex-direction:column;gap:20px;}
+  @media (max-width:549px){ .pq-card{padding:20px;} }
+  .pq-lbl{display:block;font-size:16px;font-weight:700;line-height:1.35;color:#15181C;margin-bottom:8px;}
+  .pq-inp{width:100%;min-width:0;height:44px;padding:0 14px;background:#F2F4F7;border:0;border-radius:6px;font-family:inherit;font-size:15px;font-weight:400;color:#15181C;}
+  .pq-ta{width:100%;min-width:0;min-height:148px;padding:12px 14px;background:#F2F4F7;border:0;border-radius:6px;font-family:inherit;font-size:15px;font-weight:400;line-height:1.6;color:#15181C;resize:vertical;}
+  .pq-inp::placeholder,.pq-ta::placeholder{color:#666E78;}
+  .pq-inp:focus-visible,.pq-ta:focus-visible{outline:0;box-shadow:inset 0 0 0 2px #1E5AA8;}
+  @media (max-width:549px){ .pq-inp,.pq-ta{font-size:16px;} }
+  .pq-tel{display:flex;align-items:flex-start;gap:12px;}
+  .pq-telpfx{flex:none;width:168px;}
+  @media (max-width:419px){ .pq-tel{flex-direction:column;} .pq-telpfx{width:100%;} }
+  .pq-drop{border:1px dashed #C4CAD2;border-radius:8px;background:#F7F9FB;padding:28px 20px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;}
+  .pq-files{display:flex;flex-direction:column;gap:8px;}
+  .pq-file{display:flex;align-items:center;gap:12px;background:#F2F4F7;border-radius:6px;padding:8px 8px 8px 12px;}
+  .pq-note{font-size:13px;font-weight:500;line-height:1.4;color:#666E78;}
+  .pq-req{color:#C5232B;font-weight:700;}
+  .pq-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:32px;align-items:start;}
+  @media (max-width:1149px){ .pq-grid{grid-template-columns:minmax(0,1fr);} }
+  .pq-side{background:#142F56;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;}
+  .pq-sidelink{transition:color .12s;} .pq-sidelink:hover{color:#D8E6F6 !important;}
+  .pq-side a:focus-visible{outline:2px solid #FFFFFF;outline-offset:2px;}
+</style>
+</helmet>
+<div data-screen-label="Poptat produkt" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
+
+  <dc-import name="Usp" variant="pas" tone="tmavy" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,48px"></dc-import>
+  <dc-import name="Hlavicka" active="" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:30–16:30" contact-open="{{ true }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
+
+  <main class="vp-in" style="padding-top:14px;padding-bottom:48px;">
+    <div style="margin:4px 0 10px;">
+      <dc-import name="Breadcrumb" items="{{ crumbItems }}" bare="{{ true }}" debug="{{ debug }}" hint-size="100%,20px"></dc-import>
+    </div>
+
+    <h1 class="pq-h1" style="margin:0;color:#142F56;">Poptat produkt</h1>
+    <p class="pq-lead" style="margin:10px 0 0;max-width:820px;text-wrap:pretty;">Nenašli jste díl nebo si nejste jistí, co potřebujete? Napište nám, co řešíte — ozveme se s doporučením, dostupností a cenou. Odpovídáme v pracovní dny do 24 hodin.</p>
+
+    <div class="pq-grid" style="margin-top:24px;">
+      <sc-if value="{{ formOpen }}" hint-placeholder-val="{{ true }}">
+      <form class="pq-card" onSubmit="{{ onSubmit }}" novalidate="{{ true }}">
+        <div>
+          <label class="pq-lbl" for="pq-name">Jméno / Firma</label>
+          <input class="pq-inp" id="pq-name" name="name" type="text" autocomplete="name" placeholder="Lépe zadat, ale není povinné" value="{{ name }}" onChange="{{ onName }}">
+        </div>
+
+        <div>
+          <label class="pq-lbl" for="pq-email">E-mail <span class="pq-req" aria-hidden="true">*</span></label>
+          <input class="pq-inp" id="pq-email" name="email" type="email" required="{{ true }}" autocomplete="email" aria-describedby="pq-email-err" placeholder="Kam zašleme odpověď" value="{{ email }}" onChange="{{ onEmail }}">
+          <sc-if value="{{ emailErr }}" hint-placeholder-val="">
+            <p class="pq-note" id="pq-email-err" style="margin:6px 0 0;color:#C5232B;">Zadejte e-mail ve formátu jmeno@domena.cz.</p>
+          </sc-if>
+        </div>
+
+        <div>
+          <label class="pq-lbl" for="pq-phone">Telefon <span class="pq-req" aria-hidden="true">*</span></label>
+          <div class="pq-tel">
+            <div class="pq-telpfx">
+              <dc-import name="Select" options="{{ prefixes }}" value="{{ prefix }}" on-change="{{ onPrefix }}" aria-label="Předvolba" debug="{{ false }}" hint-size="100%,44px"></dc-import>
+            </div>
+            <input class="pq-inp" id="pq-phone" name="phone" type="tel" required="{{ true }}" autocomplete="tel-national" inputmode="tel" aria-describedby="pq-phone-err" placeholder="Např. 602 123 456" value="{{ phone }}" onChange="{{ onPhone }}">
+          </div>
+          <sc-if value="{{ phoneErr }}" hint-placeholder-val="">
+            <p class="pq-note" id="pq-phone-err" style="margin:6px 0 0;color:#C5232B;">Zadejte telefonní číslo — devět číslic bez předvolby.</p>
+          </sc-if>
+        </div>
+
+        <div>
+          <label class="pq-lbl" for="pq-text">Text poptávky <span class="pq-req" aria-hidden="true">*</span></label>
+          <textarea class="pq-ta" id="pq-text" name="text" required="{{ true }}" aria-describedby="pq-text-note" placeholder="Detailně popište, co potřebujete — typ a rok přívěsu, objednací číslo dílu, rozměry…" value="{{ text }}" onChange="{{ onText }}"></textarea>
+          <p class="pq-note" id="pq-text-note" style="margin:8px 0 0;" aria-live="polite">Minimální délka textu je 25 znaků. Nyní: <span style="{{ countStyle }}">{{ textLen }}</span> {{ countWord }}.</p>
+        </div>
+
+        <div>
+          <span class="pq-lbl">Můžete přiložit i fotografie</span>
+          <div class="pq-drop">
+            <dc-import name="Tlacitko" variant="ontint" size="medium" label="Vybrat nebo vyfotit fotografie" icon="photo" on-click="{{ onPickFiles }}" debug="{{ false }}" hint-size="300px,44px"></dc-import>
+            <span class="pq-note" style="max-width:420px;text-wrap:pretty;">Lze vložit soubory z PC, vybrat z galerie nebo přímo vyfotit mobilem. Až 5 fotografií, každá do 10 MB.</span>
+          </div>
+          <input id="pq-files" type="file" accept="image/*" multiple="{{ true }}" onChange="{{ onFiles }}" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);">
+          <sc-if value="{{ hasFiles }}" hint-placeholder-val="">
+            <div class="pq-files" style="margin-top:12px;">
+              <sc-for list="{{ files }}" as="f" hint-placeholder-count="2">
+                <div class="pq-file">
+                  <span aria-hidden="true" style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="photo" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>
+                  <span style="flex:1;min-width:0;font-size:15px;font-weight:500;color:#15181C;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ f.name }}</span>
+                  <span class="pq-note" style="flex:none;">{{ f.size }}</span>
+                  <dc-import name="Tlacitko" variant="ghost" size="standard" icon-only="{{ true }}" icon="trash" aria-label="{{ f.removeLabel }}" on-click="{{ f.onRemove }}" debug="{{ false }}" hint-size="36px,36px"></dc-import>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;">
+            <div style="flex:1;min-width:0;display:flex;">
+              <dc-import name="Tlacitko" variant="primary" size="large" label="Odeslat poptávku" icon-trailing="arrow-right" full-width="{{ true }}" on-click="{{ onSubmitClick }}" debug="{{ false }}" hint-size="100%,52px"></dc-import>
+            </div>
+          </div>
+          <p class="pq-note" style="margin:0;text-wrap:pretty;">Odesláním souhlasíte se <a href="#">zpracováním osobních údajů</a>. Údaje použijeme jen k odpovědi na tuto poptávku.</p>
+        </div>
+      </form>
+      </sc-if>
+
+      <sc-if value="{{ sent }}" hint-placeholder-val="">
+        <div class="pq-card" role="status" style="align-items:flex-start;gap:16px;">
+          <span aria-hidden="true" style="display:inline-flex;width:44px;height:44px;border-radius:999px;background:#E9F8EF;color:#0E7F43;align-items:center;justify-content:center;"><dc-import name="Ikony" icon-name="circle-check" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>
+          <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.01em;">Poptávku máme</h2>
+          <p style="margin:0;font-size:16px;line-height:1.6;color:#5A626C;max-width:560px;text-wrap:pretty;">Ozveme se na <strong style="color:#15181C;">{{ sentEmail }}</strong> v pracovní dny do 24 hodin. Pokud to spěchá, zavolejte na 323 605 314.</p>
+          <dc-import name="Tlacitko" variant="secondary" size="medium" label="Poslat další poptávku" on-click="{{ onReset }}" debug="{{ false }}" hint-size="220px,44px"></dc-import>
+        </div>
+      </sc-if>
+
+      <aside class="pq-side" aria-labelledby="pq-side-h">
+        <h2 id="pq-side-h" style="margin:0;font-size:22px;font-weight:700;line-height:1.25;color:#FFFFFF;">Radši zavolejte?</h2>
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#B4CEEC;text-wrap:pretty;">Díly vybíráme podle typu přívěsu a výrobního čísla. Po telefonu to většinou vyřešíme na první zavolání.</p>
+        <a class="pq-sidelink" href="tel:+420323605314" style="display:flex;align-items:center;gap:8px;font-size:18px;font-weight:700;color:#FFFFFF;text-decoration:none;"><span aria-hidden="true" style="display:inline-flex;flex:none;color:#B4CEEC;"><dc-import name="Ikony" icon-name="phone" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>323 605 314</a>
+        <a class="pq-sidelink" href="mailto:obchod@vapp.cz" style="display:flex;align-items:center;gap:8px;font-size:18px;font-weight:700;color:#FFFFFF;text-decoration:none;"><span aria-hidden="true" style="display:inline-flex;flex:none;color:#B4CEEC;"><dc-import name="Ikony" icon-name="mail" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>obchod@vapp.cz</a>
+        <p style="margin:0;font-size:13px;font-weight:500;line-height:1.4;color:#B4CEEC;">Po–Pá 8:30–16:30</p>
+      </aside>
+    </div>
+  </main>
+
+  <div style="margin-top:10px;">
+    <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
+  </div>
+
+  <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  state = { name:'', email:'', phone:'', prefix:'+420', text:'', files:[], sent:false, touched:false };
+  PREFIXES = [
+    { value:'+420', label:'+420 (CZ)' },
+    { value:'+421', label:'+421 (SK)' },
+    { value:'+49', label:'+49 (DE)' },
+    { value:'+43', label:'+43 (AT)' },
+    { value:'+48', label:'+48 (PL)' }
+  ];
+  fmtSize(b){ return b > 1048576 ? (b/1048576).toFixed(1).replace('.', ',') + ' MB' : Math.max(1, Math.round(b/1024)) + ' kB'; }
+  znaku(n){ if (n === 1) return 'znak'; if (n >= 2 && n <= 4) return 'znaky'; return 'znaků'; }
+  validate(){
+    const s = this.state;
+    return {
+      email: !/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(s.email.trim()),
+      phone: s.phone.replace(/\D/g,'').length < 9,
+      text: s.text.trim().length < 25
+    };
+  }
+  submit(){
+    const bad = this.validate();
+    if (bad.email || bad.phone || bad.text){
+      this.setState({ touched:true });
+      const id = bad.email ? 'pq-email' : (bad.phone ? 'pq-phone' : 'pq-text');
+      const el = document.getElementById(id);
+      if (el && el.focus) el.focus();
+      return;
+    }
+    this.setState({ sent:true });
+  }
+  renderVals(){
+    const s = this.state;
+    const bad = this.validate();
+    const len = s.text.trim().length;
+    const ok = len >= 25;
+    return {
+      debug: this.props.debug ?? true,
+      crumbItems: [{ name:'Domů', href:'index.dc.html' }, { name:'Poptat produkt', href:'#' }],
+      formOpen: !s.sent, sent: s.sent, sentEmail: s.email,
+      name: s.name, email: s.email, phone: s.phone, text: s.text,
+      prefix: s.prefix, prefixes: this.PREFIXES,
+      onName: (e)=>this.setState({ name:e.target.value }),
+      onEmail: (e)=>this.setState({ email:e.target.value }),
+      onPhone: (e)=>this.setState({ phone:e.target.value }),
+      onText: (e)=>this.setState({ text:e.target.value }),
+      onPrefix: (v)=>this.setState({ prefix:v }),
+      emailErr: s.touched && bad.email,
+      phoneErr: s.touched && bad.phone,
+      textLen: len, countWord: this.znaku(len),
+      countStyle: 'font-weight:700;color:' + (ok ? '#0B6937' : '#C5232B') + ';',
+      files: s.files.map((f, i)=>({
+        name: f.name, size: this.fmtSize(f.size),
+        removeLabel: 'Odebrat fotografii ' + f.name,
+        onRemove: ()=>this.setState(st=>({ files: st.files.filter((_, j)=>j !== i) }))
+      })),
+      hasFiles: s.files.length > 0,
+      onPickFiles: ()=>{ const el = document.getElementById('pq-files'); if (el) el.click(); },
+      onFiles: (e)=>{
+        const picked = Array.from(e.target.files || []).map(f=>({ name:f.name, size:f.size }));
+        this.setState(st=>({ files: st.files.concat(picked).slice(0,5) }));
+        e.target.value = '';
+      },
+      onSubmit: (e)=>{ if (e && e.preventDefault) e.preventDefault(); this.submit(); },
+      onSubmitClick: ()=>this.submit(),
+      onReset: ()=>this.setState({ sent:false, touched:false, text:'', files:[] })
+    };
+  }
+}
+</script>
+</body>
+</html>

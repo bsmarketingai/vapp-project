@@ -29,7 +29,12 @@
   .s-input::-webkit-search-cancel-button,
   .s-input::-webkit-search-decoration{-webkit-appearance:none;appearance:none;display:none;}
   .s-input::-ms-clear{display:none;width:0;height:0;}
-  .s-sug{max-width:100%;overflow-wrap:anywhere;}
+  /* panel je širší než pole, ale zarovnaný zleva — šířku dopočítá logika podle místa vpravo */
+  .s-sug{overflow-wrap:anywhere;left:0;}
+  @media (max-width:819px){
+    .s-cols{grid-template-columns:minmax(0,1fr) !important;}
+    .s-guide{border-left:0 !important;border-top:1px solid #F2F4F7;}
+  }
 
   html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
   .s-go{transition:background .12s;} .s-go:hover{background:#1A4A8A !important;}
@@ -38,26 +43,52 @@
 </helmet>
 <div style="{{ rootStyle }}">
   <div style="{{ cardStyle }}">
-    <div style="position:relative;{{ fieldMaxW }}">
+    <div ref="{{ fieldRef }}" style="position:relative;{{ fieldMaxW }}">
       <div style="display:flex;align-items:center;height:{{ fieldH }}px;border-radius:6px;overflow:hidden;background:#F2F4F7;box-shadow:{{ searchRing }};transition:box-shadow .15s;">
-        <input type="search" class="s-input" autoFocus="{{ autofocus }}" aria-label="Hledat v e-shopu" value="{{ q }}" onInput="{{ onSearch }}" onFocus="{{ onFocus }}" onBlur="{{ onBlur }}" placeholder="{{ placeholder }}" style="flex:1;min-width:0;border:none;outline:none;background:transparent;font-size:15px;font-family:inherit;color:#15181C;padding:0 8px 0 16px;">
+        <input type="search" class="s-input" autoFocus="{{ autofocus }}" aria-label="Hledat v e-shopu" value="{{ q }}" onInput="{{ onSearch }}" onKeyDown="{{ onKey }}" onFocus="{{ onFocus }}" onBlur="{{ onBlur }}" placeholder="{{ placeholder }}" style="flex:1;min-width:0;border:none;outline:none;background:transparent;font-size:15px;font-family:inherit;color:#15181C;padding:0 8px 0 16px;">
         <sc-if value="{{ hasQ }}" hint-placeholder-val=""><button type="button" class="a11y-i" aria-label="Vymazat hledaný výraz" onMouseDown="{{ clearSearch }}" style="width:44px;display:flex;align-items:center;justify-content:center;color:#666E78;cursor:pointer;flex:none;"><dc-import name="Ikony" icon-name="x" size="24" hint-size="24px,24px"></dc-import></button></sc-if>
-        <button type="button" aria-label="Hledat" class="s-go" style="width:56px;height:100%;background:#1E5AA8;display:flex;align-items:center;justify-content:center;color:#fff;flex:none;cursor:pointer;border:none;margin:0;padding:0;appearance:none;-webkit-appearance:none;"><dc-import name="Ikony" icon-name="search" size="24" hint-size="24px,24px"></dc-import></button>
+        <button type="button" aria-label="Hledat" class="s-go" onClick="{{ onSubmit }}" style="width:56px;height:100%;background:#1E5AA8;display:flex;align-items:center;justify-content:center;color:#fff;flex:none;cursor:pointer;border:none;margin:0;padding:0;appearance:none;-webkit-appearance:none;"><dc-import name="Ikony" icon-name="search" size="24" hint-size="24px,24px"></dc-import></button>
       </div>
       <sc-if value="{{ showSuggest }}" hint-placeholder-val="{{ true }}">
-        <div class="s-sug" style="position:absolute;top:calc(100% + 8px);left:0;right:0;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);overflow:hidden;z-index:20;">
-          <div style="padding:10px 16px 6px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">{{ suggestHeading }}</div>
-          <sc-for list="{{ suggestions }}" as="sg" hint-placeholder-count="4">
-            <button type="button" onMouseDown="{{ sg.onPick }}" class="s-row a11y-i" style="display:flex;width:100%;align-items:center;gap:12px;min-height:52px;padding:6px 16px;cursor:pointer;">
-              <span style="{{ sg.thumb }}"></span>
-              <span style="flex:1;min-width:0;">
-                <span style="display:block;font-size:15px;font-weight:600;color:#15181C;line-height:1.3;">{{ sg.name }}</span>
-                <span style="display:block;font-size:13px;color:#666E78;">{{ sg.meta }}</span>
-              </span>
-              <span style="color:#B4CEEC;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span>
-            </button>
-          </sc-for>
-          <sc-if value="{{ noResults }}" hint-placeholder-val=""><div style="padding:16px;font-size:14px;color:#666E78;">Nic nenalezeno — zkuste jiný výraz nebo objednací číslo.</div></sc-if>
+        <div class="s-sug" style="position:absolute;top:calc(100% + 8px);width:{{ sugW }};background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);overflow:hidden;z-index:20;">
+          <div class="s-cols" style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);">
+            <div style="min-width:0;padding-bottom:8px;">
+              <div style="padding:10px 16px 6px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">{{ suggestHeading }}</div>
+              <sc-for list="{{ suggestions }}" as="sg" hint-placeholder-count="4">
+                <div>
+                <sc-if value="{{ sg.divider }}" hint-placeholder-val=""><div style="margin:8px 16px 2px;padding-top:10px;border-top:1px solid #F2F4F7;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Kategorie</div></sc-if>
+                <button type="button" onMouseDown="{{ sg.onPick }}" class="s-row a11y-i" style="display:flex;width:100%;align-items:center;gap:12px;min-height:52px;padding:6px 16px;cursor:pointer;">
+                  <img src="{{ sg.image }}" alt="" style="{{ sg.thumb }}">
+                  <span style="flex:1;min-width:0;">
+                    <span style="display:block;font-size:15px;font-weight:600;color:#15181C;line-height:1.3;">{{ sg.name }}</span>
+                    <span style="display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;">
+                      <span style="font-size:13px;color:#666E78;">{{ sg.meta }}</span>
+                      <sc-if value="{{ sg.showStock }}" hint-placeholder-val=""><span style="{{ sg.stockStyle }}">{{ sg.stock }}</span></sc-if>
+                    </span>
+                  </span>
+                  <sc-if value="{{ sg.showPrice }}" hint-placeholder-val=""><span style="flex:none;font-size:15px;font-weight:700;color:#15181C;">{{ sg.price }}</span></sc-if>
+                  <span style="color:#B4CEEC;display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span>
+                </button>
+                </div>
+              </sc-for>
+              <sc-if value="{{ noResults }}" hint-placeholder-val=""><div style="padding:6px 16px 10px;font-size:14px;color:#666E78;">Nic nenalezeno — zkuste jiný výraz nebo objednací číslo.</div></sc-if>
+              <a href="{{ allHref }}" class="s-row a11y-i" style="display:flex;align-items:center;gap:8px;padding:10px 16px;font-size:14px;font-weight:700;color:#C5232B;"><dc-import name="Ikony" icon-name="search" size="18" hint-size="18px,18px"></dc-import>Zobrazit všechny výsledky</a>
+            </div>
+            <div class="s-guide" style="min-width:0;padding-bottom:8px;border-left:1px solid #F2F4F7;">
+              <div style="padding:10px 16px 6px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Poradna</div>
+              <sc-for list="{{ guideItems }}" as="gi" hint-placeholder-count="4">
+                <a href="{{ gi.href }}" class="s-row a11y-i" style="display:flex;width:100%;align-items:center;gap:12px;min-height:52px;padding:6px 16px;cursor:pointer;">
+                  <img src="{{ gi.image }}" alt="" style="flex:none;width:40px;height:40px;border-radius:6px;object-fit:cover;background:#FCF1DC;">
+                  <span style="flex:1;min-width:0;">
+                    <span style="display:block;font-size:15px;font-weight:600;color:#15181C;line-height:1.3;">{{ gi.name }}</span>
+                    <span style="display:block;font-size:13px;color:#666E78;">{{ gi.meta }}</span>
+                  </span>
+                </a>
+              </sc-for>
+              <sc-if value="{{ noGuide }}" hint-placeholder-val=""><div style="padding:6px 16px 10px;font-size:14px;color:#666E78;">Žádný článek k tomuto výrazu.</div></sc-if>
+              <a href="poradna.dc.html" class="s-row a11y-i" style="display:flex;align-items:center;gap:8px;padding:10px 16px;font-size:14px;font-weight:700;color:#C5232B;"><dc-import name="Ikony" icon-name="book" size="18" hint-size="18px,18px"></dc-import>Celá poradna</a>
+            </div>
+          </div>
         </div>
       </sc-if>
     </div>
@@ -73,18 +104,37 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;onFieldFocus&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:620,&quot;height&quot;:480},&quot;value&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;bare&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;height&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:48,&quot;tsType&quot;:&quot;number&quot;},&quot;placeholder&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
-  state = { q:'', focus:false };
+  state = { q:'', focus:false, vw:0 };
+  componentDidMount(){ this.onRz = ()=> this.setState({ vw: document.documentElement.clientWidth }); this.onRz(); window.addEventListener('resize', this.onRz); }
+  componentWillUnmount(){ window.removeEventListener('resize', this.onRz); }
+  sugWidth(){
+    const el = this.fieldEl; const vw = this.state.vw || (typeof window!=='undefined' ? document.documentElement.clientWidth : 0);
+    if (!el || !vw) return '100%';
+    const left = el.getBoundingClientRect().left;
+    const avail = Math.max(el.offsetWidth, vw - left - 16);
+    return Math.min(880, avail) + 'px';
+  }
   SEARCH = [
-    { name:'Nápravy a brzdy', meta:'Kategorie · 612 produktů', cat:true, kw:'brzda brzdy naprava napravy naprav' },
-    { name:'Kola a pneumatiky', meta:'Kategorie · 296 produktů', cat:true, kw:'kolo kola pneu pneumatika disk' },
-    { name:'Elektro a osvětlení', meta:'Kategorie · 474 produktů', cat:true, kw:'led elektro svetlo osvetleni zarovka kabel' },
-    { name:'Nájezdová brzda KNOTT KF13', meta:'Obj. č. 901301 · Skladem', kw:'brzda knott najezdova' },
-    { name:'Brzdové čelisti KNOTT 200×50', meta:'Obj. č. 302005 · Skladem', kw:'brzda celisti knott' },
-    { name:'Opěrné kolečko ⌀48 mm', meta:'Obj. č. 404815 · Skladem', kw:'kolo kolecko operne' },
-    { name:'Pneumatika 165 R13 C Kenda', meta:'Obj. č. 401653 · Skladem', kw:'pneu pneumatika kolo kenda' },
-    { name:'Svítilna Fristom FT-001 B LED', meta:'Obj. č. 501224 · Skladem', kw:'led svetlo svitilna fristom' },
-    { name:'Žárovka P21/5W 12 V BAY15d', meta:'Obj. č. 502155 · Skladem', kw:'led zarovka svetlo' },
+    { name:'Nápravy a brzdy', meta:'Kategorie · 612 produktů', cat:true, image:'uploads/napravy-a-brzdy.jpg', kw:'brzda brzdy naprava napravy naprav' },
+    { name:'Kola a pneumatiky', meta:'Kategorie · 296 produktů', cat:true, image:'uploads/kola-a-pneumatiky.jpg', kw:'kolo kola pneu pneumatika disk' },
+    { name:'Elektro a osvětlení', meta:'Kategorie · 474 produktů', cat:true, image:'uploads/elektro-a-osvetleni.jpg', kw:'led elektro svetlo osvetleni zarovka kabel' },
+    { name:'Nájezdová brzda KNOTT KF13', meta:'Obj. č. 901301', stock:'Skladem', price:'4 290 Kč', image:'uploads/celisti-brzdove-knott-200x50-mala-sada-na-2-kola.jpg', kw:'brzda knott najezdova' },
+    { name:'Brzdové čelisti KNOTT 200×50', meta:'Obj. č. 302005', stock:'Skladem', price:'1 190 Kč', image:'uploads/celisti.jpg', kw:'brzda celisti knott' },
+    { name:'Opěrné kolečko ⌀48 mm', meta:'Obj. č. 404815', stock:'Skladem u dodavatele', stockTone:'muted', price:'890 Kč', image:'uploads/kolecka-1.jpg', kw:'kolo kolecko operne' },
+    { name:'Pneumatika 165 R13 C Kenda', meta:'Obj. č. 401653', stock:'Skladem', price:'1 540 Kč', image:'uploads/kola-a-pneumatiky.jpg', kw:'pneu pneumatika kolo kenda' },
+    { name:'Svítilna Fristom FT-001 B LED', meta:'Obj. č. 501224', stock:'Skladem', price:'720 Kč', image:'uploads/sdruzene-zadni-svitil.jpg', kw:'led svetlo svitilna fristom' },
+    { name:'Žárovka P21/5W 12 V BAY15d', meta:'Obj. č. 502155', stock:'Není skladem', stockTone:'out', price:'39 Kč', image:'uploads/zarovky.jpg', kw:'led zarovka svetlo' },
   ];
+  GUIDE = [
+    { name:'Tachograf od 1. 7. 2026', rubrika:'Předpisy', image:'uploads/clanek-tachograf.png', kw:'tachograf predpisy legislativa prives souprava' },
+    { name:'Jak vybrat správný disk', rubrika:'Technický rádce', image:'uploads/clanek-disk.png', kw:'disk kolo kola roztec pneu et nosnost' },
+    { name:'Zástrčky přívěsů a zásuvky tažných zařízení', rubrika:'Elektroinstalace', image:'uploads/clanek-zastrcky.png', kw:'led elektro zastrcka zasuvka 7 13 pin kabel svetlo' },
+    { name:'Huštění pneu přívěsu', rubrika:'Technický rádce', image:'uploads/clanek-husteni-pneu.png', kw:'pneu pneumatika husteni tlak kolo' },
+    { name:'Výjimka TEMPO 100 pro přípojná vozidla', rubrika:'Předpisy', image:'uploads/clanek-tempo-100.png', kw:'tempo 100 predpisy rychlost prives' },
+    { name:'Seřízení nájezdové brzdy', rubrika:'Technický rádce', image:'uploads/clanek-nalozit-prives.png', kw:'brzda brzdy najezdova serizeni celisti knott' },
+    { name:'Povinné a nepovinné osvětlení přívěsu', rubrika:'Předpisy', image:'uploads/elektro-a-osvetleni.jpg', kw:'led svetlo osvetleni zarovka svitilna' },
+  ];
+  go(q){ window.location.href = 'vysledky-hledani.dc.html?q=' + encodeURIComponent(String(q||'').trim()); }
   norm(s){ return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
   renderVals(){
     const P = this.props, s = this.state;
@@ -95,9 +145,17 @@ class Component extends DCLogic {
     const setQ = (v)=> controlled ? P.onChange(v) : this.setState({ q:v });
     const nq = this.norm(String(q).trim());
     let matches = nq ? this.SEARCH.filter(it=> this.norm(it.name).indexOf(nq)>=0 || it.kw.indexOf(nq)>=0 ) : this.SEARCH.slice(0,4);
-    const thumbCat = 'flex:none;width:40px;height:40px;border-radius:8px;background:#EFF4FB;';
-    const thumbProd = 'flex:none;width:40px;height:40px;border-radius:8px;background:#F2F4F7;';
-    const suggestions = matches.map(it=>({ name:it.name, meta:it.meta, thumb: it.cat?thumbCat:thumbProd, onPick:()=>{ setQ(it.name); this.setState({ focus:false }); } }));
+    const thumbCat = 'flex:none;width:40px;height:40px;border-radius:8px;object-fit:contain;background:#EFF4FB;';
+    const thumbProd = 'flex:none;width:40px;height:40px;object-fit:contain;';
+    const STOCK = { stock:'#0B6937', muted:'#666E78', out:'#C5232B' };
+    const guideMatches = nq ? this.GUIDE.filter(g=> this.norm(g.name).indexOf(nq)>=0 || g.kw.indexOf(nq)>=0 ) : this.GUIDE.slice(0,4);
+    const prods = matches.filter(it=>!it.cat), cats = matches.filter(it=>!!it.cat);
+    const ordered = prods.concat(cats);
+    const suggestions = ordered.map((it,i)=>({ name:it.name, meta:it.meta, image:it.image, thumb: it.cat?thumbCat:thumbProd,
+      divider: !!it.cat && i>0 && !ordered[i-1].cat,
+      stock: it.stock || '', showStock: !!it.stock, price: it.price || '', showPrice: !!it.price,
+      stockStyle: 'font-size:13px;font-weight:700;color:' + (STOCK[it.stockTone || 'stock']) + ';',
+      onPick:()=>{ setQ(it.name); this.setState({ focus:false }); } }));
     return {
       rootStyle: bare ? 'position:relative;' : 'display:flex;flex-direction:column;gap:16px;',
       cardStyle: bare ? '' : 'background:#fff;border-radius:8px;padding:28px;min-height:420px;',
@@ -112,9 +170,17 @@ class Component extends DCLogic {
       onBlur:()=>this.setState({ focus:false }),
       clearSearch:()=>setQ(''),
       showSuggest: s.focus,
+      allHref: 'vysledky-hledani.dc.html?q=' + encodeURIComponent(q || ''),
+      onKey:(e)=>{ if(e.key==='Enter'){ e.preventDefault(); this.go(q); } },
+      onSubmit:()=>this.go(q),
+      fieldRef:(el)=>{ this.fieldEl = el; },
+      sugW: this.sugWidth(),
       suggestHeading: nq ? 'Výsledky' : 'Populární dotazy',
       suggestions,
       noResults: nq && matches.length===0,
+      // prototyp: všechny články vedou na jediný hotový detail
+      guideItems: guideMatches.slice(0,5).map(g=>({ name:g.name, meta:g.rubrika, image:g.image, href:'clanek-tachograf.dc.html' })),
+      noGuide: nq && guideMatches.length===0,
     };
   }
 }

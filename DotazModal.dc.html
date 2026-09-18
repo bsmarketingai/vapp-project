@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0!important;padding:0!important;}
+  #dc-root{margin:0!important;padding:0!important;width:100%!important;max-width:none!important;border:0!important;}
+  #dc-root>.sc-host{margin:0!important;padding:0!important;width:100%!important;}
+  .dz-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
+  .dz-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .dz-close{transition:background .12s,color .12s;} .dz-close:hover{background:#F2F4F7;color:#15181C;}
+  @keyframes dz-in{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+  .dz-panel{animation:dz-in .4s ease;}
+  .dz-row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px;align-items:center;}
+  .dz-row-top{align-items:start;}
+  .dz-f{width:100%;font:inherit;font-size:15px;color:#15181C;background:#F2F4F7;border:0;border-radius:6px;padding:0 14px;height:44px;}
+  .dz-f:focus{outline:none;box-shadow:inset 0 0 0 2px #1E5AA8;}
+  textarea.dz-f{height:auto;padding:12px 14px;resize:vertical;line-height:1.5;}
+  @media (max-width:549px){
+    .dz-row{grid-template-columns:minmax(0,1fr);gap:6px;}
+    .dz-f{font-size:16px;}
+    .dz-wrap{padding:0 !important;align-items:stretch !important;}
+    .dz-panel{max-height:100dvh !important;border-radius:0 !important;}
+  }
+</style>
+</helmet>
+<sc-if value="{{ isOpen }}" hint-placeholder-val="">
+  <div class="dz-wrap" onClick="{{ onBackdrop }}" style="position:fixed;inset:0;z-index:80;background:rgba(20,30,45,.55);display:flex;align-items:center;justify-content:center;padding:24px;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;">
+    <div role="dialog" aria-modal="true" aria-labelledby="dz-title" tabindex="-1" ref="{{ panelRef }}" onClick="{{ stop }}" onKeyDown="{{ onKey }}" class="dz-panel" style="position:relative;z-index:90;background:#FFFFFF;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);width:100%;max-width:760px;max-height:86vh;display:flex;flex-direction:column;overflow:hidden;">
+
+      <div style="flex:none;display:flex;align-items:center;gap:16px;padding:18px 24px;border-bottom:1px solid #F2F4F7;">
+        <h2 id="dz-title" style="flex:1;min-width:0;margin:0;font-size:22px;font-weight:700;line-height:1.25;color:#15181C;">Potřebuji poradit</h2>
+        <button type="button" class="dz-i dz-close" aria-label="Zavřít dotaz" onClick="{{ onClose }}" style="flex:none;width:36px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#5A626C;"><dc-import name="Ikony" icon-name="x" size="24" hint-size="24px,24px"></dc-import></button>
+      </div>
+
+      <div style="flex:1;min-height:0;overflow:auto;padding:20px 24px;display:flex;flex-direction:column;gap:14px;">
+        <div class="dz-row">
+          <label for="dz-email" style="font-size:15px;color:#15181C;">Váš e-mail <span style="color:#C5232B;">*</span></label>
+          <input id="dz-email" class="dz-f" type="email" autoComplete="email" placeholder="jan.novak@email.cz" value="{{ email }}" onInput="{{ onEmail }}">
+        </div>
+        <div class="dz-row">
+          <label for="dz-tel" style="font-size:15px;color:#15181C;">Váš telefon <span style="color:#C5232B;">*</span></label>
+          <input id="dz-tel" class="dz-f" type="tel" autoComplete="tel" placeholder="+420 777 123 456" value="{{ phone }}" onInput="{{ onPhone }}">
+        </div>
+        <div class="dz-row">
+          <label for="dz-subj" style="font-size:15px;color:#15181C;">Předmět <span style="color:#C5232B;">*</span></label>
+          <input id="dz-subj" class="dz-f" type="text" value="{{ subject }}" onInput="{{ onSubject }}">
+        </div>
+        <div class="dz-row dz-row-top">
+          <label for="dz-msg" style="font-size:15px;color:#15181C;padding-top:12px;">Váš dotaz <span style="color:#C5232B;">*</span></label>
+          <textarea id="dz-msg" class="dz-f" rows="6" placeholder="Např. pasují tyto čelisti na nápravu KNOTT 200×50 z roku 2019?" value="{{ message }}" onInput="{{ onMessage }}"></textarea>
+        </div>
+        <div style="font-size:13px;color:#666E78;"><span style="color:#C5232B;">*</span> povinné údaje</div>
+      </div>
+
+      <div style="flex:none;display:flex;align-items:center;justify-content:flex-end;gap:16px;flex-wrap:wrap;padding:16px 24px;border-top:1px solid #F2F4F7;background:#F7F9FB;">
+        <div aria-hidden="true" style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:6px;padding:12px 16px;min-width:260px;">
+          <span style="flex:none;width:24px;height:24px;border-radius:6px;background:#fff;box-shadow:inset 0 0 0 1px #91959B;"></span>
+          <span style="flex:1;font-size:14px;color:#5A626C;">Nejsem robot</span>
+          <span style="flex:none;font-size:13px;font-weight:700;color:#666E78;">reCAPTCHA</span>
+        </div>
+        <dc-import name="Tlacitko" variant="primary" size="medium" icon="mail" label="Odeslat dotaz" on-click="{{ onSend }}" hint-size="180px,44px"></dc-import>
+      </div>
+
+    </div>
+  </div>
+</sc-if>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:900,&quot;height&quot;:660},&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;productName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Čelisti brzdové KNOTT 200×50 — malá sada na 2 kola&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onSend&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(data:object)=&gt;void&quot;,&quot;default&quot;:null},&quot;onClose&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  state = { email:'', phone:'', message:'', subject:null };
+  componentDidMount(){
+    this._onDocKey = (e)=>{ if(e.key === 'Escape' && this.props.open){ e.preventDefault(); this.close(); } };
+    document.addEventListener('keydown', this._onDocKey);
+    this.syncOpen();
+  }
+  componentDidUpdate(){ this.syncOpen(); }
+  componentWillUnmount(){ document.removeEventListener('keydown', this._onDocKey); this.unlock(); }
+  lock(){ if(this._locked) return; this._locked = true; this._prevOverflow = document.body.style.overflow; document.body.style.overflow = 'hidden'; }
+  unlock(){ if(!this._locked) return; this._locked = false; document.body.style.overflow = this._prevOverflow || ''; }
+  syncOpen(){
+    const open = this.props.open === true;
+    if (open && !this._wasOpen){
+      this._trigger = document.activeElement;
+      this.lock();
+      // předmět se předvyplní názvem produktu při každém otevření
+      this.setState({ subject:null });
+      if (this._panel) setTimeout(()=>{ if(this._panel) this._panel.focus(); }, 0);
+    }
+    if (!open && this._wasOpen){
+      this.unlock();
+      const t = this._trigger;
+      if (t && t.focus) setTimeout(()=>t.focus(), 0);
+      this._trigger = null;
+    }
+    this._wasOpen = open;
+  }
+  close(){ const f = this.props.onClose; if (f) f(); }
+  renderVals(){
+    const P = this.props, s = this.state;
+    const focusables = (root)=>Array.from(root.querySelectorAll('a[href],button:not([disabled]),textarea,input,select,[tabindex]:not([tabindex="-1"])'))
+      .filter(el=>el.offsetParent !== null || el === document.activeElement);
+    return {
+      debug: P.debug ?? true,
+      isOpen: P.open === true,
+      email:s.email, phone:s.phone, message:s.message,
+      subject: s.subject === null ? (P.productName || '') : s.subject,
+      onEmail:(e)=>this.setState({ email:e.target.value }),
+      onPhone:(e)=>this.setState({ phone:e.target.value }),
+      onSubject:(e)=>this.setState({ subject:e.target.value }),
+      onMessage:(e)=>this.setState({ message:e.target.value }),
+      onSend:()=>{ const f = P.onSend; if (f) f({ email:s.email, phone:s.phone, subject: s.subject === null ? (P.productName || '') : s.subject, message:s.message }); this.close(); },
+      panelRef:(el)=>{ this._panel = el; },
+      stop:(e)=>{ if(e && e.stopPropagation) e.stopPropagation(); },
+      onBackdrop:()=>this.close(),
+      onClose:()=>this.close(),
+      onKey:(e)=>{
+        if (e.key !== 'Tab' || !this._panel) return;
+        const list = focusables(this._panel);
+        if (!list.length) return;
+        const first = list[0], last = list[list.length - 1];
+        if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

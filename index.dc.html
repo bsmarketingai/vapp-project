@@ -38,7 +38,7 @@
 
   <dc-import name="Usp" variant="pas" tone="tmavy" items="{{ uspPas }}" debug="{{ debug }}" hint-size="100%,48px"></dc-import>
 
-  <dc-import name="Hlavicka" active="" contact-open="{{ contactOpen }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
+  <dc-import name="Hlavicka" active="" contact-open="{{ contactOpen }}" lang-variant="{{ langVer }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
 
   <main>
     <dc-import name="HeroHomepage" variant="{{ heroVer }}" debug="{{ debug }}" hint-size="100%,420px"></dc-import>
@@ -104,7 +104,7 @@
 
   <dc-import name="Paticka" open="{{ contactOpen }}" bare="true" debug="{{ debug }}" hint-size="100%,520px"></dc-import>
 </div>
-<dc-import name="PrezentacniLista" label="Hero:" variants="{{ heroVariants }}" active="{{ heroVer }}" on-select="{{ onHeroVer }}" label2="Ot. doba:" variants2="{{ openVariants }}" active2="{{ openState }}" on-select2="{{ onOpenState }}" debug-on="{{ debugOn }}" on-toggle-debug="{{ onToggleDebug }}" hint-size="320px,56px"></dc-import>
+<dc-import name="PrezentacniLista" label="Hero:" variants="{{ heroVariants }}" active="{{ heroVer }}" on-select="{{ onHeroVer }}" label2="Ot. doba:" variants2="{{ openVariants }}" active2="{{ openState }}" on-select2="{{ onOpenState }}" label3="Jazyk:" variants3="{{ langVariants }}" active3="{{ langVer }}" on-select3="{{ onLangVer }}" debug-on="{{ debugOn }}" on-toggle-debug="{{ onToggleDebug }}" hint-size="320px,56px"></dc-import>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
@@ -177,7 +177,7 @@ class Component extends DCLogic {
     if (c.key === 'poradna') return 'poradna.dc.html';
     return '#/' + c.key + '/' + this.slug(s) + '/';
   }
-  state = Object.assign({}, this.state, { heroVer: (typeof localStorage !== 'undefined' && localStorage.getItem('vapp-hero-variant')) || 'V1', debugOverride: null });
+  state = Object.assign({}, this.state, { heroVer: (typeof localStorage !== 'undefined' && localStorage.getItem('vapp-hero-variant')) || 'V1', langVer: 'J2', debugOverride: null });
   setHeroVer(id){
     const v = id === 'v2' || id === 'V2' ? 'V2' : 'V1';
     try{ localStorage.setItem('vapp-hero-variant', v); }catch(e){}
@@ -212,6 +212,10 @@ class Component extends DCLogic {
       heroVer,
       heroVariants: [{ id:'V1', label:'V1' }, { id:'V2', label:'V2' }],
       onHeroVer: (id)=>this.setHeroVer(id),
+      // J1 = jazyk v boxu košíku · J2 = samostatná vlajka s popiskem vedle Přihlásit
+      langVer: this.state.langVer === 'J1' ? 'J1' : 'J2',
+      langVariants: [{ id:'J1', label:'J1' }, { id:'J2', label:'J2' }],
+      onLangVer: (id)=>this.setState({ langVer: id === 'J2' ? 'J2' : 'J1' }),
       debugOn,
       onToggleDebug: ()=>this.setState({ debugOverride: !debugOn }),
       debug: debugOn

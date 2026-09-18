@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;}
+  .dq-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;cursor:pointer;}
+  .dq-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .dq-f{width:100%;min-height:44px;background:#F2F4F7;border:0;border-radius:6px;padding:0 14px;font-family:inherit;font-size:15px;color:#15181C;}
+  .dq-f:focus{outline:0;box-shadow:inset 0 0 0 2px #1E5AA8;}
+  textarea.dq-f{min-height:120px;padding:12px 14px;line-height:1.6;resize:vertical;}
+  /* iOS Safari zoomuje pod 16 px \u2014 pod 550 px zv\u011bt\u0161ujeme vstupn\u00ed p\u00edsmo */
+  @media (max-width:549px){ .dq-f{font-size:16px;} }
+  .dq-bub{position:relative;}
+  .dq-bub::after{content:"";position:absolute;top:100%;left:28px;width:0;height:0;border:9px solid transparent;border-top-color:#F2F4F7;border-bottom-width:0;}
+  .dq-row{display:grid;grid-template-columns:200px minmax(0,1fr);gap:8px 20px;align-items:start;}
+  @media (max-width:819px){ .dq-row{grid-template-columns:minmax(0,1fr);gap:6px;} }
+  .dq-lbl{font-size:15px;font-weight:700;color:#15181C;padding-top:12px;}
+  @media (max-width:819px){ .dq-lbl{padding-top:0;} }
+</style>
+</helmet>
+<section style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;display:flex;flex-direction:column;gap:24px;">
+
+  <div style="display:flex;flex-direction:column;align-items:flex-start;gap:16px;">
+    <div style="min-width:0;">
+      <h3 style="margin:0;font-size:22px;font-weight:700;line-height:1.25;">Diskuze k produktu</h3>
+      <p style="margin:6px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:60ch;text-wrap:pretty;">Máte otázku? Zajímá vás konkrétní detail? Zeptejte se nás — odpovídáme obvykle do dvou pracovních dnů a odpověď uvidí i ostatní zákazníci.</p>
+    </div>
+    <sc-if value="{{ formClosed }}" hint-placeholder-val="{{ true }}">
+      <div style="flex:none;">
+        <dc-import name="Tlacitko" variant="primary" size="medium" label="Položit dotaz" icon="message-plus" on-click="{{ openForm }}" debug="{{ false }}" hint-size="170px,44px"></dc-import>
+      </div>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ formOpen }}" hint-placeholder-val="">
+    <form style="background:#F7F9FB;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:16px;max-width:840px;" onSubmit="{{ onSubmit }}">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
+        <h4 style="margin:0;display:flex;align-items:center;gap:8px;font-size:18px;font-weight:700;line-height:1.35;"><span aria-hidden="true" style="display:flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="messages" size="24" hint-size="24px,24px"></dc-import></span>Nový dotaz</h4>
+        <dc-import name="Tlacitko" variant="text" size="standard" label="Zrušit" on-click="{{ closeForm }}" debug="{{ false }}" hint-size="80px,36px"></dc-import>
+      </div>
+
+      <div class="dq-row">
+        <label class="dq-lbl" for="dq-name">Vaše jméno nebo přezdívka</label>
+        <div>
+          <input class="dq-f" id="dq-name" type="text" value="{{ fName }}" onChange="{{ onName }}" placeholder="Např. Martin K.">
+          <div style="margin-top:6px;font-size:13px;font-weight:500;color:#666E78;">Nepovinné — bez jména se dotaz zobrazí jako „Zákazník“.</div>
+        </div>
+      </div>
+
+      <div class="dq-row">
+        <label class="dq-lbl" for="dq-mail">Váš e-mail</label>
+        <div>
+          <input class="dq-f" id="dq-mail" type="email" value="{{ fMail }}" onChange="{{ onMail }}" placeholder="jmeno@email.cz" required="{{ true }}">
+          <div style="margin-top:6px;font-size:13px;font-weight:500;color:#666E78;">Nebude zveřejněn — pošleme na něj odpověď.</div>
+        </div>
+      </div>
+
+      <div class="dq-row">
+        <label class="dq-lbl" for="dq-tel">Váš telefon</label>
+        <div>
+          <input class="dq-f" id="dq-tel" type="tel" value="{{ fTel }}" onChange="{{ onTel }}" placeholder="+420">
+          <div style="margin-top:6px;font-size:13px;font-weight:500;color:#666E78;">Nepovinné, nebude zveřejněn.</div>
+        </div>
+      </div>
+
+      <div class="dq-row">
+        <label class="dq-lbl" for="dq-text">Dotaz</label>
+        <textarea class="dq-f" id="dq-text" value="{{ fText }}" onChange="{{ onText }}" placeholder="Na co se chcete zeptat?" required="{{ true }}"></textarea>
+      </div>
+
+      <label style="display:flex;align-items:flex-start;gap:10px;font-size:15px;line-height:1.5;cursor:pointer;">
+        <input type="checkbox" checked="{{ fGdpr }}" onChange="{{ onGdpr }}" style="flex:none;width:22px;height:22px;margin:0;accent-color:#1E5AA8;cursor:pointer;">
+        <span>Souhlasím se <a href="#" style="color:#1E5AA8;font-weight:700;">zpracováním osobních údajů</a>.</span>
+      </label>
+
+      <div style="max-width:320px;height:78px;border-radius:6px;background:#F2F4F7;display:flex;align-items:center;justify-content:center;gap:10px;font-size:13px;font-weight:700;color:#666E78;text-align:center;padding:0 16px;">
+        <span aria-hidden="true" style="display:flex;color:#666E78;"><dc-import name="Ikony" icon-name="shield-check" size="24" hint-size="24px,24px"></dc-import></span>
+        Ochrana proti robotům (reCAPTCHA) — doplní se v implementaci
+      </div>
+
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <dc-import name="Tlacitko" variant="primary" size="medium" label="Zeptat se" type="submit" on-click="{{ onSubmitClick }}" debug="{{ false }}" hint-size="140px,44px"></dc-import>
+        <span style="font-size:13px;font-weight:500;color:#666E78;">Dotaz se zveřejní po odpovědi našeho technika.</span>
+      </div>
+    </form>
+  </sc-if>
+
+  <sc-if value="{{ sent }}" hint-placeholder-val="">
+    <div style="background:#E9F8EF;border-radius:8px;padding:16px 18px;display:flex;align-items:flex-start;gap:12px;">
+      <span aria-hidden="true" style="display:flex;flex:none;color:#0B6937;"><dc-import name="Ikony" icon-name="circle-check" size="24" hint-size="24px,24px"></dc-import></span>
+      <div style="font-size:15px;font-weight:700;line-height:1.5;color:#0B6937;">Dotaz jsme přijali. Odpověď vám pošleme e-mailem a zveřejníme ji tady v diskuzi.</div>
+    </div>
+  </sc-if>
+
+  <div style="display:flex;align-items:center;gap:10px;">
+    <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">{{ countLabel }}</span>
+    <span style="flex:1;height:1px;background:#F2F4F7;"></span>
+  </div>
+
+  <sc-if value="{{ hasItems }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;flex-direction:column;gap:28px;">
+      <sc-for list="{{ items }}" as="q" hint-placeholder-count="3">
+        <div style="display:flex;flex-direction:column;">
+          <div class="dq-bub" style="background:#F2F4F7;border-radius:8px;padding:16px 18px;">
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+              <span aria-hidden="true" style="display:flex;color:#666E78;"><dc-import name="Ikony" icon-name="user" size="18" hint-size="18px,18px"></dc-import></span>
+              <span style="font-size:13px;font-weight:700;color:#15181C;">{{ q.author }}</span>
+              <span style="font-size:13px;font-weight:500;color:#666E78;">{{ q.date }}</span>
+            </div>
+            <div style="font-size:16px;line-height:1.6;color:#15181C;text-wrap:pretty;">{{ q.text }}</div>
+          </div>
+          <sc-if value="{{ q.hasAnswer }}" hint-placeholder-val="{{ true }}">
+            <div style="margin:20px 0 0 28px;padding-left:16px;border-left:3px solid #D8E6F6;display:flex;flex-direction:column;gap:6px;">
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1E5AA8;">Odpověď VAPP</span>
+                <span style="font-size:13px;font-weight:500;color:#666E78;">{{ q.answerDate }}</span>
+              </div>
+              <div style="font-size:16px;line-height:1.6;color:#15181C;text-wrap:pretty;">{{ q.answer }}</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ q.noAnswer }}" hint-placeholder-val="">
+            <div style="margin:12px 0 0 28px;font-size:13px;font-weight:700;color:#666E78;">Čeká na odpověď našeho technika.</div>
+          </sc-if>
+          <div style="margin-top:12px;margin-left:28px;">
+            <dc-import name="Tlacitko" variant="text" size="standard" label="Reagovat" on-click="{{ q.onReply }}" debug="{{ false }}" hint-size="100px,36px"></dc-import>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+  <sc-if value="{{ noItems }}" hint-placeholder-val="">
+    <div style="background:#F2F4F7;border-radius:8px;padding:16px 18px;font-size:15px;font-weight:500;color:#666E78;">K tomuto produktu ještě nikdo nediskutoval. Buďte první, kdo se zeptá.</div>
+  </sc-if>
+
+  <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:900,&quot;height&quot;:900},&quot;questions&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{author?:string,date?:string,text:string,answer?:string,answerDate?:string}[]&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { open:false, sent:false, name:'', mail:'', tel:'', text:'', gdpr:false };
+
+  DEFAULT_ITEMS = [
+    { author:'Martin K.', date:'12. 9. 2026', text:'Dobrý den, dá se tento přívěs skladovat vertikálně? Děkuji.',
+      answerDate:'13. 9. 2026', answer:'Dobrý den, přívěs není vybaven opěrami pro postavení na zadní čelo. Při správném podložení, například dvěma hranoly tak, aby nedošlo k poškození zadních světel, je však možné jej skladovat ve svislé poloze. V této poloze je nutné přívěs vždy bezpečně zajistit, například pomocí upínacího popruhu.' },
+    { author:'Zákazník', date:'5. 9. 2026', text:'Dobrý den, má tento přívěsný vozík na bočnicích kolíky k upínání plachty nebo krycí sítě? Děkuji.',
+      answerDate:'8. 9. 2026', answer:'Dobrý den, děkujeme za Váš dotaz. Ano, tento přívěs je z výroby dodáván včetně čepů pro uchycení plachty i krycí sítě.' },
+    { author:'Jana P.', date:'2. 9. 2026', text:'Dobrý den, jaká by byla cena za dopravu na Jižní Moravu? PSČ 697 01 Kyjov. Děkuji.',
+      answerDate:'3. 9. 2026', answer:'Dobrý den, cena dopravy do Kyjova činí 4 114 Kč včetně DPH. Rádi ji připravíme jako součást objednávky.' }
+  ];
+
+  open(){ this.setState({ open:true, sent:false }, ()=>{
+    try{ const el = document.getElementById('dq-text'); if (el && el.focus) el.focus({ preventScroll:true }); }catch(e){}
+  }); }
+
+  submit(e){
+    if (e && e.preventDefault) e.preventDefault();
+    this.setState({ open:false, sent:true, text:'' });
+  }
+
+  renderVals(){
+    const P = this.props, s = this.state;
+    const src = Array.isArray(P.questions) && P.questions.length ? P.questions : this.DEFAULT_ITEMS;
+    const items = src.map((q)=>({
+      author: q.author || 'Zákazník', date: q.date || '', text: q.text || '',
+      answer: q.answer || '', answerDate: q.answerDate || '',
+      hasAnswer: !!q.answer, noAnswer: !q.answer,
+      onReply: ()=>this.open()
+    }));
+    const n = items.length;
+    const word = n === 1 ? 'dotaz' : (n >= 2 && n <= 4 ? 'dotazy' : 'dotazů');
+    return {
+      items, hasItems: n > 0, noItems: n === 0,
+      countLabel: n + ' ' + word,
+      formOpen: s.open, formClosed: !s.open, sent: s.sent && !s.open,
+      openForm: ()=>this.open(), closeForm: ()=>this.setState({ open:false }),
+      onSubmit: (e)=>this.submit(e), onSubmitClick: (e)=>this.submit(e),
+      fName: s.name, fMail: s.mail, fTel: s.tel, fText: s.text, fGdpr: s.gdpr,
+      onName: (e)=>this.setState({ name:e.target.value }),
+      onMail: (e)=>this.setState({ mail:e.target.value }),
+      onTel: (e)=>this.setState({ tel:e.target.value }),
+      onText: (e)=>this.setState({ text:e.target.value }),
+      onGdpr: (e)=>this.setState({ gdpr:e.target.checked }),
+      debug: P.debug ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>

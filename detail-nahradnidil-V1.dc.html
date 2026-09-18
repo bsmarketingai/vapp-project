@@ -31,7 +31,7 @@
   @media (max-width:819px){ .pd-buy{flex:1 1 100%;min-width:0;} }
   .pd-gal-v2{display:flex;gap:12px;align-items:flex-start;}
   .pd-gal-col{flex:none;display:flex;flex-direction:column;gap:12px;}
-  @media (max-width:549px){ .pd-gal-v2{flex-direction:column-reverse;} .pd-gal-col{flex-direction:row;flex-wrap:wrap;} }
+  @media (max-width:549px){ .pd-gal-v2{flex-direction:column-reverse;align-items:stretch;} .pd-gal-col{flex-direction:row;flex-wrap:wrap;} }
   /* mobil: velká fotka se přepíná šipkami, miniatury se skrývají */
   .pd-nav{display:none;}
   @media (max-width:819px){ .pd-nav{display:flex;} .pd-thumbs{display:none !important;} }
@@ -84,17 +84,16 @@
               </sc-for>
             </div>
             <div style="flex:1;min-width:0;">
-              <div style="position:relative;">
+              <div style="position:relative;touch-action:pan-y;" onTouchStart="{{ imgTouchStart }}" onTouchEnd="{{ imgTouchEnd }}">
               <div style="{{ mainImgStyle }}"></div>
-              <button type="button" class="pd-nav a11y-i" aria-label="Předchozí fotka" onClick="{{ imgPrev }}" style="position:absolute;top:50%;left:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:999px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10);">
+              <button type="button" class="pd-nav a11y-i" aria-label="Předchozí fotka" onClick="{{ imgPrev }}" style="position:absolute;top:50%;left:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:999px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10), inset 0 0 0 1px #91959B;">
                 <dc-import name="Ikony" icon-name="chevron-left" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
               </button>
-              <button type="button" class="pd-nav a11y-i" aria-label="Další fotka" onClick="{{ imgNext }}" style="position:absolute;top:50%;right:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:999px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10);">
+              <button type="button" class="pd-nav a11y-i" aria-label="Další fotka" onClick="{{ imgNext }}" style="position:absolute;top:50%;right:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:999px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10), inset 0 0 0 1px #91959B;">
                 <dc-import name="Ikony" icon-name="chevron-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
               </button>
               <span class="pd-nav" aria-hidden="true" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);align-items:center;min-height:24px;padding:0 10px;border-radius:999px;background:#FFFFFF;box-shadow:0 6px 20px rgba(20,47,86,.10);font-size:13px;font-weight:700;color:#15181C;">{{ imgCounter }}</span>
-            </div>
-            </div>
+            </div>            </div>
           </div>
         </sc-if>
       </div>
@@ -103,7 +102,7 @@
       <div class="pd-buy" style="background:#FFFFFF;border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:16px;">
 
         <sc-if value="{{ secVarianty }}" hint-placeholder-val="{{ true }}">
-          <dc-import name="VyberVariant" label="Balení" icon="package" layout="{{ varLayout }}" value-size="16" options="{{ variantOptions }}" active-index="{{ variantIndex }}" on-pick="{{ onVariant }}" hint-size="100%,120px"></dc-import>
+          <dc-import name="VyberVariant" label="Balení" icon="package" kind="{{ variantKind }}" layout="{{ varLayout }}" value-size="16" options="{{ variantOptions }}" active-index="{{ variantIndex }}" on-pick="{{ onVariant }}" hint-size="100%,120px"></dc-import>
           <span aria-hidden="true" style="height:1px;background:#F2F4F7;"></span>
         </sc-if>
 
@@ -151,6 +150,7 @@
         </div>
 
         <sc-if value="{{ secAkce }}" hint-placeholder-val="{{ true }}">
+          <sc-if value="{{ actT1 }}" hint-placeholder-val="{{ true }}">
           <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px;">
             <sc-for list="{{ actions }}" as="a" hint-placeholder-count="4">
               <button type="button" class="a11y-i hv-lnk" onClick="{{ a.onClick }}" style="display:flex;align-items:center;gap:8px;min-height:32px;font-size:13px;font-weight:500;color:#5A626C;">
@@ -158,6 +158,13 @@
               </button>
             </sc-for>
           </div>
+          </sc-if>
+          <sc-if value="{{ actT2 }}" hint-placeholder-val="">
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;min-width:0;"><dc-import name="Tlacitko" variant="secondary" size="medium" icon="help" label="Potřebuji poradit" full-width="true" on-click="{{ onHelp }}" style="width:100%;" hint-size="100%,44px"></dc-import></div>
+            <div style="display:flex;min-width:0;"><dc-import name="Tlacitko" variant="secondary" size="medium" icon="arrows-exchange" label="Porovnat" full-width="true" on-click="{{ onCompare }}" style="width:100%;" hint-size="100%,44px"></dc-import></div>
+          </div>
+          </sc-if>
         </sc-if>
 
       </div>
@@ -199,7 +206,7 @@
       <h2 id="pd-tabs-h" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:0;">Informace o produktu</h2>
       <div class="pd-tabs" role="tablist" aria-label="Informace o produktu" style="border-bottom:1px solid #F2F4F7;">
         <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
-          <button type="button" role="tab" class="a11y-i hv-tab" aria-selected="{{ t.selected }}" onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</button>
+          <button type="button" role="tab" class="a11y-i hv-tab" aria-selected="{{ t.selected }}" onClick="{{ t.onClick }}" style="{{ t.style }}"><span aria-hidden="true" style="{{ t.iconStyle }}"><dc-import name="Ikony" icon-name="{{ t.icon }}" size="18" hint-size="18px,18px"></dc-import></span>{{ t.label }}</button>
         </sc-for>
       </div>
 
@@ -281,6 +288,10 @@
           </div>
         </sc-if>
 
+        <sc-if value="{{ tabDiskuze }}" hint-placeholder-val="">
+          <dc-import name="Diskuze" debug="{{ debug }}" hint-size="100%,520px"></dc-import>
+        </sc-if>
+
         <sc-if value="{{ tabSouvisejici }}" hint-placeholder-val="">
           <div class="pd-rel">
             <sc-for list="{{ related }}" as="p" hint-placeholder-count="3">
@@ -300,6 +311,7 @@
     <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
   </div>
 
+  <dc-import name="DotazModal" open="{{ askOpen }}" product-name="{{ askProduct }}" on-close="{{ askClose }}" debug="{{ false }}" hint-size="0px,0px"></dc-import>
   <dc-import name="ControlBar" groups="{{ cbGroups }}" on-toggle="{{ cbToggle }}" on-select="{{ cbSelect }}" debug-on="{{ debug }}" on-toggle-debug="{{ cbDebug }}" hint-size="0px,0px"></dc-import>
   <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </div>
@@ -354,7 +366,7 @@ class Component extends DCLogic {
   ];
 
   state = {
-    variant:0, qty:1, tab:'popis', img:0, currency:'CZK', varStyle:0, debugOverride:null, cart:0, relQty:{}, relCart:{},
+    variant:0, qty:1, tab:'popis', img:0, currency:'CZK', varStyle:0, varCount:0, actStyle:0, askOpen:false, debugOverride:null, cart:0, relQty:{}, relCart:{},
     sec:{ varianty:true, slevy:true, dostupnost:true, heureka:true, stazeni:true, souvisejici:true, akce:true }
   };
 
@@ -375,13 +387,28 @@ class Component extends DCLogic {
     }catch(e){}
   }
 
+  manyVariants(){
+    if (this._many) return this._many;
+    const sizes = [80,90,100,112,120,130,140,150,160,170,180,190,200,203,225,250,275,300,315,350,400,406,450,500];
+    this._many = sizes.map((w,i)=>({
+      name: 'buben ⌀' + w + ' × ' + (i % 2 ? 60 : 50) + ' mm',
+      stockText: i % 4 === 3 ? 'Na dotaz' : (i % 3 === 0 ? 'Skladem > 10 ks' : 'Skladem ' + (4 + i % 7) + ' ks'),
+      net: 1200 + i * 118, gross: Math.round((1200 + i * 118) * 1.21),
+      title: 'Čelisti brzdové KNOTT ' + w + '×' + (i % 2 ? 60 : 50) + ' malá sada na 2 kola'
+    }));
+    return this._many;
+  }
+
   renderVals(){
     const s = this.state;
     const debug = s.debugOverride === null ? (this.props.debug ?? true) : s.debugOverride;
-    const v = this.VARIANTS[s.variant] || this.VARIANTS[0];
-
     // varianty jdou do komponenty VyberVariant: čistá data + skalární onPick(index)
-    const variantOptions = this.VARIANTS.map(x=>({ label:x.name, note:x.stockText, meta:this.fmt(x.net) }));
+    // přes 6 variant se karty mění na dropdown — 50 balení se do karet nevejde
+    const varSrc = s.varCount === 1 ? this.manyVariants() : this.VARIANTS;
+    const variantOptions = varSrc.map(x=>({ label:x.name, note:x.stockText, meta:this.fmt(x.net) }));
+    const variantKind = variantOptions.length > 6 ? 'select' : 'tiles';
+    const variantIndexSafe = Math.min(s.variant, varSrc.length - 1);
+    const v = varSrc[variantIndexSafe] || varSrc[0];
 
     const thumbs = this.IMAGES.map((src,i)=>({
       onPick: ()=>this.setState({ img:i }),
@@ -404,13 +431,14 @@ class Component extends DCLogic {
     const shortParams = [['výrobce','KNOTT'], ['kolová jednotka','KNOTT 20-964/1, 20-2425/1 (200×50)'], ['balení', v.name]]
       .map((r,i)=>({ label:r[0], value:r[1], rowStyle: zebra(i) }));
 
-    const TABS = [['popis','Popis'],['parametry','Parametry'],['stazeni','Ke stažení'],['hodnoceni','Hodnocení (3)'],['souvisejici','Související produkty']]
+    const TABS = [['popis','Popis','info-circle'],['parametry','Parametry','list'],['stazeni','Ke stažení','file-type-pdf'],['hodnoceni','Hodnocení (3)','thumb-up'],['diskuze','Diskuze (3)','messages'],['souvisejici','Související produkty','layout-grid']]
       .filter(([id])=> id==='stazeni' ? s.sec.stazeni : (id==='souvisejici' ? s.sec.souvisejici : true));
     const tab = TABS.some(([id])=>id===s.tab) ? s.tab : 'popis';
-    const tabs = TABS.map(([id,label])=>{
+    const tabs = TABS.map(([id,label,icon])=>{
       const on = id === tab;
-      return { label, selected: on ? 'true' : 'false', onClick: ()=>this.goTab(id),
-        style:'flex:none;min-height:48px;padding:0 18px;font-size:16px;font-weight:700;white-space:nowrap;color:'+(on?'#1E5AA8':'#5A626C')+';box-shadow:'+(on?'inset 0 -3px 0 0 #1E5AA8':'none')+';' };
+      return { label, icon, selected: on ? 'true' : 'false', onClick: ()=>this.goTab(id),
+        iconStyle:'display:flex;flex:none;color:'+(on?'#1E5AA8':'#C5232B')+';',
+        style:'flex:none;display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 18px;font-size:16px;font-weight:700;white-space:nowrap;color:'+(on?'#1E5AA8':'#5A626C')+';box-shadow:'+(on?'inset 0 -3px 0 0 #1E5AA8':'none')+';' };
     });
 
     const related = this.RELATED.map(p=>({
@@ -444,8 +472,10 @@ class Component extends DCLogic {
       thumbs, dist, params, shortParams, tabs, related,
       imgCounter: (s.img + 1) + ' / ' + this.IMAGES.length,
       imgPrev: ()=>this.setState(p=>({ img: (p.img - 1 + this.IMAGES.length) % this.IMAGES.length })),
+      imgTouchStart: (e)=>{ const t = e.touches && e.touches[0]; this._sw = t ? { x:t.clientX, y:t.clientY } : null; },
+      imgTouchEnd: (e)=>{ const s0 = this._sw; this._sw = null; const t = e.changedTouches && e.changedTouches[0]; if (!s0 || !t) return; const dx = t.clientX - s0.x, dy = t.clientY - s0.y; if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return; const n = this.IMAGES.length; this.setState(p=>({ img: (p.img + (dx < 0 ? 1 : n - 1)) % n })); },
       imgNext: ()=>this.setState(p=>({ img: (p.img + 1) % this.IMAGES.length })),
-      variantOptions, variantIndex: s.variant, onVariant:(i)=>this.setState({ variant:i }),
+      variantOptions, variantIndex: variantIndexSafe, variantKind, onVariant:(i)=>this.setState({ variant:i }),
       varLayout: s.varStyle === 0 ? 'karty' : 'radky',
       files: this.FILES.map(f=>({ name:f.name, meta:f.meta, href:'#' })),
       reviews: this.REVIEWS,
@@ -454,12 +484,8 @@ class Component extends DCLogic {
         { label:'po balení 30 ks', net:this.fmt(Math.round(v.net*0.952)), gross:this.fmt(Math.round(v.gross*0.952)) }
       ],
       actions:[
-        { label:'Hlídat dostupnost / cenu', icon:'eye', onClick:()=>{} },
         { label:'Porovnat', icon:'arrows-exchange', onClick:()=>{} },
-        { label:'Potřebuji poradit', icon:'help', onClick:()=>{} },
-        { label:'Doporučit známému', icon:'mail', onClick:()=>{} },
-        { label:'Přidat k oblíbeným', icon:'heart', onClick:()=>{} },
-        { label:'Sdílet', icon:'share-2', onClick:()=>{} }
+        { label:'Potřebuji poradit', icon:'help', onClick:()=>this.setState({ askOpen:true }) }
       ],
       qty:s.qty, onQty:(n)=>this.setState({ qty:n }), onBuy:()=>this.setState(p=>({ cart:p.cart+p.qty })),
       goReviews:()=>this.goTab('hodnoceni', true), goParams:()=>this.goTab('parametry', true), noop:()=>{},
@@ -467,17 +493,24 @@ class Component extends DCLogic {
       secVarianty:s.sec.varianty, secSlevy:s.sec.slevy, secDostupnost:s.sec.dostupnost,
       secHeureka:s.sec.heureka, secAkce:s.sec.akce,
       varTiles: s.varStyle === 0, varRows: s.varStyle === 1,
+      actT1: s.actStyle === 0, actT2: s.actStyle === 1,
+      onCompare:()=>{}, onHelp:()=>this.setState({ askOpen:true }),
+      askOpen: s.askOpen === true,
+      askProduct: v.title,
+      askClose:()=>this.setState({ askOpen:false }),
       // V2 (miniatury ve sloupci vlevo) = finální podoba galerie, rozhodnuto 18. 9. 2026
       galV2: true,
       tabPopis: tab==='popis', tabParametry: tab==='parametry', tabStazeni: tab==='stazeni',
-      tabHodnoceni: tab==='hodnoceni', tabSouvisejici: tab==='souvisejici',
+      tabHodnoceni: tab==='hodnoceni', tabDiskuze: tab==='diskuze', tabSouvisejici: tab==='souvisejici',
 
       cbGroups:[
         { label:'Sekce:', kind:'toggles', options:this.SECTIONS.map(([k,l])=>({ label:l, on:!!s.sec[k] })) },
-        { label:'Varianty:', kind:'select', activeIndex:s.varStyle, options:[{ label:'Karty' },{ label:'Řádky' }] }
+        { label:'Varianty:', kind:'select', activeIndex:s.varStyle, options:[{ label:'Karty' },{ label:'Řádky' }] },
+        { label:'Akce:', kind:'select', activeIndex:s.actStyle, options:[{ label:'T1' },{ label:'T2' }] },
+        { label:'Variant:', kind:'select', activeIndex:s.varCount, options:[{ label:'0–6' },{ label:'6–100' }] }
       ],
       cbToggle:(gi,oi)=>{ if (gi===0){ const k = this.SECTIONS[oi] && this.SECTIONS[oi][0]; if (k) this.setSec(k); } },
-      cbSelect:(gi,oi)=>{ if (gi===1) this.setState({ varStyle:oi }); },
+      cbSelect:(gi,oi)=>{ if (gi===1) this.setState({ varStyle:oi }); else if (gi===2) this.setState({ actStyle:oi }); else if (gi===3) this.setState({ varCount:oi, variant:0 }); },
       cbDebug:()=>this.setState({ debugOverride: !debug })
     };
   }

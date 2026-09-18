@@ -31,7 +31,7 @@
   @media (max-width:819px){ .pd-buy{flex:1 1 100%;min-width:0;} }
   .pd-gal-v2{display:flex;gap:12px;align-items:flex-start;}
   .pd-gal-col{flex:none;display:flex;flex-direction:column;gap:12px;}
-  @media (max-width:549px){ .pd-gal-v2{flex-direction:column-reverse;} .pd-gal-col{flex-direction:row;flex-wrap:wrap;} }
+  @media (max-width:549px){ .pd-gal-v2{flex-direction:column-reverse;align-items:stretch;} .pd-gal-col{flex-direction:row;flex-wrap:wrap;} }
   /* mobil: velká fotka se přepíná šipkami, miniatury se skrývají */
   .pd-nav{display:none;}
   @media (max-width:819px){ .pd-nav{display:flex;} .pd-thumbs{display:none !important;} }
@@ -85,12 +85,12 @@
                 <button type="button" class="a11y-i" onClick="{{ t.onPick }}" aria-label="{{ t.aria }}" aria-pressed="{{ t.pressed }}" style="{{ t.style }}"></button>
               </sc-for>
             </div>
-            <div style="flex:1;min-width:0;"><div style="position:relative;">
+            <div style="flex:1;min-width:0;"><div style="position:relative;touch-action:pan-y;" onTouchStart="{{ imgTouchStart }}" onTouchEnd="{{ imgTouchEnd }}">
                 <div style="{{ mainImgStyle }}"></div>
-                <button type="button" class="pd-nav a11y-i" aria-label="Předchozí fotka" onClick="{{ imgPrev }}" style="position:absolute;top:50%;left:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:999px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10);">
+                <button type="button" class="pd-nav a11y-i" aria-label="Předchozí fotka" onClick="{{ imgPrev }}" style="position:absolute;top:50%;left:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:999px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10), inset 0 0 0 1px #91959B;">
                   <dc-import name="Ikony" icon-name="chevron-left" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
                 </button>
-                <button type="button" class="pd-nav a11y-i" aria-label="Další fotka" onClick="{{ imgNext }}" style="position:absolute;top:50%;right:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:999px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10);">
+                <button type="button" class="pd-nav a11y-i" aria-label="Další fotka" onClick="{{ imgNext }}" style="position:absolute;top:50%;right:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:999px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10), inset 0 0 0 1px #91959B;">
                   <dc-import name="Ikony" icon-name="chevron-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
                 </button>
                 <span class="pd-nav" aria-hidden="true" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);align-items:center;min-height:24px;padding:0 10px;border-radius:999px;background:#FFFFFF;box-shadow:0 6px 20px rgba(20,47,86,.10);font-size:13px;font-weight:700;color:#15181C;">{{ imgCounter }}</span>
@@ -205,7 +205,7 @@
       <h2 id="pd-tabs-h" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:0;">Informace o produktu</h2>
       <div class="pd-tabs" role="tablist" aria-label="Informace o produktu" style="border-bottom:1px solid #F2F4F7;">
         <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="6">
-          <button type="button" role="tab" class="a11y-i hv-tab" aria-selected="{{ t.selected }}" onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</button>
+          <button type="button" role="tab" class="a11y-i hv-tab" aria-selected="{{ t.selected }}" onClick="{{ t.onClick }}" style="{{ t.style }}"><span aria-hidden="true" style="{{ t.iconStyle }}"><dc-import name="Ikony" icon-name="{{ t.icon }}" size="18" hint-size="18px,18px"></dc-import></span>{{ t.label }}</button>
         </sc-for>
       </div>
 
@@ -299,6 +299,10 @@
             </div>
             <dc-import name="Recenze" title="Recenze produktu" score-text="4,7 z 5" source-text="Ověřeno zákazníky · Heureka" reviews="{{ reviews }}" debug="{{ false }}" hint-size="100%,320px"></dc-import>
           </div>
+        </sc-if>
+
+        <sc-if value="{{ tabDiskuze }}" hint-placeholder-val="">
+          <dc-import name="Diskuze" debug="{{ debug }}" hint-size="100%,520px"></dc-import>
         </sc-if>
 
         <sc-if value="{{ tabSouvisejici }}" hint-placeholder-val="">
@@ -470,12 +474,13 @@ class Component extends DCLogic {
       ['řidičské oprávnění', dyn.__opravneni]
     ].map((r,i)=>({ label:r[0], value:r[1], rowStyle: zebra(i) }));
 
-    const TABS = [['popis','Popis'],['parametry','Parametry'],['vybava','Výbava a příplatky'],['stazeni','Ke stažení'],['hodnoceni','Hodnocení (3)'],['souvisejici','Související produkty']];
+    const TABS = [['popis','Popis','info-circle'],['parametry','Parametry','list'],['vybava','Výbava a příplatky','settings'],['stazeni','Ke stažení','file-type-pdf'],['hodnoceni','Hodnocení (3)','thumb-up'],['diskuze','Diskuze (3)','messages'],['souvisejici','Související produkty','layout-grid']];
     const tab = TABS.some(([id])=>id===s.tab) ? s.tab : 'popis';
-    const tabs = TABS.map(([id,label])=>{
+    const tabs = TABS.map(([id,label,icon])=>{
       const on = id === tab;
-      return { label, selected: on ? 'true' : 'false', onClick: ()=>this.goTab(id),
-        style:'flex:none;min-height:48px;padding:0 18px;font-size:16px;font-weight:700;white-space:nowrap;color:'+(on?'#1E5AA8':'#5A626C')+';box-shadow:'+(on?'inset 0 -3px 0 0 #1E5AA8':'none')+';' };
+      return { label, icon, selected: on ? 'true' : 'false', onClick: ()=>this.goTab(id),
+        iconStyle:'display:flex;flex:none;color:'+(on?'#1E5AA8':'#C5232B')+';',
+        style:'flex:none;display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 18px;font-size:16px;font-weight:700;white-space:nowrap;color:'+(on?'#1E5AA8':'#5A626C')+';box-shadow:'+(on?'inset 0 -3px 0 0 #1E5AA8':'none')+';' };
     });
 
     const related = this.RELATED.map(p=>({
@@ -518,6 +523,8 @@ class Component extends DCLogic {
       thumbs, dist, params, shortParams, tabs, related,
       imgCounter: (s.img + 1) + ' / ' + this.IMAGES.length,
       imgPrev: ()=>this.setState(p=>({ img: (p.img - 1 + this.IMAGES.length) % this.IMAGES.length })),
+      imgTouchStart: (e)=>{ const t = e.touches && e.touches[0]; this._sw = t ? { x:t.clientX, y:t.clientY } : null; },
+      imgTouchEnd: (e)=>{ const s0 = this._sw; this._sw = null; const t = e.changedTouches && e.changedTouches[0]; if (!s0 || !t) return; const dx = t.clientX - s0.x, dy = t.clientY - s0.y; if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return; const n = this.IMAGES.length; this.setState(p=>({ img: (p.img + (dx < 0 ? 1 : n - 1)) % n })); },
       imgNext: ()=>this.setState(p=>({ img: (p.img + 1) % this.IMAGES.length })),
       vybava: this.VYBAVA.map(v=>{
         const base = v.price === 0;
@@ -541,7 +548,7 @@ class Component extends DCLogic {
       // V2 (miniatury ve sloupci vlevo) = finální podoba galerie, rozhodnuto 18. 9. 2026
       galV2: true,
       tabPopis: tab==='popis', tabParametry: tab==='parametry', tabVybava: tab==='vybava',
-      tabStazeni: tab==='stazeni', tabHodnoceni: tab==='hodnoceni', tabSouvisejici: tab==='souvisejici',
+      tabStazeni: tab==='stazeni', tabHodnoceni: tab==='hodnoceni', tabDiskuze: tab==='diskuze', tabSouvisejici: tab==='souvisejici',
 
       cbGroups:[
         { label:'Sekce:', kind:'toggles', options:this.SECTIONS.map(([k,l])=>({ label:l, on:!!s.sec[k] })) },

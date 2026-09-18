@@ -122,7 +122,7 @@ class Component extends DCLogic {
     clearInterval(this.timer);
     this.timer = setInterval(()=>{
       this.setState(s => ({ i: (s.i + 1) % this.SLIDES.length }));
-    }, 8000);
+    }, 16000);
   }
   go(n){
     clearInterval(this.timer); // ruční ovládání autoplay definitivně zastaví

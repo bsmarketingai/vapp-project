@@ -50,7 +50,7 @@
     .ft-acc{display:flex !important;}
     .ft-t{display:none !important;}
     /* odsazení odkazů jen v akordeonové variantě */
-    .ft-links{padding:0 0 16px;gap:16px;}
+    .ft-links{padding:0 0 16px;gap:16px;margin-top:0 !important;}
     .ft-links > a{padding-left:16px;font-size:18px !important;}
     .ft-links.ft-closed{display:none !important;}
     .ft-col{border-bottom:1px solid rgba(255,255,255,.12);}
@@ -59,6 +59,8 @@
   /* S a níž: loga plateb a dopravy na 3/4 velikosti */
   @media (max-width:819px){ .ft-logo{width:49px !important;height:30px !important;} }
   .ft-acc{transition:color .12s;} .ft-acc:hover{color:#fff !important;}
+  .ft-tint{transition:background .12s;} .ft-tint:hover{background:rgba(255,255,255,.18) !important;color:#fff !important;}
+  .ft-tint:focus-visible{outline:2px solid #fff;outline-offset:2px;}
 </style>
 </helmet>
 <footer style="width:100%;margin:0;padding:0;">
@@ -71,9 +73,9 @@
               <div class="ft-col" style="display:flex;flex-direction:column;gap:4px;min-width:0;">
                 <span class="ft-t" style="font-size:20px;font-weight:700;line-height:1.35;color:#fff;">{{ col.title }}</span>
                 <button type="button" class="ft-acc a11y-i" aria-expanded="{{ col.expanded }}" onClick="{{ col.onToggle }}" style="display:none;width:100%;align-items:center;justify-content:space-between;gap:12px;min-height:52px;font-size:20px;font-weight:700;line-height:1.35;color:#fff;cursor:pointer;">{{ col.title }}<span aria-hidden="true" style="{{ col.chevStyle }}"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></span></button>
-                <div class="ft-links {{ col.cls }}" style="display:flex;flex-direction:column;gap:14px;min-width:0;">
+                <div class="ft-links {{ col.cls }}" style="display:flex;flex-direction:column;gap:14px;min-width:0;margin-top:16px;">
                   <sc-for list="{{ col.links }}" as="l" hint-placeholder-count="4">
-                    <a class="ft-link a11y-i ft-hit" href="{{ l.href }}" onClick="{{ onNav }}" style="font-size:16px;font-weight:700;line-height:1.35;color:#B4CEEC;cursor:pointer;">{{ l.t }}</a>
+                    <a class="{{ l.cls }}" href="{{ l.href }}" onClick="{{ onNav }}" style="{{ l.style }}"><sc-if value="{{ l.hasIcon }}" hint-placeholder-val=""><span aria-hidden="true" style="display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="help" size="18" hint-size="18px,18px"></dc-import></span></sc-if>{{ l.t }}</a>
                   </sc-for>
                 </div>
               </div>
@@ -152,7 +154,17 @@ class Component extends DCLogic {
     // na mobilu jsou sloupce defaultně zabalené; na desktopu CSS akordeon vypne
     const HREF = { 'Servis':'servis.dc.html', 'Přívěsy':'privesy-V1.dc.html', 'Náhradní díly':'nahradnidily.dc.html', 'Poradna':'poradna.dc.html', 'O nás':'onas.dc.html' };
     const decorate = (cols)=>cols.map((c,i)=>Object.assign({}, c, {
-      links: (c.links||[]).map(t=>({ t, href: HREF[t] || '#' })),
+      links: (c.links||[]).map(x=>{
+        const t = typeof x === 'string' ? x : x.t;
+        const o = typeof x === 'string' ? {} : x;
+        return { t, href: o.href || HREF[t] || '#',
+          cls: o.tint ? 'ft-link a11y-i ft-tint' : 'ft-link a11y-i ft-hit',
+          style: 'font-size:16px;font-weight:700;line-height:1.35;cursor:pointer;'
+            + (o.tint
+              ? 'align-self:flex-start;display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 12px;border-radius:8px;background:rgba(255,255,255,.10);color:#FFFFFF;'
+              : 'color:#B4CEEC;'),
+          hasIcon: !!o.tint };
+      }),
       expanded: open[i] ? 'true' : 'false',
       cls: open[i] ? '' : 'ft-closed',
       chevStyle: 'display:inline-flex;flex:none;transition:transform .12s ease;' + (open[i] ? 'transform:rotate(180deg);' : ''),
@@ -166,7 +178,7 @@ class Component extends DCLogic {
       isOpen: (this.props.open ?? true) !== false,
       footerCols: decorate([
         { title:'Sortiment', links:['Přívěsy','Náhradní díly','Akce a slevy'] },
-        { title:'Služby', links:['Servis','Půjčovna','Poradna'] },
+        { title:'Služby', links:['Servis','Půjčovna','Poradna',{ t:'Poptat produkt', href:'poptat-produkt.dc.html', tint:true }] },
         { title:'O firmě', links:['O nás','Kontakty','Náš příběh','Reference','Kariéra'] },
         { title:'Zákazník', links:['Obchodní podmínky','Podmínky půjčovny','Reklamace a vrácení zboží','Doprava a platba','Nákup na splátky ESSOX','Ochrana osobních údajů'] },
       ]),

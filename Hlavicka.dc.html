@@ -66,6 +66,7 @@
   .hd-v4 .hd-acts{margin-left:0 !important;}
   @media (max-width:819px){ .hd-v4 .hd-acts{margin-left:auto !important;} }
   .hd-mail{transition:color .12s;} .hd-mail:hover{color:#1E5AA8 !important;}
+  .hd-langitem{transition:background .12s;} .hd-langitem:hover{background:#F2F4F7 !important;}
 </style>
 </helmet>
 <header class="hd-root {{ rootCls }}" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;width:100%;margin:0;padding:0;transform:translateY(var(--vp-hdr-push,0px));box-shadow:var(--vp-hdr-shadow,0 2px 8px rgba(20,47,86,.06));pointer-events:var(--vp-hdr-pe,auto);">
@@ -92,13 +93,28 @@
           <button type="button" class="hd-act hd-i hd-mb" id="hd-search-toggle" aria-label="Hledat" aria-expanded="{{ searchExpanded }}" aria-controls="hd-search-panel" onClick="{{ toggleSearch }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:44px;padding:0 8px;cursor:pointer;"><div style="display:flex;align-items:center;justify-content:center;"><dc-import name="Ikony" icon-name="search" size="24" hint-size="24px,24px"></dc-import></div><span class="hd-actlbl" style="font-size:13px;font-weight:600;">Hledat</span></button>
         </sc-if>
         <button type="button" class="hd-act hd-i" id="hd-login" aria-label="Přihlásit" onClick="{{ openLogin }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:44px;padding:0 8px;cursor:pointer;"><div style="display:flex;align-items:center;justify-content:center;"><dc-import name="Ikony" icon-name="user" size="24" hint-size="24px,24px"></dc-import></div><span class="hd-actlbl" style="font-size:13px;font-weight:600;">Přihlásit</span></button>
+        <sc-if value="{{ langJ2 }}" hint-placeholder-val="">
+          <div class="hd-langwrap" style="position:relative;flex:none;">
+            <button type="button" class="hd-act hd-i" id="hd-lang" aria-haspopup="listbox" aria-expanded="{{ langExpanded }}" aria-label="{{ langAria }}" onClick="{{ toggleLang }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:44px;padding:0 8px;cursor:pointer;">
+              <div style="display:flex;align-items:center;justify-content:center;height:24px;"><img src="{{ langFlag }}" alt="" aria-hidden="true" style="display:block;height:16px;width:25px;border-radius:4px;"></div>
+              <span class="hd-actlbl" style="font-size:13px;font-weight:600;">{{ langLabel }}</span>
+            </button>
+            <sc-if value="{{ langOpen }}" hint-placeholder-val="">
+              <div role="listbox" aria-label="Jazyk a měna" style="position:absolute;top:calc(100% + 8px);right:0;min-width:180px;padding:4px;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);z-index:80;">
+                <sc-for list="{{ langItems }}" as="l" hint-placeholder-count="2">
+                  <button type="button" class="hd-i hd-langitem" role="option" aria-selected="{{ l.selected }}" onClick="{{ l.onClick }}" style="{{ l.style }}"><img src="{{ l.flag }}" alt="" aria-hidden="true" style="display:block;flex:none;height:16px;width:25px;border-radius:4px;">{{ l.label }}</button>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
         <sc-if value="{{ showCompareAct }}" hint-placeholder-val="">
         <button type="button" class="hd-act hd-i" aria-label="{{ compareAria }}" onClick="{{ onCompare }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:44px;padding:0 8px;cursor:pointer;">
           <div style="position:relative;display:flex;align-items:center;justify-content:center;"><dc-import name="Ikony" icon-name="arrows-exchange" size="24" hint-size="24px,24px"></dc-import><sc-if value="{{ showCompare }}" hint-placeholder-val=""><span aria-hidden="true" style="position:absolute;top:-4px;right:-8px;min-width:16px;width:16px;height:16px;border-radius:999px;background:#C5232B;color:#fff;font-size:10px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;">{{ compareCount }}</span></sc-if></div>
           <span class="hd-actlbl" style="font-size:13px;font-weight:600;">Porovnat</span>
         </button>
         </sc-if>
-        <span id="hd-cart" style="display:inline-flex;"><dc-import name="Kosik" count="{{ cartCount }}" total="{{ cartTotal }}" currency="{{ currency }}" currencies="{{ currencyCodes }}" on-currency-change="{{ onMenuCurrency }}" on-hover-enter="{{ onCartEnter }}" on-hover-leave="{{ onCartLeave }}" on-click="{{ onCartClick }}" hint-size="150px,44px"></dc-import></span>
+        <span id="hd-cart" style="display:inline-flex;"><dc-import name="Kosik" count="{{ cartCount }}" total="{{ cartTotal }}" currency="{{ currency }}" currencies="{{ currencyCodes }}" on-currency-change="{{ onCartCurrency }}" on-hover-enter="{{ onCartEnter }}" on-hover-leave="{{ onCartLeave }}" on-click="{{ onCartClick }}" hint-size="150px,44px"></dc-import></span>
         <button type="button" class="hd-mb hd-icon hd-i" id="hd-burger" aria-label="{{ menuLabel }}" aria-expanded="{{ menuExpanded }}" aria-controls="hd-mobile-menu" onClick="{{ toggleMenu }}" style="width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#1E5AA8;cursor:pointer;"><sc-if value="{{ menuOpen }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="x" size="24" hint-size="24px,24px"></dc-import></sc-if><sc-if value="{{ menuClosed }}" hint-placeholder-val="{{ true }}"><dc-import name="Ikony" icon-name="menu-2" size="24" hint-size="24px,24px"></dc-import></sc-if></button>
       </div>
       <sc-if value="{{ searchOpen }}" hint-placeholder-val="">
@@ -116,6 +132,9 @@
         <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
           <a class="{{ t.cls }}" href="{{ t.href }}" aria-current="{{ t.current }}" aria-expanded="{{ t.expanded }}" onClick="{{ t.onClick }}" onMouseEnter="{{ t.onEnter }}" onMouseLeave="{{ t.onLeave }}" onFocus="{{ t.onFocus }}" style="{{ t.style }}">{{ t.label }}</a>
         </sc-for>
+        <div class="hd-ctawrap" style="margin-left:auto;flex:none;display:flex;align-items:center;padding:6px 0;">
+          <dc-import name="Tlacitko" variant="primary" size="medium" label="Poptat produkt" icon="help" href="{{ inquiryHref }}" debug="{{ false }}" hint-size="190px,44px"></dc-import>
+        </div>
       </div>
     </nav>
     <sc-if value="{{ megaOpen }}" hint-placeholder-val="">
@@ -130,6 +149,21 @@
     </sc-if>
   </div>
 </header>
+<sc-if value="{{ askLangOpen }}" hint-placeholder-val="">
+  <div role="presentation" onClick="{{ askLangCancel }}" style="position:fixed;inset:0;z-index:80;background:rgba(20,30,45,.5);display:flex;align-items:center;justify-content:center;padding:16px;">
+    <div role="dialog" aria-modal="true" aria-labelledby="hd-lang-dlg-h" id="hd-lang-dialog" tabindex="-1" onKeyDown="{{ askLangKey }}" onClick="{{ stopClick }}" style="width:100%;max-width:520px;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);padding:28px;display:flex;flex-direction:column;gap:16px;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <img src="{{ askLangFlag }}" alt="" aria-hidden="true" style="display:block;flex:none;height:24px;width:38px;border-radius:4px;">
+        <h2 id="hd-lang-dlg-h" style="margin:0;font-size:22px;font-weight:700;line-height:1.25;">{{ askLangTitle }}</h2>
+      </div>
+      <p style="margin:0;font-size:16px;line-height:1.6;color:#5A626C;text-wrap:pretty;">{{ askLangText }}</p>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <dc-import name="Tlacitko" variant="primary" size="medium" label="{{ askLangConfirm }}" icon-trailing="arrow-right" on-click="{{ askLangOk }}" debug="{{ false }}" hint-size="200px,44px"></dc-import>
+        <dc-import name="Tlacitko" variant="text" size="medium" label="{{ askLangStay }}" on-click="{{ askLangCancel }}" debug="{{ false }}" hint-size="180px,44px"></dc-import>
+      </div>
+    </div>
+  </div>
+</sc-if>
 <sc-if value="{{ loginOpen }}" hint-placeholder-val="">
   <dc-import name="LoginPopup" open="{{ true }}" on-close="{{ closeLogin }}" debug="{{ debug }}" hint-size="0px,0px"></dc-import>
 </sc-if>
@@ -205,11 +239,44 @@ class Component extends DCLogic {
     clearTimeout(this._megaT);
     this._megaT = setTimeout(()=>{ if(this.state.megaTab){ this.unbindFitMega(); this.setState({ megaTab:null }); } }, delay || 0);
   }
+  LANGS = [['CZ','Česky','CZK','./vapp-flag-cz.svg'],['SK','Slovensky','EUR','./vapp-flag-sk.svg']];
+  _langWas = false;
+  trapDialog(e){
+    if (e.key !== 'Tab') return;
+    const el = document.getElementById('hd-lang-dialog');
+    if (!el) return;
+    const f = [...el.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')]
+      .filter(n=>!n.disabled && n.offsetParent !== null);
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && (document.activeElement === first || document.activeElement === el)) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+  syncLangDialog(){
+    const now = !!this.state.askLang;
+    if (this._langWas === now) return;
+    this._langWas = now;
+    this.lockScroll(now || !!this.state.menuOpen);
+    const pick = ()=> now ? document.getElementById('hd-lang-dialog')
+                          : (document.getElementById('hd-lang') || document.querySelector('.ks-cur'));
+    const put = ()=>{ const el = pick(); if (el && el.focus) { try{ el.focus({ preventScroll:true }); }catch(e){ el.focus(); } } };
+    put();
+    // spouštěč je v dítěti (Kosik) a při zavření se překresluje — fokus vrátíme po dokreslení
+    const retry = ()=>{
+      if (this._langWas !== now) return;
+      const el = pick();
+      if (el && document.activeElement !== el && !(el.contains && el.contains(document.activeElement))) put();
+    };
+    requestAnimationFrame(retry);
+    this._langFocusT = setTimeout(retry, 80);
+  }
   _menuWas = false;
   lockScroll(on){ try{ document.body.style.overflow = on ? 'hidden' : ''; }catch(e){} }
   componentDidMount(){
     this._onKey = (e)=>{ if(e.key!=='Escape') return;
       if(this.state.megaTab){ this.closeMega(0); const t=document.querySelector('.hd-tab[aria-expanded="true"]'); if(t&&t.focus) t.focus(); return; }
+      if(this.state.askLang){ this.setState({ askLang:null }); return; }
+      if(this.state.langOpen){ this.setState({ langOpen:false }); const b=document.getElementById('hd-lang'); if(b&&b.focus) b.focus(); return; }
       if(this.state.menuOpen){ this.closeMenu(); }
       else if(this.state.searchOpen){ this.setState({ searchOpen:false }); const b=document.getElementById('hd-search-toggle'); if(b&&b.focus) b.focus(); } };
     document.addEventListener('keydown', this._onKey, true);
@@ -221,12 +288,19 @@ class Component extends DCLogic {
       this.closeMega(0);
     };
     document.addEventListener('click', this._onMegaDoc, true);
+    this._onLangDoc = (e)=>{
+      if(!this.state.langOpen) return;
+      if(e.target && e.target.closest && e.target.closest('.hd-langwrap')) return;
+      this.setState({ langOpen:false });
+    };
+    document.addEventListener('click', this._onLangDoc, true);
     this._onMegaReady = ()=>this.forceUpdate();
     window.addEventListener('vapp-mega-ready', this._onMegaReady);
     if (!window.VAPP_MEGA) this._megaPoll = setInterval(()=>{ if(window.VAPP_MEGA){ clearInterval(this._megaPoll); this.forceUpdate(); } }, 120);
   }
-  componentWillUnmount(){ this.lockScroll(false); this.unbindFit(); clearTimeout(this._megaT); clearInterval(this._megaPoll); if(this._onMegaReady) window.removeEventListener('vapp-mega-ready', this._onMegaReady); this.unbindFitMega(); if(this._onKey) document.removeEventListener('keydown', this._onKey, true); if(this._onMegaDoc) document.removeEventListener('click', this._onMegaDoc, true); }
+  componentWillUnmount(){ clearTimeout(this._langFocusT); this.lockScroll(false); this.unbindFit(); clearTimeout(this._megaT); clearInterval(this._megaPoll); if(this._onMegaReady) window.removeEventListener('vapp-mega-ready', this._onMegaReady); this.unbindFitMega(); if(this._onKey) document.removeEventListener('keydown', this._onKey, true); if(this._onMegaDoc) document.removeEventListener('click', this._onMegaDoc, true); if(this._onLangDoc) document.removeEventListener('click', this._onLangDoc, true); }
   componentDidUpdate(prevProps, prevState){
+    this.syncLangDialog();
 
     // runtime nedodává spolehlivý prevState — poslední stav si držíme na instanci
     const now = !!this.state.menuOpen;
@@ -318,8 +392,12 @@ class Component extends DCLogic {
     const codes = Array.isArray(P.currencies) && P.currencies.length ? P.currencies : ['CZK','EUR'];
     const curControlled = typeof P.onCurrencyChange === 'function';
     const currency = curControlled ? (P.currency || codes[0]) : this.state.currency;
-    const setCurrency = (code)=>{ if (curControlled) P.onCurrencyChange(code); else this.setState({ currency: code }); };
+    const applyCurrency = (code)=>{ if (curControlled) P.onCurrencyChange(code); else this.setState({ currency: code }); };
+    // změna jazyka = přechod na samostatnou jazykovou mutaci webu → potvrzení v dialogu
+    const setCurrency = (code)=>{ if (code === currency) return; this.setState({ langOpen:false, askLang: code }); };
+    this._applyCurrency = applyCurrency;
     return {
+      inquiryHref: P.inquiryHref ?? 'poptat-produkt.dc.html',
       showKb: true, showMail: true, showSearchAct: true,
       // porovnávání se nepoužívá — ikona je skrytá, kód zůstává (prop showCompareAction ji vrátí)
       showCompareAct: P.showCompareAction === true,
@@ -329,6 +407,33 @@ class Component extends DCLogic {
       contactEmail: P.contactEmail ?? 'obchod@vapp.cz',
       contactEmailHref: P.contactEmailHref ?? ('mailto:' + (P.contactEmail ?? 'obchod@vapp.cz')),
       currencyCodes: codes, onMenuCurrency: (code)=>setCurrency(code), currency,
+      // J2 (samostatná vlajka s popiskem vedle Přihlásit) je výchozní podoba na celém webu
+      langJ2: (P.langVariant || 'J2') === 'J2',
+      onCartCurrency: (P.langVariant || 'J2') === 'J2' ? null : ((code)=>setCurrency(code)),
+      langOpen: !!this.state.langOpen,
+      langExpanded: this.state.langOpen ? 'true' : 'false',
+      langAria: 'Jazyk a měna: ' + (currency === 'EUR' ? 'Slovensky' : 'Česky'),
+      langFlag: currency === 'EUR' ? './vapp-flag-sk.svg' : './vapp-flag-cz.svg',
+      langLabel: currency === 'EUR' ? 'Slovensky' : 'Česky',
+      toggleLang: ()=>this.setState(s=>({ langOpen: !s.langOpen })),
+      langItems: this.LANGS.map(([code,label,cur,flag])=>({
+        code, label, flag, selected: cur === currency ? 'true' : 'false',
+        style: 'width:100%;min-height:44px;padding:0 12px;border-radius:6px;display:flex;align-items:center;gap:10px;font-size:15px;font-weight:'
+          + (cur === currency ? '700' : '500') + ';color:' + (cur === currency ? '#1E5AA8' : '#5A626C') + ';cursor:pointer;',
+        onClick: ()=>{ this.setState({ langOpen:false }); setCurrency(cur); }
+      })),
+      askLangOpen: !!this.state.askLang,
+      askLangFlag: this.state.askLang === 'EUR' ? './vapp-flag-sk.svg' : './vapp-flag-cz.svg',
+      askLangTitle: this.state.askLang === 'EUR' ? 'Přecházíte na slovenskou verzi webu' : 'Přecházíte na českou verzi webu',
+      askLangText: this.state.askLang === 'EUR'
+        ? 'Slovenská verze je samostatný web vapp.sk — ceny jsou v eurech, platí pro něj slovenské podmínky dopravy a obsah košíku se do ní nepřenese.'
+        : 'Česká verze je samostatný web vapp.cz — ceny jsou v korunách, platí pro něj české podmínky dopravy a obsah košíku se do ní nepřenese.',
+      askLangConfirm: this.state.askLang === 'EUR' ? 'Pokračovat na vapp.sk' : 'Pokračovat na vapp.cz',
+      askLangOk: ()=>{ const c = this.state.askLang; this.setState({ askLang:null }); if (c && this._applyCurrency) this._applyCurrency(c); },
+      askLangStay: this.state.askLang === 'EUR' ? 'Zůstat na české verzi' : 'Zůstat na slovenské verzi',
+      askLangCancel: ()=>this.setState({ askLang:null }),
+      stopClick: (e)=>{ if (e && e.stopPropagation) e.stopPropagation(); },
+      askLangKey: (e)=>this.trapDialog(e),
       loginOpen: this.state.loginOpen,
       openLogin: ()=>{ const f = P.onLogin; if (typeof f === 'function') f(); else this.setState({ loginOpen:true }); },
       closeLogin: ()=>{ this.setState({ loginOpen:false }); setTimeout(()=>{ const b=document.getElementById('hd-login'); if(b&&b.offsetParent!==null&&b.focus) b.focus(); },0); },
