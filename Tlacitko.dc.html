@@ -26,6 +26,10 @@
   .b-primary:hover{background:#1A4A8A !important;}
   .b-secondary:hover{background:#D8E6F6 !important;}
   .b-danger:hover{background:#A21B22 !important;}
+  .b-dangersec{transition:background .12s,transform .06s;}
+  .b-dangersec:hover{background:#FAD9DA !important;}
+  .b-dangersec:active{transform:translateY(1px);}
+  .b-dangersec:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   .b-ghost:hover{background:#EFF4FB !important;}
   .b-guide{transition:background .12s,transform .06s;}
   .b-guide:hover{background:#F7E4BC !important;}
@@ -137,7 +141,7 @@
 </div>
 </sc-if>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:920,&quot;height&quot;:540},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;buy&quot;,&quot;primary&quot;,&quot;secondary&quot;,&quot;guide&quot;,&quot;danger&quot;,&quot;ghost&quot;,&quot;text&quot;,&quot;textDanger&quot;,&quot;ontint&quot;,&quot;ondark&quot;],&quot;default&quot;:&quot;primary&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;standard&quot;,&quot;medium&quot;,&quot;large&quot;],&quot;default&quot;:&quot;medium&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Tlačítko&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;href&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;icon&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;iconTrailing&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;iconOnly&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;trailChevron&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;disabled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;fullWidth&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;ariaLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:920,&quot;height&quot;:540},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;buy&quot;,&quot;primary&quot;,&quot;secondary&quot;,&quot;guide&quot;,&quot;danger&quot;,&quot;dangerSecondary&quot;,&quot;ghost&quot;,&quot;text&quot;,&quot;textDanger&quot;,&quot;ontint&quot;,&quot;ondark&quot;],&quot;default&quot;:&quot;primary&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;standard&quot;,&quot;medium&quot;,&quot;large&quot;],&quot;default&quot;:&quot;medium&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Tlačítko&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;href&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;icon&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;iconTrailing&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;iconOnly&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;trailChevron&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;disabled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;fullWidth&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;ariaLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
   renderVals(){
     const P = this.props;
@@ -154,6 +158,7 @@ class Component extends DCLogic {
         secondary:{bg:'#EFF4FB',fg:'#1E5AA8',cls:'b-secondary'},
         guide:{bg:'#FCF1DC',fg:'#7A4E00',cls:'b-guide'},
         danger:{bg:'#C5232B',fg:'#fff',cls:'b-danger'},
+        dangerSecondary:{bg:'#FDF1F1',fg:'#C5232B',cls:'b-dangersec'},
         ghost:{bg:'transparent',fg:'#1E5AA8',cls:'b-ghost'},
         text:{bg:'transparent',fg:'#1E5AA8',cls:'b-text'},
         textDanger:{bg:'transparent',fg:'#C5232B',cls:'b-textdanger'},

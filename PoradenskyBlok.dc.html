@@ -21,8 +21,7 @@
 <style>
   *{box-sizing:border-box;}
   html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
-  @keyframes vapp-led{0%{box-shadow:0 0 0 0 var(--led);}70%{box-shadow:0 0 0 7px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
-  .vapp-led{border-radius:999px;animation:vapp-led 1.8s ease-out infinite;}
+  .vapp-led{border-radius:999px;}
 </style>
 </helmet>
 <div style="display:flex;flex-direction:column;gap:20px;width:100%;">
@@ -31,7 +30,7 @@
       <img src="./uploads/supportLine.png" alt="" style="flex:none;width:76px;height:72px;object-fit:contain;display:block;">
       <div style="flex:1;min-width:200px;">
         <div style="font-size:22px;font-weight:700;line-height:1.25;color:#084324;">Potřebujete poradit s výběrem?</div>
-        <div style="display:inline-flex;align-items:center;gap:8px;font-size:16px;line-height:1.6;color:#5A626C;margin-top:4px;"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:9px;height:9px;background:#2EAA6A;flex:none;"></span>Zkušení obchodníci poradí po telefonu i e-mailu · Po–Pá 8:30–16:30</div>
+        <div style="display:inline-flex;align-items:center;gap:8px;font-size:16px;line-height:1.6;color:#5A626C;margin-top:4px;"><sc-if value="{{ isOpen }}" hint-placeholder-val="{{ true }}"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:9px;height:9px;background:#2EAA6A;flex:none;"></span></sc-if>Zkušení obchodníci poradí po telefonu i e-mailu · Po–Pá 8:30–16:30</div>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <dc-import name="Tlacitko" variant="primary" size="medium" label="323 605 314" icon="phone" hint-size="180px,44px"></dc-import>
@@ -44,7 +43,7 @@
       <img src="./uploads/supportLine.png" alt="" style="flex:none;width:62px;height:58px;object-fit:contain;display:block;">
       <div style="flex:1;min-width:180px;">
         <div style="font-size:18px;font-weight:700;line-height:1.35;color:#084324;">Potřebujete poradit s výběrem?</div>
-        <div style="display:inline-flex;align-items:center;gap:8px;font-size:15px;line-height:1.6;color:#5A626C;margin-top:2px;"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:9px;height:9px;background:#2EAA6A;flex:none;"></span>Zkušení obchodníci poradí po telefonu i e-mailu · Po–Pá 8:30–16:30</div>
+        <div style="display:inline-flex;align-items:center;gap:8px;font-size:15px;line-height:1.6;color:#5A626C;margin-top:2px;"><sc-if value="{{ isOpen }}" hint-placeholder-val="{{ true }}"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:9px;height:9px;background:#2EAA6A;flex:none;"></span></sc-if>Zkušení obchodníci poradí po telefonu i e-mailu · Po–Pá 8:30–16:30</div>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <dc-import name="Tlacitko" variant="primary" size="medium" label="323 605 314" icon="phone" hint-size="180px,44px"></dc-import>
@@ -75,7 +74,7 @@ class Component extends DCLogic {
 
 // DebugBar: prop debug -> šablona
 (function(){ const rv = Component.prototype.renderVals;
-  Component.prototype.renderVals = function(){ const v = rv ? (rv.call(this) || {}) : {}; if (v.debug === undefined) v.debug = this.props.debug ?? true; return v; }; })();
+  Component.prototype.renderVals = function(){ const v = rv ? (rv.call(this) || {}) : {}; if (v.debug === undefined) v.debug = this.props.debug ?? true; if (v.isOpen === undefined) v.isOpen = (this.props.open ?? true) !== false; return v; }; })();
 </script>
 </body>
 </html>

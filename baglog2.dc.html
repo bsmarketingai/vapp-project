@@ -65,6 +65,8 @@
                 <div style="background:#FFFFFF;border-radius:8px;padding:20px 22px;">
                   <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:12px;">
                     <div style="flex:1;min-width:220px;font-size:18px;font-weight:700;line-height:1.35;">{{ e.title }}</div>
+                    <sc-if value="{{ e.hasTask }}" hint-placeholder-val=""><span style="{{ e.taskStyle }}">{{ e.task }}</span></sc-if>
+                    <sc-if value="{{ e.hasPick }}" hint-placeholder-val=""><span style="display:inline-block;flex:0 0 auto;background:#FDF1F1;color:#C5232B;border-radius:999px;padding:4px 12px;font-size:13px;font-weight:700;line-height:24px;">Vybrat variantu</span></sc-if>
                     <span style="{{ e.tagStyle }}">{{ e.where }}</span>
                   </div>
                   <div style="display:grid;grid-template-columns:96px 1fr;gap:8px 16px;font-size:15px;line-height:1.6;">
@@ -97,6 +99,72 @@ class Component extends DCLogic {
 
     // Historie: nejnovější den nahoře; items = {title, where, what, why, how}
     const log = [
+      { date: '18. 9. 2026', items: [
+        { title: 'Výpis na mobilu — k porovnání jeden nebo dva sloupce v pásmu XS',
+          pick: true,
+          where: 'Náhradní díly — výpis, pásmo XS (420–549 px)',
+          what: 'Lišta u spodní hrany přepíná počet sloupců výpisu na šířkách 420–549 px: 1 (dnešní stav) nebo 2. XXS (do 419 px) zůstává vždy na jednom sloupci — dva se tam nevejdou. Ostatní pásma se nemění: S dva, M tři, XL čtyři, XXL pět sloupců.',
+          why: 'Jeden sloupec dává kartě hodně šířky, ale na obrazovku se vejde málo zboží a zákazník musí rolovat. Dva sloupce ukážou víc produktů — je potřeba vidět na reálném mobilu, jestli karta v poloviční šířce ještě unese název, cenu i tlačítko Koupit.',
+          how: 'Počet sloupců drží jedna hodnota na stránce, mřížka ji čte jen v pásmu XS. Velikost karty se nepřepisuje — karta je ve výpisu tekutá, takže se přizpůsobí sama.' },
+        { title: 'Poměr stran produktové fotky má tři varianty — 16:10, 4:3 a 1:1',
+          task: 'Úkol ze schůzky 11. 9.',
+          pick: true,
+          where: 'Produktová karta — výpisy a karusely',
+          what: 'Lišta u spodní hrany přepíná poměr stran místa pro fotku na kartě. V1 je dnešní stav 16:10, V2 vrací 4:3, V3 je čtvercová 1:1. Fotka se v žádné variantě neořezává — mění se jen výška plochy, do které se vejde, takže u vyšších poměrů je nad a pod fotkou víc místa pro příznaky (sleva, doprava zdarma).',
+          why: '16:10 vzniklo v srpnu kvůli snížení karty, aby byl na mobilu vidět náběh druhé karty. U fotek na výšku a u karet s příznaky je ale plocha těsná — je potřeba vidět všechny tři poměry na reálném výpisu a rozhodnout.',
+          how: 'Poměr drží jedna hodnota, kterou si produktová karta čte — platí tedy na výpisu, v karuselech i u karet přívěsů a nemusí se přepisovat v jednotlivých stránkách.' },
+        { title: 'Sticky filtrace má tři varianty — S1 bez sticky, S2 vytlačí hlavičku, S3 nechá nahoře hledání',
+          task: 'Úkol ze schůzky 11. 9.',
+          pick: true,
+          where: 'Náhradní díly — sticky filtrační lišta',
+          what: 'Lišta u spodní hrany přepíná chování filtrace vůči hlavičce. S1 je nejjednodušší verze: filtrace není přilepená a normálně odjede pod hlavičku. S2 je dosavadní stav: filtrace vytlačí při rolování celou hlavičku. S3 nechá horní řádek hlavičky s logem, vyhledáváním a košíkem na místě a filtrace nahradí jen řádek navigace; jakmile zákazník začne rolovat nahoru, navigace se hned vrátí a lišta sjede pod ni. Skrytí i návrat jsou animované 300 ms. Stín nese vždy jen nejspodnější viditelná vrstva a lišta jde přes celou šířku okna. Výchozí volba je S2.',
+          why: 'V S2 zmizí při rolování i vyhledávací pole — zákazník, který na výpisu chce hledat jinak, musí nejdřív odrolovat celou stránku nahoru; hledání je přitom na výpisu dílů druhá nejčastější akce po filtrování. Zároveň je ve hře, jestli má být filtrace přilepená vůbec, proto je k porovnání i verze bez sticky.',
+          how: 'Bílé pozadí hlavičky je rozdělené na dva pruhy, takže se navigační řádek dá skrýt bez toho, aby se obsah stránky posunul — filtrace jím jen prosvítá a v pásu skryté navigace hlavička nechytá kliknutí. Veškerá dynamika (pozice lišty, skrytí navigace, stíny) jde přes CSS proměnné, ne inline styly, protože ty při každém překreslení React přepíše a přepínání se rozpadlo. V pásmech M a níž, kde navigační řádek neexistuje, zůstává celá hlavička a lišta se lepí pod ni.' },
+        { title: 'Galerie na detailu produktu je finální — miniatury ve sloupci vlevo',
+          task: 'Úkol ze schůzky 11. 9.',
+          where: 'Detail náhradního dílu a přívěsu — galerie',
+          what: 'Z porovnávaných dvou podob galerie platí ta se sloupcem miniatur vlevo a velkou fotkou vpravo. Varianta s miniaturami pod fotkou je smazaná a volba „Galerie“ zmizela z ovládací lišty na obou detailech. Na mobilu zůstává řešení, které jsme nasadili dnes: miniatury se skryjí a velká fotka se přepíná šipkami s ukazatelem „1 / 4“.',
+          why: 'Sloupec miniatur vlevo dá velké fotce víc výšky a všechny pohledy jsou vidět bez rolování. Držet dál druhou podobu znamená dva stavy k testování a riziko, že se na dvou detailech objeví jiné výchozí zobrazení.',
+          how: 'Vyřazená varianta je smazaná celá — markup i stav, ne jen vypnutá. Rozhodnutí je zapsané v pravidlech projektu, takže se k němu už nevracíme.' },
+        { title: 'Vybrané varianty jsou finální — megamenu M1 a nadpis výpisu v jednom sloupci',
+          task: 'Úkol ze schůzky 11. 9.',
+          where: 'Hlavička — megamenu · Náhradní díly a přívěsy — nadpis výpisu',
+          what: 'Z dvojic variant, které se v prototypu porovnávaly, jsou vybrané finální podoby. Megamenu zůstává jako mřížka sdružovacích kategorií s fotkami a pravým sloupcem Nejhledanější (dřív varianta M1); sloupcová varianta bez fotek je smazaná. Nadpis výpisu je v jednom sloupci — H1 a popis kategorie přes celou šířku a řádek Nejhledanější pod popisem (dřív varianta H2); dvousloupcové řešení se svislou linkou je zrušené, a to i na výpisech přívěsů. Oba přepínače z prezentační lišty zmizely, v liště zůstává jen struktura sdružovacích kategorií V1/V2.',
+          why: 'Rozhodnuté varianty nemá smysl dál držet v kódu — každá druhá verze je další stav, který se musí testovat a udržovat. Klient si zároveň při prezentaci nemá co přepínat tam, kde je rozhodnuto.',
+          how: 'Vyřazené varianty jsou smazané celé, ne jen vypnuté: markup, styly, data i přepínač. Rozhodnutí je zapsané v pravidlech projektu, aby se k němu už nevracelo.' },
+        { title: 'LED u otevírací doby — bez pulzování a mimo otevírací dobu zmizí',
+          task: 'Úkol ze schůzky 11. 9.',
+          where: 'Celý web — hlavička, mobilní menu, poradenský blok, patička',
+          what: 'Zelené kolečko u otevírací doby už nepulzuje — je to statická tečka. Mimo otevírací dobu se nezobrazí červená dioda ani text „právě otevřeno“: dioda i text zmizí a zůstane jen otevírací doba. Pro ukázku obou stavů je na homepage v liště u spodní hrany přepínač „Ot. doba: On / Off“, který přepne hlavičku, poradenský blok i patičku zároveň.',
+          why: 'Pulzování na sebe bralo pozornost, kterou má dostat zboží — a mimo otevírací dobu červená dioda působila jako chybové hlášení, přestože zavřená prodejna v 18 hodin je normální stav. Zákazníkovi tam stačí otevírací doba.',
+          how: 'Stav se drží na jednom místě a předává se dolů do hlavičky, poradenského bloku i patičky, takže je všude shodný. Animace byla odstraněna i ze stránkových stylů, kde po ní zůstalo pravidlo — jinak se pulz vracel na stránkách, které komponentu importují. Červená dioda zůstává v design systému nevyužitá.' },
+        { title: 'Hero na homepage — mobil ukazuje fotku a přibyla varianta V2',
+          pick: true,
+          where: 'Homepage — hero',
+          what: 'Na mobilu už obsah neleží v bílém boxu, ale přímo na fotce; čitelnost drží tmavý přechod odspodu, takže je fotka vidět i na nejmenších šířkách. Panel je kompaktnější, popisky u akčních tlačítek na mobilu zmizely a první slide má stejnou dvojici tlačítek jako druhý — Výprodej přívěsů a Náhradní díly v akci. Nově je k dispozici varianta V2, která tohle řešení používá i na desktopu: žádný bílý box, text leží na fotce a ztmavení jde zleva pod text. Přepínač V1/V2 je v liště u spodní hrany stránky.',
+          why: 'Bílý box zabíral na mobilu celou obrazovku a z hlavní fotky nebylo vidět nic — hero přestalo fungovat jako obrázek. Na desktopu zároveň klient chtěl vidět i variantu bez boxu, aby se dalo porovnat, co působí lépe.',
+          how: 'Obě varianty čtou stejná data a stejná tlačítka — mění se jen podklad textu. Výška V2 je dorovnaná na V1, aby se při přepnutí stránka neposkakovala, a volba se pamatuje mezi načteními. Pro červené doplňkové tlačítko vznikla nová varianta v červené rodině, aby se nemusela používat plná červená dvakrát vedle sebe.' },
+        { title: 'Karusely produktů jsou hned pod úvodní sekcí',
+          where: 'Homepage',
+          what: 'Karusely Přívěsy a Náhradní díly se přesunuly nahoru — hned pod sekci s nadpisem a pruhem výhod, před blok Servis a půjčovna. Nadpis stránky je zkrácený na „Přívěsy a náhradní díly“ a z patičky zmizela položka Příslušenství.',
+          why: 'Produkty byly až za službami, takže zákazník musel projít půl stránky, než uviděl první zboží. Homepage má nejdřív prodávat sortiment.',
+          how: 'Jen přesun bloků, obsah karuselů se nemění.' },
+        { title: 'Mobilní menu je všude stejné jako na Náhradních dílech',
+          where: 'Celý web — mobilní menu',
+          what: 'Na homepage a dalších stránkách bez vlastní struktury ukazuje mobilní menu u Náhradních dílů osm sdružovacích kategorií (verze V1) a na konci Akce a slevy — přesně jako na stránce Náhradních dílů.',
+          why: 'Mimo výpis dílů se pořád ukazoval starý dlouhý seznam dvaceti kategorií. Zákazník viděl na homepage jinou nabídku než po přechodu na díly.',
+          how: 'Menu si bere strukturu ze společných dat megamenu, takže stačí jedno místo a platí na všech stránkách. Přepínač V1/V2 zůstává jen na výpisu dílů, jinde se použije V1.' },
+        { title: 'Detail produktu — galerie, záložky a objednací číslo',
+          where: 'Detail náhradního dílu a přívěsu',
+          what: 'Velká fotka se na mobilu přepíná šipkami vlevo a vpravo a nese ukazatel „1 / 4“; miniatury se na mobilu skryjí. Klik na záložku (Popis, Parametry, Hodnocení) už stránkou neposkočí — web zůstane tam, kde je. Objednací číslo stojí pod hvězdičkami hodnocení se stejným odsazením shora i zdola. Tlačítko Domluvit prohlídku vede na Servis a hlavní fotka dílu je nahrazená verzí v plném rozlišení.',
+          why: 'Na mobilu se dalo fotky přepínat jen miniaturami, které zabíraly místo a nebyly zřejmé. Přepnutí záložky navíc odscrollovalo stránku tak, že záložky zmizely pod hlavičkou a zákazník nevěděl, co se stalo.',
+          how: 'Odkazy z horní části detailu na hodnocení a parametry dál na záložky odscrollují — posun zůstal jen tam, kde se na něj spoléhá. Šipky mají 44 px na dotek a jsou nad fotkou v bílém kolečku, aby byly čitelné na jakémkoli podkladu.' },
+        { title: 'Podkategorie Elektro a osvětlení mají náhledové fotky',
+          where: 'Náhradní díly — Elektro, svítilny, odrazky',
+          what: 'Všech 17 podkategorií (autobaterie, blinkry, brzdové svítilny, couvačky a mlhovky, kabely, majáky, odrazky, osvětlení SPZ, pracovní světlomety, sdružené svítilny, skla, vnitřní osvětlení, konektory, žárovky a další) má vlastní náhledovou fotku. Dlaždice sdružovací kategorie si drží svou ikonu.',
+          why: 'Podkategorie se od sebe lišily jen názvem — u osvětlení je fotka rychlejší než čtení. Fotka podkategorie se ale nesmí propsat nahoru do dlaždice kategorie.',
+          how: 'Fotky se ukazují v obou variantách dlaždic i v kompaktním řádkovém seznamu. Otevřené: fotky mají být buď u všech kategorií, nebo u žádné — smíšený stav působí rozpadle.' }
+      ] },
       { date: '10. 9. 2026', items: [
         { title: 'V mobilním menu se dá kliknout na kategorii i ji rozbalit',
           where: 'Hlavička — mobilní menu',
@@ -138,11 +206,11 @@ class Component extends DCLogic {
           what: 'Pořadí obsahu je nově e-mail → telefon → otevírací doba → název firmy s adresou a pod ní IČO a DIČ → tlačítko Všechny kontakty. Oddělovací linka stojí mezi kontakty a adresním blokem.',
           why: 'Zákazník hledá v patičce nejčastěji spojení — e-mail a telefon měly zůstat až za názvem firmy a dvěma adresami. Fakturaní údaje jsou naopak informace, která se dohledává zřídka, a patří k adrese.',
           how: 'Jen přeskládání — žádný obsah nepřibyl ani nezmizel, velikosti a barvy zůstávají. CTA uzavírá blok, takže stoí hned nad oddělovacem a sociálními sítěmi.' },
-        { title: 'Hlavička výpisu má druhou variantu — H2 v jednom sloupci',
+        { title: 'Hlavička výpisu má druhou variantu — H2 v jednom sloupci (rozhodnuto 18. 9. — platí H2)',
           where: 'Náhradní díly — nadpis sekce',
           what: 'Lišta u spodní hrany nově přepíná i uspořádání horní části stránky. H1 je dnešní stav: nadpis a popis vlevo, svislá linka a sloupec Nejhledanější vpravo. H2 dá nadpisu i popisu celou šířku a řádek Nejhledanější posune pod popis — popisek a chipy vedle sebe v jednom řádku, zalomí se až když se nevejdou.',
           why: 'Dvousloupcové řešení ubírá popisu kategorie šířku a na středních monitorech se sloupec Nejhledanější tiskne na text. V jednom sloupci se čte popis přirozeně a chipy působí jako zkratky pod ním, ne jako druhá nabídka vedle nadpisu.',
-          how: 'Obě varianty čtou stejná data — mění se jen umístění, ne obsah ani chování chipů. Volba se pamatuje mezi načteními stránky, takže při prezentaci zůstane zapnutá.' }
+          how: 'Obě varianty čtou stejná data — mění se jen umístění, ne obsah ani chování chipů. 18. 9. 2026 byla vybrána varianta H2 jako finální: jednosloupcové řešení platí na všech výpisech a přepínač i dvousloupcová varianta jsou smazané.' }
       ] },
       { date: '3. 9. 2026', items: [
         { title: 'Megamenu má pravý sloupec Nejhledanější s akcemi na konci',
@@ -153,6 +221,7 @@ class Component extends DCLogic {
       ] },
       { date: '2. 9. 2026', items: [
         { title: 'Náhradní díly mají sdružovací kategorie — V1 (8) a V2 (6)',
+          pick: true,
           where: 'Náhradní díly — rozcestník',
           what: 'Nejvyšší úroveň Náhradních dílů už není 20 dnešních kategorií, ale sdružovací kategorie z klientského excelu. Lišta u spodní hrany přepíná dvě verze: V1 s osmi a V2 s šesti položkami. Klik na položku rozbalí přesně ten výčet podkategorií, který je v excelu, a dá se odtud projít až na výpis produktů. H1 hub stránky je cílový SEO výraz ze sloupce D, v drobečkové navigaci a dlaždici je krátký název. Dlaždice „Akce a slevy“ z rozcestníku zmizela.',
           why: 'Dvacet kategorií na jedné úrovni zákazníka zahltí, nedává prostor pro růst sortimentu a nevytváří žádnou SEO landing stránku. Obě verze potřebuje klient vidět v reálném webu, ne v tabulce, aby se dalo rozhodnout.',
@@ -169,7 +238,7 @@ class Component extends DCLogic {
           how: 'Pořadí sdružovací kategorie je dané součtem prodejů kategorií, které pod ní patří, takže se do popředí dostane i skupina složená z menších kategorií (Karoserie a nástavba ve V2). Podkategorie vlastní číslo nemají, v rámci své kategorie tedy drží pořadí z excelu. Řadí se jen zobrazení — struktura zůstává beze změny.' },
         { title: 'Nové desktopové megamenu s podkategoriemi a fotkami',
           where: 'Hlavička — Náhradní díly',
-          what: 'Hover nebo fokus na tabu Náhradní díly i Přívěsy rozbalí megamenu přes šířku obsahu webu — na každé stránce webu, ne jen na výpisu dílů. Přívěsy nabízejí svých 11 kategorií s podkategoriemi. Každá sdružovací kategorie má náhledovou fotku 48 × 48, název jako odkaz na hub a pod ním max 6 podkategorií; když jich má víc, přidá se odkaz „Zobrazit vše (N)“ — třeba Elektro má 17. Struktura se řídí zvolenou verzí: V1 osm skupin ve čtyřech sloupcích, V2 šest ve třech. Zavírá Escape, odjezd myší i klik mimo.',
+          what: 'Hover nebo fokus na tabu Náhradní díly i Přívěsy rozbalí megamenu přes šířku obsahu webu — na každé stránce webu, ne jen na výpisu dílů. Přívěsy nabízejí svých 11 kategorií s podkategoriemi. Každá sdružovací kategorie má náhledovou fotku 48 × 48, název jako odkaz na hub a pod ním max 6 podkategorií; když jich má víc, přidá se odkaz „Zobrazit vše (N)“ — třeba Elektro má 17. Struktura se řídí zvolenou verzí sdružovacích kategorií: V1 osm skupin ve čtyřech sloupcích, V2 šest ve třech. (18. 9. 2026 byla tato podoba megamenu vybrána jako finální — porovnávaná sloupcová varianta je smazaná.) Zavírá Escape, odjezd myší i klik mimo.',
           why: 'Do menu se nedala hierarchie ani prohlédnout — zákazník musel nejdřív na výpis. Vypsat u velkých kategorií všech 17 podkategorií by ale panel roztáhlo přes celou obrazovku.',
           how: 'Pravidlo „6 + Zobrazit vše“ drží komponenta, takže platí všude stejně a nedá se obejít. Panel má změřenou maximální výšku podle dostupného místa v okně a vlastní rolování, takže spodní řada skupin je dosažitelná i na notebooku. Počty produktů se v megamenu nezobrazují — stejně jako v dlaždicích kategorií. Data menu leží v jednom společném souboru, takže je hlavička má k dispozici všude; výpis dílů si strukturu drží živě kvůli přepínači V1/V2 a svůj tab přebije. Akce a slevy nezabírají v mřížce další řádek — mají místo v pravém sloupci Nejhledanější, oddělené svislou linkou, kde stojí jako zvýrazněná červená položka na konci.' },
         { title: 'Mobilní menu jede po stejné struktuře jako rozcestník',
@@ -320,7 +389,9 @@ class Component extends DCLogic {
     ];
 
     const tag = "display:inline-block;flex:0 0 auto;background:#EFF4FB;color:#1E5AA8;border-radius:999px;padding:4px 12px;font-size:13px;font-weight:700;line-height:24px;";
-    const logOut = log.map(d => ({ ...d, items: (d.items || []).map(i => ({ ...i, tagStyle: tag })) }));
+    // příznak „Úkol ze schůzky …“ — odlišuje zadané úkoly od průběžných úprav
+    const taskTag = "display:inline-block;flex:0 0 auto;background:#FCF1DC;color:#7A4E00;border-radius:999px;padding:4px 12px;font-size:13px;font-weight:700;line-height:24px;";
+    const logOut = log.map(d => ({ ...d, items: (d.items || []).map(i => ({ ...i, tagStyle: tag, hasTask: !!i.task, taskStyle: taskTag, hasPick: !!i.pick })) }));
 
     return {
       now, log: logOut,

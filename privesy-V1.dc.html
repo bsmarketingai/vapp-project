@@ -35,8 +35,7 @@
   .dl-a:hover{color:#1A4A8A;}
   .wf-img{background:repeating-linear-gradient(45deg,#E9ECEF,#E9ECEF 11px,#E3E6EA 11px,#E3E6EA 22px);}
   .wf-img2{background:repeating-linear-gradient(-45deg,#D8E6F6,#D8E6F6 11px,#CFDFF2 11px,#CFDFF2 22px);}
-  @keyframes vapp-led{0%{box-shadow:0 0 0 0 var(--led);}70%{box-shadow:0 0 0 7px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
-  .vapp-led{border-radius:999px;animation:vapp-led 1.8s ease-out infinite;}
+  .vapp-led{border-radius:999px;}
   @keyframes pf-in{from{transform:translateX(100%);}to{transform:none;}}
   @keyframes pf-out{from{transform:none;}to{transform:translateX(100%);}}
   @media (max-width:819px){ .dt{display:none !important;} }
@@ -107,13 +106,12 @@
     <p style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;text-wrap:pretty;">Přívěsy do 3,5 tuny od <a class="dl-a" href="#/privesy/vapp/" onClick="{{ linkVapp }}">VAPP</a>, <a class="dl-a" href="#/privesy/agados/" onClick="{{ linkAgados }}">Agados</a>, <a class="dl-a" href="#/privesy/stema/" onClick="{{ linkStema }}">STEMA</a> a <a class="dl-a" href="#/privesy/unsinn/" onClick="{{ linkUnsinn }}">UNSINN</a> — <a class="dl-a" href="#/privesy/dvouose-valniky/" onClick="{{ linkValniky }}">valníky</a>, <a class="dl-a" href="#/privesy/sklopne-privesy/" onClick="{{ linkSklopne }}">sklopné</a>, <a class="dl-a" href="#/privesy/skrinove-privesy/" onClick="{{ linkSkrinove }}">skříňové</a> i speciální <a class="dl-a" href="#/privesy/prepravniky-stroju/" onClick="{{ linkStroje }}">přepravníky</a>.<sc-if value="{{ descOpen }}" hint-placeholder-val=""><span> Vybírejte podle počtu náprav, celkové hmotnosti nebo rozměru <a class="dl-a" href="#/privesy/jednoose-valniky/" onClick="{{ linkJednoose }}">ložné plochy</a>. Vyrábíme vlastní přívěsy VAPP a zastupujeme značky Agados, STEMA a UNSINN. Ke každému přívěsu dodáme <a class="dl-a" href="nahradnidily.dc.html">příslušenství</a>, plachtu i nástavbu na míru a zajistíme servis po celou dobu životnosti — jak vybrat přívěs poradíme v <a class="dl-a" href="#/poradna/jak-vybrat-prives/">poradně</a>.</span></sc-if><span> </span><button type="button" class="a11y-i hvxin" aria-expanded="{{ descExpanded }}" onClick="{{ toggleDesc }}" style="display:inline;font-size:16px;font-weight:700;color:#1E5AA8;cursor:pointer;white-space:nowrap;transition:color .12s;">{{ descLabel }}<span aria-hidden="true" style="display:inline-flex;vertical-align:-4px;margin-left:2px;"><sc-if value="{{ descClosed }}" hint-placeholder-val="{{ true }}"><dc-import name="Ikony" icon-name="chevron-down" size="18" hint-size="18px,18px"></dc-import></sc-if><sc-if value="{{ descOpen }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="chevron-up" size="18" hint-size="18px,18px"></dc-import></sc-if></span></button></p>
     </sc-if>
       </div>
-      <sc-if value="{{ showTopCol }}" hint-placeholder-val="{{ true }}">
-        <div class="hd-sep" aria-hidden="true" style="flex:none;align-self:stretch;width:1px;background:#F2F4F7;"></div>
-        <div style="flex:1 1 320px;min-width:260px;">
-          <dc-import name="VypisKategorii" top-only="{{ true }}" top-searched="{{ topSearchedData }}" show-guide-chip="{{ showGuideChip }}" debug="{{ debug }}" hint-size="100%,80px"></dc-import>
-        </div>
-      </sc-if>
     </div>
+    <sc-if value="{{ showTopRow }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top:22px;margin-bottom:22px;">
+        <dc-import name="VypisKategorii" top-only="{{ true }}" top-searched="{{ topSearchedData }}" show-guide-chip="{{ showGuideChip }}" debug="{{ debug }}" hint-size="100%,40px"></dc-import>
+      </div>
+    </sc-if>
 
     <!-- ===== KATEGORIE (Datart/Alza drill-down) ===== -->
     <div style="margin-top:14px;">
@@ -844,7 +842,7 @@ class Component extends DCLogic {
       pageCountText: activeMacro ? (macroSubcats.reduce((a,x)=>a+x.count,0).toLocaleString('cs-CZ')+' modelů') : (inCat ? (resultCount.toLocaleString('cs-CZ')+' modelů') : '212 modelů'),
       leafDesc: inCat ? (curName+' — '+(path.length ? ('podkategorie '+(path.length>1?path[path.length-2]:ag.name)) : 'kategorie přívěsů')+' od VAPP, Agados, STEMA a UNSINN. '+resultCount.toLocaleString('cs-CZ')+' modelů, dostupnost a termín dodání potvrdíme telefonicky. '+(hasKids?'Vyberte si přesnější zařazení níže, nebo procházejte celý výpis.':'Nevíte si rady s výběrem? Zavolejte nám.')) : '',
       crumbItems, onCrumbNav,
-      showTopCol: topChips.length > 0, topSearchedData: topChips, showGuideChip: guideChip,
+      showTopRow: topChips.length > 0, topSearchedData: topChips, showGuideChip: guideChip,
       currency: s.currency || 'CZK', onCurrency: (code)=>this.setState({ currency: code }),
       backFromLeaf: this.link(()=>{ if(path.length>0) this.go({ path: path.slice(0,-1), leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, this.urlFor(ag.key, path.slice(0,-1))); else this.go({ view:'groups', path:[], leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, '#/privesy/'); }),
       backFromLeafHref: ag ? (path.length>0 ? this.urlFor(ag.key, path.slice(0,-1)) : '#/privesy/') : '#/privesy/',

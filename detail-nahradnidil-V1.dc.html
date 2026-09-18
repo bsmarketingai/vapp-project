@@ -76,24 +76,7 @@
 
       <!-- GALERIE -->
       <div class="pd-gal">
-        <sc-if value="{{ galV1 }}" hint-placeholder-val="{{ true }}">
-          <div style="position:relative;">
-            <div style="{{ mainImgStyle }}"></div>
-            <button type="button" class="pd-nav a11y-i" aria-label="Předchozí fotka" onClick="{{ imgPrev }}" style="position:absolute;top:50%;left:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:999px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10);">
-              <dc-import name="Ikony" icon-name="chevron-left" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
-            </button>
-            <button type="button" class="pd-nav a11y-i" aria-label="Další fotka" onClick="{{ imgNext }}" style="position:absolute;top:50%;right:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:999px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10);">
-              <dc-import name="Ikony" icon-name="chevron-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
-            </button>
-            <span class="pd-nav" aria-hidden="true" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);align-items:center;min-height:24px;padding:0 10px;border-radius:999px;background:#FFFFFF;box-shadow:0 6px 20px rgba(20,47,86,.10);font-size:13px;font-weight:700;color:#15181C;">{{ imgCounter }}</span>
-          </div>
-          <div class="pd-thumbs" style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;">
-            <sc-for list="{{ thumbs }}" as="t" hint-placeholder-count="4">
-              <button type="button" class="a11y-i" onClick="{{ t.onPick }}" aria-label="{{ t.aria }}" aria-pressed="{{ t.pressed }}" style="{{ t.style }}"></button>
-            </sc-for>
-          </div>
-        </sc-if>
-        <sc-if value="{{ galV2 }}" hint-placeholder-val="">
+        <sc-if value="{{ galV2 }}" hint-placeholder-val="{{ true }}">
           <div class="pd-gal-v2">
             <div class="pd-gal-col pd-thumbs">
               <sc-for list="{{ thumbs }}" as="t" hint-placeholder-count="4">
@@ -371,7 +354,7 @@ class Component extends DCLogic {
   ];
 
   state = {
-    variant:0, qty:1, tab:'popis', img:0, currency:'CZK', varStyle:0, galStyle:0, debugOverride:null, cart:0, relQty:{}, relCart:{},
+    variant:0, qty:1, tab:'popis', img:0, currency:'CZK', varStyle:0, debugOverride:null, cart:0, relQty:{}, relCart:{},
     sec:{ varianty:true, slevy:true, dostupnost:true, heureka:true, stazeni:true, souvisejici:true, akce:true }
   };
 
@@ -484,17 +467,17 @@ class Component extends DCLogic {
       secVarianty:s.sec.varianty, secSlevy:s.sec.slevy, secDostupnost:s.sec.dostupnost,
       secHeureka:s.sec.heureka, secAkce:s.sec.akce,
       varTiles: s.varStyle === 0, varRows: s.varStyle === 1,
-      galV1: s.galStyle === 0, galV2: s.galStyle === 1,
+      // V2 (miniatury ve sloupci vlevo) = finální podoba galerie, rozhodnuto 18. 9. 2026
+      galV2: true,
       tabPopis: tab==='popis', tabParametry: tab==='parametry', tabStazeni: tab==='stazeni',
       tabHodnoceni: tab==='hodnoceni', tabSouvisejici: tab==='souvisejici',
 
       cbGroups:[
         { label:'Sekce:', kind:'toggles', options:this.SECTIONS.map(([k,l])=>({ label:l, on:!!s.sec[k] })) },
-        { label:'Varianty:', kind:'select', activeIndex:s.varStyle, options:[{ label:'Karty' },{ label:'Řádky' }] },
-        { label:'Galerie:', kind:'select', activeIndex:s.galStyle, options:[{ label:'V1' },{ label:'V2' }] }
+        { label:'Varianty:', kind:'select', activeIndex:s.varStyle, options:[{ label:'Karty' },{ label:'Řádky' }] }
       ],
       cbToggle:(gi,oi)=>{ if (gi===0){ const k = this.SECTIONS[oi] && this.SECTIONS[oi][0]; if (k) this.setSec(k); } },
-      cbSelect:(gi,oi)=>{ if (gi===1) this.setState({ varStyle:oi }); if (gi===2) this.setState({ galStyle:oi }); },
+      cbSelect:(gi,oi)=>{ if (gi===1) this.setState({ varStyle:oi }); },
       cbDebug:()=>this.setState({ debugOverride: !debug })
     };
   }

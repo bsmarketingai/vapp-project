@@ -29,9 +29,11 @@
   <div style="display:flex;flex-direction:column;gap:0;min-width:0;">
     <a class="kb-i kb-tel" href="{{ phoneHref }}" style="font-size:16px;font-weight:700;line-height:1.25;color:#15181C;white-space:nowrap;">{{ phone }}</a>
     <span style="display:inline-flex;align-items:center;gap:8px;">
-      <span style="display:flex;align-items:center;flex:none;font-size:0;line-height:0;">
-        <dc-import name="LedIndikator" state="{{ ledState }}" label="" size="8" hint-size="8px,8px"></dc-import>
-      </span>
+      <sc-if value="{{ isOpen }}" hint-placeholder-val="{{ true }}">
+        <span style="display:flex;align-items:center;flex:none;font-size:0;line-height:0;">
+          <dc-import name="LedIndikator" state="open" label="" size="8" hint-size="8px,8px"></dc-import>
+        </span>
+      </sc-if>
       <span style="font-size:13px;font-weight:500;line-height:1.4;color:#666E78;white-space:nowrap;">{{ hours }}</span>
     </span>
   </div>
@@ -47,7 +49,7 @@ class Component extends DCLogic {
       phone: P.phone ?? '323 605 314',
       phoneHref: P.phoneHref ?? 'tel:+420323605314',
       hours: P.hours ?? '8:30–16:30',
-      ledState: open ? 'open' : 'closed',
+      isOpen: open,
       debug: P.debug ?? true
     };
   }

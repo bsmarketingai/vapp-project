@@ -21,8 +21,7 @@
 <style>
   *{box-sizing:border-box;}
   html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
-  @keyframes vapp-led{0%{box-shadow:0 0 0 0 var(--led);}70%{box-shadow:0 0 0 7px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
-  .vapp-led{border-radius:999px;animation:vapp-led 1.8s ease-out infinite;}
+  .vapp-led{border-radius:999px;}
 </style>
 </helmet>
 <sc-if value="{{ single }}" hint-placeholder-val="">
@@ -32,13 +31,13 @@
 <div style="display:flex;flex-direction:column;gap:16px;max-width:760px;">
   <div style="background:#fff;border-radius:8px;padding:28px;display:flex;gap:40px;flex-wrap:wrap;align-items:center;">
     <span style="display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:#0B6937;"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:11px;height:11px;background:#2EAA6A;flex:none;"></span>Po–Pá 8:30–16:30 · právě otevřeno</span>
-    <span style="display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:#C5232B;"><span class="vapp-led" style="--led:rgba(197,35,43,.5);width:11px;height:11px;background:#C5232B;flex:none;"></span>Zavřeno · otevíráme v Po 8:30</span>
+    <span style="display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:#5A626C;">Po–Pá 8:30–16:30</span>
   </div>
   <div style="background:#142F56;border-radius:8px;padding:20px 24px;display:flex;gap:40px;flex-wrap:wrap;align-items:center;">
     <span style="display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:600;color:#fff;"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:11px;height:11px;background:#2EAA6A;flex:none;"></span>Na tmavém podkladu (topbar / patička)</span>
   </div>
   <div style="display:flex;flex-direction:column;gap:5px;padding:2px 4px;">
-    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> stav otevírací doby. Zelená #2EAA6A = otevřeno, červená #C5232B = zavřeno. Pulz 1800 ms kruhovým stínem, tečka 9–11 px.</div>
+    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> stav otevírací doby. Zelená #2EAA6A = otevřeno, bez animace. Mimo otevírací dobu dioda zmizí a zůstane jen otevírací doba — červená dioda se nepoužívá. Tečka 9–11 px.</div>
     <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nepoužívat pro jiný účel než otevírací dobu; zelenou jen zde a u dostupnosti/konverze.</div>
   </div>
 </div>
@@ -65,7 +64,10 @@ class Component extends DCLogic {
         wrapStyle: String(_lbl||'').trim()
           ? 'display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:'+(onDark?'600':'700')+';color:'+textColor+';'
           : 'display:inline-flex;align-items:center;justify-content:center;gap:0;font-size:0;line-height:0;color:'+textColor+';',
-        dotStyle:'--led:'+led+';width:'+size+'px;height:'+size+'px;background:'+color+';flex:none;' };
+        // zavřeno = dioda zmizí, zůstane jen otevírací doba (červená dioda se nepoužívá)
+        dotStyle: open
+          ? ('--led:'+led+';width:'+size+'px;height:'+size+'px;background:'+color+';flex:none;')
+          : 'display:none;' };
     }
     return { single:false, gallery:true };
   }

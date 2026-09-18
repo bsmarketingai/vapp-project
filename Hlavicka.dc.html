@@ -23,8 +23,7 @@
 <style>
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
-  @keyframes vapp-led{0%{box-shadow:0 0 0 0 var(--led);}70%{box-shadow:0 0 0 7px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
-  .vapp-led{border-radius:999px;animation:vapp-led 1.8s ease-out infinite;}
+  .vapp-led{border-radius:999px;}
   .hd-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
   .hd-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   .hd-ondark:focus-visible{outline:2px solid #FFFFFF;outline-offset:2px;}
@@ -37,7 +36,13 @@
   .hd-v4 .hd-icon:active{transform:translateY(1px);}
   .hd-act{color:#1E5AA8;transition:color .12s;} .hd-act:hover{color:#C5232B;}
   .sc-host[data-sc-name="Hlavicka"]{display:contents;}
-  .hd-root{position:sticky;top:0;z-index:70;} /* z.header — přilepená hlavička je vždy vidět celá */
+  .hd-root{position:sticky;top:0;z-index:70;} /* z.header — stín, posun a pointer-events jdou přes CSS proměnné v inline stylu */
+  /* S2 sticky režim výpisu (--vp-* proměnné nastavuje stránka): v pásu skryté navigace
+     hlavička nepaintuje ani nechytá pointer, aby jím prosvítala přilepená filtrační lišta. */
+  .hd-root.hd-navoff{pointer-events:none;background:transparent !important;box-shadow:none;}
+  .hd-root.hd-navoff .hd-toprow,
+  .hd-root.hd-navoff #hd-mega,
+  .hd-root.hd-navoff #hd-mobile-menu{pointer-events:auto;}
   @media (max-width:999px){ .hd-dt{display:none !important;} }
   @media (min-width:1000px){ .hd-mb{display:none !important;} }
   .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
@@ -63,8 +68,9 @@
   .hd-mail{transition:color .12s;} .hd-mail:hover{color:#1E5AA8 !important;}
 </style>
 </helmet>
-<header class="hd-root {{ rootCls }}" style="background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;width:100%;margin:0;padding:0;">
-  <div style="background:#fff;border-bottom:1px solid #F2F4F7;">
+<header class="hd-root {{ rootCls }}" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;width:100%;margin:0;padding:0;transform:translateY(var(--vp-hdr-push,0px));box-shadow:var(--vp-hdr-shadow,0 2px 8px rgba(20,47,86,.06));pointer-events:var(--vp-hdr-pe,auto);">
+  <div style="background:transparent;">
+    <div class="hd-toprow" style="background:#fff;border-bottom:1px solid #F2F4F7;pointer-events:auto;">
     <div class="vp-in hd-logorow" style="display:flex;align-items:center;gap:14px;padding-top:20px;padding-bottom:20px;flex-wrap:wrap;">
       <a class="hd-i" href="{{ logoHref }}" aria-label="VAPP — domovská stránka" onClick="{{ onLogoNav }}" style="display:flex;flex:none;cursor:pointer;"><img class="hd-logo" src="./vapp-logo.svg" alt="VAPP" style="height:30px;display:block;"></a>
       <div class="hd-dt hd-search-inline" style="flex:1;min-width:200px;max-width:520px;margin-left:auto;margin-right:auto;">
@@ -104,7 +110,8 @@
         <dc-import name="Vyhledavani" bare="true" height="42" value="{{ searchValue }}" on-change="{{ onSearchChange }}" on-field-focus="{{ onSearchFieldFocus }}" placeholder="Hledat díly, přívěsy…" hint-size="100%,42px"></dc-import>
       </div>
     </div>
-    <nav class="hd-dt" aria-label="Hlavní navigace" style="border-top:1px solid #F2F4F7;">
+    </div>
+    <nav class="hd-dt" aria-label="Hlavní navigace" style="background:#fff;border-bottom:1px solid #F2F4F7;pointer-events:var(--vp-nav-pe,auto);opacity:var(--vp-nav-op,1);visibility:var(--vp-nav-vis,visible);transition:opacity .3s ease, visibility 0s linear var(--vp-nav-delay,0s);">
       <div class="vp-in" style="display:flex;align-items:center;gap:26px;">
         <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
           <a class="{{ t.cls }}" href="{{ t.href }}" aria-current="{{ t.current }}" aria-expanded="{{ t.expanded }}" onClick="{{ t.onClick }}" onMouseEnter="{{ t.onEnter }}" onMouseLeave="{{ t.onLeave }}" onFocus="{{ t.onFocus }}" style="{{ t.style }}">{{ t.label }}</a>
@@ -112,12 +119,12 @@
       </div>
     </nav>
     <sc-if value="{{ megaOpen }}" hint-placeholder-val="">
-      <div class="hd-dt" id="hd-mega" onMouseEnter="{{ onMegaEnter }}" onMouseLeave="{{ onMegaLeave }}" style="position:absolute;top:100%;left:0;right:0;z-index:60;box-shadow:0 10px 30px rgba(20,30,45,.14);">
-        <dc-import name="MegaMenu" variant="{{ megaVariantEff }}" groups="{{ megaGroups }}" m2-columns="{{ megaM2 }}" all-label="{{ megaAllLabel }}" all-href="{{ megaAllHref }}" cats-label="{{ megaCatsLabel }}" cats-href="{{ megaCatsHref }}" rail-items="{{ megaRail }}" heading="{{ megaTab }}" columns="{{ megaColumns }}" max-items="{{ megaMaxItems }}" debug="{{ debug }}" hint-size="100%,420px"></dc-import>
+      <div class="hd-dt" id="hd-mega" onMouseEnter="{{ onMegaEnter }}" onMouseLeave="{{ onMegaLeave }}" style="position:absolute;top:100%;left:0;right:0;z-index:60;pointer-events:auto;box-shadow:0 10px 30px rgba(20,30,45,.14);">
+        <dc-import name="MegaMenu" groups="{{ megaGroups }}" all-label="{{ megaAllLabel }}" all-href="{{ megaAllHref }}" cats-label="{{ megaCatsLabel }}" cats-href="{{ megaCatsHref }}" rail-items="{{ megaRail }}" heading="{{ megaTab }}" columns="{{ megaColumns }}" max-items="{{ megaMaxItems }}" debug="{{ debug }}" hint-size="100%,420px"></dc-import>
       </div>
     </sc-if>
     <sc-if value="{{ menuOpen }}" hint-placeholder-val="">
-      <div class="hd-mb" id="hd-mobile-menu" role="navigation" aria-label="Hlavní menu" tabindex="-1" onKeyDown="{{ onMenuKey }}" style="position:absolute;top:100%;left:0;right:0;z-index:60;min-height:calc(100dvh - 100%);background:#fff;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;box-shadow:0 10px 30px rgba(20,30,45,.14);">
+      <div class="hd-mb" id="hd-mobile-menu" role="navigation" aria-label="Hlavní menu" tabindex="-1" onKeyDown="{{ onMenuKey }}" style="position:absolute;top:100%;left:0;right:0;z-index:60;pointer-events:auto;min-height:calc(100dvh - 100%);background:#fff;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;box-shadow:0 10px 30px rgba(20,30,45,.14);">
         <dc-import name="MobilniMenu" show-info="{{ mmInfo }}" show-contacts="{{ mmContacts }}" panel-open="{{ menuOpen }}" menu-tree="{{ menuTree }}" active="{{ menuActive }}" on-select="{{ onMenuSelect }}" info-links="{{ infoLinks }}" on-login="{{ onMenuLogin }}" currency="{{ currency }}" currencies="{{ currencyCodes }}" on-currency-change="{{ onMenuCurrency }}" debug="{{ debug }}" hint-size="100%,320px"></dc-import>
       </div>
     </sc-if>
@@ -131,7 +138,7 @@
 </sc-if>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;megaVariant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;M1&quot;,&quot;M2&quot;],&quot;default&quot;:&quot;M1&quot;,&quot;tsType&quot;:&quot;'M1'|'M2'&quot;,&quot;section&quot;:&quot;Megamenu&quot;},&quot;megaM2&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{sections:{kicker:string,items:{name:string,href:string,tone?:'sale'}[]}[]}[]&quot;,&quot;default&quot;:null},&quot;megaTab&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Megamenu&quot;},&quot;megaGroups&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{name:string,href:string,items:{name:string,href:string}[]}[]&quot;,&quot;default&quot;:null},&quot;megaColumns&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;min&quot;:2,&quot;max&quot;:5,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Megamenu&quot;},&quot;megaMaxItems&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:6,&quot;min&quot;:3,&quot;max&quot;:12,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Megamenu&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:220},&quot;contactPhone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;323 605 314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactPhoneHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;tel:+420323605314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactHours&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;8:30–16:30&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;contactEmail&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactEmailHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;mailto:obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;currency&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;CZK&quot;,&quot;EUR&quot;],&quot;default&quot;:&quot;CZK&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;currencies&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;onCurrencyChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(code:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;cartCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;},&quot;cartTotal&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1500,&quot;tsType&quot;:&quot;number&quot;},&quot;compareCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;tsType&quot;:&quot;number&quot;},&quot;tabs&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;menuTree&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;,&quot;default&quot;:null},&quot;searchValue&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;,&quot;default&quot;:null},&quot;onSearchChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCompare&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCart&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onTabClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onLogoClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;infoLinks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;megaTab&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Megamenu&quot;},&quot;megaGroups&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{name:string,href:string,items:{name:string,href:string}[]}[]&quot;,&quot;default&quot;:null},&quot;megaColumns&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;min&quot;:2,&quot;max&quot;:5,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Megamenu&quot;},&quot;megaMaxItems&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:6,&quot;min&quot;:3,&quot;max&quot;:12,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Megamenu&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:220},&quot;contactPhone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;323 605 314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactPhoneHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;tel:+420323605314&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactHours&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;8:30–16:30&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;contactEmail&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;contactEmailHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;mailto:obchod@vapp.cz&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;currency&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;CZK&quot;,&quot;EUR&quot;],&quot;default&quot;:&quot;CZK&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;currencies&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;onCurrencyChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(code:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;cartCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;tsType&quot;:&quot;number&quot;},&quot;cartTotal&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1500,&quot;tsType&quot;:&quot;number&quot;},&quot;compareCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;tsType&quot;:&quot;number&quot;},&quot;tabs&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null},&quot;menuTree&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;any[]&quot;,&quot;default&quot;:null},&quot;searchValue&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string&quot;,&quot;default&quot;:null},&quot;onSearchChange&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCompare&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onCart&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onTabClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;onLogoClick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;function&quot;,&quot;default&quot;:null},&quot;infoLinks&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;string[]&quot;,&quot;default&quot;:null}}">
 class Component extends DCLogic {
   // Položka menu bez potomků se doplní ze společných dat megamenu (vapp-menu.js),
   // aby mobilní menu ukazovalo stejnou hierarchii jako desktop na každé stránce.
@@ -269,18 +276,10 @@ class Component extends DCLogic {
     // záznam v datech smí být pole skupin, nebo objekt { groups, rail }
     const entry = (label)=>{
       const e = MEGA[label];
-      if (Array.isArray(e)) return { groups:e, rail:null, m2:null, m2Foot:null };
+      if (Array.isArray(e)) return { groups:e, rail:null, foot:null };
       return (e && typeof e === 'object')
-        ? { groups: e.groups, rail: e.rail, m2: e.m2, m2Foot: e.m2Foot }
-        : { groups:null, rail:null, m2:null, m2Foot:null };
-    };
-    // M1 = mřížka kategorií s fotkami, M2 = sloupcová verze s kickery (data v m2)
-    const megaVariant = P.megaVariant === 'M2' ? 'M2' : 'M1';
-    const m2For = (label)=>{
-      const own = Array.isArray(P.megaM2) && P.megaM2.length ? P.megaM2 : null;
-      if (label && label === ownTab && own) return own;
-      const m = entry(label).m2;
-      return (Array.isArray(m) && m.length) ? m : null;
+        ? { groups: e.groups, rail: e.rail, foot: e.foot }
+        : { groups:null, rail:null, foot:null };
     };
     const groupsFor = (label)=>{
       if (label && label === ownTab && ownGroups) return ownGroups;
@@ -296,9 +295,8 @@ class Component extends DCLogic {
     const megaTabOpen = this.state.megaTab;
     const megaGroups = groupsFor(megaTabOpen);
     const megaRail = railFor(megaTabOpen);
-    const megaM2 = m2For(megaTabOpen);
-    const hasMega = (label)=>!!groupsFor(label) || (megaVariant === 'M2' && !!m2For(label));
-    const megaFoot = entry(megaTabOpen).m2Foot || {};
+    const hasMega = (label)=>!!groupsFor(label);
+    const megaFoot = entry(megaTabOpen).foot || {};
     const megaOpen = hasMega(megaTabOpen);
     const tabs = labels.map(label=>{
       const on = label === active;
@@ -375,7 +373,7 @@ class Component extends DCLogic {
       onLogoClick: P.onLogoClick || (()=>{}),
       cartCount, cartTotal: P.cartTotal, compareCount, showCompare: compareCount>0,
       tabs,
-      megaOpen, megaGroups, megaRail, megaM2, megaVariantEff: megaVariant,
+      megaOpen, megaGroups, megaRail,
       megaAllLabel: megaFoot.allLabel || 'Všechny náhradní díly',
       megaAllHref: megaFoot.allHref || '#',
       megaCatsLabel: megaFoot.catsLabel || 'Všechny kategorie',

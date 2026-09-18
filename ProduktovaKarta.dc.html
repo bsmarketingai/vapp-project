@@ -48,7 +48,7 @@
   @media (hover:hover) and (pointer:fine){ .h-card:hover .pk-img2{opacity:1;} }
   .pk-cmp:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   /* fotka je nižší než 4:3 — ubere výšku karty, po stranách vznikne bílý prostor */
-  .pk-photo > div{aspect-ratio:16/10 !important;}
+  .pk-photo > div{aspect-ratio:var(--vp-photo-ar,16/10) !important;}
 </style>
 <script src="./mena.js"></script>
 </helmet>

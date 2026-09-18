@@ -4,6 +4,32 @@ Nejnovější den je vždy nahoře.
 
 ---
 
+# 18. 9. 2026
+
+## Homepage
+
+- **Karusely Přívěsy a Náhradní díly přesunuty výše** — hned pod sekci s H1 a USP, před blok Servis a půjčovna.
+- **Hero na mobilu:** obsah je kompaktnější a leží přímo na fotce (bílý box zmizel), čitelnost drží tmavý přechod odspodu; fotka je tak vidět i na S/XS/XXS. Popisky u akčních tlačítek na mobilu zmizely.
+- **První slide hera** má stejnou dvojici tlačítek jako druhý (bez popisků): *Výprodej přívěsů* (červené) a *Náhradní díly v akci* (červené sekundární).
+- **Nová varianta hera V2** — bez bílého boxu, text leží na fotce a čitelnost drží tmavý přechod zleva; výška odpovídá V1. Přepínač V1/V2 je v prezentační liště dole na stránce, volba se pamatuje.
+- **H1 zkráceno** na „Přívěsy a náhradní díly".
+- **Mobilní menu je na homepage stejné jako na Náhradních dílech** — 8 sdružovacích kategorií (V1) a na konci *Akce a slevy*. Dřív tam byl starý dlouhý seznam.
+
+## Detail produktu
+
+- **Objednací číslo pod hvězdičkami hodnocení** (karta i detail), s opticky stejným odsazením shora i zdola.
+- **Přepnutí záložky už stránkou neposkočí** — web zůstane na místě; odkazy na hodnocení a parametry z horní části detailu na záložky dál odscrollují.
+- **Galerie na mobilu má šipky vlevo/vpravo** přímo na velké fotce s ukazatelem „1 / 4"; miniatury se na mobilu skryjí. Platí pro náhradní díly i přívěsy.
+- **Tlačítko „Domluvit prohlídku"** vede na stránku Servis.
+
+## Ostatní
+
+- **Náhledové fotky u podkategorií Elektro a osvětlení** (17 položek) — dlaždice hubů si drží ikonu kategorie.
+- **Nová varianta tlačítka** „sekundární v červené rodině" pro akční kontexty.
+- **Z patičky odstraněna položka Příslušenství.**
+
+---
+
 # 20. 8. 2026
 
 ## Výpis produktů a karta

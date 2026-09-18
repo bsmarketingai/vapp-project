@@ -73,9 +73,9 @@
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
         <span aria-hidden="true" style="display:inline-flex;align-items:center;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="clock" size="24" hint-size="24px,24px"></dc-import></span>
         <span style="font-size:16px;font-weight:700;color:#15181C;">{{ hours }}</span>
-        <span style="display:flex;align-items:center;flex:none;font-size:0;line-height:0;margin-left:-2px;"><dc-import name="LedIndikator" state="{{ ledState }}" label="" size="11" hint-size="11px,11px"></dc-import></span>
+        <sc-if value="{{ isOpen }}" hint-placeholder-val="{{ true }}"><span style="display:flex;align-items:center;flex:none;font-size:0;line-height:0;margin-left:-2px;"><dc-import name="LedIndikator" state="open" label="" size="11" hint-size="11px,11px"></dc-import></span></sc-if>
         <sc-if value="{{ isOpen }}" hint-placeholder-val="{{ true }}"><span style="font-size:15px;font-weight:400;color:#0B6937;">právě otevřeno</span></sc-if>
-        <sc-if value="{{ isClosed }}" hint-placeholder-val=""><span style="font-size:15px;font-weight:400;color:#C5232B;">zavřeno</span></sc-if>
+
       </div>
       <div style="height:1px;background:#D5DAE0;margin:4px 0;"></div>
       <span style="font-size:15px;font-weight:700;color:#15181C;">VAPP s.r.o.</span>

@@ -33,8 +33,7 @@
   a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
   .wf-img{background:repeating-linear-gradient(45deg,#E9ECEF,#E9ECEF 11px,#E3E6EA 11px,#E3E6EA 22px);}
   .wf-img2{background:repeating-linear-gradient(-45deg,#D8E6F6,#D8E6F6 11px,#CFDFF2 11px,#CFDFF2 22px);}
-  @keyframes vapp-led{0%{box-shadow:0 0 0 0 var(--led);}70%{box-shadow:0 0 0 7px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
-  .vapp-led{border-radius:999px;animation:vapp-led 1.8s ease-out infinite;}
+  .vapp-led{border-radius:999px;}
   @keyframes pf-in{from{transform:translateX(100%);}to{transform:none;}}
   @keyframes pf-out{from{transform:none;}to{transform:translateX(100%);}}
   @media (max-width:819px){ .dt{display:none !important;} }
@@ -49,7 +48,8 @@
 @media (min-width:1560px){ .p-grid{grid-template-columns:repeat(5,1fr);} }
   @media (max-width:999px){ .p-grid{grid-template-columns:repeat(3,1fr);} }
 @media (max-width:819px){ .p-grid{grid-template-columns:repeat(2,1fr);} }
-@media (max-width:549px){ .p-grid{grid-template-columns:1fr;} }
+@media (min-width:420px) and (max-width:549px){ .p-grid{grid-template-columns:repeat(var(--vp-xs-cols,1),1fr);} }
+@media (max-width:419px){ .p-grid{grid-template-columns:1fr;} }
 .sk{background:#F2F4F7;border-radius:6px;}
 @media (max-width:819px){ .sc-tiles{display:none !important;} .sc-crumb:not(.sc-crumb-last){display:none !important;} }
 @media (min-width:820px){ .sc-rows{display:none !important;} }
@@ -95,7 +95,7 @@
 
   <dc-import name="Usp" variant="pas" tone="tmavy" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,48px"></dc-import>
 
-  <dc-import name="Hlavicka" active="Náhradní díly" currency="{{ currency }}" on-currency-change="{{ onCurrency }}" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:30–16:30" contact-open="{{ true }}" menu-tree="{{ menuTree }}" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" mega-tab="Náhradní díly" mega-variant="{{ megaVer }}" mega-groups="{{ megaGroups }}" mega-rail="{{ megaRail }}" mega-columns="{{ megaColumns }}" mega-max-items="{{ megaMaxItems }}" hint-size="100%,150px"></dc-import>
+  <dc-import name="Hlavicka" active="Náhradní díly" currency="{{ currency }}" on-currency-change="{{ onCurrency }}" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:30–16:30" contact-open="{{ true }}" menu-tree="{{ menuTree }}" search-value="{{ headerSearch }}" on-search-change="{{ onHeaderSearch }}" compare-count="{{ cmpCountNum }}" on-compare="{{ openCompare }}" mega-tab="Náhradní díly" mega-groups="{{ megaGroups }}" mega-rail="{{ megaRail }}" mega-columns="{{ megaColumns }}" mega-max-items="{{ megaMaxItems }}" hint-size="100%,150px"></dc-import>
 
   <!-- CONTENT -->
   <main class="vp-in" style="padding-top:14px;padding-bottom:40px;">
@@ -114,19 +114,8 @@
     <p style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;text-wrap:pretty;">Náhradní díly na přívěsy všech značek — KNOTT, AL-KO, BPW, Jokon i Winterhoff. Tisíce dílů skladem s expedicí do 24 hodin.<sc-if value="{{ descOpen }}" hint-placeholder-val=""><span> Vybírejte podle výrobce nápravy, průměru brzdy nebo čísla dílu. Nabízíme kompletní sortiment od nájezdových brzd a brzdových čelistí přes ložiska, náboje a spojovací zařízení až po osvětlení, blatníky, kola a plachty. Nevíte si rady? Zkušení obchodníci vám poradí s výběrem správného dílu po telefonu i e-mailu.</span></sc-if><span> </span><button type="button" class="a11y-i hvxin" aria-expanded="{{ descExpanded }}" onClick="{{ toggleDesc }}" style="display:inline;font-size:16px;font-weight:700;color:#1E5AA8;cursor:pointer;white-space:nowrap;transition:color .12s;">{{ descLabel }}<span aria-hidden="true" style="display:inline-flex;vertical-align:-4px;margin-left:2px;"><sc-if value="{{ descClosed }}" hint-placeholder-val="{{ true }}"><dc-import name="Ikony" icon-name="chevron-down" size="18" hint-size="18px,18px"></dc-import></sc-if><sc-if value="{{ descOpen }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="chevron-up" size="18" hint-size="18px,18px"></dc-import></sc-if></span></button></p>
     </sc-if>
       </div>
-      <sc-if value="{{ showTopCol }}" hint-placeholder-val="{{ true }}">
-        <div class="hd-sep" aria-hidden="true" style="flex:none;align-self:stretch;width:1px;background:#F2F4F7;"></div>
-        <div class="pg-topcol" style="flex:1 1 320px;min-width:260px;">
-          <dc-import name="VypisKategorii" top-only="{{ true }}" top-searched="{{ topSearchedData }}" show-guide-chip="{{ showGuideChip }}" debug="{{ debug }}" hint-size="100%,80px"></dc-import>
-        </div>
-      </sc-if>
     </div>
-    <sc-if value="{{ showTopRowXs }}" hint-placeholder-val="{{ true }}">
-      <div class="pg-toprow-xs" style="margin-top:22px;margin-bottom:22px;">
-        <dc-import name="VypisKategorii" top-only="{{ true }}" top-searched="{{ topSearchedData }}" show-guide-chip="{{ showGuideChip }}" debug="{{ debug }}" hint-size="100%,40px"></dc-import>
-      </div>
-    </sc-if>
-    <sc-if value="{{ showTopRow }}" hint-placeholder-val="">
+    <sc-if value="{{ showTopRow }}" hint-placeholder-val="{{ true }}">
       <div style="margin-top:22px;margin-bottom:22px;">
         <dc-import name="VypisKategorii" top-only="{{ true }}" top-searched="{{ topSearchedData }}" show-guide-chip="{{ showGuideChip }}" debug="{{ debug }}" hint-size="100%,40px"></dc-import>
       </div>
@@ -194,8 +183,10 @@
          Nepřidávat sem media query ani matchMedia, která by sticky podmiňovala.
          Logika vytlačování hlavičky je v componentDidMount → this._onScroll. -->
     <div class="p-sentinel" style="height:0;"></div>
-    <div class="vp-bleed p-sticky" style="position:sticky;top:0;z-index:60;background:#F7F9FB;margin-top:14px;padding-top:14px;padding-bottom:14px;border-bottom:1px solid #F2F4F7;">
+    <div class="p-sticky" style="position:var(--vp-bar-pos,sticky);top:var(--vp-stick-top,0px);z-index:60;background:#F7F9FB;margin-top:14px;padding-top:14px;padding-bottom:14px;border-bottom:1px solid #F2F4F7;transition:top .3s ease;width:var(--vp-bleed-w,100%);margin-left:var(--vp-bleed-ml,0px);box-shadow:var(--vp-bar-shadow,none);">
+      <div class="vp-in" style="display:flex;">
       <dc-import name="FiltracniLista" filter-count="{{ filterCount }}" active-filters="{{ activeFilters }}" on-remove-filter="{{ onRemoveFilter }}" only-stock="{{ onlyStock }}" sort="{{ sortKey }}" sort-options="{{ sortOptions }}" on-open-filter="{{ openFilter }}" on-toggle-stock="{{ toggleStock }}" on-sort-change="{{ onSortChange }}" style="width:100%;" hint-size="100%,44px"></dc-import>
+      </div>
     </div>
 
     <!-- ===== PRODUKTY ===== -->
@@ -258,7 +249,7 @@
 
   <dc-import name="FiltrDrawer" open="{{ filterOpen }}" currency="{{ currency }}" price-from="{{ priceFrom }}" price-to="{{ priceTo }}" on-price-change="{{ onPriceChange }}" flags="{{ filterFlags }}" on-toggle-flag="{{ onToggleFlag }}" only-stock="{{ onlyStock }}" on-toggle-stock="{{ toggleStock }}" groups="{{ filterGroups }}" result-count="{{ resultCount }}" on-toggle-option="{{ onFilterOption }}" on-clear="{{ clearFilters }}" on-close="{{ closeFilter }}" debug="{{ debug }}" hint-size="0px,0px"></dc-import>
 
-  <dc-import name="PrezentacniLista" label="{{ plLabel }}" variants="{{ plVariants }}" active="{{ plActive }}" on-select="{{ plSelect }}" label2="{{ pl2Label }}" variants2="{{ pl2Variants }}" active2="{{ pl2Active }}" on-select2="{{ pl2Select }}" label3="{{ pl3Label }}" variants3="{{ pl3Variants }}" active3="{{ pl3Active }}" on-select3="{{ pl3Select }}" debug-on="{{ plDebugOn }}" on-toggle-debug="{{ plToggleDebug }}" hint-size="0px,0px"></dc-import>
+  <dc-import name="PrezentacniLista" label="{{ plLabel }}" variants="{{ plVariants }}" active="{{ plActive }}" on-select="{{ plSelect }}" label2="{{ plLabel2 }}" variants2="{{ plVariants2 }}" active2="{{ plActive2 }}" on-select2="{{ plSelect2 }}" label3="{{ plLabel3 }}" variants3="{{ plVariants3 }}" active3="{{ plActive3 }}" on-select3="{{ plSelect3 }}" label4="{{ plLabel4 }}" variants4="{{ plVariants4 }}" active4="{{ plActive4 }}" on-select4="{{ plSelect4 }}" debug-on="{{ plDebugOn }}" on-toggle-debug="{{ plToggleDebug }}" hint-size="0px,0px"></dc-import>
 
   <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </div>
@@ -281,7 +272,8 @@ class Component extends DCLogic {
     this.state = {
       menuOpen:false, descOpen:false, filterOpen:false, sortOpen:false,
       priceFrom:0, priceTo:8000, flags:null,
-      hubVer:'v1', hdrVer: (function(){ try { return localStorage.getItem('vapp-header-variant') === 'H2' ? 'H2' : 'H1'; } catch(e){ return 'H1'; } })(), megaVer: (function(){ try { return localStorage.getItem('vapp-mega-variant') === 'M2' ? 'M2' : 'M1'; } catch(e){ return 'M1'; } })(), hubOrder: props.hubOrder === 'excel' ? 'excel' : 'prodeje', view:'groups', path:[], leafPath:null, subcat:null, onlyStock: props.defaultOnlyStock ?? false, sort: props.defaultSort ?? 'pop',
+      hubVer:'v1',
+      stickyMode:'S2', photoVer:'V1', xsCols:'C1',
       cart:{}, brands:{}, params:{}, accOpen:{ 'Výrobce':true }, compare:{}, qty:{}, pageFrom:1, pageTo:1, catLayout:null, debugOverride:null, hoverCard:null,
       searchQ:'', searchFocus:false, loading:false, macro:null, brandFocus:null, saleOnly:false,
       currency:'CZK',
@@ -674,24 +666,98 @@ class Component extends DCLogic {
   componentDidMount(){
     // Sticky lišta + vytlačování hlavičky: BEZ šířkové podmínky.
     // Platí na všech pásmech (M, S, XS, XXS i desktop) — rozhodnuto, nevypínat.
+    // S1: filtrační lišta vytlačí celou hlavičku.
+    // S2: zůstane řádek s logem a vyhledáváním, lišta nahradí jen navigační řádek
+    //     (nav se skryje visibility:hidden — tok stránky se nemění, lišta prosvítá).
     this._onScroll = () => {
+      const R = document.documentElement.style;
       const hdr = document.querySelector('.hd-root');
       const sen = document.querySelector('.p-sentinel');
-      if (!hdr || !sen) return;
-      const hdrH = hdr.offsetHeight;
-      const pinned = hdrH;                 // hlavička zůstává přilepená celá
       const bar = document.querySelector('.p-sticky');
+      // všechno dynamické jde přes CSS proměnné na :root — inline styly a class na prvcích
+      // přepíše React při každém překreslení, proměnné na documentElement přežijí.
+      // Full-bleed se nastavuje ještě před kontrolou hlavičky — ta se mountuje později
+      // a lišta by po načtení zůstala odsazená až do prvního scrollu.
+      if (bar && bar.parentElement) {
+        const pr = bar.parentElement.getBoundingClientRect();
+        const pl = parseFloat(getComputedStyle(bar.parentElement).paddingLeft) || 0;
+        // bez šířky scrollbaru, kterou by 100vw navíc bralo
+        R.setProperty('--vp-bleed-w', document.documentElement.clientWidth + 'px');
+        R.setProperty('--vp-bleed-ml', (-(pr.left + pl)) + 'px');
+      }
+      if (!hdr || !sen) return;
+      const nav = hdr.querySelector('nav.hd-dt');
+      const hrect = hdr.getBoundingClientRect();
+      const navH = (nav && nav.offsetParent) ? nav.getBoundingClientRect().height : 0;
+      // zaokrouhlení výšek by nechalo prosvítat vlasovou mezeru — lišta naléhá o 1 px výš
+      const hdrH = Math.floor(hrect.height);
+      const fullTop = Math.max(0, hdrH - 1);
       const senTop = sen.getBoundingClientRect().top;
-      if (bar) { const bt = bar.getBoundingClientRect().top; if (bt > 1) this._gap = bt - senTop; }
+      const short = Math.max(0, hdrH - Math.round(navH) - 1);   // hlavička bez navigace
+      // odstup lišty od sentinelu = její margin-top; z rectů ani offsetTop se počítat nesmí —
+      // přilepená nebo animovaná sticky lišta vrací posunutou hodnotu a přepínání osciluje
+      if (bar) this._gap = parseFloat(getComputedStyle(bar).marginTop) || 0;
+      const y = window.pageYOffset;
+      const dy = y - (this._lastY == null ? y : this._lastY);
+      this._lastY = y;
+      const setNav = (off)=>{
+        R.setProperty('--vp-nav-op', off ? '0' : '1');
+        R.setProperty('--vp-nav-vis', off ? 'hidden' : 'visible');
+        R.setProperty('--vp-nav-delay', off ? '.3s' : '0s');
+        R.setProperty('--vp-nav-pe', off ? 'none' : 'auto');
+        R.setProperty('--vp-hdr-pe', off ? 'none' : 'auto');
+      };
+      const mode = this.state.stickyMode === 'S3' ? 'S3' : (this.state.stickyMode === 'S1' ? 'S1' : 'S2');
+      const s2 = mode === 'S3';
+      R.setProperty('--vp-bar-pos', mode === 'S1' ? 'static' : 'sticky');
+      if (mode === 'S1') {
+        // nejjednodušší varianta: žádné sticky — filtrace odscrolluje pod hlavičku
+        setNav(false);
+        R.setProperty('--vp-stick-top', '0px');
+        R.setProperty('--vp-hdr-push', '0px');
+        R.setProperty('--vp-bar-shadow', 'none');
+        R.setProperty('--vp-hdr-shadow', '0 2px 8px rgba(20,47,86,.06)');
+        this._push = 0; this._navOff = false;
+        return;
+      }
+      let stickTop = 0, off = false;
+      if (s2) {
+        // jakmile lišta dojede k hlavičce, nahradí navigaci; pohyb nahoru ji hned vrátí (300 ms ease)
+        const s0 = senTop + (this._gap || 0);
+        const pinned = navH > 0 && s0 <= short + 0.5;
+        let want = this._navOff == null ? pinned : !!this._navOff;
+        if (dy > 0) want = true; else if (dy < -2) want = false;
+        off = pinned && want;
+        this._navOff = off;
+        stickTop = off ? short : fullTop;
+      } else {
+        this._navOff = false;
+      }
+      setNav(off);
+      R.setProperty('--vp-stick-top', stickTop + 'px');
       const s = senTop + (this._gap || 0);
-      let push = pinned - s;
+      this._stickTop = stickTop;
+      // stín (shadow.sticky) nese vždy jen nejspodnější přilepená vrstva
+      const stuck = s <= stickTop + 0.5;
+      R.setProperty('--vp-bar-shadow', stuck ? '0 2px 8px rgba(20,47,86,.06)' : 'none');
+      R.setProperty('--vp-hdr-shadow', (stuck && (s2 ? off : true)) ? 'none' : '0 2px 8px rgba(20,47,86,.06)');
+      if (s2) { this._push = 0; R.setProperty('--vp-hdr-push', '0px'); return; }
+      let push = hdrH - s;                 // S1: hlavičku vytlačí celá lišta
       if (push < 0) push = 0;
       if (push > hdrH) push = hdrH;
       this._push = push;
-      hdr.style.transform = push ? 'translateY(' + (-push) + 'px)' : '';
+      R.setProperty('--vp-hdr-push', (-push) + 'px');
     };
     window.addEventListener('scroll', this._onScroll, { passive:true });
+    this.applyPhotoRatio(this.state.photoVer);
+    this.applyXsCols(this.state.xsCols);
+    this._onResizeBar = ()=>this._onScroll();
+    window.addEventListener('resize', this._onResizeBar);
     this._onScroll();
+    // hlavička i lišta se mountují postupně — doměříme po dokreslení, jinak zůstane
+    // lišta po načtení odsazená (full-bleed) až do prvního scrollu
+    this._settleT = [0, 120, 400, 1000].map(ms=>setTimeout(()=>this._onScroll && this._onScroll(), ms));
+    requestAnimationFrame(()=>this._onScroll && this._onScroll());
     // dávka výpisu podle pásma: XXL (5 sloupců) 20, jeden sloupec (XS a XXS) 8, jinak 16
     this._mqXXL = window.matchMedia('(min-width:1560px)');
     this._mqOne = window.matchMedia('(max-width:549px)');
@@ -711,6 +777,14 @@ class Component extends DCLogic {
     this.syncJsonLd();
   }
 
+  // poměr stran produktové fotky — proměnná na :root, kterou čte ProduktovaKarta
+  PHOTO_AR = { V1:'16/10', V2:'4/3', V3:'1/1' };
+  applyPhotoRatio(v){ try{ document.documentElement.style.setProperty('--vp-photo-ar', this.PHOTO_AR[v] || this.PHOTO_AR.V1); }catch(e){} }
+
+  // počet sloupců výpisu v pásmech XS a XXS — jen k porovnání, default 1
+  XS_COLS = { C1:'1', C2:'2' };
+  applyXsCols(v){ try{ document.documentElement.style.setProperty('--vp-xs-cols', this.XS_COLS[v] || '1'); }catch(e){} }
+
   link(fn){ return (e)=>{ if(e&&e.preventDefault) e.preventDefault(); fn(); }; }
 
   slug(x){ return String(x).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''); }
@@ -729,7 +803,7 @@ class Component extends DCLogic {
       const grid = document.querySelector('.p-grid');
       if(!grid){ window.scrollTo(0,0); return; }
       const head = document.querySelector('.p-sticky');
-      const off = head ? head.getBoundingClientRect().height : 0;
+      const off = head ? head.getBoundingClientRect().height + (this._stickTop || 0) : 0;
       const y = grid.getBoundingClientRect().top + window.pageYOffset - off - 12;
       window.scrollTo(0, Math.max(0, y));
     }catch(e){ try{ window.scrollTo(0,0); }catch(e2){} }
@@ -779,6 +853,9 @@ class Component extends DCLogic {
 
   componentWillUnmount(){
     window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onResizeBar);
+    (this._settleT || []).forEach(t=>clearTimeout(t));
+    try{ ['--vp-nav-op','--vp-nav-vis','--vp-nav-delay','--vp-nav-pe','--vp-hdr-pe','--vp-hdr-push','--vp-hdr-shadow','--vp-bar-shadow','--vp-stick-top','--vp-bar-pos','--vp-bleed-w','--vp-bleed-ml'].forEach(k=>document.documentElement.style.removeProperty(k)); }catch(e){}
     if (this._onXXL){ this._mqXXL.removeEventListener('change', this._onXXL); this._mqOne.removeEventListener('change', this._onXXL); this._mqM.removeEventListener('change', this._onXXL); }
     if (this._onHash){ window.removeEventListener('hashchange', this._onHash); window.removeEventListener('popstate', this._onHash); }
     const hdr = document.querySelector('.hd-root'); if (hdr) hdr.style.transform = '';
@@ -1053,9 +1130,8 @@ class Component extends DCLogic {
       pageCountText: activeHub ? (macroSubcats.reduce((a,x)=>a+x.count,0).toLocaleString('cs-CZ')+' produktů') : (inCat ? (resultCount.toLocaleString('cs-CZ')+' produktů') : '2 418 produktů'),
       leafDesc: activeHub ? (activeHub.name + ' — ' + (activeHub.type === 'sdruzovaci' ? 'sdružovací kategorie' : 'samostatná kategorie') + ' nad ' + activeHub.items.length + ' skupinami dílů pro přívěsy všech značek. ' + activeHub.count.toLocaleString('cs-CZ') + ' položek skladem i na dotaz, expedice do 24 hodin. Vyberte si přesnější zařazení níže.') : inCat ? (curName+' — '+(path.length ? ('podkategorie '+(path.length>1?path[path.length-2]:ag.name)) : 'kategorie náhradních dílů')+' pro přívěsy všech značek. '+resultCount.toLocaleString('cs-CZ')+' položek skladem i na dotaz, expedice do 24 hodin. '+(hasKids?'Vyberte si přesnější zařazení níže, nebo procházejte celý výpis.':'Nevíte si rady s výběrem? Zavolejte nám.')) : '',
       crumbItems, onCrumbNav,
-      showTopCol: topChips.length > 0 && s.hdrVer !== 'H2',
-      showTopRow: topChips.length > 0 && s.hdrVer === 'H2',
-      showTopRowXs: topChips.length > 0 && s.hdrVer !== 'H2',
+      // nadpis a popis v jednom sloupci, Nejhledanější pod popisem — finální podoba
+      showTopRow: topChips.length > 0,
       topSearchedData: topChips, showGuideChip: guideChip,
       currency: s.currency || 'CZK', onCurrency: (code)=>this.setState({ currency: code }),
       backFromLeaf: this.link(()=>{ if(path.length>0) this.go({ path: path.slice(0,-1), leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, this.urlFor(ag.key, path.slice(0,-1))); else this.go({ view:'groups', path:[], leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, '#/nahradni-dily/'); }),
@@ -1096,19 +1172,22 @@ class Component extends DCLogic {
       brandCategories: [],
       onOpenBrand: (b)=>openBrand(b),
       debug: effDebug,
-      megaVer: s.megaVer === 'M2' ? 'M2' : 'M1',
-      pl2Label: 'Megamenu:',
-      pl2Active: s.megaVer === 'M2' ? 'M2' : 'M1',
-      pl2Variants: [{ id:'M1', label:'M1 · kategorie' }, { id:'M2', label:'M2 · sloupce' }],
-      pl2Select: (id)=>{ const v = id === 'M2' ? 'M2' : 'M1'; try { localStorage.setItem('vapp-mega-variant', v); } catch(e){} this.setState({ megaVer: v }); },
-      pl3Label: 'Nadpis:',
-      pl3Active: s.hdrVer === 'H2' ? 'H2' : 'H1',
-      pl3Variants: [{ id:'H1', label:'H1 · dva sloupce' }, { id:'H2', label:'H2 · jeden sloupec' }],
-      pl3Select: (id)=>{ const v = id === 'H2' ? 'H2' : 'H1'; try { localStorage.setItem('vapp-header-variant', v); } catch(e){} this.setState({ hdrVer: v }); },
       plLabel: 'Struktura:',
       plActive: s.hubVer === 'v2' ? 'v2' : 'v1',
       plVariants: [{ id:'v1', label:'V1 · 8 kategorií' }, { id:'v2', label:'V2 · 6 kategorií' }],
       plSelect: (id)=>this.go({ hubVer: id === 'v2' ? 'v2' : 'v1', macro:null, view:'groups', path:[], leafPath:null, subcat:null, brandFocus:null, saleOnly:false, pageFrom:1, pageTo:1 }, '#/nahradni-dily/'),
+      plLabel2: 'Sticky:',
+      plActive2: s.stickyMode === 'S3' ? 'S3' : (s.stickyMode === 'S1' ? 'S1' : 'S2'),
+      plVariants2: [{ id:'S1', label:'S1 · bez sticky' }, { id:'S2', label:'S2 · celá hlavička' }, { id:'S3', label:'S3 · zůstane hledání' }],
+      plSelect2: (id)=>this.setState({ stickyMode: (id === 'S3' || id === 'S1') ? id : 'S2' }, ()=>requestAnimationFrame(()=>this._onScroll && this._onScroll())),
+      plLabel3: 'Fotka:',
+      plActive3: this.PHOTO_AR[s.photoVer] ? s.photoVer : 'V1',
+      plVariants3: [{ id:'V1', label:'V1 · 16:10' }, { id:'V2', label:'V2 · 4:3' }, { id:'V3', label:'V3 · 1:1' }],
+      plSelect3: (id)=>{ const v = this.PHOTO_AR[id] ? id : 'V1'; this.applyPhotoRatio(v); this.setState({ photoVer:v }); },
+      plLabel4: 'XS sloupce:',
+      plActive4: this.XS_COLS[s.xsCols] ? s.xsCols : 'C1',
+      plVariants4: [{ id:'C1', label:'1' }, { id:'C2', label:'2' }],
+      plSelect4: (id)=>{ const v = this.XS_COLS[id] ? id : 'C1'; this.applyXsCols(v); this.setState({ xsCols:v }); },
       plDebugOn: effDebug,
       plToggleDebug: ()=>this.setState({ debugOverride: !effDebug }),
       headerVariant: s.headerVariant,

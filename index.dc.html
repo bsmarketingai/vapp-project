@@ -38,10 +38,10 @@
 
   <dc-import name="Usp" variant="pas" tone="tmavy" items="{{ uspPas }}" debug="{{ debug }}" hint-size="100%,48px"></dc-import>
 
-  <dc-import name="Hlavicka" active="" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
+  <dc-import name="Hlavicka" active="" contact-open="{{ contactOpen }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
 
   <main>
-    <dc-import name="HeroHomepage" debug="{{ debug }}" hint-size="100%,420px"></dc-import>
+    <dc-import name="HeroHomepage" variant="{{ heroVer }}" debug="{{ debug }}" hint-size="100%,420px"></dc-import>
 
     <section aria-labelledby="hp-h1" class="hp-sec" style="padding-top:64px;padding-bottom:56px;">
       <div class="vp-in" style="display:flex;flex-direction:column;gap:20px;">
@@ -90,7 +90,7 @@
 
     <section aria-label="Poradenství" style="padding-bottom:40px;">
       <div class="vp-in">
-        <dc-import name="PoradenskyBlok" variant="standard" debug="{{ debug }}" hint-size="100%,80px"></dc-import>
+        <dc-import name="PoradenskyBlok" open="{{ contactOpen }}" variant="standard" debug="{{ debug }}" hint-size="100%,80px"></dc-import>
       </div>
     </section>
 
@@ -102,8 +102,10 @@
     </section>
   </main>
 
-  <dc-import name="Paticka" bare="true" debug="{{ debug }}" hint-size="100%,520px"></dc-import>
+  <dc-import name="Paticka" open="{{ contactOpen }}" bare="true" debug="{{ debug }}" hint-size="100%,520px"></dc-import>
 </div>
+<dc-import name="PrezentacniLista" label="Hero:" variants="{{ heroVariants }}" active="{{ heroVer }}" on-select="{{ onHeroVer }}" label2="Ot. doba:" variants2="{{ openVariants }}" active2="{{ openState }}" on-select2="{{ onOpenState }}" debug-on="{{ debugOn }}" on-toggle-debug="{{ onToggleDebug }}" hint-size="320px,56px"></dc-import>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 class Component extends DCLogic {
@@ -175,8 +177,17 @@ class Component extends DCLogic {
     if (c.key === 'poradna') return 'poradna.dc.html';
     return '#/' + c.key + '/' + this.slug(s) + '/';
   }
+  state = Object.assign({}, this.state, { heroVer: (typeof localStorage !== 'undefined' && localStorage.getItem('vapp-hero-variant')) || 'V1', debugOverride: null });
+  setHeroVer(id){
+    const v = id === 'v2' || id === 'V2' ? 'V2' : 'V1';
+    try{ localStorage.setItem('vapp-hero-variant', v); }catch(e){}
+    this.setState({ heroVer: v });
+  }
   renderVals(){
     const P = this.props;
+    const heroVer = this.state.heroVer === 'V2' ? 'V2' : 'V1';
+    const contactOpen = this.state.contactOpen !== false;
+    const debugOn = this.state.debugOverride === null ? (P.debug ?? true) : this.state.debugOverride;
     // rozcestník nese jen produktové sekce; servis, půjčovna, poradna a akce jsou skryté (data zůstávají)
     const HIDDEN = ['servis','pujcovna','poradna','akce'];
     const categories = this.CATS.filter(c=>!HIDDEN.includes(c.key)).map(c=>({
@@ -194,7 +205,16 @@ class Component extends DCLogic {
         { icon:'truck-delivery', title:'Doprava', text:'Doprava zdarma při nákupu nad 5 000 Kč' },
         { icon:'map-pin', title:'Pobočky', text:'Osobní odběr v Popovičkách' }
       ]),
-      debug: P.debug ?? true
+      contactOpen,
+      openState: contactOpen ? 'on' : 'off',
+      openVariants: [{ id:'on', label:'On' }, { id:'off', label:'Off' }],
+      onOpenState: (id)=>this.setState({ contactOpen: id === 'on' }),
+      heroVer,
+      heroVariants: [{ id:'V1', label:'V1' }, { id:'V2', label:'V2' }],
+      onHeroVer: (id)=>this.setHeroVer(id),
+      debugOn,
+      onToggleDebug: ()=>this.setState({ debugOverride: !debugOn }),
+      debug: debugOn
     };
   }
 }
