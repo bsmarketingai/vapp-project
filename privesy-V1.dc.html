@@ -234,7 +234,7 @@
 
   <dc-import name="FiltrDrawer" open="{{ filterOpen }}" currency="{{ currency }}" price-from="{{ priceFrom }}" price-to="{{ priceTo }}" on-price-change="{{ onPriceChange }}" flags="{{ filterFlags }}" on-toggle-flag="{{ onToggleFlag }}" only-stock="{{ onlyStock }}" on-toggle-stock="{{ toggleStock }}" groups="{{ filterGroups }}" result-count="{{ resultCount }}" on-toggle-option="{{ onFilterOption }}" on-clear="{{ clearFilters }}" on-close="{{ closeFilter }}" debug="{{ debug }}" hint-size="0px,0px"></dc-import>
 
-  <dc-import name="PrezentacniLista" label="Nejhledanější:" variants="{{ nejVariants }}" active="{{ nejVer }}" on-select="{{ onNejVer }}" debug-on="{{ plDebugOn }}" on-toggle-debug="{{ plToggleDebug }}" hint-size="320px,56px"></dc-import>
+  <dc-import name="PrezentacniLista" label="Nejhledanější:" variants="{{ nejVariants }}" active="{{ nejVer }}" on-select="{{ onNejVer }}" label2="Megamenu:" variants2="{{ mmVariants }}" active2="{{ mmVer }}" on-select2="{{ onMmVer }}" debug-on="{{ plDebugOn }}" on-toggle-debug="{{ plToggleDebug }}" hint-size="320px,56px"></dc-import>
   <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </div>
 </x-dc>
@@ -852,6 +852,9 @@ class Component extends DCLogic {
       nejVariants: [{ id:'NEJ1', label:'NEJ1' }, { id:'NEJ2', label:'NEJ2' }, { id:'NEJ3', label:'NEJ3' }],
       nejVer: s.nejVer || 'NEJ1',
       onNejVer: (id)=>this.setState({ nejVer:id }),
+      mmVariants: [{ id:'M1', label:'M1' }, { id:'M2', label:'M2' }],
+      mmVer: s.mmVer || (()=>{ try{ return localStorage.getItem('vapp-mm') || 'M1'; }catch(e){ return 'M1'; } })(),
+      onMmVer: (id)=>{ try{ localStorage.setItem('vapp-mm', id); }catch(e){} window.dispatchEvent(new CustomEvent('vapp-mm', { detail:id })); this.setState({ mmVer:id }); },
       plDebugOn: effDebug, plToggleDebug: ()=>this.setState({ debugOverride: !effDebug }), showGuideChip: guideChip,
       currency: s.currency || 'CZK', onCurrency: (code)=>this.setState({ currency: code }),
       backFromLeaf: this.link(()=>{ if(path.length>0) this.go({ path: path.slice(0,-1), leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, this.urlFor(ag.key, path.slice(0,-1))); else this.go({ view:'groups', path:[], leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, '#/privesy/'); }),

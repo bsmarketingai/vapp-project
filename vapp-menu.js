@@ -322,6 +322,98 @@ window.VAPP_MEGA = {
     ]
   },
   "Přívěsy": {
+    "m2": {
+      "groups": [
+        {
+          "name": "Valníky",
+          "href": "privesy-V1.dc.html#/privesy/",
+          "image": "privesy-kat-01.png",
+          "items": [
+            {
+              "name": "Jednoosé valníky",
+              "href": "privesy-V1.dc.html#/privesy/jednoose-valniky/"
+            },
+            {
+              "name": "Dvouosé valníky",
+              "href": "privesy-V1.dc.html#/privesy/dvouose-valniky/"
+            },
+            {
+              "name": "Tříosé valníky",
+              "href": "privesy-V1.dc.html#/privesy/triose-valniky/"
+            }
+          ]
+        },
+        {
+          "name": "Přívěsy",
+          "href": "privesy-V1.dc.html#/privesy/",
+          "image": "privesy-kat-07.png",
+          "items": [
+            {
+              "name": "Sklopné přívěsy",
+              "href": "privesy-V1.dc.html#/privesy/sklopne-privesy/"
+            },
+            {
+              "name": "Skříňové přívěsy",
+              "href": "privesy-V1.dc.html#/privesy/skrinove-privesy/"
+            },
+            {
+              "name": "Chladírenské přívěsy",
+              "href": "privesy-V1.dc.html#/privesy/chladirenske-privesy/"
+            }
+          ]
+        },
+        {
+          "name": "Přepravníky",
+          "href": "privesy-V1.dc.html#/privesy/",
+          "image": "privesy-kat-06.png",
+          "items": [
+            {
+              "name": "Přepravníky automobilů",
+              "href": "privesy-V1.dc.html#/privesy/prepravniky-automobilu/"
+            },
+            {
+              "name": "Přepravníky motocyklů",
+              "href": "privesy-V1.dc.html#/privesy/prepravniky-motocyklu/"
+            },
+            {
+              "name": "Přepravníky strojů",
+              "href": "privesy-V1.dc.html#/privesy/prepravniky-stroju/"
+            },
+            {
+              "name": "Přepravníky lodí a skútrů",
+              "href": "privesy-V1.dc.html#/privesy/prepravniky-lodi-a-vodnich-skutru/"
+            },
+            {
+              "name": "Přepravníky zvířat",
+              "href": "privesy-V1.dc.html#/privesy/prepravniky-zvirat/"
+            }
+          ]
+        },
+        {
+          "name": "Značky",
+          "href": "privesy-V1.dc.html#/privesy/",
+          "image": "privesy-kat-02.png",
+          "items": [
+            {
+              "name": "Agados",
+              "href": "privesy-V1.dc.html#/privesy/vyrobce/agados/"
+            },
+            {
+              "name": "STEMA",
+              "href": "privesy-V1.dc.html#/privesy/vyrobce/stema/"
+            },
+            {
+              "name": "UNSINN",
+              "href": "privesy-V1.dc.html#/privesy/vyrobce/unsinn/"
+            },
+            {
+              "name": "VAPP",
+              "href": "privesy-V1.dc.html#/privesy/vyrobce/vapp/"
+            }
+          ]
+        }
+      ]
+    },
     "groups": [
       {
         "name": "Jednoosé valníky",

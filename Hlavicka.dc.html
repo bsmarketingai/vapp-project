@@ -289,6 +289,9 @@ class Component extends DCLogic {
     try{ const v = localStorage.getItem('vapp-pp'); if (v) this.setState({ pp: v }); }catch(e){}
     this._onPP = (e)=>this.setState({ pp: e.detail });
     window.addEventListener('vapp-pp', this._onPP);
+    try{ const v = localStorage.getItem('vapp-mm'); if (v) this.setState({ mm: v }); }catch(e){}
+    this._onMM = (e)=>this.setState({ mm: e.detail });
+    window.addEventListener('vapp-mm', this._onMM);
     this._onKey = (e)=>{ if(e.key!=='Escape') return;
       if(this.state.megaTab){ this.closeMega(0); const t=document.querySelector('.hd-tab[aria-expanded="true"]'); if(t&&t.focus) t.focus(); return; }
       if(this.state.askLang){ this.setState({ askLang:null }); return; }
@@ -314,7 +317,7 @@ class Component extends DCLogic {
     window.addEventListener('vapp-mega-ready', this._onMegaReady);
     if (!window.VAPP_MEGA) this._megaPoll = setInterval(()=>{ if(window.VAPP_MEGA){ clearInterval(this._megaPoll); this.forceUpdate(); } }, 120);
   }
-  componentWillUnmount(){ if(this._onPP) window.removeEventListener('vapp-pp', this._onPP); clearTimeout(this._langFocusT); this.lockScroll(false); this.unbindFit(); clearTimeout(this._megaT); clearInterval(this._megaPoll); if(this._onMegaReady) window.removeEventListener('vapp-mega-ready', this._onMegaReady); this.unbindFitMega(); if(this._onKey) document.removeEventListener('keydown', this._onKey, true); if(this._onMegaDoc) document.removeEventListener('click', this._onMegaDoc, true); if(this._onLangDoc) document.removeEventListener('click', this._onLangDoc, true); }
+  componentWillUnmount(){ if(this._onPP) window.removeEventListener('vapp-pp', this._onPP); if(this._onMM) window.removeEventListener('vapp-mm', this._onMM); clearTimeout(this._langFocusT); this.lockScroll(false); this.unbindFit(); clearTimeout(this._megaT); clearInterval(this._megaPoll); if(this._onMegaReady) window.removeEventListener('vapp-mega-ready', this._onMegaReady); this.unbindFitMega(); if(this._onKey) document.removeEventListener('keydown', this._onKey, true); if(this._onMegaDoc) document.removeEventListener('click', this._onMegaDoc, true); if(this._onLangDoc) document.removeEventListener('click', this._onLangDoc, true); }
   componentDidUpdate(prevProps, prevState){
     this.syncLangDialog();
 
@@ -366,10 +369,10 @@ class Component extends DCLogic {
     // záznam v datech smí být pole skupin, nebo objekt { groups, rail }
     const entry = (label)=>{
       const e = MEGA[label];
-      if (Array.isArray(e)) return { groups:e, rail:null, foot:null };
+      if (Array.isArray(e)) return { groups:e, rail:null, foot:null, m2:null };
       return (e && typeof e === 'object')
-        ? { groups: e.groups, rail: e.rail, foot: e.foot }
-        : { groups:null, rail:null, foot:null };
+        ? { groups: e.groups, rail: e.rail, foot: e.foot, m2: e.m2 }
+        : { groups:null, rail:null, foot:null, m2:null };
     };
     const groupsFor = (label)=>{
       if (label && label === ownTab && ownGroups) return ownGroups;
@@ -388,6 +391,9 @@ class Component extends DCLogic {
     const hasMega = (label)=>!!groupsFor(label);
     const megaFoot = entry(megaTabOpen).foot || {};
     const megaOpen = hasMega(megaTabOpen);
+    // megamenu M1 (mřížka skupin) / M2 (sloupce sekcí) — otevřená varianta, localStorage vapp-mm
+    const m2 = entry(megaTabOpen).m2;
+    const megaVariant = (this.state.mm === 'M2' && m2 && Array.isArray(m2.groups) && m2.groups.length) ? 'M2' : 'M1';
     const tabs = labels.map(label=>{
       const on = label === active;
       const href = TAB_HREF[label] || '#';
@@ -502,13 +508,13 @@ class Component extends DCLogic {
       onLogoClick: P.onLogoClick || (()=>{}),
       cartCount, cartTotal: P.cartTotal, compareCount, showCompare: compareCount>0,
       tabs,
-      megaOpen, megaGroups, megaRail,
+      megaOpen, megaGroups: megaVariant === 'M2' ? m2.groups : megaGroups, megaRail,
       megaAllLabel: megaFoot.allLabel || 'Všechny náhradní díly',
       megaAllHref: megaFoot.allHref || '#',
       megaCatsLabel: megaFoot.catsLabel || 'Všechny kategorie',
       megaCatsHref: megaFoot.catsHref || megaFoot.allHref || '#',
       megaTab: megaTabOpen || '',
-      megaColumns: P.megaColumns ?? 4, megaMaxItems: P.megaMaxItems ?? 6,
+      megaColumns: P.megaColumns ?? 4, megaMaxItems: P.megaMaxItems ?? 4,
       onMegaEnter: ()=>this.openMega(), onMegaLeave: ()=>this.closeMega(160),
       menuOpen: this.state.menuOpen, menuClosed: !this.state.menuOpen,
       menuExpanded: this.state.menuOpen ? 'true' : 'false',

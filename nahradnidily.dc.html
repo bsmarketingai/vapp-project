@@ -1121,7 +1121,7 @@ class Component extends DCLogic {
         .map(x=>({ name:x.label, href:x.href, tone: x.kind === 'sale' ? 'sale' : undefined, iconName: x.iconName }))
         .sort((a,b)=>(a.tone === 'sale' ? 1 : 0) - (b.tone === 'sale' ? 1 : 0)),
       megaColumns: hubs.length === 6 ? 3 : 4,
-      megaMaxItems: 6,
+      megaMaxItems: 4,
       inSubcats: inSubcatsAny,
       inLeaf: inCat || !!activeHub, notLeaf: !inCat && !activeHub,
       pageTitle: s.brandFocus ? ('Díly ' + s.brandFocus) : (s.saleOnly && !inCat ? 'Akce a slevy' : (activeHub ? activeHub.seo : (inCat ? curName : 'Náhradní díly'))),
