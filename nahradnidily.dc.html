@@ -48,8 +48,8 @@
 @media (min-width:1560px){ .p-grid{grid-template-columns:repeat(5,1fr);} }
   @media (max-width:999px){ .p-grid{grid-template-columns:repeat(3,1fr);} }
 @media (max-width:819px){ .p-grid{grid-template-columns:repeat(2,1fr);} }
-@media (min-width:420px) and (max-width:549px){ .p-grid{grid-template-columns:repeat(var(--vp-xs-cols,1),1fr);} }
-@media (max-width:419px){ .p-grid{grid-template-columns:1fr;} }
+@media (max-width:549px){ .p-grid{grid-template-columns:repeat(var(--vp-xs-cols,1),1fr);} }
+@media (max-width:319px){ .p-grid{grid-template-columns:1fr;} }
 .sk{background:#F2F4F7;border-radius:6px;}
 @media (max-width:819px){ .sc-tiles{display:none !important;} .sc-crumb:not(.sc-crumb-last){display:none !important;} }
 @media (min-width:820px){ .sc-rows{display:none !important;} }
@@ -83,9 +83,9 @@
 /* Rozcestník včetně dlaždice Akce a slevy: V1 devět, V2 sedm dlaždic.
    Počet sloupců je volený tak, aby na posledním řádku nikdy nezbyla jediná dlaždice —
    dlaždice se nikdy neroztahuje přes víc sloupců. */
-@media (min-width:1560px){ .hub-9 .vk-grid{grid-template-columns:repeat(5,1fr) !important;} } /* 5 + 4 */
-@media (min-width:1150px) and (max-width:1559px){ .hub-9 .vk-grid{grid-template-columns:repeat(3,1fr) !important;} } /* 3 + 3 + 3 */
-@media (min-width:1000px){ .hub-7 .vk-grid{grid-template-columns:repeat(4,1fr) !important;} } /* 4 + 3 */
+
+
+
 /* XS a XXS: sloupec Nejhledanější jde přes celou šířku a začíná u levého okraje */
 @media (max-width:549px){ .pg-topcol{display:none !important;} }
 @media (min-width:550px){ .pg-toprow-xs{display:none !important;} }
@@ -240,9 +240,6 @@
   
 
   </main>
-  <div class="vp-in" style="margin-top:8px;">
-    <dc-import name="Usp" variant="sloupce" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
-  </div>
   <div style="margin-top:10px;">
     <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
   </div>
@@ -273,7 +270,7 @@ class Component extends DCLogic {
       menuOpen:false, descOpen:false, filterOpen:false, sortOpen:false,
       priceFrom:0, priceTo:8000, flags:null,
       hubVer:'v1',
-      stickyMode:'S2', photoVer:'V1', xsCols:'C1',
+      stickyMode:'S2', photoVer:'V2', xsCols:'C1',
       cart:{}, brands:{}, params:{}, accOpen:{ 'Výrobce':true }, compare:{}, qty:{}, pageFrom:1, pageTo:1, catLayout:null, debugOverride:null, hoverCard:null,
       searchQ:'', searchFocus:false, loading:false, macro:null, brandFocus:null, saleOnly:false,
       currency:'CZK',
@@ -758,7 +755,7 @@ class Component extends DCLogic {
     // lišta po načtení odsazená (full-bleed) až do prvního scrollu
     this._settleT = [0, 120, 400, 1000].map(ms=>setTimeout(()=>this._onScroll && this._onScroll(), ms));
     requestAnimationFrame(()=>this._onScroll && this._onScroll());
-    // dávka výpisu podle pásma: XXL (5 sloupců) 20, jeden sloupec (XS a XXS) 8, jinak 16
+    // pásma pro velikost dávky výpisu (viz PER_PAGE)
     this._mqXXL = window.matchMedia('(min-width:1560px)');
     this._mqOne = window.matchMedia('(max-width:549px)');
     this._mqM = window.matchMedia('(min-width:820px) and (max-width:999px)');
@@ -779,7 +776,7 @@ class Component extends DCLogic {
 
   // poměr stran produktové fotky — proměnná na :root, kterou čte ProduktovaKarta
   PHOTO_AR = { V1:'16/10', V2:'4/3', V3:'1/1' };
-  applyPhotoRatio(v){ try{ document.documentElement.style.setProperty('--vp-photo-ar', this.PHOTO_AR[v] || this.PHOTO_AR.V1); }catch(e){} }
+  applyPhotoRatio(v){ try{ document.documentElement.style.setProperty('--vp-photo-ar', this.PHOTO_AR[v] || this.PHOTO_AR.V2); }catch(e){} }
 
   // počet sloupců výpisu v pásmech XS a XXS — jen k porovnání, default 1
   XS_COLS = { C1:'1', C2:'2' };
@@ -879,7 +876,9 @@ class Component extends DCLogic {
       : (s.view !== 'groups' && groupNode ? groupNode.count : 2418);
     // zobrazené okno je souvislý rozsah stránek pageFrom…pageTo; dávka = jedna celá stránka
     // dávka je vždy násobkem počtu sloupců, aby poslední řádek nebyl poloprázdný
-    const PER_PAGE = this.state.oneCol ? 8 : (this.state.wideXXL ? 20 : (this.state.threeCol ? 18 : 16));
+    // desktop 20–24 (XXL 5×4 = 20, L/XL 4×6 = 24, M 3×8 = 24), mobil (S a níž) 16
+    const mobileBand = typeof window !== 'undefined' && window.matchMedia('(max-width:819px)').matches;
+    const PER_PAGE = (this.state.oneCol || mobileBand) ? 16 : (this.state.wideXXL ? 20 : 24);
     const pgCount  = Math.max(1, Math.ceil(filteredAll.length / PER_PAGE));
     const pgTo     = Math.min(Math.max(1, s.pageTo || 1), pgCount);
     const pgFrom   = Math.min(Math.max(1, s.pageFrom || 1), pgTo);
@@ -1049,7 +1048,6 @@ class Component extends DCLogic {
       if (guideChip) topChips = [GUIDE].concat(topChips.slice(0,3));
     } else {
       topChips = [
-        { kind:'sale', label:'Akce a slevy', iconName:'discount', href:'#/nahradni-dily/akce/' },
         { kind:'secondary', label:'Plynové vzpěry', href:this.urlFor('vzpery',[]) },
         { kind:'secondary', label:'Nájezdové brzdy', href:this.urlFor('napravy',[]) },
         { kind:'secondary', label:'Kabeláž a zásuvky', href:this.urlFor('elektro',['Kabely a kabeláže']) },
@@ -1181,9 +1179,9 @@ class Component extends DCLogic {
       plVariants2: [{ id:'S1', label:'S1 · bez sticky' }, { id:'S2', label:'S2 · celá hlavička' }, { id:'S3', label:'S3 · zůstane hledání' }],
       plSelect2: (id)=>this.setState({ stickyMode: (id === 'S3' || id === 'S1') ? id : 'S2' }, ()=>requestAnimationFrame(()=>this._onScroll && this._onScroll())),
       plLabel3: 'Fotka:',
-      plActive3: this.PHOTO_AR[s.photoVer] ? s.photoVer : 'V1',
+      plActive3: this.PHOTO_AR[s.photoVer] ? s.photoVer : 'V2',
       plVariants3: [{ id:'V1', label:'V1 · 16:10' }, { id:'V2', label:'V2 · 4:3' }, { id:'V3', label:'V3 · 1:1' }],
-      plSelect3: (id)=>{ const v = this.PHOTO_AR[id] ? id : 'V1'; this.applyPhotoRatio(v); this.setState({ photoVer:v }); },
+      plSelect3: (id)=>{ const v = this.PHOTO_AR[id] ? id : 'V2'; this.applyPhotoRatio(v); this.setState({ photoVer:v }); },
       plLabel4: 'XS sloupce:',
       plActive4: this.XS_COLS[s.xsCols] ? s.xsCols : 'C1',
       plVariants4: [{ id:'C1', label:'1' }, { id:'C2', label:'2' }],

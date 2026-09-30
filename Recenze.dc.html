@@ -18,18 +18,16 @@
   .rc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
   @media (max-width:999px){ .rc-grid{grid-template-columns:repeat(2,1fr);} }
   .rc-head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px;}
+  .rc-badge{transition:opacity .12s;} .rc-badge:hover{opacity:.85;} .rc-badge:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .rc-all:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   .rc-h2{font-size:28px;line-height:1.2;letter-spacing:-0.01em;}
-  @media (max-width:819px){ .rc-h2{font-size:22px;line-height:1.25;} .rc-grid{grid-template-columns:1fr;} }
+  @media (max-width:819px){ .rc-h2{font-size:26px;line-height:1.2;} .rc-grid{grid-template-columns:1fr;} }
 </style>
 </helmet>
 <section aria-labelledby="rc-title" style="width:100%;">
   <div class="rc-head">
     <h2 id="rc-title" class="rc-h2" style="margin:0;font-weight:700;color:#15181C;">{{ title }}</h2>
-    <span style="display:inline-flex;align-items:center;gap:8px;background:#FFFFFF;border-radius:999px;padding:8px 16px;">
-      <span aria-hidden="true" style="display:flex;color:#F5A623;"><dc-import name="Ikony" icon-name="star-filled" size="18" hint-size="18px,18px"></dc-import></span>
-      <span style="font-size:14px;font-weight:700;color:#15181C;">{{ scoreText }}</span>
-      <span style="font-size:13px;font-weight:400;color:#666E78;">{{ sourceText }}</span>
-    </span>
+    <a class="rc-badge" href="https://obchody.heureka.cz/" target="_blank" rel="noopener noreferrer" aria-label="Heureka: {{ scoreText }} — celková spokojenost s obchodem" style="display:inline-flex;align-items:center;gap:12px;flex:none;height:70px;padding:0 20px 0 8px;background:#FFFFFF;border-radius:999px;text-decoration:none;"><span style="display:flex;align-items:center;justify-content:center;flex:none;width:56px;height:56px;border-radius:999px;background:#fff;"><img src="./uploads/logo-verified-by-customers-gold--cs.png" alt="" width="48" height="48" style="display:block;width:48px;height:48px;"></span><span style="display:flex;flex-direction:column;gap:2px;min-width:0;"><span style="display:flex;align-items:center;gap:8px;"><span style="font-size:17px;font-weight:700;color:#15181C;">{{ scoreNum }}</span><span aria-hidden="true" style="display:inline-flex;align-items:center;gap:1px;color:#F5A623;"><dc-import name="Ikony" icon-name="star-filled" size="16" hint-size="16px,16px"></dc-import><dc-import name="Ikony" icon-name="star-filled" size="16" hint-size="16px,16px"></dc-import><dc-import name="Ikony" icon-name="star-filled" size="16" hint-size="16px,16px"></dc-import><dc-import name="Ikony" icon-name="star-filled" size="16" hint-size="16px,16px"></dc-import><dc-import name="Ikony" icon-name="star-filled" size="16" hint-size="16px,16px"></dc-import></span></span><span style="font-size:13px;font-weight:500;color:#5A626C;white-space:nowrap;">celková spokojenost s obchodem</span></span></a>
   </div>
   <ul class="rc-grid" style="list-style:none;margin:0;padding:0;">
     <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="3">
@@ -44,6 +42,9 @@
       </li>
     </sc-for>
   </ul>
+  <div style="display:flex;justify-content:flex-end;margin-top:24px;">
+    <a class="rc-all" href="{{ allHref }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:8px;background:#FFFFFF;border:1px solid #B4CEEC;font-size:14px;font-weight:700;color:#1E5AA8;text-decoration:none;transition:background 120ms ease;" style-hover="background:#EFF4FB;" style-active="transform:translateY(1px);">Všechna hodnocení<dc-import name="Ikony" icon-name="arrow-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import></a>
+  </div>
 </section>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
@@ -63,8 +64,10 @@ class Component extends DCLogic {
     return {
       title: P.title ?? 'Co říkají zákazníci',
       scoreText: P.scoreText ?? '4,8 z 5',
+      scoreNum: (P.scoreText ?? '4,8 z 5').split(' ')[0],
       sourceText: P.sourceText ?? 'Ověřeno zákazníky · Heureka',
       reviews: src,
+      allHref: P.allHref ?? 'https://obchody.heureka.cz/vapp-cz/recenze/',
       debug: P.debug ?? true
     };
   }

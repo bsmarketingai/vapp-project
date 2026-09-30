@@ -109,7 +109,7 @@
     </div>
     <sc-if value="{{ showTopRow }}" hint-placeholder-val="{{ true }}">
       <div style="margin-top:22px;margin-bottom:22px;">
-        <dc-import name="VypisKategorii" top-only="{{ true }}" top-searched="{{ topSearchedData }}" show-guide-chip="{{ showGuideChip }}" debug="{{ debug }}" hint-size="100%,40px"></dc-import>
+        <dc-import name="VypisKategorii" top-only="{{ true }}" top-searched="{{ topSearchedData }}" top-logos="{{ topLogosData }}" top-aria="{{ topAria }}" top-label="{{ topLabel }}" show-guide-chip="{{ showGuideChip }}" debug="{{ debug }}" hint-size="100%,40px"></dc-import>
       </div>
     </sc-if>
 
@@ -228,15 +228,13 @@
   
 
   </main>
-  <div class="vp-in" style="margin-top:8px;">
-    <dc-import name="Usp" variant="sloupce" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
-  </div>
   <div style="margin-top:10px;">
     <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
   </div>
 
   <dc-import name="FiltrDrawer" open="{{ filterOpen }}" currency="{{ currency }}" price-from="{{ priceFrom }}" price-to="{{ priceTo }}" on-price-change="{{ onPriceChange }}" flags="{{ filterFlags }}" on-toggle-flag="{{ onToggleFlag }}" only-stock="{{ onlyStock }}" on-toggle-stock="{{ toggleStock }}" groups="{{ filterGroups }}" result-count="{{ resultCount }}" on-toggle-option="{{ onFilterOption }}" on-clear="{{ clearFilters }}" on-close="{{ closeFilter }}" debug="{{ debug }}" hint-size="0px,0px"></dc-import>
 
+  <dc-import name="PrezentacniLista" label="Nejhledanější:" variants="{{ nejVariants }}" active="{{ nejVer }}" on-select="{{ onNejVer }}" debug-on="{{ plDebugOn }}" on-toggle-debug="{{ plToggleDebug }}" hint-size="320px,56px"></dc-import>
   <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </div>
 </x-dc>
@@ -260,7 +258,7 @@ class Component extends DCLogic {
       priceFrom:0, priceTo:300000, flags:null,
       view:'groups', path:[], leafPath:null, subcat:null, onlyStock: props.defaultOnlyStock ?? false, sort: props.defaultSort ?? 'pop',
       cart:{}, brands:{}, params:{}, accOpen:{ 'Výrobce':true }, compare:{}, qty:{}, pageFrom:1, pageTo:1, catLayout:null, debugOverride:null, hoverCard:null,
-      searchQ:'', searchFocus:false, loading:false, macro:null, brandFocus:null, saleOnly:false,
+      searchQ:'', searchFocus:false, loading:false, macro:null, brandFocus:null, saleOnly:false, nejVer:'NEJ1',
       currency:'CZK',
       headerVariant:'kontakt'
     };
@@ -426,6 +424,8 @@ class Component extends DCLogic {
   ];
 
   BRANDS = [['VAPP',96],['Agados',54],['STEMA',28],['UNSINN',22]];
+  // loga značek pro Nejhledanější NEJ3 — chybějící logo nahradí název značky
+  BRAND_LOGOS = { 'VAPP':'./vapp-logo.svg', 'Agados':'./logo-agados.png', 'STEMA':'./logo-stema.png', 'UNSINN':'./logo-unsinn.png' };
 
   priceNum(p){ return parseInt(p.gross.replace(/\s/g,''),10); }
 
@@ -466,7 +466,7 @@ class Component extends DCLogic {
     };
     window.addEventListener('scroll', this._onScroll, { passive:true });
     this._onScroll();
-    // dávka výpisu podle pásma: XXL (5 sloupců) 20, jeden sloupec (XS a XXS) 8, jinak 16
+    // pásma pro velikost dávky výpisu (viz PER_PAGE)
     this._mqXXL = window.matchMedia('(min-width:1560px)');
     this._mqOne = window.matchMedia('(max-width:549px)');
     this._mqM = window.matchMedia('(min-width:820px) and (max-width:999px)');
@@ -575,7 +575,9 @@ class Component extends DCLogic {
       : (s.view !== 'groups' && groupNode ? groupNode.count : 212);
     // zobrazené okno je souvislý rozsah stránek pageFrom…pageTo; dávka = jedna celá stránka
     // dávka je vždy násobkem počtu sloupců, aby poslední řádek nebyl poloprázdný
-    const PER_PAGE = this.state.oneCol ? 8 : (this.state.wideXXL ? 20 : (this.state.threeCol ? 18 : 16));
+    // desktop 20–24 (XXL 5×4 = 20, L/XL 4×6 = 24, M 3×8 = 24), mobil (S a níž) 16
+    const mobileBand = typeof window !== 'undefined' && window.matchMedia('(max-width:819px)').matches;
+    const PER_PAGE = (this.state.oneCol || mobileBand) ? 16 : (this.state.wideXXL ? 20 : 24);
     const pgCount  = Math.max(1, Math.ceil(filteredAll.length / PER_PAGE));
     const pgTo     = Math.min(Math.max(1, s.pageTo || 1), pgCount);
     const pgFrom   = Math.min(Math.max(1, s.pageFrom || 1), pgTo);
@@ -634,10 +636,10 @@ class Component extends DCLogic {
       name: saleMacro.name, icon:'ikona-vyprodej.svg', sale:true, href:'#/privesy/'+this.slug(saleMacro.name)+'/',
       count: this.PRODUCTS.filter(pr=>pr.sale).length, subs: []
     };
-    const flatCategories = [saleTile].concat(this.GROUPS.map(g=>({
+    const flatCategories = this.GROUPS.map(g=>({
       name:g.name, count:g.count, image:g.image, icon:g.icon, href:this.urlFor(g.key,[]),
       subs: (g.children||[]).slice(0,4).map(c=>({ name:c.name, count:c.count, href:this.urlFor(g.key,[c.name]) }))
-    })));
+    })).concat([saleTile]);
     // Akce a slevy se kategorizují podle toho, co je v katalogu ve slevě
     const saleGroups = this.GROUPS
       .map(g=>({ g, n: this.PRODUCTS.filter(pr=>pr.g===g.key && pr.sale).length }))
@@ -650,7 +652,8 @@ class Component extends DCLogic {
       if (gs.length === 1 && (gs[0].children||[]).length) return gs[0].children.map(c=>({ name:c.name, count:c.count }));
       return gs.map(g=>({ name:g.name, count:g.count }));
     };
-    const macroOrder = [saleMacro].concat(this.MACROS.filter(m=>!m.sale));
+    // Výprodej je vždy poslední dlaždice (i v mobilním menu stojí na konci)
+    const macroOrder = this.MACROS.filter(m=>!m.sale).concat(saleMacro ? [saleMacro] : []);
     const macroCategories = macroOrder.map(m=>{
       const kids = macroItems(m);
       return { name:m.name, image:m.image, icon:m.icon, sale: !!m.sale, count: kids.reduce((a,k)=>a+k.count,0), href:'#/privesy/'+this.slug(m.name)+'/',
@@ -766,7 +769,10 @@ class Component extends DCLogic {
         { kind:'secondary', label:'Sklopné přívěsy', href:this.urlFor('sklopne',[]) },
         { kind:'secondary', label:'Přepravníky automobilů', href:this.urlFor('automobily',[]) },
       ];
+      // NEJ2 = značky jako chipy, NEJ3 = loga značek (otevřená varianta, přepínač v prezentační liště)
+      if (s.nejVer === 'NEJ2') topChips = this.BRANDS.map(b=>({ kind:'secondary', label:b[0], href:'#/privesy/vyrobce/'+this.slug(b[0])+'/' }));
     }
+    const nejLogos = (!ag && s.nejVer === 'NEJ3') ? this.BRANDS.map(b=>({ name:b[0], logo: this.BRAND_LOGOS[b[0]] || '', href:'#/privesy/vyrobce/'+this.slug(b[0])+'/' })) : null;
     this._bc = topRaw.map(c=>({ name:c.name, url:c.url }));
     if(typeof queueMicrotask==='function') queueMicrotask(()=>this.syncJsonLd()); else setTimeout(()=>this.syncJsonLd(),0);
     // vykresluje komponenta Breadcrumb: data bez funkcí, navigace skalárním callbackem
@@ -842,7 +848,11 @@ class Component extends DCLogic {
       pageCountText: activeMacro ? (macroSubcats.reduce((a,x)=>a+x.count,0).toLocaleString('cs-CZ')+' modelů') : (inCat ? (resultCount.toLocaleString('cs-CZ')+' modelů') : '212 modelů'),
       leafDesc: inCat ? (curName+' — '+(path.length ? ('podkategorie '+(path.length>1?path[path.length-2]:ag.name)) : 'kategorie přívěsů')+' od VAPP, Agados, STEMA a UNSINN. '+resultCount.toLocaleString('cs-CZ')+' modelů, dostupnost a termín dodání potvrdíme telefonicky. '+(hasKids?'Vyberte si přesnější zařazení níže, nebo procházejte celý výpis.':'Nevíte si rady s výběrem? Zavolejte nám.')) : '',
       crumbItems, onCrumbNav,
-      showTopRow: topChips.length > 0, topSearchedData: topChips, showGuideChip: guideChip,
+      showTopRow: topChips.length > 0 || !!nejLogos, topSearchedData: topChips, topLogosData: nejLogos, topLabel: (!ag && s.nejVer && s.nejVer !== 'NEJ1') ? 'Značka' : 'Nejhledanější', topAria: (!ag && s.nejVer && s.nejVer !== 'NEJ1') ? 'Nejhledanější značky' : 'Nejhledanější kategorie',
+      nejVariants: [{ id:'NEJ1', label:'NEJ1' }, { id:'NEJ2', label:'NEJ2' }, { id:'NEJ3', label:'NEJ3' }],
+      nejVer: s.nejVer || 'NEJ1',
+      onNejVer: (id)=>this.setState({ nejVer:id }),
+      plDebugOn: effDebug, plToggleDebug: ()=>this.setState({ debugOverride: !effDebug }), showGuideChip: guideChip,
       currency: s.currency || 'CZK', onCurrency: (code)=>this.setState({ currency: code }),
       backFromLeaf: this.link(()=>{ if(path.length>0) this.go({ path: path.slice(0,-1), leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, this.urlFor(ag.key, path.slice(0,-1))); else this.go({ view:'groups', path:[], leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, '#/privesy/'); }),
       backFromLeafHref: ag ? (path.length>0 ? this.urlFor(ag.key, path.slice(0,-1)) : '#/privesy/') : '#/privesy/',

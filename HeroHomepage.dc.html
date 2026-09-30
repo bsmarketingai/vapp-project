@@ -27,13 +27,24 @@
   @media (max-width:819px){ .hh-lead{font-size:16px;} }
   .hh-tile{color:#15181C;text-decoration:none;}
   @media (max-width:549px){ .hh-tiles{grid-template-columns:1fr!important;} }
-  @media (max-width:819px){ .hh-slider{margin-bottom:32px;} }
+  /* mobil: ovladač v toku pod tlačítky uvnitř fotky — nepřekrývá obsah a nepřečnívá dolů */
+  /* ovladač bez podkladu, bílé šipky a tečky přímo na fotce; desktop vlevo dole na modrém přechodu, zarovnaný s obsahem */
+  .hh-ctrl{left:max(32px, calc((100% - 1560px) / 2 + 32px)) !important;transform:none !important;bottom:16px !important;background:none !important;box-shadow:none !important;padding:0 !important;}
+  .hh-ctrl>.hh-btn{color:#FFFFFF !important;}
+  .hh-ctrl>.hh-btn:hover{background:rgba(255,255,255,.16) !important;}
+  .hh-ctrl .hh-btn span{background:#B4CEEC !important;}
+  .hh-ctrl .hh-btn[aria-current="true"] span{background:#FFFFFF !important;}
+  /* mobil: v toku pod tlačítky, šipky na krajích přes celou šířku */
+  @media (max-width:819px){
+    .hh-ctrl{position:relative !important;left:auto !important;bottom:auto !important;transform:none !important;justify-content:space-between;margin:-8px 4px 0;}
+    .hh-slider{padding-bottom:4px;}
+  }
   /* mobil: místo bílé plochy text přímo na fotce, čitelnost drží tmavý přechod odspodu */
   @media (max-width:819px){
     .hh-pad{padding-top:200px;padding-bottom:24px;}
     .hh-panel{background:none !important;box-shadow:none !important;padding:0 !important;gap:8px !important;}
     .hh-panel>span{color:#FFFFFF !important;}
-    .hh-panel h2,.hh-panel p{color:#FFFFFF !important;}
+    .hh-panel .hh-h1,.hh-panel p{color:#FFFFFF !important;}
     .hh-veil{background:linear-gradient(180deg,rgba(20,47,86,0) 18%,rgba(20,47,86,.58) 52%,rgba(20,47,86,.90) 100%) !important;}
     .hh-tile{padding:14px !important;}
   }
@@ -49,7 +60,7 @@
   .hh-v2 .hh-pad{padding-top:104px;padding-bottom:104px;}
   @media (max-width:819px){ .hh-v2 .hh-pad{padding-top:200px;padding-bottom:24px;} }
   .hh-v2 .hh-panel>span{color:#FFFFFF !important;}
-  .hh-v2 .hh-panel h2,.hh-v2 .hh-panel p{color:#FFFFFF !important;}
+  .hh-v2 .hh-panel .hh-h1,.hh-v2 .hh-panel p{color:#FFFFFF !important;}
   .hh-v2 .hh-veil{background:linear-gradient(90deg,rgba(20,47,86,.90) 0%,rgba(20,47,86,.72) 34%,rgba(20,47,86,.28) 66%,rgba(20,47,86,0) 100%) !important;}
   @media (max-width:819px){
     .hh-v2 .hh-veil{background:linear-gradient(180deg,rgba(20,47,86,0) 18%,rgba(20,47,86,.58) 52%,rgba(20,47,86,.90) 100%) !important;}
@@ -69,7 +80,7 @@
         <dc-import name="Ikony" icon-name="discount" size="{{ 18 }}" hint-size="18px,18px"></dc-import>
         Akce a slevy
       </span>
-      <h2 class="hh-h1" style="margin:0;font-weight:700;color:#15181C;text-wrap:pretty;">Zlevněné přívěsy a díly od výrobce</h2>
+      <h1 class="hh-h1" style="margin:0;font-weight:700;color:#15181C;text-wrap:pretty;">Zlevněné přívěsy a díly od výrobce</h1>
       <p class="hh-lead" style="margin:0;font-weight:400;color:#5A626C;text-wrap:pretty;">Doprodej modelů, zlevněné náhradní díly a bazar přívěsů. Stejná záruka i autorizovaný servis AL-KO a KNOTT jako u zboží za plnou cenu — jen za méně.</p>
       <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;">
         <dc-import name="Tlacitko" variant="danger" size="large" label="Výprodej přívěsů" icon-trailing="arrow-right" href="{{ saleTrailersHref }}" hint-size="220px,52px"></dc-import>
@@ -82,7 +93,7 @@
         <dc-import name="Ikony" icon-name="award" size="{{ 18 }}" hint-size="18px,18px"></dc-import>
         Český výrobce přívěsů od roku 1991
       </span>
-      <h2 class="hh-h1" style="margin:0;font-weight:700;color:#15181C;text-wrap:pretty;">Přívěsy, díly a servis na jednom místě</h2>
+      <h1 class="hh-h1" style="margin:0;font-weight:700;color:#15181C;text-wrap:pretty;">Přívěsy, díly a servis na jednom místě</h1>
       <p class="hh-lead" style="margin:0;font-weight:400;color:#5A626C;text-wrap:pretty;">Vyrábíme, prodáváme, půjčujeme i opravujeme. Náhradní díly máme skladem a autorizovaný servis AL-KO a KNOTT přímo u nás.</p>
       <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;">
         <dc-import name="Tlacitko" variant="primary" size="large" label="Prohlédnout přívěsy" icon-trailing="arrow-right" href="{{ primaryHref }}" on-click="{{ onPrimary }}" hint-size="220px,52px"></dc-import>
@@ -91,8 +102,8 @@
     </div>
   </div>
 
-  <div style="position:absolute;left:50%;bottom:0;transform:translate(-50%,50%);z-index:2;display:flex;align-items:center;gap:4px;background:#FFFFFF;border-radius:999px;padding:4px;box-shadow:0 6px 20px rgba(20,47,86,.10);">
-    <button type="button" class="hh-btn" aria-label="Předchozí slide" onClick="{{ onPrev }}" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:999px;color:#1E5AA8;transition:background 120ms ease;" style-hover="background:#EFF4FB;" style-active="transform:translateY(1px);">
+  <div class="hh-ctrl" style="position:absolute;left:50%;bottom:0;transform:translate(-50%,50%);z-index:2;display:flex;align-items:center;gap:4px;background:#FFFFFF;border-radius:8px;padding:4px;box-shadow:0 6px 20px rgba(20,47,86,.10);">
+    <button type="button" class="hh-btn" aria-label="Předchozí slide" onClick="{{ onPrev }}" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:6px;color:#1E5AA8;transition:background 120ms ease;" style-hover="background:#EFF4FB;" style-active="transform:translateY(1px);">
       <dc-import name="Ikony" icon-name="chevron-left" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
     </button>
     <div style="display:flex;align-items:center;gap:4px;padding:0 4px;">
@@ -102,14 +113,14 @@
         </button>
       </sc-for>
     </div>
-    <button type="button" class="hh-btn" aria-label="Další slide" onClick="{{ onNext }}" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:999px;color:#1E5AA8;transition:background 120ms ease;" style-hover="background:#EFF4FB;" style-active="transform:translateY(1px);">
+    <button type="button" class="hh-btn" aria-label="Další slide" onClick="{{ onNext }}" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:6px;color:#1E5AA8;transition:background 120ms ease;" style-hover="background:#EFF4FB;" style-active="transform:translateY(1px);">
       <dc-import name="Ikony" icon-name="chevron-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
     </button>
   </div>
 </section>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:520},&quot;onPrimary&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;},&quot;onSecondary&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;V1&quot;,&quot;V2&quot;],&quot;default&quot;:&quot;V1&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:520},&quot;onPrimary&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;},&quot;onSecondary&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;V1&quot;,&quot;V2&quot;],&quot;default&quot;:&quot;V2&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 class Component extends DCLogic {
   state = { i: 0 };
   SLIDES = [
@@ -132,7 +143,7 @@ class Component extends DCLogic {
   renderVals(){
     const P = this.props, i = this.state.i;
     return {
-      verCls: (P.variant === 'V2') ? 'hh-v2' : '',
+      verCls: (P.variant === 'V1') ? '' : 'hh-v2',
       sliderLabel: 'Hlavní sdělení, slide ' + (i+1) + ' z ' + this.SLIDES.length,
       image: this.SLIDES[i].image,
       vis0: i === 0 ? 'visible' : 'hidden',

@@ -34,7 +34,11 @@
   @media (max-width:549px){ .pq-inp,.pq-ta{font-size:16px;} }
   .pq-tel{display:flex;align-items:flex-start;gap:12px;}
   .pq-telpfx{flex:none;width:168px;}
-  @media (max-width:419px){ .pq-tel{flex-direction:column;} .pq-telpfx{width:100%;} }
+  /* předvolba a číslo zůstávají v jednom řádku i na mobilu; předvolba se zúží */
+  .pq-tel>.pq-inp{flex:1;min-width:0;}
+  @media (max-width:549px){ .pq-tel{gap:8px;} .pq-telpfx{width:148px;} }
+  /* XXS: předvolba nad číslem přes celou šířku */
+  @media (max-width:419px){ .pq-tel{flex-direction:column;align-items:stretch;} .pq-telpfx{width:100%;} }
   .pq-drop{border:1px dashed #C4CAD2;border-radius:8px;background:#F7F9FB;padding:28px 20px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;}
   .pq-files{display:flex;flex-direction:column;gap:8px;}
   .pq-file{display:flex;align-items:center;gap:12px;background:#F2F4F7;border-radius:6px;padding:8px 8px 8px 12px;}
@@ -64,8 +68,11 @@
       <sc-if value="{{ formOpen }}" hint-placeholder-val="{{ true }}">
       <form class="pq-card" onSubmit="{{ onSubmit }}" novalidate="{{ true }}">
         <div>
-          <label class="pq-lbl" for="pq-name">Jméno / Firma</label>
-          <input class="pq-inp" id="pq-name" name="name" type="text" autocomplete="name" placeholder="Lépe zadat, ale není povinné" value="{{ name }}" onChange="{{ onName }}">
+          <label class="pq-lbl" for="pq-name">Jméno / Firma <span class="pq-req" aria-hidden="true">*</span></label>
+          <input class="pq-inp" id="pq-name" name="name" type="text" required="{{ true }}" autocomplete="name" aria-describedby="pq-name-err" placeholder="Jak vás máme oslovit" value="{{ name }}" onChange="{{ onName }}">
+          <sc-if value="{{ nameErr }}" hint-placeholder-val="">
+            <p class="pq-note" id="pq-name-err" style="margin:6px 0 0;color:#C5232B;">Vyplňte jméno nebo název firmy.</p>
+          </sc-if>
         </div>
 
         <div>
@@ -80,13 +87,18 @@
           <label class="pq-lbl" for="pq-phone">Telefon <span class="pq-req" aria-hidden="true">*</span></label>
           <div class="pq-tel">
             <div class="pq-telpfx">
-              <dc-import name="Select" options="{{ prefixes }}" value="{{ prefix }}" on-change="{{ onPrefix }}" aria-label="Předvolba" debug="{{ false }}" hint-size="100%,44px"></dc-import>
+              <dc-import name="Select" options="{{ prefixes }}" value="{{ prefix }}" on-change="{{ onPrefix }}" aria-label="Předvolba" debug="{{ debug }}" hint-size="100%,44px"></dc-import>
             </div>
             <input class="pq-inp" id="pq-phone" name="phone" type="tel" required="{{ true }}" autocomplete="tel-national" inputmode="tel" aria-describedby="pq-phone-err" placeholder="Např. 602 123 456" value="{{ phone }}" onChange="{{ onPhone }}">
           </div>
           <sc-if value="{{ phoneErr }}" hint-placeholder-val="">
             <p class="pq-note" id="pq-phone-err" style="margin:6px 0 0;color:#C5232B;">Zadejte telefonní číslo — devět číslic bez předvolby.</p>
           </sc-if>
+        </div>
+
+        <div>
+          <span class="pq-lbl" id="pq-type-l" style="display:block;">Typ produktu</span>
+          <dc-import name="Select" options="{{ types }}" value="{{ ptype }}" on-change="{{ onType }}" aria-label="Typ produktu" debug="{{ debug }}" hint-size="100%,44px"></dc-import>
         </div>
 
         <div>
@@ -137,11 +149,11 @@
       </sc-if>
 
       <aside class="pq-side" aria-labelledby="pq-side-h">
-        <h2 id="pq-side-h" style="margin:0;font-size:22px;font-weight:700;line-height:1.25;color:#FFFFFF;">Radši zavolejte?</h2>
+        <h2 id="pq-side-h" style="margin:0;font-size:22px;font-weight:700;line-height:1.25;color:#FFFFFF;">Nevíte si rady?<br>Zavolejte nám.</h2>
         <p style="margin:0;font-size:16px;line-height:1.6;color:#B4CEEC;text-wrap:pretty;">Díly vybíráme podle typu přívěsu a výrobního čísla. Po telefonu to většinou vyřešíme na první zavolání.</p>
-        <a class="pq-sidelink" href="tel:+420323605314" style="display:flex;align-items:center;gap:8px;font-size:18px;font-weight:700;color:#FFFFFF;text-decoration:none;"><span aria-hidden="true" style="display:inline-flex;flex:none;color:#B4CEEC;"><dc-import name="Ikony" icon-name="phone" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>323 605 314</a>
-        <a class="pq-sidelink" href="mailto:obchod@vapp.cz" style="display:flex;align-items:center;gap:8px;font-size:18px;font-weight:700;color:#FFFFFF;text-decoration:none;"><span aria-hidden="true" style="display:inline-flex;flex:none;color:#B4CEEC;"><dc-import name="Ikony" icon-name="mail" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>obchod@vapp.cz</a>
-        <p style="margin:0;font-size:13px;font-weight:500;line-height:1.4;color:#B4CEEC;">Po–Pá 8:30–16:30</p>
+        <a class="pq-sidelink" href="tel:+420323605314" style="display:flex;align-items:center;gap:8px;font-size:18px;font-weight:700;color:#FFFFFF;text-decoration:underline;text-underline-offset:3px;"><span aria-hidden="true" style="display:inline-flex;flex:none;color:#B4CEEC;"><dc-import name="Ikony" icon-name="phone" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>323 605 314</a>
+        <a class="pq-sidelink" href="mailto:obchod@vapp.cz" style="display:flex;align-items:center;gap:8px;font-size:18px;font-weight:700;color:#FFFFFF;text-decoration:underline;text-underline-offset:3px;"><span aria-hidden="true" style="display:inline-flex;flex:none;color:#B4CEEC;"><dc-import name="Ikony" icon-name="mail" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>obchod@vapp.cz</a>
+        <p style="margin:0;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;line-height:1.4;color:#B4CEEC;"><span style="display:flex;align-items:center;flex:none;font-size:0;line-height:0;"><dc-import name="LedIndikator" state="{{ ledState }}" label="" size="11" hint-size="11px,11px"></dc-import></span>Po–Pá 8:30–16:30<sc-if value="{{ isOpenNow }}" hint-placeholder-val="{{ true }}"><span style="color:#97DBB4;">· právě otevřeno</span></sc-if></p>
       </aside>
     </div>
   </main>
@@ -155,7 +167,8 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 class Component extends DCLogic {
-  state = { name:'', email:'', phone:'', prefix:'+420', text:'', files:[], sent:false, touched:false };
+  state = { name:'', ptype:'prives', email:'', phone:'', prefix:'+420', text:'', files:[], sent:false, touched:false };
+  TYPES = [{ value:'prives', label:'Přívěs' }, { value:'dil', label:'Náhradní díl' }];
   PREFIXES = [
     { value:'+420', label:'+420 (CZ)' },
     { value:'+421', label:'+421 (SK)' },
@@ -168,6 +181,7 @@ class Component extends DCLogic {
   validate(){
     const s = this.state;
     return {
+      name: s.name.trim().length < 2,
       email: !/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(s.email.trim()),
       phone: s.phone.replace(/\D/g,'').length < 9,
       text: s.text.trim().length < 25
@@ -175,9 +189,9 @@ class Component extends DCLogic {
   }
   submit(){
     const bad = this.validate();
-    if (bad.email || bad.phone || bad.text){
+    if (bad.name || bad.email || bad.phone || bad.text){
       this.setState({ touched:true });
-      const id = bad.email ? 'pq-email' : (bad.phone ? 'pq-phone' : 'pq-text');
+      const id = bad.name ? 'pq-name' : bad.email ? 'pq-email' : (bad.phone ? 'pq-phone' : 'pq-text');
       const el = document.getElementById(id);
       if (el && el.focus) el.focus();
       return;
@@ -194,12 +208,16 @@ class Component extends DCLogic {
       crumbItems: [{ name:'Domů', href:'index.dc.html' }, { name:'Poptat produkt', href:'#' }],
       formOpen: !s.sent, sent: s.sent, sentEmail: s.email,
       name: s.name, email: s.email, phone: s.phone, text: s.text,
-      prefix: s.prefix, prefixes: this.PREFIXES,
+      prefix: s.prefix, types: this.TYPES, ptype: s.ptype, onType: (v)=>this.setState({ ptype:v }),
+      // otevírací doba Po–Pá 8:30–16:30 — LED ukazuje aktuální stav
+      ...(()=>{ const d = new Date(); const wd = d.getDay(); const m = d.getHours()*60 + d.getMinutes(); const on = wd>=1 && wd<=5 && m>=510 && m<990; return { ledState: on ? 'open' : 'closed', isOpenNow: on }; })(),
+      prefixes: this.PREFIXES,
       onName: (e)=>this.setState({ name:e.target.value }),
       onEmail: (e)=>this.setState({ email:e.target.value }),
       onPhone: (e)=>this.setState({ phone:e.target.value }),
       onText: (e)=>this.setState({ text:e.target.value }),
       onPrefix: (v)=>this.setState({ prefix:v }),
+      nameErr: s.touched && bad.name,
       emailErr: s.touched && bad.email,
       phoneErr: s.touched && bad.phone,
       textLen: len, countWord: this.znaku(len),

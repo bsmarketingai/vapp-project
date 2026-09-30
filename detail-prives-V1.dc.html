@@ -27,7 +27,10 @@
   @media (max-width:819px){ .pd-h1{font-size:26px !important;} }
   .pd-cols{display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap;}
   .pd-gal{flex:1 1 520px;min-width:0;}
-  .pd-buy{flex:0 1 460px;min-width:340px;}
+  .pd-buy{flex:0 1 540px;min-width:340px;}
+  /* dvě sekundární CTA vyplní řádek rovným dílem; když se nevejdou, jdou pod sebe přes celou šířku */
+  .pd-ctas{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;}
+  .pd-ctas>*{display:flex;min-width:0;} .pd-ctas>*>*{width:100%;white-space:nowrap;}
   @media (max-width:819px){ .pd-buy{flex:1 1 100%;min-width:0;} }
   .pd-gal-v2{display:flex;gap:12px;align-items:flex-start;}
   .pd-gal-col{flex:none;display:flex;flex-direction:column;gap:12px;}
@@ -87,13 +90,13 @@
             </div>
             <div style="flex:1;min-width:0;"><div style="position:relative;touch-action:pan-y;" onTouchStart="{{ imgTouchStart }}" onTouchEnd="{{ imgTouchEnd }}">
                 <div style="{{ mainImgStyle }}"></div>
-                <button type="button" class="pd-nav a11y-i" aria-label="Předchozí fotka" onClick="{{ imgPrev }}" style="position:absolute;top:50%;left:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:999px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10), inset 0 0 0 1px #91959B;">
+                <button type="button" class="pd-nav a11y-i" aria-label="Předchozí fotka" onClick="{{ imgPrev }}" style="position:absolute;top:50%;left:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:8px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10), inset 0 0 0 1px #91959B;">
                   <dc-import name="Ikony" icon-name="chevron-left" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
                 </button>
-                <button type="button" class="pd-nav a11y-i" aria-label="Další fotka" onClick="{{ imgNext }}" style="position:absolute;top:50%;right:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:999px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10), inset 0 0 0 1px #91959B;">
+                <button type="button" class="pd-nav a11y-i" aria-label="Další fotka" onClick="{{ imgNext }}" style="position:absolute;top:50%;right:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:8px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10), inset 0 0 0 1px #91959B;">
                   <dc-import name="Ikony" icon-name="chevron-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
                 </button>
-                <span class="pd-nav" aria-hidden="true" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);align-items:center;min-height:24px;padding:0 10px;border-radius:999px;background:#FFFFFF;box-shadow:0 6px 20px rgba(20,47,86,.10);font-size:13px;font-weight:700;color:#15181C;">{{ imgCounter }}</span>
+                <span class="pd-nav" aria-hidden="true" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);align-items:center;min-height:24px;padding:0 10px;border-radius:8px;background:#FFFFFF;box-shadow:0 6px 20px rgba(20,47,86,.10);font-size:13px;font-weight:700;color:#15181C;">{{ imgCounter }}</span>
               </div></div>
           </div>
         </sc-if>
@@ -125,7 +128,7 @@
         </sc-if>
 
         <div style="display:flex;flex-direction:column;gap:8px;">
-          <dc-import name="Skladovost" state="in" text="{{ stockText }}" debug="{{ false }}" hint-size="160px,18px"></dc-import>
+          <dc-import name="Skladovost" state="in" text="{{ stockText }}" debug="{{ debug }}" hint-size="160px,18px"></dc-import>
           <div style="display:flex;gap:8px;font-size:14px;color:#5A626C;"><span style="flex:1;">Připraveno k odběru v Popovičkách</span><span style="font-weight:700;color:#15181C;">{{ readyText }}</span></div>
           <div style="display:flex;gap:8px;font-size:14px;color:#5A626C;"><span style="flex:1;">Registrace a přihlášení do provozu</span><span style="font-weight:700;color:#15181C;">zajistíme</span></div>
         </div>
@@ -140,18 +143,14 @@
         </div>
 
         <div style="display:flex;align-items:stretch;gap:12px;flex-wrap:wrap;">
-          <dc-import name="Kvantifikator" size="standard" value="{{ qty }}" on-change="{{ onQty }}" debug="{{ false }}" hint-size="116px,44px"></dc-import>
+          <dc-import name="Kvantifikator" size="standard" value="{{ qty }}" on-change="{{ onQty }}" debug="{{ debug }}" hint-size="116px,44px"></dc-import>
           <div style="flex:1;min-width:160px;display:flex;">
             <dc-import name="Tlacitko" variant="buy" size="medium" label="Koupit" icon="shopping-cart" full-width="{{ true }}" on-click="{{ onBuy }}" hint-size="100%,44px"></dc-import>
           </div>
         </div>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;">
-          <div style="flex:1;min-width:150px;display:flex;">
-            <dc-import name="Tlacitko" variant="secondary" size="medium" label="Nezávazná poptávka" icon="mail" full-width="{{ true }}" on-click="{{ noop }}" hint-size="100%,44px"></dc-import>
-          </div>
-          <div style="flex:1;min-width:150px;display:flex;">
-            <dc-import name="Tlacitko" variant="secondary" size="medium" label="Domluvit prohlídku" icon="calendar" full-width="{{ true }}" href="servis.dc.html" hint-size="100%,44px"></dc-import>
-          </div>
+        <div class="pd-ctas">
+          <dc-import name="Tlacitko" variant="secondary" size="medium" label="Nezávazná poptávka" icon="mail" full-width="{{ true }}" on-click="{{ noop }}" hint-size="100%,44px"></dc-import>
+          <dc-import name="Tlacitko" variant="secondary" size="medium" label="Domluvit prohlídku" icon="calendar" full-width="{{ true }}" href="servis.dc.html" hint-size="100%,44px"></dc-import>
         </div>
 
         <div style="display:flex;gap:16px;flex-wrap:wrap;background:#F2F4F7;border-radius:6px;padding:10px 14px;">
@@ -160,13 +159,21 @@
           <span style="font-size:13px;color:#666E78;">Záruka <span style="font-weight:700;color:#3A424C;">24 měsíců</span></span>
         </div>
 
+        <sc-if value="{{ actT1 }}" hint-placeholder-val="{{ true }}">
         <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px;">
-          <sc-for list="{{ actions }}" as="a" hint-placeholder-count="4">
+          <sc-for list="{{ actions }}" as="a" hint-placeholder-count="2">
             <button type="button" class="a11y-i hv-lnk" onClick="{{ a.onClick }}" style="display:flex;align-items:center;gap:8px;min-height:32px;font-size:13px;font-weight:500;color:#5A626C;">
               <span style="display:inline-flex;flex:none;color:#5189CC;"><dc-import name="Ikony" icon-name="{{ a.icon }}" size="18" hint-size="18px,18px"></dc-import></span>{{ a.label }}
             </button>
           </sc-for>
         </div>
+        </sc-if>
+        <sc-if value="{{ actT2 }}" hint-placeholder-val="">
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;min-width:0;"><dc-import name="Tlacitko" variant="secondary" size="medium" icon="help" label="Potřebuji poradit" full-width="true" on-click="{{ onHelp }}" style="width:100%;" hint-size="100%,44px"></dc-import></div>
+          <div style="display:flex;min-width:0;"><dc-import name="Tlacitko" variant="secondary" size="medium" icon="arrows-exchange" label="Porovnat" full-width="true" on-click="{{ onCompare }}" style="width:100%;" hint-size="100%,44px"></dc-import></div>
+        </div>
+        </sc-if>
 
       </div>
     </div>
@@ -297,7 +304,7 @@
                 <dc-import name="Tlacitko" variant="primary" size="medium" label="Přidat hodnocení" on-click="{{ noop }}" hint-size="190px,44px"></dc-import>
               </div>
             </div>
-            <dc-import name="Recenze" title="Recenze produktu" score-text="4,7 z 5" source-text="Ověřeno zákazníky · Heureka" reviews="{{ reviews }}" debug="{{ false }}" hint-size="100%,320px"></dc-import>
+            <dc-import name="Recenze" title="Recenze produktu" score-text="4,7 z 5" source-text="Ověřeno zákazníky · Heureka" reviews="{{ reviews }}" debug="{{ debug }}" hint-size="100%,320px"></dc-import>
           </div>
         </sc-if>
 
@@ -308,7 +315,7 @@
         <sc-if value="{{ tabSouvisejici }}" hint-placeholder-val="">
           <div class="pd-rel">
             <sc-for list="{{ related }}" as="p" hint-placeholder-count="4">
-              <dc-import name="ProduktovaKarta" p="{{ p }}" detail-href="./detail-prives-V1.dc.html" currency="{{ currency }}" debug="{{ false }}" hint-size="100%,470px"></dc-import>
+              <dc-import name="ProduktovaKarta" p="{{ p }}" detail-href="./detail-prives-V1.dc.html" currency="{{ currency }}" debug="{{ debug }}" hint-size="100%,470px"></dc-import>
             </sc-for>
           </div>
         </sc-if>
@@ -317,15 +324,13 @@
     </section>
   </main>
 
-  <div class="vp-in" style="margin-top:8px;">
-    <dc-import name="Usp" variant="sloupce" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
-  </div>
   <div style="margin-top:10px;">
     <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
   </div>
 
   <dc-import name="ControlBar" groups="{{ cbGroups }}" on-toggle="{{ cbToggle }}" on-select="{{ cbSelect }}" debug-on="{{ debug }}" on-toggle-debug="{{ cbDebug }}" hint-size="0px,0px"></dc-import>
-  <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+  <dc-import name="DotazModal" open="{{ askOpen }}" product-name="{{ askProduct }}" on-close="{{ askClose }}" debug="{{ debug }}" hint-size="0px,0px"></dc-import>
+<dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </div>
 
 </x-dc>
@@ -400,7 +405,7 @@ class Component extends DCLogic {
 
   state = {
     sel:{ delka:0, sirka:0, hmotnost:0, vybava:0 },
-    qty:1, tab:'popis', img:0, currency:'CZK', varStyle:0, debugOverride:null, cart:0, relQty:{}, relCart:{},
+    qty:1, tab:'popis', img:0, currency:'CZK', varStyle:0, actStyle:0, askOpen:false, debugOverride:null, cart:0, relQty:{}, relCart:{},
     sec:{ varianty:true }
   };
 
@@ -534,13 +539,14 @@ class Component extends DCLogic {
       }),
       files: this.FILES.map(f=>({ name:f.name, meta:f.meta, href:'#' })),
       reviews: this.REVIEWS,
+      // akce pod nákupem shodně s detailem náhradního dílu (T1 textové odkazy / T2 sekundární tlačítka)
       actions:[
-        { label:'Hlídat dostupnost / cenu', icon:'eye', onClick:()=>{} },
         { label:'Porovnat', icon:'arrows-exchange', onClick:()=>{} },
-        { label:'Potřebuji poradit', icon:'help', onClick:()=>{} },
-        { label:'Přidat k oblíbeným', icon:'heart', onClick:()=>{} },
-        { label:'Sdílet', icon:'share-2', onClick:()=>{} }
+        { label:'Potřebuji poradit', icon:'help', onClick:()=>this.setState({ askOpen:true }) }
       ],
+      actT1: (s.actStyle||0) === 0, actT2: s.actStyle === 1,
+      onCompare:()=>{}, onHelp:()=>this.setState({ askOpen:true }),
+      askOpen: s.askOpen === true, askProduct: 'Přívěs VAPP PRAKTIK', askClose:()=>this.setState({ askOpen:false }),
       qty:s.qty, onQty:(n)=>this.setState({ qty:n }), onBuy:()=>this.setState(p=>({ cart:p.cart+p.qty })),
       goReviews:()=>this.goTab('hodnoceni', true), goParams:()=>this.goTab('parametry', true), noop:()=>{},
 
@@ -552,10 +558,11 @@ class Component extends DCLogic {
 
       cbGroups:[
         { label:'Sekce:', kind:'toggles', options:this.SECTIONS.map(([k,l])=>({ label:l, on:!!s.sec[k] })) },
-        { label:'Varianty:', kind:'select', activeIndex:s.varStyle, options:[{ label:'Karty' },{ label:'Řádky' }] }
+        { label:'Varianty:', kind:'select', activeIndex:s.varStyle, options:[{ label:'Karty' },{ label:'Řádky' }] },
+        { label:'Akce:', kind:'select', activeIndex:s.actStyle||0, options:[{ label:'T1' },{ label:'T2' }] }
       ],
       cbToggle:(gi,oi)=>{ if (gi===0){ const k = this.SECTIONS[oi] && this.SECTIONS[oi][0]; if (k) this.setSec(k); } },
-      cbSelect:(gi,oi)=>{ if (gi===1) this.setState({ varStyle:oi }); },
+      cbSelect:(gi,oi)=>{ if (gi===1) this.setState({ varStyle:oi }); else if (gi===2) this.setState({ actStyle:oi }); },
       cbDebug:()=>this.setState({ debugOverride: !debug })
     };
   }

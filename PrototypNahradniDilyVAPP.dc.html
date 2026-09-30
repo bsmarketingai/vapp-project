@@ -548,7 +548,7 @@ class Component extends DCLogic {
     };
     window.addEventListener('scroll', this._onScroll, { passive:true });
     this._onScroll();
-    // dávka výpisu podle pásma: XXL (5 sloupců) 20, jeden sloupec (XS a XXS) 8, jinak 16
+    // pásma pro velikost dávky výpisu (viz PER_PAGE)
     this._mqXXL = window.matchMedia('(min-width:1560px)');
     this._mqOne = window.matchMedia('(max-width:549px)');
     this._mqM = window.matchMedia('(min-width:820px) and (max-width:999px)');
@@ -657,7 +657,9 @@ class Component extends DCLogic {
       : (s.view !== 'groups' && groupNode ? groupNode.count : 2418);
     // zobrazené okno je souvislý rozsah stránek pageFrom…pageTo; dávka = jedna celá stránka
     // dávka je vždy násobkem počtu sloupců, aby poslední řádek nebyl poloprázdný
-    const PER_PAGE = this.state.oneCol ? 8 : (this.state.wideXXL ? 20 : (this.state.threeCol ? 18 : 16));
+    // desktop 20–24 (XXL 5×4 = 20, L/XL 4×6 = 24, M 3×8 = 24), mobil (S a níž) 16
+    const mobileBand = typeof window !== 'undefined' && window.matchMedia('(max-width:819px)').matches;
+    const PER_PAGE = (this.state.oneCol || mobileBand) ? 16 : (this.state.wideXXL ? 20 : 24);
     const pgCount  = Math.max(1, Math.ceil(filteredAll.length / PER_PAGE));
     const pgTo     = Math.min(Math.max(1, s.pageTo || 1), pgCount);
     const pgFrom   = Math.min(Math.max(1, s.pageFrom || 1), pgTo);

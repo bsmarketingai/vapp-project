@@ -24,7 +24,7 @@
   .a11y-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
   @media (max-width:819px){ .vp-in{padding-left:16px;padding-right:16px;} }
-  @media (max-width:819px){ .pd-h1{font-size:26px !important;} .pd-h2{font-size:22px !important;} }
+  @media (max-width:819px){ .pd-h1{font-size:26px !important;} .pd-h2{font-size:26px !important;} }
   .pd-cols{display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap;}
   .pd-gal{flex:1 1 520px;min-width:0;}
   .pd-buy{flex:0 1 420px;min-width:320px;}
@@ -86,13 +86,13 @@
             <div style="flex:1;min-width:0;">
               <div style="position:relative;touch-action:pan-y;" onTouchStart="{{ imgTouchStart }}" onTouchEnd="{{ imgTouchEnd }}">
               <div style="{{ mainImgStyle }}"></div>
-              <button type="button" class="pd-nav a11y-i" aria-label="Předchozí fotka" onClick="{{ imgPrev }}" style="position:absolute;top:50%;left:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:999px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10), inset 0 0 0 1px #91959B;">
+              <button type="button" class="pd-nav a11y-i" aria-label="Předchozí fotka" onClick="{{ imgPrev }}" style="position:absolute;top:50%;left:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:8px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10), inset 0 0 0 1px #91959B;">
                 <dc-import name="Ikony" icon-name="chevron-left" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
               </button>
-              <button type="button" class="pd-nav a11y-i" aria-label="Další fotka" onClick="{{ imgNext }}" style="position:absolute;top:50%;right:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:999px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10), inset 0 0 0 1px #91959B;">
+              <button type="button" class="pd-nav a11y-i" aria-label="Další fotka" onClick="{{ imgNext }}" style="position:absolute;top:50%;right:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:8px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10), inset 0 0 0 1px #91959B;">
                 <dc-import name="Ikony" icon-name="chevron-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
               </button>
-              <span class="pd-nav" aria-hidden="true" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);align-items:center;min-height:24px;padding:0 10px;border-radius:999px;background:#FFFFFF;box-shadow:0 6px 20px rgba(20,47,86,.10);font-size:13px;font-weight:700;color:#15181C;">{{ imgCounter }}</span>
+              <span class="pd-nav" aria-hidden="true" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);align-items:center;min-height:24px;padding:0 10px;border-radius:8px;background:#FFFFFF;box-shadow:0 6px 20px rgba(20,47,86,.10);font-size:13px;font-weight:700;color:#15181C;">{{ imgCounter }}</span>
             </div>            </div>
           </div>
         </sc-if>
@@ -108,7 +108,7 @@
 
         <sc-if value="{{ secDostupnost }}" hint-placeholder-val="{{ true }}">
           <div style="display:flex;flex-direction:column;gap:8px;">
-            <dc-import name="Skladovost" state="in" text="{{ stockText }}" debug="{{ false }}" hint-size="160px,18px"></dc-import>
+            <dc-import name="Skladovost" state="in" text="{{ stockText }}" debug="{{ debug }}" hint-size="160px,18px"></dc-import>
             <div style="display:flex;gap:8px;font-size:14px;color:#5A626C;"><span style="flex:1;">Osobně v prodejně Popovičky</span><span style="font-weight:700;color:#15181C;">ještě dnes</span></div>
             <div style="display:flex;gap:8px;font-size:14px;color:#5A626C;"><span style="flex:1;">Přepravci předáme</span><span style="font-weight:700;color:#15181C;">ještě dnes</span></div>
           </div>
@@ -116,7 +116,7 @@
         </sc-if>
 
         <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;">
-          <dc-import name="Cena" price-net="{{ netNum }}" price-gross="{{ grossNum }}" size="large" currency="{{ currency }}" debug="{{ false }}" hint-size="140px,50px"></dc-import>
+          <dc-import name="Cena" price-net="{{ netNum }}" price-gross="{{ grossNum }}" size="large" currency="{{ currency }}" debug="{{ debug }}" hint-size="140px,50px"></dc-import>
           <span style="font-size:14px;font-weight:500;color:#5A626C;">ceny za 1 ks</span>
         </div>
 
@@ -138,7 +138,7 @@
         </sc-if>
 
         <div style="display:flex;align-items:stretch;gap:12px;flex-wrap:wrap;">
-          <dc-import name="Kvantifikator" size="standard" value="{{ qty }}" on-change="{{ onQty }}" debug="{{ false }}" hint-size="116px,44px"></dc-import>
+          <dc-import name="Kvantifikator" size="standard" value="{{ qty }}" on-change="{{ onQty }}" debug="{{ debug }}" hint-size="116px,44px"></dc-import>
           <div style="flex:1;min-width:160px;display:flex;">
             <dc-import name="Tlacitko" variant="buy" size="medium" label="Koupit" icon="shopping-cart" full-width="{{ true }}" on-click="{{ onBuy }}" hint-size="100%,44px"></dc-import>
           </div>
@@ -284,7 +284,7 @@
                 <dc-import name="Tlacitko" variant="primary" size="medium" label="Přidat hodnocení" on-click="{{ noop }}" hint-size="190px,44px"></dc-import>
               </div>
             </div>
-            <dc-import name="Recenze" title="Recenze produktu" score-text="4,5 z 5" source-text="Ověřeno zákazníky · Heureka" reviews="{{ reviews }}" debug="{{ false }}" hint-size="100%,320px"></dc-import>
+            <dc-import name="Recenze" title="Recenze produktu" score-text="4,5 z 5" source-text="Ověřeno zákazníky · Heureka" reviews="{{ reviews }}" debug="{{ debug }}" hint-size="100%,320px"></dc-import>
           </div>
         </sc-if>
 
@@ -295,7 +295,7 @@
         <sc-if value="{{ tabSouvisejici }}" hint-placeholder-val="">
           <div class="pd-rel">
             <sc-for list="{{ related }}" as="p" hint-placeholder-count="3">
-              <dc-import name="ProduktovaKarta" p="{{ p }}" currency="{{ currency }}" debug="{{ false }}" hint-size="100%,440px"></dc-import>
+              <dc-import name="ProduktovaKarta" p="{{ p }}" currency="{{ currency }}" debug="{{ debug }}" hint-size="100%,440px"></dc-import>
             </sc-for>
           </div>
         </sc-if>
@@ -304,14 +304,11 @@
     </section>
   </main>
 
-  <div class="vp-in" style="margin-top:8px;">
-    <dc-import name="Usp" variant="sloupce" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
-  </div>
   <div style="margin-top:10px;">
     <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
   </div>
 
-  <dc-import name="DotazModal" open="{{ askOpen }}" product-name="{{ askProduct }}" on-close="{{ askClose }}" debug="{{ false }}" hint-size="0px,0px"></dc-import>
+  <dc-import name="DotazModal" open="{{ askOpen }}" product-name="{{ askProduct }}" on-close="{{ askClose }}" debug="{{ debug }}" hint-size="0px,0px"></dc-import>
   <dc-import name="ControlBar" groups="{{ cbGroups }}" on-toggle="{{ cbToggle }}" on-select="{{ cbSelect }}" debug-on="{{ debug }}" on-toggle-debug="{{ cbDebug }}" hint-size="0px,0px"></dc-import>
   <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </div>

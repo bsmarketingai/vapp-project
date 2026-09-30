@@ -25,9 +25,9 @@
   .vp-in{max-width:1560px;margin:0 auto;padding:0 32px;}
   @media (max-width:819px){ .vp-in{padding:0 16px;} }
   .hp-sec{padding:40px 0;}
-  @media (max-width:819px){ .hp-sec{padding:24px 0;} }
+  @media (max-width:819px){ .hp-sec{padding:24px 0;} .hp-cars{margin-bottom:0 !important;} }
   .hp-h2{font-size:28px;line-height:1.2;letter-spacing:-0.01em;}
-  @media (max-width:819px){ .hp-h2{font-size:22px;line-height:1.25;} }
+  @media (max-width:819px){ .hp-h2{font-size:26px;line-height:1.2;} }
   .hp-h1{font-size:36px;line-height:1.15;letter-spacing:-0.02em;}
   @media (max-width:819px){ .hp-h1{font-size:26px;line-height:1.2;} }
   @media (max-width:819px){ .hp-h1row{flex-direction:column;gap:16px;} }
@@ -43,25 +43,9 @@
   <main>
     <dc-import name="HeroHomepage" variant="{{ heroVer }}" debug="{{ debug }}" hint-size="100%,420px"></dc-import>
 
-    <section aria-labelledby="hp-h1" class="hp-sec" style="padding-top:64px;padding-bottom:56px;">
-      <div class="vp-in" style="display:flex;flex-direction:column;gap:20px;">
-        <div class="hp-h1row" style="display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;">
-          <h1 id="hp-h1" class="hp-h1" style="margin:0;font-weight:700;color:#15181C;text-wrap:pretty;text-align:center;">Přívěsy a náhradní díly</h1>
-          <a href="onas.dc.html" style="display:inline-flex;align-items:center;gap:12px;background:#FFFFFF;border-radius:999px;padding:10px 20px;text-decoration:none;box-shadow:0 6px 20px rgba(20,47,86,.10);">
-            <span style="display:inline-flex;color:#F5A623;">
-              <dc-import name="Ikony" icon-name="star-filled" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
-            </span>
-            <span style="font-size:16px;font-weight:700;color:#15181C;">4,8 z 5</span>
-            <span style="font-size:15px;font-weight:400;color:#5A626C;">Ověřeno zákazníky · Heureka</span>
-          </a>
-        </div>
-        <dc-import name="Usp" variant="sloupce" items="{{ uspGrid }}" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
-      </div>
-    </section>
-
-    <section aria-label="Karusely produktů" class="hp-sec" style="background:#EFF4FB;margin-bottom:40px;">
+    <section aria-label="Karusely produktů" class="hp-sec hp-cars" style="background:#EFF4FB;margin-bottom:40px;">
       <div class="vp-in" style="display:flex;flex-direction:column;gap:40px;">
-        <dc-import name="ProduktovyKarusel" title="Přívěsy" items="{{ privesyItems }}" all-label="Zobrazit vše" all-href="privesy-V1.dc.html" detail-href="detail-prives-V1.dc.html" debug="{{ debug }}" hint-size="100%,620px"></dc-import>
+        <dc-import name="ProduktovyKarusel" title="Přívěsy" items="{{ privesyItems }}" all-label="Zobrazit všechny přívěsy" all-href="privesy-V1.dc.html" detail-href="detail-prives-V1.dc.html" debug="{{ debug }}" hint-size="100%,620px"></dc-import>
         <dc-import name="ProduktovyKarusel" title="Náhradní díly" items="{{ dilyItems }}" all-label="Zobrazit vše" all-href="nahradnidily.dc.html" detail-href="detail-nahradnidil-V1.dc.html" debug="{{ debug }}" hint-size="100%,620px"></dc-import>
       </div>
     </section>
@@ -84,7 +68,7 @@
 
     <section aria-label="Poradna" class="hp-sec" style="padding-bottom:64px;">
       <div class="vp-in">
-        <dc-import name="PoradnaBlok" debug="{{ debug }}" hint-size="100%,560px"></dc-import>
+        <dc-import name="PoradnaBlok" variant="{{ pbVer }}" debug="{{ debug }}" hint-size="100%,560px"></dc-import>
       </div>
     </section>
 
@@ -102,9 +86,9 @@
     </section>
   </main>
 
-  <dc-import name="Paticka" open="{{ contactOpen }}" bare="true" debug="{{ debug }}" hint-size="100%,520px"></dc-import>
+  <dc-import name="Paticka" usp-tone="tint" open="{{ contactOpen }}" bare="true" debug="{{ debug }}" hint-size="100%,520px"></dc-import>
 </div>
-<dc-import name="PrezentacniLista" label="Hero:" variants="{{ heroVariants }}" active="{{ heroVer }}" on-select="{{ onHeroVer }}" label2="Ot. doba:" variants2="{{ openVariants }}" active2="{{ openState }}" on-select2="{{ onOpenState }}" label3="Jazyk:" variants3="{{ langVariants }}" active3="{{ langVer }}" on-select3="{{ onLangVer }}" debug-on="{{ debugOn }}" on-toggle-debug="{{ onToggleDebug }}" hint-size="320px,56px"></dc-import>
+<dc-import name="PrezentacniLista" label="Hero:" variants="{{ heroVariants }}" active="{{ heroVer }}" on-select="{{ onHeroVer }}" label2="Ot. doba:" variants2="{{ openVariants }}" active2="{{ openState }}" on-select2="{{ onOpenState }}" label3="Jazyk:" variants3="{{ langVariants }}" active3="{{ langVer }}" on-select3="{{ onLangVer }}" label4="Poptat:" variants4="{{ ppVariants }}" active4="{{ ppVer }}" on-select4="{{ onPpVer }}" label5="Poradna:" variants5="{{ pbVariants }}" active5="{{ pbVer }}" on-select5="{{ onPbVer }}" label6="XS sloupce:" variants6="{{ xsVariants }}" active6="{{ xsCols }}" on-select6="{{ onXsCols }}" debug-on="{{ debugOn }}" on-toggle-debug="{{ onToggleDebug }}" hint-size="320px,56px"></dc-import>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
@@ -177,15 +161,18 @@ class Component extends DCLogic {
     if (c.key === 'poradna') return 'poradna.dc.html';
     return '#/' + c.key + '/' + this.slug(s) + '/';
   }
-  state = Object.assign({}, this.state, { heroVer: (typeof localStorage !== 'undefined' && localStorage.getItem('vapp-hero-variant')) || 'V1', langVer: 'J2', debugOverride: null });
+  state = Object.assign({}, this.state, { heroVer: (typeof localStorage !== 'undefined' && localStorage.getItem('vapp-hero-variant')) || 'V2', langVer: 'J2', xsCols: 'C1', debugOverride: null });
+  XS_COLS = { C1:'1', C2:'2' };
+  applyXsCols(v){ try{ document.documentElement.style.setProperty('--vp-xs-cols', this.XS_COLS[v] || '1'); }catch(e){} }
+  componentDidMount(){ this.applyXsCols(this.state.xsCols); }
   setHeroVer(id){
-    const v = id === 'v2' || id === 'V2' ? 'V2' : 'V1';
+    const v = id === 'v1' || id === 'V1' ? 'V1' : 'V2';
     try{ localStorage.setItem('vapp-hero-variant', v); }catch(e){}
     this.setState({ heroVer: v });
   }
   renderVals(){
     const P = this.props;
-    const heroVer = this.state.heroVer === 'V2' ? 'V2' : 'V1';
+    const heroVer = this.state.heroVer === 'V1' ? 'V1' : 'V2';
     const contactOpen = this.state.contactOpen !== false;
     const debugOn = this.state.debugOverride === null ? (P.debug ?? true) : this.state.debugOverride;
     // rozcestník nese jen produktové sekce; servis, půjčovna, poradna a akce jsou skryté (data zůstávají)
@@ -196,6 +183,12 @@ class Component extends DCLogic {
       subs: c.subs.map(s=>({ name:s, href: this.subHref(c, s) }))
     }));
     return {
+      pbVariants: [{ id:'P1', label:'P1' }, { id:'P2', label:'P2' }],
+      pbVer: this.state.pbVer || 'P2',
+      onPbVer: (id)=>this.setState({ pbVer:id }),
+      ppVariants: [{ id:'PP1', label:'PP1' }, { id:'PP2', label:'PP2' }, { id:'PP3', label:'PP3' }],
+      ppVer: this.state.ppVer || (()=>{ try{ return localStorage.getItem('vapp-pp') || 'PP1'; }catch(e){ return 'PP1'; } })(),
+      onPpVer: (id)=>{ try{ localStorage.setItem('vapp-pp', id); }catch(e){} window.dispatchEvent(new CustomEvent('vapp-pp', { detail:id })); this.setState({ ppVer:id }); },
       categories,
       privesyItems: this.PRIVESY,
       dilyItems: this.DILY,
@@ -216,6 +209,9 @@ class Component extends DCLogic {
       langVer: this.state.langVer === 'J1' ? 'J1' : 'J2',
       langVariants: [{ id:'J1', label:'J1' }, { id:'J2', label:'J2' }],
       onLangVer: (id)=>this.setState({ langVer: id === 'J2' ? 'J2' : 'J1' }),
+      xsCols: this.XS_COLS[this.state.xsCols] ? this.state.xsCols : 'C1',
+      xsVariants: [{ id:'C1', label:'1' }, { id:'C2', label:'2' }],
+      onXsCols: (id)=>{ const v = this.XS_COLS[id] ? id : 'C1'; this.applyXsCols(v); this.setState({ xsCols:v }); },
       debugOn,
       onToggleDebug: ()=>this.setState({ debugOverride: !debugOn }),
       debug: debugOn

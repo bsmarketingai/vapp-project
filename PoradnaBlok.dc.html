@@ -18,11 +18,16 @@
   .pb-a{text-decoration:none;color:inherit;}
   .pb-a:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   .pb-h2{font-size:28px;line-height:1.2;letter-spacing:-0.01em;}
-  @media (max-width:819px){ .pb-h2{font-size:22px;line-height:1.25;} }
+  @media (max-width:819px){ .pb-h2{font-size:26px;line-height:1.2;} }
   .pb-cols{display:grid;grid-template-columns:2fr 1fr;gap:20px;align-items:start;}
   @media (max-width:999px){ .pb-cols{grid-template-columns:1fr;} }
   .pb-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-  @media (max-width:549px){ .pb-cards{grid-template-columns:1fr;} }
+  @media (max-width:549px){ .pb-cards{grid-template-columns:1fr;} .pb-cards>*:nth-child(n+2){display:none !important;} }
+  /* XS a XXS: velká je jen první karta, další doporučené články jsou v malém výpisu */
+  .pb-xsrow{display:none !important;}
+  /* desktop (od L) 5 článků ve 3. sloupci, pod 1000 px 2 */
+  @media (max-width:999px){ .pb-list>li:nth-child(n+4){display:none !important;} }
+  @media (max-width:549px){ .pb-xsrow{display:flex !important;} .pb-list>li:nth-child(n+3){display:none !important;} }
   .pb-card{background:#FFFFFF;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow 150ms ease;}
   .pb-card:hover{box-shadow:0 6px 20px rgba(20,47,86,.10);}
   .pb-card:hover .pb-title{color:#1E5AA8;}
@@ -46,23 +51,27 @@
   .pb-btn{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 16px;border-radius:8px;background:#EFF4FB;color:#1E5AA8;font-size:14px;font-weight:700;transition:background 120ms ease;}
   .pb-btn:hover{background:#D8E6F6;color:#1E5AA8;}
   .pb-btn:active{transform:translateY(1px);}
-  .pb-all,.pb-all:hover{color:#C5232B;}
-  @media (max-width:819px){ .pb-head{flex-direction:column;align-items:flex-start;gap:16px;}
-    .pb-head>h2{align-self:flex-start;text-align:left;width:100%;}
-    .pb-nav{width:100%;flex-direction:column;align-items:flex-start;gap:12px;}
-    .pb-nav>.pb-all{align-self:flex-start;margin-left:-16px!important;} }
+  .pb-all,.pb-all:hover{color:#1E5AA8;}
+  /* mobil: nahoře H2 a rubriky, Zobrazit vše pod příspěvky vpravo */
+  @media (max-width:819px){ .pb-head,.pb-nav{display:contents !important;}
+    .pb-cols{order:2;}
+    .pb-nav>.pb-all{order:3;align-self:flex-end;margin-left:0!important;} }
+  /* P1: jen velké karty, malý výpis na žádné šířce — na XS/XXS proto obě karty pod sebou */
+  @media (min-width:820px){ .pb-p1 .pb-cols{grid-template-columns:1fr;} }
+  .pb-p1 .pb-list{display:none !important;}
+  @media (max-width:549px){ .pb-p1 .pb-cards>*:nth-child(n+2){display:flex !important;} }
 </style>
 </helmet>
-<section aria-labelledby="pb-head" style="width:100%;display:flex;flex-direction:column;gap:16px;">
+<section aria-labelledby="pb-head" class="{{ verCls }}" style="width:100%;display:flex;flex-direction:column;gap:16px;">
   <div class="pb-head" style="display:flex;align-items:center;justify-content:flex-start;gap:24px;flex-wrap:wrap;">
     <h2 id="pb-head" class="pb-h2" style="margin:0;font-weight:700;color:#15181C;">{{ title }}</h2>
     <div class="pb-nav" style="flex:1;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
         <sc-for list="{{ rubriky }}" as="r" hint-placeholder-count="4">
-          <dc-import name="Chip" kind="secondary" size="small" label="{{ r.name }}" href="{{ r.href }}" debug="{{ false }}" hint-size="140px,32px"></dc-import>
+          <dc-import name="Chip" kind="secondary" size="small" label="{{ r.name }}" href="{{ r.href }}" debug="{{ debug }}" hint-size="140px,32px"></dc-import>
         </sc-for>
       </div>
-      <a class="pb-a pb-cta pb-all" href="{{ allHref }}" style="margin-left:auto;min-height:36px;padding:0 16px;border-radius:8px;color:#C5232B;transition:background 120ms ease;" style-hover="background:#FDF1F1;">{{ allLabel }}
+      <a class="pb-a pb-cta pb-all" href="{{ allHref }}" style="margin-left:auto;min-height:44px;padding:0 16px;border-radius:8px;background:#FFFFFF;border:1px solid #B4CEEC;color:#1E5AA8;transition:background 120ms ease;" style-hover="background:#EFF4FB;" style-active="transform:translateY(1px);">{{ allLabel }}
         <dc-import name="Ikony" icon-name="arrow-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
       </a>
     </div>
@@ -71,11 +80,22 @@
   <div class="pb-cols">
     <div class="pb-cards">
       <sc-for list="{{ featured }}" as="f" hint-placeholder-count="2">
-        <dc-import name="KartaClanku" a="{{ f }}" debug="{{ false }}" hint-size="100%,400px"></dc-import>
+        <dc-import name="KartaClanku" a="{{ f }}" debug="{{ debug }}" hint-size="100%,400px"></dc-import>
       </sc-for>
     </div>
 
-    <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;">
+    <ul class="pb-list" style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;">
+      <sc-for list="{{ featuredRest }}" as="r" hint-placeholder-count="1">
+        <li class="pb-row pb-xsrow">
+          <img src="{{ r.image }}" alt="" style="flex:none;width:64px;height:64px;border-radius:6px;object-fit:cover;">
+          <span class="pb-title pb-clamp2" style="flex:1;min-width:0;font-size:15px;font-weight:700;line-height:1.3;color:#15181C;">
+            <a class="pb-a" href="{{ r.href }}">{{ r.name }}</a>
+          </span>
+          <a class="pb-a pb-btn" href="{{ r.href }}" aria-label="Přečíst článek" style="flex:none;"><span class="pb-btn-l">Přečíst</span>
+            <dc-import name="Ikony" icon-name="arrow-right" size="{{ 18 }}" hint-size="18px,18px"></dc-import>
+          </a>
+        </li>
+      </sc-for>
       <sc-for list="{{ rows }}" as="r" hint-placeholder-count="6">
         <li class="pb-row">
           <img src="{{ r.image }}" alt="" style="flex:none;width:64px;height:64px;border-radius:6px;object-fit:cover;">
@@ -92,7 +112,7 @@
 </section>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:560},&quot;title&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Poradna&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;allLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Zobrazit vše&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;allHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;#/poradna/&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;rowCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:7,&quot;min&quot;:3,&quot;max&quot;:10,&quot;tsType&quot;:&quot;number&quot;},&quot;featured&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;object[]&quot;},&quot;rows&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;object[]&quot;},&quot;rubriky&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;object[]&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:560},&quot;title&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Poradna&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;allLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Zobrazit vše&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;allHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;#/poradna/&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;rowCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:7,&quot;min&quot;:3,&quot;max&quot;:10,&quot;tsType&quot;:&quot;number&quot;},&quot;featured&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;object[]&quot;},&quot;rows&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;object[]&quot;},&quot;rubriky&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;object[]&quot;},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;P1&quot;,&quot;P2&quot;],&quot;default&quot;:&quot;P2&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 class Component extends DCLogic {
   RUBRIKY = [
     { name:'Technický rádce', href:'#/poradna/technicky-radce/' },
@@ -121,10 +141,12 @@ class Component extends DCLogic {
     const P = this.props;
     return {
       title: P.title ?? 'Poradna',
+      verCls: P.variant === 'P1' ? 'pb-p1' : '',
       allLabel: P.allLabel ?? 'Zobrazit vše',
       allHref: P.allHref ?? 'poradna.dc.html',
       rubriky: Array.isArray(P.rubriky) && P.rubriky.length ? P.rubriky : this.RUBRIKY,
       featured: (Array.isArray(P.featured) && P.featured.length ? P.featured : this.FEATURED).slice(0,2).map(f=>({ ...f, href:'clanek-tachograf.dc.html' })),
+      featuredRest: (Array.isArray(P.featured) && P.featured.length ? P.featured : this.FEATURED).slice(1,2).map(f=>({ name:f.name, image:f.image, href:'clanek-tachograf.dc.html' })),
       // prototyp: všechny články vedou na jediný hotový detail
       rows: (Array.isArray(P.rows) && P.rows.length ? P.rows : this.ROWS).slice(0, Math.max(1, Number(P.rowCount) || 5)).map(r=>({ ...r, href:'clanek-tachograf.dc.html' })),
       debug: P.debug ?? true

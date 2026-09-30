@@ -67,7 +67,7 @@
 
     <div class="cl-grid">
       <sc-for list="{{ articles }}" as="a" hint-placeholder-count="9">
-        <dc-import name="KartaClanku" a="{{ a }}" debug="{{ false }}" hint-size="100%,400px"></dc-import>
+        <dc-import name="KartaClanku" a="{{ a }}" debug="{{ debug }}" hint-size="100%,400px"></dc-import>
       </sc-for>
     </div>
 
@@ -77,9 +77,6 @@
 
   </main>
 
-  <div class="vp-in" style="margin-top:8px;">
-    <dc-import name="Usp" variant="sloupce" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
-  </div>
   <div style="margin-top:10px;">
     <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
   </div>
@@ -153,15 +150,21 @@ class Component extends DCLogic {
     { name:'Dovoz přívěsu ze zahraničí', typ:'Návod', rubrika:'Potřebuji vyřídit', image:'uploads/doplnky.jpg',
       perex:'Schválení technické způsobilosti, COC list a překlady dokladů. Postup, který ušetří druhou cestu na úřad.' }
   ];
-  PER_PAGE = 12;
-  state = { rubrika:'', page:1, shown:0 };
+  // desktop 24 článků (dělitelné 3 i 2 sloupci), od S níž (≤819 px) 16
+  PER_PAGE_DT = 24; PER_PAGE_MB = 16;
+  state = { rubrika:'', page:1, shown:0, mb:false };
   componentDidMount(){
+    this._mq = window.matchMedia('(max-width:819px)');
+    this._onMq = ()=>this.setState({ mb:this._mq.matches, page:1, shown:0 });
+    this._mq.addEventListener('change', this._onMq);
+    this.setState({ mb:this._mq.matches });
     this._onHash = ()=>this.routeFromUrl();
     window.addEventListener('hashchange', this._onHash);
     window.addEventListener('popstate', this._onHash);
     this.routeFromUrl();
   }
   componentWillUnmount(){
+    if (this._mq) this._mq.removeEventListener('change', this._onMq);
     window.removeEventListener('hashchange', this._onHash);
     window.removeEventListener('popstate', this._onHash);
   }
@@ -186,7 +189,7 @@ class Component extends DCLogic {
     // prototyp: všechny články vedou na jediný hotový detail
     const all = this.A.map(a=>({ ...a, href:'clanek-tachograf.dc.html' }));
     const filtered = s.rubrika ? all.filter(a=>a.rubrika === s.rubrika) : all;
-    const per = this.PER_PAGE;
+    const per = s.mb ? this.PER_PAGE_MB : this.PER_PAGE_DT;
     const pgCount = Math.max(1, Math.ceil(filtered.length / per));
     const page = Math.min(s.page, pgCount);
     const shown = Math.max(per, Math.min(s.shown || per, filtered.length));

@@ -47,24 +47,32 @@
   @media (min-width:1000px){ .hd-mb{display:none !important;} }
   .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
   @media (max-width:819px){ .vp-in{padding-left:16px;padding-right:16px;} }
-  @media (max-width:549px){ .hd-actlbl{display:none !important;} .hd-acts{gap:4px !important;} }
-  /* XS a XXS: čítač košíku přečnívá vpravo — hamburger potřebuje odstup */
-  @media (max-width:549px){ #hd-cart{margin-right:16px !important;} }
+  /* labely u ikon se nezobrazují na žádné šířce — význam nese aria-label */
+  .hd-actlbl{display:none !important;}
+  /* čítač košíku přečnívá přes hamburger — musí ležet nad ním */
+  #hd-cart{position:relative;z-index:1;}
+  /* mobilní hlavička (M a níž): akční ikony a ikona telefonu 28 × 28 — výjimka z kontraktu 24 px, plochy 44 px beze změny */
+  @media (max-width:999px){ .hd-acts .hd-act svg, #hd-burger svg, #hd-cart .ks-mob svg, #hd-cart .ks-box > button:first-child > span:first-child svg, #hd-cart .ks-box svg[class*="shopping-cart"], .hd-kb svg{width:28px !important;height:28px !important;stroke-width:1.75 !important;} }
+  /* desktop: ikonová tlačítka mají 8 px vnitřní odsazení, box košíku ne — dorovnáme, aby mezery mezi ikonami, vlajkou a košíkem vypadaly stejně */
+  @media (min-width:1000px){ #hd-cart{margin-left:8px;} }
   @media (max-width:419px){ .hd-logo{height:24px !important;} }
-  /* XXS: řádek se musí vejít i na 320 px — stlačíme mezery a odsazení ikon */
+  /* XXS: hledání a přihlášení k sobě (menší odsazení ikon), mezera košík–hamburger jako v XS; na 320 px se zužuje logo */
   @media (max-width:419px){
-    .hd-logorow{gap:8px !important;}
+    .hd-logorow{gap:8px !important;flex-wrap:nowrap !important;}
+    .hd-logolink{flex:0 1 auto !important;min-width:0;}
+    .hd-logo{width:100%;height:auto !important;max-height:24px;}
     .hd-act{padding-left:2px !important;padding-right:2px !important;}
-    .hd-acts{gap:2px !important;}
   }
   @media (max-width:819px){ .hd-mdup{display:none !important;} }
   @media (min-width:820px){ .hd-sdn{display:none !important;} }
   .hd-kb{margin-left:auto;}
+  /* M (820–999): bez vyhledávání v řádku — kontakt patří k logu, ne k ikonám */
+  @media (min-width:820px) and (max-width:999px){ .hd-kb{margin-left:32px !important;} }
   /* pod 1150 se e-mail nevejde vedle telefonu a ikon — místo zalomení řádku ho skryjeme */
   @media (max-width:1149px){ .hd-mailblk{display:none !important;} }
   .hd-v4 .hd-mbsearch{display:none !important;}
   .hd-v4 .hd-acts{margin-left:0 !important;}
-  @media (max-width:819px){ .hd-v4 .hd-acts{margin-left:auto !important;} }
+  @media (max-width:999px){ .hd-v4 .hd-acts{margin-left:auto !important;} }
   .hd-mail{transition:color .12s;} .hd-mail:hover{color:#1E5AA8 !important;}
   .hd-langitem{transition:background .12s;} .hd-langitem:hover{background:#F2F4F7 !important;}
 </style>
@@ -73,7 +81,7 @@
   <div style="background:transparent;">
     <div class="hd-toprow" style="background:#fff;border-bottom:1px solid #F2F4F7;pointer-events:auto;">
     <div class="vp-in hd-logorow" style="display:flex;align-items:center;gap:14px;padding-top:20px;padding-bottom:20px;flex-wrap:wrap;">
-      <a class="hd-i" href="{{ logoHref }}" aria-label="VAPP — domovská stránka" onClick="{{ onLogoNav }}" style="display:flex;flex:none;cursor:pointer;"><img class="hd-logo" src="./vapp-logo.svg" alt="VAPP" style="height:30px;display:block;"></a>
+      <a class="hd-i hd-logolink" href="{{ logoHref }}" aria-label="VAPP — domovská stránka" onClick="{{ onLogoNav }}" style="display:flex;flex:none;cursor:pointer;"><img class="hd-logo" src="./vapp-logo.svg" alt="VAPP" style="height:30px;display:block;"></a>
       <div class="hd-dt hd-search-inline" style="flex:1;min-width:200px;max-width:520px;margin-left:auto;margin-right:auto;">
         <dc-import name="Vyhledavani" bare="true" height="44" value="{{ searchValue }}" on-change="{{ onSearchChange }}" placeholder="Hledat díly podle názvu, čísla nebo modelu…" hint-size="100%,44px"></dc-import>
       </div>
@@ -92,9 +100,9 @@
         <sc-if value="{{ showSearchAct }}" hint-placeholder-val="">
           <button type="button" class="hd-act hd-i hd-mb" id="hd-search-toggle" aria-label="Hledat" aria-expanded="{{ searchExpanded }}" aria-controls="hd-search-panel" onClick="{{ toggleSearch }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:44px;padding:0 8px;cursor:pointer;"><div style="display:flex;align-items:center;justify-content:center;"><dc-import name="Ikony" icon-name="search" size="24" hint-size="24px,24px"></dc-import></div><span class="hd-actlbl" style="font-size:13px;font-weight:600;">Hledat</span></button>
         </sc-if>
-        <button type="button" class="hd-act hd-i" id="hd-login" aria-label="Přihlásit" onClick="{{ openLogin }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:44px;padding:0 8px;cursor:pointer;"><div style="display:flex;align-items:center;justify-content:center;"><dc-import name="Ikony" icon-name="user" size="24" hint-size="24px,24px"></dc-import></div><span class="hd-actlbl" style="font-size:13px;font-weight:600;">Přihlásit</span></button>
+        <button type="button" class="hd-act hd-i" id="hd-login" aria-label="Přihlásit" onClick="{{ openLogin }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:44px;padding:0 8px;cursor:pointer;"><div style="display:flex;align-items:center;justify-content:center;"><dc-import name="Ikony" icon-name="user-circle" size="24" hint-size="24px,24px"></dc-import></div><span class="hd-actlbl" style="font-size:13px;font-weight:600;">Přihlásit</span></button>
         <sc-if value="{{ langJ2 }}" hint-placeholder-val="">
-          <div class="hd-langwrap" style="position:relative;flex:none;">
+          <div class="hd-langwrap hd-dt" style="position:relative;flex:none;">
             <button type="button" class="hd-act hd-i" id="hd-lang" aria-haspopup="listbox" aria-expanded="{{ langExpanded }}" aria-label="{{ langAria }}" onClick="{{ toggleLang }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:44px;padding:0 8px;cursor:pointer;">
               <div style="display:flex;align-items:center;justify-content:center;height:24px;"><img src="{{ langFlag }}" alt="" aria-hidden="true" style="display:block;height:16px;width:25px;border-radius:4px;"></div>
               <span class="hd-actlbl" style="font-size:13px;font-weight:600;">{{ langLabel }}</span>
@@ -132,9 +140,14 @@
         <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
           <a class="{{ t.cls }}" href="{{ t.href }}" aria-current="{{ t.current }}" aria-expanded="{{ t.expanded }}" onClick="{{ t.onClick }}" onMouseEnter="{{ t.onEnter }}" onMouseLeave="{{ t.onLeave }}" onFocus="{{ t.onFocus }}" style="{{ t.style }}">{{ t.label }}</a>
         </sc-for>
+        <sc-if value="{{ ppBtn }}" hint-placeholder-val="{{ true }}">
         <div class="hd-ctawrap" style="margin-left:auto;flex:none;display:flex;align-items:center;padding:6px 0;">
           <dc-import name="Tlacitko" variant="primary" size="medium" label="Poptat produkt" icon="help" href="{{ inquiryHref }}" debug="{{ false }}" hint-size="190px,44px"></dc-import>
         </div>
+        </sc-if>
+        <sc-if value="{{ ppLink }}" hint-placeholder-val="">
+        <a class="hd-tab hd-i" href="{{ inquiryHref }}" aria-current="{{ ppCurrent }}" style="{{ ppLinkStyle }}">Poptat produkt</a>
+        </sc-if>
       </div>
     </nav>
     <sc-if value="{{ megaOpen }}" hint-placeholder-val="">
@@ -144,7 +157,7 @@
     </sc-if>
     <sc-if value="{{ menuOpen }}" hint-placeholder-val="">
       <div class="hd-mb" id="hd-mobile-menu" role="navigation" aria-label="Hlavní menu" tabindex="-1" onKeyDown="{{ onMenuKey }}" style="position:absolute;top:100%;left:0;right:0;z-index:60;pointer-events:auto;min-height:calc(100dvh - 100%);background:#fff;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;box-shadow:0 10px 30px rgba(20,30,45,.14);">
-        <dc-import name="MobilniMenu" show-info="{{ mmInfo }}" show-contacts="{{ mmContacts }}" panel-open="{{ menuOpen }}" menu-tree="{{ menuTree }}" active="{{ menuActive }}" on-select="{{ onMenuSelect }}" info-links="{{ infoLinks }}" on-login="{{ onMenuLogin }}" currency="{{ currency }}" currencies="{{ currencyCodes }}" on-currency-change="{{ onMenuCurrency }}" debug="{{ debug }}" hint-size="100%,320px"></dc-import>
+        <dc-import name="MobilniMenu" show-info="{{ mmInfo }}" show-contacts="{{ mmContacts }}" panel-open="{{ menuOpen }}" menu-tree="{{ menuTree }}" active="{{ menuActive }}" on-select="{{ onMenuSelect }}" info-links="{{ infoLinks }}" on-login="{{ onMenuLogin }}" currency="{{ currency }}" currencies="{{ currencyCodes }}" on-currency-change="{{ onMenuCurrency }}" inquiry-mode="{{ ppMode }}" inquiry-href="{{ inquiryHref }}" debug="{{ debug }}" hint-size="100%,320px"></dc-import>
       </div>
     </sc-if>
   </div>
@@ -273,6 +286,9 @@ class Component extends DCLogic {
   _menuWas = false;
   lockScroll(on){ try{ document.body.style.overflow = on ? 'hidden' : ''; }catch(e){} }
   componentDidMount(){
+    try{ const v = localStorage.getItem('vapp-pp'); if (v) this.setState({ pp: v }); }catch(e){}
+    this._onPP = (e)=>this.setState({ pp: e.detail });
+    window.addEventListener('vapp-pp', this._onPP);
     this._onKey = (e)=>{ if(e.key!=='Escape') return;
       if(this.state.megaTab){ this.closeMega(0); const t=document.querySelector('.hd-tab[aria-expanded="true"]'); if(t&&t.focus) t.focus(); return; }
       if(this.state.askLang){ this.setState({ askLang:null }); return; }
@@ -298,7 +314,7 @@ class Component extends DCLogic {
     window.addEventListener('vapp-mega-ready', this._onMegaReady);
     if (!window.VAPP_MEGA) this._megaPoll = setInterval(()=>{ if(window.VAPP_MEGA){ clearInterval(this._megaPoll); this.forceUpdate(); } }, 120);
   }
-  componentWillUnmount(){ clearTimeout(this._langFocusT); this.lockScroll(false); this.unbindFit(); clearTimeout(this._megaT); clearInterval(this._megaPoll); if(this._onMegaReady) window.removeEventListener('vapp-mega-ready', this._onMegaReady); this.unbindFitMega(); if(this._onKey) document.removeEventListener('keydown', this._onKey, true); if(this._onMegaDoc) document.removeEventListener('click', this._onMegaDoc, true); if(this._onLangDoc) document.removeEventListener('click', this._onLangDoc, true); }
+  componentWillUnmount(){ if(this._onPP) window.removeEventListener('vapp-pp', this._onPP); clearTimeout(this._langFocusT); this.lockScroll(false); this.unbindFit(); clearTimeout(this._megaT); clearInterval(this._megaPoll); if(this._onMegaReady) window.removeEventListener('vapp-mega-ready', this._onMegaReady); this.unbindFitMega(); if(this._onKey) document.removeEventListener('keydown', this._onKey, true); if(this._onMegaDoc) document.removeEventListener('click', this._onMegaDoc, true); if(this._onLangDoc) document.removeEventListener('click', this._onLangDoc, true); }
   componentDidUpdate(prevProps, prevState){
     this.syncLangDialog();
 
@@ -385,6 +401,13 @@ class Component extends DCLogic {
         onClick: (e)=>{ if(e&&e.preventDefault) e.preventDefault(); this.closeMega(0); if (href !== '#' && !on){ window.location.href = href; return; } if(onTab) onTab(label); },
         style:'display:flex;align-items:center;align-self:stretch;font-size:18px;font-weight:700;padding:13px 2px;cursor:pointer;border-bottom:3px solid '+(on?'#1E5AA8':'transparent')+';color:'+(on?'#1E5AA8':'#3A424C')+';' };
     });
+    // Poptat produkt — otevřené varianty PP1 (tlačítko) / PP2 (položka s ikonou vpravo) / PP3 (poslední záložka)
+    const ppMode = ['PP1','PP2','PP3'].includes(P.inquiryMode) ? P.inquiryMode : (this.state.pp || 'PP1');
+    const inqHref = P.inquiryHref ?? 'poptat-produkt.dc.html';
+    const ppOn = typeof window !== 'undefined' && /poptat-produkt/.test(window.location.pathname);
+    const ppTabStyle = (ml)=>'display:flex;align-items:center;gap:6px;align-self:stretch;font-size:18px;font-weight:700;padding:13px 2px;cursor:pointer;text-decoration:none;'+(ml?'margin-left:auto;':'')+'border-bottom:3px solid '+(ppOn?'#1E5AA8':'transparent')+';color:'+(ppOn?'#1E5AA8':'#3A424C')+';';
+    if (ppMode === 'PP3') tabs.push({ label:'Poptat produkt', cls:'hd-tab hd-i', current: ppOn ? 'page' : undefined, href: inqHref,
+      onEnter: ()=>this.closeMega(0), onFocus: ()=>this.closeMega(0), onClick: undefined, style: ppTabStyle(false) });
     const cartCount = P.cartCount;
     const compareCount = P.compareCount || 0;
     // Jediná platná verze hlavičky (v UI „V3"): tmavý pás USP nad hlavičkou, bez tmavého topbaru.
@@ -397,7 +420,8 @@ class Component extends DCLogic {
     const setCurrency = (code)=>{ if (code === currency) return; this.setState({ langOpen:false, askLang: code }); };
     this._applyCurrency = applyCurrency;
     return {
-      inquiryHref: P.inquiryHref ?? 'poptat-produkt.dc.html',
+      inquiryHref: inqHref, ppMode,
+      ppBtn: ppMode === 'PP1', ppLink: ppMode === 'PP2', ppCurrent: ppOn ? 'page' : undefined, ppLinkStyle: ppTabStyle(true),
       showKb: true, showMail: true, showSearchAct: true,
       // porovnávání se nepoužívá — ikona je skrytá, kód zůstává (prop showCompareAction ji vrátí)
       showCompareAct: P.showCompareAction === true,

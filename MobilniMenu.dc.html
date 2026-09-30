@@ -31,11 +31,6 @@
 </style>
 </helmet>
 <div style="border-top:1px solid #F2F4F7;background:#fff;">
-  <div style="padding:12px 16px 4px;display:flex;">
-    <div style="flex:1;min-width:0;display:flex;">
-      <dc-import name="Tlacitko" variant="primary" size="medium" label="Poptat produkt" icon="help" full-width="{{ true }}" href="{{ inquiryHref }}" debug="{{ false }}" hint-size="100%,44px"></dc-import>
-    </div>
-  </div>
   <div style="padding:4px 16px;">
     <sc-for list="{{ items }}" as="m" hint-placeholder-count="5">
       <sc-if value="{{ m.isBranchLink }}" hint-placeholder-val="">
@@ -51,6 +46,16 @@
         <a class="mm-link a11y-i" href="{{ m.href }}" onClick="{{ m.onClick }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:52px;border-bottom:1px solid #F2F4F7;cursor:pointer;"><span style="{{ m.style }}">{{ m.t }}</span></a>
       </sc-if>
     </sc-for>
+    <sc-if value="{{ ppItem }}" hint-placeholder-val="">
+      <a class="mm-link a11y-i" href="{{ inquiryHref }}" style="display:flex;align-items:center;gap:8px;min-height:52px;border-bottom:1px solid #F2F4F7;cursor:pointer;text-decoration:none;"><sc-if value="{{ ppIcon }}" hint-placeholder-val=""><span aria-hidden="true" style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="help" size="24" hint-size="24px,24px"></dc-import></span></sc-if><span style="font-size:20px;font-weight:700;line-height:1.35;min-width:0;color:#15181C;">Poptat produkt</span></a>
+    </sc-if>
+    <sc-if value="{{ ppBtn }}" hint-placeholder-val="{{ true }}">
+      <div style="padding:12px 0 4px;display:flex;">
+        <div style="flex:1;min-width:0;display:flex;">
+          <dc-import name="Tlacitko" variant="primary" size="medium" label="Poptat produkt" icon="help" full-width="{{ true }}" href="{{ inquiryHref }}" debug="{{ false }}" hint-size="100%,44px"></dc-import>
+        </div>
+      </div>
+    </sc-if>
   </div>
 
   <div style="padding:4px 16px;">
@@ -382,7 +387,7 @@ class Component extends DCLogic {
           toggleLabel: (isOpen ? 'Sbalit ' : 'Rozbalit ') + n.name,
           onToggle: toggle(key),
           onNav: goHref(href, n.name),
-          style: 'font-size:' + (root ? 20 : 18) + 'px;font-weight:700;line-height:1.35;min-width:0;'
+          style: 'font-size:' + (root ? 20 : 18) + 'px;font-weight:' + (depth >= 2 ? 400 : 700) + ';line-height:1.35;min-width:0;'
             + (depth ? 'padding-left:' + (depth * 16) + 'px;' : '') + 'color:'
             + (n.tone === 'sale' ? '#C5232B' : (root ? '#15181C' : '#5A626C')) + ';',
           onClick: branch ? toggle(key) : goHref(n.href || '#', n.name),
@@ -395,6 +400,8 @@ class Component extends DCLogic {
     return {
       embedded, standalone: !embedded, debug: P.debug ?? true,
       items,
+      inquiryHref: P.inquiryHref ?? 'poptat-produkt.dc.html',
+      ppBtn: (P.inquiryMode || 'PP1') === 'PP1', ppItem: P.inquiryMode === 'PP2' || P.inquiryMode === 'PP3', ppIcon: P.inquiryMode === 'PP2',
       infoItems: infoLinks.map(t=>({ t, onClick:(e)=>{ stop(e); onInfoSelect(t); } })),
       phone, email, hours,
       phoneHref: 'tel:+420' + phone.replace(/\D/g,''),

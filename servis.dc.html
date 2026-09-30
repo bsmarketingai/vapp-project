@@ -36,6 +36,20 @@
   .sv-lists{display:grid;gap:20px;grid-template-columns:repeat(2,minmax(0,1fr));}
   @media (max-width:819px){ .sv-lists{grid-template-columns:1fr;} }
   .vapp-led{border-radius:999px;}
+  .sv-acc-mb{display:none;}
+  @media (max-width:999px){
+    .sv-acc-dt{display:none !important;}
+    .sv-acc-mb{display:block;}
+    .sv-acc-body[data-open="0"]{display:none !important;}
+    .sv-acc-list{gap:8px !important;}
+    .sv-acc-item{background:#FFFFFF;border-radius:8px;}
+    .sv-acc-item .sv-acc-body{padding:0 12px 12px;}
+  }
+  .a11y-i.sv-acc-btn{width:100%;min-height:56px;display:flex;align-items:center;gap:10px;padding:12px;border-radius:8px;transition:background-color .12s ease;}
+  .sv-acc-btn:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  @media (hover:hover) and (pointer:fine){ .sv-acc-btn:hover{background:#F2F4F7;} }
+  .sv-acc-chev{flex:none;display:inline-flex;color:#5189CC;margin-left:auto;transition:transform .15s ease;}
+  .sv-acc-btn[aria-expanded="true"] .sv-acc-chev{transform:rotate(180deg);}
 </style>
 </helmet>
 <div data-screen-label="Servis" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
@@ -50,41 +64,6 @@
 
     <div style="margin-top:22px;">
       <dc-import name="VypisKategorii" layout="kompaktni" media="zadne" nejhledanejsi="{{ false }}" categories="{{ categoriesData }}" debug="{{ debug }}" hint-size="100%,160px"></dc-import>
-    </div>
-
-    <div class="sv-two" style="margin-top:24px;">
-      <div style="background:#FFFFFF;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:16px;">
-        <h2 style="margin:0;font-size:22px;font-weight:700;line-height:1.25;">Objednání do servisu</h2>
-        <div style="display:flex;flex-direction:column;gap:12px;">
-          <a class="a11y-i" target="_blank" rel="noopener noreferrer" href="https://www.google.cz/maps/dir//VAPP+-+p%C5%99%C3%ADv%C4%9Bsy,+p%C5%99%C3%ADslu%C5%A1enstv%C3%AD,+n%C3%A1hradn%C3%AD+d%C3%ADly+a+servis,+38,+251+01+Popovi%C4%8Dky/@49.9695313,14.6010162,13z" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#15181C;text-decoration:underline;"><span aria-hidden="true" style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="map-pin" size="24" hint-size="24px,24px"></dc-import></span>Popovičky 38, 251 01 Říčany, Praha-východ</a>
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-            <span aria-hidden="true" style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="clock" size="24" hint-size="24px,24px"></dc-import></span>
-            <span style="font-size:16px;font-weight:700;color:#15181C;">Po–Pá 8:30–16:00</span>
-            <span class="vapp-led" aria-hidden="true" style="--led:rgba(46,170,106,.45);width:9px;height:9px;background:#2EAA6A;flex:none;"></span>
-            <span style="font-size:15px;font-weight:400;color:#0B6937;">právě otevřeno</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-            <span aria-hidden="true" style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import></span>
-            <a class="a11y-i" href="tel:+420603924555" style="font-size:16px;font-weight:700;color:#15181C;text-decoration:underline;">603 924 555</a>
-            <span style="font-size:15px;font-weight:400;color:#5A626C;">Jiří Balzer, objednávky</span>
-          </div>
-        </div>
-        <div style="height:1px;background:#F2F4F7;"></div>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <div style="font-size:16px;font-weight:700;color:#15181C;">Rezervujte si termín on-line</div>
-          <p style="margin:0;font-size:15px;line-height:1.6;color:#5A626C;max-width:52ch;text-wrap:pretty;">Vyberte službu ve výpisu níž a odešlete poptávku — ozveme se s termínem do jednoho pracovního dne.</p>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <dc-import name="Tlacitko" variant="primary" size="medium" icon="calendar" label="Rezervovat termín" on-click="{{ openForm }}" hint-size="200px,44px"></dc-import>
-            <dc-import name="Tlacitko" variant="secondary" size="medium" icon="phone" label="Zavolat" href="tel:+420603924555" hint-size="140px,44px"></dc-import>
-          </div>
-        </div>
-      </div>
-      <div class="sv-map" style="position:relative;background:#FFFFFF;border-radius:8px;padding:12px;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;overflow:hidden;">
-        <div class="sv-mapimg" style="position:absolute;left:12px;right:12px;top:12px;bottom:56px;">
-          <img src="uploads/Sni%CC%81mek%20obrazovky%202026-09-10%20v%2015.34.34.png" alt="Mapa — trasa do VAPP v Popovičkách" style="width:100%;height:100%;object-fit:cover;border-radius:6px;display:block;">
-        </div>
-        <div style="position:relative;z-index:1;display:flex;padding:2px 0 0;"><dc-import name="Tlacitko" variant="textDanger" size="standard" icon-trailing="chevron-right" label="Naplánovat trasu" href="https://www.google.cz/maps/dir//VAPP+-+p%C5%99%C3%ADv%C4%9Bsy,+p%C5%99%C3%ADslu%C5%A1enstv%C3%AD,+n%C3%A1hradn%C3%AD+d%C3%ADly+a+servis,+38,+251+01+Popovi%C4%8Dky/@49.9695313,14.6010162,13z" hint-size="180px,36px"></dc-import></div>
-      </div>
     </div>
 
     <div class="sv-lists" style="margin-top:20px;">
@@ -127,14 +106,21 @@
       <div style="min-width:220px;"><dc-import name="Select" options="{{ sortOptions }}" value="{{ sortKey }}" on-change="{{ onSort }}" size="compact" hint-size="220px,36px"></dc-import></div>
     </div>
 
-    <div style="display:flex;flex-direction:column;gap:32px;">
+    <div class="sv-acc-list" style="display:flex;flex-direction:column;gap:32px;">
       <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
-        <div>
-          <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:10px;">
+        <div class="sv-acc-item">
+          <div class="sv-acc-dt" style="display:flex;align-items:baseline;gap:10px;margin-bottom:10px;">
             <h2 style="margin:0;font-size:22px;font-weight:700;line-height:1.25;">{{ g.name }}</h2>
             <span style="font-size:13px;font-weight:500;color:#666E78;">{{ g.countLabel }}</span>
           </div>
-          <div style="display:flex;flex-direction:column;gap:8px;">
+          <h2 class="sv-acc-mb" style="margin:0;font-size:18px;font-weight:700;line-height:1.3;">
+            <button type="button" class="a11y-i sv-acc-btn" aria-expanded="{{ g.expanded }}" aria-controls="{{ g.bodyId }}" onClick="{{ g.onToggle }}">
+              <span style="min-width:0;text-align:left;">{{ g.name }}</span>
+              <span style="flex:none;font-size:13px;font-weight:500;color:#666E78;">{{ g.countLabel }}</span>
+              <span class="sv-acc-chev" aria-hidden="true"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></span>
+            </button>
+          </h2>
+          <div class="sv-acc-body" id="{{ g.bodyId }}" data-open="{{ g.openFlag }}" style="display:flex;flex-direction:column;gap:8px;">
             <sc-for list="{{ g.items }}" as="p" hint-placeholder-count="4">
               <dc-import name="KartaServis" layout="radek" p="{{ p }}" currency="{{ currency }}" on-order="{{ openForm }}" debug="{{ debug }}" hint-size="100%,76px"></dc-import>
             </sc-for>
@@ -147,15 +133,47 @@
       <dc-import name="Paginace" page="{{ pgPage }}" page-count="{{ pgCount }}" shown-count="{{ shownCount }}" total-count="{{ pgTotal }}" next-batch="{{ nextBatch }}" item-word="služeb" on-page="{{ onPageChange }}" on-load-more="{{ loadMore }}" debug="{{ debug }}" hint-size="100%,180px"></dc-import>
     </div>
 
+    <div class="sv-two" style="margin-top:24px;">
+      <div style="background:#FFFFFF;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:16px;">
+        <h2 style="margin:0;font-size:22px;font-weight:700;line-height:1.25;">Objednání do servisu</h2>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <a class="a11y-i" target="_blank" rel="noopener noreferrer" href="https://www.google.cz/maps/dir//VAPP+-+p%C5%99%C3%ADv%C4%9Bsy,+p%C5%99%C3%ADslu%C5%A1enstv%C3%AD,+n%C3%A1hradn%C3%AD+d%C3%ADly+a+servis,+38,+251+01+Popovi%C4%8Dky/@49.9695313,14.6010162,13z" style="display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#15181C;text-decoration:underline;"><span aria-hidden="true" style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="map-pin" size="24" hint-size="24px,24px"></dc-import></span>Popovičky 38, 251 01 Říčany, Praha-východ</a>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span aria-hidden="true" style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="clock" size="24" hint-size="24px,24px"></dc-import></span>
+            <span style="font-size:16px;font-weight:700;color:#15181C;">Po–Pá 8:30–16:00</span>
+            <span class="vapp-led" aria-hidden="true" style="--led:rgba(46,170,106,.45);width:9px;height:9px;background:#2EAA6A;flex:none;"></span>
+            <span style="font-size:15px;font-weight:400;color:#0B6937;">právě otevřeno</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span aria-hidden="true" style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import></span>
+            <a class="a11y-i" href="tel:+420603924555" style="font-size:16px;font-weight:700;color:#15181C;text-decoration:underline;">603 924 555</a>
+            <span style="font-size:15px;font-weight:400;color:#5A626C;">Jiří Balzer, objednávky</span>
+          </div>
+        </div>
+        <div style="height:1px;background:#F2F4F7;"></div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="font-size:16px;font-weight:700;color:#15181C;">Rezervujte si termín on-line</div>
+          <p style="margin:0;font-size:15px;line-height:1.6;color:#5A626C;max-width:52ch;text-wrap:pretty;">Vyberte službu ve výpisu níž a odešlete poptávku — ozveme se s termínem do jednoho pracovního dne.</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <dc-import name="Tlacitko" variant="primary" size="medium" icon="calendar" label="Rezervovat termín" on-click="{{ openForm }}" hint-size="200px,44px"></dc-import>
+            <dc-import name="Tlacitko" variant="secondary" size="medium" icon="phone" label="Zavolat" href="tel:+420603924555" hint-size="140px,44px"></dc-import>
+          </div>
+        </div>
+      </div>
+      <div class="sv-map" style="position:relative;background:#FFFFFF;border-radius:8px;padding:12px;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;overflow:hidden;">
+        <div class="sv-mapimg" style="position:absolute;left:12px;right:12px;top:12px;bottom:56px;">
+          <img src="uploads/Sni%CC%81mek%20obrazovky%202026-09-10%20v%2015.34.34.png" alt="Mapa — trasa do VAPP v Popovičkách" style="width:100%;height:100%;object-fit:cover;border-radius:6px;display:block;">
+        </div>
+        <div style="position:relative;z-index:1;display:flex;padding:2px 0 0;"><dc-import name="Tlacitko" variant="ghost" size="standard" icon-trailing="chevron-right" label="Naplánovat trasu" href="https://www.google.cz/maps/dir//VAPP+-+p%C5%99%C3%ADv%C4%9Bsy,+p%C5%99%C3%ADslu%C5%A1enstv%C3%AD,+n%C3%A1hradn%C3%AD+d%C3%ADly+a+servis,+38,+251+01+Popovi%C4%8Dky/@49.9695313,14.6010162,13z" hint-size="180px,36px"></dc-import></div>
+      </div>
+    </div>
+
     <div style="margin-top:22px;">
       <dc-import name="PoradenskyBlok" variant="compact" hint-size="100%,90px"></dc-import>
     </div>
 
   </main>
 
-  <div class="vp-in" style="margin-top:8px;">
-    <dc-import name="Usp" variant="sloupce" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
-  </div>
   <div style="margin-top:10px;">
     <dc-import name="Paticka" bare="{{ true }}" hint-size="100%,600px"></dc-import>
   </div>
@@ -165,7 +183,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 class Component extends DCLogic {
-  state = { currency:'CZK', sortKey:'Výchozí řazení', shown:16, formOpen:false, rezIndex:0 };
+  state = { currency:'CZK', sortKey:'Výchozí řazení', shown:16, formOpen:false, rezIndex:0, accOpen:0 };
 
   CATS = ['AL-KO servis','BPW servis','KNOTT servis','Garanční prohlídky','Pneuservis'];
 
@@ -267,7 +285,7 @@ class Component extends DCLogic {
       onSort: (v)=>this.setState({ sortKey:v, shown:perPage }),
       totalLabel: total + ' služeb',
       shownItems: sorted.slice(0, shown),
-      groups: this.GROUP_ORDER.map(g=>({ name:g, items: sorted.slice(0, shown).filter(it=>this.groupOf(it.name)===g) })).filter(g=>g.items.length>0).map(g=>({ name:g.name, items:g.items, countLabel:g.items.length+' '+(g.items.length===1?'úkon':(g.items.length<5?'úkony':'úkonů')) })),
+      groups: this.GROUP_ORDER.map(g=>({ name:g, items: sorted.slice(0, shown).filter(it=>this.groupOf(it.name)===g) })).filter(g=>g.items.length>0).map((g,i)=>({ name:g.name, items:g.items, bodyId:'sv-acc-'+i, expanded: s.accOpen===i ? 'true' : 'false', openFlag: s.accOpen===i ? '1' : '0', onToggle: ()=>this.setState({ accOpen: s.accOpen===i ? -1 : i }), countLabel:g.items.length+' '+(g.items.length===1?'úkon':(g.items.length<5?'úkony':'úkonů')) })),
       pgPage: 1,
       pgCount: Math.max(1, Math.ceil(total / perPage)),
       shownCount: shown,

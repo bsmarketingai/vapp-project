@@ -57,7 +57,7 @@
         <span style="font-size:13px;font-weight:400;line-height:1.4;color:#666E78;">{{ c.countText }}</span>
         <nav aria-label="{{ c.navLabel }}" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;">
           <sc-for list="{{ c.subs }}" as="s" hint-placeholder-count="4">
-            <dc-import name="Chip" kind="secondary" size="small" label="{{ s.name }}" href="{{ s.href }}" active="{{ false }}" count="{{ 0 }}" debug="{{ false }}" hint-size="120px,32px"></dc-import>
+            <dc-import name="Chip" kind="secondary" size="small" label="{{ s.name }}" href="{{ s.href }}" active="{{ false }}" count="{{ 0 }}" debug="{{ debug }}" hint-size="120px,32px"></dc-import>
           </sc-for>
         </nav>
       </div>

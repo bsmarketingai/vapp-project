@@ -25,7 +25,7 @@
   .ar-h1{font-size:36px;font-weight:700;line-height:1.15;letter-spacing:-0.02em;}
   .ar-h2{font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.01em;}
   .ar-h3{font-size:22px;font-weight:700;line-height:1.25;}
-  @media (max-width:819px){ .ar-h1{font-size:26px;line-height:1.2;} .ar-h2{font-size:22px;line-height:1.25;} .ar-h3{font-size:18px;line-height:1.3;} .ar-body{font-size:16px!important;} }
+  @media (max-width:819px){ .ar-h1{font-size:26px;line-height:1.2;} .ar-h2{font-size:26px;line-height:1.2;} .ar-h3{font-size:18px;line-height:1.3;} .ar-body{font-size:16px!important;} }
   .ar-body{font-size:18px;font-weight:400;line-height:1.6;color:#3A424C;}
   .ar-body p{margin:0;text-wrap:pretty;}
   .ar-side{display:flex;flex-direction:column;gap:16px;}
@@ -67,7 +67,7 @@
         <header style="display:flex;flex-direction:column;gap:14px;">
           <h1 class="ar-h1" style="margin:0;color:#142F56;text-wrap:pretty;">Tachograf od 1. 7. 2026: koho se povinnost týká</h1>
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-            <dc-import name="Chip" kind="guide" size="small" label="Předpisy" icon-name="book" href="poradna.dc.html" debug="{{ false }}" hint-size="130px,32px"></dc-import>
+            <dc-import name="Chip" kind="guide" size="small" label="Předpisy" icon-name="book" href="poradna.dc.html" debug="{{ debug }}" hint-size="130px,32px"></dc-import>
           </div>
           <p style="margin:0;font-size:18px;font-weight:400;line-height:1.6;color:#5A626C;text-wrap:pretty;">Od 1. července 2026 musí být některé automobily a soupravy s přívěsem o hmotnosti od 2,5 t do 3,5 t vybaveny chytrým tachografem. Shrnuli jsme, koho se povinnost týká, jaké jsou výjimky a co udělat, abyste pokutu nedostali hned první den.</p>
           <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:13px;font-weight:500;color:#666E78;">
@@ -180,15 +180,12 @@
       <h2 id="ar-rel-h" class="ar-h2" style="margin:0;color:#15181C;">Další články z rubriky Předpisy</h2>
       <div class="ar-rel">
         <sc-for list="{{ related }}" as="a" hint-placeholder-count="3">
-          <dc-import name="KartaClanku" a="{{ a }}" debug="{{ false }}" hint-size="100%,400px"></dc-import>
+          <dc-import name="KartaClanku" a="{{ a }}" debug="{{ debug }}" hint-size="100%,400px"></dc-import>
         </sc-for>
       </div>
     </section>
   </main>
 
-  <div class="vp-in" style="margin-top:8px;">
-    <dc-import name="Usp" variant="sloupce" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
-  </div>
   <div style="margin-top:10px;">
     <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
   </div>

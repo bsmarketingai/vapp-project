@@ -28,24 +28,32 @@
   @media (max-width:999px){ .pkr-item{flex-basis:calc((100% - 40px)/3);} }
   @media (max-width:819px){ .pkr-item{flex-basis:calc((100% - 20px)/2);} }
   /* XS a XXS: vždy právě jedna celá karta, nic nevykukuje */
-  @media (max-width:549px){ .pkr-item{flex-basis:100%;} }
+  /* XS a XXS: poloviční mezera (space-2) kvůli úspoře místa */
+  @media (max-width:549px){ .pkr-track{gap:8px;} .pkr-item{flex-basis:100%;} }
+  /* přepínač XS sloupce platí pro XS i XXS od 320 px; pod 320 px vždy jeden sloupec */
+  @media (min-width:320px) and (max-width:549px){ .pkr-item{flex-basis:calc((100% - (var(--vp-xs-cols,1) - 1) * 8px) / var(--vp-xs-cols,1));} }
+  /* karta v karuselu je tekutá — bez min-width 280 by se dva sloupce v XS nevešly */
+  .pkr-item .h-card{min-width:0 !important;max-width:none !important;}
   .pkr-h2{font-size:28px;line-height:1.2;letter-spacing:-0.01em;}
-  @media (max-width:819px){ .pkr-h2{font-size:22px;line-height:1.25;} }
+  @media (max-width:819px){ .pkr-h2{font-size:26px;line-height:1.2;} }
   .pkr-navwrap{display:flex;}
+  /* mobil: nahoře jen H2, Zobrazit vše a šipky pod karuselem vpravo */
+  .pkr-navbot{display:none !important;}
+  @media (max-width:819px){ .pkr-ctrl{display:none !important;} .pkr-navbot{display:flex !important;align-items:center;justify-content:space-between;gap:16px;} }
 </style>
 </helmet>
 <section aria-labelledby="{{ headingId }}" style="width:100%;display:flex;flex-direction:column;gap:16px;">
-  <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <div class="pkr-head" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
     <h2 id="{{ headingId }}" class="pkr-h2" style="margin:0;font-weight:700;color:#15181C;">{{ title }}</h2>
-    <div style="display:flex;align-items:center;gap:8px;">
-      <a class="pkr-all" href="{{ allHref }}" style="display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 16px;border-radius:8px;font-size:14px;font-weight:700;color:#C5232B;transition:background 120ms ease;" style-hover="background:#FDF1F1;" style-active="transform:translateY(1px);">{{ allLabel }}
+    <div class="pkr-ctrl" style="display:flex;align-items:center;gap:16px;">
+      <a class="pkr-all" href="{{ allHref }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:8px;background:#FFFFFF;border:1px solid #B4CEEC;font-size:14px;font-weight:700;color:#1E5AA8;transition:background 120ms ease;" style-hover="background:#EFF4FB;" style-active="transform:translateY(1px);">{{ allLabel }}
         <dc-import name="Ikony" icon-name="arrow-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
       </a>
-      <div class="pkr-navwrap" style="align-items:center;gap:4px;">
-        <button type="button" class="pkr-btn" aria-label="Předchozí produkty" disabled="{{ atStart }}" onClick="{{ onPrev }}" style="{{ prevStyle }}" style-hover="background:#FDF1F1;" style-active="transform:translateY(1px);">
+      <div class="pkr-navwrap pkr-navtop" style="align-items:center;gap:4px;">
+        <button type="button" class="pkr-btn" aria-label="Předchozí produkty" disabled="{{ atStart }}" onClick="{{ onPrev }}" style="{{ prevStyle }}" style-hover="background:#EFF4FB;" style-active="transform:translateY(1px);">
           <dc-import name="Ikony" icon-name="chevron-left" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
         </button>
-        <button type="button" class="pkr-btn" aria-label="Další produkty" disabled="{{ atEnd }}" onClick="{{ onNext }}" style="{{ nextStyle }}" style-hover="background:#FDF1F1;" style-active="transform:translateY(1px);">
+        <button type="button" class="pkr-btn" aria-label="Další produkty" disabled="{{ atEnd }}" onClick="{{ onNext }}" style="{{ nextStyle }}" style-hover="background:#EFF4FB;" style-active="transform:translateY(1px);">
           <dc-import name="Ikony" icon-name="chevron-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
         </button>
       </div>
@@ -58,12 +66,26 @@
       </div>
     </sc-for>
   </div>
+  <div class="pkr-navbot">
+  <a class="pkr-all" href="{{ allHref }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:8px;background:#FFFFFF;border:1px solid #B4CEEC;font-size:14px;font-weight:700;color:#1E5AA8;transition:background 120ms ease;" style-hover="background:#EFF4FB;" style-active="transform:translateY(1px);">{{ allLabel }}
+        <dc-import name="Ikony" icon-name="arrow-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
+      </a>
+        <div class="pkr-navwrap" style="align-items:center;gap:4px;">
+          <button type="button" class="pkr-btn" aria-label="Předchozí produkty" disabled="{{ atStart }}" onClick="{{ onPrev }}" style="{{ prevStyle }}" style-hover="background:#EFF4FB;" style-active="transform:translateY(1px);">
+            <dc-import name="Ikony" icon-name="chevron-left" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
+          </button>
+          <button type="button" class="pkr-btn" aria-label="Další produkty" disabled="{{ atEnd }}" onClick="{{ onNext }}" style="{{ nextStyle }}" style-hover="background:#EFF4FB;" style-active="transform:translateY(1px);">
+            <dc-import name="Ikony" icon-name="chevron-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
+          </button>
+        </div>
+  
+  </div>
 </section>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:600},&quot;title&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Nejprodávanější náhradní díly&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;allLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Zobrazit celou kategorii&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;allHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;#&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;detailHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;#&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;currency&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;CZK&quot;,&quot;EUR&quot;],&quot;default&quot;:&quot;CZK&quot;,&quot;tsType&quot;:&quot;'CZK'|'EUR'&quot;},&quot;items&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;object[]&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 class Component extends DCLogic {
-  NAV = 'width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:999px;background:#FFFFFF;color:#C5232B;transition:background 120ms ease,opacity 120ms ease;';
+  NAV = 'width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:#FFFFFF;border:1px solid #B4CEEC;color:#1E5AA8;transition:background 120ms ease,opacity 120ms ease;';
   NAV_OFF = 'opacity:.4;cursor:not-allowed;';
   DEMO = [
     { name:'Opěrné kolečko ⌀48 mm, nosnost 150 kg', objNum:'404815', net:'397 Kč', gross:'480 Kč', stock:22, sale:15 },

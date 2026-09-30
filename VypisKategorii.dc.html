@@ -14,10 +14,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
 <style>
   *{box-sizing:border-box;}
+  .vk-logo:hover{border-color:#5189CC !important;} .vk-logo:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   .a11y-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
   .a11y-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
   /* mřížka kategorií: S dvousloupcová, jeden sloupec až na XS a XXS */
+  /* jednotný počet sloupců rozcestníku (Náhradní díly i Přívěsy): od L 4, M 3, S 2, XS a XXS 1 */
+  @media (min-width:1000px){ .vk-grid{grid-template-columns:repeat(4,minmax(0,1fr)) !important;} }
+  @media (min-width:820px) and (max-width:999px){ .vk-grid{grid-template-columns:repeat(3,minmax(0,1fr)) !important;} }
   @media (max-width:819px){ .vk-grid{grid-template-columns:repeat(2,1fr) !important;} }
   @media (max-width:549px){ .vk-grid{grid-template-columns:1fr !important;} }
   /* nejhledanější: desktop jeden řádek s labelem vlevo, pod 820 px label nad chipsy */
@@ -25,12 +29,22 @@
 </style>
 </helmet>
 <sc-if value="{{ showTop }}" hint-placeholder-val="{{ true }}">
-  <nav class="vk-top" aria-label="Nejhledanější kategorie" style="display:flex;align-items:center;gap:8px 16px;flex-wrap:wrap;margin-bottom:{{ topMargin }};">
-    <span style="flex:none;font-size:13px;font-weight:700;line-height:1.4;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Nejhledanější</span>
+  <nav class="vk-top" aria-label="{{ topAria }}" style="display:flex;align-items:center;gap:8px 16px;flex-wrap:wrap;margin-bottom:{{ topMargin }};">
+    <span style="flex:none;font-size:13px;font-weight:700;line-height:1.4;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">{{ topLabel }}</span>
     <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0;">
+      <sc-if value="{{ showTopChips }}" hint-placeholder-val="{{ true }}">
       <sc-for list="{{ topItems }}" as="t" hint-placeholder-count="5">
         <dc-import name="Chip" kind="{{ t.kind }}" size="small" label="{{ t.label }}" icon-name="{{ t.iconName }}" href="{{ t.href }}" hint-size="150px,32px"></dc-import>
       </sc-for>
+      </sc-if>
+      <sc-if value="{{ showTopLogos }}" hint-placeholder-val="">
+      <sc-for list="{{ topLogoItems }}" as="l" hint-placeholder-count="4">
+        <a class="vk-logo" href="{{ l.href }}" aria-label="{{ l.name }}" style="display:inline-flex;align-items:center;justify-content:center;height:32px;min-width:88px;padding:4px 16px;border-radius:999px;background:#FFFFFF;border:1px solid #B4CEEC;text-decoration:none;transition:border-color 120ms ease;">
+          <sc-if value="{{ l.hasLogo }}" hint-placeholder-val=""><img src="{{ l.logo }}" alt="" style="display:block;height:16px;width:auto;max-width:96px;object-fit:contain;"></sc-if>
+          <sc-if value="{{ l.noLogo }}" hint-placeholder-val="{{ true }}"><span style="font-size:14px;font-weight:700;line-height:1;color:#3A424C;letter-spacing:.02em;">{{ l.name }}</span></sc-if>
+        </a>
+      </sc-for>
+      </sc-if>
     </div>
   </nav>
 </sc-if>
@@ -94,7 +108,7 @@
 </sc-if>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:700},&quot;media&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;fotky&quot;,&quot;ikony&quot;],&quot;default&quot;:&quot;fotky&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;layout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dlazdice&quot;,&quot;kompaktni&quot;,&quot;kompaktni-akordeon&quot;],&quot;default&quot;:&quot;kompaktni&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;accordionLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Všechny kategorie&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;accordionOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;brandsAccordionLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Díly podle výrobce&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;topOnly&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Nejhledanější&quot;},&quot;nejhledanejsi&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Nejhledanější&quot;},&quot;showGuideChip&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;topSearched&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{kind:string,label:string,iconName?:string,href?:string}[]&quot;,&quot;default&quot;:null,&quot;section&quot;:&quot;Nejhledanější&quot;},&quot;categories&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{name:string,count:number,subs:{name:string,count:number}[]}[]&quot;,&quot;default&quot;:null},&quot;onOpenCategory&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(name:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;onPickSub&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(catName:string,subName:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:700},&quot;media&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;fotky&quot;,&quot;ikony&quot;],&quot;default&quot;:&quot;fotky&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;layout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dlazdice&quot;,&quot;kompaktni&quot;,&quot;kompaktni-akordeon&quot;],&quot;default&quot;:&quot;kompaktni&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;accordionLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Všechny kategorie&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;accordionOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;brandsAccordionLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Díly podle výrobce&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;topOnly&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Nejhledanější&quot;},&quot;nejhledanejsi&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Nejhledanější&quot;},&quot;showGuideChip&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;topLogos&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{name:string,logo?:string,href?:string}[]&quot;,&quot;default&quot;:null,&quot;section&quot;:&quot;Nejhledanější&quot;},&quot;topAria&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Nejhledanější kategorie&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Nejhledanější&quot;},&quot;topSearched&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{kind:string,label:string,iconName?:string,href?:string}[]&quot;,&quot;default&quot;:null,&quot;section&quot;:&quot;Nejhledanější&quot;},&quot;categories&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{name:string,count:number,subs:{name:string,count:number}[]}[]&quot;,&quot;default&quot;:null},&quot;onOpenCategory&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(name:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;onPickSub&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(catName:string,subName:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 class Component extends DCLogic {
   DEMO_BRANDS = [
     { name:'Sport Jacht', count:196 }, { name:'Agados', count:274 },
@@ -172,6 +186,8 @@ class Component extends DCLogic {
       ? this.props.topSearched
       : this.TOP).filter(it => it.kind !== 'guide' || this.props.showGuideChip === true);
     const P = this.props;
+    // Nejhledanější: místo chipů mohou přijít loga (NEJ3) — {name, logo?, href}
+    const topLogoItems = (Array.isArray(P.topLogos) ? P.topLogos : []).map(l=>({ name:l.name, logo:l.logo, href:l.href || '#', hasLogo: !!l.logo, noLogo: !l.logo }));
     const layout = P.layout || this.DEFAULT_LAYOUT;
     const accLayout = layout === 'kompaktni-akordeon';
     const accOn = accLayout && !!this.state.narrow;
@@ -180,7 +196,10 @@ class Component extends DCLogic {
     if (this._brKey !== key){ this._brKey = key; this._brOpen = false; }
     const chev = (open)=>'flex:none;display:flex;color:#5189CC;transition:transform .12s ease;'+(open?'transform:rotate(180deg);':'');
     // v režimu topOnly jde o výřez pro stránku, ne o samostatný náhled — dokumentace se nevykresluje
-    return { cats, brandCats, showBrands: brandCats.length > 0, showDocs: demo && this.props.topOnly !== true,
+    return {
+      topLogoItems, showTopLogos: topLogoItems.length > 0, showTopChips: topLogoItems.length === 0,
+      topLabel: P.topLabel || 'Nejhledanější',
+      topAria: P.topAria || 'Nejhledanější kategorie', cats, brandCats, showBrands: brandCats.length > 0, showDocs: demo && this.props.topOnly !== true,
       tileVariant: (layout === 'dlazdice' ? 'standard' : 'kompaktni'),
       tileMedia: (P.media === 'ikony' || P.media === 'zadne') ? P.media : 'fotky',
       showTop: (P.nejhledanejsi ?? true) && topItems.length > 0, topItems,

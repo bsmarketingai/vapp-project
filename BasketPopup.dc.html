@@ -48,11 +48,14 @@
       <sc-if value="{{ hasItems }}" hint-placeholder-val="{{ true }}">
         <ul style="flex:1;min-height:0;overflow-y:auto;list-style:none;margin:0;padding:4px 8px;display:flex;flex-direction:column;">
           <sc-for list="{{ items }}" as="it" hint-placeholder-count="3">
-            <li class="bp-row" style="display:flex;align-items:center;gap:12px;padding:10px 8px;border-radius:8px;">
+            <li class="bp-row" style="display:flex;align-items:flex-start;gap:12px;padding:10px 8px;border-radius:8px;">
               <span aria-hidden="true" style="{{ it.thumbStyle }}"></span>
               <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;">
                 <a class="bp-i bp-name" href="{{ it.href }}" style="font-size:14px;font-weight:700;line-height:1.3;color:#15181C;">{{ it.name }}</a>
-                <span style="font-size:13px;font-weight:400;color:#666E78;">{{ it.qtyLine }}</span>
+                <span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px;">
+                  <dc-import name="Kvantifikator" size="compact" value="{{ it.qty }}" min="{{ 1 }}" max="{{ 99 }}" on-change="{{ it.onQty }}" debug="{{ debug }}" hint-size="104px,36px"></dc-import>
+                  <span style="font-size:13px;font-weight:400;color:#666E78;white-space:nowrap;">{{ it.unitLine }}</span>
+                </span>
               </span>
               <span style="flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:2px;">
                 <span style="font-size:14px;font-weight:700;color:#15181C;white-space:nowrap;">{{ it.sum }}</span>
@@ -94,7 +97,7 @@
 <sc-if value="{{ standalone }}" hint-placeholder-val="">
   <div style="padding:24px 16px;display:flex;flex-direction:column;gap:5px;">
     <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> náhled košíku po najetí nebo kliknutí na košík v hlavičce. Komponenta drží overlay, pozicování, animaci, Escape, focus trap i zámek scrollu; položky a akce posílá hlavička přes props (<code>items</code>, <code>onRemove(index)</code>, <code>onGoToCart</code>, <code>onBackToShop</code>). Na XS a XXS panel pokrývá celý displej a přibývá sekundární „Zpět do obchodu".</div>
-    <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nepatří sem změna množství ani doprava a platba — to řeší stránka košíku. Položkové callbacky se nepředávají v poli dat, komponenta si je vyrábí z <code>onRemove(index)</code>.</div>
+    <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> nepatří sem doprava a platba — to řeší stránka košíku. Položkové callbacky se nepředávají v poli dat, komponenta si je vyrábí z <code>onRemove(index)</code>.</div>
   </div>
 </sc-if>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
@@ -122,12 +125,14 @@ class Component extends DCLogic {
   // panel se kotví pod ikonu košíku v hlavičce; bez kotvy zůstává vpravo nahoře
   measure(){
     try{
-      const sel = this.props.anchor || '#hd-cart';
+      const sel = this.props.anchor || '#hd-cart .ks-box, #hd-cart .ks-mob, #hd-cart';
       const a = document.querySelector(sel);
       if (!a) { if (this.state.pos) this.setState({ pos:null }); return; }
       const r = a.getBoundingClientRect();
       const top = Math.max(8, Math.round(r.bottom + 8));
-      const right = Math.max(16, Math.round(window.innerWidth - r.right));
+      // clientWidth bez posuvníku — innerWidth by panel posunul o šířku scrollbaru doleva
+      const vw = document.documentElement.clientWidth || window.innerWidth;
+      const right = Math.max(16, Math.round(vw - r.right));
       const p = top + ':' + right;
       if (this._pos !== p){ this._pos = p; this.setState({ pos:{ top, right } }); }
     }catch(e){}
@@ -208,12 +213,23 @@ class Component extends DCLogic {
     const removeItem = (i)=>{
       if (typeof P.onRemove === 'function'){ P.onRemove(i); return; }
       const next = (this.state.demoItems || this.DEMO).filter((x,ix)=>ix!==i);
-      this.setState({ demoItems: next });
+      this.setState({ demoItems: next, qtyOv: {} });
     };
-    const items = src.map((it,i)=>({
+    // změna množství: stránka může převzít přes onQtyChange(index, qty), jinak drží komponenta
+    const ov = this.state.qtyOv || {};
+    const q = (it,i)=> ov[i] ?? (it.qty||1);
+    const setQty = (i, n)=>{
+      const v = Math.max(1, Math.min(99, Number(n) || 1));
+      if (typeof P.onQtyChange === 'function'){ P.onQtyChange(i, v); return; }
+      this.setState(s=>({ qtyOv: Object.assign({}, s.qtyOv || {}, { [i]: v }) }));
+    };
+    const srcQ = src.map((it,i)=>Object.assign({}, it, { qty: q(it,i) }));
+    const items = srcQ.map((it,i)=>({
       name: it.name,
       href: it.href || '#',
-      qtyLine: (it.qty||1) + '× ' + this.fmt(it.price||0) + ' / ks',
+      qty: it.qty,
+      unitLine: this.fmt(it.price||0) + ' / ks',
+      onQty: (n)=>setQty(i, n),
       sum: this.fmt((it.price||0) * (it.qty||1)),
       grossLine: this.fmt(Math.round((it.price||0) * (it.qty||1) * vat)) + ' s DPH',
       removeAria: 'Odebrat z košíku: ' + it.name,
@@ -221,8 +237,8 @@ class Component extends DCLogic {
         + (it.img ? ' url("./' + it.img + '") center/contain no-repeat' : '') + ';',
       onRemove: (e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); removeItem(i); }
     }));
-    const pieces = src.reduce((a,x)=>a + (x.qty||1), 0);
-    const net = src.reduce((a,x)=>a + (x.price||0) * (x.qty||1), 0);
+    const pieces = srcQ.reduce((a,x)=>a + (x.qty||1), 0);
+    const net = srcQ.reduce((a,x)=>a + (x.price||0) * (x.qty||1), 0);
     const plural = pieces === 1 ? '1 položka' : (pieces >= 2 && pieces <= 4 ? pieces + ' položky' : pieces + ' položek');
     const call = (f, fallback)=> ()=>{ if (typeof f === 'function') f(); else if (fallback) fallback(); };
     return {
