@@ -312,6 +312,16 @@ class Component extends DCLogic {
     { key:'m-skrinove', icon:'ikona-skrinove-privesy.svg', name:'Skříňové a chladírenské', image:'privesy-kat-10.png', cats:['skrinove','chladirenske'] },
     { key:'m-akce', icon:'ikona-vyprodej.svg', name:'Výprodej přívěsů', image:'privesy-kat-01.png', cats:[], sale:true }
   ];
+  // M2 (přepínač Megamenu): stejné skupiny jako megamenu M2 — Valníky · Přívěsy · Přepravníky · Značky + Výprodej
+  MACROS_M2 = [
+    { key:'m2-valniky', icon:'ikona-dvouose-valniky.svg', name:'Valníky', image:'privesy-kat-01.png', cats:['jednoose','dvouose','triose'] },
+    { key:'m2-privesy', icon:'ikona-sklopne-privesy.svg', name:'Přívěsy', image:'privesy-kat-07.png', cats:['sklopne','skrinove','chladirenske'] },
+    { key:'m2-preprava', icon:'ikona-prepravniky-automobilu.svg', name:'Přepravníky', image:'privesy-kat-06.png', cats:['automobily','motocykly','stroje','lode','zvirata'] },
+    { key:'m2-znacky', icon:'ikona-dvouose-valniky.svg', name:'Značky', image:'privesy-kat-02.png', cats:[], brands:['VAPP','Agados','STEMA','UNSINN'] },
+    { key:'m-akce', icon:'ikona-vyprodej.svg', name:'Výprodej přívěsů', image:'privesy-kat-01.png', cats:[], sale:true }
+  ];
+  mmVerNow(){ if(this.state && this.state.mmVer) return this.state.mmVer; try{ return localStorage.getItem('vapp-mm') || 'M1'; }catch(e){ return 'M1'; } }
+  macroList(){ return this.mmVerNow() === 'M2' ? this.MACROS_M2 : this.MACROS; }
 
   reload(patch){ this.setState(Object.assign({ loading:true }, patch||{})); clearTimeout(this._rt); this._rt=setTimeout(()=>this.setState({ loading:false }), 400); }
 
@@ -523,7 +533,7 @@ class Component extends DCLogic {
       const b = this.BRANDS.map(x=>x[0]).find(x=>this.slug(x)===parts[2]);
       if(b){ this.setState({ view:'groups', path:[], leafPath:null, subcat:null, macro:null, saleOnly:false, brandFocus:b }); return; }
     }
-    const mac = this.MACROS.find(x=>this.slug(x.name)===parts[1]);
+    const mac = this.macroList().find(x=>this.slug(x.name)===parts[1]);
     if(mac){ this.setState({ view:'groups', path:[], leafPath:null, subcat:null, brandFocus:null, macro:mac.key }); return; }
     const g = this.GROUPS.find(x=>this.slug(x.name)===parts[1]);
     if(!g){ this.setState({ view:'groups', path:[], leafPath:null, subcat:null, macro:null }); return; }
@@ -628,10 +638,10 @@ class Component extends DCLogic {
     }));
 
     // velké skupiny se používají jen v layoutu "dlazdice"; kompaktní verze zůstává plochá
-    const macroMode = effLayout === 'dlazdice';
+    const macroMode = effLayout === 'dlazdice' || this.mmVerNow() === 'M2';
     const macroOf = (m)=>m.cats.map(k=>this.GROUPS.find(g=>g.key===k)).filter(Boolean);
-    const activeMacro = this.MACROS.find(m=>m.key===s.macro) || null;
-    const saleMacro = this.MACROS.find(m=>m.sale);
+    const activeMacro = this.macroList().find(m=>m.key===s.macro) || null;
+    const saleMacro = this.macroList().find(m=>m.sale);
     const saleTile = {
       name: saleMacro.name, icon:'ikona-vyprodej.svg', sale:true, href:'#/privesy/'+this.slug(saleMacro.name)+'/',
       count: this.PRODUCTS.filter(pr=>pr.sale).length, subs: []
@@ -653,7 +663,7 @@ class Component extends DCLogic {
       return gs.map(g=>({ name:g.name, count:g.count }));
     };
     // Výprodej je vždy poslední dlaždice (i v mobilním menu stojí na konci)
-    const macroOrder = this.MACROS.filter(m=>!m.sale).concat(saleMacro ? [saleMacro] : []);
+    const macroOrder = this.macroList().filter(m=>!m.sale).concat(saleMacro ? [saleMacro] : []);
     const macroCategories = macroOrder.map(m=>{
       const kids = macroItems(m);
       return { name:m.name, image:m.image, icon:m.icon, sale: !!m.sale, count: kids.reduce((a,k)=>a+k.count,0), href:'#/privesy/'+this.slug(m.name)+'/',
@@ -663,14 +673,14 @@ class Component extends DCLogic {
     const openGroup = (g)=>this.go({ view:g.key, path:[], leafPath:null, subcat:null, macro:null, brandFocus:null, saleOnly:false, pageFrom:1, pageTo:1 }, this.urlFor(g.key,[]));
     const onOpenCategory = (name)=>{
       if (name === saleMacro.name){ this.go({ macro:saleMacro.key }, '#/privesy/'+this.slug(saleMacro.name)+'/'); return; }
-      const m = macroMode ? this.MACROS.find(x=>x.name===name) : null;
+      const m = macroMode ? this.macroList().find(x=>x.name===name) : null;
       if (m){ this.go({ macro:m.key }, '#/privesy/' + this.slug(m.name) + '/'); return; }
       const g = this.GROUPS.find(x=>x.name===name); if(g) openGroup(g);
     };
     const openBrand = (b)=>this.go({ view:'groups', path:[], leafPath:null, subcat:null, macro:null, brandFocus:b, saleOnly:false, brands:{}, pageFrom:1, pageTo:1 }, '#/privesy/vyrobce/'+this.slug(b)+'/');
     const openSaleGroup = (g)=>this.go({ view:g.key, path:[], leafPath:null, subcat:null, macro:null, brandFocus:null, saleOnly:true, pageFrom:1, pageTo:1 }, '#/privesy/akce/'+this.slug(g.name)+'/');
     const onPickSub = (catName, subName)=>{
-      const m = macroMode ? this.MACROS.find(x=>x.name===catName) : null;
+      const m = macroMode ? this.macroList().find(x=>x.name===catName) : null;
       if (m && m.brands){ openBrand(subName); return; }
       if (m && m.sale){ const g = this.GROUPS.find(x=>x.name===subName); if(g) openSaleGroup(g); return; }
       if (m){ const g = macroOf(m).find(x=>x.name===subName); if(g) openGroup(g); return; }
@@ -702,7 +712,8 @@ class Component extends DCLogic {
     // úroveň velké skupiny (layout dlazdice): jejími "podkategoriemi" jsou dnešní kategorie
     const macroSubcats = activeMacro ? macroItems(activeMacro).map(k=>({
       name:k.name, count:k.count, countText: k.count+' modelů',
-      href: activeMacro.brands ? ('#/privesy/vyrobce/'+this.slug(k.name)+'/') : '#/privesy/',
+      href: activeMacro.brands ? ('#/privesy/vyrobce/'+this.slug(k.name)+'/') : (()=>{ const g = this.GROUPS.find(x=>x.name===k.name); return g ? (activeMacro.sale ? '#/privesy/akce/'+this.slug(g.name)+'/' : this.urlFor(g.key,[])) : '#/privesy/'; })(),
+      image: (this.GROUPS.find(x=>x.name===k.name)||{}).image, icon: (this.GROUPS.find(x=>x.name===k.name)||{}).icon,
       onPick: this.link(()=>{
         if (activeMacro.brands){ openBrand(k.name); return; }
         const g = this.GROUPS.find(x=>x.name===k.name);
@@ -854,7 +865,7 @@ class Component extends DCLogic {
       onNejVer: (id)=>this.setState({ nejVer:id }),
       mmVariants: [{ id:'M1', label:'M1' }, { id:'M2', label:'M2' }],
       mmVer: s.mmVer || (()=>{ try{ return localStorage.getItem('vapp-mm') || 'M1'; }catch(e){ return 'M1'; } })(),
-      onMmVer: (id)=>{ try{ localStorage.setItem('vapp-mm', id); }catch(e){} window.dispatchEvent(new CustomEvent('vapp-mm', { detail:id })); this.setState({ mmVer:id }); },
+      onMmVer: (id)=>{ try{ localStorage.setItem('vapp-mm', id); }catch(e){} window.dispatchEvent(new CustomEvent('vapp-mm', { detail:id })); this.go({ mmVer:id, view:'groups', path:[], leafPath:null, subcat:null, macro:null, brandFocus:null, saleOnly:false, pageFrom:1, pageTo:1 }, '#/privesy/'); },
       plDebugOn: effDebug, plToggleDebug: ()=>this.setState({ debugOverride: !effDebug }), showGuideChip: guideChip,
       currency: s.currency || 'CZK', onCurrency: (code)=>this.setState({ currency: code }),
       backFromLeaf: this.link(()=>{ if(path.length>0) this.go({ path: path.slice(0,-1), leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, this.urlFor(ag.key, path.slice(0,-1))); else this.go({ view:'groups', path:[], leafPath:null, subcat:null, pageFrom:1, pageTo:1 }, '#/privesy/'); }),
@@ -877,9 +888,9 @@ class Component extends DCLogic {
         { name:'Půjčovna', href:'#' },
       ],
       groups, subcats, categoriesData, onOpenCategory, onPickSub,
-      inSubcatsCompact: inSubcats && effLayout !== 'dlazdice',
+      inSubcatsCompact: (inSubcats || !!activeMacro) && effLayout !== 'dlazdice',
       inSubcatsTiles: (inSubcats || !!activeMacro) && effLayout === 'dlazdice',
-      subcatCategories: subcats.map(x=>({ name:x.name, count:x.count, href:x.href, subs:[] })),
+      subcatCategories: subcats.map(x=>({ name:x.name, count:x.count, href:x.href, image:x.image, icon:x.icon, subs:[] })),
       onOpenSubcat: (name)=>{ const hit = subcats.find(x=>x.name===name); if (hit && hit.onPick) hit.onPick(); },
       categoryLayout: effLayout,
       brandCategories: [],
