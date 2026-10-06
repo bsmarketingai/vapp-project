@@ -38,7 +38,7 @@
   .pq-tel>.pq-inp{flex:1;min-width:0;}
   @media (max-width:549px){ .pq-tel{gap:8px;} .pq-telpfx{width:148px;} }
   /* XXS: předvolba nad číslem přes celou šířku */
-  @media (max-width:419px){ .pq-tel{flex-direction:column;align-items:stretch;} .pq-telpfx{width:100%;} }
+  @media (max-width:419px){ .pq-tel{flex-direction:column;align-items:stretch;} .pq-telpfx{width:100%;} .pq-tel>.pq-inp{flex:none;height:44px;} }
   .pq-drop{border:1px dashed #C4CAD2;border-radius:8px;background:#F7F9FB;padding:28px 20px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;}
   .pq-files{display:flex;flex-direction:column;gap:8px;}
   .pq-file{display:flex;align-items:center;gap:12px;background:#F2F4F7;border-radius:6px;padding:8px 8px 8px 12px;}
@@ -159,7 +159,7 @@
   </main>
 
   <div style="margin-top:10px;">
-    <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
+    <dc-import name="Paticka" bare="true" hide-promo="{{ true }}" hint-size="100%,600px"></dc-import>
   </div>
 
   <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>

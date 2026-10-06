@@ -46,7 +46,7 @@
   <div class="pkr-head" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
     <h2 id="{{ headingId }}" class="pkr-h2" style="margin:0;font-weight:700;color:#15181C;">{{ title }}</h2>
     <div class="pkr-ctrl" style="display:flex;align-items:center;gap:16px;">
-      <a class="pkr-all" href="{{ allHref }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:8px;background:#FFFFFF;border:1px solid #B4CEEC;font-size:14px;font-weight:700;color:#1E5AA8;transition:background 120ms ease;" style-hover="background:#EFF4FB;" style-active="transform:translateY(1px);">{{ allLabel }}
+      <a class="pkr-all" href="{{ allHref }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:8px;background:transparent;border:0;font-size:14px;font-weight:700;color:#1E5AA8;transition:background 120ms ease;" style-hover="text-decoration:underline;text-underline-offset:3px;" style-active="transform:translateY(1px);">{{ allLabel }}
         <dc-import name="Ikony" icon-name="arrow-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
       </a>
       <div class="pkr-navwrap pkr-navtop" style="align-items:center;gap:4px;">
@@ -67,7 +67,7 @@
     </sc-for>
   </div>
   <div class="pkr-navbot">
-  <a class="pkr-all" href="{{ allHref }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:8px;background:#FFFFFF;border:1px solid #B4CEEC;font-size:14px;font-weight:700;color:#1E5AA8;transition:background 120ms ease;" style-hover="background:#EFF4FB;" style-active="transform:translateY(1px);">{{ allLabel }}
+  <a class="pkr-all" href="{{ allHref }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:8px;background:transparent;border:0;font-size:14px;font-weight:700;color:#1E5AA8;transition:background 120ms ease;" style-hover="text-decoration:underline;text-underline-offset:3px;" style-active="transform:translateY(1px);">{{ allLabel }}
         <dc-import name="Ikony" icon-name="arrow-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
       </a>
         <div class="pkr-navwrap" style="align-items:center;gap:4px;">
@@ -151,7 +151,7 @@ class Component extends DCLogic {
       badge, badgeStyle: 'position:absolute;top:8px;left:8px;font-size:13px;font-weight:700;border-radius:6px;padding:4px 9px;' + (raw.sale ? 'color:#fff;background:#C5232B;' : 'color:#0B6937;background:#E9F8EF;'),
       dot1:'display:none;', dot2:'display:none;',
       rating, reviews: raw.reviews != null ? raw.reviews : ((raw.name.length * 13) % 38 + 3),
-      specs, priceNet: raw.net, price: raw.gross, original: raw.original || 0,
+      specs, variants: raw.variants != null ? !!raw.variants : (raw.name.length % 2 === 1), priceNet: raw.net, price: raw.gross, original: raw.original || 0,
       available: stock > 0,
       avail: stock >= 15 ? 'Skladem > 15 ks' : (stock > 0 ? ('Skladem ' + stock + ' ks') : 'Na dotaz'),
       availIn: stock > 0, availOut: stock === 0,

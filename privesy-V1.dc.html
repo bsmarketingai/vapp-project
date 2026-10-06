@@ -209,7 +209,7 @@
     <sc-if value="{{ showGrid }}" hint-placeholder-val="{{ true }}">
     <div class="p-grid">
       <sc-for list="{{ products }}" as="p" hint-placeholder-count="8">
-        <dc-import name="ProduktovaKarta" p="{{ p }}" detail-href="./detail-prives-V1.dc.html" currency="{{ currency }}" hint-size="100%,470px"></dc-import>
+        <dc-import name="ProduktovaKarta" p="{{ p }}" detail-href="./detail-prives-V1.dc.html" currency="{{ currency }}" buy-layout="{{ cardVer }}" hint-size="100%,470px"></dc-import>
       </sc-for>
     </div>
     </sc-if>
@@ -234,7 +234,7 @@
 
   <dc-import name="FiltrDrawer" open="{{ filterOpen }}" currency="{{ currency }}" price-from="{{ priceFrom }}" price-to="{{ priceTo }}" on-price-change="{{ onPriceChange }}" flags="{{ filterFlags }}" on-toggle-flag="{{ onToggleFlag }}" only-stock="{{ onlyStock }}" on-toggle-stock="{{ toggleStock }}" groups="{{ filterGroups }}" result-count="{{ resultCount }}" on-toggle-option="{{ onFilterOption }}" on-clear="{{ clearFilters }}" on-close="{{ closeFilter }}" debug="{{ debug }}" hint-size="0px,0px"></dc-import>
 
-  <dc-import name="PrezentacniLista" label="Nejhledanější:" variants="{{ nejVariants }}" active="{{ nejVer }}" on-select="{{ onNejVer }}" label2="Megamenu:" variants2="{{ mmVariants }}" active2="{{ mmVer }}" on-select2="{{ onMmVer }}" debug-on="{{ plDebugOn }}" on-toggle-debug="{{ plToggleDebug }}" hint-size="320px,56px"></dc-import>
+  <dc-import name="PrezentacniLista" label="Nejhledanější:" variants="{{ nejVariants }}" active="{{ nejVer }}" on-select="{{ onNejVer }}" label2="Megamenu:" variants2="{{ mmVariants }}" active2="{{ mmVer }}" on-select2="{{ onMmVer }}" label3="Karta:" variants3="{{ cardVariants }}" active3="{{ cardVer }}" on-select3="{{ onCardVer }}" debug-on="{{ plDebugOn }}" on-toggle-debug="{{ plToggleDebug }}" hint-size="320px,56px"></dc-import>
   <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </div>
 </x-dc>
@@ -258,7 +258,7 @@ class Component extends DCLogic {
       priceFrom:0, priceTo:300000, flags:null,
       view:'groups', path:[], leafPath:null, subcat:null, onlyStock: props.defaultOnlyStock ?? false, sort: props.defaultSort ?? 'pop',
       cart:{}, brands:{}, params:{}, accOpen:{ 'Výrobce':true }, compare:{}, qty:{}, pageFrom:1, pageTo:1, catLayout:null, debugOverride:null, hoverCard:null,
-      searchQ:'', searchFocus:false, loading:false, macro:null, brandFocus:null, saleOnly:false, nejVer:'NEJ1',
+      searchQ:'', searchFocus:false, loading:false, macro:null, brandFocus:null, saleOnly:false, nejVer:'NEJ1', cardVer:(()=>{ try{ return localStorage.getItem('vapp-card') === 'K1' ? 'K1' : 'K2'; }catch(e){ return 'K2'; } })(),
       currency:'CZK',
       headerVariant:'kontakt'
     };
@@ -612,6 +612,8 @@ class Component extends DCLogic {
         onPlus:()=>{ this.setState(prev=>{ const q=Object.assign({}, prev.qty||{}); q[p.name]=(q[p.name]||1)+1; return { qty:q }; }); },
         onQty:(v)=>{ this.setState(prev=>{ const q=Object.assign({}, prev.qty||{}); q[p.name]=Math.max(1,v); return { qty:q }; }); },
         specs: p.specs || [],
+        // ukázková data: přívěs s variantami → Detail, bez variant → Koupit (reálně z feedu)
+        variants: p.variants != null ? !!p.variants : (p.name.length % 2 === 1),
         img:p.img||'', noImg:!p.img, img2:p.img2||'',
         badge: p.sale ? '−'+p.sale+' %' : (this.priceNum(p)>=freeShip ? 'Doprava zdarma' : ''),
         badgeStyle:'position:absolute;top:8px;left:8px;font-size:13px;font-weight:700;border-radius:6px;padding:4px 9px;'+(p.sale?'color:#fff;background:#C5232B;':'color:#0B6937;background:#E9F8EF;'),
@@ -863,6 +865,9 @@ class Component extends DCLogic {
       nejVariants: [{ id:'NEJ1', label:'NEJ1' }, { id:'NEJ2', label:'NEJ2' }, { id:'NEJ3', label:'NEJ3' }],
       nejVer: s.nejVer || 'NEJ1',
       onNejVer: (id)=>this.setState({ nejVer:id }),
+      cardVariants: [{ id:'K1', label:'K1' }, { id:'K2', label:'K2' }],
+      cardVer: s.cardVer === 'K1' ? 'K1' : 'K2',
+      onCardVer: (id)=>{ try{ localStorage.setItem('vapp-card', id); }catch(e){} window.dispatchEvent(new CustomEvent('vapp-card', { detail:id })); this.setState({ cardVer:id }); },
       mmVariants: [{ id:'M1', label:'M1' }, { id:'M2', label:'M2' }],
       mmVer: s.mmVer || (()=>{ try{ return localStorage.getItem('vapp-mm') || 'M1'; }catch(e){ return 'M1'; } })(),
       onMmVer: (id)=>{ try{ localStorage.setItem('vapp-mm', id); }catch(e){} window.dispatchEvent(new CustomEvent('vapp-mm', { detail:id })); this.go({ mmVer:id, view:'groups', path:[], leafPath:null, subcat:null, macro:null, brandFocus:null, saleOnly:false, pageFrom:1, pageTo:1 }, '#/privesy/'); },

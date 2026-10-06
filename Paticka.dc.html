@@ -79,11 +79,14 @@
 </style>
 </helmet>
 <footer style="width:100%;margin:0;padding:0;">
+  <sc-if value="{{ showPromo }}" hint-placeholder-val="{{ true }}">
   <div class="{{ uspCls }}" style="background:#F7F9FB;">
     <div class="vp-in" style="padding-top:8px;padding-bottom:12px;">
       <dc-import name="Usp" variant="sloupce" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
     </div>
   </div>
+  </sc-if>
+  <sc-if value="{{ showPromo }}" hint-placeholder-val="{{ true }}">
   <section aria-labelledby="ft-nl-h" style="background:#D8E6F6;">
     <div class="vp-in" style="padding-top:40px;padding-bottom:48px;">
       <div style="max-width:560px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;">
@@ -108,6 +111,7 @@
       </div>
     </div>
   </section>
+  </sc-if>
   <div style="background:#142F56;color:#fff;">
     <div class="vp-in" style="padding-top:40px;padding-bottom:40px;display:flex;flex-direction:column;gap:32px;">
       <div class="ft-wrap">
@@ -189,7 +193,7 @@
 </footer>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;uspTone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;page&quot;,&quot;tint&quot;],&quot;default&quot;:&quot;page&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:540},&quot;bare&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;hidePromo&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;uspTone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;page&quot;,&quot;tint&quot;],&quot;default&quot;:&quot;page&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:540},&quot;bare&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
 class Component extends DCLogic {
   state = { openCols:{}, nlEmail:'', nlSent:false, nlInvalid:false };
   nlSubmit(){ const v = (this.state.nlEmail||'').trim(); if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { this.setState({ nlInvalid:true }); return; } this.setState({ nlSent:true, nlInvalid:false }); }
@@ -226,6 +230,8 @@ class Component extends DCLogic {
       // odkaz s reálným cílem se nechá na prohlížeči; zbytek prototypu je zatím bez cíle
       onNav:(e)=>{ const h = e && e.currentTarget && e.currentTarget.getAttribute('href'); if(h && h !== '#') return; if(e&&e.preventDefault) e.preventDefault(); },
       showNote: !this.props.bare,
+      // hidePromo: stránka bez USP a newsletteru (např. Poptat produkt)
+      showPromo: !this.props.hidePromo,
       isOpen: (this.props.open ?? true) !== false,
       footerCols: decorate([
         { title:'Sortiment', links:['Přívěsy','Náhradní díly','Akce a slevy',{ t:'Poptat produkt', href:'poptat-produkt.dc.html', tint:true }] },

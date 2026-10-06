@@ -40,6 +40,10 @@
     .pk-qty > .sc-host > div > span{flex:1;}
   }
   .a11y-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
+  /* mobil (S a níž): název produktu 18 px, rezerva na 2 řádky */
+  @media (max-width:819px){ .pk-title{font-size:18px !important;min-height:48px !important;} }
+  /* karta dílu (bez parametrů): mezera obj. č. → řádek ceny 8 px místo 14 (záporný okraj, margin-top:auto u ceny zůstává) */
+  .pk-head-dil{margin-bottom:-6px;}
   .pk-title::after{content:"";position:absolute;inset:0;z-index:0;}
   .pk-title:focus-visible{outline:none;}
   .pk-title:focus-visible::after{outline:2px solid #1E5AA8;outline-offset:-2px;border-radius:8px;}
@@ -49,6 +53,16 @@
   .pk-cmp:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   /* výchozí poměr fotky 4:3 na celém webu; přepínač na Náhradních dílech ho přebíjí přes --vp-photo-ar */
   .pk-photo > div{aspect-ratio:var(--vp-photo-ar,4/3) !important;}
+  /* fotka uvnitř plochy menší (4:3 = default webu): i snímek focený do krajů má kolem sebe bílý okraj; plocha/placeholder se nemění. Jiné poměry vrací --vp-photo-pad */
+  .pk-photo > div[role="img"], .pk-photo > .pk-img2{padding:var(--vp-photo-pad,4px 10%) !important;background-origin:content-box !important;}
+  /* poměr 4:3 platí pro vnitřní prostor fotky (modrý rámeček), ne pro celou plochu — plocha je tak nižší. Placeholder bez fotky drží stejnou výšku. V1/V3 na Náhradních dílech vrací border-box přes --vp-photo-box */
+  .pk-photo > div[role="img"]{box-sizing:var(--vp-photo-box,content-box) !important;}
+  /* hover fotka leží absolutně přes plochu — velikost určí inset, ne poměr stran */
+  .pk-photo > .pk-img2{aspect-ratio:auto !important;height:auto !important;box-sizing:border-box !important;}
+  .pk-photo > div:not([role="img"]):not(.pk-img2){box-sizing:var(--vp-photo-box,content-box) !important;padding:var(--vp-photo-pad,4px 10%) !important;}
+  /* DOČASNĚ — vodítka stavby fotky: červená = plocha 4:3, modrá = prostor pro fotku po odsazení */
+  .pk-photo > div[role="img"]{outline:1px dashed #C5232B;outline-offset:-1px;}
+  .pk-photo > div[role="img"]::after{content:"";position:absolute;inset:0;margin:var(--vp-photo-pad,4px 10%);outline:1px dashed #1E5AA8;pointer-events:none;}
   /* úzká karta (dva sloupce na XS): parametry i skladovost/cena pod sebe, vše zarovnané doleva */
   @container (max-width:215px){
     .pk-body{padding:12px 12px 12px !important;gap:12px !important;}
@@ -69,7 +83,7 @@
     <sc-if value="{{ p.badge }}" hint-placeholder-val=""><span style="{{ p.badgeStyle }}">{{ p.badge }}</span></sc-if><span class="dt" aria-hidden="true" style="position:absolute;top:8px;right:8px;display:flex;gap:4px;"><span style="{{ p.dot1 }}"></span><span style="{{ p.dot2 }}"></span></span>
   </div>
   <div class="pk-body" style="padding:14px 16px 16px;display:flex;flex-direction:column;gap:14px;flex:1;">
-    <div style="display:flex;flex-direction:column;gap:6px;">
+    <div class="pk-head {{ headCls }}" style="display:flex;flex-direction:column;gap:6px;">
       <a class="pk-title a11y-i" href="{{ detailHref }}" onClick="{{ onCardNav }}" style="display:block;font-size:16px;font-weight:700;color:#15181C;line-height:1.3;min-height:42px;">{{ p.name }}</a>
       <dc-import name="Hodnoceni" value="{{ ratingValue }}" count="{{ reviews }}" hint-size="140px,18px"></dc-import>
       <span class="pk-objnum" style="font-size:13px;font-weight:400;line-height:1.4;color:#666E78;white-space:nowrap;">Obj. č. {{ p.objNum }}</span>
@@ -87,6 +101,7 @@
       <span class="pk-av" style="{{ p.availStyle }}"><sc-if value="{{ p.availIn }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="circle-check" size="18" hint-size="18px,18px"></dc-import></sc-if><sc-if value="{{ p.availOut }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="circle-x" size="18" hint-size="18px,18px"></dc-import></sc-if><span style="min-width:0;">{{ p.avail }}</span></span>
       <dc-import name="Cena" size="large" price-net="{{ netNum }}" price-gross="{{ grossNum }}" original="{{ originalNum }}" currency="{{ currency }}" hint-size="120px,52px"></dc-import>
     </div>
+    <sc-if value="{{ buyK1 }}" hint-placeholder-val="{{ true }}">
     <div class="pk-buyrow pk-over" onClick="{{ stop }}" style="display:flex;align-items:stretch;gap:8px;">
       <div class="pk-qty" style="flex:none;"><dc-import name="Kvantifikator" value="{{ qtyVal }}" on-change="{{ onQty }}" hint-size="120px,44px"></dc-import></div>
       <div class="pk-buyfull" style="position:relative;flex:1;display:flex;min-width:0;">
@@ -98,6 +113,16 @@
         <sc-if value="{{ showCartQty }}" hint-placeholder-val=""><span aria-hidden="true" style="{{ cartBadgeStyle }}">{{ cartQty }}</span></sc-if>
       </div>
     </div>
+    </sc-if>
+    <sc-if value="{{ buyK2 }}" hint-placeholder-val="">
+    <div class="pk-buyrow pk-over" onClick="{{ stop }}" style="display:flex;align-items:stretch;justify-content:flex-start;">
+      <div style="position:relative;flex:none;display:flex;">
+        <sc-if value="{{ k2Detail }}" hint-placeholder-val=""><dc-import name="Tlacitko" variant="primary" size="medium" label="Vybrat variantu" icon-trailing="arrow-right" aria-label="{{ detailAria }}" href="{{ detailHref }}" on-click="{{ onCardNav }}" hint-size="170px,44px"></dc-import></sc-if>
+        <sc-if value="{{ k2Buy }}" hint-placeholder-val=""><dc-import name="Tlacitko" variant="buy" size="medium" label="Koupit" aria-label="{{ buyAria }}" disabled="{{ buyDisabled }}" on-click="{{ onBuyClick }}" hint-size="100px,44px"></dc-import></sc-if>
+        <sc-if value="{{ k2BuyBadge }}" hint-placeholder-val=""><span aria-hidden="true" style="{{ cartBadgeStyle }}">{{ cartQty }}</span></sc-if>
+      </div>
+    </div>
+    </sc-if>
     <sc-if value="{{ showCompare }}" hint-placeholder-val="">
     <div class="pk-over" onClick="{{ stop }}" style="display:flex;align-items:center;gap:8px;height:26px;padding-top:2px;">
       <button type="button" class="a11y-i pk-cmp" role="checkbox" aria-checked="{{ p.cmpChecked }}" aria-label="Porovnat produkt" onClick="{{ p.onCmp }}" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#5A626C;cursor:pointer;min-height:24px;white-space:nowrap;"><span style="{{ p.cmpBox }}"><sc-if value="{{ p.cmp }}" hint-placeholder-val=""><svg width="9" height="9" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#fff" stroke-width="2.8" stroke-linecap="round"></path></svg></sc-if></span>Porovnat</button>
@@ -107,7 +132,7 @@
 </div>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCompare&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:300,&quot;height&quot;:560},&quot;p&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;object&quot;,&quot;default&quot;:null},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dil&quot;,&quot;prives&quot;],&quot;default&quot;:&quot;dil&quot;,&quot;tsType&quot;:&quot;'dil'|'prives'&quot;,&quot;section&quot;:&quot;Varianty&quot;},&quot;available&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Varianty&quot;},&quot;onDetail&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;,&quot;default&quot;:null}}">class Component extends DCLogic {
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCompare&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:300,&quot;height&quot;:560},&quot;p&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;object&quot;,&quot;default&quot;:null},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dil&quot;,&quot;prives&quot;],&quot;default&quot;:&quot;dil&quot;,&quot;tsType&quot;:&quot;'dil'|'prives'&quot;,&quot;section&quot;:&quot;Varianty&quot;},&quot;available&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Varianty&quot;},&quot;buyLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;&quot;,&quot;K1&quot;,&quot;K2&quot;],&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;'K1'|'K2'|''&quot;,&quot;section&quot;:&quot;Varianty&quot;},&quot;onDetail&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;,&quot;default&quot;:null}}">class Component extends DCLogic {
   state = { qty:1, cmp:false, inCartDemo:0 };
   // čítač v košíku: stejný vzhled jako u Porovnat a Košíku v hlavičce
   CART_BADGE = 'position:absolute;top:-6px;right:-6px;min-width:16px;width:16px;height:16px;border-radius:999px;background:#C5232B;color:#fff;font-size:10px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;pointer-events:none;';
@@ -197,7 +222,16 @@
 
 // DebugBar: prop debug -> šablona
 (function(){ const rv = Component.prototype.renderVals;
-  Component.prototype.renderVals = function(){ const v = rv ? (rv.call(this) || {}) : {}; if (v.debug === undefined) v.debug = this.props.debug ?? true; return v; }; })();
+  Component.prototype.renderVals = function(){ const v = rv ? (rv.call(this) || {}) : {}; if (v.debug === undefined) v.debug = this.props.debug ?? true; 
+    // K1/K2: explicitní prop vyhrává; jinak karta přívěsu (má specs) čte volbu z localStorage 'vapp-card' (default K2), díl zůstává K1
+    let lay = this.props.buyLayout;
+    if (!lay) { let st = null; try{ st = localStorage.getItem('vapp-card'); }catch(e){} lay = (v.p && v.p.hasSpecs) ? (st === 'K1' ? 'K1' : 'K2') : 'K1'; }
+    v.buyK2 = lay === 'K2'; v.buyK1 = !v.buyK2; v.detailAria = 'Vybrat variantu — ' + ((v.p && v.p.name) || '');
+    v.headCls = (v.p && v.p.hasSpecs) ? '' : 'pk-head-dil'; v.k2Detail = !!(v.p && v.p.variants); v.k2Buy = !v.k2Detail; v.k2BuyBadge = v.k2Buy && !!v.showCartQty; return v; };
+  const dm = Component.prototype.componentDidMount, du = Component.prototype.componentWillUnmount;
+  Component.prototype.componentDidMount = function(){ if (dm) dm.call(this); this._cardLs = ()=>this.forceUpdate(); window.addEventListener('vapp-card', this._cardLs); window.addEventListener('storage', this._cardLs); };
+  Component.prototype.componentWillUnmount = function(){ if (du) du.call(this); window.removeEventListener('vapp-card', this._cardLs); window.removeEventListener('storage', this._cardLs); };
+})();
 </script>
 </body>
 </html>

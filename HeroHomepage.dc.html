@@ -65,6 +65,13 @@
   @media (max-width:819px){
     .hh-v2 .hh-veil{background:linear-gradient(180deg,rgba(20,47,86,0) 18%,rgba(20,47,86,.58) 52%,rgba(20,47,86,.90) 100%) !important;}
   }
+  /* V2 Small: na mobilu nižší — max. 4:3 v S, 1:1 v XS/XXS; obsah sedí dole, fotka nahoře se zkrátí */
+  @media (max-width:819px){
+    .hh-v2s{display:flex;flex-direction:column;justify-content:flex-end;aspect-ratio:4/3;}
+    .hh-v2s .hh-pad{padding-top:24px;padding-bottom:16px;}
+    .hh-v2s .hh-veil{background:linear-gradient(180deg,rgba(20,47,86,.10) 0%,rgba(20,47,86,.62) 40%,rgba(20,47,86,.92) 100%) !important;}
+  }
+  @media (max-width:549px){ .hh-v2s{aspect-ratio:1/1;} }
   .hh-btn{appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;cursor:pointer;}
 </style>
 </helmet>
@@ -120,7 +127,7 @@
 </section>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:520},&quot;onPrimary&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;},&quot;onSecondary&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;V1&quot;,&quot;V2&quot;],&quot;default&quot;:&quot;V2&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:520},&quot;onPrimary&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;},&quot;onSecondary&quot;:{&quot;editor&quot;:null,&quot;default&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;V1&quot;,&quot;V2&quot;,&quot;V2S&quot;],&quot;default&quot;:&quot;V2&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 class Component extends DCLogic {
   state = { i: 0 };
   SLIDES = [
@@ -143,7 +150,7 @@ class Component extends DCLogic {
   renderVals(){
     const P = this.props, i = this.state.i;
     return {
-      verCls: (P.variant === 'V1') ? '' : 'hh-v2',
+      verCls: P.variant === 'V1' ? '' : (P.variant === 'V2S' ? 'hh-v2 hh-v2s' : 'hh-v2'),
       sliderLabel: 'Hlavní sdělení, slide ' + (i+1) + ' z ' + this.SLIDES.length,
       image: this.SLIDES[i].image,
       vis0: i === 0 ? 'visible' : 'hidden',

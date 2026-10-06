@@ -59,7 +59,14 @@
   /* P1: jen velké karty, malý výpis na žádné šířce — na XS/XXS proto obě karty pod sebou */
   @media (min-width:820px){ .pb-p1 .pb-cols{grid-template-columns:1fr;} }
   .pb-p1 .pb-list{display:none !important;}
-  @media (max-width:549px){ .pb-p1 .pb-cards>*:nth-child(n+2){display:flex !important;} }
+  /* P1: jedna řada se stejným počtem sloupců jako karusely — XXL 5, XL/L 4, M 3, S 2; přebytečné karty se skryjí. XS/XXS pod sebou (4) */
+  .pb-p1 .pb-cards{grid-template-columns:repeat(5,minmax(0,1fr));}
+  @media (max-width:1559px){ .pb-p1 .pb-cards{grid-template-columns:repeat(4,minmax(0,1fr));} .pb-p1 .pb-cards>*:nth-child(n+5){display:none !important;} }
+  @media (max-width:999px){ .pb-p1 .pb-cards{grid-template-columns:repeat(3,minmax(0,1fr));} .pb-p1 .pb-cards>*:nth-child(n+4){display:none !important;} }
+  @media (max-width:819px){ .pb-p1 .pb-cards{grid-template-columns:repeat(2,minmax(0,1fr));} .pb-p1 .pb-cards>*:nth-child(n+3){display:none !important;} }
+  @media (max-width:549px){ .pb-p1 .pb-cards{grid-template-columns:1fr;} .pb-p1 .pb-cards>*:nth-child(-n+4){display:flex !important;} }
+  /* přepínač XS sloupce (--vp-xs-cols) platí i tady — XS i XXS od 320 px, mezera 8 jako u karuselů */
+  @media (min-width:320px) and (max-width:549px){ .pb-p1 .pb-cards{grid-template-columns:repeat(var(--vp-xs-cols,1),minmax(0,1fr));gap:8px;} }
 </style>
 </helmet>
 <section aria-labelledby="pb-head" class="{{ verCls }}" style="width:100%;display:flex;flex-direction:column;gap:16px;">
@@ -71,7 +78,7 @@
           <dc-import name="Chip" kind="secondary" size="small" label="{{ r.name }}" href="{{ r.href }}" debug="{{ debug }}" hint-size="140px,32px"></dc-import>
         </sc-for>
       </div>
-      <a class="pb-a pb-cta pb-all" href="{{ allHref }}" style="margin-left:auto;min-height:44px;padding:0 16px;border-radius:8px;background:#FFFFFF;border:1px solid #B4CEEC;color:#1E5AA8;transition:background 120ms ease;" style-hover="background:#EFF4FB;" style-active="transform:translateY(1px);">{{ allLabel }}
+      <a class="pb-a pb-cta pb-all" href="{{ allHref }}" style="margin-left:auto;min-height:44px;padding:0 16px;border-radius:8px;background:transparent;border:0;color:#1E5AA8;transition:background 120ms ease;" style-hover="text-decoration:underline;text-underline-offset:3px;" style-active="transform:translateY(1px);">{{ allLabel }}
         <dc-import name="Ikony" icon-name="arrow-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
       </a>
     </div>
@@ -128,6 +135,18 @@ class Component extends DCLogic {
       perex:'Rozteč, kolový úchyt, ET a nosnost — čtyři údaje, podle kterých se disk k přívěsu vybírá. Kde je na přívěsu najdete a co znamenají.',
       href:'#/poradna/jak-vybrat-spravny-disk/' }
   ];
+  // P1: další dvě velké karty, aby řada měla 4 sloupce
+  FEATURED_P1 = [
+    { name:'Huštění pneu přívěsu', typ:'Návod', rubrika:'Technický rádce', image:'uploads/clanek-husteni-pneu.png',
+      perex:'Správný tlak prodlužuje životnost pneumatik a zlepšuje stabilitu soupravy. Kde tlak najdete a jak často ho kontrolovat.',
+      href:'#/poradna/husteni-pneu/' },
+    { name:'Zástrčky přívěsů a zásuvky tažných zařízení', typ:'Návod', rubrika:'Elektroinstalace', image:'uploads/clanek-zastrcky.png',
+      perex:'Sedmipól, třináctipól a redukce mezi nimi. Jak poznat, co máte na autě i na přívěsu, a kdy redukce stačí.',
+      href:'#/poradna/zastrcky-a-zasuvky/' },
+    { name:'Výjimka TEMPO 100 pro přípojná vozidla', typ:'Legislativa', rubrika:'Předpisy', image:'uploads/clanek-tempo-100.png',
+      perex:'Za jakých podmínek smí souprava s přívěsem jezdit po dálnici 100 km/h a co k tomu přívěs potřebuje.',
+      href:'#/poradna/tempo-100/' }
+  ];
   ROWS = [
     { name:'Huštění pneu přívěsu', image:'uploads/clanek-husteni-pneu.png', href:'#/poradna/husteni-pneu/' },
     { name:'Zástrčky přívěsů a zásuvky tažných zařízení', image:'uploads/clanek-zastrcky.png', href:'#/poradna/zastrcky-a-zasuvky/' },
@@ -145,7 +164,7 @@ class Component extends DCLogic {
       allLabel: P.allLabel ?? 'Zobrazit vše',
       allHref: P.allHref ?? 'poradna.dc.html',
       rubriky: Array.isArray(P.rubriky) && P.rubriky.length ? P.rubriky : this.RUBRIKY,
-      featured: (Array.isArray(P.featured) && P.featured.length ? P.featured : this.FEATURED).slice(0,2).map(f=>({ ...f, href:'clanek-tachograf.dc.html' })),
+      featured: (P.variant === 'P1' && !(Array.isArray(P.featured) && P.featured.length) ? this.FEATURED.concat(this.FEATURED_P1) : (Array.isArray(P.featured) && P.featured.length ? P.featured : this.FEATURED)).slice(0, P.variant === 'P1' ? 5 : 2).map(f=>({ ...f, href:'clanek-tachograf.dc.html' })),
       featuredRest: (Array.isArray(P.featured) && P.featured.length ? P.featured : this.FEATURED).slice(1,2).map(f=>({ name:f.name, image:f.image, href:'clanek-tachograf.dc.html' })),
       // prototyp: všechny články vedou na jediný hotový detail
       rows: (Array.isArray(P.rows) && P.rows.length ? P.rows : this.ROWS).slice(0, Math.max(1, Number(P.rowCount) || 5)).map(r=>({ ...r, href:'clanek-tachograf.dc.html' })),

@@ -166,13 +166,13 @@ class Component extends DCLogic {
   applyXsCols(v){ try{ document.documentElement.style.setProperty('--vp-xs-cols', this.XS_COLS[v] || '1'); }catch(e){} }
   componentDidMount(){ this.applyXsCols(this.state.xsCols); }
   setHeroVer(id){
-    const v = id === 'v1' || id === 'V1' ? 'V1' : 'V2';
+    const v = id === 'v1' || id === 'V1' ? 'V1' : (id === 'V2S' ? 'V2S' : 'V2');
     try{ localStorage.setItem('vapp-hero-variant', v); }catch(e){}
     this.setState({ heroVer: v });
   }
   renderVals(){
     const P = this.props;
-    const heroVer = this.state.heroVer === 'V1' ? 'V1' : 'V2';
+    const heroVer = ['V1','V2S'].includes(this.state.heroVer) ? this.state.heroVer : 'V2';
     const contactOpen = this.state.contactOpen !== false;
     const debugOn = this.state.debugOverride === null ? (P.debug ?? true) : this.state.debugOverride;
     // rozcestník nese jen produktové sekce; servis, půjčovna, poradna a akce jsou skryté (data zůstávají)
@@ -203,7 +203,7 @@ class Component extends DCLogic {
       openVariants: [{ id:'on', label:'On' }, { id:'off', label:'Off' }],
       onOpenState: (id)=>this.setState({ contactOpen: id === 'on' }),
       heroVer,
-      heroVariants: [{ id:'V1', label:'V1' }, { id:'V2', label:'V2' }],
+      heroVariants: [{ id:'V1', label:'V1' }, { id:'V2', label:'V2' }, { id:'V2S', label:'V2 Small' }],
       onHeroVer: (id)=>this.setHeroVer(id),
       // J1 = jazyk v boxu košíku · J2 = samostatná vlajka s popiskem vedle Přihlásit
       langVer: this.state.langVer === 'J1' ? 'J1' : 'J2',

@@ -59,8 +59,21 @@
 
   <main class="vp-in" style="padding-top:14px;padding-bottom:40px;">
 
-    <h1 class="pg-h1" style="margin:16px 0 0;font-size:36px;font-weight:700;letter-spacing:-0.02em;color:#142F56;">Servis přívěsů</h1>
-    <p class="pg-lead" style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;text-wrap:pretty;">Autorizovaný servis brzdových systémů AL-KO, BPW a KNOTT. Servisujeme brzděné i nebrzděné přívěsy do 3 500 kg, podvozky karavanů, elektrocentrál a kompresorů Atlas Copco. Zajistíme přípravu i provedení STK.</p>
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:24px 32px;margin-top:16px;">
+      <div style="flex:1 1 480px;min-width:0;">
+        <h1 class="pg-h1" style="margin:0;font-size:36px;font-weight:700;letter-spacing:-0.02em;color:#142F56;">Servis přívěsů</h1>
+        <p class="pg-lead" style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;text-wrap:pretty;">Autorizovaný servis brzdových systémů AL-KO, BPW a KNOTT. Servisujeme brzděné i nebrzděné přívěsy do 3 500 kg, podvozky karavanů, elektrocentrál a kompresorů Atlas Copco. Zajistíme přípravu i provedení STK.</p>
+      </div>
+      <section aria-label="Autorizovaný servis" style="flex:0 1 auto;min-width:0;display:flex;flex-direction:column;gap:8px;">
+        <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Autorizovaný servis</span>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <a href="#" aria-label="AL-KO servis" style="width:136px;height:64px;background:#FFFFFF;border-radius:8px;padding:12px 16px;display:flex;align-items:center;justify-content:center;transition:box-shadow 150ms ease;" style-hover="box-shadow:0 6px 20px rgba(20,47,86,.10);"><img src="uploads/al-ko_logo.svg" alt="" style="width:104px;height:40px;object-fit:contain;display:block;"></a>
+          <a href="#" aria-label="BPW servis" style="width:136px;height:64px;background:#FFFFFF;border-radius:8px;padding:12px 16px;display:flex;align-items:center;justify-content:center;transition:box-shadow 150ms ease;" style-hover="box-shadow:0 6px 20px rgba(20,47,86,.10);"><img src="uploads/bpw-logo.svg" alt="" style="width:104px;height:40px;object-fit:contain;display:block;"></a>
+          <a href="#" aria-label="KNOTT servis" style="width:136px;height:64px;background:#FFFFFF;border-radius:8px;padding:12px 16px;display:flex;align-items:center;justify-content:center;transition:box-shadow 150ms ease;" style-hover="box-shadow:0 6px 20px rgba(20,47,86,.10);"><img src="uploads/knott_logo.svg" alt="" style="width:104px;height:40px;object-fit:contain;display:block;"></a>
+          <a href="#" aria-label="Atlas Copco" style="width:136px;height:64px;background:#FFFFFF;border-radius:8px;padding:12px 16px;display:flex;align-items:center;justify-content:center;transition:box-shadow 150ms ease;" style-hover="box-shadow:0 6px 20px rgba(20,47,86,.10);"><img src="uploads/atlas_copco_logo.svg" alt="" style="width:104px;height:40px;object-fit:contain;display:block;"></a>
+        </div>
+      </section>
+    </div>
 
     <div style="margin-top:22px;">
       <dc-import name="VypisKategorii" layout="kompaktni" media="zadne" nejhledanejsi="{{ false }}" categories="{{ categoriesData }}" debug="{{ debug }}" hint-size="100%,160px"></dc-import>
@@ -91,15 +104,6 @@
       </section>
     </div>
 
-    <section style="margin-top:20px;background:#FFFFFF;border-radius:8px;padding:20px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
-      <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;">Autorizovaný servis</span>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;">
-        <img src="uploads/al-ko_logo.svg" alt="AL-KO" style="width:120px;height:44px;object-fit:contain;display:block;">
-        <img src="uploads/bpw-logo.svg" alt="BPW" style="width:120px;height:44px;object-fit:contain;display:block;">
-        <img src="uploads/knott_logo.svg" alt="KNOTT" style="width:120px;height:44px;object-fit:contain;display:block;">
-        <img src="uploads/atlas_copco_logo.svg" alt="Atlas Copco" style="width:120px;height:44px;object-fit:contain;display:block;">
-      </div>
-    </section>
 
     <h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;margin:0;">Ceník servisních úkonů</h2>
     <div style="display:flex;align-items:center;justify-content:flex-end;gap:12px;flex-wrap:wrap;margin:26px 0 10px;">

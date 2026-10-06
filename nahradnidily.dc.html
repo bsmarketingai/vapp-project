@@ -776,7 +776,7 @@ class Component extends DCLogic {
 
   // poměr stran produktové fotky — proměnná na :root, kterou čte ProduktovaKarta
   PHOTO_AR = { V1:'16/10', V2:'4/3', V3:'1/1' };
-  applyPhotoRatio(v){ try{ document.documentElement.style.setProperty('--vp-photo-ar', this.PHOTO_AR[v] || this.PHOTO_AR.V2); }catch(e){} }
+  applyPhotoRatio(v){ try{ const r = document.documentElement.style; r.setProperty('--vp-photo-ar', this.PHOTO_AR[v] || this.PHOTO_AR.V2); if (v === 'V1' || v === 'V3') { r.setProperty('--vp-photo-pad', '18px 12px'); r.setProperty('--vp-photo-box', 'border-box'); } else { r.removeProperty('--vp-photo-pad'); r.removeProperty('--vp-photo-box'); } }catch(e){} }
 
   // počet sloupců výpisu v pásmech XS a XXS — jen k porovnání, default 1
   XS_COLS = { C1:'1', C2:'2' };
