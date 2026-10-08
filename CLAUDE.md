@@ -1,5 +1,38 @@
 # VAPP — trvalé pokyny
 
+## Předání projektu (stav k 8. 10. 2026) — čti jako první
+
+Projekt byl převeden z osobního účtu na firemní. Kontext z předchozích konverzací se nepřenáší — **jediná paměť projektu jsou soubory**. Když se zápis a soubor rozcházejí, platí soubor.
+
+**Co to je.** Klikací hi-fi prototyp nového e-shopu **VAPP.cz** (přívěsy, náhradní díly k přívěsům, servis, půjčovna, poradna) pro klienta VAPP. Pracuje agentura (doména jxk.cz). Komunikace, UI texty i zápisy **česky**. Prototyp se klientovi prezentuje přímo v prohlížeči; varianty k rozhodnutí se přepínají v `PrezentacniLista` u spodní hrany (§11).
+
+**Jak uživatel pracuje.**
+- Zadává krátké dílčí úpravy (často ze schůzek s klientem). Chce stručné odpovědi, bez vysvětlování. Mění se jen to, co zadal — žádné „vylepšování“ okolí.
+- **Každá dokončená úprava se zapíše do `baglog2.dc.html`** (pole `log` v `renderVals()`, nejnovější den nahoře, formát `{ title, where, what, why, how }`, volitelně `task: 'Úkol ze schůzky D. M.'`, `pick: true` u volby klienta). Texty píšeš pro klienta: srozumitelně, bez kódu a názvů tokenů. Rozpracované věci jdou do pole `now`. Pokud dnešní datum v logu ještě není, založ nový blok `{ date: 'D. M. RRRR', items: [...] }`.
+- Rozhodnutí klienta (finální podoby, zrušené varianty) se zapisují i sem do CLAUDE.md k příslušné sekci — např. „rozhodnuto 18. 9. 2026, nevracet se k tomu“.
+- Otevřené varianty (dvě až tři k rozhodnutí) se drží v liště jako přepínače; po rozhodnutí se přepínač i nepoužitá varianta mažou.
+
+**Stránky prototypu (vstupní body).** `index.dc.html` (homepage) · `nahradnidily.dc.html` (rozcestník + výpis dílů, zdroj `HUBS`) · `privesy-V1.dc.html` (výpis přívěsů, platná verze; `privesy-V2` je starší návrh) · `detail-nahradnidil-V1.dc.html` · `detail-prives-V1.dc.html` · `servis.dc.html` · `poradna.dc.html` · `clanek-tachograf.dc.html` · `onas.dc.html` · `poptat-produkt.dc.html` · `vysledky-hledani.dc.html`.
+
+**Dokumentační / pracovní soubory.** `baglog2.dc.html` (aktuální log úprav pro klienta) · `UXBacklogVAPP.dc.html` (UX backlog) · `DesignSystemVAPP.dc.html`, `KomponentyVAPP.dc.html`, `AuditKomponentVAPP.dc.html` · `Handoff*.dc.html` (předávací listy pro vývoj) · `STAV-PRACE.md`, `Zmeny-session.md`, `ZmenyLog-*.md`, `report-*.md` = **starší zápisy (červenec–srpen), částečně zastaralé** (např. zlom 900 px a 3 sloupce už neplatí) — jen pro historii. Testovací: `KontrolaKomponent*.dc.html`, `TestSirkyM.html`, `PlaygroundVAPP.dc.html`, `nahled-vlajky.html`. Data: `vapp-menu.js` (megamenu), `mena.js` (měna). `uploads/` = klientské podklady (excel sdružovacích kategorií).
+
+**Poslední práce (1.–6. 10. 2026)** — detail v `baglog2`:
+- Homepage: Hero V2 Small (na XS/XXS poměr 1:1); Poradna P1 v řadě 5/4/3/2 sloupců, na XS/XXS podle `XS sloupce`; ikony výhod (Usp) 48 px bez podkladu od 1000 px.
+- Karta přívěsu: K2 výchozí všude; s variantami „Vybrat variantu“ (primary + šipka), bez variant „Koupit“ (buy). Název produktu na mobilu 18 px.
+- Fotka karty 4:3: padding 4 px nahoře/dole a 10 % po stranách (karta nižší); opravený hover druhé fotky, který přetékal přes název.
+- Poptat produkt: telefon s předvolbou v jednom řádku i pod 420 px; patička tam bez USP a newsletteru (`hidePromo`).
+
+**Otevřené body k navázání.**
+- V `ProduktovaKarta` jsou ještě zapnutá **vodítka** (pomocné linky pro ladění zarovnání) — po odsouhlasení vypnout/odstranit.
+- Ověřit s klientem perexy nových článků Poradny (Huštění pneu, Zástrčky a zásuvky, TEMPO 100).
+- Potvrdit, které přívěsy mají varianty (`p.variants` je v datech rozložený jen ukázkově).
+- Velikost ikony 48 px (Usp) doplnit do `DesignSystemVAPP.dc.html` a §6, pokud ji klient potvrdí.
+- Dál platí otevřené body v §6 (fotky u všech kategorií), §9 (nadpis „INFORMACE“ v MobilniMenu), §12 (chybějící kategorie ve V1) a otevřené varianty v §11 (PP1–3, NEJ1–3, P1/P2, S1–S3, M1/M2, K1/K2).
+
+**Než začneš úpravu:** přečti dotčený soubor (nepiš z paměti), drž tokeny z této stránky, ověř na hranicích pásem (1560 · 1150 · 1000 · 820 · 550 · 420) a na konci zapiš do `baglog2`.
+
+---
+
 ## 0. Jak pracovat s design systémem
 
 - **Nikdy nepiš vlastní hodnoty.** Barvy, velikosti písma, mezery, rádiusy a stíny ber výhradně z tokenů níže. Když token neexistuje, řekni to a navrhni jeho doplnění — nevymýšlej hodnotu ad hoc.
