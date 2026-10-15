@@ -56,6 +56,10 @@
 @media (min-width:820px){ .sc-rows{display:none !important;} }
 .sc-tile{transition:background .12s;}
 .sc-tile:not(.sc-tile-on):hover{background:#EFF4FB !important;}
+/* Zrušit filtry je od 550 px v řádku chipů filtrační lišty; pod 550 px (chipy skryté) zůstává odkaz nad výpisem */
+/* akordeon popisu: pod 820 px jen chevron (klikací plocha 44 px), popisek nese aria-label */
+@media (max-width:819px){ .pg-acc-l{display:none;} .pg-acc-t{min-width:44px;min-height:44px !important;justify-content:center;margin-top:-9px;} }
+.p-clear-mb{display:none;} @media (max-width:549px){ .p-clear-mb{display:inline !important;} }
 </style>
 <script>
 (function(){
@@ -100,10 +104,10 @@
       <div style="flex:1 1 460px;min-width:0;">
     <h1 class="pg-h1" style="margin:0;font-size:36px;font-weight:700;letter-spacing:-0.02em;color:#142F56;">{{ pageTitle }}</h1>
     <sc-if value="{{ inLeaf }}" hint-placeholder-val="">
-      <p class="pg-lead" style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">{{ leafDesc }}</p>
+      <div class="pg-acc" style="margin-top:8px;display:flex;align-items:flex-start;gap:16px;"><p class="pg-lead" ref="{{ descRef }}" style="flex:1;min-width:0;margin:0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;text-wrap:pretty;overflow:hidden;">{{ leafLead }}<sc-if value="{{ descOpen }}" hint-placeholder-val=""><span>{{ leafMore }}</span></sc-if></p><sc-if value="{{ hasLeafMore }}" hint-placeholder-val="{{ true }}"><button type="button" class="a11y-i hvxin pg-acc-t" aria-expanded="{{ descExpanded }}" aria-label="{{ descLabel }}" onClick="{{ toggleDesc }}" style="flex:none;margin-left:auto;display:inline-flex;align-items:center;gap:4px;min-height:26px;font-size:16px;font-weight:700;color:#1E5AA8;cursor:pointer;white-space:nowrap;transition:color .12s;"><span class="pg-acc-l">{{ descLabel }}</span><span aria-hidden="true" style="display:inline-flex;color:#5189CC;"><sc-if value="{{ descClosed }}" hint-placeholder-val="{{ true }}"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></sc-if><sc-if value="{{ descOpen }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="chevron-up" size="24" hint-size="24px,24px"></dc-import></sc-if></span></button></sc-if></div>
     </sc-if>
     <sc-if value="{{ notLeaf }}" hint-placeholder-val="{{ true }}">
-    <p style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;text-wrap:pretty;">Přívěsy do 3,5 tuny od <a class="dl-a" href="#/privesy/vapp/" onClick="{{ linkVapp }}">VAPP</a>, <a class="dl-a" href="#/privesy/agados/" onClick="{{ linkAgados }}">Agados</a>, <a class="dl-a" href="#/privesy/stema/" onClick="{{ linkStema }}">STEMA</a> a <a class="dl-a" href="#/privesy/unsinn/" onClick="{{ linkUnsinn }}">UNSINN</a> — <a class="dl-a" href="#/privesy/dvouose-valniky/" onClick="{{ linkValniky }}">valníky</a>, <a class="dl-a" href="#/privesy/sklopne-privesy/" onClick="{{ linkSklopne }}">sklopné</a>, <a class="dl-a" href="#/privesy/skrinove-privesy/" onClick="{{ linkSkrinove }}">skříňové</a> i speciální <a class="dl-a" href="#/privesy/prepravniky-stroju/" onClick="{{ linkStroje }}">přepravníky</a>.<sc-if value="{{ descOpen }}" hint-placeholder-val=""><span> Vybírejte podle počtu náprav, celkové hmotnosti nebo rozměru <a class="dl-a" href="#/privesy/jednoose-valniky/" onClick="{{ linkJednoose }}">ložné plochy</a>. Vyrábíme vlastní přívěsy VAPP a zastupujeme značky Agados, STEMA a UNSINN. Ke každému přívěsu dodáme <a class="dl-a" href="nahradnidily.dc.html">příslušenství</a>, plachtu i nástavbu na míru a zajistíme servis po celou dobu životnosti — jak vybrat přívěs poradíme v <a class="dl-a" href="#/poradna/jak-vybrat-prives/">poradně</a>.</span></sc-if><span> </span><button type="button" class="a11y-i hvxin" aria-expanded="{{ descExpanded }}" onClick="{{ toggleDesc }}" style="display:inline;font-size:16px;font-weight:700;color:#1E5AA8;cursor:pointer;white-space:nowrap;transition:color .12s;">{{ descLabel }}<span aria-hidden="true" style="display:inline-flex;vertical-align:-4px;margin-left:2px;"><sc-if value="{{ descClosed }}" hint-placeholder-val="{{ true }}"><dc-import name="Ikony" icon-name="chevron-down" size="18" hint-size="18px,18px"></dc-import></sc-if><sc-if value="{{ descOpen }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="chevron-up" size="18" hint-size="18px,18px"></dc-import></sc-if></span></button></p>
+    <div class="pg-acc" style="margin-top:8px;display:flex;align-items:flex-start;gap:16px;"><p ref="{{ descRef }}" style="flex:1;min-width:0;margin:0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;text-wrap:pretty;overflow:hidden;">Přívěsy do 3,5 tuny od <a class="dl-a" href="#/privesy/vapp/" onClick="{{ linkVapp }}">VAPP</a>, <a class="dl-a" href="#/privesy/agados/" onClick="{{ linkAgados }}">Agados</a>, <a class="dl-a" href="#/privesy/stema/" onClick="{{ linkStema }}">STEMA</a> a <a class="dl-a" href="#/privesy/unsinn/" onClick="{{ linkUnsinn }}">UNSINN</a> — <a class="dl-a" href="#/privesy/dvouose-valniky/" onClick="{{ linkValniky }}">valníky</a>, <a class="dl-a" href="#/privesy/sklopne-privesy/" onClick="{{ linkSklopne }}">sklopné</a>, <a class="dl-a" href="#/privesy/skrinove-privesy/" onClick="{{ linkSkrinove }}">skříňové</a> i speciální <a class="dl-a" href="#/privesy/prepravniky-stroju/" onClick="{{ linkStroje }}">přepravníky</a>.<sc-if value="{{ descOpen }}" hint-placeholder-val=""><span> Vybírejte podle počtu náprav, celkové hmotnosti nebo rozměru <a class="dl-a" href="#/privesy/jednoose-valniky/" onClick="{{ linkJednoose }}">ložné plochy</a>. Vyrábíme vlastní přívěsy VAPP a zastupujeme značky Agados, STEMA a UNSINN. Ke každému přívěsu dodáme <a class="dl-a" href="nahradnidily.dc.html">příslušenství</a>, plachtu i nástavbu na míru a zajistíme servis po celou dobu životnosti — jak vybrat přívěs poradíme v <a class="dl-a" href="#/poradna/jak-vybrat-prives/">poradně</a>.</span></sc-if></p><button type="button" class="a11y-i hvxin pg-acc-t" aria-expanded="{{ descExpanded }}" aria-label="{{ descLabel }}" onClick="{{ toggleDesc }}" style="flex:none;margin-left:auto;display:inline-flex;align-items:center;gap:4px;min-height:26px;font-size:16px;font-weight:700;color:#1E5AA8;cursor:pointer;white-space:nowrap;transition:color .12s;"><span class="pg-acc-l">{{ descLabel }}</span><span aria-hidden="true" style="display:inline-flex;color:#5189CC;"><sc-if value="{{ descClosed }}" hint-placeholder-val="{{ true }}"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></sc-if><sc-if value="{{ descOpen }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="chevron-up" size="24" hint-size="24px,24px"></dc-import></sc-if></span></button></div>
     </sc-if>
       </div>
     </div>
@@ -173,15 +177,15 @@
          Nepřidávat sem media query ani matchMedia, která by sticky podmiňovala.
          Logika vytlačování hlavičky je v componentDidMount → this._onScroll. -->
     <div class="p-sentinel" style="height:0;"></div>
-    <div class="vp-bleed p-sticky" style="position:sticky;top:0;z-index:60;background:#F7F9FB;margin-top:14px;padding-top:14px;padding-bottom:14px;border-bottom:1px solid #F2F4F7;">
-      <dc-import name="FiltracniLista" filter-count="{{ filterCount }}" active-filters="{{ activeFilters }}" on-remove-filter="{{ onRemoveFilter }}" only-stock="{{ onlyStock }}" sort="{{ sortKey }}" sort-options="{{ sortOptions }}" on-open-filter="{{ openFilter }}" on-toggle-stock="{{ toggleStock }}" on-sort-change="{{ onSortChange }}" style="width:100%;" hint-size="100%,44px"></dc-import>
+    <div class="vp-bleed p-sticky" style="position:sticky;top:var(--vp-stick-top,0px);z-index:60;background:#F7F9FB;margin-top:14px;padding-top:14px;padding-bottom:14px;border-bottom:1px solid #F2F4F7;transition:top .3s ease;box-shadow:var(--vp-bar-shadow,none);">
+      <dc-import name="FiltracniLista" filter-count="{{ filterCount }}" hide-count="{{ true }}" active-filters="{{ activeFilters }}" on-remove-filter="{{ onRemoveFilter }}" on-clear-all="{{ clearFilters }}" show-clear="{{ anyFilter }}" only-stock="{{ onlyStock }}" sort="{{ sortKey }}" sort-options="{{ sortOptions }}" on-open-filter="{{ openFilter }}" on-toggle-stock="{{ toggleStock }}" on-sort-change="{{ onSortChange }}" style="width:100%;" hint-size="100%,44px"></dc-import>
     </div>
 
     <!-- ===== PRODUKTY ===== -->
     <h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;margin:0;">Výpis produktů</h2>
     <div style="display:flex;align-items:baseline;justify-content:space-between;margin:16px 0 10px;">
       <span style="font-size:13px;color:#5A626C;font-weight:600;">{{ resultCount }} modelů</span>
-      <sc-if value="{{ anyFilter }}" hint-placeholder-val=""><button type="button" class="a11y-i" onClick="{{ clearFilters }}" style="font-size:13px;font-weight:700;color:#C5232B;cursor:pointer;text-decoration:underline;">Zrušit filtry</button></sc-if>
+      <sc-if value="{{ anyFilter }}" hint-placeholder-val=""><button type="button" class="a11y-i p-clear-mb" onClick="{{ clearFilters }}" style="font-size:13px;font-weight:700;color:#C5232B;cursor:pointer;text-decoration:underline;">Zrušit filtry</button></sc-if>
     </div>
     <sc-if value="{{ loading }}" hint-placeholder-val="">
       <div class="p-grid" aria-busy="true" aria-label="Načítání přívěsů">
@@ -234,7 +238,7 @@
 
   <dc-import name="FiltrDrawer" open="{{ filterOpen }}" currency="{{ currency }}" price-from="{{ priceFrom }}" price-to="{{ priceTo }}" on-price-change="{{ onPriceChange }}" flags="{{ filterFlags }}" on-toggle-flag="{{ onToggleFlag }}" only-stock="{{ onlyStock }}" on-toggle-stock="{{ toggleStock }}" groups="{{ filterGroups }}" result-count="{{ resultCount }}" on-toggle-option="{{ onFilterOption }}" on-clear="{{ clearFilters }}" on-close="{{ closeFilter }}" debug="{{ debug }}" hint-size="0px,0px"></dc-import>
 
-  <dc-import name="PrezentacniLista" label="Nejhledanější:" variants="{{ nejVariants }}" active="{{ nejVer }}" on-select="{{ onNejVer }}" label2="Megamenu:" variants2="{{ mmVariants }}" active2="{{ mmVer }}" on-select2="{{ onMmVer }}" label3="Karta:" variants3="{{ cardVariants }}" active3="{{ cardVer }}" on-select3="{{ onCardVer }}" debug-on="{{ plDebugOn }}" on-toggle-debug="{{ plToggleDebug }}" hint-size="320px,56px"></dc-import>
+
   <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </div>
 </x-dc>
@@ -320,7 +324,7 @@ class Component extends DCLogic {
     { key:'m2-znacky', icon:'ikona-dvouose-valniky.svg', name:'Značky', image:'privesy-kat-02.png', cats:[], brands:['VAPP','Agados','STEMA','UNSINN'] },
     { key:'m-akce', icon:'ikona-vyprodej.svg', name:'Výprodej přívěsů', image:'privesy-kat-01.png', cats:[], sale:true }
   ];
-  mmVerNow(){ if(this.state && this.state.mmVer) return this.state.mmVer; try{ return localStorage.getItem('vapp-mm') || 'M1'; }catch(e){ return 'M1'; } }
+  mmVerNow(){ return 'M1'; } // rozhodnuto 15. 10. 2026 — megamenu M1 i na Přívěsech
   macroList(){ return this.mmVerNow() === 'M2' ? this.MACROS_M2 : this.MACROS; }
 
   reload(patch){ this.setState(Object.assign({ loading:true }, patch||{})); clearTimeout(this._rt); this._rt=setTimeout(()=>this.setState({ loading:false }), 400); }
@@ -458,21 +462,55 @@ class Component extends DCLogic {
   componentDidMount(){
     // Sticky lišta + vytlačování hlavičky: BEZ šířkové podmínky.
     // Platí na všech pásmech (M, S, XS, XXS i desktop) — rozhodnuto, nevypínat.
+    // S3 (rozhodnuto 15. 10. 2026, platí na celém webu): zůstane řádek s logem a vyhledáváním,
+    // lišta nahradí jen navigační řádek; při scrollu nahoru se navigace hned vrátí (300 ms ease).
+    // Dynamika jde přes CSS proměnné na :root (viz CLAUDE.md §5) — ne přes inline styly.
     this._onScroll = () => {
+      const R = document.documentElement.style;
       const hdr = document.querySelector('.hd-root');
       const sen = document.querySelector('.p-sentinel');
-      if (!hdr || !sen) return;
-      const hdrH = hdr.offsetHeight;
-      const pinned = hdrH;                 // hlavička zůstává přilepená celá
       const bar = document.querySelector('.p-sticky');
+      if (!hdr || !sen) return;
+      const nav = hdr.querySelector('nav.hd-dt');
+      const hdrH = Math.floor(hdr.getBoundingClientRect().height);
+      const navH = (nav && nav.offsetParent) ? nav.getBoundingClientRect().height : 0;
+      const fullTop = Math.max(0, hdrH - 1);
+      const short = Math.max(0, hdrH - Math.round(navH) - 1);
       const senTop = sen.getBoundingClientRect().top;
-      if (bar) { const bt = bar.getBoundingClientRect().top; if (bt > 1) this._gap = bt - senTop; }
-      const s = senTop + (this._gap || 0);
-      let push = pinned - s;
-      if (push < 0) push = 0;
-      if (push > hdrH) push = hdrH;
-      this._push = push;
-      hdr.style.transform = push ? 'translateY(' + (-push) + 'px)' : '';
+      // odstup lišty od sentinelu = její margin-top; z rectů se počítat nesmí (osciluje)
+      if (bar) this._gap = parseFloat(getComputedStyle(bar).marginTop) || 0;
+      const y = window.pageYOffset;
+      const dy = y - (this._lastY == null ? y : this._lastY);
+      this._lastY = y;
+      const s0 = senTop + (this._gap || 0);
+      const pinned = navH > 0 && s0 <= short + 0.5;
+      // menu zajede při scrollu dolů hned za hlavičkou, ne až u lišty; scroll nahoru ho vrátí
+      const past = navH > 0 && y > hdrH;
+      let want = this._navOff == null ? pinned : !!this._navOff;
+      if (dy > 0) want = true; else if (dy < -2) want = false;
+      const off = (pinned || past) && want;
+      this._navOff = off;
+      R.setProperty('--vp-nav-op', off ? '0' : '1');
+      R.setProperty('--vp-nav-vis', off ? 'hidden' : 'visible');
+      R.setProperty('--vp-nav-delay', off ? '.3s' : '0s');
+      R.setProperty('--vp-nav-pe', off ? 'none' : 'auto');
+      R.setProperty('--vp-hdr-pe', off ? 'none' : 'auto');
+      let stickTop = off ? short : fullTop;
+      // mobil (bez navigačního řádku): lišta se při scrollu dolů schová pod hlavičku a při scrollu nahoru hned vrátí
+      if (navH === 0 && bar) {
+        const stuckM = (senTop + (this._gap || 0)) <= fullTop + 0.5;
+        let wantB = !!this._barOff;
+        if (dy > 0) wantB = true; else if (dy < -2) wantB = false;
+        const hideB = stuckM && wantB; this._barOff = hideB;
+        if (hideB) stickTop = fullTop - Math.ceil(bar.getBoundingClientRect().height);
+      } else { this._barOff = false; }
+      this._stickTop = stickTop; this._push = 0;
+      R.setProperty('--vp-stick-top', stickTop + 'px');
+      R.setProperty('--vp-hdr-push', '0px');
+      const stuck = s0 <= stickTop + 0.5;
+      R.setProperty('--vp-bar-shadow', stuck ? '0 2px 8px rgba(20,47,86,.06)' : 'none');
+      R.setProperty('--vp-hdr-shadow', off ? 'none' : '0 2px 8px rgba(20,47,86,.06)');
+      R.setProperty('--vp-top-shadow', (off && !stuck) ? '0 2px 8px rgba(20,47,86,.06)' : 'none');
     };
     window.addEventListener('scroll', this._onScroll, { passive:true });
     this._onScroll();
@@ -565,6 +603,7 @@ class Component extends DCLogic {
     if (this._onXXL){ this._mqXXL.removeEventListener('change', this._onXXL); this._mqOne.removeEventListener('change', this._onXXL); this._mqM.removeEventListener('change', this._onXXL); }
     if (this._onHash){ window.removeEventListener('hashchange', this._onHash); window.removeEventListener('popstate', this._onHash); }
     const hdr = document.querySelector('.hd-root'); if (hdr) hdr.style.transform = '';
+    try{ ['--vp-nav-op','--vp-nav-vis','--vp-nav-delay','--vp-nav-pe','--vp-hdr-pe','--vp-hdr-push','--vp-hdr-shadow','--vp-bar-shadow','--vp-stick-top','--vp-top-shadow'].forEach(k=>document.documentElement.style.removeProperty(k)); }catch(e){}
   }
   renderVals(){
     const s = this.state;
@@ -842,7 +881,13 @@ class Component extends DCLogic {
         { t:'Servis', style:'font-size:14px;font-weight:700;color:#15181C;' },
         { t:'Půjčovna', style:'font-size:14px;font-weight:700;color:#15181C;' },
       ],
-      descOpen:s.descOpen, descClosed:!s.descOpen, toggleDesc:()=>this.setState({descOpen:!s.descOpen}),
+      descOpen:s.descOpen, descClosed:!s.descOpen,
+      descRef:(el)=>{ this._descEl = el; },
+      // plynulé rozbalení popisu: změří výšku před a po přepnutí a dopočítá přechod (motion.panel 400 ms)
+      toggleDesc:()=>{ const el = this._descEl; const from = el ? el.getBoundingClientRect().height : 0;
+        this.setState({descOpen:!s.descOpen}, ()=>{ if(!el || !el.animate) return; const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; if(reduce) return;
+          const to = el.getBoundingClientRect().height; if (Math.abs(to-from) < 1) return;
+          el.animate([{ height: from+'px' }, { height: to+'px' }], { duration:400, easing:'ease' }); }); },
       linkVapp:(e)=>{e.preventDefault();openBrand('VAPP');},
       linkAgados:(e)=>{e.preventDefault();openBrand('Agados');},
       linkStema:(e)=>{e.preventDefault();openBrand('STEMA');},
@@ -861,15 +906,15 @@ class Component extends DCLogic {
       pageCountText: activeMacro ? (macroSubcats.reduce((a,x)=>a+x.count,0).toLocaleString('cs-CZ')+' modelů') : (inCat ? (resultCount.toLocaleString('cs-CZ')+' modelů') : '212 modelů'),
       leafDesc: inCat ? (curName+' — '+(path.length ? ('podkategorie '+(path.length>1?path[path.length-2]:ag.name)) : 'kategorie přívěsů')+' od VAPP, Agados, STEMA a UNSINN. '+resultCount.toLocaleString('cs-CZ')+' modelů, dostupnost a termín dodání potvrdíme telefonicky. '+(hasKids?'Vyberte si přesnější zařazení níže, nebo procházejte celý výpis.':'Nevíte si rady s výběrem? Zavolejte nám.')) : '',
       crumbItems, onCrumbNav,
-      showTopRow: topChips.length > 0 || !!nejLogos, topSearchedData: topChips, topLogosData: nejLogos, topLabel: (!ag && s.nejVer && s.nejVer !== 'NEJ1') ? 'Značka' : 'Nejhledanější', topAria: (!ag && s.nejVer && s.nejVer !== 'NEJ1') ? 'Nejhledanější značky' : 'Nejhledanější kategorie',
+      showTopRow: false, // rozhodnuto 15. 10. 2026 — řádek Nejhledanější na výpisu přívěsů není (zůstává jen na Náhradních dílech) topSearchedData: topChips, topLogosData: nejLogos, topLabel: (!ag && s.nejVer && s.nejVer !== 'NEJ1') ? 'Značka' : 'Nejhledanější', topAria: (!ag && s.nejVer && s.nejVer !== 'NEJ1') ? 'Nejhledanější značky' : 'Nejhledanější kategorie',
       nejVariants: [{ id:'NEJ1', label:'NEJ1' }, { id:'NEJ2', label:'NEJ2' }, { id:'NEJ3', label:'NEJ3' }],
       nejVer: s.nejVer || 'NEJ1',
       onNejVer: (id)=>this.setState({ nejVer:id }),
       cardVariants: [{ id:'K1', label:'K1' }, { id:'K2', label:'K2' }],
-      cardVer: s.cardVer === 'K1' ? 'K1' : 'K2',
+      cardVer: 'K2', // rozhodnuto 15. 10. 2026 — K2, bez kvantifikátoru
       onCardVer: (id)=>{ try{ localStorage.setItem('vapp-card', id); }catch(e){} window.dispatchEvent(new CustomEvent('vapp-card', { detail:id })); this.setState({ cardVer:id }); },
       mmVariants: [{ id:'M1', label:'M1' }, { id:'M2', label:'M2' }],
-      mmVer: s.mmVer || (()=>{ try{ return localStorage.getItem('vapp-mm') || 'M1'; }catch(e){ return 'M1'; } })(),
+      mmVer: 'M1',
       onMmVer: (id)=>{ try{ localStorage.setItem('vapp-mm', id); }catch(e){} window.dispatchEvent(new CustomEvent('vapp-mm', { detail:id })); this.go({ mmVer:id, view:'groups', path:[], leafPath:null, subcat:null, macro:null, brandFocus:null, saleOnly:false, pageFrom:1, pageTo:1 }, '#/privesy/'); },
       plDebugOn: effDebug, plToggleDebug: ()=>this.setState({ debugOverride: !effDebug }), showGuideChip: guideChip,
       currency: s.currency || 'CZK', onCurrency: (code)=>this.setState({ currency: code }),
@@ -969,6 +1014,11 @@ class Component extends DCLogic {
 // DebugBar: prop debug -> šablona
 (function(){ const rv = Component.prototype.renderVals;
   Component.prototype.renderVals = function(){ const v = rv ? (rv.call(this) || {}) : {}; if (v.debug === undefined) v.debug = this.props.debug ?? true; return v; }; })();
+
+// popis kategorie jako akordeon: první věta je perex, zbytek se rozbalí
+(function(){ const rv = Component.prototype.renderVals;
+  Component.prototype.renderVals = function(){ const v = rv ? (rv.call(this) || {}) : {}; const d = String(v.leafDesc || ''); const i = d.indexOf('. ');
+    v.leafLead = i > 0 ? d.slice(0, i + 1) : d; v.leafMore = i > 0 ? d.slice(i + 1) : ''; v.hasLeafMore = !!v.leafMore.trim(); return v; }; })();
 </script>
 </body>
 </html>

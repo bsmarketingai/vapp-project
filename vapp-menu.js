@@ -298,6 +298,12 @@ window.VAPP_MEGA = {
     ],
     "rail": [
       {
+        "name": "Akce a slevy",
+        "href": "nahradnidily.dc.html#/nahradni-dily/akce/",
+        "tone": "sale",
+        "iconName": "discount"
+      },
+      {
         "name": "Plynové vzpěry",
         "href": "nahradnidily.dc.html#/nahradni-dily/plynove-vzpery-a-prislusenstvi/"
       },
@@ -312,12 +318,6 @@ window.VAPP_MEGA = {
       {
         "name": "Pneumatiky s diskem",
         "href": "nahradnidily.dc.html#/nahradni-dily/pneu-kola-disky/kompletni-kola/"
-      },
-      {
-        "name": "Akce a slevy",
-        "href": "nahradnidily.dc.html#/nahradni-dily/akce/",
-        "tone": "sale",
-        "iconName": "discount"
       }
     ]
   },

@@ -64,8 +64,9 @@ class Component extends DCLogic {
     items.forEach((it,i)=>{
       const label = it.label;
       const home = i === 0;
-      crumbs.push({ sep: i>0, label, href: it.href || '#', isHome: home, isLink: !home, isLast: false,
-        onNav:(e)=>{ if(onNavigate){ onNavigate(i); } else if(e&&e.preventDefault){ e.preventDefault(); } },
+      // první položka (domeček) vede vždy na homepage — běžný odkaz, bez callbacku stránky
+      crumbs.push({ sep: i>0, label, href: home ? (this.props.homeHref || 'index.dc.html') : (it.href || '#'), isHome: home, isLink: !home, isLast: false,
+        onNav:(e)=>{ if(home) return; if(onNavigate){ onNavigate(i); } else if(e&&e.preventDefault){ e.preventDefault(); } },
         cls: 'bc-link',
         style: 'color:#666E78;cursor:pointer;' });
     });

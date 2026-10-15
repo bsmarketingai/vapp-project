@@ -18,7 +18,9 @@
   .pkr-btn{appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;cursor:pointer;}
   .pkr-btn:focus-visible,.pkr-all:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   .pkr-all{text-decoration:none;}
-  .pkr-track{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding-bottom:4px;}
+  /* overflow-x ořízne i stín karty v hoveru (0 6px 20px) — track má kolem karet rezervu na stín,
+     zápornými okraji vyrovnanou, takže se layout ani zarovnání snapu neposune */
+  .pkr-track{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding:8px 16px 28px;margin:-8px -16px -24px;scroll-padding-inline:16px;}
   .pkr-track::-webkit-scrollbar{display:none;}
   .pkr-item{flex:0 0 calc((100% - 80px)/5);min-width:0;scroll-snap-align:start;display:flex;}
   /* mount komponenty karty nedědí flex — roztáhne se blokově, ne flexem (host má i mount DebugBaru) */
@@ -30,8 +32,8 @@
   /* XS a XXS: vždy právě jedna celá karta, nic nevykukuje */
   /* XS a XXS: poloviční mezera (space-2) kvůli úspoře místa */
   @media (max-width:549px){ .pkr-track{gap:8px;} .pkr-item{flex-basis:100%;} }
-  /* přepínač XS sloupce platí pro XS i XXS od 320 px; pod 320 px vždy jeden sloupec */
-  @media (min-width:320px) and (max-width:549px){ .pkr-item{flex-basis:calc((100% - (var(--vp-xs-cols,1) - 1) * 8px) / var(--vp-xs-cols,1));} }
+  /* rozhodnuto 15. 10. 2026: XS 2 sloupce, XXS 1 sloupec */
+  @media (min-width:420px) and (max-width:549px){ .pkr-item{flex-basis:calc((100% - 8px) / 2);} }
   /* karta v karuselu je tekutá — bez min-width 280 by se dva sloupce v XS nevešly */
   .pkr-item .h-card{min-width:0 !important;max-width:none !important;}
   .pkr-h2{font-size:28px;line-height:1.2;letter-spacing:-0.01em;}

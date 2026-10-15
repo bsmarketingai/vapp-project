@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<style>
+  html,body{margin:0!important;padding:0!important;}
+  #dc-root{margin:0!important;padding:0!important;width:100%!important;max-width:none!important;border:0!important;}
+  #dc-root>.sc-host{margin:0!important;padding:0!important;width:100%!important;}
+  .pp-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
+  .pp-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .pp-close{transition:background .12s,color .12s;} .pp-close:hover{background:#F2F4F7;color:#15181C;}
+  @keyframes pp-in{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+  .pp-panel{animation:pp-in .4s ease;}
+  @media (prefers-reduced-motion:reduce){ .pp-panel{animation:none;} }
+  .pp-qr svg{display:block;width:100%;height:100%;}
+  a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
+</style>
+</helmet>
+<sc-if value="{{ isOpen }}" hint-placeholder-val="">
+  <div onClick="{{ onBackdrop }}" style="position:fixed;inset:0;z-index:80;background:rgba(20,30,45,.55);display:flex;align-items:center;justify-content:center;padding:24px;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;">
+    <div role="dialog" aria-modal="true" aria-labelledby="pp-title" tabindex="-1" ref="{{ panelRef }}" onClick="{{ stop }}" onKeyDown="{{ onKey }}" class="pp-panel" style="position:relative;z-index:90;background:#FFFFFF;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);width:100%;max-width:760px;max-height:86vh;display:flex;flex-direction:column;overflow:hidden;">
+
+      <div style="flex:none;display:flex;align-items:center;gap:16px;padding:20px 24px;border-bottom:1px solid #F2F4F7;">
+        <span aria-hidden="true" style="flex:none;width:44px;height:44px;border-radius:999px;background:#EFF4FB;color:#1E5AA8;display:flex;align-items:center;justify-content:center;"><dc-import name="Ikony" icon-name="help" size="24" hint-size="24px,24px"></dc-import></span>
+        <h2 id="pp-title" style="flex:1;min-width:0;margin:0;font-size:22px;font-weight:700;line-height:1.25;color:#142F56;">Poptat produkt — poradíme s výběrem</h2>
+        <button type="button" class="pp-i pp-close" aria-label="Zavřít" onClick="{{ onClose }}" style="flex:none;width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#5A626C;"><dc-import name="Ikony" icon-name="x" size="24" hint-size="24px,24px"></dc-import></button>
+      </div>
+
+      <div style="flex:1;min-height:0;overflow:auto;padding:24px;display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:32px;align-items:start;">
+        <div style="display:flex;flex-direction:column;gap:20px;">
+          <p style="margin:0;font-size:16px;line-height:1.6;color:#5A626C;text-wrap:pretty;">Hledáte konkrétní díl, nevíte, co přesně potřebujete, nebo řešíte problém s přívěsem? Napište nám — odborníci VAPP se ozvou s doporučením, dostupností a cenou.</p>
+          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px;">
+            <li style="display:flex;gap:12px;align-items:flex-start;">
+              <span aria-hidden="true" style="flex:none;display:flex;color:#1E5AA8;padding-top:1px;"><dc-import name="Ikony" icon-name="pencil" size="24" hint-size="24px,24px"></dc-import></span>
+              <div style="display:flex;flex-direction:column;gap:4px;">
+                <span style="font-size:16px;font-weight:700;line-height:1.35;color:#15181C;">Popište, co hledáte nebo řešíte</span>
+                <span style="font-size:14px;line-height:1.5;color:#5A626C;">Konkrétní díl, typ přívěsu, nebo jen problém, se kterým si nevíte rady.</span>
+              </div>
+            </li>
+            <li style="display:flex;gap:12px;align-items:flex-start;">
+              <span aria-hidden="true" style="flex:none;display:flex;color:#1E5AA8;padding-top:1px;"><dc-import name="Ikony" icon-name="camera" size="24" hint-size="24px,24px"></dc-import></span>
+              <div style="display:flex;flex-direction:column;gap:4px;">
+                <span style="font-size:16px;font-weight:700;line-height:1.35;color:#15181C;">Přiložte fotky z mobilu</span>
+                <span style="font-size:14px;line-height:1.5;color:#5A626C;">Vyfoťte díl, štítek nebo nápravu přímo telefonem — až 5 fotek. Podle fotky díl dohledáme nejrychleji.</span>
+              </div>
+            </li>
+            <li style="display:flex;gap:12px;align-items:flex-start;">
+              <span aria-hidden="true" style="flex:none;display:flex;color:#1E5AA8;padding-top:1px;"><dc-import name="Ikony" icon-name="users" size="24" hint-size="24px,24px"></dc-import></span>
+              <div style="display:flex;flex-direction:column;gap:4px;">
+                <span style="font-size:16px;font-weight:700;line-height:1.35;color:#15181C;">Poradí vám odborník</span>
+                <span style="font-size:14px;line-height:1.5;color:#5A626C;">Odpovídáme v pracovní dny do 24 hodin.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div style="background:#F2F4F7;border-radius:8px;padding:20px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;">
+          <span style="font-size:13px;font-weight:700;line-height:1.4;text-transform:uppercase;letter-spacing:.06em;color:#142F56;">Pokračujte na mobilu</span>
+          <div class="pp-qr" ref="{{ qrRef }}" role="img" aria-label="QR kód s odkazem na formulář Poptat produkt" style="width:176px;height:176px;background:#FFFFFF;border-radius:6px;padding:12px;box-sizing:border-box;"></div>
+          <span style="font-size:14px;line-height:1.5;color:#5A626C;text-wrap:pretty;">Naskenujte fotoaparátem telefonu. Formulář se otevře v mobilu a fotky nahrajete rovnou z galerie nebo je vyfotíte.</span>
+        </div>
+      </div>
+
+      <div style="flex:none;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:16px 24px;border-top:1px solid #F2F4F7;background:#F7F9FB;">
+        <span style="font-size:14px;line-height:1.5;color:#5A626C;">Raději na počítači? Fotky nahrajete i z disku.</span>
+        <dc-import name="Tlacitko" variant="primary" size="medium" label="Vyplnit formulář" icon-trailing="arrow-right" href="{{ formHref }}" hint-size="190px,44px"></dc-import>
+      </div>
+
+    </div>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:900,&quot;height&quot;:640},&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;href&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;poptat-produkt.dc.html&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onClose&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null}}">
+class Component extends DCLogic {
+  componentDidMount(){
+    this._onDocKey = (e)=>{ if(e.key === 'Escape' && this.isOpen()){ e.preventDefault(); this.close(); } };
+    document.addEventListener('keydown', this._onDocKey);
+    this.syncOpen();
+  }
+  componentDidUpdate(){ this.syncOpen(); }
+  componentWillUnmount(){ document.removeEventListener('keydown', this._onDocKey); this.unlock(); clearInterval(this._qrPoll); }
+  isOpen(){ return this.props.open === true || (this.props.open === undefined && typeof this.props.onClose !== 'function'); }
+  lock(){ if(this._locked) return; this._locked = true; this._prevOverflow = document.body.style.overflow; document.body.style.overflow = 'hidden'; }
+  unlock(){ if(!this._locked) return; this._locked = false; document.body.style.overflow = this._prevOverflow || ''; }
+  formUrl(){ try{ return new URL(this.props.href || 'poptat-produkt.dc.html', location.href).href; }catch(e){ return this.props.href || 'poptat-produkt.dc.html'; } }
+  drawQr(){
+    const el = this._qr; if (!el) return;
+    const url = this.formUrl();
+    if (el.dataset.url === url && el.firstChild) return;
+    if (typeof window.qrcode !== 'function'){
+      clearInterval(this._qrPoll);
+      this._qrPoll = setInterval(()=>{ if(typeof window.qrcode === 'function'){ clearInterval(this._qrPoll); this.drawQr(); } }, 150);
+      return;
+    }
+    const q = window.qrcode(0, 'M'); q.addData(url); q.make();
+    el.innerHTML = q.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
+    el.dataset.url = url;
+  }
+  syncOpen(){
+    const open = this.isOpen();
+    if (open && !this._wasOpen){
+      this._trigger = document.activeElement;
+      this.lock();
+      setTimeout(()=>{ if(this._panel) this._panel.focus(); }, 0);
+    }
+    if (open) this.drawQr();
+    if (!open && this._wasOpen){
+      this.unlock();
+      const t = this._trigger;
+      if (t && t.focus) setTimeout(()=>t.focus(), 0);
+      this._trigger = null;
+    }
+    this._wasOpen = open;
+  }
+  close(){ const f = this.props.onClose; if (f) f(); }
+  renderVals(){
+    const focusables = (root)=>Array.from(root.querySelectorAll('a[href],button:not([disabled]),textarea,input,select,[tabindex]:not([tabindex="-1"])'))
+      .filter(el=>el.offsetParent !== null || el === document.activeElement);
+    return {
+      isOpen: this.isOpen(),
+      formHref: this.props.href || 'poptat-produkt.dc.html',
+      panelRef:(el)=>{ this._panel = el; },
+      qrRef:(el)=>{ this._qr = el; if (el) this.drawQr(); },
+      stop:(e)=>{ if(e && e.stopPropagation) e.stopPropagation(); },
+      onBackdrop:()=>this.close(),
+      onClose:()=>this.close(),
+      onKey:(e)=>{
+        if (e.key !== 'Tab' || !this._panel) return;
+        const list = focusables(this._panel);
+        if (!list.length) return;
+        const first = list[0], last = list[list.length - 1];
+        if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

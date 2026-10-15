@@ -31,10 +31,12 @@
 </sc-if>
 <sc-if value="{{ open }}" hint-placeholder-val="{{ true }}">
 <div class="pl-shell" style="pointer-events:auto;display:flex;align-items:center;flex-wrap:wrap;justify-content:center;gap:8px;padding:6px;background:#142F56;box-shadow:0 10px 30px rgba(20,30,45,.14);">
+  <sc-if value="{{ hasGroup1 }}" hint-placeholder-val="{{ true }}">
   <span class="pl-label" style="font-size:13px;font-weight:700;color:#B4CEEC;padding:0 4px 0 10px;">{{ label }}</span>
   <sc-for list="{{ items }}" as="it" hint-placeholder-count="2">
     <button type="button" class="pl-i pl-btn" onClick="{{ it.onClick }}" aria-pressed="{{ it.pressed }}" style="{{ it.style }}">{{ it.label }}</button>
   </sc-for>
+  </sc-if>
   <sc-if value="{{ hasGroup2 }}" hint-placeholder-val="">
     <span style="width:1px;height:20px;background:#1E5AA8;margin:0 2px;"></span>
     <span class="pl-label" style="font-size:13px;font-weight:700;color:#B4CEEC;padding:0 4px 0 4px;">{{ label2 }}</span>
@@ -138,7 +140,8 @@ class Component extends DCLogic {
     })) : [];
     const dOn = (P.debugOn ?? true) !== false;
     return {
-      label: P.label || 'Kategorie:', items,
+      // noGroup1: stránka bez otevřených variant — lišta drží jen Debug, výchozí skupina se nevykreslí
+      label: P.noGroup1 ? '' : (P.label || 'Kategorie:'), items: P.noGroup1 ? [] : items, hasGroup1: !P.noGroup1,
       hasGroup2: !!src2, label2: P.label2 || '', items2,
       hasGroup3: !!src3, label3: P.label3 || '', items3,
       hasGroup4: !!src4, label4: P.label4 || '', items4,

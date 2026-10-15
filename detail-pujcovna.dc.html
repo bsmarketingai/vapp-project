@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0 !important;padding:0 !important;}
+  body{background:#F7F9FB;}
+  #dc-root{margin:0 !important;padding:0 !important;width:100% !important;max-width:none !important;border:0 !important;}
+  #dc-root>.sc-host{margin:0 !important;padding:0 !important;width:100% !important;}
+  a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
+  .a11y-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
+  .a11y-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
+  @media (max-width:819px){ .vp-in{padding-left:16px;padding-right:16px;} }
+  @media (max-width:819px){ .pd-h1{font-size:26px !important;} }
+  .pd-cols{display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap;}
+  .pd-gal{flex:1 1 520px;min-width:0;}
+  .pd-buy{flex:0 1 540px;min-width:340px;}
+  @media (max-width:819px){ .pd-buy{flex:1 1 100%;min-width:0;} }
+  .pd-gal-v2{display:flex;gap:12px;align-items:flex-start;}
+  .pd-gal-col{flex:none;display:flex;flex-direction:column;gap:12px;}
+  @media (max-width:549px){ .pd-gal-v2{flex-direction:column-reverse;align-items:stretch;} .pd-gal-col{flex-direction:row;flex-wrap:wrap;} }
+  .pd-nav{display:none;}
+  @media (max-width:819px){ .pd-nav{display:flex;} .pd-thumbs{display:none !important;} }
+  .pd-key{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;}
+  @media (max-width:819px){ .pd-key{grid-template-columns:repeat(2,minmax(0,1fr));} }
+  .pd-desc{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:32px;}
+  @media (max-width:999px){ .pd-desc{grid-template-columns:minmax(0,1fr);} }
+  .pj-tel{color:#15181C;text-decoration:none;transition:color .12s;} .pj-tel:hover{color:#1E5AA8;}
+</style>
+</helmet>
+<div data-screen-label="Detail přívěsu — půjčovna" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
+
+  <dc-import name="Usp" variant="pas" tone="tmavy" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,48px"></dc-import>
+  <dc-import name="Hlavicka" active="Půjčovna" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:30–16:30" contact-open="{{ true }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
+
+  <main class="vp-in" style="padding-top:14px;padding-bottom:48px;">
+
+    <div style="margin:4px 0 10px;">
+      <dc-import name="Breadcrumb" items="{{ crumbItems }}" bare="{{ true }}" debug="{{ debug }}" hint-size="100%,20px"></dc-import>
+    </div>
+
+    <h1 class="pd-h1" style="margin:0;font-size:36px;font-weight:700;letter-spacing:-0.02em;line-height:1.15;color:#142F56;text-wrap:pretty;">Valník nebrzděný 750 kg</h1>
+
+    <div class="pd-cols" style="margin-top:20px;">
+
+      <!-- GALERIE — shodně s detailem přívěsu -->
+      <div class="pd-gal">
+        <div class="pd-gal-v2">
+          <div class="pd-gal-col pd-thumbs">
+            <sc-for list="{{ thumbs }}" as="t" hint-placeholder-count="4">
+              <button type="button" class="a11y-i" onClick="{{ t.onPick }}" aria-label="{{ t.aria }}" aria-pressed="{{ t.pressed }}" style="{{ t.style }}"></button>
+            </sc-for>
+          </div>
+          <div style="flex:1;min-width:0;"><div style="position:relative;touch-action:pan-y;" onTouchStart="{{ imgTouchStart }}" onTouchEnd="{{ imgTouchEnd }}">
+            <div role="img" aria-label="Valník nebrzděný 750 kg" style="{{ mainImgStyle }}"></div>
+            <button type="button" class="pd-nav a11y-i" aria-label="Předchozí fotka" onClick="{{ imgPrev }}" style="position:absolute;top:50%;left:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:8px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10), inset 0 0 0 1px #91959B;">
+              <dc-import name="Ikony" icon-name="chevron-left" size="24" hint-size="24px,24px"></dc-import>
+            </button>
+            <button type="button" class="pd-nav a11y-i" aria-label="Další fotka" onClick="{{ imgNext }}" style="position:absolute;top:50%;right:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:8px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10), inset 0 0 0 1px #91959B;">
+              <dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import>
+            </button>
+            <span class="pd-nav" aria-hidden="true" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);align-items:center;min-height:24px;padding:0 10px;border-radius:8px;background:#FFFFFF;box-shadow:0 6px 20px rgba(20,47,86,.10);font-size:13px;font-weight:700;color:#15181C;">{{ imgCounter }}</span>
+          </div></div>
+        </div>
+
+        <!-- KLÍČOVÉ PARAMETRY — shodně s detailem přívěsu -->
+        <div class="pd-key" style="margin-top:16px;">
+          <sc-for list="{{ keySpecs }}" as="k" hint-placeholder-count="4">
+            <div style="background:#FDF1F1;border-radius:8px;padding:14px;display:flex;align-items:center;gap:10px;">
+              <span aria-hidden="true" style="display:inline-flex;flex:none;color:#C5232B;"><dc-import name="Ikony" icon-name="{{ k.icon }}" size="24" hint-size="24px,24px"></dc-import></span>
+              <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;">
+                <span style="font-size:13px;font-weight:500;color:#A21B22;">{{ k.label }}</span>
+                <span style="font-size:18px;font-weight:700;line-height:1.25;color:#15181C;">{{ k.value }}</span>
+              </span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;font-size:13px;line-height:1.5;color:#666E78;">
+          <p style="margin:0;text-wrap:pretty;">* Uvedená cena je včetně DPH. Půjčovné je účtováno za každých započatých 24 hodin.</p>
+          <p style="margin:0;text-wrap:pretty;">** Přívěs je schválen na maximální rychlost 130 km/h. Za zákonem stanovených podmínek je možné s přívěsem jet 130 km/h na území ČR. Mimo ČR je nutné se řídit platnými předpisy daného státu, které se od českých mohou lišit.</p>
+          <div style="display:flex;">
+            <dc-import name="Tlacitko" variant="ghost" size="standard" label="Kompletní podmínky půjčovny" icon="file-type-pdf" href="#" hint-size="260px,36px"></dc-import>
+          </div>
+        </div>
+      </div>
+
+      <!-- REZERVAČNÍ BOX -->
+      <div class="pd-buy" style="background:#FFFFFF;border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <h2 style="margin:0;font-size:18px;font-weight:700;line-height:1.35;color:#15181C;">Parametry</h2>
+          <div style="display:flex;flex-direction:column;">
+            <sc-for list="{{ params }}" as="r" hint-placeholder-count="7">
+              <div style="{{ r.rowStyle }}">
+                <span style="flex:0 0 50%;font-size:14px;color:#5A626C;">{{ r.label }}</span>
+                <span style="flex:1;min-width:0;font-size:14px;font-weight:700;color:#15181C;">{{ r.value }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <span aria-hidden="true" style="height:1px;background:#F2F4F7;"></span>
+        <span style="display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:700;line-height:1.4;color:#0B6937;"><span aria-hidden="true" style="flex:none;display:inline-flex;width:18px;height:18px;"><dc-import name="Ikony" icon-name="calendar" size="18" hint-size="18px,18px"></dc-import></span>Možno rezervovat</span>
+        <div style="display:flex;flex-direction:column;gap:2px;">
+          <span style="font-size:14px;font-weight:500;color:#5A626C;">Půjčovné</span>
+          <div style="display:flex;align-items:baseline;gap:4px;">
+            <span style="font-size:28px;font-weight:700;line-height:1.2;color:#15181C;">400 Kč</span>
+            <span style="font-size:18px;font-weight:700;color:#5A626C;">/ den*</span>
+          </div>
+          <span style="font-size:13px;font-weight:400;color:#666E78;">včetně DPH, za každých započatých 24 hodin</span>
+        </div>
+
+        <dc-import name="Tlacitko" variant="buy" size="large" label="Rezervovat" icon="calendar" full-width="{{ true }}" on-click="{{ noop }}" hint-size="100%,52px"></dc-import>
+
+        <p style="margin:0;padding:12px 14px;border-radius:6px;background:#EFF4FB;font-size:14px;line-height:1.5;font-weight:700;color:#1E5AA8;text-wrap:pretty;">Volitelně lze zapůjčit příslušenství — nutno rezervovat spolu s přívěsem.</p>
+
+
+        <span aria-hidden="true" style="height:1px;background:#F2F4F7;"></span>
+
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;gap:8px;font-size:14px;color:#5A626C;"><span style="flex:1;">Vyzvednutí</span><span style="font-weight:700;color:#15181C;">Popovičky 38, Praha – východ</span></div>
+          <div style="display:flex;gap:8px;font-size:14px;color:#5A626C;"><span style="flex:1;">Otevírací doba</span><span style="font-weight:700;color:#15181C;">Po–Pá 8:30–16:00</span></div>
+          <div style="display:flex;gap:8px;font-size:14px;color:#5A626C;"><span style="flex:1;">Víkend</span><span style="font-weight:700;color:#15181C;">jeden den půjčovného odečítáme</span></div>
+          <div style="display:flex;gap:8px;font-size:14px;color:#5A626C;"><span style="flex:1;">Řidičské oprávnění</span><span style="font-weight:700;color:#15181C;">skupina B</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;">
+      <dc-import name="PoradenskyBlok" variant="compact" hide-inquiry="{{ true }}" hint-size="100%,90px"></dc-import>
+    </div>
+  </main>
+
+  <div style="margin-top:10px;">
+    <dc-import name="Paticka" bare="true" hint-size="100%,600px"></dc-import>
+  </div>
+
+  <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  state = { img:0 };
+  IMAGES = [
+    'prives-praktik-2-a.jpg', 'prives-praktik-2-b.jpg',
+    'uploads/prives-vapp-praktik-2.jpg', 'uploads/prives-vapp-praktik-2-1.jpg'
+  ];
+  PARAMS = [
+    ['nosnost (kg)', '515'],
+    ['délka ložné plochy (mm)', '2530'],
+    ['šířka ložné plochy (mm)', '1280'],
+    ['celková hmotnost (kg)', '750'],
+    ['brzdy', 'nebrzděný'],
+    ['max. rychlost', '130 km/h**'],
+    ['řidičské oprávnění', 'minimálně skupina B']
+  ];
+  renderVals(){
+    const s = this.state, N = this.IMAGES.length;
+    const zebra = (i)=>'display:flex;gap:12px;padding:10px 14px;background:'+(i%2?'#FFFFFF':'#F7F9FB')+';';
+    return {
+      debug: this.props.debug ?? true,
+      noop: ()=>{},
+      crumbItems: [{ name:'Úvod', href:'index.dc.html' }, { name:'Půjčovna', href:'pujcovna.dc.html' }, { name:'Valník nebrzděný 750 kg', href:'#' }],
+      thumbs: this.IMAGES.map((src,i)=>({
+        onPick: ()=>this.setState({ img:i }), aria:'Zobrazit fotku '+(i+1), pressed: i===s.img ? 'true' : 'false',
+        style:'flex:none;width:92px;height:70px;border-radius:6px;background:#FFFFFF url("./'+src+'") center/contain no-repeat;background-origin:content-box;padding:6px;box-shadow:inset 0 0 0 '+(i===s.img?'2px #1E5AA8':'1px #F2F4F7')+';cursor:pointer;'
+      })),
+      mainImgStyle:'aspect-ratio:4/3;border-radius:8px;background:#FFFFFF url("./'+this.IMAGES[s.img]+'") center/contain no-repeat;background-origin:content-box;padding:24px;',
+      imgCounter: (s.img + 1) + ' / ' + N,
+      imgPrev: ()=>this.setState(p=>({ img:(p.img - 1 + N) % N })),
+      imgNext: ()=>this.setState(p=>({ img:(p.img + 1) % N })),
+      imgTouchStart: (e)=>{ const t = e.touches && e.touches[0]; this._sw = t ? { x:t.clientX, y:t.clientY } : null; },
+      imgTouchEnd: (e)=>{ const s0 = this._sw; this._sw = null; const t = e.changedTouches && e.changedTouches[0]; if (!s0 || !t) return; const dx = t.clientX - s0.x, dy = t.clientY - s0.y; if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return; this.setState(p=>({ img: dx < 0 ? (p.img + 1) % N : (p.img - 1 + N) % N })); },
+      keySpecs: [
+        { icon:'dimensions', label:'Ložná plocha', value:'2530 × 1280 mm' },
+        { icon:'weight', label:'Celková hmotnost', value:'750 kg' },
+        { icon:'box', label:'Nosnost', value:'515 kg' },
+        { icon:'steering-wheel', label:'Řidičák', value:'skupina B' }
+      ],
+      params: this.PARAMS.map((r,i)=>({ label:r[0], value:r[1], rowStyle: zebra(i) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

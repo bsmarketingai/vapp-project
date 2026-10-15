@@ -41,9 +41,9 @@
 </helmet>
 <sc-if value="{{ single }}" hint-placeholder-val="">
   <div class="{{ viewCls }}" style="display:inline-flex;align-items:center;">
-    <div class="ks-box" style="position:relative;display:inline-flex;align-items:center;min-height:44px;border:1px solid #B4CEEC;border-radius:8px;background:#fff;color:#15181C;">
+    <div class="ks-box" style="position:relative;display:inline-flex;align-items:center;min-height:44px;border:0;border-radius:8px;background:#fff;color:#15181C;">
       <button type="button" class="a11y-i" onClick="{{ onClick }}" onMouseEnter="{{ onHoverEnter }}" onMouseLeave="{{ onHoverLeave }}" aria-label="{{ cartAria }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;cursor:pointer;">
-        <span style="display:flex;align-items:center;color:#1E5AA8;"><dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import></span>
+        <span style="position:relative;display:flex;align-items:center;color:#1E5AA8;"><dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import><sc-if value="{{ showCount }}" hint-placeholder-val=""><span aria-hidden="true" style="position:absolute;top:-4px;right:-8px;min-width:16px;width:16px;height:16px;border-radius:999px;background:#C5232B;color:#fff;font-size:10px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;">{{ count }}</span></sc-if></span>
         <span class="ks-price" style="font-size:14px;font-weight:700;color:#15181C;white-space:nowrap;">{{ label }}</span>
       </button>
       <sc-if value="{{ showCur }}" hint-placeholder-val="{{ true }}">
@@ -59,11 +59,12 @@
           </sc-if>
         </div>
       </sc-if>
-      <sc-if value="{{ showCount }}" hint-placeholder-val=""><span aria-hidden="true" style="position:absolute;top:-4px;right:-8px;min-width:16px;width:16px;height:16px;border-radius:999px;background:#C5232B;color:#fff;font-size:10px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;">{{ count }}</span></sc-if>
     </div>
-    <button type="button" class="ks-mob a11y-i" onClick="{{ onClick }}" aria-label="{{ cartAria }}" style="position:relative;align-items:center;justify-content:center;box-sizing:border-box;width:44px;height:44px;border:1px solid #B4CEEC;border-radius:8px;background:#fff;color:#1E5AA8;cursor:pointer;">
-      <dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import>
-      <sc-if value="{{ showCount }}" hint-placeholder-val=""><span aria-hidden="true" style="position:absolute;top:-4px;right:-8px;min-width:16px;width:16px;height:16px;border-radius:999px;background:#C5232B;color:#fff;font-size:10px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;">{{ count }}</span></sc-if>
+    <button type="button" class="ks-mob a11y-i" onClick="{{ onClick }}" aria-label="{{ cartAria }}" style="position:relative;align-items:center;justify-content:center;box-sizing:border-box;width:44px;height:44px;border:0;border-radius:8px;background:transparent;color:#1E5AA8;cursor:pointer;">
+      <span style="position:relative;display:flex;align-items:center;">
+        <dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import>
+        <sc-if value="{{ showCount }}" hint-placeholder-val=""><span aria-hidden="true" style="position:absolute;top:-4px;right:-8px;min-width:16px;width:16px;height:16px;border-radius:999px;background:#C5232B;color:#fff;font-size:10px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;">{{ count }}</span></sc-if>
+      </span>
     </button>
   </div>
 </sc-if>
@@ -74,10 +75,9 @@
       <span style="font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#666E78;">Desktop (≥ 550 px)</span>
       <div class="ks-f-desk" style="display:flex;gap:24px;flex-wrap:wrap;align-items:center;">
         <sc-for list="{{ states }}" as="it" hint-placeholder-count="3">
-          <div class="ks-box" style="position:relative;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:1px solid #B4CEEC;border-radius:8px;background:#fff;color:#15181C;">
-      <span style="display:flex;align-items:center;color:#1E5AA8;"><dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import></span>
+          <div class="ks-box" style="position:relative;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:0;border-radius:8px;background:#fff;color:#15181C;">
+      <span style="position:relative;display:flex;align-items:center;color:#1E5AA8;"><dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import><sc-if value="{{ it.showCount }}" hint-placeholder-val=""><span style="position:absolute;top:-4px;right:-8px;min-width:16px;width:16px;height:16px;border-radius:999px;background:#C5232B;color:#fff;font-size:10px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;">{{ it.count }}</span></sc-if></span>
       <span style="font-size:14px;font-weight:700;color:#15181C;white-space:nowrap;">{{ it.label }}</span>
-      <sc-if value="{{ it.showCount }}" hint-placeholder-val=""><span style="position:absolute;top:-4px;right:-8px;min-width:16px;width:16px;height:16px;border-radius:999px;background:#C5232B;color:#fff;font-size:10px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;">{{ it.count }}</span></sc-if>
     </div>
         </sc-for>
       </div>
@@ -86,17 +86,19 @@
       <span style="font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#666E78;">Mobil XS a XXS (&lt; 550 px)</span>
       <div class="ks-f-mob" style="display:flex;gap:24px;flex-wrap:wrap;align-items:center;">
         <sc-for list="{{ states }}" as="it" hint-placeholder-count="3">
-          <div class="ks-mob" style="position:relative;align-items:center;justify-content:center;box-sizing:border-box;width:44px;height:44px;border:1px solid #B4CEEC;border-radius:8px;background:#fff;color:#1E5AA8;">
-      <dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import>
-      <sc-if value="{{ it.showCount }}" hint-placeholder-val=""><span style="position:absolute;top:-4px;right:-8px;min-width:16px;width:16px;height:16px;border-radius:999px;background:#C5232B;color:#fff;font-size:10px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;">{{ it.count }}</span></sc-if>
+          <div class="ks-mob" style="position:relative;align-items:center;justify-content:center;box-sizing:border-box;width:44px;height:44px;border:0;border-radius:8px;background:transparent;color:#1E5AA8;">
+      <span style="position:relative;display:flex;align-items:center;">
+        <dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import>
+        <sc-if value="{{ it.showCount }}" hint-placeholder-val=""><span style="position:absolute;top:-4px;right:-8px;min-width:16px;width:16px;height:16px;border-radius:999px;background:#C5232B;color:#fff;font-size:10px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;">{{ it.count }}</span></sc-if>
+      </span>
     </div>
         </sc-for>
       </div>
     </div>
   </div>
   <div style="display:flex;flex-direction:column;gap:5px;padding:2px 4px;">
-    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> v hlavičce jako vstup do košíku. Desktop: rámeček 1 px #B4CEEC (blue.200), radius 8, výška 44, ikona + částka bez DPH a čítač 16×16 v pravém horním rohu boxu (u prázdného košíku popisek „Košík" a bez čítače). XS a XXS: jen ikona 44×44 s červeným čítačem 16×16, jen když počet &gt; 0.</div>
-    <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> rámeček je #B4CEEC (blue.200): box je identifikovatelný ikonou a textem, rámeček není nositelem významu, proto se na něj nevztahuje limit 3 : 1; čítač nedělat větší než 16×16; nezobrazovat cenu s DPH ani popisek „s DPH"; čítač neukazovat při nule.</div>
+    <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy:</strong> v hlavičce jako vstup do košíku. Bez rámečku na všech šířkách. Desktop: výška 44, ikona + částka bez DPH, čítač 16×16 v pravém horním rohu ikony (u prázdného košíku popisek „Košík" a bez čítače). XS a XXS: jen ikona (klikací plocha 44×44) se stejným čítačem, jen když počet &gt; 0.</div>
+    <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> rámeček kolem košíku nevracet; čítač nedělat větší než 16×16; nezobrazovat cenu s DPH ani popisek „s DPH"; čítač neukazovat při nule.</div>
   </div>
 </div>
 </sc-if>

@@ -167,7 +167,7 @@
           <span style="font-size:15px;font-weight:700;color:#fff;">VAPP s.r.o.</span>
           <span style="font-size:13px;color:#B4CEEC;margin-top:-6px;">IČO 12345678 · DIČ CZ12345678</span>
           <a class="ft-clink a11y-i" href="https://www.google.cz/maps/dir//VAPP+-+p%C5%99%C3%ADv%C4%9Bsy,+p%C5%99%C3%ADslu%C5%A1enstv%C3%AD,+n%C3%A1hradn%C3%AD+d%C3%ADly+a+servis,+38,+251+01+Popovi%C4%8Dky/@49.9695313,14.6010162,13z/data=!4m9!4m8!1m0!1m5!1m1!1s0x470b8f238df097eb:0x94157206222d85f7!2m2!1d14.6005557!2d49.9599557!3e0?entry=ttu&amp;g_ep=EgoyMDI2MDgyMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:#fff;line-height:1.5;text-decoration:underline;cursor:pointer;"><span aria-hidden="true" style="display:inline-flex;align-items:center;flex:none;"><dc-import name="Ikony" icon-name="map-pin" size="24" hint-size="24px,24px"></dc-import></span>Popovičky 38, 251 01 Říčany, Praha-východ</a>
-          <dc-import name="Tlacitko" variant="ondark" size="medium" icon="address-book" label="Všechny kontakty" full-width="true" style="width:100%;" hint-size="100%,44px"></dc-import>
+          <dc-import name="Tlacitko" variant="ondark" size="medium" icon="address-book" label="Všechny kontakty" href="kontakty.dc.html" full-width="true" style="width:100%;" hint-size="100%,44px"></dc-import>
           <div style="height:1px;background:rgba(255,255,255,.12);margin:4px 0;"></div>
           <span style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#B4CEEC;">Sledujte nás</span>
           <div style="display:flex;gap:12px;">
@@ -201,7 +201,7 @@ class Component extends DCLogic {
     const open = this.state.openCols || {};
     const toggle = (i)=>this.setState({ openCols: Object.assign({}, open, { [i]: !open[i] }) });
     // na mobilu jsou sloupce defaultně zabalené; na desktopu CSS akordeon vypne
-    const HREF = { 'Servis':'servis.dc.html', 'Přívěsy':'privesy-V1.dc.html', 'Náhradní díly':'nahradnidily.dc.html', 'Poradna':'poradna.dc.html', 'O nás':'onas.dc.html' };
+    const HREF = { 'Servis':'servis.dc.html', 'Přívěsy':'privesy-V1.dc.html', 'Náhradní díly':'nahradnidily.dc.html', 'Poradna':'poradna.dc.html', 'O nás':'onas.dc.html', 'Kontakty':'kontakty.dc.html', 'Půjčovna':'pujcovna.dc.html' };
     const decorate = (cols)=>cols.map((c,i)=>Object.assign({}, c, {
       links: (c.links||[]).map(x=>{
         const t = typeof x === 'string' ? x : x.t;

@@ -22,32 +22,34 @@
   *{box-sizing:border-box;}
   html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
   .vapp-led{border-radius:999px;}
+  /* desktop (od 820 px): vnitřní odsazení boxu 2× — 32 px (space-8); mobil zůstává 16 */
+  @media (min-width:820px){ .pb-box{padding:32px !important;} }
 </style>
 </helmet>
 <div style="display:flex;flex-direction:column;gap:20px;width:100%;">
   <sc-if value="{{ showStd }}" hint-placeholder-val="{{ true }}">
-    <div style="display:flex;align-items:center;gap:16px;background:#EFF4FB;box-shadow:inset 0 0 0 1px #B4CEEC;border-radius:8px;padding:16px;flex-wrap:wrap;">
+    <div class="pb-box" style="display:flex;align-items:center;gap:16px;background:#EFF4FB;box-shadow:inset 0 0 0 1px #B4CEEC;border-radius:8px;padding:16px;flex-wrap:wrap;">
       <img src="./uploads/supportLine.png" alt="" style="flex:none;width:76px;height:72px;object-fit:contain;display:block;">
       <div style="flex:1;min-width:200px;">
         <div style="font-size:22px;font-weight:700;line-height:1.25;color:#142F56;">Potřebujete poradit s výběrem?</div>
         <div style="display:inline-flex;align-items:center;gap:8px;font-size:16px;line-height:1.6;color:#5A626C;margin-top:4px;"><sc-if value="{{ isOpen }}" hint-placeholder-val="{{ true }}"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:9px;height:9px;background:#2EAA6A;flex:none;"></span></sc-if>Zkušení obchodníci poradí po telefonu i e-mailu · Po–Pá 8:30–16:30</div>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <dc-import name="Tlacitko" variant="primary" size="medium" label="323 605 314" icon="phone" hint-size="180px,44px"></dc-import>
-        <dc-import name="Tlacitko" variant="ontint" size="medium" label="Napsat e-mail" hint-size="160px,44px"></dc-import>
+        <dc-import name="Tlacitko" variant="{{ phoneVariant }}" size="medium" label="323 605 314" icon="phone" hint-size="180px,44px"></dc-import>
+        <sc-if value="{{ showInquiry }}" hint-placeholder-val="{{ true }}"><dc-import name="Tlacitko" variant="primary" size="medium" label="Poptat produkt" icon="help" href="poptat-produkt.dc.html" on-click="{{ onInquiry }}" hint-size="180px,44px"></dc-import></sc-if>
       </div>
     </div>
   </sc-if>
   <sc-if value="{{ showCompact }}" hint-placeholder-val="">
-    <div style="display:flex;align-items:center;gap:14px;background:#EFF4FB;box-shadow:inset 0 0 0 1px #B4CEEC;border-radius:8px;padding:16px;flex-wrap:wrap;">
+    <div class="pb-box" style="display:flex;align-items:center;gap:14px;background:#EFF4FB;box-shadow:inset 0 0 0 1px #B4CEEC;border-radius:8px;padding:16px;flex-wrap:wrap;">
       <img src="./uploads/supportLine.png" alt="" style="flex:none;width:62px;height:58px;object-fit:contain;display:block;">
       <div style="flex:1;min-width:180px;">
         <div style="font-size:18px;font-weight:700;line-height:1.35;color:#142F56;">Potřebujete poradit s výběrem?</div>
         <div style="display:inline-flex;align-items:center;gap:8px;font-size:15px;line-height:1.6;color:#5A626C;margin-top:2px;"><sc-if value="{{ isOpen }}" hint-placeholder-val="{{ true }}"><span class="vapp-led" style="--led:rgba(46,170,106,.5);width:9px;height:9px;background:#2EAA6A;flex:none;"></span></sc-if>Zkušení obchodníci poradí po telefonu i e-mailu · Po–Pá 8:30–16:30</div>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <dc-import name="Tlacitko" variant="primary" size="medium" label="323 605 314" icon="phone" hint-size="180px,44px"></dc-import>
-        <dc-import name="Tlacitko" variant="ontint" size="medium" label="Napsat e-mail" hint-size="160px,44px"></dc-import>
+        <dc-import name="Tlacitko" variant="{{ phoneVariant }}" size="medium" label="323 605 314" icon="phone" hint-size="180px,44px"></dc-import>
+        <sc-if value="{{ showInquiry }}" hint-placeholder-val="{{ true }}"><dc-import name="Tlacitko" variant="primary" size="medium" label="Poptat produkt" icon="help" href="poptat-produkt.dc.html" on-click="{{ onInquiry }}" hint-size="180px,44px"></dc-import></sc-if>
       </div>
     </div>
   </sc-if>
@@ -55,19 +57,31 @@
     <div style="display:flex;flex-direction:column;gap:5px;padding:2px 4px;">
       <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy standard:</strong> samostatná pobídka na stránce kategorie i v detailu — fotka operátora 76 × 72 vlevo, tlačítka 44.</div>
       <div style="font-size:13px;line-height:1.5;color:#0B6937;"><strong>Kdy compact:</strong> v hutnějším kontextu (pod výpisem, v užším sloupci), kde je potřeba nižší profil — fotka 62 × 58, tlačítka zůstávají 44.</div>
-      <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> neopakovat víckrát na jedné stránce; telefon vždy jako primární akce; podklad vždy #EFF4FB (blue.50) s linkou #B4CEEC; fotka operátora bez plochy, rámečku i rádiusu.</div>
+      <div style="font-size:13px;line-height:1.5;color:#C5232B;"><strong>Kdy ne:</strong> neopakovat víckrát na jedné stránce; hlavní akce je Poptat produkt (primary), telefon je sekundární (ontint — secondary by na podkladu #EFF4FB splynul); podklad vždy #EFF4FB (blue.50) s linkou #B4CEEC; fotka operátora bez plochy, rámečku i rádiusu.</div>
     </div>
   </sc-if>
 </div>
+<dc-import name="PoptavkaPopup" open="{{ inquiryOpen }}" href="poptat-produkt.dc.html" on-close="{{ closeInquiry }}" hint-size="0px,0px"></dc-import>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;},&quot;$preview&quot;:{&quot;width&quot;:900,&quot;height&quot;:280},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;standard&quot;,&quot;compact&quot;],&quot;default&quot;:&quot;standard&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 class Component extends DCLogic {
+  state = { inquiryOpen:false };
   renderVals(){
     const v = this.props.variant;
-    if (v === 'compact') return { showStd:false, showCompact:true, showNote:false };
-    if (v === 'standard') return { showStd:true, showCompact:false, showNote:false };
-    return { showStd:true, showCompact:true, showNote:true };
+    // Poptat produkt: na zařízení s myší (desktop) se otevře popup s popisem služby a QR kódem do mobilu;
+    // na dotykových zařízeních odkaz vede rovnou na formulář (fotky se nahrají přímo z telefonu)
+    // hideInquiry: stránka bez Poptat produkt (detail v půjčovně) — telefon pak nese hlavní akci
+    const hideInq = this.props.hideInquiry === true;
+    const inq = {
+      showInquiry: !hideInq, phoneVariant: hideInq ? 'primary' : 'ontint',
+      inquiryOpen: this.state.inquiryOpen,
+      onInquiry: (e)=>{ const fine = window.matchMedia && window.matchMedia('(hover:hover) and (pointer:fine)').matches; if (!fine) return; if (e && e.preventDefault) e.preventDefault(); this.setState({ inquiryOpen:true }); },
+      closeInquiry: ()=>this.setState({ inquiryOpen:false })
+    };
+    if (v === 'compact') return Object.assign({ showStd:false, showCompact:true, showNote:false }, inq);
+    if (v === 'standard') return Object.assign({ showStd:true, showCompact:false, showNote:false }, inq);
+    return Object.assign({ showStd:true, showCompact:true, showNote:true }, inq);
   }
 }
 

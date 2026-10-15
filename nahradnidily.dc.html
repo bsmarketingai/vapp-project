@@ -48,8 +48,8 @@
 @media (min-width:1560px){ .p-grid{grid-template-columns:repeat(5,1fr);} }
   @media (max-width:999px){ .p-grid{grid-template-columns:repeat(3,1fr);} }
 @media (max-width:819px){ .p-grid{grid-template-columns:repeat(2,1fr);} }
-@media (max-width:549px){ .p-grid{grid-template-columns:repeat(var(--vp-xs-cols,1),1fr);} }
-@media (max-width:319px){ .p-grid{grid-template-columns:1fr;} }
+@media (max-width:549px){ .p-grid{grid-template-columns:repeat(2,1fr);} }
+@media (max-width:419px){ .p-grid{grid-template-columns:1fr;} }
 .sk{background:#F2F4F7;border-radius:6px;}
 @media (max-width:819px){ .sc-tiles{display:none !important;} .sc-crumb:not(.sc-crumb-last){display:none !important;} }
 @media (min-width:820px){ .sc-rows{display:none !important;} }
@@ -70,6 +70,8 @@
   .a11y-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
   .a11y-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
 .hvx1{transition:background .12s;} .hvx1:hover{background:#F2F4F7 !important;}
+/* akordeon popisu: pod 820 px jen chevron (klikací plocha 44 px), popisek nese aria-label */
+@media (max-width:819px){ .pg-acc-l{display:none;} .pg-acc-t{min-width:44px;min-height:44px !important;justify-content:center;margin-top:-9px;} }
 .hvx2{transition:color .12s;} .hvx2:hover{color:#1E5AA8 !important;}
 .hvx3{transition:background .12s;} .hvx3:hover{background:#D8E6F6 !important;}
   .hvxin:hover{color:#1A4A8A !important;text-decoration:underline;}
@@ -80,9 +82,9 @@
 .hvx8{transition:color .12s,border-color .12s;} .hvx8:hover{color:#fff !important;border-color:#fff !important;}
 .hvx9{transition:color .12s;} .hvx9:hover{color:#fff !important;}
 @media (max-width:999px){ .hd-sep{display:none !important;} }
-/* Rozcestník včetně dlaždice Akce a slevy: V1 devět, V2 sedm dlaždic.
-   Počet sloupců je volený tak, aby na posledním řádku nikdy nezbyla jediná dlaždice —
-   dlaždice se nikdy neroztahuje přes víc sloupců. */
+/* Zrušit filtry je od 550 px v řádku chipů filtrační lišty; pod 550 px (chipy skryté) zůstává odkaz nad výpisem */
+.p-clear-mb{display:none;} @media (max-width:549px){ .p-clear-mb{display:inline !important;} }
+/* Rozcestník bez dlaždice Akce a slevy (ta je první chip v Nejhledanějších): V1 osm, V2 šest dlaždic. */
 
 
 
@@ -108,10 +110,10 @@
       <div style="flex:1 1 460px;min-width:0;">
     <h1 class="pg-h1" style="margin:0;font-size:36px;font-weight:700;letter-spacing:-0.02em;color:#142F56;">{{ pageTitle }}</h1>
     <sc-if value="{{ inLeaf }}" hint-placeholder-val="">
-      <p class="pg-lead" style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;">{{ leafDesc }}</p>
+      <div class="pg-acc" style="margin-top:8px;display:flex;align-items:flex-start;gap:16px;"><p class="pg-lead" ref="{{ descRef }}" style="flex:1;min-width:0;margin:0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;text-wrap:pretty;overflow:hidden;">{{ leafLead }}<sc-if value="{{ descOpen }}" hint-placeholder-val=""><span>{{ leafMore }}</span></sc-if></p><sc-if value="{{ hasLeafMore }}" hint-placeholder-val="{{ true }}"><button type="button" class="a11y-i hvxin pg-acc-t" aria-expanded="{{ descExpanded }}" aria-label="{{ descLabel }}" onClick="{{ toggleDesc }}" style="flex:none;margin-left:auto;display:inline-flex;align-items:center;gap:4px;min-height:26px;font-size:16px;font-weight:700;color:#1E5AA8;cursor:pointer;white-space:nowrap;transition:color .12s;"><span class="pg-acc-l">{{ descLabel }}</span><span aria-hidden="true" style="display:inline-flex;color:#5189CC;"><sc-if value="{{ descClosed }}" hint-placeholder-val="{{ true }}"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></sc-if><sc-if value="{{ descOpen }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="chevron-up" size="24" hint-size="24px,24px"></dc-import></sc-if></span></button></sc-if></div>
     </sc-if>
     <sc-if value="{{ notLeaf }}" hint-placeholder-val="{{ true }}">
-    <p style="margin:8px 0 0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;text-wrap:pretty;">Náhradní díly na přívěsy všech značek — KNOTT, AL-KO, BPW, Jokon i Winterhoff. Tisíce dílů skladem s expedicí do 24 hodin.<sc-if value="{{ descOpen }}" hint-placeholder-val=""><span> Vybírejte podle výrobce nápravy, průměru brzdy nebo čísla dílu. Nabízíme kompletní sortiment od nájezdových brzd a brzdových čelistí přes ložiska, náboje a spojovací zařízení až po osvětlení, blatníky, kola a plachty. Nevíte si rady? Zkušení obchodníci vám poradí s výběrem správného dílu po telefonu i e-mailu.</span></sc-if><span> </span><button type="button" class="a11y-i hvxin" aria-expanded="{{ descExpanded }}" onClick="{{ toggleDesc }}" style="display:inline;font-size:16px;font-weight:700;color:#1E5AA8;cursor:pointer;white-space:nowrap;transition:color .12s;">{{ descLabel }}<span aria-hidden="true" style="display:inline-flex;vertical-align:-4px;margin-left:2px;"><sc-if value="{{ descClosed }}" hint-placeholder-val="{{ true }}"><dc-import name="Ikony" icon-name="chevron-down" size="18" hint-size="18px,18px"></dc-import></sc-if><sc-if value="{{ descOpen }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="chevron-up" size="18" hint-size="18px,18px"></dc-import></sc-if></span></button></p>
+    <div class="pg-acc" style="margin-top:8px;display:flex;align-items:flex-start;gap:16px;"><p ref="{{ descRef }}" style="flex:1;min-width:0;margin:0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;text-wrap:pretty;overflow:hidden;">Náhradní díly na přívěsy všech značek — KNOTT, AL-KO, BPW, Jokon i Winterhoff. Tisíce dílů skladem s expedicí do 24 hodin.<sc-if value="{{ descOpen }}" hint-placeholder-val=""><span> Vybírejte podle výrobce nápravy, průměru brzdy nebo čísla dílu. Nabízíme kompletní sortiment od nájezdových brzd a brzdových čelistí přes ložiska, náboje a spojovací zařízení až po osvětlení, blatníky, kola a plachty. Nevíte si rady? Zkušení obchodníci vám poradí s výběrem správného dílu po telefonu i e-mailu.</span></sc-if></p><button type="button" class="a11y-i hvxin pg-acc-t" aria-expanded="{{ descExpanded }}" aria-label="{{ descLabel }}" onClick="{{ toggleDesc }}" style="flex:none;margin-left:auto;display:inline-flex;align-items:center;gap:4px;min-height:26px;font-size:16px;font-weight:700;color:#1E5AA8;cursor:pointer;white-space:nowrap;transition:color .12s;"><span class="pg-acc-l">{{ descLabel }}</span><span aria-hidden="true" style="display:inline-flex;color:#5189CC;"><sc-if value="{{ descClosed }}" hint-placeholder-val="{{ true }}"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></sc-if><sc-if value="{{ descOpen }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="chevron-up" size="24" hint-size="24px,24px"></dc-import></sc-if></span></button></div>
     </sc-if>
       </div>
     </div>
@@ -185,7 +187,7 @@
     <div class="p-sentinel" style="height:0;"></div>
     <div class="p-sticky" style="position:var(--vp-bar-pos,sticky);top:var(--vp-stick-top,0px);z-index:60;background:#F7F9FB;margin-top:14px;padding-top:14px;padding-bottom:14px;border-bottom:1px solid #F2F4F7;transition:top .3s ease;width:var(--vp-bleed-w,100%);margin-left:var(--vp-bleed-ml,0px);box-shadow:var(--vp-bar-shadow,none);">
       <div class="vp-in" style="display:flex;">
-      <dc-import name="FiltracniLista" filter-count="{{ filterCount }}" active-filters="{{ activeFilters }}" on-remove-filter="{{ onRemoveFilter }}" only-stock="{{ onlyStock }}" sort="{{ sortKey }}" sort-options="{{ sortOptions }}" on-open-filter="{{ openFilter }}" on-toggle-stock="{{ toggleStock }}" on-sort-change="{{ onSortChange }}" style="width:100%;" hint-size="100%,44px"></dc-import>
+      <dc-import name="FiltracniLista" filter-count="{{ filterCount }}" hide-count="{{ true }}" active-filters="{{ activeFilters }}" on-remove-filter="{{ onRemoveFilter }}" on-clear-all="{{ clearFilters }}" show-clear="{{ anyFilter }}" only-stock="{{ onlyStock }}" sort="{{ sortKey }}" sort-options="{{ sortOptions }}" on-open-filter="{{ openFilter }}" on-toggle-stock="{{ toggleStock }}" on-sort-change="{{ onSortChange }}" style="width:100%;" hint-size="100%,44px"></dc-import>
       </div>
     </div>
 
@@ -193,7 +195,7 @@
     <h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;margin:0;">Výpis produktů</h2>
     <div style="display:flex;align-items:baseline;justify-content:space-between;margin:16px 0 10px;">
       <span style="font-size:13px;color:#5A626C;font-weight:600;">{{ resultCount }} produktů</span>
-      <sc-if value="{{ anyFilter }}" hint-placeholder-val=""><button type="button" class="a11y-i" onClick="{{ clearFilters }}" style="font-size:13px;font-weight:700;color:#C5232B;cursor:pointer;text-decoration:underline;">Zrušit filtry</button></sc-if>
+      <sc-if value="{{ anyFilter }}" hint-placeholder-val=""><button type="button" class="a11y-i p-clear-mb" onClick="{{ clearFilters }}" style="font-size:13px;font-weight:700;color:#C5232B;cursor:pointer;text-decoration:underline;">Zrušit filtry</button></sc-if>
     </div>
     <sc-if value="{{ loading }}" hint-placeholder-val="">
       <div class="p-grid" aria-busy="true" aria-label="Načítání produktů">
@@ -246,7 +248,6 @@
 
   <dc-import name="FiltrDrawer" open="{{ filterOpen }}" currency="{{ currency }}" price-from="{{ priceFrom }}" price-to="{{ priceTo }}" on-price-change="{{ onPriceChange }}" flags="{{ filterFlags }}" on-toggle-flag="{{ onToggleFlag }}" only-stock="{{ onlyStock }}" on-toggle-stock="{{ toggleStock }}" groups="{{ filterGroups }}" result-count="{{ resultCount }}" on-toggle-option="{{ onFilterOption }}" on-clear="{{ clearFilters }}" on-close="{{ closeFilter }}" debug="{{ debug }}" hint-size="0px,0px"></dc-import>
 
-  <dc-import name="PrezentacniLista" label="{{ plLabel }}" variants="{{ plVariants }}" active="{{ plActive }}" on-select="{{ plSelect }}" label2="{{ plLabel2 }}" variants2="{{ plVariants2 }}" active2="{{ plActive2 }}" on-select2="{{ plSelect2 }}" label3="{{ plLabel3 }}" variants3="{{ plVariants3 }}" active3="{{ plActive3 }}" on-select3="{{ plSelect3 }}" label4="{{ plLabel4 }}" variants4="{{ plVariants4 }}" active4="{{ plActive4 }}" on-select4="{{ plSelect4 }}" debug-on="{{ plDebugOn }}" on-toggle-debug="{{ plToggleDebug }}" hint-size="0px,0px"></dc-import>
 
   <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </div>
@@ -270,7 +271,7 @@ class Component extends DCLogic {
       menuOpen:false, descOpen:false, filterOpen:false, sortOpen:false,
       priceFrom:0, priceTo:8000, flags:null,
       hubVer:'v1',
-      stickyMode:'S2', photoVer:'V2', xsCols:'C1',
+      stickyMode:'S3', photoVer:'V2', xsCols:'C1',
       cart:{}, brands:{}, params:{}, accOpen:{ 'Výrobce':true }, compare:{}, qty:{}, pageFrom:1, pageTo:1, catLayout:null, debugOverride:null, hoverCard:null,
       searchQ:'', searchFocus:false, loading:false, macro:null, brandFocus:null, saleOnly:false,
       currency:'CZK',
@@ -402,7 +403,7 @@ class Component extends DCLogic {
   }
 
   hubList(){
-    const ver = this.state.hubVer === 'v2' ? 'v2' : 'v1';
+    const ver = 'v1'; // rozhodnuto 15. 10. 2026 — struktura V1 (8 kategorií)
     const bySales = (this.state.hubOrder || 'prodeje') === 'prodeje';
     // stabilní řazení: shodná hodnota drží původní pořadí z excelu
     const rank = (arr, val)=>arr.map((x,i)=>[x,i]).sort((a,b)=>(val(b[0]) - val(a[0])) || (a[1] - b[1])).map(x=>x[0]);
@@ -704,7 +705,7 @@ class Component extends DCLogic {
         R.setProperty('--vp-nav-pe', off ? 'none' : 'auto');
         R.setProperty('--vp-hdr-pe', off ? 'none' : 'auto');
       };
-      const mode = this.state.stickyMode === 'S3' ? 'S3' : (this.state.stickyMode === 'S1' ? 'S1' : 'S2');
+      const mode = 'S3'; // rozhodnuto 15. 10. 2026 — S3 na celém webu
       const s2 = mode === 'S3';
       R.setProperty('--vp-bar-pos', mode === 'S1' ? 'static' : 'sticky');
       if (mode === 'S1') {
@@ -722,14 +723,24 @@ class Component extends DCLogic {
         // jakmile lišta dojede k hlavičce, nahradí navigaci; pohyb nahoru ji hned vrátí (300 ms ease)
         const s0 = senTop + (this._gap || 0);
         const pinned = navH > 0 && s0 <= short + 0.5;
+        // menu zajede při scrollu dolů hned za hlavičkou, ne až u lišty; scroll nahoru ho vrátí
+        const past = navH > 0 && y > hdrH;
         let want = this._navOff == null ? pinned : !!this._navOff;
         if (dy > 0) want = true; else if (dy < -2) want = false;
-        off = pinned && want;
+        off = (pinned || past) && want;
         this._navOff = off;
         stickTop = off ? short : fullTop;
       } else {
         this._navOff = false;
       }
+      // mobil (bez navigačního řádku): lišta se při scrollu dolů schová pod hlavičku a při scrollu nahoru hned vrátí
+      if (navH === 0 && bar) {
+        const stuckM = (senTop + (this._gap || 0)) <= fullTop + 0.5;
+        let wantB = !!this._barOff;
+        if (dy > 0) wantB = true; else if (dy < -2) wantB = false;
+        const hideB = stuckM && wantB; this._barOff = hideB;
+        if (hideB) stickTop = fullTop - Math.ceil(bar.getBoundingClientRect().height);
+      } else { this._barOff = false; }
       setNav(off);
       R.setProperty('--vp-stick-top', stickTop + 'px');
       const s = senTop + (this._gap || 0);
@@ -737,7 +748,9 @@ class Component extends DCLogic {
       // stín (shadow.sticky) nese vždy jen nejspodnější přilepená vrstva
       const stuck = s <= stickTop + 0.5;
       R.setProperty('--vp-bar-shadow', stuck ? '0 2px 8px rgba(20,47,86,.06)' : 'none');
-      R.setProperty('--vp-hdr-shadow', (stuck && (s2 ? off : true)) ? 'none' : '0 2px 8px rgba(20,47,86,.06)');
+      R.setProperty('--vp-hdr-shadow', (s2 ? off : stuck) ? 'none' : '0 2px 8px rgba(20,47,86,.06)');
+      // menu zajelo, lišta ještě nedojela: stín nese horní řádek hlavičky
+      R.setProperty('--vp-top-shadow', (s2 && off && !stuck) ? '0 2px 8px rgba(20,47,86,.06)' : 'none');
       if (s2) { this._push = 0; R.setProperty('--vp-hdr-push', '0px'); return; }
       let push = hdrH - s;                 // S1: hlavičku vytlačí celá lišta
       if (push < 0) push = 0;
@@ -746,7 +759,7 @@ class Component extends DCLogic {
       R.setProperty('--vp-hdr-push', (-push) + 'px');
     };
     window.addEventListener('scroll', this._onScroll, { passive:true });
-    this.applyPhotoRatio(this.state.photoVer);
+    this.applyPhotoRatio('V2'); // rozhodnuto 15. 10. 2026 — fotka 4:3 na celém webu
     this.applyXsCols(this.state.xsCols);
     this._onResizeBar = ()=>this._onScroll();
     window.addEventListener('resize', this._onResizeBar);
@@ -852,7 +865,7 @@ class Component extends DCLogic {
     window.removeEventListener('scroll', this._onScroll);
     window.removeEventListener('resize', this._onResizeBar);
     (this._settleT || []).forEach(t=>clearTimeout(t));
-    try{ ['--vp-nav-op','--vp-nav-vis','--vp-nav-delay','--vp-nav-pe','--vp-hdr-pe','--vp-hdr-push','--vp-hdr-shadow','--vp-bar-shadow','--vp-stick-top','--vp-bar-pos','--vp-bleed-w','--vp-bleed-ml'].forEach(k=>document.documentElement.style.removeProperty(k)); }catch(e){}
+    try{ ['--vp-nav-op','--vp-nav-vis','--vp-nav-delay','--vp-nav-pe','--vp-hdr-pe','--vp-hdr-push','--vp-hdr-shadow','--vp-bar-shadow','--vp-stick-top','--vp-bar-pos','--vp-bleed-w','--vp-bleed-ml','--vp-top-shadow'].forEach(k=>document.documentElement.style.removeProperty(k)); }catch(e){}
     if (this._onXXL){ this._mqXXL.removeEventListener('change', this._onXXL); this._mqOne.removeEventListener('change', this._onXXL); this._mqM.removeEventListener('change', this._onXXL); }
     if (this._onHash){ window.removeEventListener('hashchange', this._onHash); window.removeEventListener('popstate', this._onHash); }
     const hdr = document.querySelector('.hd-root'); if (hdr) hdr.style.transform = '';
@@ -938,10 +951,8 @@ class Component extends DCLogic {
     const categoriesData = hubs.map(h=>({
       name:h.name, count:h.count, image:h.image, icon:h.icon, href:hubHref(h),
       subs: h.items.slice(0,4).map(k=>({ name:k.name, count:k.count, href:itemHref(k) }))
-    })).concat([{
-      name: SALE_NAME, sale:true, href: saleHref, subs: [],
-      count: this.PRODUCTS.filter(pr=>pr.sale).length * 12
-    }]);
+    }));
+    // Akce a slevy už nejsou dlaždice rozcestníku — jsou první chip v Nejhledanějších (15. 10. 2026)
     const openGroup = (g)=>this.go({ view:g.key, path:[], leafPath:null, subcat:null, macro:null, brandFocus:null, saleOnly:false, pageFrom:1, pageTo:1 }, this.urlFor(g.key,[]));
     const openItem = (k)=>{
       if(!k || !k.gKey) return;
@@ -1048,6 +1059,7 @@ class Component extends DCLogic {
       if (guideChip) topChips = [GUIDE].concat(topChips.slice(0,3));
     } else {
       topChips = [
+        { kind:'sale', label:SALE_NAME, iconName:'discount', href:saleHref },
         { kind:'secondary', label:'Plynové vzpěry', href:this.urlFor('vzpery',[]) },
         { kind:'secondary', label:'Nájezdové brzdy', href:this.urlFor('napravy',[]) },
         { kind:'secondary', label:'Kabeláž a zásuvky', href:this.urlFor('elektro',['Kabely a kabeláže']) },
@@ -1110,7 +1122,13 @@ class Component extends DCLogic {
         { t:'Servis', style:'font-size:14px;font-weight:700;color:#15181C;' },
         { t:'Půjčovna', style:'font-size:14px;font-weight:700;color:#15181C;' },
       ],
-      descOpen:s.descOpen, descClosed:!s.descOpen, toggleDesc:()=>this.setState({descOpen:!s.descOpen}),
+      descOpen:s.descOpen, descClosed:!s.descOpen,
+      descRef:(el)=>{ this._descEl = el; },
+      // plynulé rozbalení popisu: změří výšku před a po přepnutí a dopočítá přechod (motion.panel 400 ms)
+      toggleDesc:()=>{ const el = this._descEl; const from = el ? el.getBoundingClientRect().height : 0;
+        this.setState({descOpen:!s.descOpen}, ()=>{ if(!el || !el.animate) return; const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; if(reduce) return;
+          const to = el.getBoundingClientRect().height; if (Math.abs(to-from) < 1) return;
+          el.animate([{ height: from+'px' }, { height: to+'px' }], { duration:400, easing:'ease' }); }); },
       descLabel: s.descOpen ? 'Skrýt' : 'Zobrazit celý popis',
       descExpanded: s.descOpen ? 'true' : 'false',
       inGroups: s.view==='groups' && !activeHub && !s.brandFocus,
@@ -1119,7 +1137,7 @@ class Component extends DCLogic {
       megaGroups: hubs.map(h=>({ name:h.name, href:hubHref(h), image:h.image, icon:h.icon, items:h.items.map(k=>({ name:k.name, href:itemHref(k) })) })),
       megaRail: topChips.filter(x=>x.kind !== 'guide')
         .map(x=>({ name:x.label, href:x.href, tone: x.kind === 'sale' ? 'sale' : undefined, iconName: x.iconName }))
-        .sort((a,b)=>(a.tone === 'sale' ? 1 : 0) - (b.tone === 'sale' ? 1 : 0)),
+        .sort((a,b)=>(b.tone === 'sale' ? 1 : 0) - (a.tone === 'sale' ? 1 : 0)), // Akce a slevy první (15. 10. 2026)
       megaColumns: hubs.length === 6 ? 3 : 4,
       megaMaxItems: 4,
       inSubcats: inSubcatsAny,
@@ -1174,18 +1192,6 @@ class Component extends DCLogic {
       plActive: s.hubVer === 'v2' ? 'v2' : 'v1',
       plVariants: [{ id:'v1', label:'V1 · 8 kategorií' }, { id:'v2', label:'V2 · 6 kategorií' }],
       plSelect: (id)=>this.go({ hubVer: id === 'v2' ? 'v2' : 'v1', macro:null, view:'groups', path:[], leafPath:null, subcat:null, brandFocus:null, saleOnly:false, pageFrom:1, pageTo:1 }, '#/nahradni-dily/'),
-      plLabel2: 'Sticky:',
-      plActive2: s.stickyMode === 'S3' ? 'S3' : (s.stickyMode === 'S1' ? 'S1' : 'S2'),
-      plVariants2: [{ id:'S1', label:'S1 · bez sticky' }, { id:'S2', label:'S2 · celá hlavička' }, { id:'S3', label:'S3 · zůstane hledání' }],
-      plSelect2: (id)=>this.setState({ stickyMode: (id === 'S3' || id === 'S1') ? id : 'S2' }, ()=>requestAnimationFrame(()=>this._onScroll && this._onScroll())),
-      plLabel3: 'Fotka:',
-      plActive3: this.PHOTO_AR[s.photoVer] ? s.photoVer : 'V2',
-      plVariants3: [{ id:'V1', label:'V1 · 16:10' }, { id:'V2', label:'V2 · 4:3' }, { id:'V3', label:'V3 · 1:1' }],
-      plSelect3: (id)=>{ const v = this.PHOTO_AR[id] ? id : 'V2'; this.applyPhotoRatio(v); this.setState({ photoVer:v }); },
-      plLabel4: 'XS sloupce:',
-      plActive4: this.XS_COLS[s.xsCols] ? s.xsCols : 'C1',
-      plVariants4: [{ id:'C1', label:'1' }, { id:'C2', label:'2' }],
-      plSelect4: (id)=>{ const v = this.XS_COLS[id] ? id : 'C1'; this.applyXsCols(v); this.setState({ xsCols:v }); },
       plDebugOn: effDebug,
       plToggleDebug: ()=>this.setState({ debugOverride: !effDebug }),
       headerVariant: s.headerVariant,
@@ -1251,6 +1257,11 @@ class Component extends DCLogic {
 // DebugBar: prop debug -> šablona
 (function(){ const rv = Component.prototype.renderVals;
   Component.prototype.renderVals = function(){ const v = rv ? (rv.call(this) || {}) : {}; if (v.debug === undefined) v.debug = this.props.debug ?? true; return v; }; })();
+
+// popis kategorie jako akordeon: první věta je perex, zbytek se rozbalí
+(function(){ const rv = Component.prototype.renderVals;
+  Component.prototype.renderVals = function(){ const v = rv ? (rv.call(this) || {}) : {}; const d = String(v.leafDesc || ''); const i = d.indexOf('. ');
+    v.leafLead = i > 0 ? d.slice(0, i + 1) : d; v.leafMore = i > 0 ? d.slice(i + 1) : ''; v.hasLeafMore = !!v.leafMore.trim(); return v; }; })();
 </script>
 </body>
 </html>

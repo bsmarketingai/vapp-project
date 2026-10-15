@@ -65,8 +65,9 @@
   @media (max-width:999px){ .pb-p1 .pb-cards{grid-template-columns:repeat(3,minmax(0,1fr));} .pb-p1 .pb-cards>*:nth-child(n+4){display:none !important;} }
   @media (max-width:819px){ .pb-p1 .pb-cards{grid-template-columns:repeat(2,minmax(0,1fr));} .pb-p1 .pb-cards>*:nth-child(n+3){display:none !important;} }
   @media (max-width:549px){ .pb-p1 .pb-cards{grid-template-columns:1fr;} .pb-p1 .pb-cards>*:nth-child(-n+4){display:flex !important;} }
-  /* přepínač XS sloupce (--vp-xs-cols) platí i tady — XS i XXS od 320 px, mezera 8 jako u karuselů */
-  @media (min-width:320px) and (max-width:549px){ .pb-p1 .pb-cards{grid-template-columns:repeat(var(--vp-xs-cols,1),minmax(0,1fr));gap:8px;} }
+  /* rozhodnuto 15. 10. 2026: XS 2 sloupce, XXS 1 sloupec — mezera 8 jako u karuselů */
+  @media (max-width:549px){ .pb-p1 .pb-cards{gap:8px;} }
+  @media (min-width:420px) and (max-width:549px){ .pb-p1 .pb-cards{grid-template-columns:repeat(2,minmax(0,1fr));} }
 </style>
 </helmet>
 <section aria-labelledby="pb-head" class="{{ verCls }}" style="width:100%;display:flex;flex-direction:column;gap:16px;">

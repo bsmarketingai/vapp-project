@@ -59,8 +59,8 @@
   </div>
 
   <div style="padding:4px 16px;">
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;border-bottom:1px solid #F2F4F7;">
-      <span style="font-size:14px;font-weight:500;color:#5A626C;">{{ currencyLabel }}</span>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;">
+      <span style="font-size:16px;font-weight:500;color:#5A626C;">{{ currencyLabel }}</span>
       <div role="group" aria-label="{{ currencyLabel }}" style="display:flex;align-items:center;gap:4px;flex:none;">
         <sc-for list="{{ currencyItems }}" as="c" hint-placeholder-count="2">
           <button type="button" class="a11y-i mm-cur" aria-pressed="{{ c.pressed }}" onClick="{{ c.onClick }}" style="{{ c.style }}"><img src="{{ c.flag }}" alt="" aria-hidden="true" style="display:block;flex:none;height:16px;width:25px;border-radius:4px;">{{ c.code }}</button>
@@ -70,7 +70,7 @@
     <sc-if value="{{ showInfo }}" hint-placeholder-val="{{ true }}">
     <div style="padding:8px 0 4px;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666E78;"><span aria-hidden="true" style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="info-circle" size="18" hint-size="18px,18px"></dc-import></span>Informace</div>
     <sc-for list="{{ infoItems }}" as="s" hint-placeholder-count="4">
-      <a class="mm-link a11y-i" href="#" onClick="{{ s.onClick }}" style="display:flex;align-items:center;min-height:44px;border-bottom:1px solid #F2F4F7;font-size:14px;font-weight:500;color:#5A626C;cursor:pointer;">{{ s.t }}</a>
+      <a class="mm-link a11y-i" href="{{ s.href }}" onClick="{{ s.onClick }}" style="display:flex;align-items:center;min-height:44px;border-bottom:1px solid #F2F4F7;font-size:14px;font-weight:500;color:#5A626C;cursor:pointer;">{{ s.t }}</a>
     </sc-for>
     </sc-if>
   </div>
@@ -90,7 +90,7 @@
       <div style="height:1px;background:#D5DAE0;margin:4px 0;"></div>
       <span style="font-size:15px;font-weight:700;color:#15181C;">VAPP s.r.o.</span>
       <a target="_blank" rel="noopener noreferrer" class="mm-link a11y-i" href="https://www.google.cz/maps/dir//VAPP+-+p%C5%99%C3%ADv%C4%9Bsy,+p%C5%99%C3%ADslu%C5%A1enstv%C3%AD,+n%C3%A1hradn%C3%AD+d%C3%ADly+a+servis,+38,+251+01+Popovi%C4%8Dky/@49.9695313,14.6010162,13z/data=!4m9!4m8!1m0!1m5!1m1!1s0x470b8f238df097eb:0x94157206222d85f7!2m2!1d14.6005557!2d49.9599557!3e0" style="display:flex;align-items:center;gap:8px;font-size:15px;line-height:1.5;font-weight:700;color:#15181C;text-decoration:underline;cursor:pointer;"><span style="display:inline-flex;align-items:center;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="map-pin" size="24" hint-size="24px,24px"></dc-import></span>Popovičky 38, 251 01 Říčany, Praha-východ</a>
-      <div style="display:flex;margin-top:4px;"><dc-import name="Tlacitko" variant="ontint" size="medium" icon="address-book" label="Všechny kontakty" href="#" hint-size="180px,44px"></dc-import></div>
+      <div style="display:flex;margin-top:4px;"><dc-import name="Tlacitko" variant="ontint" size="medium" icon="address-book" label="Všechny kontakty" href="kontakty.dc.html" hint-size="180px,44px"></dc-import></div>
       </sc-if>
       <sc-if value="{{ showAccountButtons }}" hint-placeholder-val="">
         <div style="display:flex;gap:8px;">
@@ -316,7 +316,7 @@ const DEFAULT_TREE = [
     L('AL-KO servis'), L('BPW servis'), L('KNOTT servis'),
     L('Garanční prohlídky'), L('Pneuservis'),
   ]},
-  L('Půjčovna'),
+  { name:'Půjčovna', href:'pujcovna.dc.html' },
   H('Poradna', 'poradna.dc.html', [
     H('Technický rádce', 'poradna.dc.html'),
     H('Elektroinstalace', 'poradna.dc.html'),
@@ -402,7 +402,8 @@ class Component extends DCLogic {
       items,
       inquiryHref: P.inquiryHref ?? 'poptat-produkt.dc.html',
       ppBtn: (P.inquiryMode || 'PP1') === 'PP1', ppItem: P.inquiryMode === 'PP2' || P.inquiryMode === 'PP3', ppIcon: P.inquiryMode === 'PP2',
-      infoItems: infoLinks.map(t=>({ t, onClick:(e)=>{ stop(e); onInfoSelect(t); } })),
+      // stránky, které v prototypu existují, se otevírají běžným odkazem
+      infoItems: infoLinks.map(t=>{ const INFO_HREF = { 'O nás':'onas.dc.html', 'Kontakty':'kontakty.dc.html' }; const href = INFO_HREF[t]; return { t, href: href || '#', onClick:(e)=>{ if (href) return; stop(e); onInfoSelect(t); } }; }),
       phone, email, hours,
       phoneHref: 'tel:+420' + phone.replace(/\D/g,''),
       emailHref: 'mailto:' + email,
