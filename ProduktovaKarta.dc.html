@@ -21,8 +21,8 @@
 <style>
   @media (max-width:819px){ .dt{display:none !important;} }
   html,body{margin:0;background:#F7F9FB;}
-  .h-card{transition:box-shadow .15s;} .h-card:hover{box-shadow:0 6px 20px rgba(20,47,86,.10) !important;}
-  .h-buy:hover{background:#0B6937 !important;}
+  .h-card{transition:box-shadow .15s;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);} .h-card:hover{box-shadow:0 6px 20px rgba(20,47,86,.10) !important;}
+  .h-buy{transition:background .12s;} .h-buy:hover{background:#0B6937 !important;}
   .pk-fluid{width:100% !important;min-width:0 !important;max-width:none !important;}
   /* Řádek skladovosti: styl přichází jako prop (nelze doplnit inline), proto class —
      min-width:0 dovolí zalomení textu na 2 řádky místo odstřižení. */
@@ -51,6 +51,8 @@
   .pk-img2{opacity:0;transition:opacity .12s ease;}
   @media (hover:hover) and (pointer:fine){ .h-card:hover .pk-img2{opacity:1;} }
   .pk-cmp:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+.pk-cmp{transition:color .12s;} .pk-cmp:hover{color:#15181C !important;}
+.pk-cmpbox{transition:border-color .12s, background .12s;} .pk-cmp:hover .pk-cmpbox[data-on="false"]{border-color:#5A626C !important;}
   /* poměr fotky 4:3 na celém webu — rozhodnuto 15. 10. 2026 (V2); přepínač poměru je zrušený */
   .pk-photo > div{aspect-ratio:var(--vp-photo-ar,4/3) !important;}
   /* fotka uvnitř plochy menší (4:3 = default webu): i snímek focený do krajů má kolem sebe bílý okraj; plocha/placeholder se nemění. Jiné poměry vrací --vp-photo-pad */
@@ -102,7 +104,7 @@
       <span style="font-size:22px;font-weight:700;line-height:1.25;color:#15181C;white-space:nowrap;">{{ rentPrice }}</span><span style="font-size:16px;font-weight:700;line-height:1.25;color:#5A626C;">/den</span>
     </div>
     <div class="pk-buyrow pk-over" onClick="{{ stop }}" style="display:flex;align-items:stretch;justify-content:flex-start;">
-      <dc-import name="Tlacitko" variant="primary" size="medium" label="Detail" icon-trailing="arrow-right" aria-label="{{ detailAria }}" href="{{ detailHref }}" on-click="{{ onCardNav }}" hint-size="120px,44px"></dc-import>
+      <dc-import name="Tlacitko" variant="primary" size="medium" label="Detail" icon-trailing="chevron-right" aria-label="{{ detailAria }}" href="{{ detailHref }}" on-click="{{ onCardNav }}" hint-size="120px,44px"></dc-import>
     </div>
     </sc-if>
     <sc-if value="{{ notRental }}" hint-placeholder-val="{{ true }}">
@@ -127,15 +129,15 @@
     <sc-if value="{{ buyK2 }}" hint-placeholder-val="">
     <div class="pk-buyrow pk-over" onClick="{{ stop }}" style="display:flex;align-items:stretch;justify-content:flex-start;">
       <div style="position:relative;flex:none;display:flex;">
-        <sc-if value="{{ k2Detail }}" hint-placeholder-val=""><dc-import name="Tlacitko" variant="primary" size="medium" label="Vybrat variantu" icon-trailing="arrow-right" aria-label="{{ detailAria }}" href="{{ detailHref }}" on-click="{{ onCardNav }}" hint-size="170px,44px"></dc-import></sc-if>
-        <sc-if value="{{ k2Buy }}" hint-placeholder-val=""><dc-import name="Tlacitko" variant="primary" size="medium" label="Detail přívěsu" icon-trailing="arrow-right" aria-label="{{ detailAria }}" href="{{ detailHref }}" on-click="{{ onCardNav }}" hint-size="170px,44px"></dc-import></sc-if>
+        <sc-if value="{{ k2Detail }}" hint-placeholder-val=""><dc-import name="Tlacitko" variant="primary" size="medium" label="Vybrat variantu" icon-trailing="chevron-right" aria-label="{{ detailAria }}" href="{{ detailHref }}" on-click="{{ onCardNav }}" hint-size="170px,44px"></dc-import></sc-if>
+        <sc-if value="{{ k2Buy }}" hint-placeholder-val=""><dc-import name="Tlacitko" variant="primary" size="medium" label="Detail přívěsu" icon-trailing="chevron-right" aria-label="{{ detailAria }}" href="{{ detailHref }}" on-click="{{ onCardNav }}" hint-size="170px,44px"></dc-import></sc-if>
         <sc-if value="{{ k2BuyBadge }}" hint-placeholder-val=""><span aria-hidden="true" style="{{ cartBadgeStyle }}">{{ cartQty }}</span></sc-if>
       </div>
     </div>
     </sc-if>
     <sc-if value="{{ showCompare }}" hint-placeholder-val="">
     <div class="pk-over" onClick="{{ stop }}" style="display:flex;align-items:center;gap:8px;height:26px;padding-top:2px;">
-      <button type="button" class="a11y-i pk-cmp" role="checkbox" aria-checked="{{ p.cmpChecked }}" aria-label="Porovnat produkt" onClick="{{ p.onCmp }}" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#5A626C;cursor:pointer;min-height:24px;white-space:nowrap;"><span style="{{ p.cmpBox }}"><sc-if value="{{ p.cmp }}" hint-placeholder-val=""><svg width="9" height="9" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#fff" stroke-width="2.8" stroke-linecap="round"></path></svg></sc-if></span>Porovnat</button>
+      <button type="button" class="a11y-i pk-cmp" role="checkbox" aria-checked="{{ p.cmpChecked }}" aria-label="Porovnat produkt" onClick="{{ p.onCmp }}" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#5A626C;cursor:pointer;min-height:24px;white-space:nowrap;"><span class="pk-cmpbox" data-on="{{ p.cmpChecked }}" style="{{ p.cmpBox }}"><sc-if value="{{ p.cmp }}" hint-placeholder-val=""><svg width="9" height="9" viewBox="0 0 16 16" fill="none" aria-hidden="true" focusable="false"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#fff" stroke-width="2.8" stroke-linecap="round"></path></svg></sc-if></span>Porovnat</button>
     </div>
     </sc-if>
   </div>

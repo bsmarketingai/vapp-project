@@ -20,6 +20,10 @@
   a{color:#15181C;} a:hover{color:#1E5AA8;}
   .fd-row{transition:color .12s;} .fd-row:hover{color:#1E5AA8 !important;}
   .fd-stock:hover{color:#0B6937 !important;}
+  .fd-acc{display:grid;grid-template-rows:1fr;transition:grid-template-rows .25s ease, opacity .25s ease;} .fd-acc > *{min-height:0;overflow:hidden;} .fd-acc[data-shown="false"]{grid-template-rows:0fr;opacity:0;}
+  @media (prefers-reduced-motion:reduce){ .fd-acc{transition:none !important;} }
+  .fd-close{transition:background .12s, color .12s;} .fd-close:hover{background:#D5DAE0 !important;color:#15181C !important;}
+  .fd-head{transition:color .12s;} .fd-head > span:first-child{transition:color .12s;} .fd-head:hover > span:first-child{color:#1E5AA8 !important;}
   .fd-chip{transition:background .12s;} .fd-chip:hover{background:#1A4A8A !important;}
   .fd-chip-clear{transition:background .12s;} .fd-chip-clear:hover{background:#A21B22 !important;}
   @keyframes fd-in{from{transform:translateX(100%);}to{transform:translateX(0);}}
@@ -35,7 +39,7 @@
     <div class="fd-panel" ref="{{ panelRef }}" role="dialog" aria-modal="true" aria-label="Filtry" tabindex="-1" style="position:fixed;top:0;right:0;bottom:0;width:min(400px,92vw);background:#fff;z-index:90;display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(20,30,45,.2);animation:{{ panelAnim }};">
       <div style="display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid #F2F4F7;">
         <h2 style="margin:0;display:flex;align-items:center;gap:8px;font-size:16px;font-weight:700;color:#142F56;min-width:0;"><span style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="filter" size="24" hint-size="24px,24px"></dc-import></span>{{ title }}</h2>
-        <button type="button" class="fd-i" aria-label="Zavřít filtry" onClick="{{ onClose }}" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;flex:none;color:#5A626C;cursor:pointer;background:#F2F4F7;border-radius:8px;"><dc-import name="Ikony" icon-name="x" size="24" hint-size="24px,24px"></dc-import></button>
+        <button type="button" class="fd-i fd-close" aria-label="Zavřít filtry" onClick="{{ onClose }}" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;flex:none;color:#5A626C;cursor:pointer;background:#F2F4F7;border-radius:8px;"><dc-import name="Ikony" icon-name="x" size="24" hint-size="24px,24px"></dc-import></button>
       </div>
       <div style="flex:1;overflow-y:auto;padding:2px 18px;">
         <sc-if value="{{ hasChips }}" hint-placeholder-val="{{ true }}">
@@ -57,11 +61,12 @@
           </div>
         </sc-if>
         <div style="border-bottom:1px solid #F2F4F7;">
-          <h3 style="margin:0;font-size:inherit;font-weight:inherit;line-height:inherit;"><button type="button" class="fd-i" aria-expanded="{{ priceExpanded }}" onClick="{{ onTogglePrice }}" style="display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;min-height:48px;cursor:pointer;">
+          <h3 style="margin:0;font-size:inherit;font-weight:inherit;line-height:inherit;"><button type="button" class="fd-i fd-head" aria-expanded="{{ priceExpanded }}" onClick="{{ onTogglePrice }}" style="display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;min-height:48px;cursor:pointer;">
             <span style="font-size:14px;font-weight:700;color:#15181C;min-width:0;">Ceny a štítky</span>
             <span style="{{ priceChevStyle }}"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></span>
           </button></h3>
-          <sc-if value="{{ priceOpen }}" hint-placeholder-val="{{ true }}">
+          <sc-if value="{{ priceMounted }}" hint-placeholder-val="{{ true }}">
+            <div class="fd-acc" data-shown="{{ priceShown }}"><div>
             <div style="padding:2px 0 16px;display:flex;flex-direction:column;gap:16px;">
               <dc-import name="CenovyFiltr" currency="{{ currency }}" min="{{ priceMin }}" max="{{ priceMax }}" step="{{ priceStep }}" value-from="{{ priceFrom }}" value-to="{{ priceTo }}" on-change="{{ onPriceChange }}" hint-size="100%,150px"></dc-import>
               <div>
@@ -76,15 +81,17 @@
                 </div>
               </div>
             </div>
+            </div></div>
           </sc-if>
         </div>
         <sc-for list="{{ groups }}" as="f" hint-placeholder-count="5">
           <div style="border-bottom:1px solid #F2F4F7;">
-            <h3 style="margin:0;font-size:inherit;font-weight:inherit;line-height:inherit;"><button type="button" class="fd-i" aria-expanded="{{ f.expanded }}" onClick="{{ f.onToggle }}" style="display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;min-height:48px;cursor:pointer;">
+            <h3 style="margin:0;font-size:inherit;font-weight:inherit;line-height:inherit;"><button type="button" class="fd-i fd-head" aria-expanded="{{ f.expanded }}" onClick="{{ f.onToggle }}" style="display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;min-height:48px;cursor:pointer;">
               <span style="font-size:14px;font-weight:700;color:#15181C;min-width:0;">{{ f.h }}</span>
               <span style="{{ f.chevStyle }}"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></span>
             </button></h3>
-            <sc-if value="{{ f.open }}" hint-placeholder-val="{{ true }}">
+            <sc-if value="{{ f.mounted }}" hint-placeholder-val="{{ true }}">
+              <div class="fd-acc" data-shown="{{ f.shown }}"><div>
               <div style="padding:0 0 12px;display:flex;flex-direction:column;gap:8px;">
                 <sc-for list="{{ f.opts }}" as="o" hint-placeholder-count="4">
                   <button type="button" class="fd-i fd-row" role="checkbox" aria-checked="{{ o.checked }}" onClick="{{ o.onToggle }}" style="width:100%;display:flex;align-items:center;gap:10px;font-size:14px;color:#3A424C;min-height:32px;padding:0;cursor:pointer;">
@@ -92,6 +99,7 @@
                   </button>
                 </sc-for>
               </div>
+              </div></div>
             </sc-if>
           </div>
         </sc-for>
@@ -132,6 +140,14 @@ const DEMO_FLAGS = [
 ];
 
 class Component extends DCLogic {
+  // plynulé otevření i zavření: prvek zůstane v DOM po dobu odjezdu (ms), data-shown řídí CSS přechod
+  fade(key, open, ms){ ms = ms || 200; const F = this._fx || (this._fx = {}); const f = F[key] || (F[key] = { m:false, s:false, t:null, r:false, w:false });
+    f.w = !!open;
+    if (open){ if (f.t){ clearTimeout(f.t); f.t = null; } if (!f.m){ f.m = true; f.s = false; }
+      if (!f.s && !f.r){ f.r = true; requestAnimationFrame(()=>requestAnimationFrame(()=>{ f.r = false; if (f.w && !f.s){ f.s = true; this.forceUpdate(); } })); } }
+    else if (f.m){ f.s = false; if (!f.t) f.t = setTimeout(()=>{ f.t = null; if (!f.w){ f.m = false; this.forceUpdate(); } }, ms); }
+    return { mounted: f.m, shown: f.s ? 'true' : 'false' }; }
+
   state = { accOpen:{}, demoOpen:true, closing:false, prevOpen:false, priceOpen:true, demoFlags:DEMO_FLAGS, demoFrom:null, demoTo:null, demoStock:false, demoGroups:DEMO };
 
   componentDidUpdate(prevProps){
@@ -234,8 +250,9 @@ class Component extends DCLogic {
       stockColor: 'width:100%;display:flex;align-items:center;gap:10px;min-height:32px;padding:0;font-size:14px;font-weight:700;cursor:pointer;color:'+(stockOn?'#0B6937':'#15181C')+';',
       onToggleStock: ()=>{ if(typeof P.onToggleStock === 'function'){ P.onToggleStock(); return; } this.setState({ demoStock: !this.state.demoStock }); },
       priceOpen: this.state.priceOpen,
+      ...(()=>{ const x = this.fade('price', this.state.priceOpen, 250); return { priceMounted: x.mounted, priceShown: x.shown }; })(),
       priceExpanded: this.state.priceOpen ? 'true' : 'false',
-      priceChevStyle: 'display:inline-flex;flex:none;color:#5189CC;transition:transform .12s;transform:rotate('+(this.state.priceOpen?180:0)+'deg);',
+      priceChevStyle: 'display:inline-flex;flex:none;color:#5189CC;transition:transform .25s ease;transform:rotate('+(this.state.priceOpen?180:0)+'deg);',
       onTogglePrice: ()=>this.setState({ priceOpen: !this.state.priceOpen }),
       currency,
       priceMin: Number(P.priceMin ?? 0),
@@ -265,9 +282,9 @@ class Component extends DCLogic {
         return {
           h: g.h,
           activeN: g.activeN || '',
-          open: isOn,
+          open: isOn, ...(()=>{ const x = this.fade('g'+gi, isOn, 250); return { mounted: x.mounted, shown: x.shown }; })(),
           expanded: isOn ? 'true' : 'false',
-          chevStyle: 'display:inline-flex;flex:none;color:#5189CC;transition:transform .12s;transform:rotate('+(isOn?180:0)+'deg);',
+          chevStyle: 'display:inline-flex;flex:none;color:#5189CC;transition:transform .25s ease;transform:rotate('+(isOn?180:0)+'deg);',
           onToggle: ()=>{ const a = Object.assign({}, this.state.accOpen); a[g.h] = !isOn; this.setState({ accOpen:a }); },
           opts: (g.opts || []).map((o, oi)=>({
             t: o.t, c: o.c || '', on: !!o.on,

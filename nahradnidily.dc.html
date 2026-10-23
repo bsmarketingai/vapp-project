@@ -70,17 +70,20 @@
   .a11y-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
   .a11y-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
 .hvx1{transition:background .12s;} .hvx1:hover{background:#F2F4F7 !important;}
-/* akordeon popisu: pod 820 px jen chevron (klikací plocha 44 px), popisek nese aria-label */
-@media (max-width:819px){ .pg-acc-l{display:none;} .pg-acc-t{min-width:44px;min-height:44px !important;justify-content:center;margin-top:-9px;} }
+/* akordeon popisu: odkaz pod krátkým popisem; pod 820 px klikací plocha 44 px */
+@media (max-width:819px){ .pg-acc-t{min-height:44px !important;} }
 .hvx2{transition:color .12s;} .hvx2:hover{color:#1E5AA8 !important;}
 .hvx3{transition:background .12s;} .hvx3:hover{background:#D8E6F6 !important;}
-  .hvxin:hover{color:#1A4A8A !important;text-decoration:underline;}
+  .hvxin{transition:color .12s;} .hvxin:hover{color:#1A4A8A !important;text-decoration:underline;}
 .hvx4{transition:background .12s;} .hvx4:hover{background:#A21B22 !important;}
 .hvx5{transition:box-shadow .12s;} .hvx5:hover{box-shadow:0 6px 20px rgba(20,47,86,.10) !important;}
 .hvx6{transition:color .12s,text-decoration .12s;} .hvx6:hover{color:#1E5AA8 !important;text-decoration:underline !important;}
 .hvx7{transition:background .12s;} .hvx7:hover{background:rgba(255,255,255,.2) !important;}
 .hvx8{transition:color .12s,border-color .12s;} .hvx8:hover{color:#fff !important;border-color:#fff !important;}
 .hvx9{transition:color .12s;} .hvx9:hover{color:#fff !important;}
+.hvxg{transition:background .12s,color .12s;border-radius:8px;} .hvxg:hover{background:#EFF4FB !important;color:#1A4A8A !important;} .hvxg:active{transform:translateY(1px);}
+.hvxb{transition:background .12s;} .hvxb:hover{background:#1A4A8A !important;}
+.hvxr{transition:color .12s;} .hvxr:hover{color:#A21B22 !important;}
 @media (max-width:999px){ .hd-sep{display:none !important;} }
 /* Zrušit filtry je od 550 px v řádku chipů filtrační lišty; pod 550 px (chipy skryté) zůstává odkaz nad výpisem */
 .p-clear-mb{display:none;} @media (max-width:549px){ .p-clear-mb{display:inline !important;} }
@@ -110,10 +113,10 @@
       <div style="flex:1 1 460px;min-width:0;">
     <h1 class="pg-h1" style="margin:0;font-size:36px;font-weight:700;letter-spacing:-0.02em;color:#142F56;">{{ pageTitle }}</h1>
     <sc-if value="{{ inLeaf }}" hint-placeholder-val="">
-      <div class="pg-acc" style="margin-top:8px;display:flex;align-items:flex-start;gap:16px;"><p class="pg-lead" ref="{{ descRef }}" style="flex:1;min-width:0;margin:0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;text-wrap:pretty;overflow:hidden;">{{ leafLead }}<sc-if value="{{ descOpen }}" hint-placeholder-val=""><span>{{ leafMore }}</span></sc-if></p><sc-if value="{{ hasLeafMore }}" hint-placeholder-val="{{ true }}"><button type="button" class="a11y-i hvxin pg-acc-t" aria-expanded="{{ descExpanded }}" aria-label="{{ descLabel }}" onClick="{{ toggleDesc }}" style="flex:none;margin-left:auto;display:inline-flex;align-items:center;gap:4px;min-height:26px;font-size:16px;font-weight:700;color:#1E5AA8;cursor:pointer;white-space:nowrap;transition:color .12s;"><span class="pg-acc-l">{{ descLabel }}</span><span aria-hidden="true" style="display:inline-flex;color:#5189CC;"><sc-if value="{{ descClosed }}" hint-placeholder-val="{{ true }}"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></sc-if><sc-if value="{{ descOpen }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="chevron-up" size="24" hint-size="24px,24px"></dc-import></sc-if></span></button></sc-if></div>
+      <div class="pg-acc" style="margin-top:8px;display:flex;flex-direction:column;align-items:flex-start;gap:4px;"><p class="pg-lead" ref="{{ descRef }}" style="flex:none;width:100%;min-width:0;margin:0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;text-wrap:pretty;overflow:hidden;">{{ leafLead }}<sc-if value="{{ descOpen }}" hint-placeholder-val=""><span>{{ leafMore }}</span></sc-if></p><sc-if value="{{ hasLeafMore }}" hint-placeholder-val="{{ true }}"><button type="button" class="a11y-i hvxin pg-acc-t" aria-expanded="{{ descExpanded }}" aria-label="{{ descLabel }}" onClick="{{ toggleDesc }}" style="flex:none;display:inline-flex;align-items:center;gap:4px;min-height:26px;font-size:16px;font-weight:700;color:#1E5AA8;cursor:pointer;white-space:nowrap;transition:color .12s;"><span class="pg-acc-l">{{ descLabel }}</span><span aria-hidden="true" style="display:inline-flex;color:#5189CC;"><sc-if value="{{ descClosed }}" hint-placeholder-val="{{ true }}"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></sc-if><sc-if value="{{ descOpen }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="chevron-up" size="24" hint-size="24px,24px"></dc-import></sc-if></span></button></sc-if></div>
     </sc-if>
     <sc-if value="{{ notLeaf }}" hint-placeholder-val="{{ true }}">
-    <div class="pg-acc" style="margin-top:8px;display:flex;align-items:flex-start;gap:16px;"><p ref="{{ descRef }}" style="flex:1;min-width:0;margin:0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;text-wrap:pretty;overflow:hidden;">Náhradní díly na přívěsy všech značek — KNOTT, AL-KO, BPW, Jokon i Winterhoff. Tisíce dílů skladem s expedicí do 24 hodin.<sc-if value="{{ descOpen }}" hint-placeholder-val=""><span> Vybírejte podle výrobce nápravy, průměru brzdy nebo čísla dílu. Nabízíme kompletní sortiment od nájezdových brzd a brzdových čelistí přes ložiska, náboje a spojovací zařízení až po osvětlení, blatníky, kola a plachty. Nevíte si rady? Zkušení obchodníci vám poradí s výběrem správného dílu po telefonu i e-mailu.</span></sc-if></p><button type="button" class="a11y-i hvxin pg-acc-t" aria-expanded="{{ descExpanded }}" aria-label="{{ descLabel }}" onClick="{{ toggleDesc }}" style="flex:none;margin-left:auto;display:inline-flex;align-items:center;gap:4px;min-height:26px;font-size:16px;font-weight:700;color:#1E5AA8;cursor:pointer;white-space:nowrap;transition:color .12s;"><span class="pg-acc-l">{{ descLabel }}</span><span aria-hidden="true" style="display:inline-flex;color:#5189CC;"><sc-if value="{{ descClosed }}" hint-placeholder-val="{{ true }}"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></sc-if><sc-if value="{{ descOpen }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="chevron-up" size="24" hint-size="24px,24px"></dc-import></sc-if></span></button></div>
+    <div class="pg-acc" style="margin-top:8px;display:flex;flex-direction:column;align-items:flex-start;gap:4px;"><p ref="{{ descRef }}" style="flex:none;width:100%;min-width:0;margin:0;font-size:16px;line-height:1.6;color:#5A626C;max-width:760px;text-wrap:pretty;overflow:hidden;">Náhradní díly na přívěsy všech značek — KNOTT, AL-KO, BPW, Jokon i Winterhoff. Tisíce dílů skladem s expedicí do 24 hodin.<sc-if value="{{ descOpen }}" hint-placeholder-val=""><span> Vybírejte podle výrobce nápravy, průměru brzdy nebo čísla dílu. Nabízíme kompletní sortiment od nájezdových brzd a brzdových čelistí přes ložiska, náboje a spojovací zařízení až po osvětlení, blatníky, kola a plachty. Nevíte si rady? Zkušení obchodníci vám poradí s výběrem správného dílu po telefonu i e-mailu.</span></sc-if></p><button type="button" class="a11y-i hvxin pg-acc-t" aria-expanded="{{ descExpanded }}" aria-label="{{ descLabel }}" onClick="{{ toggleDesc }}" style="flex:none;display:inline-flex;align-items:center;gap:4px;min-height:26px;font-size:16px;font-weight:700;color:#1E5AA8;cursor:pointer;white-space:nowrap;transition:color .12s;"><span class="pg-acc-l">{{ descLabel }}</span><span aria-hidden="true" style="display:inline-flex;color:#5189CC;"><sc-if value="{{ descClosed }}" hint-placeholder-val="{{ true }}"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></sc-if><sc-if value="{{ descOpen }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="chevron-up" size="24" hint-size="24px,24px"></dc-import></sc-if></span></button></div>
     </sc-if>
       </div>
     </div>
@@ -136,21 +139,21 @@
       <sc-if value="{{ inSubcatsCompact }}" hint-placeholder-val="">
         <div style="display:flex;flex-direction:column;gap:12px;">
           <div style="display:flex;align-items:center;gap:10px;">
-            <button type="button" class="a11y-i" onClick="{{ backToGroups }}" style="display:inline-flex;align-items:center;gap:6px;min-height:36px;font-size:14px;font-weight:700;color:#1E5AA8;cursor:pointer;padding:0 10px 0 4px;"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>{{ backToGroupsLabel }}</button>
+            <button type="button" class="a11y-i hvxg" onClick="{{ backToGroups }}" style="display:inline-flex;align-items:center;gap:6px;min-height:36px;font-size:14px;font-weight:700;color:#1E5AA8;cursor:pointer;padding:0 10px 0 4px;"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>{{ backToGroupsLabel }}</button>
             <span style="font-size:13px;color:#666E78;margin-left:auto;">{{ activeGroupCount }} produktů</span>
           </div>
           <dc-import name="VypisKategorii" layout="kompaktni" nejhledanejsi="{{ false }}" categories="{{ subcatCategories }}" on-open-category="{{ onOpenSubcat }}" debug="{{ debug }}" hint-size="100%,300px"></dc-import>
         </div>
       </sc-if>
       <sc-if value="{{ inSubcatsTiles }}" hint-placeholder-val="">
-        <div style="background:#fff;border-radius:8px;overflow:hidden;">
+        <div style="background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);">
           <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid #F2F4F7;background:#EFF4FB;">
-            <button type="button" class="a11y-i" onClick="{{ backToGroups }}" style="display:inline-flex;align-items:center;gap:6px;min-height:34px;font-size:13px;font-weight:700;color:#1E5AA8;cursor:pointer;padding:0 10px 0 4px;"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>{{ backToGroupsLabel }}</button>
+            <button type="button" class="a11y-i hvxg" onClick="{{ backToGroups }}" style="display:inline-flex;align-items:center;gap:6px;min-height:34px;font-size:13px;font-weight:700;color:#1E5AA8;cursor:pointer;padding:0 10px 0 4px;"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>{{ backToGroupsLabel }}</button>
             <span style="font-size:13px;color:#666E78;margin-left:auto;">{{ activeGroupCount }} produktů</span>
           </div>
           <div class="sc-rows">
           <sc-for list="{{ subcats }}" as="s" hint-placeholder-count="5">
-            <a class="a11y-i" href="{{ s.href }}" onClick="{{ s.onPick }}" style="{{ s.style }}">
+            <a class="a11y-i hvx1" href="{{ s.href }}" onClick="{{ s.onPick }}" style="{{ s.style }}">
               <span style="{{ s.nameStyle }}">{{ s.name }}</span>
               <span style="display:flex;align-items:center;gap:8px;"><span style="display:inline-flex;flex:none;color:#5189CC;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span></span>
             </a>
@@ -175,7 +178,7 @@
     <sc-if value="{{ activeSubcat }}" hint-placeholder-val="">
       <div style="display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap;">
         <span style="font-size:13px;color:#666E78;font-weight:600;">Zobrazeno:</span>
-        <button type="button" class="a11y-i" onClick="{{ clearSubcat }}" style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:999px;padding:8px 14px;cursor:pointer;">{{ activeSubcat }} ✕</button>
+        <button type="button" class="a11y-i hvxb" onClick="{{ clearSubcat }}" style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:999px;padding:8px 14px;cursor:pointer;">{{ activeSubcat }} ✕</button>
       </div>
     </sc-if>
 
@@ -195,12 +198,12 @@
     <h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;margin:0;">Výpis produktů</h2>
     <div style="display:flex;align-items:baseline;justify-content:space-between;margin:16px 0 10px;">
       <span style="font-size:13px;color:#5A626C;font-weight:600;">{{ resultCount }} produktů</span>
-      <sc-if value="{{ anyFilter }}" hint-placeholder-val=""><button type="button" class="a11y-i p-clear-mb" onClick="{{ clearFilters }}" style="font-size:13px;font-weight:700;color:#C5232B;cursor:pointer;text-decoration:underline;">Zrušit filtry</button></sc-if>
+      <sc-if value="{{ anyFilter }}" hint-placeholder-val=""><button type="button" class="a11y-i p-clear-mb hvxr" onClick="{{ clearFilters }}" style="font-size:13px;font-weight:700;color:#C5232B;cursor:pointer;text-decoration:underline;">Zrušit filtry</button></sc-if>
     </div>
     <sc-if value="{{ loading }}" hint-placeholder-val="">
       <div class="p-grid" aria-busy="true" aria-label="Načítání produktů">
         <sc-for list="{{ skeletons }}" as="k" hint-placeholder-count="4">
-          <div style="background:#fff;border-radius:8px;overflow:hidden;padding-bottom:16px;">
+          <div style="background:#fff;border-radius:8px;overflow:hidden;padding-bottom:16px;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);">
             <div class="sk" style="aspect-ratio:4/3;border-radius:0;"></div>
             <div style="padding:14px 16px;display:flex;flex-direction:column;gap:10px;">
               <div class="sk" style="height:14px;width:90%;"></div>
@@ -249,6 +252,7 @@
   <dc-import name="FiltrDrawer" open="{{ filterOpen }}" currency="{{ currency }}" price-from="{{ priceFrom }}" price-to="{{ priceTo }}" on-price-change="{{ onPriceChange }}" flags="{{ filterFlags }}" on-toggle-flag="{{ onToggleFlag }}" only-stock="{{ onlyStock }}" on-toggle-stock="{{ toggleStock }}" groups="{{ filterGroups }}" result-count="{{ resultCount }}" on-toggle-option="{{ onFilterOption }}" on-clear="{{ clearFilters }}" on-close="{{ closeFilter }}" debug="{{ debug }}" hint-size="0px,0px"></dc-import>
 
 
+  <dc-import name="PrezentacniLista" label="Sticky:" variants="{{ stickyVariants }}" active="{{ stickyActive }}" on-select="{{ onStickyMode }}" debug-on="{{ plDebugOn }}" on-toggle-debug="{{ plToggleDebug }}" hint-size="0px,0px"></dc-import>
   <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 </div>
 </x-dc>
@@ -271,7 +275,7 @@ class Component extends DCLogic {
       menuOpen:false, descOpen:false, filterOpen:false, sortOpen:false,
       priceFrom:0, priceTo:8000, flags:null,
       hubVer:'v1',
-      stickyMode:'S3', photoVer:'V2', xsCols:'C1',
+      stickyMode:(()=>{ try{ return localStorage.getItem('vapp-sticky') === 'S3' ? 'S3' : 'S4'; }catch(e){ return 'S4'; } })(), photoVer:'V2', xsCols:'C1',
       cart:{}, brands:{}, params:{}, accOpen:{ 'Výrobce':true }, compare:{}, qty:{}, pageFrom:1, pageTo:1, catLayout:null, debugOverride:null, hoverCard:null,
       searchQ:'', searchFocus:false, loading:false, macro:null, brandFocus:null, saleOnly:false,
       currency:'CZK',
@@ -705,7 +709,8 @@ class Component extends DCLogic {
         R.setProperty('--vp-nav-pe', off ? 'none' : 'auto');
         R.setProperty('--vp-hdr-pe', off ? 'none' : 'auto');
       };
-      const mode = 'S3'; // rozhodnuto 15. 10. 2026 — S3 na celém webu
+      // S3 / S4 — otevřená volba v liště (vapp-sticky), S1 a S2 už se nepoužívají
+      const mode = this.state.stickyMode === 'S3' ? 'S3' : 'S4';
       const s2 = mode === 'S3';
       R.setProperty('--vp-bar-pos', mode === 'S1' ? 'static' : 'sticky');
       if (mode === 'S1') {
@@ -718,6 +723,27 @@ class Component extends DCLogic {
         this._push = 0; this._navOff = false;
         return;
       }
+      if (mode === 'S4') {
+        // S4: v oblasti výpisu scroll dolů schová celou hlavičku a nahoře zůstane jen filtrace;
+        // scroll nahoru vrátí hlavičku s menu a filtrace se schová pod ni (obojí 300 ms ease)
+        setNav(false); this._navOff = false; this._barOff = false;
+        const s0 = senTop + (this._gap || 0);
+        const reached = s0 <= fullTop + 0.5;
+        let want = !!this._hdrOff;
+        if (dy > 0) want = true; else if (dy < -2) want = false;
+        const hide = reached && want; this._hdrOff = hide;
+        const barH = bar ? Math.ceil(bar.getBoundingClientRect().height) : 0;
+        const st = hide ? 0 : (reached ? fullTop - barH : fullTop);
+        this._stickTop = st; this._push = hide ? hdrH : 0;
+        R.setProperty('--vp-stick-top', st + 'px');
+        R.setProperty('--vp-hdr-push', (hide ? -(hdrH + 12) : 0) + 'px');
+        R.setProperty('--vp-hdr-pe', hide ? 'none' : 'auto');
+        R.setProperty('--vp-bar-shadow', hide ? '0 2px 8px rgba(20,47,86,.06)' : 'none');
+        R.setProperty('--vp-hdr-shadow', hide ? 'none' : '0 2px 8px rgba(20,47,86,.06)');
+        R.setProperty('--vp-top-shadow', 'none');
+        return;
+      }
+      this._hdrOff = false;
       let stickTop = 0, off = false;
       if (s2) {
         // jakmile lišta dojede k hlavičce, nahradí navigaci; pohyb nahoru ji hned vrátí (300 ms ease)
@@ -1125,10 +1151,25 @@ class Component extends DCLogic {
       descOpen:s.descOpen, descClosed:!s.descOpen,
       descRef:(el)=>{ this._descEl = el; },
       // plynulé rozbalení popisu: změří výšku před a po přepnutí a dopočítá přechod (motion.panel 400 ms)
-      toggleDesc:()=>{ const el = this._descEl; const from = el ? el.getBoundingClientRect().height : 0;
-        this.setState({descOpen:!s.descOpen}, ()=>{ if(!el || !el.animate) return; const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; if(reduce) return;
-          const to = el.getBoundingClientRect().height; if (Math.abs(to-from) < 1) return;
-          el.animate([{ height: from+'px' }, { height: to+'px' }], { duration:400, easing:'ease' }); }); },
+      toggleDesc:()=>{ const el = this._descEl; const open = !s.descOpen;
+        const reduce = !el || !el.animate || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+        if (this._descAnim) { this._descAnim.cancel(); this._descAnim = null; }
+        if (reduce) { this.setState({descOpen:open}); return; }
+        const from = el.getBoundingClientRect().height;
+        if (open) {
+          // rozbalení: text se přidá, výška se plynule dorovná a dovětek se prolne
+          this.setState({descOpen:true}, ()=>{ const to = el.getBoundingClientRect().height;
+            const more = el.querySelector('span'); if (more && more.animate) more.animate([{opacity:0},{opacity:1}], { duration:400, easing:'ease' });
+            if (Math.abs(to-from) >= 1) this._descAnim = el.animate([{ height: from+'px' }, { height: to+'px' }], { duration:400, easing:'ease' }); });
+        } else {
+          // zabalení: text zůstane, dokud výška nedojede, pak se teprve odebere — žádný skok
+          const more = el.querySelector('span'); if (!more) { this.setState({descOpen:false}); return; }
+          more.style.display = 'none'; const to = el.getBoundingClientRect().height; more.style.display = '';
+          if (more.animate) more.animate([{opacity:1},{opacity:0}], { duration:400, easing:'ease', fill:'forwards' });
+          const a = el.animate([{ height: from+'px' }, { height: to+'px' }], { duration:400, easing:'ease', fill:'forwards' });
+          this._descAnim = a;
+          a.onfinish = ()=>{ this.setState({descOpen:false}, ()=>{ a.cancel(); if (this._descAnim === a) this._descAnim = null; }); };
+        } },
       descLabel: s.descOpen ? 'Skrýt' : 'Zobrazit celý popis',
       descExpanded: s.descOpen ? 'true' : 'false',
       inGroups: s.view==='groups' && !activeHub && !s.brandFocus,
@@ -1194,6 +1235,9 @@ class Component extends DCLogic {
       plSelect: (id)=>this.go({ hubVer: id === 'v2' ? 'v2' : 'v1', macro:null, view:'groups', path:[], leafPath:null, subcat:null, brandFocus:null, saleOnly:false, pageFrom:1, pageTo:1 }, '#/nahradni-dily/'),
       plDebugOn: effDebug,
       plToggleDebug: ()=>this.setState({ debugOverride: !effDebug }),
+      stickyActive: s.stickyMode === 'S3' ? 'S3' : 'S4',
+      stickyVariants: [{ id:'S3', label:'S3' }, { id:'S4', label:'S4' }],
+      onStickyMode: (id)=>{ const v = id === 'S3' ? 'S3' : 'S4'; try{ localStorage.setItem('vapp-sticky', v); }catch(e){} this._hdrOff = false; this._navOff = false; this.setState({ stickyMode:v }, ()=>this._onScroll && this._onScroll()); },
       headerVariant: s.headerVariant,
       headerVariantOptions: [{ id:'classic', label:'V1 topbar' }, { id:'kontakt', label:'V2 kontakt' }],
       onHeaderVariant: (v)=>this.setState({ headerVariant: v }),

@@ -15,7 +15,8 @@
 <style>
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
-  .pkr-btn{appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;cursor:pointer;}
+  .pkr-btn{appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;cursor:pointer;transition:background .12s ease, color .12s ease, opacity .12s ease !important;}
+  .pkr-btn:not(:disabled):active{transform:translateY(1px);}
   .pkr-btn:focus-visible,.pkr-all:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   .pkr-all{text-decoration:none;}
   /* overflow-x ořízne i stín karty v hoveru (0 6px 20px) — track má kolem karet rezervu na stín,
@@ -49,7 +50,7 @@
     <h2 id="{{ headingId }}" class="pkr-h2" style="margin:0;font-weight:700;color:#15181C;">{{ title }}</h2>
     <div class="pkr-ctrl" style="display:flex;align-items:center;gap:16px;">
       <a class="pkr-all" href="{{ allHref }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:8px;background:transparent;border:0;font-size:14px;font-weight:700;color:#1E5AA8;transition:background 120ms ease;" style-hover="text-decoration:underline;text-underline-offset:3px;" style-active="transform:translateY(1px);">{{ allLabel }}
-        <dc-import name="Ikony" icon-name="arrow-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
+        <dc-import name="Ikony" icon-name="chevron-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
       </a>
       <div class="pkr-navwrap pkr-navtop" style="align-items:center;gap:4px;">
         <button type="button" class="pkr-btn" aria-label="Předchozí produkty" disabled="{{ atStart }}" onClick="{{ onPrev }}" style="{{ prevStyle }}" style-hover="background:#EFF4FB;" style-active="transform:translateY(1px);">
@@ -70,7 +71,7 @@
   </div>
   <div class="pkr-navbot">
   <a class="pkr-all" href="{{ allHref }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:8px;background:transparent;border:0;font-size:14px;font-weight:700;color:#1E5AA8;transition:background 120ms ease;" style-hover="text-decoration:underline;text-underline-offset:3px;" style-active="transform:translateY(1px);">{{ allLabel }}
-        <dc-import name="Ikony" icon-name="arrow-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
+        <dc-import name="Ikony" icon-name="chevron-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
       </a>
         <div class="pkr-navwrap" style="align-items:center;gap:4px;">
           <button type="button" class="pkr-btn" aria-label="Předchozí produkty" disabled="{{ atStart }}" onClick="{{ onPrev }}" style="{{ prevStyle }}" style-hover="background:#EFF4FB;" style-active="transform:translateY(1px);">

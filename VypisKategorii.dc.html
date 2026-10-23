@@ -14,7 +14,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&display=swap" rel="stylesheet">
 <style>
   *{box-sizing:border-box;}
-  .vk-logo:hover{border-color:#5189CC !important;} .vk-logo:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .vk-logo:hover{border-color:#5189CC !important;}
+  .vk-acc{display:grid;grid-template-rows:1fr;transition:grid-template-rows .25s ease, opacity .25s ease;} .vk-acc > *{min-height:0;overflow:hidden;padding:0 20px 20px;margin:0 -20px -20px;} /* rezerva pro hover stín dlaždic */ .vk-acc[data-shown="false"]{grid-template-rows:0fr;opacity:0;}
+  @media (prefers-reduced-motion:reduce){ .vk-acc{transition:none !important;} }
+  .vk-acchead{transition:box-shadow .15s ease;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);} .vk-acchead:hover{box-shadow:0 6px 20px rgba(20,47,86,.10);} .vk-logo:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   .a11y-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
   .a11y-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   html,body{margin:0;background:#F7F9FB;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;}
@@ -69,32 +72,36 @@
 </sc-if>
 </sc-if>
 <sc-if value="{{ accOn }}" hint-placeholder-val="">
-  <button type="button" class="a11y-i" aria-expanded="{{ catsExpanded }}" aria-controls="vk-acc-cats" onClick="{{ toggleAcc }}" style="width:100%;min-height:48px;padding:0 16px;background:#FFFFFF;border-radius:8px;display:flex;align-items:center;gap:12px;">
+  <button type="button" class="a11y-i vk-acchead" aria-expanded="{{ catsExpanded }}" aria-controls="vk-acc-cats" onClick="{{ toggleAcc }}" style="width:100%;min-height:48px;padding:0 16px;background:#FFFFFF;border-radius:8px;display:flex;align-items:center;gap:12px;">
     <span aria-hidden="true" style="flex:none;display:flex;color:#1E5AA8;"><dc-import name="Ikony" icon-name="layout-grid" size="24" hint-size="24px,24px"></dc-import></span>
     <span style="flex:1;min-width:0;font-size:16px;font-weight:700;line-height:1.3;color:#15181C;text-align:left;">{{ accLabel }}</span>
     <span style="flex:none;font-size:13px;font-weight:400;color:#666E78;">{{ catsCountText }}</span>
     <span aria-hidden="true" style="{{ catsChevronStyle }}"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></span>
   </button>
-  <sc-if value="{{ catsOpen }}" hint-placeholder-val="">
-    <div id="vk-acc-cats" class="vk-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:8px;margin-top:12px;">
+  <sc-if value="{{ catsMounted }}" hint-placeholder-val="">
+    <div class="vk-acc" data-shown="{{ catsShown }}"><div>
+    <div id="vk-acc-cats" class="vk-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:8px;padding-top:12px;">
       <sc-for list="{{ cats }}" as="c" hint-placeholder-count="6">
         <dc-import name="KategorickaDlazdice" cat="{{ c }}" variant="{{ tileVariant }}" media="{{ tileMedia }}" hint-size="100%,240px"></dc-import>
       </sc-for>
     </div>
+    </div></div>
   </sc-if>
   <sc-if value="{{ showBrands }}" hint-placeholder-val="{{ true }}">
-    <button type="button" class="a11y-i" aria-expanded="{{ brandsExpanded }}" aria-controls="vk-acc-brands" onClick="{{ toggleBrands }}" style="width:100%;min-height:48px;padding:0 16px;margin-top:16px;background:#FFFFFF;border-radius:8px;display:flex;align-items:center;gap:12px;">
+    <button type="button" class="a11y-i vk-acchead" aria-expanded="{{ brandsExpanded }}" aria-controls="vk-acc-brands" onClick="{{ toggleBrands }}" style="width:100%;min-height:48px;padding:0 16px;margin-top:16px;background:#FFFFFF;border-radius:8px;display:flex;align-items:center;gap:12px;">
       <span aria-hidden="true" style="flex:none;display:flex;color:#1E5AA8;"><dc-import name="Ikony" icon-name="tag" size="24" hint-size="24px,24px"></dc-import></span>
       <span style="flex:1;min-width:0;font-size:16px;font-weight:700;line-height:1.3;color:#15181C;text-align:left;">{{ brandsLabel }}</span>
       <span style="flex:none;font-size:13px;font-weight:400;color:#666E78;">{{ brandsCountText }}</span>
       <span aria-hidden="true" style="{{ brandsChevronStyle }}"><dc-import name="Ikony" icon-name="chevron-down" size="24" hint-size="24px,24px"></dc-import></span>
     </button>
-    <sc-if value="{{ brandsOpen }}" hint-placeholder-val="">
-      <div id="vk-acc-brands" class="vk-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:8px;margin-top:12px;">
+    <sc-if value="{{ brandsMounted }}" hint-placeholder-val="">
+      <div class="vk-acc" data-shown="{{ brandsShown }}"><div>
+      <div id="vk-acc-brands" class="vk-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:8px;padding-top:12px;">
         <sc-for list="{{ brandCats }}" as="b" hint-placeholder-count="4">
           <dc-import name="KategorickaDlazdice" cat="{{ b }}" variant="{{ tileVariant }}" media="{{ tileMedia }}" hint-size="100%,88px"></dc-import>
         </sc-for>
       </div>
+      </div></div>
     </sc-if>
   </sc-if>
 </sc-if>
@@ -110,6 +117,14 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:700},&quot;media&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;fotky&quot;,&quot;ikony&quot;],&quot;default&quot;:&quot;fotky&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;layout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dlazdice&quot;,&quot;kompaktni&quot;,&quot;kompaktni-akordeon&quot;],&quot;default&quot;:&quot;kompaktni&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;accordionLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Všechny kategorie&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;accordionOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;brandsAccordionLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Díly podle výrobce&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;topOnly&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Nejhledanější&quot;},&quot;nejhledanejsi&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Nejhledanější&quot;},&quot;showGuideChip&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Zobrazení&quot;},&quot;topLogos&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{name:string,logo?:string,href?:string}[]&quot;,&quot;default&quot;:null,&quot;section&quot;:&quot;Nejhledanější&quot;},&quot;topAria&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Nejhledanější kategorie&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Nejhledanější&quot;},&quot;topSearched&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{kind:string,label:string,iconName?:string,href?:string}[]&quot;,&quot;default&quot;:null,&quot;section&quot;:&quot;Nejhledanější&quot;},&quot;categories&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{name:string,count:number,subs:{name:string,count:number}[]}[]&quot;,&quot;default&quot;:null},&quot;onOpenCategory&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(name:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;onPickSub&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(catName:string,subName:string)=&gt;void&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 class Component extends DCLogic {
+  // plynulé otevření i zavření: prvek zůstane v DOM po dobu odjezdu (ms), data-shown řídí CSS přechod
+  fade(key, open, ms){ ms = ms || 200; const F = this._fx || (this._fx = {}); const f = F[key] || (F[key] = { m:false, s:false, t:null, r:false, w:false });
+    f.w = !!open;
+    if (open){ if (f.t){ clearTimeout(f.t); f.t = null; } if (!f.m){ f.m = true; f.s = false; }
+      if (!f.s && !f.r){ f.r = true; requestAnimationFrame(()=>requestAnimationFrame(()=>{ f.r = false; if (f.w && !f.s){ f.s = true; this.forceUpdate(); } })); } }
+    else if (f.m){ f.s = false; if (!f.t) f.t = setTimeout(()=>{ f.t = null; if (!f.w){ f.m = false; this.forceUpdate(); } }, ms); }
+    return { mounted: f.m, shown: f.s ? 'true' : 'false' }; }
+
   DEMO_BRANDS = [
     { name:'Sport Jacht', count:196 }, { name:'Agados', count:274 },
     { name:'KNOTT', count:486 }, { name:'AL-KO', count:612 }
@@ -194,7 +209,7 @@ class Component extends DCLogic {
     const key = String(P.accordionLabel||'') + '|' + String(!!P.accordionOpen);
     if (this._accKey !== key){ this._accKey = key; this._accOpen = !!P.accordionOpen; }
     if (this._brKey !== key){ this._brKey = key; this._brOpen = false; }
-    const chev = (open)=>'flex:none;display:flex;color:#5189CC;transition:transform .12s ease;'+(open?'transform:rotate(180deg);':'');
+    const chev = (open)=>'flex:none;display:flex;color:#5189CC;transition:transform .25s ease;'+(open?'transform:rotate(180deg);':'');
     // v režimu topOnly jde o výřez pro stránku, ne o samostatný náhled — dokumentace se nevykresluje
     return {
       topLogoItems, showTopLogos: topLogoItems.length > 0, showTopChips: topLogoItems.length === 0,
@@ -210,6 +225,7 @@ class Component extends DCLogic {
       accLabel: P.accordionLabel || 'Všechny kategorie',
       brandsLabel: P.brandsAccordionLabel || 'Díly podle výrobce',
       catsOpen: this._accOpen, brandsOpen: this._brOpen,
+      ...(()=>{ const a = this.fade('cats', this._accOpen, 250), b = this.fade('brands', this._brOpen, 250); return { catsMounted: a.mounted, catsShown: a.shown, brandsMounted: b.mounted, brandsShown: b.shown }; })(),
       catsExpanded: this._accOpen ? 'true' : 'false',
       brandsExpanded: this._brOpen ? 'true' : 'false',
       catsCountText: cats.length + ' ' + this.plural(cats.length,'kategorie','kategorie','kategorií'),

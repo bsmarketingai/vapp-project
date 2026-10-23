@@ -75,9 +75,20 @@
   @media (max-width:999px){ .hd-v4 .hd-acts{margin-left:auto !important;} }
   .hd-mail{transition:color .12s;} .hd-mail:hover{color:#1E5AA8 !important;}
   .hd-langitem{transition:background .12s;} .hd-langitem:hover{background:#F2F4F7 !important;}
+  .hd-logolink{transition:opacity .12s;} .hd-logolink:hover{opacity:.85;}
+  /* plynulé otevření i zavření (data-shown řídí logika přes fade()) */
+  .hd-dd{transition:opacity .15s ease, transform .15s ease;} .hd-dd[data-shown="false"]{opacity:0;transform:translateY(-4px);pointer-events:none !important;}
+  #hd-mega{transition:opacity .2s ease, transform .2s ease;} #hd-mega[data-shown="false"]{opacity:0;transform:translateY(-6px);pointer-events:none !important;}
+  #hd-mobile-menu{transition:opacity .25s ease, transform .25s ease;} #hd-mobile-menu[data-shown="false"]{opacity:0;transform:translateY(-8px);pointer-events:none !important;}
+  .hd-acc{display:grid;grid-template-rows:1fr;transition:grid-template-rows .25s ease, opacity .25s ease;} .hd-acc > *{min-height:0;overflow:hidden;} .hd-acc[data-shown="false"]{grid-template-rows:0fr;opacity:0;}
+  /* otevřené mobilní hledání nesmí ořezat našeptávač, který z pole vyjíždí dolů */
+  .hd-acc[data-shown="true"] > *{overflow:visible;}
+  .hd-modal{transition:opacity .2s ease;} .hd-modal[data-shown="false"]{opacity:0;pointer-events:none;}
+  .hd-modal > div{transition:transform .2s ease;} .hd-modal[data-shown="false"] > div{transform:translateY(8px);}
+  @media (prefers-reduced-motion:reduce){ .hd-dd,#hd-mega,#hd-mobile-menu,.hd-acc,.hd-modal,.hd-modal > div{transition:none !important;} }
 </style>
 </helmet>
-<header class="hd-root {{ rootCls }}" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;width:100%;margin:0;padding:0;transform:translateY(var(--vp-hdr-push,0px));box-shadow:var(--vp-hdr-shadow,0 2px 8px rgba(20,47,86,.06));pointer-events:var(--vp-hdr-pe,auto);">
+<header class="hd-root {{ rootCls }}" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;width:100%;margin:0;padding:0;transform:translateY(var(--vp-hdr-push,0px));transition:transform .3s ease;box-shadow:var(--vp-hdr-shadow,0 2px 8px rgba(20,47,86,.06));pointer-events:var(--vp-hdr-pe,auto);">
   <div style="background:transparent;">
     <div class="hd-toprow" style="background:#fff;border-bottom:1px solid #F2F4F7;pointer-events:auto;position:relative;box-shadow:var(--vp-top-shadow,none);transition:box-shadow .15s ease;">
     <div class="vp-in hd-logorow" style="display:flex;align-items:center;gap:14px;padding-top:20px;padding-bottom:20px;flex-wrap:wrap;">
@@ -100,15 +111,15 @@
         <sc-if value="{{ showSearchAct }}" hint-placeholder-val="">
           <button type="button" class="hd-act hd-i hd-mb" id="hd-search-toggle" aria-label="Hledat" aria-expanded="{{ searchExpanded }}" aria-controls="hd-search-panel" onClick="{{ toggleSearch }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:44px;padding:0 8px;cursor:pointer;"><div style="display:flex;align-items:center;justify-content:center;"><dc-import name="Ikony" icon-name="search" size="24" hint-size="24px,24px"></dc-import></div><span class="hd-actlbl" style="font-size:13px;font-weight:600;">Hledat</span></button>
         </sc-if>
-        <button type="button" class="hd-act hd-i" id="hd-login" aria-label="Přihlásit" onClick="{{ openLogin }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:44px;padding:0 8px;cursor:pointer;"><div style="display:flex;align-items:center;justify-content:center;"><dc-import name="Ikony" icon-name="user-circle" size="24" hint-size="24px,24px"></dc-import></div><span class="hd-actlbl" style="font-size:13px;font-weight:600;">Přihlásit</span></button>
+        <button type="button" class="hd-act hd-i" id="hd-login" aria-label="Přihlásit" onClick="{{ openLogin }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:44px;padding:0 8px;cursor:pointer;"><div style="display:flex;align-items:center;justify-content:center;"><dc-import name="Ikony" icon-name="user" size="24" hint-size="24px,24px"></dc-import></div><span class="hd-actlbl" style="font-size:13px;font-weight:600;">Přihlásit</span></button>
         <sc-if value="{{ langJ2 }}" hint-placeholder-val="">
           <div class="hd-langwrap hd-dt" style="position:relative;flex:none;">
             <button type="button" class="hd-act hd-i" id="hd-lang" aria-haspopup="listbox" aria-expanded="{{ langExpanded }}" aria-label="{{ langAria }}" onClick="{{ toggleLang }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:44px;padding:0 8px;cursor:pointer;">
               <div style="display:flex;align-items:center;justify-content:center;height:24px;"><img src="{{ langFlag }}" alt="" aria-hidden="true" style="display:block;height:16px;width:25px;border-radius:4px;"></div>
               <span class="hd-actlbl" style="font-size:13px;font-weight:600;">{{ langLabel }}</span>
             </button>
-            <sc-if value="{{ langOpen }}" hint-placeholder-val="">
-              <div role="listbox" aria-label="Jazyk a měna" style="position:absolute;top:calc(100% + 8px);right:0;min-width:180px;padding:4px;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);z-index:80;">
+            <sc-if value="{{ langMounted }}" hint-placeholder-val="">
+              <div class="hd-dd" data-shown="{{ langShown }}" role="listbox" aria-label="Jazyk a měna" style="position:absolute;top:calc(100% + 8px);right:0;min-width:180px;padding:4px;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);z-index:80;">
                 <sc-for list="{{ langItems }}" as="l" hint-placeholder-count="2">
                   <button type="button" class="hd-i hd-langitem" role="option" aria-selected="{{ l.selected }}" onClick="{{ l.onClick }}" style="{{ l.style }}"><img src="{{ l.flag }}" alt="" aria-hidden="true" style="display:block;flex:none;height:16px;width:25px;border-radius:4px;">{{ l.label }}</button>
                 </sc-for>
@@ -125,9 +136,11 @@
         <span id="hd-cart" style="display:inline-flex;"><dc-import name="Kosik" count="{{ cartCount }}" total="{{ cartTotal }}" currency="{{ currency }}" currencies="{{ currencyCodes }}" on-currency-change="{{ onCartCurrency }}" on-hover-enter="{{ onCartEnter }}" on-hover-leave="{{ onCartLeave }}" on-click="{{ onCartClick }}" hint-size="150px,44px"></dc-import></span>
         <button type="button" class="hd-mb hd-icon hd-i" id="hd-burger" aria-label="{{ menuLabel }}" aria-expanded="{{ menuExpanded }}" aria-controls="hd-mobile-menu" onClick="{{ toggleMenu }}" style="width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#1E5AA8;cursor:pointer;"><sc-if value="{{ menuOpen }}" hint-placeholder-val=""><dc-import name="Ikony" icon-name="x" size="24" hint-size="24px,24px"></dc-import></sc-if><sc-if value="{{ menuClosed }}" hint-placeholder-val="{{ true }}"><dc-import name="Ikony" icon-name="menu-2" size="24" hint-size="24px,24px"></dc-import></sc-if></button>
       </div>
-      <sc-if value="{{ searchOpen }}" hint-placeholder-val="">
-        <div class="hd-mb" id="hd-search-panel" style="flex-basis:100%;padding-top:4px;">
-          <dc-import name="Vyhledavani" bare="true" autofocus="{{ true }}" height="44" value="{{ searchValue }}" on-change="{{ onSearchChange }}" on-field-focus="{{ onSearchFieldFocus }}" placeholder="Hledat díly podle názvu, čísla nebo modelu…" hint-size="100%,44px"></dc-import>
+      <sc-if value="{{ searchMounted }}" hint-placeholder-val="">
+        <div class="hd-mb hd-acc" id="hd-search-panel" data-shown="{{ searchShown }}" style="position:absolute;left:0;right:0;top:100%;z-index:65;background:#FFFFFF;box-shadow:0 10px 30px rgba(20,30,45,.14);">
+          <div><div class="vp-in" style="padding-top:0;padding-bottom:12px;">
+          <dc-import name="Vyhledavani" bare="true" autofocus="{{ true }}" height="44" value="{{ searchValue }}" on-change="{{ onSearchChange }}" on-field-focus="{{ onSearchFieldFocus }}" on-field-blur="{{ onSearchFieldBlur }}" placeholder="Hledat díly podle názvu, čísla nebo modelu…" hint-size="100%,44px"></dc-import>
+          </div></div>
         </div>
       </sc-if>
       <div class="hd-mb hd-mbsearch" style="flex-basis:100%;">
@@ -150,20 +163,20 @@
         </sc-if>
       </div>
     </nav>
-    <sc-if value="{{ megaOpen }}" hint-placeholder-val="">
-      <div class="hd-dt" id="hd-mega" onMouseEnter="{{ onMegaEnter }}" onMouseLeave="{{ onMegaLeave }}" style="position:absolute;top:100%;left:0;right:0;z-index:60;pointer-events:auto;box-shadow:0 10px 30px rgba(20,30,45,.14);">
+    <sc-if value="{{ megaMounted }}" hint-placeholder-val="">
+      <div class="hd-dt" id="hd-mega" data-shown="{{ megaShown }}" onMouseEnter="{{ onMegaEnter }}" onMouseLeave="{{ onMegaLeave }}" style="position:absolute;top:100%;left:0;right:0;z-index:60;pointer-events:auto;box-shadow:0 10px 30px rgba(20,30,45,.14);">
         <dc-import name="MegaMenu" groups="{{ megaGroups }}" all-label="{{ megaAllLabel }}" all-href="{{ megaAllHref }}" cats-label="{{ megaCatsLabel }}" cats-href="{{ megaCatsHref }}" rail-items="{{ megaRail }}" heading="{{ megaTab }}" columns="{{ megaColumns }}" max-items="{{ megaMaxItems }}" debug="{{ debug }}" hint-size="100%,420px"></dc-import>
       </div>
     </sc-if>
-    <sc-if value="{{ menuOpen }}" hint-placeholder-val="">
-      <div class="hd-mb" id="hd-mobile-menu" role="navigation" aria-label="Hlavní menu" tabindex="-1" onKeyDown="{{ onMenuKey }}" style="position:absolute;top:100%;left:0;right:0;z-index:60;pointer-events:auto;min-height:calc(100dvh - 100%);background:#fff;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;box-shadow:0 10px 30px rgba(20,30,45,.14);">
+    <sc-if value="{{ menuMounted }}" hint-placeholder-val="">
+      <div class="hd-mb" id="hd-mobile-menu" data-shown="{{ menuShown }}" role="navigation" aria-label="Hlavní menu" tabindex="-1" onKeyDown="{{ onMenuKey }}" style="position:absolute;top:100%;left:0;right:0;z-index:60;pointer-events:auto;min-height:calc(100dvh - 100%);background:#fff;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;box-shadow:0 10px 30px rgba(20,30,45,.14);">
         <dc-import name="MobilniMenu" show-info="{{ mmInfo }}" show-contacts="{{ mmContacts }}" panel-open="{{ menuOpen }}" menu-tree="{{ menuTree }}" active="{{ menuActive }}" on-select="{{ onMenuSelect }}" info-links="{{ infoLinks }}" on-login="{{ onMenuLogin }}" currency="{{ currency }}" currencies="{{ currencyCodes }}" on-currency-change="{{ onMenuCurrency }}" inquiry-mode="{{ ppMode }}" inquiry-href="{{ inquiryHref }}" debug="{{ debug }}" hint-size="100%,320px"></dc-import>
       </div>
     </sc-if>
   </div>
 </header>
-<sc-if value="{{ askLangOpen }}" hint-placeholder-val="">
-  <div role="presentation" onClick="{{ askLangCancel }}" style="position:fixed;inset:0;z-index:80;background:rgba(20,30,45,.5);display:flex;align-items:center;justify-content:center;padding:16px;">
+<sc-if value="{{ askLangMounted }}" hint-placeholder-val="">
+  <div class="hd-modal" data-shown="{{ askLangShown }}" role="presentation" onClick="{{ askLangCancel }}" style="position:fixed;inset:0;z-index:80;background:rgba(20,30,45,.5);display:flex;align-items:center;justify-content:center;padding:16px;">
     <div role="dialog" aria-modal="true" aria-labelledby="hd-lang-dlg-h" id="hd-lang-dialog" tabindex="-1" onKeyDown="{{ askLangKey }}" onClick="{{ stopClick }}" style="width:100%;max-width:520px;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);padding:28px;display:flex;flex-direction:column;gap:16px;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;">
       <div style="display:flex;align-items:center;gap:12px;">
         <img src="{{ askLangFlag }}" alt="" aria-hidden="true" style="display:block;flex:none;height:24px;width:38px;border-radius:4px;">
@@ -171,18 +184,14 @@
       </div>
       <p style="margin:0;font-size:16px;line-height:1.6;color:#5A626C;text-wrap:pretty;">{{ askLangText }}</p>
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-        <dc-import name="Tlacitko" variant="primary" size="medium" label="{{ askLangConfirm }}" icon-trailing="arrow-right" on-click="{{ askLangOk }}" debug="{{ false }}" hint-size="200px,44px"></dc-import>
+        <dc-import name="Tlacitko" variant="primary" size="medium" label="{{ askLangConfirm }}" icon-trailing="chevron-right" on-click="{{ askLangOk }}" debug="{{ false }}" hint-size="200px,44px"></dc-import>
         <dc-import name="Tlacitko" variant="text" size="medium" label="{{ askLangStay }}" on-click="{{ askLangCancel }}" debug="{{ false }}" hint-size="180px,44px"></dc-import>
       </div>
     </div>
   </div>
 </sc-if>
-<sc-if value="{{ loginOpen }}" hint-placeholder-val="">
-  <dc-import name="LoginPopup" open="{{ true }}" on-close="{{ closeLogin }}" debug="{{ debug }}" hint-size="0px,0px"></dc-import>
-</sc-if>
-<sc-if value="{{ cartOpen }}" hint-placeholder-val="">
-  <dc-import name="BasketPopup" open="{{ true }}" items="{{ cartItems }}" currency="{{ currency }}" on-close="{{ closeCart }}" on-remove="{{ onCartRemove }}" on-go-to-cart="{{ onCart }}" on-back-to-shop="{{ closeCart }}" on-panel-enter="{{ onCartEnter }}" on-panel-leave="{{ onCartLeave }}" debug="{{ debug }}" hint-size="0px,0px"></dc-import>
-</sc-if>
+<dc-import name="LoginPopup" open="{{ loginOpen }}" on-close="{{ closeLogin }}" debug="{{ debug }}" hint-size="0px,0px"></dc-import>
+<dc-import name="BasketPopup" open="{{ cartOpen }}" items="{{ cartItems }}" currency="{{ currency }}" on-close="{{ closeCart }}" on-remove="{{ onCartRemove }}" on-go-to-cart="{{ onCart }}" on-back-to-shop="{{ closeCart }}" on-panel-enter="{{ onCartEnter }}" on-panel-leave="{{ onCartLeave }}" debug="{{ debug }}" hint-size="0px,0px"></dc-import>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
 <dc-import name="PoptavkaPopup" open="{{ inquiryOpen }}" href="{{ inquiryHref }}" on-close="{{ closeInquiry }}" hint-size="0px,0px"></dc-import>
 </x-dc>
@@ -215,6 +224,14 @@ class Component extends DCLogic {
     return (labels || []).map(name=>({ name, href: (TAB_HREF && TAB_HREF[name]) || '#' }));
   }
   state = { menuOpen:false, searchOpen:false, loginOpen:false, cartOpen:false, currency:'CZK', megaTab:null };
+  // plynulé otevření i zavření: prvek zůstane v DOM po dobu odjezdu (ms), data-shown řídí CSS přechod
+  fade(key, open, ms){ ms = ms || 200; const F = this._fx || (this._fx = {}); const f = F[key] || (F[key] = { m:false, s:false, t:null, r:false, w:false });
+    f.w = !!open;
+    if (open){ if (f.t){ clearTimeout(f.t); f.t = null; } if (!f.m){ f.m = true; f.s = false; }
+      if (!f.s && !f.r){ f.r = true; requestAnimationFrame(()=>requestAnimationFrame(()=>{ f.r = false; if (f.w && !f.s){ f.s = true; this.forceUpdate(); } })); } }
+    else if (f.m){ f.s = false; if (!f.t) f.t = setTimeout(()=>{ f.t = null; if (!f.w){ f.m = false; this.forceUpdate(); } }, ms); }
+    return { mounted: f.m, shown: f.s ? 'true' : 'false' }; }
+
   // megamenu: otevírá hover nebo fokus tabu, zavírá Escape, odjezd myší a klik mimo.
   // Otevřený je vždy nejvýš jeden tab — drží se jeho label, ne boolean.
   openMega(label){
@@ -387,13 +404,19 @@ class Component extends DCLogic {
       return (Array.isArray(r) && r.length) ? r : null;
     };
     const megaTabOpen = this.state.megaTab;
-    const megaGroups = groupsFor(megaTabOpen);
-    const megaRail = railFor(megaTabOpen);
     const hasMega = (label)=>!!groupsFor(label);
-    const megaFoot = entry(megaTabOpen).foot || {};
     const megaOpen = hasMega(megaTabOpen);
+    // při zavírání drží panel obsah posledního tabu, aby plynule odjel s obsahem
+    if (megaOpen) this._megaLast = megaTabOpen;
+    const megaTabShow = megaOpen ? megaTabOpen : (this._megaLast || null);
+    const megaGroups = groupsFor(megaTabShow);
+    const megaRail = railFor(megaTabShow);
+    const megaFoot = entry(megaTabShow).foot || {};
+    if (this.state.askLang) this._askLast = this.state.askLang;
+    const AL = this.state.askLang || this._askLast;
+    const fxLang = this.fade('lang', !!this.state.langOpen, 150), fxMega = this.fade('mega', megaOpen, 200), fxMenu = this.fade('menu', !!this.state.menuOpen, 250), fxSearch = this.fade('search', !!this.state.searchOpen, 250), fxAsk = this.fade('ask', !!this.state.askLang, 200);
     // megamenu M1 (mřížka skupin) / M2 (sloupce sekcí) — otevřená varianta, localStorage vapp-mm
-    const m2 = entry(megaTabOpen).m2;
+    const m2 = entry(megaTabShow).m2;
     const megaVariant = 'M1'; // rozhodnuto 15. 10. 2026 — M1 na všech tabech, localStorage vapp-mm už neovlivňuje
     const tabs = labels.map(label=>{
       const on = label === active;
@@ -456,14 +479,14 @@ class Component extends DCLogic {
         onClick: ()=>{ this.setState({ langOpen:false }); setCurrency(cur); }
       })),
       askLangOpen: !!this.state.askLang,
-      askLangFlag: this.state.askLang === 'EUR' ? './vapp-flag-sk.svg' : './vapp-flag-cz.svg',
-      askLangTitle: this.state.askLang === 'EUR' ? 'Přecházíte na slovenskou verzi webu' : 'Přecházíte na českou verzi webu',
-      askLangText: this.state.askLang === 'EUR'
+      askLangFlag: AL === 'EUR' ? './vapp-flag-sk.svg' : './vapp-flag-cz.svg',
+      askLangTitle: AL === 'EUR' ? 'Přecházíte na slovenskou verzi webu' : 'Přecházíte na českou verzi webu',
+      askLangText: AL === 'EUR'
         ? 'Slovenská verze je samostatný web vapp.sk — ceny jsou v eurech, platí pro něj slovenské podmínky dopravy a obsah košíku se do ní nepřenese.'
         : 'Česká verze je samostatný web vapp.cz — ceny jsou v korunách, platí pro něj české podmínky dopravy a obsah košíku se do ní nepřenese.',
-      askLangConfirm: this.state.askLang === 'EUR' ? 'Pokračovat na vapp.sk' : 'Pokračovat na vapp.cz',
+      askLangConfirm: AL === 'EUR' ? 'Pokračovat na vapp.sk' : 'Pokračovat na vapp.cz',
       askLangOk: ()=>{ const c = this.state.askLang; this.setState({ askLang:null }); if (c && this._applyCurrency) this._applyCurrency(c); },
-      askLangStay: this.state.askLang === 'EUR' ? 'Zůstat na české verzi' : 'Zůstat na slovenské verzi',
+      askLangStay: AL === 'EUR' ? 'Zůstat na české verzi' : 'Zůstat na slovenské verzi',
       askLangCancel: ()=>this.setState({ askLang:null }),
       stopClick: (e)=>{ if (e && e.stopPropagation) e.stopPropagation(); },
       askLangKey: (e)=>this.trapDialog(e),
@@ -472,7 +495,9 @@ class Component extends DCLogic {
       closeLogin: ()=>{ this.setState({ loginOpen:false }); setTimeout(()=>{ const b=document.getElementById('hd-login'); if(b&&b.offsetParent!==null&&b.focus) b.focus(); },0); },
       onMenuLogin: ()=>{ const f = P.onLogin; this.setState({ menuOpen:false, loginOpen: typeof f === 'function' ? false : true }); if (typeof f === 'function') f(); },
       searchOpen, searchExpanded: searchOpen ? 'true' : 'false',
-      onSearchFieldFocus: ()=>{ if (this.state.menuOpen) this.closeMenu(); },
+      // mobil: odchod z pole hledání (blur) hledání zavře; prodleva nechá doběhnout klik do našeptávače
+      onSearchFieldBlur: ()=>{ clearTimeout(this._sBlurT); this._sBlurT = setTimeout(()=>{ const p = document.getElementById('hd-search-panel'); if (p && p.contains(document.activeElement)) return; if (this.state.searchOpen) this.setState({ searchOpen:false }); }, 180); },
+      onSearchFieldFocus: ()=>{ clearTimeout(this._sBlurT); if (this.state.menuOpen) this.closeMenu(); },
       toggleSearch: ()=>{
         const next = !this.state.searchOpen;
         this.setState({ searchOpen: next, menuOpen: next ? false : this.state.menuOpen });
@@ -516,7 +541,10 @@ class Component extends DCLogic {
       megaAllHref: megaFoot.allHref || '#',
       megaCatsLabel: megaFoot.catsLabel || 'Všechny kategorie',
       megaCatsHref: megaFoot.catsHref || megaFoot.allHref || '#',
-      megaTab: megaTabOpen || '',
+      megaTab: megaTabShow || '',
+      megaMounted: fxMega.mounted, megaShown: fxMega.shown, langMounted: fxLang.mounted, langShown: fxLang.shown,
+      menuMounted: fxMenu.mounted, menuShown: fxMenu.shown, searchMounted: fxSearch.mounted, searchShown: fxSearch.shown,
+      askLangMounted: fxAsk.mounted, askLangShown: fxAsk.shown,
       megaColumns: P.megaColumns ?? 4, megaMaxItems: P.megaMaxItems ?? 4,
       onMegaEnter: ()=>this.openMega(), onMegaLeave: ()=>this.closeMega(160),
       menuOpen: this.state.menuOpen, menuClosed: !this.state.menuOpen,

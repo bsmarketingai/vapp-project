@@ -34,6 +34,8 @@
   .hh-ctrl>.hh-btn:hover{background:rgba(255,255,255,.16) !important;}
   .hh-ctrl .hh-btn span{background:#B4CEEC !important;}
   .hh-ctrl .hh-btn[aria-current="true"] span{background:#FFFFFF !important;}
+  .hh-btn span{transition:background .12s, transform .12s;} .hh-btn[aria-current="false"]:hover span{background:#5189CC !important;transform:scale(1.25);}
+  .hh-ctrl .hh-btn[aria-current="false"]:hover span{background:#FFFFFF !important;}
   /* mobil: v toku pod tlačítky, šipky na krajích přes celou šířku */
   @media (max-width:819px){
     .hh-ctrl{position:relative !important;left:auto !important;bottom:auto !important;transform:none !important;justify-content:space-between;margin:-8px 4px 0;}
@@ -90,7 +92,7 @@
       <h1 class="hh-h1" style="margin:0;font-weight:700;color:#15181C;text-wrap:pretty;">Zlevněné přívěsy a díly od výrobce</h1>
       <p class="hh-lead" style="margin:0;font-weight:400;color:#5A626C;text-wrap:pretty;">Doprodej modelů, zlevněné náhradní díly a bazar přívěsů. Stejná záruka i autorizovaný servis AL-KO a KNOTT jako u zboží za plnou cenu — jen za méně.</p>
       <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;">
-        <dc-import name="Tlacitko" variant="danger" size="large" label="Výprodej přívěsů" icon-trailing="arrow-right" href="{{ saleTrailersHref }}" hint-size="220px,52px"></dc-import>
+        <dc-import name="Tlacitko" variant="danger" size="large" label="Výprodej přívěsů" icon-trailing="chevron-right" href="{{ saleTrailersHref }}" hint-size="220px,52px"></dc-import>
         <dc-import name="Tlacitko" variant="dangerSecondary" size="large" label="Náhradní díly v akci" href="{{ salePartsHref }}" hint-size="200px,52px"></dc-import>
       </div>
     </div>
@@ -103,7 +105,7 @@
       <h1 class="hh-h1" style="margin:0;font-weight:700;color:#15181C;text-wrap:pretty;">Přívěsy, díly a servis na jednom místě</h1>
       <p class="hh-lead" style="margin:0;font-weight:400;color:#5A626C;text-wrap:pretty;">Vyrábíme, prodáváme, půjčujeme i opravujeme. Náhradní díly máme skladem a autorizovaný servis AL-KO a KNOTT přímo u nás.</p>
       <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;">
-        <dc-import name="Tlacitko" variant="primary" size="large" label="Prohlédnout přívěsy" icon-trailing="arrow-right" href="{{ primaryHref }}" on-click="{{ onPrimary }}" hint-size="220px,52px"></dc-import>
+        <dc-import name="Tlacitko" variant="primary" size="large" label="Prohlédnout přívěsy" icon-trailing="chevron-right" href="{{ primaryHref }}" on-click="{{ onPrimary }}" hint-size="220px,52px"></dc-import>
         <dc-import name="Tlacitko" variant="secondary" size="large" label="Poptat přívěs na míru" href="{{ secondaryHref }}" on-click="{{ onSecondary }}" hint-size="200px,52px"></dc-import>
       </div>
     </div>

@@ -34,6 +34,8 @@
   @media (max-width:549px){ .pd-gal-v2{flex-direction:column-reverse;align-items:stretch;} .pd-gal-col{flex-direction:row;flex-wrap:wrap;} }
   /* mobil: velká fotka se přepíná šipkami, miniatury se skrývají */
   .pd-nav{display:none;}
+  .pd-thumb{transition:box-shadow .12s;} .pd-thumb[aria-pressed="false"]:hover{box-shadow:inset 0 0 0 1px #5189CC !important;}
+  .pd-navbtn{transition:background .12s;} .pd-navbtn:hover{background:#EFF4FB !important;} .pd-navbtn:active{transform:translateY(calc(-50% + 1px)) !important;}
   @media (max-width:819px){ .pd-nav{display:flex;} .pd-thumbs{display:none !important;} }
   .pd-desc{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:32px;}
   @media (max-width:999px){ .pd-desc{grid-template-columns:minmax(0,1fr);} }
@@ -80,16 +82,16 @@
           <div class="pd-gal-v2">
             <div class="pd-gal-col pd-thumbs">
               <sc-for list="{{ thumbs }}" as="t" hint-placeholder-count="4">
-                <button type="button" class="a11y-i" onClick="{{ t.onPick }}" aria-label="{{ t.aria }}" aria-pressed="{{ t.pressed }}" style="{{ t.style }}"></button>
+                <button type="button" class="a11y-i pd-thumb" onClick="{{ t.onPick }}" aria-label="{{ t.aria }}" aria-pressed="{{ t.pressed }}" style="{{ t.style }}"></button>
               </sc-for>
             </div>
             <div style="flex:1;min-width:0;">
               <div style="position:relative;touch-action:pan-y;" onTouchStart="{{ imgTouchStart }}" onTouchEnd="{{ imgTouchEnd }}">
               <div style="{{ mainImgStyle }}"></div>
-              <button type="button" class="pd-nav a11y-i" aria-label="Předchozí fotka" onClick="{{ imgPrev }}" style="position:absolute;top:50%;left:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:8px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10), inset 0 0 0 1px #91959B;">
+              <button type="button" class="pd-nav pd-navbtn a11y-i" aria-label="Předchozí fotka" onClick="{{ imgPrev }}" style="position:absolute;top:50%;left:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:8px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10), inset 0 0 0 1px #91959B;">
                 <dc-import name="Ikony" icon-name="chevron-left" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
               </button>
-              <button type="button" class="pd-nav a11y-i" aria-label="Další fotka" onClick="{{ imgNext }}" style="position:absolute;top:50%;right:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:8px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10), inset 0 0 0 1px #91959B;">
+              <button type="button" class="pd-nav pd-navbtn a11y-i" aria-label="Další fotka" onClick="{{ imgNext }}" style="position:absolute;top:50%;right:8px;transform:translateY(-50%);width:44px;height:44px;align-items:center;justify-content:center;border-radius:8px;background:#FFFFFF;color:#1E5AA8;box-shadow:0 6px 20px rgba(20,47,86,.10), inset 0 0 0 1px #91959B;">
                 <dc-import name="Ikony" icon-name="chevron-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
               </button>
               <span class="pd-nav" aria-hidden="true" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);align-items:center;min-height:24px;padding:0 10px;border-radius:8px;background:#FFFFFF;box-shadow:0 6px 20px rgba(20,47,86,.10);font-size:13px;font-weight:700;color:#15181C;">{{ imgCounter }}</span>
@@ -99,7 +101,7 @@
       </div>
 
       <!-- NÁKUPNÍ BOX -->
-      <div class="pd-buy" style="background:#FFFFFF;border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:16px;">
+      <div class="pd-buy" style="background:#FFFFFF;border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:16px;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);">
 
         <sc-if value="{{ secVarianty }}" hint-placeholder-val="{{ true }}">
           <dc-import name="VyberVariant" label="Balení" icon="package" kind="{{ variantKind }}" layout="{{ varLayout }}" value-size="16" options="{{ variantOptions }}" active-index="{{ variantIndex }}" on-pick="{{ onVariant }}" hint-size="100%,120px"></dc-import>
@@ -172,7 +174,7 @@
 
     <!-- HEUREKA -->
     <sc-if value="{{ secHeureka }}" hint-placeholder-val="{{ true }}">
-      <section aria-labelledby="pd-heu-h" style="margin-top:24px;background:#FFFFFF;border-radius:8px;padding:24px;">
+      <section aria-labelledby="pd-heu-h" style="margin-top:24px;background:#FFFFFF;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);">
         <h2 id="pd-heu-h" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:0;">Hodnocení produktu</h2>
         <div class="pd-heu">
           <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">

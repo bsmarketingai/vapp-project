@@ -29,7 +29,7 @@
   @media (max-width:999px){ .pb-list>li:nth-child(n+4){display:none !important;} }
   @media (max-width:549px){ .pb-xsrow{display:flex !important;} .pb-list>li:nth-child(n+3){display:none !important;} }
   .pb-card{background:#FFFFFF;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;transition:box-shadow 150ms ease;}
-  .pb-card:hover{box-shadow:0 6px 20px rgba(20,47,86,.10);}
+  .pb-card{transition:box-shadow .15s;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);} .pb-card:hover{box-shadow:0 6px 20px rgba(20,47,86,.10);}
   .pb-card:hover .pb-title{color:#1E5AA8;}
   .pb-card img{transition:transform .28s ease;}
   .pb-card:hover img{transform:scale(1.03);}
@@ -41,7 +41,7 @@
     .pb-btn-l{display:none;}
     .pb-row>.pb-title{font-size:15px!important;-webkit-line-clamp:3;}
   }
-  .pb-row:hover{box-shadow:0 6px 20px rgba(20,47,86,.10);}
+  .pb-row{transition:box-shadow .15s;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);} .pb-row:hover{box-shadow:0 6px 20px rgba(20,47,86,.10);}
   .pb-row:hover .pb-title{color:#1E5AA8;}
   .pb-clamp{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
   .pb-clamp2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
@@ -80,7 +80,7 @@
         </sc-for>
       </div>
       <a class="pb-a pb-cta pb-all" href="{{ allHref }}" style="margin-left:auto;min-height:44px;padding:0 16px;border-radius:8px;background:transparent;border:0;color:#1E5AA8;transition:background 120ms ease;" style-hover="text-decoration:underline;text-underline-offset:3px;" style-active="transform:translateY(1px);">{{ allLabel }}
-        <dc-import name="Ikony" icon-name="arrow-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
+        <dc-import name="Ikony" icon-name="chevron-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
       </a>
     </div>
   </div>
@@ -100,7 +100,7 @@
             <a class="pb-a" href="{{ r.href }}">{{ r.name }}</a>
           </span>
           <a class="pb-a pb-btn" href="{{ r.href }}" aria-label="Přečíst článek" style="flex:none;"><span class="pb-btn-l">Přečíst</span>
-            <dc-import name="Ikony" icon-name="arrow-right" size="{{ 18 }}" hint-size="18px,18px"></dc-import>
+            <dc-import name="Ikony" icon-name="chevron-right" size="{{ 18 }}" hint-size="18px,18px"></dc-import>
           </a>
         </li>
       </sc-for>
@@ -111,7 +111,7 @@
             <a class="pb-a" href="{{ r.href }}">{{ r.name }}</a>
           </span>
           <a class="pb-a pb-btn" href="{{ r.href }}" aria-label="Přečíst článek" style="flex:none;"><span class="pb-btn-l">Přečíst</span>
-            <dc-import name="Ikony" icon-name="arrow-right" size="{{ 18 }}" hint-size="18px,18px"></dc-import>
+            <dc-import name="Ikony" icon-name="chevron-right" size="{{ 18 }}" hint-size="18px,18px"></dc-import>
           </a>
         </li>
       </sc-for>

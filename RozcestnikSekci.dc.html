@@ -23,7 +23,7 @@
   .rs-grid-1{grid-template-columns:1fr;}
   .rs-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
   .rs-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
-  .rs-card{transition:box-shadow .15s;} .rs-card:hover{box-shadow:0 6px 20px rgba(20,47,86,.10);}
+  .rs-card{transition:box-shadow .15s;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);} .rs-card:hover{box-shadow:0 6px 20px rgba(20,47,86,.10);}
   .rs-card:hover .rs-name{color:#1E5AA8;}
   .rs-card:hover .rs-photo img{transform:scale(1.03);}
   .rs-name{transition:color .12s;}
@@ -52,7 +52,7 @@
           <h3 style="margin:0;flex:1;min-width:0;font-size:22px;font-weight:700;line-height:1.25;color:#15181C;">
             <a class="rs-i rs-name" href="{{ c.href }}" onClick="{{ c.onOpen }}" style="color:inherit;">{{ c.name }}</a>
           </h3>
-          <span aria-hidden="true" style="flex:none;display:flex;color:#5189CC;"><dc-import name="Ikony" icon-name="arrow-right" size="24" hint-size="24px,24px"></dc-import></span>
+          <span aria-hidden="true" style="flex:none;display:flex;color:#5189CC;"><dc-import name="Ikony" icon-name="chevron-right" size="24" hint-size="24px,24px"></dc-import></span>
         </div>
         <span style="font-size:13px;font-weight:400;line-height:1.4;color:#666E78;">{{ c.countText }}</span>
         <nav aria-label="{{ c.navLabel }}" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;">

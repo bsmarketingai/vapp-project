@@ -31,7 +31,7 @@
   </div>
   <ul class="rc-grid" style="list-style:none;margin:0;padding:0;">
     <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="3">
-      <li style="background:#FFFFFF;border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:12px;">
+      <li style="background:#FFFFFF;border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);">
         <dc-import name="Hodnoceni" value="{{ r.value }}" hint-size="120px,20px"></dc-import>
         <blockquote style="margin:0;font-size:16px;font-weight:400;line-height:1.6;color:#15181C;text-wrap:pretty;">{{ r.text }}</blockquote>
         <div style="margin-top:auto;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:#666E78;">
@@ -43,7 +43,7 @@
     </sc-for>
   </ul>
   <div style="display:flex;justify-content:flex-end;margin-top:24px;">
-    <a class="rc-all" href="{{ allHref }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:8px;background:transparent;border:0;font-size:14px;font-weight:700;color:#1E5AA8;text-decoration:none;transition:background 120ms ease;" style-hover="text-decoration:underline;text-underline-offset:3px;" style-active="transform:translateY(1px);">Všechna hodnocení<dc-import name="Ikony" icon-name="arrow-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import></a>
+    <a class="rc-all" href="{{ allHref }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:8px;background:transparent;border:0;font-size:14px;font-weight:700;color:#1E5AA8;text-decoration:none;transition:background 120ms ease;" style-hover="text-decoration:underline;text-underline-offset:3px;" style-active="transform:translateY(1px);">Všechna hodnocení<dc-import name="Ikony" icon-name="chevron-right" size="{{ 24 }}" hint-size="24px,24px"></dc-import></a>
   </div>
 </section>
 <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>

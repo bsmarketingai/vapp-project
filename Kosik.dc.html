@@ -30,6 +30,11 @@
   .ks-box, .ks-mob{transition:border-color .12s;} .ks-box:hover, .ks-mob:hover{border-color:#5189CC !important;}
   .ks-cur{transition:background .12s;} .ks-cur:hover{background:#F2F4F7 !important;border-radius:0 7px 7px 0;}
   .ks-curitem{transition:background .12s;} .ks-curitem:hover{background:#F2F4F7 !important;}
+  .ks-cartbtn .ks-price{transition:color .12s;} .ks-cartbtn:hover .ks-price{color:#1E5AA8 !important;}
+  .ks-cartbtn:hover{border-radius:8px 0 0 8px;}
+  .ks-mob{transition:background .12s;} .ks-mob:hover{background:#F2F4F7 !important;}
+  .ks-dd{transition:opacity .15s ease, transform .15s ease;} .ks-dd[data-shown="false"]{opacity:0;transform:translateY(-4px);pointer-events:none;}
+  @media (prefers-reduced-motion:reduce){ .ks-dd{transition:none !important;} }
   /* M a níž (kde je hamburger): měnu si zákazník přepíná v mobilním menu */
   @media (max-width:999px){ .ks-sep, .ks-curwrap{display:none !important;} }
   .ks-mob{display:none;}
@@ -42,7 +47,7 @@
 <sc-if value="{{ single }}" hint-placeholder-val="">
   <div class="{{ viewCls }}" style="display:inline-flex;align-items:center;">
     <div class="ks-box" style="position:relative;display:inline-flex;align-items:center;min-height:44px;border:0;border-radius:8px;background:#fff;color:#15181C;">
-      <button type="button" class="a11y-i" onClick="{{ onClick }}" onMouseEnter="{{ onHoverEnter }}" onMouseLeave="{{ onHoverLeave }}" aria-label="{{ cartAria }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;cursor:pointer;">
+      <button type="button" class="a11y-i ks-cartbtn" onClick="{{ onClick }}" onMouseEnter="{{ onHoverEnter }}" onMouseLeave="{{ onHoverLeave }}" aria-label="{{ cartAria }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;cursor:pointer;">
         <span style="position:relative;display:flex;align-items:center;color:#1E5AA8;"><dc-import name="Ikony" icon-name="shopping-cart" size="24" hint-size="24px,24px"></dc-import><sc-if value="{{ showCount }}" hint-placeholder-val=""><span aria-hidden="true" style="position:absolute;top:-4px;right:-8px;min-width:16px;width:16px;height:16px;border-radius:999px;background:#C5232B;color:#fff;font-size:10px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;">{{ count }}</span></sc-if></span>
         <span class="ks-price" style="font-size:14px;font-weight:700;color:#15181C;white-space:nowrap;">{{ label }}</span>
       </button>
@@ -50,8 +55,8 @@
         <span class="ks-sep" aria-hidden="true" style="flex:none;width:1px;align-self:stretch;margin:8px 0;background:#D5DAE0;"></span>
         <div class="ks-curwrap" style="position:relative;flex:none;">
           <button type="button" class="a11y-i ks-cur" aria-haspopup="listbox" aria-expanded="{{ curExpanded }}" aria-label="{{ curAria }}" onClick="{{ toggleCur }}" style="display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 10px 0 12px;cursor:pointer;"><img src="{{ langFlag }}" alt="" aria-hidden="true" style="display:block;flex:none;height:16px;width:25px;border-radius:4px;"><span aria-hidden="true" style="{{ curChevronStyle }}"><dc-import name="Ikony" icon-name="chevron-down" size="18" hint-size="18px,18px"></dc-import></span></button>
-          <sc-if value="{{ curOpen }}" hint-placeholder-val="">
-            <div role="listbox" aria-label="Jazyk a měna" style="position:absolute;top:calc(100% + 8px);right:0;min-width:132px;padding:4px;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);z-index:90;">
+          <sc-if value="{{ curMounted }}" hint-placeholder-val="">
+            <div class="ks-dd" data-shown="{{ curShown }}" role="listbox" aria-label="Jazyk a měna" style="position:absolute;top:calc(100% + 8px);right:0;min-width:132px;padding:4px;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);z-index:90;">
               <sc-for list="{{ langItems }}" as="c" hint-placeholder-count="2">
                 <button type="button" class="a11y-i ks-curitem" role="option" aria-selected="{{ c.selected }}" onClick="{{ c.onClick }}" style="{{ c.style }}"><img src="{{ c.flag }}" alt="" aria-hidden="true" style="display:block;flex:none;height:16px;width:25px;border-radius:4px;">{{ c.code }}</button>
               </sc-for>
@@ -110,6 +115,14 @@ const CART_DEFAULT = { count: 2, total: 42556 };
 
 class Component extends DCLogic {
   state = { curOpen:false };
+  // plynulé otevření i zavření: prvek zůstane v DOM po dobu odjezdu (ms), data-shown řídí CSS přechod
+  fade(key, open, ms){ ms = ms || 200; const F = this._fx || (this._fx = {}); const f = F[key] || (F[key] = { m:false, s:false, t:null, r:false, w:false });
+    f.w = !!open;
+    if (open){ if (f.t){ clearTimeout(f.t); f.t = null; } if (!f.m){ f.m = true; f.s = false; }
+      if (!f.s && !f.r){ f.r = true; requestAnimationFrame(()=>requestAnimationFrame(()=>{ f.r = false; if (f.w && !f.s){ f.s = true; this.forceUpdate(); } })); } }
+    else if (f.m){ f.s = false; if (!f.t) f.t = setTimeout(()=>{ f.t = null; if (!f.w){ f.m = false; this.forceUpdate(); } }, ms); }
+    return { mounted: f.m, shown: f.s ? 'true' : 'false' }; }
+
   componentDidMount(){
     this._away = (e)=>{ if(!this.state.curOpen) return; const n=e.target; if(n&&n.closest&&n.closest('.ks-cur, [role="listbox"]')) return; this.setState({ curOpen:false }); };
     this._esc = (e)=>{ if(e.key==='Escape' && this.state.curOpen) this.setState({ curOpen:false }); };
@@ -152,7 +165,8 @@ class Component extends DCLogic {
         onHoverEnter: typeof P.onHoverEnter === 'function' ? P.onHoverEnter : (()=>{}),
         onHoverLeave: typeof P.onHoverLeave === 'function' ? P.onHoverLeave : (()=>{}),
         showCur: !!setCur && codes.length > 1,
-        curCode: cur, curOpen, curExpanded: curOpen ? 'true' : 'false',
+        curCode: cur, curOpen,
+      ...(()=>{ const x = this.fade('cur', curOpen, 150); return { curMounted: x.mounted, curShown: x.shown }; })(), curExpanded: curOpen ? 'true' : 'false',
         // přepínač jazyka: CZ = ceny v Kč, SK = ceny v EUR
         curAria: 'Jazyk: ' + (cur === 'EUR' ? 'SK' : 'CZ'),
         langFlag: cur === 'EUR' ? './vapp-flag-sk.svg' : './vapp-flag-cz.svg',

@@ -20,13 +20,15 @@
   .rz-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   .rz-close{transition:background .12s,color .12s;} .rz-close:hover{background:#F2F4F7;color:#15181C;}
   .rz-link{color:#1E5AA8;text-decoration:underline;transition:color .12s;} .rz-link:hover{color:#1A4A8A;}
-  @keyframes rz-in{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
-  .rz-panel{animation:rz-in .4s ease;}
+  
+  .rz-bd{transition:opacity .25s ease;} .rz-bd[data-shown="false"]{opacity:0;pointer-events:none;}
+  .rz-panel{transition:transform .25s ease;} .rz-bd[data-shown="false"] .rz-panel{transform:translateY(8px);}
+  @media (prefers-reduced-motion:reduce){ .rz-bd,.rz-panel{transition:none !important;} }
   @media (max-width:549px){ .rz-wrap{padding:0 !important;align-items:stretch !important;} .rz-panel{max-height:100dvh !important;border-radius:0 !important;} }
 </style>
 </helmet>
-<sc-if value="{{ isOpen }}" hint-placeholder-val="">
-  <div class="rz-wrap" onClick="{{ onBackdrop }}" style="position:fixed;inset:0;z-index:80;background:rgba(20,30,45,.55);display:flex;align-items:center;justify-content:center;padding:24px;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;">
+<sc-if value="{{ fxMounted }}" hint-placeholder-val="">
+  <div class="rz-wrap rz-bd" data-shown="{{ fxShown }}" onClick="{{ onBackdrop }}" style="position:fixed;inset:0;z-index:80;background:rgba(20,30,45,.55);display:flex;align-items:center;justify-content:center;padding:24px;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;">
     <div role="dialog" aria-modal="true" aria-labelledby="rz-title" tabindex="-1" ref="{{ panelRef }}" onClick="{{ stop }}" onKeyDown="{{ onKey }}" class="rz-panel" style="position:relative;z-index:90;background:#FFFFFF;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);width:100%;max-width:720px;max-height:86vh;display:flex;flex-direction:column;overflow:hidden;">
 
       <div style="display:flex;align-items:center;gap:16px;padding:20px 24px 0;">
@@ -62,6 +64,14 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:900,&quot;height&quot;:620},&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;options&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{label:string,note?:string,meta?:string,disabled?:boolean}[]&quot;,&quot;default&quot;:null},&quot;activeIndex&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;number&quot;,&quot;default&quot;:0},&quot;loggedIn&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onPick&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(index:number)=&gt;void&quot;,&quot;default&quot;:null},&quot;onClose&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null},&quot;onNext&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 class Component extends DCLogic {
+  // plynulé otevření i zavření: prvek zůstane v DOM po dobu odjezdu (ms), data-shown řídí CSS přechod
+  fade(key, open, ms){ ms = ms || 200; const F = this._fx || (this._fx = {}); const f = F[key] || (F[key] = { m:false, s:false, t:null, r:false, w:false });
+    f.w = !!open;
+    if (open){ if (f.t){ clearTimeout(f.t); f.t = null; } if (!f.m){ f.m = true; f.s = false; }
+      if (!f.s && !f.r){ f.r = true; requestAnimationFrame(()=>requestAnimationFrame(()=>{ f.r = false; if (f.w && !f.s){ f.s = true; this.forceUpdate(); } })); } }
+    else if (f.m){ f.s = false; if (!f.t) f.t = setTimeout(()=>{ f.t = null; if (!f.w){ f.m = false; this.forceUpdate(); } }, ms); }
+    return { mounted: f.m, shown: f.s ? 'true' : 'false' }; }
+
   DEMO = [
     { label:'Celková kontrola přívěsu' },
     { label:'Kontrola a seřízení brzd' },
@@ -117,6 +127,7 @@ class Component extends DCLogic {
     return {
       debug: P.debug ?? true,
       isOpen: P.open === true,
+      ...(()=>{ const x = this.fade('m', P.open === true, 250); return { fxMounted: x.mounted, fxShown: x.shown }; })(),
       options: opts,
       activeIndex: idx,
       showNote: /jin/i.test(String(opts[idx] && opts[idx].label || '')),

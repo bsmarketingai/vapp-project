@@ -29,11 +29,18 @@
   }
   .fl-chip-clear{transition:background .12s;} .fl-chip-clear:hover{background:#A21B22 !important;}
   .fl-opt{transition:background .12s;} .fl-opt:hover{background:#F2F4F7 !important;}
+  .fl-filter{transition:background .12s, transform .06s;} .fl-filter:hover{background:#1A4A8A !important;} .fl-filter:active{transform:translateY(1px);}
+  .fl-box{transition:border-color .12s, background .12s;} .fl-stock:hover .fl-box[data-on="false"]{border-color:#5A626C !important;}
+  .fl-stock{transition:color .12s;} .fl-stock:hover{color:#15181C !important;}
+  .fl-sortbtn{transition:background .12s;} .fl-sortbtn:hover{background:#D5DAE0 !important;}
+  .fl-chev{display:inline-flex;transition:transform .2s ease;} .fl-sortbtn[aria-expanded="true"] .fl-chev{transform:rotate(180deg);}
+  .fl-dd{transition:opacity .15s ease, transform .15s ease;transform-origin:top right;} .fl-dd[data-shown="false"]{opacity:0;transform:translateY(-4px);pointer-events:none;}
+  @media (prefers-reduced-motion:reduce){ .fl-dd,.fl-chev{transition:none !important;} }
 </style>
 </helmet>
 <div style="display:flex;flex-wrap:wrap;gap:8px;max-width:1560px;margin:0 auto;">
   <button type="button" class="fl-i fl-filter" id="pf-open" onClick="{{ onOpenFilter }}" style="flex:1;max-width:220px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;font-size:14px;font-weight:700;color:#fff;background:#1E5AA8;border-radius:8px;cursor:pointer;"><span style="display:inline-flex;flex:none;"><dc-import name="Ikony" icon-name="filter" size="24" hint-size="24px,24px"></dc-import></span>Filtry<sc-if value="{{ filterCountText }}" hint-placeholder-val=""><span style="background:#C5232B;border-radius:999px;font-size:13px;padding:2px 8px;">{{ filterCountText }}</span></sc-if></button>
-  <button type="button" class="fl-i fl-stock" aria-pressed="{{ stockPressed }}" onClick="{{ onToggleStock }}" style="{{ stockBtnStyle }}"><span style="{{ stockBoxStyle }}"><sc-if value="{{ stockOn }}" hint-placeholder-val=""><span style="color:#fff;display:inline-flex;"><dc-import name="Ikony" icon-name="check" size="16" hint-size="16px,16px"></dc-import></span></sc-if></span>Skladem</button>
+  <button type="button" class="fl-i fl-stock" aria-pressed="{{ stockPressed }}" onClick="{{ onToggleStock }}" style="{{ stockBtnStyle }}"><span class="fl-box" data-on="{{ stockPressed }}" style="{{ stockBoxStyle }}"><sc-if value="{{ stockOn }}" hint-placeholder-val=""><span style="color:#fff;display:inline-flex;"><dc-import name="Ikony" icon-name="check" size="16" hint-size="16px,16px"></dc-import></span></sc-if></span>Skladem</button>
   <sc-if value="{{ hasChipRow }}" hint-placeholder-val="{{ true }}">
     <div class="fl-chips" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0;">
       <sc-for list="{{ activeChips }}" as="c" hint-placeholder-count="3">
@@ -45,9 +52,9 @@
     </div>
   </sc-if>
   <div class="fl-sort" ref="{{ rootRef }}" style="position:relative;flex:none;max-width:260px;min-width:0;margin-left:auto;">
-    <button type="button" class="fl-i" aria-expanded="{{ sortExpanded }}" onClick="{{ toggleSort }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;font-size:14px;font-weight:700;color:#15181C;background:#F2F4F7;border-radius:6px;cursor:pointer;padding:0 14px;">{{ sortLabel }} <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5189CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></button>
-    <sc-if value="{{ sortOpen }}" hint-placeholder-val="">
-      <div style="position:absolute;top:calc(100% + 6px);right:0;min-width:100%;white-space:nowrap;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);overflow:hidden;z-index:50;">
+    <button type="button" class="fl-i fl-sortbtn" aria-expanded="{{ sortExpanded }}" onClick="{{ toggleSort }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;font-size:14px;font-weight:700;color:#15181C;background:#F2F4F7;border-radius:6px;cursor:pointer;padding:0 14px;">{{ sortLabel }} <span class="fl-chev" aria-hidden="true"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5189CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></span></button>
+    <sc-if value="{{ sortMounted }}" hint-placeholder-val="">
+      <div class="fl-dd" data-shown="{{ sortShown }}" style="position:absolute;top:calc(100% + 6px);right:0;min-width:100%;white-space:nowrap;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);overflow:hidden;z-index:50;">
         <sc-for list="{{ sortOpts }}" as="o" hint-placeholder-count="4"><button type="button" class="fl-i fl-opt" onClick="{{ o.onPick }}" style="{{ o.style }}">{{ o.t }}</button></sc-for>
       </div>
     </sc-if>
@@ -70,6 +77,14 @@ const DEFAULT_SORTS = [
 
 class Component extends DCLogic {
   state = { sortOpen:false };
+  // plynulé otevření i zavření: prvek zůstane v DOM po dobu odjezdu (ms), data-shown řídí CSS přechod
+  fade(key, open, ms){ ms = ms || 200; const F = this._fx || (this._fx = {}); const f = F[key] || (F[key] = { m:false, s:false, t:null, r:false, w:false });
+    f.w = !!open;
+    if (open){ if (f.t){ clearTimeout(f.t); f.t = null; } if (!f.m){ f.m = true; f.s = false; }
+      if (!f.s && !f.r){ f.r = true; requestAnimationFrame(()=>requestAnimationFrame(()=>{ f.r = false; if (f.w && !f.s){ f.s = true; this.forceUpdate(); } })); } }
+    else if (f.m){ f.s = false; if (!f.t) f.t = setTimeout(()=>{ f.t = null; if (!f.w){ f.m = false; this.forceUpdate(); } }, ms); }
+    return { mounted: f.m, shown: f.s ? 'true' : 'false' }; }
+
   bindDocument(on){
     if(on){
       if(this._docBound) return;
@@ -115,6 +130,7 @@ class Component extends DCLogic {
       stockBtnStyle:'display:flex;align-items:center;gap:9px;min-height:44px;padding:0 6px;font-size:13px;font-weight:700;cursor:pointer;user-select:none;color:'+(onlyStock?'#0B6937;':'#3A424C;'),
       stockBoxStyle:'flex:none;width:21px;height:21px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;'+(onlyStock?'background:#0E7F43;color:#fff;border:1px solid #0E7F43;':'background:#fff;color:transparent;border:1px solid #91959B;'),
       stockOn: onlyStock,
+      ...(()=>{ const x = this.fade('sort', this.state.sortOpen, 150); return { sortMounted: x.mounted, sortShown: x.shown }; })(),
       sortOpen: this.state.sortOpen,
       sortExpanded: this.state.sortOpen ? 'true' : 'false',
       toggleSort: ()=>this.setState(s=>({ sortOpen: !s.sortOpen })),

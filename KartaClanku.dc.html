@@ -18,7 +18,7 @@
   .kc-a{text-decoration:none;color:inherit;}
   .kc-a:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   .kc{background:#FFFFFF;border-radius:8px;overflow:hidden;display:flex;flex-direction:column;height:100%;transition:box-shadow 150ms ease;}
-  .kc:hover{box-shadow:0 6px 20px rgba(20,47,86,.10);}
+  .kc{transition:box-shadow .15s;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);} .kc:hover{box-shadow:0 6px 20px rgba(20,47,86,.10);}
   .kc:hover .kc-title{color:#1E5AA8;}
   .kc img{transition:transform .28s ease;}
   .kc:hover img{transform:scale(1.03);}
@@ -42,7 +42,7 @@
     </h3>
     <p class="kc-clamp" style="margin:0;font-size:14px;font-weight:400;line-height:1.5;color:#5A626C;">{{ perex }}</p>
     <a class="kc-a kc-btn" href="{{ href }}" style="margin-top:auto;align-self:flex-start;">Přečíst
-      <dc-import name="Ikony" icon-name="arrow-right" size="{{ 18 }}" hint-size="18px,18px"></dc-import>
+      <dc-import name="Ikony" icon-name="chevron-right" size="{{ 18 }}" hint-size="18px,18px"></dc-import>
     </a>
   </div>
 </article>

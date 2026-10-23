@@ -19,8 +19,10 @@
   .dz-i{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;text-decoration:none;cursor:pointer;}
   .dz-i:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
   .dz-close{transition:background .12s,color .12s;} .dz-close:hover{background:#F2F4F7;color:#15181C;}
-  @keyframes dz-in{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
-  .dz-panel{animation:dz-in .4s ease;}
+  
+  .dz-bd{transition:opacity .25s ease;} .dz-bd[data-shown="false"]{opacity:0;pointer-events:none;}
+  .dz-panel{transition:transform .25s ease;} .dz-bd[data-shown="false"] .dz-panel{transform:translateY(8px);}
+  @media (prefers-reduced-motion:reduce){ .dz-bd,.dz-panel{transition:none !important;} }
   .dz-row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px;align-items:center;}
   .dz-row-top{align-items:start;}
   .dz-f{width:100%;font:inherit;font-size:15px;color:#15181C;background:#F2F4F7;border:0;border-radius:6px;padding:0 14px;height:44px;}
@@ -34,8 +36,8 @@
   }
 </style>
 </helmet>
-<sc-if value="{{ isOpen }}" hint-placeholder-val="">
-  <div class="dz-wrap" onClick="{{ onBackdrop }}" style="position:fixed;inset:0;z-index:80;background:rgba(20,30,45,.55);display:flex;align-items:center;justify-content:center;padding:24px;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;">
+<sc-if value="{{ fxMounted }}" hint-placeholder-val="">
+  <div class="dz-wrap dz-bd" data-shown="{{ fxShown }}" onClick="{{ onBackdrop }}" style="position:fixed;inset:0;z-index:80;background:rgba(20,30,45,.55);display:flex;align-items:center;justify-content:center;padding:24px;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;">
     <div role="dialog" aria-modal="true" aria-labelledby="dz-title" tabindex="-1" ref="{{ panelRef }}" onClick="{{ stop }}" onKeyDown="{{ onKey }}" class="dz-panel" style="position:relative;z-index:90;background:#FFFFFF;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);width:100%;max-width:760px;max-height:86vh;display:flex;flex-direction:column;overflow:hidden;">
 
       <div style="flex:none;display:flex;align-items:center;gap:16px;padding:18px 24px;border-bottom:1px solid #F2F4F7;">
@@ -79,6 +81,14 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:900,&quot;height&quot;:660},&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;productName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Čelisti brzdové KNOTT 200×50 — malá sada na 2 kola&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onSend&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(data:object)=&gt;void&quot;,&quot;default&quot;:null},&quot;onClose&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 class Component extends DCLogic {
+  // plynulé otevření i zavření: prvek zůstane v DOM po dobu odjezdu (ms), data-shown řídí CSS přechod
+  fade(key, open, ms){ ms = ms || 200; const F = this._fx || (this._fx = {}); const f = F[key] || (F[key] = { m:false, s:false, t:null, r:false, w:false });
+    f.w = !!open;
+    if (open){ if (f.t){ clearTimeout(f.t); f.t = null; } if (!f.m){ f.m = true; f.s = false; }
+      if (!f.s && !f.r){ f.r = true; requestAnimationFrame(()=>requestAnimationFrame(()=>{ f.r = false; if (f.w && !f.s){ f.s = true; this.forceUpdate(); } })); } }
+    else if (f.m){ f.s = false; if (!f.t) f.t = setTimeout(()=>{ f.t = null; if (!f.w){ f.m = false; this.forceUpdate(); } }, ms); }
+    return { mounted: f.m, shown: f.s ? 'true' : 'false' }; }
+
   state = { email:'', phone:'', message:'', subject:null };
   componentDidMount(){
     this._onDocKey = (e)=>{ if(e.key === 'Escape' && this.props.open){ e.preventDefault(); this.close(); } };
@@ -114,6 +124,7 @@ class Component extends DCLogic {
     return {
       debug: P.debug ?? true,
       isOpen: P.open === true,
+      ...(()=>{ const x = this.fade('m', P.open === true, 250); return { fxMounted: x.mounted, fxShown: x.shown }; })(),
       email:s.email, phone:s.phone, message:s.message,
       subject: s.subject === null ? (P.productName || '') : s.subject,
       onEmail:(e)=>this.setState({ email:e.target.value }),

@@ -38,6 +38,9 @@
   .kt-f:focus{outline:none;box-shadow:inset 0 0 0 2px #1E5AA8;}
   textarea.kt-f{height:auto;padding:12px 14px;resize:vertical;line-height:1.5;}
   @media (max-width:549px){ .kt-f{font-size:16px;} }
+  @keyframes vpSwap{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .vp-swap{animation:vpSwap .3s ease both;}
+  @media (prefers-reduced-motion:reduce){ .vp-swap{animation:none !important;} }
 </style>
 </helmet>
 <div data-screen-label="Kontakty" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
@@ -56,21 +59,21 @@
       <h2 id="kt-odd-h" class="kt-h2" style="margin:0;color:#15181C;">Oddělení</h2>
       <div class="kt-grid3">
 
-        <div style="background:#FFFFFF;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;">
+        <div style="background:#FFFFFF;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);">
           <h3 class="kt-h3" style="margin:0;color:#15181C;">Prodej přívěsů</h3>
           <a class="kt-tel" href="tel:+420603924555" style="display:inline-flex;align-items:center;gap:8px;font-size:18px;font-weight:700;line-height:1.35;align-self:flex-start;"><span aria-hidden="true" style="display:inline-flex;color:#1E5AA8;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import></span>+420 603 924 555</a>
           <p style="margin:0;font-size:14px;line-height:1.5;color:#5A626C;">Jiří Balzer, Michael Novák, Jan Verbík, Michal Kerechanyn</p>
           <p style="margin:0;display:inline-flex;align-items:center;gap:8px;font-size:14px;line-height:1.5;color:#5A626C;"><span aria-hidden="true" style="flex:none;display:inline-flex;width:24px;height:24px;color:#1E5AA8;"><dc-import name="Ikony" icon-name="clock" size="24" hint-size="24px,24px"></dc-import></span>Po–Pá 8:30–16:30</p>
         </div>
 
-        <div style="background:#FFFFFF;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;">
+        <div style="background:#FFFFFF;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);">
           <h3 class="kt-h3" style="margin:0;color:#15181C;">Servis</h3>
           <a class="kt-tel" href="tel:+420773835329" style="display:inline-flex;align-items:center;gap:8px;font-size:18px;font-weight:700;line-height:1.35;align-self:flex-start;"><span aria-hidden="true" style="display:inline-flex;color:#1E5AA8;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import></span>+420 773 835 329</a>
           <p style="margin:0;font-size:14px;line-height:1.5;color:#5A626C;">Jiří Balzer, Michael Novák, Jan Verbík, Michal Kerechanyn</p>
           <p style="margin:0;display:inline-flex;align-items:center;gap:8px;font-size:14px;line-height:1.5;color:#5A626C;"><span aria-hidden="true" style="flex:none;display:inline-flex;width:24px;height:24px;color:#1E5AA8;"><dc-import name="Ikony" icon-name="clock" size="24" hint-size="24px,24px"></dc-import></span>Po–Pá 8:30–16:00</p>
         </div>
 
-        <div style="background:#FFFFFF;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;">
+        <div style="background:#FFFFFF;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);">
           <h3 class="kt-h3" style="margin:0;color:#15181C;">Náhradní díly</h3>
           <a class="kt-tel" href="tel:+420773835330" style="display:inline-flex;align-items:center;gap:8px;font-size:18px;font-weight:700;line-height:1.35;align-self:flex-start;"><span aria-hidden="true" style="display:inline-flex;color:#1E5AA8;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import></span>+420 773 835 330</a>
           <a class="kt-wa" href="https://wa.me/420773835330" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:4px 12px 4px 8px;border-radius:999px;background:#E9F8EF;color:#0B6937;font-size:14px;font-weight:700;line-height:24px;text-decoration:none;align-self:flex-start;"><span aria-hidden="true" style="display:inline-flex;color:#0E7F43;"><dc-import name="Ikony" icon-name="brand-whatsapp" size="18" hint-size="18px,18px"></dc-import></span>Napsat na WhatsApp</a>
@@ -81,20 +84,20 @@
           </div>
         </div>
 
-        <div style="background:#FFFFFF;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;">
+        <div style="background:#FFFFFF;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);">
           <h3 class="kt-h3" style="margin:0;color:#15181C;">E-shop — objednávky</h3>
           <a class="kt-tel" href="tel:+420773835334" style="display:inline-flex;align-items:center;gap:8px;font-size:18px;font-weight:700;line-height:1.35;align-self:flex-start;"><span aria-hidden="true" style="display:inline-flex;color:#1E5AA8;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import></span>+420 773 835 334</a>
           <p style="margin:0;font-size:14px;line-height:1.5;color:#5A626C;">Vojtěch Kubásek</p>
           <p style="margin:0;display:inline-flex;align-items:center;gap:8px;font-size:14px;line-height:1.5;color:#5A626C;"><span aria-hidden="true" style="flex:none;display:inline-flex;width:24px;height:24px;color:#1E5AA8;"><dc-import name="Ikony" icon-name="clock" size="24" hint-size="24px,24px"></dc-import></span>Po–Pá 8:30–16:30</p>
         </div>
 
-        <div style="background:#FFFFFF;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;">
+        <div style="background:#FFFFFF;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);">
           <h3 class="kt-h3" style="margin:0;color:#15181C;">Půjčovna</h3>
           <a class="kt-tel" href="tel:+420773835329" style="display:inline-flex;align-items:center;gap:8px;font-size:18px;font-weight:700;line-height:1.35;align-self:flex-start;"><span aria-hidden="true" style="display:inline-flex;color:#1E5AA8;"><dc-import name="Ikony" icon-name="phone" size="24" hint-size="24px,24px"></dc-import></span>+420 773 835 329</a>
           <p style="margin:0;display:inline-flex;align-items:center;gap:8px;font-size:14px;line-height:1.5;color:#5A626C;"><span aria-hidden="true" style="flex:none;display:inline-flex;width:24px;height:24px;color:#1E5AA8;"><dc-import name="Ikony" icon-name="clock" size="24" hint-size="24px,24px"></dc-import></span>Po–Pá 8:30–16:00</p>
         </div>
 
-        <div style="background:#FFFFFF;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;">
+        <div style="background:#FFFFFF;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);">
           <h3 class="kt-h3" style="margin:0;color:#15181C;">E-mail</h3>
           <dl style="margin:0;display:flex;flex-direction:column;gap:12px;">
             <div style="display:flex;flex-direction:column;gap:2px;">
@@ -118,7 +121,7 @@
     <section aria-labelledby="kt-firma-h" style="margin-top:48px;display:flex;flex-direction:column;gap:16px;">
       <h2 id="kt-firma-h" class="kt-h2" style="margin:0;color:#15181C;">Firma a platby</h2>
       <div class="kt-grid2">
-        <div style="background:#FFFFFF;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;">
+        <div style="background:#FFFFFF;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);">
           <h3 class="kt-h3" style="margin:0;color:#15181C;">Sídlo firmy</h3>
           <p style="margin:0;font-size:16px;line-height:1.6;color:#15181C;"><strong>Areál VAPP s.r.o.</strong><br>Popovičky 38, 251 01 Popovičky<br><span style="color:#5A626C;">Praha – východ</span></p>
           <div style="display:flex;">
@@ -131,7 +134,7 @@
           <p style="margin:0;font-size:14px;line-height:1.5;color:#5A626C;text-wrap:pretty;">Firma je zapsána v obchodním rejstříku vedeném Městským soudem v Praze, oddíl C, vložka 182308.</p>
         </div>
 
-        <div style="background:#FFFFFF;border-radius:8px;padding:24px;display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;">
+        <div style="background:#FFFFFF;border-radius:8px;padding:24px;display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);">
           <div style="flex:1 1 260px;min-width:0;display:flex;flex-direction:column;gap:12px;">
             <h3 class="kt-h3" style="margin:0;color:#15181C;">Bankovní spojení</h3>
             <dl style="margin:0;display:flex;flex-direction:column;gap:10px;font-size:16px;line-height:1.6;">
@@ -151,9 +154,9 @@
 
     <section aria-labelledby="kt-form-h" style="margin-top:48px;display:flex;flex-direction:column;gap:16px;">
       <h2 id="kt-form-h" class="kt-h2" style="margin:0;color:#15181C;">Napište nám</h2>
-      <div style="background:#FFFFFF;border-radius:8px;padding:24px;max-width:760px;">
+      <div style="background:#FFFFFF;border-radius:8px;padding:24px;max-width:760px;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);">
         <sc-if value="{{ formOpen }}" hint-placeholder-val="{{ true }}">
-        <form onSubmit="{{ onSubmit }}" novalidate="{{ true }}" style="display:flex;flex-direction:column;gap:14px;">
+        <form class="vp-swap" onSubmit="{{ onSubmit }}" novalidate="{{ true }}" style="display:flex;flex-direction:column;gap:14px;">
           <div class="kt-form">
             <label for="kt-name" style="font-size:15px;color:#15181C;">Jméno <span style="color:#C5232B;">*</span></label>
             <input id="kt-name" class="kt-f" type="text" autoComplete="name" placeholder="Jan Novák" value="{{ name }}" onInput="{{ onName }}">
@@ -185,7 +188,7 @@
         </form>
         </sc-if>
         <sc-if value="{{ sent }}" hint-placeholder-val="">
-          <div role="status" style="display:flex;align-items:flex-start;gap:12px;">
+          <div class="vp-swap" role="status" style="display:flex;align-items:flex-start;gap:12px;">
             <span aria-hidden="true" style="display:inline-flex;color:#0B6937;"><dc-import name="Ikony" icon-name="circle-check" size="24" hint-size="24px,24px"></dc-import></span>
             <div style="display:flex;flex-direction:column;gap:4px;">
               <span style="font-size:18px;font-weight:700;line-height:1.35;color:#15181C;">Děkujeme, zprávu jsme přijali</span>

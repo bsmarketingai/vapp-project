@@ -24,12 +24,16 @@
   .bp-del{transition:background .12s,color .12s;} .bp-del:hover{background:#FDF1F1;color:#C5232B;}
   .bp-row{transition:background .12s;} .bp-row:hover{background:#F7F9FB;}
   .bp-name{transition:color .12s;} .bp-row:hover .bp-name{color:#1E5AA8;}
-  .bp-panel{outline:none;position:fixed;top:92px;right:24px;width:min(420px,calc(100vw - 32px));max-height:calc(100vh - 112px);display:flex;flex-direction:column;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);z-index:90;animation:bpIn 120ms ease;}
+  .bp-panel{outline:none;position:fixed;top:92px;right:24px;width:min(420px,calc(100vw - 32px));max-height:calc(100vh - 112px);display:flex;flex-direction:column;background:#fff;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);z-index:90;transition:opacity .2s ease, transform .2s ease;}
+  .bp-panel[data-shown="false"]{opacity:0;transform:translateY(-8px);pointer-events:none;}
+  .bp-ov{transition:opacity .2s ease;} .bp-ov[data-shown="false"]{opacity:0;}
+  @media (prefers-reduced-motion:reduce){ .bp-panel,.bp-ov{transition:none !important;} }
   /* na desktopu overlay nesmí krást hover nad ikonou košíku */
   .bp-ov{pointer-events:none;}
   .bp-mobonly{display:none !important;}
   @media (max-width:549px){
-    .bp-panel{top:0 !important;right:0 !important;left:0 !important;bottom:0 !important;width:100% !important;max-width:none !important;max-height:none !important;border-radius:0 !important;animation:bpUp 150ms ease;}
+    .bp-panel{top:0 !important;right:0 !important;left:0 !important;bottom:0 !important;width:100% !important;max-width:none !important;max-height:none !important;border-radius:0 !important;}
+    .bp-panel[data-shown="false"]{transform:translateY(16px);}
     .bp-ov{pointer-events:auto;}
     .bp-mobonly{display:flex !important;}
   }
@@ -38,8 +42,8 @@
 </helmet>
 <sc-if value="{{ mounted }}" hint-placeholder-val="{{ true }}">
   <div>
-    <div class="bp-ov" onClick="{{ onOverlay }}" aria-hidden="true" style="position:fixed;inset:0;background:rgba(20,30,45,.45);z-index:80;animation:bpFade 120ms ease;"></div>
-    <div class="bp-panel" style="{{ panelPos }}" ref="{{ panelRef }}" role="dialog" aria-modal="true" aria-labelledby="bp-title" tabindex="-1" onMouseEnter="{{ onPanelEnter }}" onMouseLeave="{{ onPanelLeave }}">
+    <div class="bp-ov" data-shown="{{ shown }}" onClick="{{ onOverlay }}" aria-hidden="true" style="position:fixed;inset:0;background:rgba(20,30,45,.45);z-index:80;"></div>
+    <div class="bp-panel" data-shown="{{ shown }}" style="{{ panelPos }}" ref="{{ panelRef }}" role="dialog" aria-modal="true" aria-labelledby="bp-title" tabindex="-1" onMouseEnter="{{ onPanelEnter }}" onMouseLeave="{{ onPanelLeave }}">
       <div style="flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 12px 12px 20px;border-bottom:1px solid #F2F4F7;">
         <h2 id="bp-title" style="margin:0;font-size:20px;font-weight:700;line-height:1.35;color:#15181C;">{{ title }}</h2>
         <button type="button" class="bp-i bp-close" aria-label="Zavřít košík" onClick="{{ onCloseClick }}" style="flex:none;width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#666E78;"><dc-import name="Ikony" icon-name="x" size="24" hint-size="24px,24px"></dc-import></button>
@@ -86,9 +90,9 @@
             <span style="font-size:13px;font-weight:400;color:#666E78;white-space:nowrap;">{{ totalGross }}</span>
           </span>
         </div>
-        <dc-import name="Tlacitko" variant="primary" size="large" label="Přejít do košíku" icon-trailing="arrow-right" on-click="{{ onGoToCart }}" full-width="true" style="width:100%;" hint-size="100%,52px"></dc-import>
+        <dc-import name="Tlacitko" variant="primary" size="large" label="Přejít do košíku" icon-trailing="chevron-right" on-click="{{ onGoToCart }}" full-width="true" style="width:100%;" hint-size="100%,52px"></dc-import>
         <div class="bp-mobonly" style="width:100%;">
-          <dc-import name="Tlacitko" variant="secondary" size="large" label="Zpět do obchodu" icon="arrow-left" on-click="{{ onBackClick }}" full-width="true" style="width:100%;" hint-size="100%,52px"></dc-import>
+          <dc-import name="Tlacitko" variant="secondary" size="large" label="Zpět do obchodu" icon="chevron-left" on-click="{{ onBackClick }}" full-width="true" style="width:100%;" hint-size="100%,52px"></dc-import>
         </div>
       </div>
     </div>
@@ -104,6 +108,14 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:520,&quot;height&quot;:620},&quot;open&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;onClose&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null},&quot;title&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Váš košík&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;items&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{name:string;img?:string;qty:number;price:number;href?:string}[]&quot;,&quot;default&quot;:null},&quot;currency&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;CZK&quot;,&quot;EUR&quot;],&quot;default&quot;:&quot;CZK&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onRemove&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(index:number)=&gt;void&quot;,&quot;default&quot;:null},&quot;onGoToCart&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null},&quot;onBackToShop&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null},&quot;anchor&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;#hd-cart&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;onPanelEnter&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null},&quot;onPanelLeave&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;()=&gt;void&quot;,&quot;default&quot;:null},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
 class Component extends DCLogic {
+  // plynulé otevření i zavření: prvek zůstane v DOM po dobu odjezdu (ms), data-shown řídí CSS přechod
+  fade(key, open, ms){ ms = ms || 200; const F = this._fx || (this._fx = {}); const f = F[key] || (F[key] = { m:false, s:false, t:null, r:false, w:false });
+    f.w = !!open;
+    if (open){ if (f.t){ clearTimeout(f.t); f.t = null; } if (!f.m){ f.m = true; f.s = false; }
+      if (!f.s && !f.r){ f.r = true; requestAnimationFrame(()=>requestAnimationFrame(()=>{ f.r = false; if (f.w && !f.s){ f.s = true; this.forceUpdate(); } })); } }
+    else if (f.m){ f.s = false; if (!f.t) f.t = setTimeout(()=>{ f.t = null; if (!f.w){ f.m = false; this.forceUpdate(); } }, ms); }
+    return { mounted: f.m, shown: f.s ? 'true' : 'false' }; }
+
   state = { demoOpen: true, closing: false, demoItems: null, pos: null };
 
   DEMO = [
@@ -242,7 +254,7 @@ class Component extends DCLogic {
     const plural = pieces === 1 ? '1 položka' : (pieces >= 2 && pieces <= 4 ? pieces + ' položky' : pieces + ' položek');
     const call = (f, fallback)=> ()=>{ if (typeof f === 'function') f(); else if (fallback) fallback(); };
     return {
-      mounted: open || this.state.closing,
+      ...(()=>{ const x = this.fade('p', open, 200); return { mounted: x.mounted, shown: x.shown }; })(),
       standalone: !embedded,
       title: P.title ?? 'Váš košík',
       items, hasItems: items.length > 0, empty: items.length === 0,

@@ -24,7 +24,7 @@
   @media (max-width:819px){ .pq-h1{font-size:26px;line-height:1.2;} }
   .pq-lead{font-size:18px;font-weight:400;line-height:1.6;color:#5A626C;}
   @media (max-width:819px){ .pq-lead{font-size:16px;} }
-  .pq-card{background:#FFFFFF;border-radius:8px;padding:32px;display:flex;flex-direction:column;gap:20px;}
+  .pq-card{box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);background:#FFFFFF;border-radius:8px;padding:32px;display:flex;flex-direction:column;gap:20px;}
   @media (max-width:549px){ .pq-card{padding:20px;} }
   .pq-lbl{display:block;font-size:16px;font-weight:700;line-height:1.35;color:#15181C;margin-bottom:8px;}
   .pq-inp{width:100%;min-width:0;height:44px;padding:0 14px;background:#F2F4F7;border:0;border-radius:6px;font-family:inherit;font-size:15px;font-weight:400;color:#15181C;}
@@ -33,22 +33,37 @@
   .pq-inp:focus-visible,.pq-ta:focus-visible{outline:0;box-shadow:inset 0 0 0 2px #1E5AA8;}
   @media (max-width:549px){ .pq-inp,.pq-ta{font-size:16px;} }
   .pq-tel{display:flex;align-items:flex-start;gap:12px;}
-  .pq-telpfx{flex:none;width:168px;}
+  .pq-telpfx{flex:none;width:148px;}
+  .pq-form{container-type:inline-size;}
+  .pq-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px 32px;}
+  /* dvojice polí vedle sebe jen když má formulář místo (měří šířku karty, ne okna) */
+  @container (max-width:639px){ .pq-row{grid-template-columns:minmax(0,1fr);} }
+  .pq-opt{display:flex;align-items:center;gap:10px;min-height:44px;font-size:16px;font-weight:500;color:#15181C;cursor:pointer;}
+  .pq-opt input{appearance:none;margin:0;flex:none;width:22px;height:22px;border-radius:999px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #91959B;cursor:pointer;transition:box-shadow .12s;}
+  .pq-opt:hover input{box-shadow:inset 0 0 0 1px #5A626C;}
+  .pq-opt input:checked{box-shadow:inset 0 0 0 7px #1E5AA8;}
+  .pq-opt input:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .pq-login{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#EFF4FB;border-radius:8px;padding:16px 20px;}
+  .pq-loginlink{display:inline-flex;align-items:center;gap:4px;margin-left:auto;font-size:16px;font-weight:700;color:#1E5AA8;transition:color .12s;}
+  .pq-loginlink:hover{color:#1A4A8A;}
   /* předvolba a číslo zůstávají v jednom řádku i na mobilu; předvolba se zúží */
   .pq-tel>.pq-inp{flex:1;min-width:0;}
   @media (max-width:549px){ .pq-tel{gap:8px;} .pq-telpfx{width:148px;} }
   /* XXS: předvolba nad číslem přes celou šířku */
   @media (max-width:419px){ .pq-tel{flex-direction:column;align-items:stretch;} .pq-telpfx{width:100%;} .pq-tel>.pq-inp{flex:none;height:44px;} }
-  .pq-drop{border:1px dashed #C4CAD2;border-radius:8px;background:#F7F9FB;padding:28px 20px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;}
+  .pq-drop{border:1px dashed #84AEDF;border-radius:8px;background:#EFF4FB;padding:28px 20px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;}
   .pq-files{display:flex;flex-direction:column;gap:8px;}
   .pq-file{display:flex;align-items:center;gap:12px;background:#F2F4F7;border-radius:6px;padding:8px 8px 8px 12px;}
   .pq-note{font-size:13px;font-weight:500;line-height:1.4;color:#666E78;}
   .pq-req{color:#C5232B;font-weight:700;}
   .pq-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:32px;align-items:start;}
   @media (max-width:1149px){ .pq-grid{grid-template-columns:minmax(0,1fr);} }
-  .pq-side{background:#142F56;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;}
-  .pq-sidelink{transition:color .12s;} .pq-sidelink:hover{color:#D8E6F6 !important;}
-  .pq-side a:focus-visible{outline:2px solid #FFFFFF;outline-offset:2px;}
+  .pq-side{box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);background:#FFFFFF;border-radius:8px;padding:24px;display:flex;flex-direction:column;gap:12px;}
+  .pq-sidelink{transition:color .12s;} .pq-sidelink:hover{color:#1A4A8A !important;}
+  .pq-side a:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  @keyframes vpSwap{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .vp-swap{animation:vpSwap .3s ease both;}
+  @media (prefers-reduced-motion:reduce){ .vp-swap{animation:none !important;} }
 </style>
 </helmet>
 <div data-screen-label="Poptat produkt" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;">
@@ -66,18 +81,18 @@
 
     <div class="pq-grid" style="margin-top:24px;">
       <sc-if value="{{ formOpen }}" hint-placeholder-val="{{ true }}">
-      <form class="pq-card" onSubmit="{{ onSubmit }}" novalidate="{{ true }}">
-        <div>
-          <label class="pq-lbl" for="pq-name">Jméno / Firma <span class="pq-req" aria-hidden="true">*</span></label>
-          <input class="pq-inp" id="pq-name" name="name" type="text" required="{{ true }}" autocomplete="name" aria-describedby="pq-name-err" placeholder="Jak vás máme oslovit" value="{{ name }}" onChange="{{ onName }}">
-          <sc-if value="{{ nameErr }}" hint-placeholder-val="">
-            <p class="pq-note" id="pq-name-err" style="margin:6px 0 0;color:#C5232B;">Vyplňte jméno nebo název firmy.</p>
-          </sc-if>
-        </div>
-
+      <div class="vp-swap" style="display:flex;flex-direction:column;gap:16px;min-width:0;">
+      <div class="pq-login">
+        <span aria-hidden="true" style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="user" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>
+        <p style="margin:0;flex:1 1 260px;font-size:16px;line-height:1.5;color:#5A626C;text-wrap:pretty;"><strong style="font-weight:700;color:#15181C;">Už u nás máte účet?</strong> Po přihlášení vám údaje vyplníme.</p>
+        <a class="pq-loginlink" href="#">Přihlásit se<span aria-hidden="true" style="display:inline-flex;"><dc-import name="Ikony" icon-name="chevron-right" size="{{ 18 }}" hint-size="18px,18px"></dc-import></span></a>
+      </div>
+      <form class="pq-card pq-form" onSubmit="{{ onSubmit }}" novalidate="{{ true }}">
+        <p class="pq-note" style="margin:0 0 -8px;text-align:right;"><span class="pq-req" aria-hidden="true">*</span> povinné údaje</p>
+        <div class="pq-row">
         <div>
           <label class="pq-lbl" for="pq-email">E-mail <span class="pq-req" aria-hidden="true">*</span></label>
-          <input class="pq-inp" id="pq-email" name="email" type="email" required="{{ true }}" autocomplete="email" aria-describedby="pq-email-err" placeholder="Kam zašleme odpověď" value="{{ email }}" onChange="{{ onEmail }}">
+          <input class="pq-inp" id="pq-email" name="email" type="email" required="{{ true }}" autocomplete="email" aria-describedby="pq-email-err" placeholder="jmeno@domena.cz" value="{{ email }}" onChange="{{ onEmail }}">
           <sc-if value="{{ emailErr }}" hint-placeholder-val="">
             <p class="pq-note" id="pq-email-err" style="margin:6px 0 0;color:#C5232B;">Zadejte e-mail ve formátu jmeno@domena.cz.</p>
           </sc-if>
@@ -95,23 +110,41 @@
             <p class="pq-note" id="pq-phone-err" style="margin:6px 0 0;color:#C5232B;">Zadejte telefonní číslo — devět číslic bez předvolby.</p>
           </sc-if>
         </div>
-
         <div>
-          <span class="pq-lbl" id="pq-type-l" style="display:block;">Typ produktu</span>
-          <dc-import name="Select" options="{{ types }}" value="{{ ptype }}" on-change="{{ onType }}" aria-label="Typ produktu" debug="{{ debug }}" hint-size="100%,44px"></dc-import>
+          <label class="pq-lbl" for="pq-name">Jméno a příjmení <span class="pq-req" aria-hidden="true">*</span></label>
+          <input class="pq-inp" id="pq-name" name="name" type="text" required="{{ true }}" autocomplete="name" aria-describedby="pq-name-err" value="{{ name }}" onChange="{{ onName }}">
+          <sc-if value="{{ nameErr }}" hint-placeholder-val="">
+            <p class="pq-note" id="pq-name-err" style="margin:6px 0 0;color:#C5232B;">Vyplňte jméno a příjmení.</p>
+          </sc-if>
         </div>
+        <div>
+          <label class="pq-lbl" for="pq-company">Firma <span style="font-weight:400;color:#666E78;">(nepovinné)</span></label>
+          <input class="pq-inp" id="pq-company" name="company" type="text" autocomplete="organization" value="{{ company }}" onChange="{{ onCompany }}">
+        </div>
+        </div>
+
+        <fieldset style="margin:0;padding:0;border:0;min-width:0;" aria-describedby="pq-type-err">
+          <legend class="pq-lbl" style="padding:0;">Co poptáváte? <span class="pq-req" aria-hidden="true">*</span></legend>
+          <div style="display:flex;flex-wrap:wrap;gap:4px 32px;">
+            <label class="pq-opt"><input type="radio" name="ptype" value="prives" id="pq-type" checked="{{ typePrives }}" onChange="{{ onTypePrives }}">Přívěs</label>
+            <label class="pq-opt"><input type="radio" name="ptype" value="dil" checked="{{ typeDil }}" onChange="{{ onTypeDil }}">Náhradní díl</label>
+          </div>
+          <sc-if value="{{ typeErr }}" hint-placeholder-val="">
+            <p class="pq-note" id="pq-type-err" style="margin:2px 0 0;color:#C5232B;">Vyberte, co poptáváte.</p>
+          </sc-if>
+        </fieldset>
 
         <div>
           <label class="pq-lbl" for="pq-text">Text poptávky <span class="pq-req" aria-hidden="true">*</span></label>
-          <textarea class="pq-ta" id="pq-text" name="text" required="{{ true }}" aria-describedby="pq-text-note" placeholder="Detailně popište, co potřebujete — typ a rok přívěsu, objednací číslo dílu, rozměry…" value="{{ text }}" onChange="{{ onText }}"></textarea>
-          <p class="pq-note" id="pq-text-note" style="margin:8px 0 0;" aria-live="polite">Minimální délka textu je 25 znaků. Nyní: <span style="{{ countStyle }}">{{ textLen }}</span> {{ countWord }}.</p>
+          <textarea class="pq-ta" id="pq-text" name="text" required="{{ true }}" aria-describedby="pq-text-note" placeholder="Popište, co potřebujete…" value="{{ text }}" onChange="{{ onText }}"></textarea>
+          <p class="pq-note" id="pq-text-note" style="margin:8px 0 0;" aria-live="polite">Napište alespoň 25 znaků. Zatím: <span style="{{ countStyle }}">{{ textLen }}</span></p>
         </div>
 
         <div>
-          <span class="pq-lbl">Můžete přiložit i fotografie</span>
+          <span class="pq-lbl">Fotografie <span style="font-weight:400;color:#666E78;">(nepovinné)</span></span>
           <div class="pq-drop">
-            <dc-import name="Tlacitko" variant="ontint" size="medium" label="Vybrat nebo vyfotit fotografie" icon="photo" on-click="{{ onPickFiles }}" debug="{{ false }}" hint-size="300px,44px"></dc-import>
-            <span class="pq-note" style="max-width:420px;text-wrap:pretty;">Lze vložit soubory z PC, vybrat z galerie nebo přímo vyfotit mobilem. Až 5 fotografií, každá do 10 MB.</span>
+            <dc-import name="Tlacitko" variant="ontint" size="medium" label="Vybrat nebo vyfotit" icon="photo" on-click="{{ onPickFiles }}" debug="{{ false }}" hint-size="220px,44px"></dc-import>
+            <span class="pq-note" style="max-width:420px;text-wrap:pretty;">Fotka štítku nebo dílu nám pomůže. Až 5 fotek, každá do 10 MB.</span>
           </div>
           <input id="pq-files" type="file" accept="image/*" multiple="{{ true }}" onChange="{{ onFiles }}" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);">
           <sc-if value="{{ hasFiles }}" hint-placeholder-val="">
@@ -130,17 +163,16 @@
 
         <div style="display:flex;flex-direction:column;gap:12px;">
           <div style="display:flex;">
-            <div style="flex:1;min-width:0;display:flex;">
-              <dc-import name="Tlacitko" variant="primary" size="large" label="Odeslat poptávku" icon-trailing="arrow-right" full-width="{{ true }}" on-click="{{ onSubmitClick }}" debug="{{ false }}" hint-size="100%,52px"></dc-import>
-            </div>
+            <dc-import name="Tlacitko" variant="primary" size="large" label="Odeslat poptávku" icon-trailing="chevron-right" on-click="{{ onSubmitClick }}" debug="{{ false }}" hint-size="240px,52px"></dc-import>
           </div>
           <p class="pq-note" style="margin:0;text-wrap:pretty;">Odesláním souhlasíte se <a href="#">zpracováním osobních údajů</a>. Údaje použijeme jen k odpovědi na tuto poptávku.</p>
         </div>
       </form>
+      </div>
       </sc-if>
 
       <sc-if value="{{ sent }}" hint-placeholder-val="">
-        <div class="pq-card" role="status" style="align-items:flex-start;gap:16px;">
+        <div class="vp-swap pq-card" role="status" style="align-items:flex-start;gap:16px;">
           <span aria-hidden="true" style="display:inline-flex;width:44px;height:44px;border-radius:999px;background:#E9F8EF;color:#0E7F43;align-items:center;justify-content:center;"><dc-import name="Ikony" icon-name="circle-check" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>
           <h2 style="margin:0;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.01em;">Poptávku máme</h2>
           <p style="margin:0;font-size:16px;line-height:1.6;color:#5A626C;max-width:560px;text-wrap:pretty;">Ozveme se na <strong style="color:#15181C;">{{ sentEmail }}</strong> v pracovní dny do 24 hodin. Pokud to spěchá, zavolejte na 323 605 314.</p>
@@ -149,11 +181,16 @@
       </sc-if>
 
       <aside class="pq-side" aria-labelledby="pq-side-h">
-        <h2 id="pq-side-h" style="margin:0;font-size:22px;font-weight:700;line-height:1.25;color:#FFFFFF;">Nevíte si rady?<br>Zavolejte nám.</h2>
-        <p style="margin:0;font-size:16px;line-height:1.6;color:#B4CEEC;text-wrap:pretty;">Díly vybíráme podle typu přívěsu a výrobního čísla. Po telefonu to většinou vyřešíme na první zavolání.</p>
-        <a class="pq-sidelink" href="tel:+420323605314" style="display:flex;align-items:center;gap:8px;font-size:18px;font-weight:700;color:#FFFFFF;text-decoration:underline;text-underline-offset:3px;"><span aria-hidden="true" style="display:inline-flex;flex:none;color:#B4CEEC;"><dc-import name="Ikony" icon-name="phone" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>323 605 314</a>
-        <a class="pq-sidelink" href="mailto:obchod@vapp.cz" style="display:flex;align-items:center;gap:8px;font-size:18px;font-weight:700;color:#FFFFFF;text-decoration:underline;text-underline-offset:3px;"><span aria-hidden="true" style="display:inline-flex;flex:none;color:#B4CEEC;"><dc-import name="Ikony" icon-name="mail" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>obchod@vapp.cz</a>
-        <p style="margin:0;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;line-height:1.4;color:#B4CEEC;"><span style="display:flex;align-items:center;flex:none;font-size:0;line-height:0;"><dc-import name="LedIndikator" state="{{ ledState }}" label="" size="11" hint-size="11px,11px"></dc-import></span>Po–Pá 8:30–16:30<sc-if value="{{ isOpenNow }}" hint-placeholder-val="{{ true }}"><span style="color:#97DBB4;">· právě otevřeno</span></sc-if></p>
+        <h2 id="pq-side-h" style="margin:0;font-size:22px;font-weight:700;line-height:1.25;color:#142F56;">Nevíte si rady? Zavolejte nám.</h2>
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#5A626C;text-wrap:pretty;">Díly vybíráme podle typu přívěsu a výrobního čísla. Po telefonu to většinou vyřešíme na první zavolání.</p>
+        <a class="pq-sidelink" href="tel:+420323605314" style="display:flex;align-items:center;gap:8px;font-size:22px;font-weight:700;color:#1E5AA8;text-decoration:none;gap:12px;"><span aria-hidden="true" style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="phone" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>323 605 314</a>
+        <div style="display:flex;align-items:flex-start;gap:12px;margin-top:4px;">
+          <span aria-hidden="true" style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="clock" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <span style="font-size:16px;font-weight:700;line-height:24px;color:#15181C;">Po–Pá 8:30–16:30</span>
+            <sc-if value="{{ isOpenNow }}" hint-placeholder-val="{{ true }}"><span style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;line-height:1.4;color:#0B6937;"><span style="display:flex;align-items:center;flex:none;font-size:0;line-height:0;"><dc-import name="LedIndikator" state="{{ ledState }}" label="" size="11" hint-size="11px,11px"></dc-import></span>Právě otevřeno</span></sc-if>
+          </div>
+        </div>
       </aside>
     </div>
   </main>
@@ -167,7 +204,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
 class Component extends DCLogic {
-  state = { name:'', ptype:'prives', email:'', phone:'', prefix:'+420', text:'', files:[], sent:false, touched:false };
+  state = { name:'', company:'', ptype:'', email:'', phone:'', prefix:'+420', text:'', files:[], sent:false, touched:false };
   TYPES = [{ value:'prives', label:'Přívěs' }, { value:'dil', label:'Náhradní díl' }];
   PREFIXES = [
     { value:'+420', label:'+420 (CZ)' },
@@ -184,14 +221,15 @@ class Component extends DCLogic {
       name: s.name.trim().length < 2,
       email: !/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(s.email.trim()),
       phone: s.phone.replace(/\D/g,'').length < 9,
+      type: !s.ptype,
       text: s.text.trim().length < 25
     };
   }
   submit(){
     const bad = this.validate();
-    if (bad.name || bad.email || bad.phone || bad.text){
+    if (bad.name || bad.email || bad.phone || bad.type || bad.text){
       this.setState({ touched:true });
-      const id = bad.name ? 'pq-name' : bad.email ? 'pq-email' : (bad.phone ? 'pq-phone' : 'pq-text');
+      const id = bad.email ? 'pq-email' : bad.phone ? 'pq-phone' : bad.name ? 'pq-name' : (bad.type ? 'pq-type' : 'pq-text');
       const el = document.getElementById(id);
       if (el && el.focus) el.focus();
       return;
@@ -213,6 +251,10 @@ class Component extends DCLogic {
       ...(()=>{ const d = new Date(); const wd = d.getDay(); const m = d.getHours()*60 + d.getMinutes(); const on = wd>=1 && wd<=5 && m>=510 && m<990; return { ledState: on ? 'open' : 'closed', isOpenNow: on }; })(),
       prefixes: this.PREFIXES,
       onName: (e)=>this.setState({ name:e.target.value }),
+      company: s.company, onCompany: (e)=>this.setState({ company:e.target.value }),
+      typePrives: s.ptype === 'prives', typeDil: s.ptype === 'dil',
+      onTypePrives: ()=>this.setState({ ptype:'prives' }), onTypeDil: ()=>this.setState({ ptype:'dil' }),
+      typeErr: s.touched && bad.type,
       onEmail: (e)=>this.setState({ email:e.target.value }),
       onPhone: (e)=>this.setState({ phone:e.target.value }),
       onText: (e)=>this.setState({ text:e.target.value }),
@@ -236,7 +278,7 @@ class Component extends DCLogic {
       },
       onSubmit: (e)=>{ if (e && e.preventDefault) e.preventDefault(); this.submit(); },
       onSubmitClick: ()=>this.submit(),
-      onReset: ()=>this.setState({ sent:false, touched:false, text:'', files:[] })
+      onReset: ()=>this.setState({ sent:false, touched:false, text:'', files:[], ptype:'' })
     };
   }
 }
