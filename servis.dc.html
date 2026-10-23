@@ -213,13 +213,13 @@
 
     <section aria-labelledby="cenik" style="padding-top:26px;">
       <h2 id="cenik" style="margin:0 0 24px;font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.01em;color:#142F56;scroll-margin-top:140px;">Ceník servisu</h2>
+      <div role="group" aria-label="Filtr kategorií ceníku" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;">
+        <sc-for list="{{ cenChips }}" as="ch" hint-placeholder-count="6">
+          <dc-import name="Chip" kind="{{ ch.kind }}" label="{{ ch.label }}" on-click="{{ ch.onClick }}" hint-size="120px,40px"></dc-import>
+        </sc-for>
+      </div>
       <div class="sv-cen">
         <div style="min-width:0;display:flex;flex-direction:column;gap:20px;">
-          <div role="group" aria-label="Filtr kategorií ceníku" style="display:flex;flex-wrap:wrap;gap:8px;">
-            <sc-for list="{{ cenChips }}" as="ch" hint-placeholder-count="6">
-              <dc-import name="Chip" kind="{{ ch.kind }}" label="{{ ch.label }}" on-click="{{ ch.onClick }}" hint-size="120px,40px"></dc-import>
-            </sc-for>
-          </div>
           <sc-for list="{{ cenGroups }}" as="g" hint-placeholder-count="3">
             <div style="background:#FFFFFF;border-radius:8px;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);overflow:hidden;">
               <div style="display:flex;align-items:center;gap:16px;padding:24px;">
@@ -247,9 +247,21 @@
           <h3 style="margin:0;font-size:18px;font-weight:700;line-height:1.35;color:#142F56;">Nevíte, co přívěs potřebuje?</h3>
           <p style="margin:0;font-size:15px;line-height:1.6;color:#5A626C;text-wrap:pretty;">Přivezte ho na prohlídku. Posouzení a cenovou kalkulaci uděláme za <strong style="font-weight:700;color:#15181C;">1 150 Kč</strong> a bez vašeho souhlasu nic neopravíme.</p>
           <div style="display:flex;margin-top:4px;"><div style="flex:1;min-width:0;display:flex;"><dc-import name="Tlacitko" variant="primary" size="medium" label="Rezervovat termín" icon="calendar" full-width="{{ true }}" on-click="{{ openForm }}" style="width:100%;" hint-size="100%,44px"></dc-import></div></div>
-          <div style="display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;">
-            <span style="font-size:15px;color:#15181C;">nebo volejte <a class="sv-tel" href="tel:+420603924555" style="font-weight:700;color:#1E5AA8;text-decoration:none;white-space:nowrap;">603 924 555</a></span>
-            <span style="font-size:13px;color:#666E78;">Po–Pá 8:30–16:00</span>
+          <div style="display:flex;flex-direction:column;gap:12px;margin-top:4px;">
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <span aria-hidden="true" style="flex:none;display:inline-flex;color:#1E5AA8;"><dc-import name="Ikony" icon-name="user" size="24" hint-size="24px,24px"></dc-import></span>
+              <div style="display:flex;flex-direction:column;gap:2px;min-width:0;">
+                <span style="font-size:16px;line-height:1.5;color:#15181C;">Jiří Balzer, objednávky</span>
+                <a class="sv-tel" href="tel:+420603924555" style="font-size:18px;font-weight:700;line-height:1.35;color:#1E5AA8;text-decoration:none;">603 924 555</a>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <span aria-hidden="true" style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="clock" size="24" hint-size="24px,24px"></dc-import></span>
+              <div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px 12px;min-height:24px;">
+                <span style="font-size:16px;font-weight:700;line-height:24px;color:#15181C;">Po–Pá 8:30–16:00</span>
+                <sc-if value="{{ svOpenNow }}" hint-placeholder-val="{{ true }}"><span style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;line-height:1.4;color:#0B6937;"><span style="display:flex;align-items:center;flex:none;font-size:0;line-height:0;"><dc-import name="LedIndikator" state="open" label="" size="11" hint-size="11px,11px"></dc-import></span>Právě otevřeno</span></sc-if>
+              </div>
+            </div>
           </div>
           <p style="margin:4px 0 0;padding-top:12px;border-top:1px solid #F2F4F7;font-size:13px;line-height:1.5;color:#666E78;">Všechny ceny jsou uvedené včetně DPH.</p>
         </aside>
