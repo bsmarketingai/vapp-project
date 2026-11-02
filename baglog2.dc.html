@@ -100,6 +100,11 @@ class Component extends DCLogic {
     // Historie: nejnovější den nahoře; items = {title, where, what, why, how}
     const log = [
       { date: '2. 11. 2026', items: [
+        { title: 'Košík — krok 2 Kontaktní údaje, krok 3 Kontrola údajů a stránka Děkujeme',
+          where: 'Nové stránky kosik-krok2, kosik-krok3, kosik-dekujeme · tlačítko Přejít do košíku',
+          what: 'Objednávka jde celá od košíku po poděkování. Krok 2 sbírá kontakt, doručovací adresu a poznámku, krok 3 shrnuje vše k potvrzení, stránka Děkujeme ukazuje číslo objednávky a pokyny k platbě.',
+          why: 'Klient dodal obsah kroků; zákazník má vidět, co objednává, a po odeslání vědět, co bude následovat.',
+          how: 'Krok 2: přihlášení otevře stejné okno jako v hlavičce; telefon s předvolbou a vlajkou (na nejmenších mobilech bez vlajky); „Nakupuji na firmu“ ukáže IČ, společnost, plátce DPH s DIČ, vlastní číslo objednávky a fakturační adresu — po zadání IČ se údaje v ukázce doplní samy. U osobního odběru se adresa nevyplňuje. Chybějící povinná pole se označí červeně a stránka k nim sjede. Krok 3: zboží, kontakt, doprava, místo doručení, platba a poznámka, každé s odkazem Změnit; souhlasy s hodnocením a novinkami; tlačítko Objednat s povinností platby. Děkujeme: standardní hlavička a patička, zelené potvrzení, pokyny k platbě podle zvolené platby (u převodu účet, VS a QR kód) a co bude následovat. Tlačítko Přejít do košíku v náhledu košíku vede na krok 1.' },
         { title: 'Košík — doprava a platba podle zadání',
           where: 'Košík, krok 1',
           what: 'Volba dopravy a platby odpovídá dodaným wireframům: země dodání, devět způsobů dopravy (osobní odběr Popovičky, Zásilkovna, GLS, DPD, TOPTRANS, Geis Cargo) a čtyři způsoby platby.',

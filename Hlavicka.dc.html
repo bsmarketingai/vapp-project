@@ -514,7 +514,7 @@ class Component extends DCLogic {
       onLogoNav: (e)=>{ const f=P.onLogoClick; if (typeof f === 'function'){ if(e&&e.preventDefault) e.preventDefault(); f(e); } },
       logoHref: P.logoHref ?? 'index.dc.html',
       onCompare: P.onCompare || (()=>{}),
-      onCart: P.onCart || (()=>{}),
+      onCart: P.onCart || (()=>{ window.location.href = 'kosik-krok1.dc.html'; }),
       cartOpen: this.state.cartOpen,
       cartItems: Array.isArray(P.cartItems) ? P.cartItems : null,
       onCartRemove: typeof P.onCartRemove === 'function' ? P.onCartRemove : null,

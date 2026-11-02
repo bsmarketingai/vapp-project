@@ -263,7 +263,7 @@ class Component extends DCLogic {
       totalGross: this.fmt(Math.round(net * vat)) + ' s DPH',
       onCloseClick: ()=>this.close(),
       onOverlay: ()=>this.close(),
-      onGoToCart: call(P.onGoToCart),
+      onGoToCart: call(P.onGoToCart, ()=>{ window.location.href = 'kosik-krok1.dc.html'; }),
       onBackClick: call(P.onBackToShop, ()=>this.close()),
       onPanelEnter: ()=>{ if (typeof P.onPanelEnter === 'function') P.onPanelEnter(); },
       onPanelLeave: ()=>{ if (typeof P.onPanelLeave === 'function') P.onPanelLeave(); },
