@@ -99,6 +99,25 @@ class Component extends DCLogic {
 
     // Historie: nejnovější den nahoře; items = {title, where, what, why, how}
     const log = [
+      { date: '2. 11. 2026', items: [
+        { title: 'Košík — doprava a platba podle zadání',
+          where: 'Košík, krok 1',
+          what: 'Volba dopravy a platby odpovídá dodaným wireframům: země dodání, devět způsobů dopravy (osobní odběr Popovičky, Zásilkovna, GLS, DPD, TOPTRANS, Geis Cargo) a čtyři způsoby platby.',
+          why: 'Klient dodal přesný seznam dopravců a plateb.',
+          how: 'Každý způsob je řádek s výběrem, logem dopravce, názvem a cenou; „Zdarma“ je zeleně. Doprava zdarma od 5 000 Kč platí pro Zásilkovnu, GLS a DPD, nadrozměrné přepravy se platí vždy. Změna země dodání (Česko / Slovensko) přepne nabídku dopravců. V souhrnu je doprava a platba s pomlčkou, dokud zákazník nevybere; tlačítko Pokračovat bez výběru upozorní, co chybí. Pod tlačítkem je odkaz Zpět. Loga dopravců a plateb jsou doplněná z dodaných souborů; při volbě Slovensko se všechny ceny v košíku přepočítají do eur; pro Slovensko se nabízejí jen čtyři dopravy podle zadání: Packeta SK – Z-Point / Z-BOX, Packeta SK na adresu, GLS – přepravní balíková služba a Geis Cargo.' },
+        { title: 'Košík — krok 1: Nákupní košík',
+          where: 'Nová stránka Košík (kosik-krok1)',
+          what: 'Vznikl první ze tří kroků objednávky: položky košíku, ukazatel dopravy zdarma, volba dopravy a platby, souhrn ceny a nabídka souvisejícího zboží.',
+          why: 'Zákazník má v košíku dokončit objednávku bez rozptylování — proto má košík vlastní zjednodušenou hlavičku jen s logem a kroky objednávky.',
+          how: 'Hlavička nese logo a krokovník (Nákupní košík · Kontaktní údaje · Kontrola údajů); hotový krok je zelený se zaškrtnutím, aktuální modrý. Položky jdou po řádcích s fotkou, obj. číslem, skladovostí, množstvím, cenou a odebráním; pod nimi je slevový kód. Ukazatel dopravy zdarma (od 5 000 Kč) se plní podle obsahu košíku. Platba se nabízí podle zvolené dopravy (dobírka jen při doručení, platba na prodejně jen při osobním odběru). Souhrn vpravo zůstává při scrollu na očích, na mobilu je pod platbou. Úplně dole je nabídka „K vašemu nákupu se hodí“, položku jde jedním tlačítkem přidat do košíku.' }
+      ]},
+      { date: '28. 10. 2026', items: [
+        { title: 'Rozcestník prototypu',
+          where: 'Nová vstupní stránka (rozcestnik.dc.html, index.html pro git)',
+          what: 'Úvod se dvěma cestami: funkční web od homepage a mapa všech stránek, komponent, popupů, modalů a drawerů.',
+          why: 'Aby klient i kodér měli jedno místo, odkud se proklikají ke všemu, a nic nepřehlédli.',
+          how: 'Odkazy jsou seskupené podle typu: stránky, vrstvy nad obsahem, rámec stránky, výpis, detail, základní prvky a dokumentace.' }
+      ]},
       { date: '23. 10. 2026', items: [
         { title: 'Výsledky hledání bez počtů u Kategorií a Poradny',
           where: 'Stránka Výsledky hledání',

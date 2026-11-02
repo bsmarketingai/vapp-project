@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&amp;display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0!important;padding:0!important;background:#F7F9FB;}
+  #dc-root{margin:0!important;padding:0!important;width:100%!important;max-width:none!important;border:0!important;}
+  #dc-root>.sc-host{margin:0!important;padding:0!important;width:100%!important;}
+  a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
+  .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
+  @media (max-width:819px){ .vp-in{padding-left:16px;padding-right:16px;} }
+  .ck-lnk{color:#15181C;text-decoration:none;transition:color .12s ease;}
+  .ck-lnk:hover{color:#1E5AA8;}
+  .ck-lnk:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;border-radius:4px;}
+  .ck-h1{font-size:36px;font-weight:700;line-height:1.15;letter-spacing:-0.02em;}
+  .ck-h2{font-size:22px;font-weight:700;line-height:1.25;}
+  @media (max-width:819px){ .ck-h1{font-size:26px;line-height:1.2;} .ck-h2{font-size:18px;line-height:1.3;} }
+  .ck-card{background:#FFFFFF;border-radius:8px;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);}
+  .ck-steps{display:flex;align-items:center;gap:12px;list-style:none;margin:0;padding:0;}
+  .ck-step{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;line-height:1.5;white-space:nowrap;}
+  .ck-sep{width:48px;height:2px;border-radius:999px;background:#D5DAE0;flex:none;}
+  @media (max-width:1149px){ .ck-sep{width:24px;} }
+  @media (max-width:819px){ .ck-step[data-active="0"] .ck-steplbl{display:none;} .ck-steps{gap:8px;} .ck-sep{width:16px;} }
+  @media (max-width:419px){ .ck-steplbl{display:none;} .ck-logo{height:24px !important;} }
+  .ck-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px 32px;align-items:start;}
+  @media (min-width:1560px){ .ck-grid{grid-template-columns:minmax(0,1fr) 400px;} }
+  @media (max-width:1149px){ .ck-grid{grid-template-columns:minmax(0,1fr);} }
+  .ck-side{position:sticky;top:104px;}
+  @media (max-width:1149px){ .ck-side{position:static;} }
+  /* formulář */
+  .ck-sec{padding:28px 32px;display:flex;flex-direction:column;gap:20px;container-type:inline-size;}
+  @media (max-width:549px){ .ck-sec{padding:20px 16px;} }
+  .ck-num{width:32px;height:32px;border-radius:999px;background:#142F56;color:#FFFFFF;display:flex;align-items:center;justify-content:center;flex:none;font-size:16px;font-weight:700;}
+  .ck-row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px 24px;}
+  .ck-rowA{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:20px 24px;}
+  @container (max-width:559px){ .ck-row2,.ck-rowA{grid-template-columns:minmax(0,1fr);} }
+  .ck-lbl{display:block;font-size:16px;font-weight:700;line-height:1.35;color:#15181C;margin-bottom:8px;}
+  .ck-req{color:#C5232B;font-weight:700;}
+  .ck-inp{width:100%;min-width:0;height:44px;padding:0 14px;background:#F2F4F7;border:0;border-radius:6px;font-family:inherit;font-size:15px;font-weight:400;color:#15181C;transition:box-shadow .12s ease;}
+  .ck-ta{width:100%;min-width:0;min-height:120px;padding:12px 14px;background:#F2F4F7;border:0;border-radius:6px;font-family:inherit;font-size:15px;line-height:1.6;color:#15181C;resize:vertical;}
+  .ck-inp::placeholder,.ck-ta::placeholder{color:#666E78;}
+  .ck-inp:focus-visible,.ck-ta:focus-visible{outline:0;box-shadow:inset 0 0 0 2px #1E5AA8;}
+  .ck-inp[data-err="1"]{box-shadow:inset 0 0 0 2px #C5232B;}
+  @media (max-width:549px){ .ck-inp,.ck-ta{font-size:16px;} }
+  .ck-err{margin:6px 0 0;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;line-height:1.4;color:#C5232B;}
+  .ck-tel{display:flex;gap:12px;align-items:flex-start;}
+  .ck-telpfx{flex:none;width:136px;}
+  @media (max-width:549px){ .ck-tel{gap:8px;} .ck-telpfx{width:120px;} }
+  .ck-cb{display:inline-flex;align-items:center;gap:12px;min-height:44px;font-size:16px;font-weight:500;color:#15181C;cursor:pointer;}
+  .ck-cb input{appearance:none;margin:0;flex:none;width:22px;height:22px;border-radius:6px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #91959B;cursor:pointer;display:grid;place-content:center;transition:box-shadow .12s ease, background .12s ease;}
+  .ck-cb:hover input{box-shadow:inset 0 0 0 1px #5A626C;}
+  .ck-cb input:checked{background:#1E5AA8;box-shadow:none;}
+  .ck-cb input:checked::after{content:"";width:10px;height:6px;border-left:2px solid #FFFFFF;border-bottom:2px solid #FFFFFF;transform:translateY(-1px) rotate(-45deg);}
+  .ck-cb input:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .ck-firmbox{display:flex;flex-direction:column;gap:20px;padding:24px;border-radius:8px;background:#F7F9FB;}
+  .ck-firmbox .ck-inp{background:#FFFFFF;box-shadow:inset 0 0 0 1px #D5DAE0;}
+  .ck-firmbox .ck-inp:focus-visible{box-shadow:inset 0 0 0 2px #1E5AA8;}
+  .ck-firmbox .ck-inp[data-err="1"]{box-shadow:inset 0 0 0 2px #C5232B;}
+  .ck-firmbox .se-btn{background:#FFFFFF !important;box-shadow:inset 0 0 0 1px #D5DAE0 !important;}
+  .ck-firmbox .se-btn:focus-visible{box-shadow:inset 0 0 0 2px #1E5AA8 !important;}
+  .ck-firmbox .se-btn:not(:disabled):hover{background:#F2F4F7 !important;}
+  .ck-icrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:8px 24px;align-items:end;}
+  .ck-icrow>p{padding-bottom:10px;}
+  .ck-w2{max-width:66.666%;} .ck-w1{max-width:50%;}
+  @container (max-width:559px){ .ck-icrow{grid-template-columns:minmax(0,1fr);} .ck-icrow>p{padding-bottom:0;} .ck-w2,.ck-w1{max-width:none;} .ck-firmbox{padding:16px;} }
+  .ck-rv{display:grid;grid-template-columns:200px minmax(0,1fr) auto;gap:8px 24px;align-items:start;padding:20px 32px;}
+  .ck-rv + .ck-rv{border-top:1px solid #F2F4F7;}
+  @media (max-width:549px){ .ck-rv{grid-template-columns:minmax(0,1fr) auto;padding:16px;} .ck-rv>.ck-rvv{grid-column:1 / -1;grid-row:2;} }
+  .ck-gl + .ck-gl{border-top:1px solid #F2F4F7;}
+  .ck-rvh{margin:0;font-size:18px;font-weight:700;line-height:1.35;color:#142F56;}
+  .ck-rvv{display:flex;flex-direction:column;gap:2px;font-size:16px;line-height:1.6;color:#15181C;min-width:0;}
+  .ck-edit{font-size:16px;font-weight:700;color:#1E5AA8;text-decoration:none;transition:color .12s ease;white-space:nowrap;}
+  .ck-edit:hover{color:#1A4A8A;}
+  .ck-edit:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;border-radius:4px;}
+  .ck-cbd{display:grid;grid-template-columns:22px minmax(0,1fr);gap:4px 12px;align-items:start;cursor:pointer;}
+  .ck-cbd input{appearance:none;margin:0;width:22px;height:22px;border-radius:6px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #91959B;cursor:pointer;display:grid;place-content:center;transition:box-shadow .12s ease, background .12s ease;margin-top:1px;}
+  .ck-cbd:hover input{box-shadow:inset 0 0 0 1px #5A626C;}
+  .ck-cbd input:checked{background:#1E5AA8;box-shadow:none;}
+  .ck-cbd input:checked::after{content:"";width:10px;height:6px;border-left:2px solid #FFFFFF;border-bottom:2px solid #FFFFFF;transform:translateY(-1px) rotate(-45deg);}
+  .ck-cbd input:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .ty-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:stretch;}
+  @media (max-width:999px){ .ty-grid{grid-template-columns:minmax(0,1fr);} }
+  .ty-box{border-radius:8px;padding:28px 32px;display:flex;flex-direction:column;gap:16px;}
+  @media (max-width:549px){ .ty-box{padding:20px 16px;} }
+  .ty-pay{display:grid;grid-template-columns:minmax(0,1fr) 168px;gap:20px 24px;align-items:start;}
+  @media (max-width:549px){ .ty-pay{grid-template-columns:minmax(0,1fr);} }
+  .ty-qr{width:168px;height:168px;border-radius:8px;background:repeating-linear-gradient(135deg,#F2F4F7 0 6px,#FFFFFF 6px 12px);box-shadow:inset 0 0 0 1px #D5DAE0;display:flex;align-items:center;justify-content:center;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;color:#666E78;text-align:center;padding:8px;}
+  .ty-dl{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:#1E5AA8;text-decoration:none;transition:color .12s ease;}
+  .ty-dl:hover{color:#1A4A8A;}
+  .ty-dl:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;border-radius:4px;}
+  .ty-steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;counter-reset:ty;}
+  .ty-steps li{counter-increment:ty;display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;align-items:center;font-size:16px;line-height:1.6;color:#15181C;}
+  .ty-steps li::before{content:counter(ty);width:32px;height:32px;border-radius:999px;background:#EFF4FB;color:#1E5AA8;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;}
+  .ck-login{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#EFF4FB;box-shadow:inset 0 0 0 1px #B4CEEC;border-radius:8px;padding:16px 24px;}
+  .ck-loginlink{display:inline-flex;align-items:center;gap:4px;margin-left:auto;font-size:16px;font-weight:700;color:#1E5AA8;text-decoration:none;transition:color .12s ease;}
+  .ck-loginlink:hover{color:#1A4A8A;}
+  .ck-loginlink:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;border-radius:4px;}
+  .ck-foot a{color:#5A626C;text-decoration:none;transition:color .12s ease;}
+  .ck-foot a:hover{color:#1E5AA8;}
+  @keyframes ckIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .ck-in{animation:ckIn .3s ease both;}
+  @media (prefers-reduced-motion:reduce){ .ck-in{animation:none;} }
+</style>
+</helmet>
+<div data-screen-label="Děkujeme za objednávku" lang="cs" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;display:flex;flex-direction:column;">
+
+  <dc-import name="Usp" variant="pas" tone="tmavy" docs="{{ false }}" debug="{{ debug }}" hint-size="100%,48px"></dc-import>
+  <dc-import name="Hlavicka" active="" contact-phone="323 605 314" contact-phone-href="tel:+420323605314" contact-hours="8:30–16:30" contact-open="{{ true }}" debug="{{ debug }}" hint-size="100%,150px"></dc-import>
+
+  <main class="vp-in" style="width:100%;padding-top:32px;padding-bottom:56px;flex:1;display:flex;flex-direction:column;gap:32px;">
+    <h1 class="ck-h1" style="margin:0;color:#142F56;">Děkujeme za objednávku</h1>
+
+    <div class="ty-grid">
+      <section class="ty-box" aria-labelledby="ty-ok-h" style="background:#E9F8EF;">
+        <div style="display:flex;align-items:flex-start;gap:12px;padding-bottom:16px;border-bottom:1px solid #C9EDD8;">
+          <span style="color:#0E7F43;display:flex;flex:none;"><dc-import name="Ikony" icon-name="circle-check" size="{{ 32 }}" hint-size="32px,32px"></dc-import></span>
+          <h2 id="ty-ok-h" class="ck-h2" style="margin:0;color:#0B6937;text-wrap:pretty;">Objednávka č. {{ orderNo }} byla úspěšně odeslána</h2>
+        </div>
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#15181C;">Potvrzení jsme vám poslali na <strong style="font-weight:700;">{{ email }}</strong>.</p>
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#5A626C;">Pokud potvrzení nevidíte, zkontrolujte prosím i složku Hromadné nebo Spam.</p>
+        <div style="margin-top:auto;padding-top:8px;display:flex;flex-direction:column;gap:4px;">
+          <p style="margin:0;font-size:16px;font-weight:700;line-height:1.35;color:#15181C;">Potřebujete poradit?</p>
+          <p style="margin:0;font-size:16px;line-height:1.6;color:#15181C;">Zavolejte nám na <a class="ck-lnk" href="tel:+420323605314" style="font-weight:700;white-space:nowrap;">323 605 314</a> nebo napište na <a class="ck-lnk" href="mailto:obchod@vapp.cz" style="font-weight:700;">obchod@vapp.cz</a>.</p>
+        </div>
+      </section>
+
+      <section class="ck-card ty-box" aria-labelledby="ty-pay-h">
+        <div style="display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid #F2F4F7;">
+          <span style="color:#1E5AA8;display:flex;flex:none;"><dc-import name="Ikony" icon-name="{{ payIcon }}" size="{{ 32 }}" hint-size="32px,32px"></dc-import></span>
+          <h2 id="ty-pay-h" class="ck-h2" style="margin:0;color:#142F56;">{{ payHead }}</h2>
+        </div>
+        <sc-if value="{{ isTransfer }}" hint-placeholder-val="{{ true }}">
+          <div class="ty-pay">
+            <div style="display:flex;flex-direction:column;gap:16px;min-width:0;">
+              <div>
+                <p style="margin:0;font-size:16px;font-weight:700;line-height:1.5;">Objednávku můžete uhradit pomocí QR kódu.</p>
+                <p style="margin:0;font-size:16px;line-height:1.6;color:#5A626C;">Platební údaje jsme vám poslali e-mailem.</p>
+              </div>
+              <dl style="margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 16px;font-size:16px;line-height:1.5;">
+                <dt style="color:#5A626C;">Číslo účtu</dt><dd style="margin:0;font-weight:700;">131-3469830267 / 0100</dd>
+                <dt style="color:#5A626C;">IBAN</dt><dd style="margin:0;font-weight:700;">CZ89 0100 0001 3134 6983 0267</dd>
+                <dt style="color:#5A626C;">Variabilní symbol</dt><dd style="margin:0;font-weight:700;">{{ orderNo }}</dd>
+                <dt style="color:#5A626C;">Částka</dt><dd style="margin:0;font-weight:700;">{{ total }}</dd>
+              </dl>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+              <div class="ty-qr" role="img" aria-label="QR kód pro platbu">QR kód platby</div>
+              <a class="ty-dl" href="#"><dc-import name="Ikony" icon-name="download" size="{{ 18 }}" hint-size="18px,18px"></dc-import>Stáhnout QR kód</a>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isOther }}" hint-placeholder-val="">
+          <p style="margin:0;font-size:16px;line-height:1.6;color:#15181C;text-wrap:pretty;">{{ payText }}</p>
+          <dl style="margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 16px;font-size:16px;line-height:1.5;">
+            <dt style="color:#5A626C;">Způsob platby</dt><dd style="margin:0;font-weight:700;">{{ payLabel }}</dd>
+            <dt style="color:#5A626C;">Částka</dt><dd style="margin:0;font-weight:700;">{{ total }}</dd>
+          </dl>
+        </sc-if>
+      </section>
+    </div>
+
+    <section aria-labelledby="ty-next-h" style="display:flex;flex-direction:column;gap:16px;max-width:820px;">
+      <h2 id="ty-next-h" class="ck-h2" style="margin:0;color:#142F56;">Co bude následovat?</h2>
+      <ol class="ty-steps">
+        <li>Během několika minut vám přijde potvrzení objednávky e-mailem.</li>
+        <li>{{ nextPay }}</li>
+        <li>Jakmile objednávku zpracujeme, dáme vám vědět e-mailem.</li>
+        <li>{{ nextShip }}</li>
+      </ol>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;">
+        <dc-import name="Tlacitko" variant="primary" size="medium" label="Pokračovat v nákupu" href="index.dc.html" hint-size="200px,44px"></dc-import>
+      </div>
+    </section>
+  </main>
+
+  <dc-import name="Paticka" bare="true" debug="{{ debug }}" hint-size="100%,600px"></dc-import>
+  <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  state = { sum:null, f:null };
+  componentDidMount(){
+    let sum=null, f=null;
+    try { const d = JSON.parse(localStorage.getItem('vapp-kosik') || 'null'); if (d && d.summary) sum = d.summary; } catch(e){}
+    try { f = JSON.parse(localStorage.getItem('vapp-kosik-kontakt') || 'null'); } catch(e){}
+    this.setState({ sum, f });
+  }
+  renderVals(){
+    const S = this.state, P = this.props;
+    const sum = S.sum || { total:'8 570\u00a0Kč', pickup:false, rows:[{ label:'Platba · Bankovním převodem / QR kódem', value:'Zdarma' }] };
+    const f = (S.f && S.f.email) ? S.f : { email:'jan.novak@email.cz' };
+    const payRow = (sum.rows||[]).find(r=>r.label.indexOf('Platba')===0) || {};
+    const payLabel = (payRow.label||'').split(' · ').slice(1).join(' · ') || 'Bankovním převodem / QR kódem';
+    const isTransfer = /převod/i.test(payLabel);
+    const isCod = /dobírka/i.test(payLabel);
+    const isOnline = /kart|Pay/i.test(payLabel);
+    const payText = isCod ? 'Objednávku zaplatíte při převzetí zásilky — hotově nebo kartou u kurýra.'
+      : isOnline ? 'Platba proběhla úspěšně. Doklad o zaplacení najdete v potvrzení objednávky.'
+      : 'Objednávku zaplatíte při převzetí.';
+    return {
+      debug: P.debug ?? true,
+      orderNo: '8880381516', email: f.email, total: sum.total,
+      isTransfer, isOther: !isTransfer, payLabel, payText,
+      payHead: isTransfer ? 'Pokyny k platbě' : (isOnline ? 'Zaplaceno' : 'Platba'),
+      payIcon: isTransfer ? 'qrcode' : (isOnline ? 'credit-card' : 'coin'),
+      nextPay: isTransfer ? 'Objednávku odešleme po připsání platby na náš účet.' : (isCod ? 'Platbu převezmeme při doručení zásilky.' : 'Platbu jsme přijali, není potřeba nic dalšího.'),
+      nextShip: sum.pickup ? 'Až bude zboží připravené k vyzvednutí, pošleme vám SMS a e-mail.' : 'Po odeslání zásilky vám pošleme informaci o doručení.'
+    };
+  }
+}
+</script>
+</body>
+</html>

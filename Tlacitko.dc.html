@@ -168,7 +168,7 @@ class Component extends DCLogic {
       const bg = disabled ? '#F2F4F7' : V.bg;
       const fg = disabled ? '#666E78' : V.fg;
       // zpětná kompatibilita: buy => košík, trailChevron => chevron-right
-      const leadIcon = P.icon || (P.variant==='buy' ? 'shopping-cart' : '');
+      const leadIcon = P.icon === 'none' ? '' : (P.icon || (P.variant==='buy' ? 'shopping-cart' : ''));
       const trailIcon = iconOnly ? '' : (P.iconTrailing || (P.trailChevron ? 'chevron-right' : ''));
       if (iconOnly && !P.ariaLabel) console.warn('Tlacitko: icon-only tlačítko vyžaduje ariaLabel (icon="'+(P.icon||'')+'").');
       let btnStyle;

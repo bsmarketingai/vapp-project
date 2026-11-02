@@ -25,6 +25,7 @@
   .se-btn[data-variant="outline"]:not(:disabled):hover{background:#EFF4FB !important;}
   @media (prefers-reduced-motion:reduce){ .se-list{transition:none !important;} }
   @media (max-width:549px){ .se-val,.se-opt-l{font-size:16px !important;} }
+  @media (max-width:419px){ .se-val .se-flag{display:none !important;} }
 </style>
 </helmet>
 <div ref="{{ rootRef }}" style="display:flex;flex-direction:column;gap:6px;font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;width:100%;position:relative;">
@@ -32,14 +33,14 @@
     <span id="{{ labelId }}" style="font-size:14px;font-weight:500;color:#5A626C;">{{ label }}</span>
   </sc-if>
   <button type="button" ref="{{ btnRef }}" class="se-btn" data-variant="{{ seVariant }}" id="{{ btnId }}" role="combobox" aria-haspopup="listbox" aria-expanded="{{ expanded }}" aria-controls="{{ listId }}" aria-activedescendant="{{ activeDesc }}" aria-label="{{ btnAria }}" disabled="{{ disabledAttr }}" onClick="{{ onToggle }}" onKeyDown="{{ onBtnKey }}" style="{{ btnStyle }}">
-    <span class="se-val" style="{{ valStyle }}">{{ currentLabel }}</span>
+    <span class="se-val" style="{{ valStyle }}"><sc-if value="{{ currentImg }}" hint-placeholder-val=""><img class="se-flag" src="{{ currentImg }}" alt="" aria-hidden="true" style="flex:none;width:25px;height:16px;border-radius:4px;object-fit:cover;display:block;margin-right:10px;"></sc-if>{{ currentLabel }}</span>
     <span aria-hidden="true" style="{{ chevStyle }}"><span style="{{ chevRot }}"><dc-import name="Ikony" icon-name="chevron-down" size="{{ chevSize }}" hint-size="24px,24px"></dc-import></span></span>
   </button>
   <sc-if value="{{ listMounted }}" hint-placeholder-val="">
     <ul class="se-list" data-shown="{{ listShown }}" id="{{ listId }}" role="listbox" ref="{{ listRef }}" aria-label="{{ btnAria }}" onMouseDown="{{ keepFocus }}" style="position:absolute;left:0;right:0;top:{{ listTop }};z-index:20;margin:0;padding:6px;list-style:none;background:#FFFFFF;border-radius:8px;box-shadow:0 10px 30px rgba(20,30,45,.14);max-height:320px;overflow-y:auto;outline:none;">
       <sc-for list="{{ opts }}" as="o" hint-placeholder-count="3">
         <li id="{{ o.id }}" class="{{ o.cls }}" role="option" aria-selected="{{ o.selected }}" aria-disabled="{{ o.disabled }}" onClick="{{ o.onPick }}" onMouseEnter="{{ o.onHover }}" style="{{ o.style }}">
-          <span class="se-opt-l" style="{{ o.labelStyle }}">{{ o.label }}</span>
+          <sc-if value="{{ o.img }}" hint-placeholder-val=""><img src="{{ o.img }}" alt="" aria-hidden="true" style="flex:none;width:25px;height:16px;border-radius:4px;object-fit:cover;display:block;"></sc-if><span class="se-opt-l" style="{{ o.labelStyle }}">{{ o.label }}</span>
           <sc-if value="{{ o.hasNote }}" hint-placeholder-val=""><span style="flex:none;font-size:14px;font-weight:500;color:#5A626C;white-space:nowrap;">{{ o.note }}</span></sc-if>
           <span aria-hidden="true" style="{{ o.checkStyle }}"><dc-import name="Ikony" icon-name="check" size="18" hint-size="18px,18px"></dc-import></span>
         </li>
@@ -80,7 +81,7 @@ class Component extends DCLogic {
     const P = this.props;
     const controlled = Array.isArray(P.options) && P.options.length;
     const raw = controlled ? P.options : this.DEMO;
-    const opts = raw.map(o=>({ value: String(o.value ?? o.label), label:o.label, note:o.note || '', disabled: !!o.disabled }));
+    const opts = raw.map(o=>({ value: String(o.value ?? o.label), label:o.label, note:o.note || '', img:o.img || '', disabled: !!o.disabled }));
     const value = controlled ? String(P.value ?? '') : this.state.demo;
     const onChange = controlled ? (P.onChange || (()=>{})) : ((v)=>this.setState({ demo:v }));
     return { opts, value, onChange };
@@ -126,7 +127,7 @@ class Component extends DCLogic {
       ...(()=>{ const x = this.fade('list', open, 150); return { listMounted: x.mounted, listShown: x.shown }; })(),
       seVariant: dis ? 'disabled' : variant,
       disabledAttr: dis ? true : null,
-      currentLabel: cur.label,
+      currentLabel: cur.label, currentImg: cur.img || '',
       onToggle: ()=>{ open ? this.close(true) : this.open(); },
       // focus zůstává na spouštěči (combobox), klávesy se řídí odtud
       onBtnKey: (e)=>{ if (open) { keyMove(e); return; } if (e.key === 'ArrowDown' || e.key === 'ArrowUp'){ e.preventDefault(); this.open(); } },
@@ -143,7 +144,7 @@ class Component extends DCLogic {
       opts: opts.map((o,i)=>{
         const sel = o.value === value;
         return {
-          id: uid + '-o' + i, label:o.label, note:o.note, hasNote: !!o.note,
+          id: uid + '-o' + i, img:o.img, label:o.label, note:o.note, hasNote: !!o.note,
           selected: sel ? 'true' : 'false', disabled: o.disabled ? 'true' : undefined,
           cls: 'se-opt' + (i === this.state.active ? ' se-act' : ''),
           style: 'display:flex;align-items:center;gap:12px;min-height:44px;padding:8px 12px;border-radius:6px;cursor:pointer;',

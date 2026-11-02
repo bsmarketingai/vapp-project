@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0!important;padding:0!important;background:#F7F9FB;}
+#dc-root{margin:0!important;padding:0!important;width:100%!important;max-width:none!important;border:0!important;}
+#dc-root>.sc-host{margin:0!important;padding:0!important;width:100%!important;}
+a{color:#1E5AA8;text-decoration:none;}
+a:hover{color:#1A4A8A;}
+</style>
+</helmet>
+<div lang="cs" style="width:100%; min-height:100vh; background:#F7F9FB; font-family:'Exo 2','Helvetica Neue',Arial,sans-serif; color:#15181C;">
+  <header style="background:#142F56; color:#FFFFFF;">
+    <div style="max-width:1560px; margin:0 auto; padding:24px 32px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+      <img src="vapp-logo.svg" alt="VAPP" style="height:32px; filter:brightness(0) invert(1);">
+      <span style="font-size:13px; font-weight:500; color:#B4CEEC;">Hi-fi prototyp e-shopu VAPP.cz · stav 28. 10. 2026</span>
+    </div>
+  </header>
+  <main style="max-width:1560px; margin:0 auto; padding:40px 32px 64px; display:flex; flex-direction:column; gap:48px; box-sizing:border-box;">
+    <div style="display:flex; flex-direction:column; gap:8px; max-width:760px;">
+      <h1 style="margin:0; font-size:36px; font-weight:700; line-height:1.15; letter-spacing:-0.02em;">Rozcestník prototypu</h1>
+      <p style="margin:0; font-size:18px; line-height:1.6; color:#5A626C; text-wrap:pretty;">Dvě cesty: projít web jako zákazník, nebo otevřít každou stránku, komponentu a vyskakovací vrstvu zvlášť, aby nic nezůstalo přehlédnuté.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr)); gap:20px;">
+      <a href="index.dc.html" style="display:flex; flex-direction:column; gap:16px; padding:32px; background:#1E5AA8; color:#FFFFFF; border-radius:8px; box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04); transition:background 120ms ease;" style-hover="background:#1A4A8A; color:#FFFFFF;">
+        <span style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:#D8E6F6;">1 · Pro klienta</span>
+        <span style="font-size:28px; font-weight:700; line-height:1.2;">Funkční web</span>
+        <span style="font-size:16px; line-height:1.6; color:#EFF4FB;">Začíná na homepage. Vše se proklikává přes menu, megamenu, vyhledávání a karty — stejně jako na hotovém e-shopu.</span>
+        <span style="font-size:15px; font-weight:700;">Otevřít homepage →</span>
+      </a>
+      <a href="#mapa" style="display:flex; flex-direction:column; gap:16px; padding:32px; background:#FFFFFF; color:#15181C; border-radius:8px; box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04); transition:box-shadow 150ms ease;" style-hover="box-shadow:0 6px 20px rgba(20,47,86,.10); color:#15181C;">
+        <span style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:#1E5AA8;">2 · Pro kodéra i klienta</span>
+        <span style="font-size:28px; font-weight:700; line-height:1.2;">Mapa všech obrazovek</span>
+        <span style="font-size:16px; line-height:1.6; color:#5A626C;">Stránky, komponenty, drawery, popupy, modaly i dokumentace — každý soubor samostatně.</span>
+        <span style="font-size:15px; font-weight:700; color:#1E5AA8;">Přejít na mapu ↓</span>
+      </a>
+    </div>
+
+    <div id="mapa" style="display:flex; flex-direction:column; gap:40px; scroll-margin-top:24px;">
+      <sc-for list="{{ groups }}" as="g" hint-placeholder-count="6">
+        <section style="display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; flex-direction:column; gap:4px;">
+            <h2 style="margin:0; font-size:22px; font-weight:700; line-height:1.25;">{{ g.title }}</h2>
+            <p style="margin:0; font-size:14px; font-weight:500; line-height:1.5; color:#5A626C; text-wrap:pretty;">{{ g.note }}</p>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr)); gap:8px;">
+            <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="6">
+              <a href="{{ it.file }}" style="display:flex; flex-direction:column; gap:4px; padding:16px; background:#FFFFFF; color:#15181C; border-radius:8px; box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04); transition:box-shadow 150ms ease; min-width:0;" style-hover="box-shadow:0 6px 20px rgba(20,47,86,.10); color:#15181C;">
+                <span style="font-size:16px; font-weight:700; line-height:1.3;">{{ it.name }}</span>
+                <span style="font-size:14px; line-height:1.5; color:#5A626C; text-wrap:pretty;">{{ it.desc }}</span>
+                <span style="font-size:13px; font-weight:400; color:#666E78; overflow-wrap:anywhere;">{{ it.file }}</span>
+              </a>
+            </sc-for>
+          </div>
+        </section>
+      </sc-for>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const i = (name, file, desc) => ({ name, file, desc });
+    const groups = [
+      { title: 'Stránky webu', note: 'Vstupní body e-shopu v pořadí, jak jimi prochází zákazník.', items: [
+        i('Homepage', 'index.dc.html', 'Hero, rozcestník sekcí, karusely produktů, Poradna.'),
+        i('Náhradní díly', 'nahradnidily.dc.html', 'Rozcestník kategorií, Nejhledanější, filtrace a výpis dílů.'),
+        i('Přívěsy — výpis', 'privesy-V1.dc.html', 'Kategorie přívěsů, filtrace, karty K2 s parametry.'),
+        i('Detail náhradního dílu', 'detail-nahradnidil-V1.dc.html', 'Galerie, výběr variant, množstevní slevy, nákup.'),
+        i('Detail přívěsu', 'detail-prives-V1.dc.html', 'Galerie, konfigurace variant, parametry.'),
+        i('Půjčovna', 'pujcovna.dc.html', 'Nabídka přívěsů k zapůjčení, postup, rezervace.'),
+        i('Detail půjčovny', 'detail-pujcovna.dc.html', 'Přívěs k zapůjčení, ceník, rezervace termínu.'),
+        i('Servis', 'servis.dc.html', 'Skupiny služeb, typy přívěsů, ceník, kontakt a mapa.'),
+        i('Poradna', 'poradna.dc.html', 'Přehled článků a návodů.'),
+        i('Článek — tachograf', 'clanek-tachograf.dc.html', 'Vzorová stránka článku Poradny.'),
+        i('O nás', 'onas.dc.html', 'Příběh firmy a značka VAPP.'),
+        i('Kontakty', 'kontakty.dc.html', 'Pobočka, otevírací doba, mapa.'),
+        i('Poptat produkt', 'poptat-produkt.dc.html', 'Formulář poptávky přívěsu nebo dílu.'),
+        i('Výsledky hledání', 'vysledky-hledani.dc.html', 'Produkty, kategorie a články k hledanému výrazu.')
+      ]},
+      { title: 'Popupy, modaly a drawery', note: 'Vrstvy, které se na webu otevírají nad obsahem. Tady je lze zobrazit samostatně.', items: [
+        i('Košík — popup po přidání', 'BasketPopup.dc.html', 'Potvrzení vložení do košíku.'),
+        i('Přihlášení', 'LoginPopup.dc.html', 'Popup přihlášení z ikony v hlavičce.'),
+        i('Poptávka', 'PoptavkaPopup.dc.html', 'Rychlá poptávka produktu.'),
+        i('Dotaz k produktu', 'DotazModal.dc.html', 'Modal s dotazem z detailu.'),
+        i('Rezervace', 'RezervaceModal.dc.html', 'Rezervace přívěsu v půjčovně.'),
+        i('Panel filtrů', 'FiltrDrawer.dc.html', 'Výsuvný drawer s facetami filtrace.'),
+        i('Mobilní menu', 'MobilniMenu.dc.html', 'Obsah rozbaleného menu pod 1000 px.'),
+        i('Megamenu', 'MegaMenu.dc.html', 'Rozbalená desktopová navigace (M1).'),
+        i('Vyhledávání a našeptávač', 'Vyhledavani.dc.html', 'Pole hledání s našeptávačem 70/30.'),
+        i('Výběr jazyka a košík', 'Kosik.dc.html', 'Box košíku s přepínačem CZ / SK.'),
+        i('Toast', 'Toast.dc.html', 'Krátké potvrzení akce.')
+      ]},
+      { title: 'Rámec stránky', note: 'Sdílené části, které nese každá stránka.', items: [
+        i('Hlavička', 'Hlavicka.dc.html', 'Pás USP, logo, hledání, košík, navigace.'),
+        i('Patička', 'Paticka.dc.html', 'USP, newsletter, odkazy, kontakt.'),
+        i('Drobečková navigace', 'Breadcrumb.dc.html', 'Cesta ke stránce.'),
+        i('USP', 'Usp.dc.html', 'Výhody nákupu — pás i sloupce.'),
+        i('Hero homepage', 'HeroHomepage.dc.html', 'Úvodní blok homepage (V2 Small).'),
+        i('Rozcestník sekcí', 'RozcestnikSekci.dc.html', 'Dlaždice hlavních sekcí webu.')
+      ]},
+      { title: 'Výpis a filtrace', note: 'Prvky výpisů produktů a kategorií.', items: [
+        i('Produktová karta', 'ProduktovaKarta.dc.html', 'Karta dílu (K1) i přívěsu (K2).'),
+        i('Produktový karusel', 'ProduktovyKarusel.dc.html', 'Vodorovná řada karet.'),
+        i('Výpis kategorií', 'VypisKategorii.dc.html', 'Mřížka dlaždic + Nejhledanější.'),
+        i('Kategorická dlaždice', 'KategorickaDlazdice.dc.html', 'Dlaždice standard / kompaktní.'),
+        i('Filtrační lišta', 'FiltracniLista.dc.html', 'Sticky lišta nad výpisem.'),
+        i('Cenový filtr', 'CenovyFiltr.dc.html', 'Rozsah ceny se sliderem.'),
+        i('Paginace', 'Paginace.dc.html', 'Stránkování a Načíst další.'),
+        i('Control bar', 'ControlBar.dc.html', 'Řazení a počet výsledků.')
+      ]},
+      { title: 'Detail produktu a obsah', note: 'Bloky detailů, služeb a Poradny.', items: [
+        i('Výběr variant', 'VyberVariant.dc.html', 'Karty, řádky nebo select variant.'),
+        i('Cena', 'Cena.dc.html', 'Cena bez a s DPH.'),
+        i('Skladovost', 'Skladovost.dc.html', 'Stav skladu s ikonou.'),
+        i('Hodnocení', 'Hodnoceni.dc.html', 'Hvězdičky s počtem.'),
+        i('Recenze', 'Recenze.dc.html', 'Výpis recenzí.'),
+        i('Diskuze', 'Diskuze.dc.html', 'Dotazy a odpovědi u produktu.'),
+        i('Karta článku', 'KartaClanku.dc.html', 'Článek Poradny.'),
+        i('Blok Poradny', 'PoradnaBlok.dc.html', 'Poradna na homepage.'),
+        i('Poradenský blok', 'PoradenskyBlok.dc.html', 'Kontakt na poradce.'),
+        i('Karta servisu', 'KartaServis.dc.html', 'Služba servisu.'),
+        i('Bloky služeb', 'SluzbyBloky.dc.html', 'Servis a půjčovna v řadě.'),
+        i('Kontaktní blok', 'KontaktBlok.dc.html', 'Telefon, otevírací doba, LED.'),
+        i('Příběh firmy', 'PribehFirmy.dc.html', 'Blok O nás.')
+      ]},
+      { title: 'Základní prvky', note: 'Atomy, ze kterých se skládá vše ostatní.', items: [
+        i('Tlačítko', 'Tlacitko.dc.html', 'Všechny varianty a velikosti.'),
+        i('Chip', 'Chip.dc.html', 'Filter, secondary, guide, sale…'),
+        i('Select', 'Select.dc.html', 'Rozbalovací pole subtle / outline.'),
+        i('Formulářové prvky', 'FormularovePrvky.dc.html', 'Inputy, checkboxy, přepínače.'),
+        i('Kvantifikátor', 'Kvantifikator.dc.html', 'Výběr počtu kusů.'),
+        i('Badge', 'Badge.dc.html', 'Sleva, Doprava zdarma.'),
+        i('LED indikátor', 'LedIndikator.dc.html', 'Otevřeno / zavřeno.'),
+        i('Ikony', 'Ikony.dc.html', 'Registr ikon (Tabler).')
+      ]},
+      { title: 'Dokumentace a předání', note: 'Pro kodéra: pravidla systému, katalog a předávací listy.', items: [
+        i('Design systém', 'DesignSystemVAPP.dc.html', 'Barvy, typografie, spacing, stavy.'),
+        i('Katalog komponent', 'KomponentyVAPP.dc.html', 'Všechny UI prvky na jednom místě.'),
+        i('Audit komponent', 'AuditKomponentVAPP.dc.html', 'Kontrola shody s pravidly.'),
+        i('Handoff — přehled', 'HandoffVAPP.dc.html', 'Úvod předávacích listů.'),
+        i('Handoff — hlavička', 'HandoffHlavicka.dc.html', ''),
+        i('Handoff — navigace', 'HandoffNav.dc.html', ''),
+        i('Handoff — mobilní menu', 'HandoffMobilniMenu.dc.html', ''),
+        i('Handoff — produktová karta', 'HandoffProduktovaKarta.dc.html', ''),
+        i('Handoff — panel filtrů', 'HandoffFiltrDrawer.dc.html', ''),
+        i('Handoff — chip', 'HandoffChip.dc.html', ''),
+        i('Handoff — select', 'HandoffSelect.dc.html', ''),
+        i('Handoff — kvantifikátor', 'HandoffKvantifikator.dc.html', ''),
+        i('Handoff — assety', 'HandoffAssets.dc.html', 'Loga, ikony, fotky.'),
+        i('Log úprav', 'baglog2.dc.html', 'Co se změnilo a proč.'),
+        i('UX backlog', 'UXBacklogVAPP.dc.html', 'Otevřené UX body.')
+      ]}
+    ];
+    return { groups };
+  }
+}
+</script>
+</body>
+</html>

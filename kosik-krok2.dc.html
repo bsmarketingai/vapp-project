@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&amp;display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0!important;padding:0!important;background:#F7F9FB;}
+  #dc-root{margin:0!important;padding:0!important;width:100%!important;max-width:none!important;border:0!important;}
+  #dc-root>.sc-host{margin:0!important;padding:0!important;width:100%!important;}
+  a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
+  .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
+  @media (max-width:819px){ .vp-in{padding-left:16px;padding-right:16px;} }
+  .ck-lnk{color:#15181C;text-decoration:none;transition:color .12s ease;}
+  .ck-lnk:hover{color:#1E5AA8;}
+  .ck-lnk:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;border-radius:4px;}
+  .ck-h1{font-size:36px;font-weight:700;line-height:1.15;letter-spacing:-0.02em;}
+  .ck-h2{font-size:22px;font-weight:700;line-height:1.25;}
+  @media (max-width:819px){ .ck-h1{font-size:26px;line-height:1.2;} .ck-h2{font-size:18px;line-height:1.3;} }
+  .ck-card{background:#FFFFFF;border-radius:8px;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);}
+  .ck-steps{display:flex;align-items:center;gap:12px;list-style:none;margin:0;padding:0;}
+  .ck-step{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;line-height:1.5;white-space:nowrap;}
+  .ck-sep{width:48px;height:2px;border-radius:999px;background:#D5DAE0;flex:none;}
+  @media (max-width:1149px){ .ck-sep{width:24px;} }
+  @media (max-width:819px){ .ck-step[data-active="0"] .ck-steplbl{display:none;} .ck-steps{gap:8px;} .ck-sep{width:16px;} }
+  @media (max-width:419px){ .ck-steplbl{display:none;} .ck-logo{height:24px !important;} }
+  .ck-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px 32px;align-items:start;}
+  @media (min-width:1560px){ .ck-grid{grid-template-columns:minmax(0,1fr) 400px;} }
+  @media (max-width:1149px){ .ck-grid{grid-template-columns:minmax(0,1fr);} }
+  .ck-side{position:sticky;top:104px;}
+  @media (max-width:1149px){ .ck-side{position:static;} }
+  /* formulář */
+  .ck-sec{padding:28px 32px;display:flex;flex-direction:column;gap:20px;container-type:inline-size;}
+  @media (max-width:549px){ .ck-sec{padding:20px 16px;} }
+  .ck-num{width:32px;height:32px;border-radius:999px;background:#142F56;color:#FFFFFF;display:flex;align-items:center;justify-content:center;flex:none;font-size:16px;font-weight:700;}
+  .ck-row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px 24px;}
+  .ck-rowA{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:20px 24px;}
+  @container (max-width:559px){ .ck-row2,.ck-rowA{grid-template-columns:minmax(0,1fr);} }
+  .ck-lbl{display:block;font-size:16px;font-weight:700;line-height:1.35;color:#15181C;margin-bottom:8px;}
+  .ck-req{color:#C5232B;font-weight:700;}
+  .ck-inp{width:100%;min-width:0;height:44px;padding:0 14px;background:#F2F4F7;border:0;border-radius:6px;font-family:inherit;font-size:15px;font-weight:400;color:#15181C;transition:box-shadow .12s ease;}
+  .ck-ta{width:100%;min-width:0;min-height:120px;padding:12px 14px;background:#F2F4F7;border:0;border-radius:6px;font-family:inherit;font-size:15px;line-height:1.6;color:#15181C;resize:vertical;}
+  .ck-inp::placeholder,.ck-ta::placeholder{color:#666E78;}
+  .ck-inp:focus-visible,.ck-ta:focus-visible{outline:0;box-shadow:inset 0 0 0 2px #1E5AA8;}
+  .ck-inp[data-err="1"]{box-shadow:inset 0 0 0 2px #C5232B;}
+  @media (max-width:549px){ .ck-inp,.ck-ta{font-size:16px;} }
+  .ck-err{margin:6px 0 0;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;line-height:1.4;color:#C5232B;}
+  .ck-tel{display:flex;gap:12px;align-items:flex-start;}
+  .ck-telpfx{flex:none;width:136px;}
+  @media (max-width:549px){ .ck-tel{gap:8px;} .ck-telpfx{width:120px;} }
+  .ck-cb{display:inline-flex;align-items:center;gap:12px;min-height:44px;font-size:16px;font-weight:500;color:#15181C;cursor:pointer;}
+  .ck-cb input{appearance:none;margin:0;flex:none;width:22px;height:22px;border-radius:6px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #91959B;cursor:pointer;display:grid;place-content:center;transition:box-shadow .12s ease, background .12s ease;}
+  .ck-cb:hover input{box-shadow:inset 0 0 0 1px #5A626C;}
+  .ck-cb input:checked{background:#1E5AA8;box-shadow:none;}
+  .ck-cb input:checked::after{content:"";width:10px;height:6px;border-left:2px solid #FFFFFF;border-bottom:2px solid #FFFFFF;transform:translateY(-1px) rotate(-45deg);}
+  .ck-cb input:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .ck-firmbox{display:flex;flex-direction:column;gap:20px;padding:24px;border-radius:8px;background:#F7F9FB;}
+  .ck-firmbox .ck-inp{background:#FFFFFF;box-shadow:inset 0 0 0 1px #D5DAE0;}
+  .ck-firmbox .ck-inp:focus-visible{box-shadow:inset 0 0 0 2px #1E5AA8;}
+  .ck-firmbox .ck-inp[data-err="1"]{box-shadow:inset 0 0 0 2px #C5232B;}
+  .ck-firmbox .se-btn{background:#FFFFFF !important;box-shadow:inset 0 0 0 1px #D5DAE0 !important;}
+  .ck-firmbox .se-btn:focus-visible{box-shadow:inset 0 0 0 2px #1E5AA8 !important;}
+  .ck-firmbox .se-btn:not(:disabled):hover{background:#F2F4F7 !important;}
+  .ck-icrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:8px 24px;align-items:end;}
+  .ck-icrow>p{padding-bottom:10px;}
+  .ck-w2{max-width:66.666%;} .ck-w1{max-width:50%;}
+  @container (max-width:559px){ .ck-icrow{grid-template-columns:minmax(0,1fr);} .ck-icrow>p{padding-bottom:0;} .ck-w2,.ck-w1{max-width:none;} .ck-firmbox{padding:16px;} }
+  .ck-login{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#EFF4FB;box-shadow:inset 0 0 0 1px #B4CEEC;border-radius:8px;padding:16px 24px;}
+  .ck-loginlink{display:inline-flex;align-items:center;gap:4px;margin-left:auto;font-size:16px;font-weight:700;color:#1E5AA8;text-decoration:none;transition:color .12s ease;}
+  .ck-loginlink:hover{color:#1A4A8A;}
+  .ck-loginlink:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;border-radius:4px;}
+  .ck-foot a{color:#5A626C;text-decoration:none;transition:color .12s ease;}
+  .ck-foot a:hover{color:#1E5AA8;}
+  @keyframes ckIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .ck-in{animation:ckIn .3s ease both;}
+  @media (prefers-reduced-motion:reduce){ .ck-in{animation:none;} }
+</style>
+</helmet>
+<div data-screen-label="Košík — krok 2" lang="cs" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;display:flex;flex-direction:column;">
+
+  <header style="position:sticky;top:0;z-index:70;background:#FFFFFF;box-shadow:0 2px 8px rgba(20,47,86,.06);">
+    <div class="vp-in" style="display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:80px;padding-top:16px;padding-bottom:16px;">
+      <a class="ck-lnk" href="index.dc.html" aria-label="VAPP — domovská stránka" style="display:flex;flex:none;"><img class="ck-logo" src="./vapp-logo.svg" alt="VAPP" style="height:32px;width:auto;display:block;"></a>
+      <nav aria-label="Kroky objednávky">
+        <ol class="ck-steps">
+          <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+            <sc-if value="{{ s.notFirst }}" hint-placeholder-val="">
+              <li aria-hidden="true" class="ck-sep" style="{{ s.sepStyle }}"></li>
+            </sc-if>
+            <li class="ck-step" data-active="{{ s.activeFlag }}" aria-current="{{ s.current }}">
+              <sc-if value="{{ s.isDone }}" hint-placeholder-val="">
+                <a href="{{ s.href }}" class="ck-lnk" style="display:flex;align-items:center;gap:8px;color:#0B6937;">
+                  <span style="width:28px;height:28px;border-radius:999px;background:#0E7F43;color:#FFFFFF;display:flex;align-items:center;justify-content:center;flex:none;"><dc-import name="Ikony" icon-name="check" size="{{ 18 }}" hint-size="18px,18px"></dc-import></span>
+                  <span class="ck-steplbl">{{ s.label }}</span>
+                </a>
+              </sc-if>
+              <sc-if value="{{ s.isActive }}" hint-placeholder-val="{{ true }}">
+                <span style="width:28px;height:28px;border-radius:999px;background:#1E5AA8;color:#FFFFFF;display:flex;align-items:center;justify-content:center;flex:none;font-size:14px;">{{ s.num }}</span>
+                <span class="ck-steplbl" style="color:#15181C;">{{ s.label }}</span>
+              </sc-if>
+              <sc-if value="{{ s.isTodo }}" hint-placeholder-val="">
+                <span style="width:28px;height:28px;border-radius:999px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #91959B;color:#5A626C;display:flex;align-items:center;justify-content:center;flex:none;font-size:14px;">{{ s.num }}</span>
+                <span class="ck-steplbl" style="color:#5A626C;">{{ s.label }}</span>
+              </sc-if>
+            </li>
+          </sc-for>
+        </ol>
+      </nav>
+    </div>
+  </header>
+
+  <main class="vp-in" style="width:100%;padding-top:28px;padding-bottom:56px;flex:1;">
+    <h1 class="ck-h1" style="margin:0 0 24px;color:#142F56;">Kontaktní údaje</h1>
+    <div class="ck-grid">
+      <div style="display:flex;flex-direction:column;gap:16px;min-width:0;">
+
+        <div class="ck-login">
+          <span aria-hidden="true" style="display:inline-flex;flex:none;color:#1E5AA8;"><dc-import name="Ikony" icon-name="user" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>
+          <p style="margin:0;flex:1 1 260px;font-size:16px;line-height:1.5;color:#5A626C;text-wrap:pretty;"><strong style="font-weight:700;color:#15181C;">Už u nás máte účet?</strong> Po přihlášení vám údaje vyplníme.</p>
+          <button type="button" class="ck-loginlink" aria-haspopup="dialog" onClick="{{ openLogin }}" style="appearance:none;background:none;border:0;padding:0;font-family:inherit;line-height:inherit;cursor:pointer;">Přihlásit se<span aria-hidden="true" style="display:inline-flex;"><dc-import name="Ikony" icon-name="chevron-right" size="{{ 18 }}" hint-size="18px,18px"></dc-import></span></button>
+        </div>
+
+        <section id="ck-s1" class="ck-card ck-sec" aria-labelledby="ck-h-1">
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+            <span class="ck-num" aria-hidden="true">1</span>
+            <h2 id="ck-h-1" class="ck-h2" style="margin:0;color:#142F56;flex:1;">Kontaktní údaje</h2>
+            <span style="font-size:13px;font-weight:500;line-height:1.4;color:#666E78;"><span class="ck-req" aria-hidden="true">*</span> povinné údaje</span>
+          </div>
+          <div>
+            <label class="ck-lbl" for="ck-email">E-mail <span class="ck-req" aria-hidden="true">*</span></label>
+            <input class="ck-inp" id="ck-email" type="email" autocomplete="email" required="{{ true }}" placeholder="jmeno@domena.cz" value="{{ f.email }}" onChange="{{ on.email }}" data-err="{{ ef.email }}" aria-invalid="{{ e.email }}" aria-describedby="ck-email-err">
+            <sc-if value="{{ e.email }}" hint-placeholder-val="">
+              <p class="ck-err" id="ck-email-err">Zadejte e-mail ve formátu jmeno@domena.cz.</p>
+            </sc-if>
+          </div>
+          <div class="ck-row2">
+            <div>
+              <label class="ck-lbl" for="ck-first">Jméno <span class="ck-req" aria-hidden="true">*</span></label>
+              <input class="ck-inp" id="ck-first" type="text" autocomplete="given-name" required="{{ true }}" value="{{ f.first }}" onChange="{{ on.first }}" data-err="{{ ef.first }}" aria-invalid="{{ e.first }}" aria-describedby="ck-first-err">
+              <sc-if value="{{ e.first }}" hint-placeholder-val="">
+                <p class="ck-err" id="ck-first-err">Vyplňte jméno.</p>
+              </sc-if>
+            </div>
+            <div>
+              <label class="ck-lbl" for="ck-last">Příjmení <span class="ck-req" aria-hidden="true">*</span></label>
+              <input class="ck-inp" id="ck-last" type="text" autocomplete="family-name" required="{{ true }}" value="{{ f.last }}" onChange="{{ on.last }}" data-err="{{ ef.last }}" aria-invalid="{{ e.last }}" aria-describedby="ck-last-err">
+              <sc-if value="{{ e.last }}" hint-placeholder-val="">
+                <p class="ck-err" id="ck-last-err">Vyplňte příjmení.</p>
+              </sc-if>
+            </div>
+          </div>
+          <div>
+            <label class="ck-lbl" for="ck-phone">Telefon <span class="ck-req" aria-hidden="true">*</span></label>
+            <div class="ck-tel">
+              <div class="ck-telpfx">
+                <dc-import name="Select" options="{{ prefixes }}" value="{{ f.prefix }}" on-change="{{ on.prefix }}" aria-label="Předvolba" debug="{{ debug }}" hint-size="100%,44px"></dc-import>
+              </div>
+              <input class="ck-inp" id="ck-phone" type="tel" inputmode="tel" autocomplete="tel-national" required="{{ true }}" placeholder="777 123 456" value="{{ f.phone }}" onChange="{{ on.phone }}" data-err="{{ ef.phone }}" aria-invalid="{{ e.phone }}" aria-describedby="ck-phone-err" style="flex:1;">
+            </div>
+            <sc-if value="{{ e.phone }}" hint-placeholder-val="">
+              <p class="ck-err" id="ck-phone-err">Zadejte telefonní číslo — devět číslic bez předvolby.</p>
+            </sc-if>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <label class="ck-cb"><input type="checkbox" checked="{{ f.company }}" onChange="{{ onCompany }}"><span>Nakupuji na firmu</span></label>
+            <sc-if value="{{ f.company }}" hint-placeholder-val="">
+              <div class="ck-in ck-firmbox">
+                <div class="ck-icrow">
+                  <div class="ck-icinp">
+                    <div>
+                  <label class="ck-lbl" for="ck-ico">IČ <span class="ck-req" aria-hidden="true">*</span></label>
+                  <input class="ck-inp" id="ck-ico" type="text" inputmode="numeric" autocomplete="off" value="{{ f.ico }}" onChange="{{ on.ico }}" data-err="{{ ef.ico }}" aria-invalid="{{ e.ico }}" aria-describedby="ck-ico-err">
+                  <sc-if value="{{ e.ico }}" hint-placeholder-val="">
+                    <p class="ck-err" id="ck-ico-err">IČ má osm číslic.</p>
+                  </sc-if>
+                </div>
+                  </div>
+                  <p style="margin:0;font-size:14px;font-weight:500;line-height:1.5;color:#5A626C;text-wrap:pretty;">{{ icNote }}</p>
+                </div>
+                <div class="ck-w2">
+                  <div>
+                  <label class="ck-lbl" for="ck-firm">Společnost <span class="ck-req" aria-hidden="true">*</span></label>
+                  <input class="ck-inp" id="ck-firm" type="text" autocomplete="organization" value="{{ f.firm }}" onChange="{{ on.firm }}" data-err="{{ ef.firm }}" aria-invalid="{{ e.firm }}" aria-describedby="ck-firm-err">
+                  <sc-if value="{{ e.firm }}" hint-placeholder-val="">
+                    <p class="ck-err" id="ck-firm-err">Vyplňte název společnosti.</p>
+                  </sc-if>
+                </div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:16px;">
+                  <label class="ck-cb"><input type="checkbox" checked="{{ f.vat }}" onChange="{{ onVat }}"><span>Jsem plátce DPH</span></label>
+                  <sc-if value="{{ f.vat }}" hint-placeholder-val="">
+                    <div class="ck-in ck-w1">
+                      <div>
+                  <label class="ck-lbl" for="ck-dic">DIČ <span class="ck-req" aria-hidden="true">*</span></label>
+                  <input class="ck-inp" id="ck-dic" type="text" placeholder="CZ12345678" value="{{ f.dic }}" onChange="{{ on.dic }}" data-err="{{ ef.dic }}" aria-invalid="{{ e.dic }}" aria-describedby="ck-dic-err">
+                  <sc-if value="{{ e.dic }}" hint-placeholder-val="">
+                    <p class="ck-err" id="ck-dic-err">Zadejte DIČ ve formátu CZ12345678.</p>
+                  </sc-if>
+                </div>
+                    </div>
+                  </sc-if>
+                </div>
+                <div class="ck-w1">
+                  <div>
+                  <label class="ck-lbl" for="ck-ordno">Vlastní číslo objednávky</label>
+                  <input class="ck-inp" id="ck-ordno" type="text" value="{{ f.ordno }}" onChange="{{ on.ordno }}">
+                </div>
+                </div>
+                <p style="margin:0;font-size:16px;font-weight:700;line-height:1.35;">Fakturační adresa</p>
+                <div class="ck-rowA">
+                  <div>
+                  <label class="ck-lbl" for="ck-bstreet">Ulice, č. p. <span class="ck-req" aria-hidden="true">*</span></label>
+                  <input class="ck-inp" id="ck-bstreet" type="text" autocomplete="billing street-address" value="{{ f.bstreet }}" onChange="{{ on.bstreet }}" data-err="{{ ef.bstreet }}" aria-invalid="{{ e.bstreet }}" aria-describedby="ck-bstreet-err">
+                  <sc-if value="{{ e.bstreet }}" hint-placeholder-val="">
+                    <p class="ck-err" id="ck-bstreet-err">Vyplňte ulici a číslo popisné.</p>
+                  </sc-if>
+                </div>
+                  <div>
+                  <label class="ck-lbl" for="ck-bzip">PSČ <span class="ck-req" aria-hidden="true">*</span></label>
+                  <input class="ck-inp" id="ck-bzip" type="text" inputmode="numeric" autocomplete="billing postal-code" value="{{ f.bzip }}" onChange="{{ on.bzip }}" data-err="{{ ef.bzip }}" aria-invalid="{{ e.bzip }}" aria-describedby="ck-bzip-err">
+                  <sc-if value="{{ e.bzip }}" hint-placeholder-val="">
+                    <p class="ck-err" id="ck-bzip-err">PSČ má pět číslic.</p>
+                  </sc-if>
+                </div>
+                </div>
+                <div class="ck-rowA">
+                  <div>
+                  <label class="ck-lbl" for="ck-bcity">Město <span class="ck-req" aria-hidden="true">*</span></label>
+                  <input class="ck-inp" id="ck-bcity" type="text" autocomplete="billing address-level2" value="{{ f.bcity }}" onChange="{{ on.bcity }}" data-err="{{ ef.bcity }}" aria-invalid="{{ e.bcity }}" aria-describedby="ck-bcity-err">
+                  <sc-if value="{{ e.bcity }}" hint-placeholder-val="">
+                    <p class="ck-err" id="ck-bcity-err">Vyplňte město.</p>
+                  </sc-if>
+                </div>
+                  <div>
+                    <span class="ck-lbl">Země <span class="ck-req" aria-hidden="true">*</span></span>
+                    <dc-import name="Select" options="{{ countries }}" value="{{ f.bcountry }}" on-change="{{ on.bcountry }}" aria-label="Země fakturační adresy" debug="{{ debug }}" hint-size="100%,44px"></dc-import>
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </section>
+
+        <section id="ck-s2" class="ck-card ck-sec" aria-labelledby="ck-h-2">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span class="ck-num" aria-hidden="true">2</span>
+            <h2 id="ck-h-2" class="ck-h2" style="margin:0;color:#142F56;">Doručení</h2>
+          </div>
+          <sc-if value="{{ isPickup }}" hint-placeholder-val="">
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:16px 20px;border-radius:8px;background:#EFF4FB;">
+              <span style="color:#1E5AA8;display:flex;flex:none;"><dc-import name="Ikony" icon-name="map-pin" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>
+              <p style="margin:0;flex:1;min-width:0;font-size:16px;font-weight:400;line-height:1.6;color:#15181C;text-wrap:pretty;">Zboží si vyzvednete osobně: <strong style="font-weight:700;">VAPP Popovičky</strong>, Popovičky 38, 251 01 Praha-východ · Po–Pá 8:30–16:30. Adresu nepotřebujeme.</p>
+              <a class="ck-loginlink" href="kosik-krok1.dc.html" style="font-size:14px;">Změnit</a>
+            </div>
+          </sc-if>
+          <sc-if value="{{ hasPoint }}" hint-placeholder-val="">
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:16px 20px;border-radius:8px;background:#EFF4FB;">
+              <span style="color:#1E5AA8;display:flex;flex:none;"><dc-import name="Ikony" icon-name="map-pin" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>
+              <div style="display:flex;flex-direction:column;gap:2px;min-width:0;flex:1;">
+                <span style="font-size:16px;font-weight:700;line-height:1.35;">{{ placeTitle }}</span>
+                <span style="font-size:14px;font-weight:500;line-height:1.5;color:#5A626C;">{{ placeText }}</span>
+              </div>
+              <a class="ck-loginlink" href="kosik-krok1.dc.html" style="font-size:14px;">Změnit</a>
+            </div>
+          </sc-if>
+          <sc-if value="{{ needAddr }}" hint-placeholder-val="{{ true }}">
+          <p style="margin:0;font-size:16px;font-weight:700;line-height:1.35;">{{ addrTitle }}</p>
+          <div class="ck-rowA">
+            <div>
+              <label class="ck-lbl" for="ck-street">Ulice, č. p. <span class="ck-req" aria-hidden="true">*</span></label>
+              <input class="ck-inp" id="ck-street" type="text" autocomplete="street-address" value="{{ f.street }}" onChange="{{ on.street }}" data-err="{{ ef.street }}" aria-invalid="{{ e.street }}" aria-describedby="ck-street-err">
+              <sc-if value="{{ e.street }}" hint-placeholder-val="">
+                <p class="ck-err" id="ck-street-err">Vyplňte ulici a číslo popisné.</p>
+              </sc-if>
+            </div>
+            <div>
+              <label class="ck-lbl" for="ck-zip">PSČ <span class="ck-req" aria-hidden="true">*</span></label>
+              <input class="ck-inp" id="ck-zip" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="252 41" value="{{ f.zip }}" onChange="{{ on.zip }}" data-err="{{ ef.zip }}" aria-invalid="{{ e.zip }}" aria-describedby="ck-zip-err">
+              <sc-if value="{{ e.zip }}" hint-placeholder-val="">
+                <p class="ck-err" id="ck-zip-err">PSČ má pět číslic.</p>
+              </sc-if>
+            </div>
+          </div>
+          <div class="ck-rowA">
+            <div>
+              <label class="ck-lbl" for="ck-city">Město <span class="ck-req" aria-hidden="true">*</span></label>
+              <input class="ck-inp" id="ck-city" type="text" autocomplete="address-level2" value="{{ f.city }}" onChange="{{ on.city }}" data-err="{{ ef.city }}" aria-invalid="{{ e.city }}" aria-describedby="ck-city-err">
+              <sc-if value="{{ e.city }}" hint-placeholder-val="">
+                <p class="ck-err" id="ck-city-err">Vyplňte město.</p>
+              </sc-if>
+            </div>
+            <div>
+              <span class="ck-lbl" id="ck-country-l">Země <span class="ck-req" aria-hidden="true">*</span></span>
+              <dc-import name="Select" options="{{ countries }}" value="{{ country }}" disabled="{{ true }}" aria-label="Země" debug="{{ debug }}" hint-size="100%,44px"></dc-import>
+              <p style="margin:6px 0 0;font-size:13px;font-weight:500;line-height:1.4;color:#666E78;">Zemi dodání změníte v <a href="kosik-krok1.dc.html" style="font-weight:700;">košíku</a>.</p>
+            </div>
+          </div>
+          </sc-if>
+        </section>
+
+        <section class="ck-card ck-sec" aria-labelledby="ck-h-3">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span class="ck-num" aria-hidden="true">3</span>
+            <h2 id="ck-h-3" class="ck-h2" style="margin:0;color:#142F56;">Doplňující informace</h2>
+          </div>
+          <div>
+            <label class="ck-lbl" for="ck-note">Poznámka k objednávce</label>
+            <textarea class="ck-ta" id="ck-note" placeholder="Např. typ přívěsu nebo čas, kdy jste k zastižení" value="{{ f.note }}" onChange="{{ on.note }}"></textarea>
+          </div>
+        </section>
+      </div>
+
+      <aside class="ck-side" aria-labelledby="ck-sum-h">
+        <div class="ck-card" style="padding:24px;display:flex;flex-direction:column;gap:12px;">
+          <h2 id="ck-sum-h" class="ck-h2" style="margin:0 0 4px;color:#142F56;">Souhrn</h2>
+          <sc-for list="{{ sumRows }}" as="r" hint-placeholder-count="4">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;font-size:16px;line-height:1.5;">
+              <span style="color:#5A626C;min-width:0;">{{ r.label }}</span>
+              <span style="{{ r.valStyle }}">{{ r.value }}</span>
+            </div>
+          </sc-for>
+          <div style="height:1px;background:#D5DAE0;margin:4px 0;"></div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-top:4px;">
+            <span style="font-size:18px;font-weight:700;line-height:1.35;">Celkem s DPH</span>
+            <span style="font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.01em;white-space:nowrap;">{{ totalText }}</span>
+          </div>
+          <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px;">
+            <dc-import name="Tlacitko" variant="buy" size="large" label="Pokračovat ke kontrole údajů" icon="none" icon-trailing="chevron-right" full-width="{{ true }}" on-click="{{ onContinue }}" hint-size="100%,52px"></dc-import>
+            <sc-if value="{{ showMissing }}" hint-placeholder-val="">
+              <p role="alert" style="margin:0;display:flex;align-items:center;justify-content:center;gap:6px;font-size:14px;font-weight:500;line-height:1.5;color:#C5232B;"><dc-import name="Ikony" icon-name="alert-circle" size="{{ 18 }}" hint-size="18px,18px"></dc-import>Doplňte označené údaje.</p>
+            </sc-if>
+            <div style="display:flex;justify-content:center;">
+              <dc-import name="Tlacitko" variant="ghost" size="standard" label="Zpět do košíku" icon="chevron-left" href="kosik-krok1.dc.html" hint-size="140px,36px"></dc-import>
+            </div>
+          </div>
+          <ul style="list-style:none;margin:4px 0 0;padding:16px 0 0;border-top:1px solid #F2F4F7;display:flex;flex-direction:column;gap:10px;">
+            <li style="display:flex;align-items:center;gap:12px;font-size:14px;font-weight:500;line-height:1.5;color:#5A626C;"><span style="color:#1E5AA8;display:flex;flex:none;"><dc-import name="Ikony" icon-name="truck-delivery" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>Skladové položky expedujeme do druhého dne</li>
+            <li style="display:flex;align-items:center;gap:12px;font-size:14px;font-weight:500;line-height:1.5;color:#5A626C;"><span style="color:#1E5AA8;display:flex;flex:none;"><dc-import name="Ikony" icon-name="lock" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>Bezpečná platba kartou, Apple Pay i Google Pay</li>
+            <li style="display:flex;align-items:center;gap:12px;font-size:14px;font-weight:500;line-height:1.5;color:#5A626C;"><span style="color:#1E5AA8;display:flex;flex:none;"><dc-import name="Ikony" icon-name="help" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span><span>Nevíte, jestli díl pasuje? <a class="ck-lnk" href="kontakty.dc.html" style="font-weight:700;">Poradíme.</a></span></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="ck-foot" style="background:#FFFFFF;border-top:1px solid #F2F4F7;">
+    <div class="vp-in" style="display:flex;align-items:center;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;padding-top:20px;padding-bottom:20px;font-size:13px;font-weight:500;line-height:1.4;color:#5A626C;">
+      <span>© 2026 VAPP</span>
+      <div style="display:flex;gap:8px 20px;flex-wrap:wrap;">
+        <a href="#">Obchodní podmínky</a>
+        <a href="#">Ochrana osobních údajů</a>
+        <a href="tel:+420323605314">Poradíme: 323 605 314 · Po–Pá 8:30–16:30</a>
+      </div>
+    </div>
+  </footer>
+  <dc-import name="LoginPopup" open="{{ loginOpen }}" on-close="{{ closeLogin }}" debug="{{ debug }}" hint-size="0px,0px"></dc-import>
+  <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  FIELDS = ['email','first','last','prefix','phone','firm','ico','dic','ordno','bstreet','bzip','bcity','bcountry','street','zip','city','note'];
+  DEMO_SUM = { rows:[
+      { label:'Zboží (4 ks) bez DPH', value:'7 083\u00a0Kč' }, { label:'DPH 21 %', value:'1 487\u00a0Kč' },
+      { label:'Doprava · Zásilkovna – Z-Point / Z-BOX', value:'Zdarma', free:true }, { label:'Platba · Platba kartou online', value:'Zdarma', free:true } ],
+    total:'8 570\u00a0Kč', country:'CZ', shipId:'zp', shipLabel:'Zásilkovna – Z-Point / Z-BOX', point:'Z-BOX Praha 9 – Vysočany, Kolbenova 942/38', pickup:false };
+  state = { f:{ email:'', first:'', last:'', prefix:'+420', phone:'', company:false, firm:'', ico:'', vat:false, dic:'', ordno:'', bstreet:'', bzip:'', bcity:'', bcountry:'CZ', street:'', zip:'', city:'', note:'' }, tried:false, sum:null, loginOpen:false };
+
+  componentDidMount(){
+    let sum = null, f = null;
+    try { const d = JSON.parse(localStorage.getItem('vapp-kosik') || 'null'); if (d && d.summary) sum = d.summary; } catch(e){}
+    try { f = JSON.parse(localStorage.getItem('vapp-kosik-kontakt') || 'null'); } catch(e){}
+    const s = sum || this.DEMO_SUM;
+    const base = { ...this.state.f, prefix: s.country==='SK' ? '+421' : '+420', bcountry: s.country || 'CZ' };
+    this.setState({ sum, f: f ? { ...base, ...f } : base });
+  }
+  componentDidUpdate(){ try { localStorage.setItem('vapp-kosik-kontakt', JSON.stringify(this.state.f)); } catch(e){} }
+
+  errors(f, pickup){
+    const digits = (v)=>String(v||'').replace(/\D/g,'');
+    return {
+      email: !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test((f.email||'').trim()),
+      first: !(f.first||'').trim(), last: !(f.last||'').trim(),
+      phone: digits(f.phone).length !== 9,
+      firm: f.company && !(f.firm||'').trim(),
+      ico: f.company && digits(f.ico).length !== 8,
+      dic: f.company && f.vat && !/^[A-Z]{2}\d{8,10}$/.test(String(f.dic||'').replace(/\s/g,'').toUpperCase()),
+      bstreet: f.company && !(f.bstreet||'').trim(), bzip: f.company && digits(f.bzip).length !== 5, bcity: f.company && !(f.bcity||'').trim(),
+      street: !pickup && !(f.street||'').trim(), zip: !pickup && digits(f.zip).length !== 5, city: !pickup && !(f.city||'').trim()
+    };
+  }
+
+  renderVals(){
+    const S = this.state, P = this.props, f = S.f;
+    const sum = S.sum || this.DEMO_SUM;
+    const labels = ['Nákupní košík','Kontaktní údaje','Kontrola údajů'];
+    const step = 2;
+    const steps = labels.map((label,i)=>{
+      const n = i+1, active = n===step;
+      return { num:n, label, isDone:n<step, isActive:active, isTodo:n>step, notFirst:i>0,
+        activeFlag: active ? '1' : '0', current: active ? 'step' : undefined, href:'kosik-krok1.dc.html',
+        sepStyle: 'background:' + (n<=step ? '#0E7F43' : '#D5DAE0') + ';' };
+    });
+    const errAll = this.errors(f, !!sum.pickup);
+    const e = {}, ef = {};
+    Object.keys(errAll).forEach(k=>{ e[k] = S.tried && !!errAll[k]; ef[k] = e[k] ? '1' : '0'; });
+    const on = {};
+    this.FIELDS.forEach(k=>{
+      on[k] = (ev)=>{ const v = (ev && ev.target) ? ev.target.value : ev; this.setState(s=>({ f:{ ...s.f, [k]:v } })); };
+    });
+    on.ico = (ev)=>{ const v = ev.target.value; this.setState(s=>{
+      const nf = { ...s.f, ico:v };
+      if (String(v).replace(/\D/g,'').length === 8 && !s.f.firm) Object.assign(nf, { firm:'Přívěsy Novák s.r.o.', vat:true, dic:'CZ' + String(v).replace(/\D/g,''), bstreet:'Průmyslová 1520/4', bzip:'252 41', bcity:'Dolní Břežany' });
+      return { f:nf };
+    }); };
+    const icFilled = f.company && !!f.firm && String(f.ico||'').replace(/\D/g,'').length === 8;
+    const rowVal = (free)=> 'white-space:nowrap;font-weight:500;color:' + (free ? '#0B6937' : '#15181C') + ';';
+    const hasPlace = !!sum.pickup || !!sum.point;
+    const anyErr = Object.values(errAll).some(Boolean);
+    return {
+      debug: P.debug ?? true,
+      steps, f, e, ef, on,
+      prefixes: [{ value:'+420', label:'+420', img:'vapp-flag-cz.svg' }, { value:'+421', label:'+421', img:'vapp-flag-sk.svg' }],
+      countries: [{ value:'CZ', label:'Česko' }, { value:'SK', label:'Slovensko' }],
+      country: sum.country || 'CZ',
+      hasPlace, isPickup: !!sum.pickup, hasPoint: !sum.pickup && !!sum.point, needAddr: !sum.pickup && !(f.company && sum.point),
+      icNote: icFilled ? 'Údaje jsme doplnili z obchodního rejstříku — zkontrolujte je.' : 'Po zadání IČ doplníme název firmy, DIČ a adresu z obchodního rejstříku.',
+      onVat: (ev)=>{ const c = ev.target.checked; this.setState(s=>({ f:{ ...s.f, vat:c } })); },
+      placeTitle: sum.pickup ? 'Osobní odběr Popovičky' : (sum.shipLabel || 'Výdejní místo'),
+      placeText: sum.pickup ? 'Zboží vyzvednete na prodejně VAPP, Popovičky. Připravíme do 2 hodin.' : (sum.point || 'Výdejní místo vyberete v košíku.'),
+      addrTitle: hasPlace ? 'Fakturační adresa' : 'Kam vám zásilku doručíme?',
+      sumRows: (sum.rows||[]).map(r=>({ label:r.label, value:r.value, valStyle:rowVal(!!r.free) })),
+      totalText: sum.total,
+      showMissing: S.tried && anyErr,
+      loginOpen: S.loginOpen, openLogin: ()=>this.setState({ loginOpen:true }), closeLogin: ()=>this.setState({ loginOpen:false }),
+      onCompany: (ev)=>{ const c = ev.target.checked; this.setState(s=>({ f:{ ...s.f, company:c } })); },
+      onContinue: ()=>{
+        this.setState({ tried:true });
+        const order = ['email','first','last','phone','ico','firm','dic','bstreet','bzip','bcity','street','zip','city'];
+        const ids = { email:'ck-email', first:'ck-first', last:'ck-last', phone:'ck-phone', firm:'ck-firm', ico:'ck-ico', dic:'ck-dic', bstreet:'ck-bstreet', bzip:'ck-bzip', bcity:'ck-bcity', street:'ck-street', zip:'ck-zip', city:'ck-city' };
+        const bad = order.find(k=>errAll[k]);
+        if (bad) {
+          setTimeout(()=>{ const el = document.getElementById(ids[bad]); if (el){ window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 140, behavior:'smooth' }); el.focus({ preventScroll:true }); } }, 0);
+          return;
+        }
+        this.componentDidUpdate();
+        window.location.href = 'kosik-krok3.dc.html';
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

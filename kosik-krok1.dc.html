@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&amp;display=swap" rel="stylesheet">
+<script src="./mena.js"></script>
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0!important;padding:0!important;background:#F7F9FB;}
+  #dc-root{margin:0!important;padding:0!important;width:100%!important;max-width:none!important;border:0!important;}
+  #dc-root>.sc-host{margin:0!important;padding:0!important;width:100%!important;}
+  a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
+  .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
+  @media (max-width:819px){ .vp-in{padding-left:16px;padding-right:16px;} }
+  .ck-btn{appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-align:inherit;line-height:inherit;cursor:pointer;}
+  .ck-btn:focus-visible,.ck-lnk:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;border-radius:4px;}
+  .ck-h1{font-size:36px;font-weight:700;line-height:1.15;letter-spacing:-0.02em;}
+  .ck-h2{font-size:22px;font-weight:700;line-height:1.25;}
+  .ck-title{font-size:16px;font-weight:700;line-height:1.3;}
+  @media (max-width:819px){ .ck-h1{font-size:26px;line-height:1.2;} .ck-h2{font-size:18px;line-height:1.3;} .ck-title{font-size:18px;} }
+  .ck-card{background:#FFFFFF;border-radius:8px;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);}
+  .ck-lnk{color:#15181C;text-decoration:none;transition:color .12s ease;}
+  .ck-lnk:hover{color:#1E5AA8;}
+  /* hlavička košíku */
+  .ck-steps{display:flex;align-items:center;gap:12px;list-style:none;margin:0;padding:0;}
+  .ck-step{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;line-height:1.5;white-space:nowrap;}
+  .ck-sep{width:48px;height:2px;border-radius:999px;background:#D5DAE0;flex:none;}
+  @media (max-width:1149px){ .ck-sep{width:24px;} }
+  @media (max-width:819px){ .ck-step[data-active="0"] .ck-steplbl{display:none;} .ck-steps{gap:8px;} .ck-sep{width:16px;} }
+  @media (max-width:419px){ .ck-steplbl{display:none;} .ck-logo{height:24px !important;} }
+  /* layout */
+  .ck-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;grid-template-areas:"main side" "up side";gap:24px 32px;align-items:start;}
+  @media (min-width:1560px){ .ck-grid{grid-template-columns:minmax(0,1fr) 400px;} }
+  @media (max-width:1149px){ .ck-grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"main" "side" "up";} }
+  .ck-side{grid-area:side;position:sticky;top:104px;}
+  @media (max-width:1149px){ .ck-side{position:static;} }
+  /* řádek položky */
+  .ck-row{display:grid;grid-template-columns:96px minmax(0,1fr) auto 112px 44px;grid-template-areas:"ph info qty price del";gap:20px;align-items:center;padding:20px 24px;}
+  .ck-row + .ck-row{border-top:1px solid #F2F4F7;}
+  @media (max-width:819px){
+    .ck-row{grid-template-columns:72px minmax(0,1fr) auto;grid-template-areas:"ph info del" "ph qty price";gap:12px 16px;padding:16px;align-items:start;}
+    .ck-price{align-self:center;}
+    .ck-qty{align-self:center;}
+  }
+  .ck-thumb{width:100%;aspect-ratio:4/3;object-fit:contain;display:block;background:#FFFFFF;padding:4px;}
+  /* volby dopravy a platby */
+  .ck-opt{display:grid;grid-template-columns:22px 65px minmax(0,1fr) auto;align-items:center;gap:20px;min-height:72px;padding:12px 24px;border-top:1px solid #F2F4F7;background:#FFFFFF;cursor:pointer;transition:background .12s ease;}
+  .ck-opt:hover{background:#F2F4F7;}
+  .ck-opt:has(input:checked){background:#EFF4FB;}
+  .ck-opt[data-off="1"]{cursor:not-allowed;background:#FFFFFF;}
+  .ck-opt input{appearance:none;margin:0;width:22px;height:22px;border-radius:999px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #91959B;cursor:inherit;transition:box-shadow .12s ease;}
+  .ck-opt:hover input:not(:disabled){box-shadow:inset 0 0 0 1px #5A626C;}
+  .ck-opt input:checked,.ck-opt:hover input:checked{box-shadow:inset 0 0 0 7px #1E5AA8;}
+  .ck-opt input:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .ck-opt input:disabled{background:#F2F4F7;box-shadow:inset 0 0 0 1px #D5DAE0;}
+  .ck-sp{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start;}
+  @container (min-width:680px){ .ck-sp{grid-template-columns:minmax(0,1fr) minmax(0,1fr);} .ck-sp .ck-opt{gap:16px;padding:12px 20px;} .ck-sp .ck-opthd{padding:20px;} .ck-sp .ck-ptrow{padding:0 20px 12px 139px;} }
+  .ck-sec{position:relative;}
+  .ck-sec::after{content:"";position:absolute;inset:0;border-radius:8px;box-shadow:inset 0 0 0 2px #C5232B;pointer-events:none;opacity:0;transition:opacity .15s ease;z-index:1;}
+  .ck-sec[data-err="1"]::after{opacity:1;}
+  .ck-logobox{display:flex;align-items:center;justify-content:center;gap:4px;width:65px;height:40px;border-radius:6px;background:#FFFFFF;overflow:hidden;}
+  .ck-logoimg{display:block;width:65px;height:40px;object-fit:contain;}
+  .ck-opt[data-off="1"] .ck-logoimg{opacity:.4;}
+  .ck-optname{font-size:16px;font-weight:700;line-height:1.35;}
+  .ck-ph{width:112px;height:36px;border-radius:6px;background:repeating-linear-gradient(135deg,#F2F4F7 0 6px,#FFFFFF 6px 12px);box-shadow:inset 0 0 0 1px #D5DAE0;display:flex;align-items:center;justify-content:center;padding:0 6px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;color:#666E78;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .ck-ptrow{padding:0 24px 12px 151px;}
+  .ck-opthd{display:flex;align-items:center;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;padding:20px 24px;}
+  @media (max-width:549px){
+    .ck-opt{grid-template-columns:22px 65px minmax(0,1fr) auto;gap:12px;padding:12px 16px;}
+    .ck-opthd{padding:16px;}
+    .ck-ptrow{padding:0 16px 12px 127px;}
+  }
+  /* checkbox slevového kódu */
+  .ck-cb{display:inline-flex;align-items:center;gap:12px;min-height:44px;font-size:16px;font-weight:500;color:#15181C;cursor:pointer;}
+  .ck-cb input{appearance:none;margin:0;flex:none;width:22px;height:22px;border-radius:6px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #91959B;cursor:pointer;display:grid;place-content:center;transition:box-shadow .12s ease, background .12s ease;}
+  .ck-cb:hover input{box-shadow:inset 0 0 0 1px #5A626C;}
+  .ck-cb input:checked{background:#1E5AA8;box-shadow:none;}
+  .ck-cb input:checked::after{content:"";width:10px;height:6px;border-left:2px solid #FFFFFF;border-bottom:2px solid #FFFFFF;transform:translateY(-1px) rotate(-45deg);}
+  .ck-cb input:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .ck-inp{flex:1;min-width:0;height:44px;padding:0 14px;background:#F2F4F7;border:0;border-radius:6px;font-family:inherit;font-size:15px;color:#15181C;}
+  .ck-inp::placeholder{color:#666E78;}
+  .ck-inp:focus-visible{outline:0;box-shadow:inset 0 0 0 2px #1E5AA8;}
+  @media (max-width:549px){ .ck-inp{font-size:16px;} }
+  /* upsell */
+  .ck-up{display:grid;grid-template-columns:64px minmax(0,1fr) auto auto;grid-template-areas:"ph info price add";align-items:center;gap:16px 20px;padding:16px 20px;border-radius:8px;background:#EFF4FB;box-shadow:inset 0 0 0 1px #B4CEEC;}
+  @media (max-width:549px){ .ck-up{grid-template-columns:64px minmax(0,1fr) auto;grid-template-areas:"ph info info" "ph price add";gap:12px 16px;padding:16px;} }
+  .ck-bar{height:8px;border-radius:999px;background:#F2F4F7;overflow:hidden;}
+  .ck-barfill{height:100%;border-radius:999px;transition:width .4s ease, background .12s ease;}
+  .ck-foot a{color:#5A626C;text-decoration:none;transition:color .12s ease;}
+  .ck-foot a:hover{color:#1E5AA8;}
+  @media (prefers-reduced-motion:reduce){ .ck-barfill{transition:none;} }
+</style>
+</helmet>
+<div data-screen-label="Košík — krok 1" lang="cs" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;display:flex;flex-direction:column;">
+
+  <header style="position:sticky;top:0;z-index:70;background:#FFFFFF;box-shadow:0 2px 8px rgba(20,47,86,.06);">
+    <div class="vp-in" style="display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:80px;padding-top:16px;padding-bottom:16px;">
+      <a class="ck-lnk" href="index.dc.html" aria-label="VAPP — domovská stránka" style="display:flex;flex:none;"><img class="ck-logo" src="./vapp-logo.svg" alt="VAPP" style="height:32px;width:auto;display:block;"></a>
+      <nav aria-label="Kroky objednávky">
+        <ol class="ck-steps">
+          <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+            <sc-if value="{{ s.notFirst }}" hint-placeholder-val="">
+              <li aria-hidden="true" class="ck-sep" style="{{ s.sepStyle }}"></li>
+            </sc-if>
+            <li class="ck-step" data-active="{{ s.activeFlag }}" aria-current="{{ s.current }}">
+              <sc-if value="{{ s.isDone }}" hint-placeholder-val="">
+                <a href="{{ s.href }}" class="ck-lnk" style="display:flex;align-items:center;gap:8px;color:#0B6937;">
+                  <span style="width:28px;height:28px;border-radius:999px;background:#0E7F43;color:#FFFFFF;display:flex;align-items:center;justify-content:center;flex:none;"><dc-import name="Ikony" icon-name="check" size="{{ 18 }}" hint-size="18px,18px"></dc-import></span>
+                  <span class="ck-steplbl">{{ s.label }}</span>
+                </a>
+              </sc-if>
+              <sc-if value="{{ s.isActive }}" hint-placeholder-val="{{ true }}">
+                <span style="width:28px;height:28px;border-radius:999px;background:#1E5AA8;color:#FFFFFF;display:flex;align-items:center;justify-content:center;flex:none;font-size:14px;">{{ s.num }}</span>
+                <span class="ck-steplbl" style="color:#15181C;">{{ s.label }}</span>
+              </sc-if>
+              <sc-if value="{{ s.isTodo }}" hint-placeholder-val="">
+                <span style="width:28px;height:28px;border-radius:999px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #91959B;color:#5A626C;display:flex;align-items:center;justify-content:center;flex:none;font-size:14px;">{{ s.num }}</span>
+                <span class="ck-steplbl" style="color:#5A626C;">{{ s.label }}</span>
+              </sc-if>
+            </li>
+          </sc-for>
+        </ol>
+      </nav>
+    </div>
+  </header>
+
+  <main class="vp-in" style="width:100%;padding-top:28px;padding-bottom:56px;flex:1;">
+    <h1 class="ck-h1" style="margin:0 0 24px;color:#142F56;">Košík</h1>
+
+    <sc-if value="{{ isEmpty }}" hint-placeholder-val="">
+      <div class="ck-card" style="padding:48px 24px;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;">
+        <span style="color:#5189CC;display:flex;"><dc-import name="Ikony" icon-name="shopping-cart" size="{{ 48 }}" hint-size="48px,48px"></dc-import></span>
+        <p class="ck-h2" style="margin:0;">Košík je prázdný</p>
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#5A626C;">Vyberte si z náhradních dílů nebo přívěsů.</p>
+        <dc-import name="Tlacitko" variant="primary" size="medium" label="Pokračovat v nákupu" href="nahradnidily.dc.html" hint-size="200px,44px"></dc-import>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ hasItems }}" hint-placeholder-val="{{ true }}">
+    <div class="ck-grid">
+      <div style="grid-area:main;display:flex;flex-direction:column;gap:16px;min-width:0;container-type:inline-size;">
+
+        <section class="ck-card" aria-label="Položky v košíku">
+          <sc-for list="{{ items }}" as="it" hint-placeholder-count="3">
+            <div class="ck-row">
+              <a href="{{ it.href }}" tabindex="-1" aria-hidden="true" style="grid-area:ph;display:block;border-radius:6px;overflow:hidden;"><img class="ck-thumb" src="{{ it.img }}" alt=""></a>
+              <div style="grid-area:info;min-width:0;display:flex;flex-direction:column;gap:6px;">
+                <a class="ck-lnk ck-title" href="{{ it.href }}" style="text-wrap:pretty;">{{ it.name }}</a>
+                <span style="font-size:13px;font-weight:400;line-height:1.4;color:#666E78;">Obj. č. {{ it.code }}</span>
+                <dc-import name="Skladovost" state="in" text="{{ it.stock }}" debug="{{ debug }}" hint-size="120px,18px"></dc-import>
+              </div>
+              <div class="ck-qty" style="grid-area:qty;">
+                <dc-import name="Kvantifikator" size="standard" value="{{ it.qty }}" min="{{ 1 }}" max="{{ it.max }}" on-change="{{ it.onQty }}" debug="{{ debug }}" hint-size="108px,44px"></dc-import>
+              </div>
+              <div class="ck-price" style="grid-area:price;justify-self:end;text-align:right;display:flex;flex-direction:column;gap:2px;">
+                <span style="font-size:17px;font-weight:700;line-height:1.3;white-space:nowrap;">{{ it.lineTotal }}</span>
+                <sc-if value="{{ it.multi }}" hint-placeholder-val="">
+                  <span style="font-size:13px;font-weight:400;line-height:1.4;color:#666E78;white-space:nowrap;">{{ it.unitNote }}</span>
+                </sc-if>
+              </div>
+              <div style="grid-area:del;justify-self:end;">
+                <dc-import name="Tlacitko" variant="ghost" size="medium" icon="trash" icon-only="{{ true }}" aria-label="{{ it.removeAria }}" on-click="{{ it.onRemove }}" hint-size="44px,44px"></dc-import>
+              </div>
+            </div>
+          </sc-for>
+          <div style="border-top:1px solid #F2F4F7;padding:12px 24px 16px;display:flex;flex-direction:column;gap:8px;">
+            <label class="ck-cb"><input type="checkbox" checked="{{ codeOpen }}" onChange="{{ onToggleCode }}"><span>Mám slevový kód</span></label>
+            <sc-if value="{{ codeFormOpen }}" hint-placeholder-val="">
+              <div style="display:flex;gap:12px;max-width:480px;">
+                <input class="ck-inp" type="text" aria-label="Slevový kód" placeholder="Zadejte kód" value="{{ codeDraft }}" onChange="{{ onCodeInput }}" onKeyDown="{{ onCodeKey }}">
+                <dc-import name="Tlacitko" variant="secondary" size="medium" label="Uplatnit" on-click="{{ onApplyCode }}" hint-size="100px,44px"></dc-import>
+              </div>
+            </sc-if>
+            <sc-if value="{{ codeApplied }}" hint-placeholder-val="">
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px;font-weight:500;line-height:1.5;color:#0B6937;">
+                <dc-import name="Ikony" icon-name="circle-check" size="{{ 18 }}" hint-size="18px,18px"></dc-import>
+                <span>Kód <strong style="font-weight:700;">{{ code }}</strong> je uplatněný — sleva 10 % ze zboží.</span>
+                <button type="button" class="ck-btn" onClick="{{ onRemoveCode }}" style="color:#1E5AA8;font-weight:700;text-decoration:underline;">Odebrat</button>
+              </div>
+            </sc-if>
+          </div>
+        </section>
+
+        <section class="ck-card" aria-label="Doprava zdarma" style="padding:20px 24px;display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span style="color:#1E5AA8;display:flex;flex:none;"><dc-import name="Ikony" icon-name="truck-delivery" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>
+            <sc-if value="{{ freeReached }}" hint-placeholder-val="{{ true }}">
+              <p style="margin:0;font-size:16px;font-weight:700;line-height:1.35;color:#0B6937;">Máte dopravné zdarma.</p>
+            </sc-if>
+            <sc-if value="{{ freeMissing }}" hint-placeholder-val="">
+              <p style="margin:0;font-size:16px;font-weight:500;line-height:1.35;color:#15181C;">Nakupte ještě za <strong style="font-weight:700;">{{ freeRemain }}</strong> a máte dopravné zdarma.</p>
+            </sc-if>
+          </div>
+          <div class="ck-bar" role="progressbar" aria-label="Postup k dopravě zdarma" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ freePct }}">
+            <div class="ck-barfill" style="{{ barStyle }}"></div>
+          </div>
+          <p style="margin:0;font-size:13px;font-weight:500;line-height:1.4;color:#666E78;">Doprava zdarma od {{ freeThresholdText }} platí pro Zásilkovnu, GLS a DPD.</p>
+        </section>
+
+        <section class="ck-card ck-opthd" aria-labelledby="ck-country-l" style="justify-content:flex-start;">
+          <h2 id="ck-country-l" class="ck-h2" style="margin:0;color:#142F56;">Země dodání</h2>
+          <div style="width:240px;max-width:100%;min-width:0;">
+            <dc-import name="Select" variant="outline" options="{{ countries }}" value="{{ country }}" on-change="{{ onCountry }}" aria-label="Země dodání" debug="{{ debug }}" hint-size="100%,44px"></dc-import>
+          </div>
+        </section>
+        <div class="ck-sp">
+        <section id="ck-ship" class="ck-card ck-sec" data-err="{{ shipErrFlag }}" aria-labelledby="ck-ship-h" style="overflow:hidden;">
+          <div class="ck-opthd">
+            <h2 id="ck-ship-h" class="ck-h2" style="margin:0;color:#142F56;">Způsob dopravy</h2>
+            <sc-if value="{{ shipErr }}" hint-placeholder-val="">
+              <p id="ck-ship-err" style="margin:0;width:100%;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;line-height:1.5;color:#C5232B;"><dc-import name="Ikony" icon-name="alert-circle" size="{{ 18 }}" hint-size="18px,18px"></dc-import>Vyberte způsob dopravy.</p>
+            </sc-if>
+          </div>
+          <div role="radiogroup" aria-labelledby="ck-ship-h" aria-describedby="ck-ship-err" aria-invalid="{{ shipErr }}" style="display:flex;flex-direction:column;">
+            <sc-for list="{{ shipOpts }}" as="o" hint-placeholder-count="9">
+              <label class="ck-opt">
+                <input type="radio" name="ck-ship" value="{{ o.id }}" checked="{{ o.checked }}" onChange="{{ o.onPick }}">
+                <span class="ck-logobox" style="color:#1E5AA8;">
+                  <sc-if value="{{ o.hasIcons }}" hint-placeholder-val="">
+                    <sc-for list="{{ o.icons }}" as="ic" hint-placeholder-count="2">
+                      <dc-import name="Ikony" icon-name="{{ ic }}" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
+                    </sc-for>
+                  </sc-if>
+                  <sc-if value="{{ o.logo }}" hint-placeholder-val="">
+                    <img class="ck-logoimg" src="{{ o.logo }}" alt="{{ o.logoAlt }}" width="65" height="40">
+                  </sc-if>
+                </span>
+                <span style="display:flex;flex-direction:column;gap:2px;min-width:0;">
+                  <span class="ck-optname">{{ o.label }}</span>
+                  <sc-if value="{{ o.hasPoint }}" hint-placeholder-val="">
+                    <span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;line-height:1.4;color:#5A626C;"><span style="color:#1E5AA8;display:flex;flex:none;"><dc-import name="Ikony" icon-name="map-pin" size="{{ 18 }}" hint-size="18px,18px"></dc-import></span>{{ o.point }}</span>
+                  </sc-if>
+                </span>
+                <span style="{{ o.priceStyle }}">{{ o.priceText }}</span>
+              </label>
+              <sc-if value="{{ o.showPoint }}" hint-placeholder-val="">
+                <div class="ck-ptrow" style="display:flex;background:#EFF4FB;">
+                  <dc-import name="Tlacitko" variant="text" size="standard" label="{{ o.pointLabel }}" on-click="{{ onPickPoint }}" hint-size="160px,36px"></dc-import>
+                </div>
+              </sc-if>
+            </sc-for>
+          </div>
+        </section>
+
+        <section id="ck-pay" class="ck-card ck-sec" data-err="{{ payErrFlag }}" aria-labelledby="ck-pay-h" style="overflow:hidden;">
+          <div class="ck-opthd">
+            <h2 id="ck-pay-h" class="ck-h2" style="margin:0;color:#142F56;">Způsob platby</h2>
+            <sc-if value="{{ payErr }}" hint-placeholder-val="">
+              <p id="ck-pay-err" style="margin:0;width:100%;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;line-height:1.5;color:#C5232B;"><dc-import name="Ikony" icon-name="alert-circle" size="{{ 18 }}" hint-size="18px,18px"></dc-import>Vyberte způsob platby.</p>
+            </sc-if>
+          </div>
+          <div role="radiogroup" aria-labelledby="ck-pay-h" aria-describedby="ck-pay-err" aria-invalid="{{ payErr }}" style="display:flex;flex-direction:column;">
+            <sc-for list="{{ payOpts }}" as="o" hint-placeholder-count="4">
+              <label class="ck-opt" data-off="{{ o.offFlag }}">
+                <input type="radio" name="ck-pay" value="{{ o.id }}" checked="{{ o.checked }}" disabled="{{ o.disabled }}" onChange="{{ o.onPick }}">
+                <span class="ck-logobox" style="{{ o.iconWrapStyle }}">
+                  <sc-if value="{{ o.hasIcons }}" hint-placeholder-val="">
+                    <sc-for list="{{ o.icons }}" as="ic" hint-placeholder-count="2">
+                      <dc-import name="Ikony" icon-name="{{ ic }}" size="{{ 24 }}" hint-size="24px,24px"></dc-import>
+                    </sc-for>
+                  </sc-if>
+                  <sc-if value="{{ o.logo }}" hint-placeholder-val="">
+                    <img class="ck-logoimg" src="{{ o.logo }}" alt="{{ o.logoAlt }}" width="65" height="40">
+                  </sc-if>
+                </span>
+                <span style="display:flex;flex-direction:column;gap:2px;min-width:0;">
+                  <span class="ck-optname" style="{{ o.labelStyle }}">{{ o.label }}</span>
+                  <sc-if value="{{ o.disabled }}" hint-placeholder-val="">
+                    <span style="font-size:13px;font-weight:500;line-height:1.4;color:#666E78;">Jen při doručení zásilky</span>
+                  </sc-if>
+                </span>
+                <span style="{{ o.priceStyle }}">{{ o.priceText }}</span>
+              </label>
+            </sc-for>
+          </div>
+        </section>
+        </div>
+      </div>
+
+      <aside class="ck-side" aria-labelledby="ck-sum-h">
+        <div class="ck-card" style="padding:24px;display:flex;flex-direction:column;gap:12px;">
+          <h2 id="ck-sum-h" class="ck-h2" style="margin:0 0 4px;color:#142F56;">Souhrn</h2>
+          <sc-for list="{{ sumRows }}" as="r" hint-placeholder-count="4">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;font-size:16px;line-height:1.5;">
+              <span style="color:#5A626C;min-width:0;">{{ r.label }}</span>
+              <span style="{{ r.valStyle }}">{{ r.value }}</span>
+            </div>
+          </sc-for>
+          <div style="height:1px;background:#D5DAE0;margin:4px 0;"></div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-top:4px;">
+            <span style="font-size:18px;font-weight:700;line-height:1.35;">Celkem s DPH</span>
+            <span style="font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.01em;white-space:nowrap;">{{ totalText }}</span>
+          </div>
+          <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px;">
+            <dc-import name="Tlacitko" variant="buy" size="large" label="Pokračovat ke kontaktním údajům" icon="none" icon-trailing="chevron-right" full-width="{{ true }}" on-click="{{ onContinue }}" hint-size="100%,52px"></dc-import>
+            <sc-if value="{{ showMissing }}" hint-placeholder-val="">
+              <p role="alert" style="margin:0;display:flex;align-items:center;justify-content:center;gap:6px;font-size:14px;font-weight:500;line-height:1.5;color:#C5232B;"><dc-import name="Ikony" icon-name="alert-circle" size="{{ 18 }}" hint-size="18px,18px"></dc-import>{{ missingText }}</p>
+            </sc-if>
+            <div style="display:flex;justify-content:center;">
+              <dc-import name="Tlacitko" variant="ghost" size="standard" label="Zpět" icon="chevron-left" on-click="{{ onBack }}" hint-size="100px,36px"></dc-import>
+            </div>
+          </div>
+          <ul style="list-style:none;margin:4px 0 0;padding:16px 0 0;border-top:1px solid #F2F4F7;display:flex;flex-direction:column;gap:10px;">
+            <li style="display:flex;align-items:center;gap:12px;font-size:14px;font-weight:500;line-height:1.5;color:#5A626C;"><span style="color:#1E5AA8;display:flex;flex:none;"><dc-import name="Ikony" icon-name="truck-delivery" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>Skladové položky expedujeme do druhého dne</li>
+            <li style="display:flex;align-items:center;gap:12px;font-size:14px;font-weight:500;line-height:1.5;color:#5A626C;"><span style="color:#1E5AA8;display:flex;flex:none;"><dc-import name="Ikony" icon-name="lock" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>Bezpečná platba kartou, Apple Pay i Google Pay</li>
+            <li style="display:flex;align-items:center;gap:12px;font-size:14px;font-weight:500;line-height:1.5;color:#5A626C;"><span style="color:#1E5AA8;display:flex;flex:none;"><dc-import name="Ikony" icon-name="help" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span><span>Nevíte, jestli díl pasuje? <a class="ck-lnk" href="kontakty.dc.html" style="font-weight:700;">Poradíme.</a></span></li>
+          </ul>
+        </div>
+      </aside>
+
+      <sc-if value="{{ hasUpsell }}" hint-placeholder-val="{{ true }}">
+        <section aria-labelledby="ck-up-h" style="grid-area:up;display:flex;flex-direction:column;gap:12px;min-width:0;">
+          <h2 id="ck-up-h" class="ck-h2" style="margin:8px 0 4px;">K vašemu nákupu se hodí</h2>
+          <sc-for list="{{ upsell }}" as="u" hint-placeholder-count="2">
+            <div class="ck-up">
+              <img src="{{ u.img }}" alt="" style="grid-area:ph;width:64px;height:64px;object-fit:contain;background:#FFFFFF;border-radius:6px;padding:4px;display:block;">
+              <div style="grid-area:info;min-width:0;display:flex;flex-direction:column;gap:4px;">
+                <span style="font-size:13px;font-weight:700;line-height:1.4;text-transform:uppercase;letter-spacing:.06em;color:#1E5AA8;">{{ u.context }}</span>
+                <a class="ck-lnk ck-title" href="detail-nahradnidil-V1.dc.html" style="text-wrap:pretty;">{{ u.name }}</a>
+                <span style="font-size:13px;font-weight:400;line-height:1.4;color:#5A626C;">Obj. č. {{ u.code }} · {{ u.stock }}</span>
+              </div>
+              <span style="grid-area:price;font-size:17px;font-weight:700;line-height:1.3;white-space:nowrap;">{{ u.priceText }}</span>
+              <div style="grid-area:add;justify-self:end;">
+                <dc-import name="Tlacitko" variant="buy" size="medium" label="Přidat" aria-label="{{ u.addAria }}" on-click="{{ u.onAdd }}" hint-size="110px,44px"></dc-import>
+              </div>
+            </div>
+          </sc-for>
+        </section>
+      </sc-if>
+    </div>
+    </sc-if>
+  </main>
+
+  <footer class="ck-foot" style="background:#FFFFFF;border-top:1px solid #F2F4F7;">
+    <div class="vp-in" style="display:flex;align-items:center;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;padding-top:20px;padding-bottom:20px;font-size:13px;font-weight:500;line-height:1.4;color:#5A626C;">
+      <span>© 2026 VAPP</span>
+      <div style="display:flex;gap:8px 20px;flex-wrap:wrap;">
+        <a href="#">Obchodní podmínky</a>
+        <a href="#">Ochrana osobních údajů</a>
+        <a href="tel:+420323605314">Poradíme: 323 605 314 · Po–Pá 8:30–16:30</a>
+      </div>
+    </div>
+  </footer>
+  <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;step&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;1&quot;,&quot;2&quot;,&quot;3&quot;],&quot;default&quot;:&quot;1&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Hlavička — ukázka stavu kroků&quot;},&quot;freeShippingThreshold&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5000,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0,&quot;max&quot;:20000,&quot;step&quot;:500,&quot;unit&quot;:&quot;Kč&quot;},&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  CART = [
+    { id:'901301', name:'Nájezdová brzda KNOTT KF13', img:'uploads/najezdova-brzda-knott-kf13-c-gf.jpg', price:5900, qty:1, stock:'Skladem 12 ks', max:12 },
+    { id:'202050', name:'Brzdové čelisti KNOTT 200×50 — malá sada na 2 kola', img:'uploads/celisti-brzdove-knott-200x50-mala-sada-na-2-kola.jpg', price:490, qty:2, stock:'Skladem > 15 ks', max:99 },
+    { id:'301125', name:'Náboj kola KNOTT 112×5', img:'uploads/naboj-nebrzdeny-knott-112x5-l-lv-vc-loziska.jpg', price:1690, qty:1, stock:'Skladem 8 ks', max:8 }
+  ];
+  UPSELL = [
+    { id:'907527', for:'901301', context:'K nájezdové brzdě se hodí', name:'Manžeta gumová KNOTT KF/KR 7,5 až 27', img:'uploads/manzeta-gumova-knott-kf-kr-7-5-az-27.jpg', price:190, stock:'Skladem > 15 ks', max:99 },
+    { id:'907750', for:'901301', context:'K nájezdové brzdě se hodí', name:'Lanko bezpečnostní záchytné s karabinou KNOTT 750 kg', img:'uploads/lanko-bezpecnostni-zachytne-s-karabinou-knott-750-kg.jpg', price:290, stock:'Skladem > 15 ks', max:99 },
+    { id:'306434', for:'301125', context:'K náboji kola se hodí', name:'Ložisko do bubnu KNOTT 200×50 64×34 h37', img:'uploads/lozisko-do-bubnu-knott-200x50-64x34-h37-original.jpg', price:640, stock:'Skladem 9 ks', max:9 }
+  ];
+  SHIP = {
+    CZ: [
+      { id:'osobni', label:'Osobní odběr Popovičky', icons:['map-pin','home'], price:0 },
+      { id:'zp', label:'Zásilkovna – Z-Point / Z-BOX', logo:'logo-doprava-zasilkovna.svg', logoAlt:'Zásilkovna', price:79, free:true, point:true },
+      { id:'za', label:'Zásilkovna na adresu', logo:'logo-doprava-zasilkovna-adresa.svg', logoAlt:'Zásilkovna', price:99, free:true },
+      { id:'gps', label:'AlzaBox / GLS ParcelShop', logo:'logo-doprava-gls-parcelshop.svg', logoAlt:'GLS ParcelShop', price:79, free:true, point:true },
+      { id:'gls', label:'GLS', logo:'logo-doprava-gls.svg', logoAlt:'GLS', price:119, free:true },
+      { id:'dpd', label:'DPD Private', logo:'logo-doprava-dpd.svg', logoAlt:'DPD', price:129, free:true },
+      { id:'glsn', label:'GLS – nadrozměr', logo:'logo-doprava-gls.svg', logoAlt:'GLS', price:149 },
+      { id:'top', label:'TOPTRANS', logo:'logo-doprava-toptrans.png', logoAlt:'TOPTRANS', price:254 },
+      { id:'geis', label:'Geis Cargo', logo:'logo-doprava-geis.svg', logoAlt:'Geis', price:536 }
+    ],
+    SK: [
+      { id:'zp', label:'Packeta SK – Z-Point / Z-BOX', logo:'logo-doprava-zasilkovna.svg', logoAlt:'Zásilkovna', price:3.59*25, free:true, point:true },
+      { id:'za', label:'Packeta SK na adresu', logo:'logo-doprava-packeta.svg', logoAlt:'Packeta', price:4.76*25, free:true },
+      { id:'gls', label:'GLS – přepravní balíková služba', logo:'logo-doprava-gls.svg', logoAlt:'GLS', price:4.79*25, free:true },
+      { id:'geis', label:'Geis Cargo', logo:'logo-doprava-geis.svg', logoAlt:'Geis', price:63.26*25 }
+    ]
+  };
+  COUNTRIES = [{ value:'CZ', label:'Česko' }, { value:'SK', label:'Slovensko' }];
+  PAY = [
+    { id:'karta', label:'Platba kartou online', logo:'logo-platba-visa-mastercard.svg', logoAlt:'Visa, Mastercard', price:0 },
+    { id:'wallet', label:'Apple Pay / Google Pay', logo:'logo-platba-apple-google-pay.svg', logoAlt:'Apple Pay, Google Pay', price:0 },
+    { id:'prevod', label:'Bankovním převodem / QR kódem', icons:['building-bank','qrcode'], price:0 },
+    { id:'dobirka', label:'Dobírka', icons:['package','coin'], price:35, needsDelivery:true }
+  ];
+  state = { cart: this.CART.map(i=>({...i})), country:'CZ', ship:null, pay:null, point:'', tried:false, codeOpen:false, codeDraft:'', code:'' };
+
+  fmt(n){ const cur = this.state.country === 'SK' ? 'EUR' : 'CZK'; if (window.VappMena) return window.VappMena.format(n, cur); return cur === 'EUR' ? (n/25).toFixed(2).replace('.', ',') + '\u00a0€' : Math.round(n).toLocaleString('cs-CZ') + '\u00a0Kč'; }
+  payOff(p, ship){ return !!p && !!p.needsDelivery && ship==='osobni'; }
+
+  componentDidMount(){
+    try {
+      const d = JSON.parse(localStorage.getItem('vapp-kosik') || 'null');
+      if (d && d.state && Array.isArray(d.state.cart)) {
+        const s = d.state;
+        this.setState({ cart:s.cart, country:s.country||'CZ', ship:s.ship||null, pay:s.pay||null, point:s.point||'', code:s.code||'', codeOpen:!!s.code });
+      }
+    } catch(e){}
+  }
+  componentDidUpdate(){
+    const S = this.state;
+    try { localStorage.setItem('vapp-kosik', JSON.stringify({ state:{ cart:S.cart, country:S.country, ship:S.ship, pay:S.pay, point:S.point, code:S.code }, summary:this._sum || null })); } catch(e){}
+  }
+  setShip(id){
+    this.setState(s=>{
+      const cur = this.PAY.find(p=>p.id===s.pay);
+      return { ship:id, pay: this.payOff(cur, id) ? null : s.pay };
+    });
+  }
+
+  renderVals(){
+    const S = this.state, P = this.props;
+    const step = Math.min(3, Math.max(1, parseInt(P.step ?? 1, 10) || 1));
+    const threshold = P.freeShippingThreshold ?? 5000;
+    const labels = ['Nákupní košík','Kontaktní údaje','Kontrola údajů'];
+    const steps = labels.map((label,i)=>{
+      const n = i+1, done = n<step, active = n===step;
+      return { num:n, label, isDone:done, isActive:active, isTodo:n>step, notFirst:i>0,
+        activeFlag: active ? '1' : '0', current: active ? 'step' : undefined, href:'kosik-krok1.dc.html',
+        sepStyle: 'background:' + (n<=step ? '#0E7F43' : '#D5DAE0') + ';' };
+    });
+
+    const cart = S.cart;
+    const pieces = cart.reduce((a,i)=>a+i.qty,0);
+    const goods = cart.reduce((a,i)=>a+i.qty*i.price,0);
+    const discount = S.code ? Math.round(goods*0.1) : 0;
+    const goodsAfter = goods - discount;
+    const freeReached = goodsAfter >= threshold;
+
+    const items = cart.map((it,idx)=>({
+      ...it, code: it.id, href:'detail-nahradnidil-V1.dc.html',
+      lineTotal: this.fmt(it.qty*it.price), multi: it.qty>1, unitNote: it.qty + ' × ' + this.fmt(it.price),
+      removeAria: 'Odebrat z košíku: ' + it.name,
+      onQty: (v)=>this.setState(s=>({ cart: s.cart.map((c,j)=> j===idx ? {...c, qty:v} : c) })),
+      onRemove: ()=>this.setState(s=>({ cart: s.cart.filter((_,j)=>j!==idx) }))
+    }));
+
+    const shipPrice = (o)=> (o.free && freeReached) ? 0 : o.price;
+    const priceStyle = (free)=> 'font-size:16px;font-weight:700;line-height:1.35;white-space:nowrap;color:' + (free ? '#0B6937' : '#15181C') + ';';
+    const shipList = this.SHIP[S.country] || this.SHIP.CZ;
+    const shipOpts = shipList.map(o=>{
+      const pr = shipPrice(o), checked = S.ship===o.id;
+      return { ...o, checked, hasIcons: !!o.icons, icons: o.icons || [], logo: o.logo || '',
+        priceText: pr===0 ? 'Zdarma' : this.fmt(pr), priceStyle: priceStyle(pr===0),
+        onPick: ()=>this.setShip(o.id),
+        showPoint: checked && !!o.point, hasPoint: checked && !!o.point && !!S.point, point: S.point,
+        pointLabel: S.point ? 'Změnit výdejní místo' : 'Vybrat výdejní místo' };
+    });
+    const payOpts = this.PAY.map(o=>{
+      const off = this.payOff(o, S.ship);
+      return { ...o, checked: S.pay===o.id, disabled: off, offFlag: off ? '1' : '0',
+        hasIcons: !!o.icons, icons: o.icons || [], logo: o.logo || '',
+        iconWrapStyle: 'color:' + (off ? '#91959B' : '#1E5AA8') + ';',
+        labelStyle: off ? 'color:#666E78;' : '',
+        priceText: o.price===0 ? 'Zdarma' : this.fmt(o.price),
+        priceStyle: off ? 'font-size:16px;font-weight:700;line-height:1.35;white-space:nowrap;color:#666E78;' : priceStyle(o.price===0),
+        onPick: ()=>this.setState({ pay:o.id }) };
+    });
+
+    const shipSel = shipList.find(o=>o.id===S.ship) || null;
+    const paySel = this.PAY.find(o=>o.id===S.pay) || null;
+    const sp = shipSel ? shipPrice(shipSel) : 0, pp = paySel ? paySel.price : 0;
+    const total = goodsAfter + sp + pp;
+    const goodsNet = Math.round(goodsAfter/1.21);
+    const rowVal = (free)=> 'white-space:nowrap;font-weight:500;color:' + (free ? '#0B6937' : '#15181C') + ';';
+    const sumRows = [];
+    if (discount) sumRows.push({ label:'Sleva ' + S.code, value:'− ' + this.fmt(discount), valStyle:rowVal(true) });
+    sumRows.push({ label:'Zboží (' + pieces + ' ks) bez DPH', value:this.fmt(goodsNet), valStyle:rowVal(false) });
+    sumRows.push({ label:'DPH 21 %', value:this.fmt(goodsAfter-goodsNet), valStyle:rowVal(false) });
+    sumRows.push({ label: shipSel ? 'Doprava · ' + shipSel.label : 'Doprava', value: !shipSel ? '—' : (sp===0 ? 'Zdarma' : this.fmt(sp)), valStyle:rowVal(!!shipSel && sp===0) });
+    sumRows.push({ label: paySel ? 'Platba · ' + paySel.label : 'Platba', value: !paySel ? '—' : (pp===0 ? 'Zdarma' : this.fmt(pp)), valStyle:rowVal(!!paySel && pp===0) });
+    const missingText = !shipSel && !paySel ? 'Vyberte způsob dopravy a platby.' : (!shipSel ? 'Vyberte způsob dopravy.' : 'Vyberte způsob platby.');
+
+    this._sum = { rows: sumRows.map(r=>({ label:r.label, value:r.value, free: r.valStyle.indexOf('#0B6937')>=0 })), total: this.fmt(total),
+      country: S.country, shipId: S.ship, shipLabel: shipSel ? shipSel.label : '', point: (shipSel && shipSel.point) ? S.point : '',
+      pickup: S.ship==='osobni', items: cart.map(c=>({ name:c.name, qty:c.qty, img:c.img, line:this.fmt(c.qty*c.price) })) };
+    const inCart = new Set(cart.map(c=>c.id));
+    const upsell = this.UPSELL.filter(u=>inCart.has(u.for) && !inCart.has(u.id)).map(u=>({
+      ...u, code:u.id, priceText:this.fmt(u.price), addAria:'Přidat do košíku: ' + u.name,
+      onAdd: ()=>this.setState(s=>({ cart: s.cart.concat([{ id:u.id, name:u.name, img:u.img, price:u.price, qty:1, stock:u.stock, max:u.max }]) }))
+    }));
+
+    const pct = Math.min(100, Math.round(goodsAfter/threshold*100));
+    const applyCode = ()=>{ const c = (S.codeDraft||'').trim().toUpperCase(); if (c) this.setState({ code:c, codeDraft:'' }); };
+
+    return {
+      debug: P.debug ?? true,
+      steps, items, isEmpty: cart.length===0, hasItems: cart.length>0,
+      shipOpts, payOpts, sumRows, upsell, hasUpsell: upsell.length>0,
+      freeReached, freeMissing: !freeReached, freeRemain: this.fmt(threshold - goodsAfter), freePct: pct,
+      freeThresholdText: this.fmt(threshold),
+      barStyle: 'width:' + pct + '%;background:' + (freeReached ? '#0E7F43' : '#1E5AA8') + ';',
+      totalText: this.fmt(total), showMissing: S.tried && (!shipSel || !paySel), missingText,
+      shipErr: S.tried && !shipSel, payErr: S.tried && !paySel,
+      shipErrFlag: (S.tried && !shipSel) ? '1' : '0', payErrFlag: (S.tried && !paySel) ? '1' : '0',
+      countries: this.COUNTRIES, country: S.country,
+      onCountry: (v)=>this.setState(s=>({ country:v, ship: (this.SHIP[v]||[]).some(o=>o.id===s.ship) ? s.ship : null })),
+      onBack: ()=>{ if (window.history.length > 1) window.history.back(); else window.location.href = 'index.dc.html'; },
+      codeOpen: S.codeOpen || !!S.code, codeFormOpen: S.codeOpen && !S.code, codeApplied: !!S.code, code: S.code, codeDraft: S.codeDraft,
+      onToggleCode: (e)=>{ const on = e.target.checked; this.setState(on ? { codeOpen:true } : { codeOpen:false, code:'', codeDraft:'' }); },
+      onCodeInput: (e)=>this.setState({ codeDraft: e.target.value }),
+      onCodeKey: (e)=>{ if (e.key==='Enter'){ e.preventDefault(); applyCode(); } },
+      onApplyCode: applyCode,
+      onRemoveCode: ()=>this.setState({ code:'', codeOpen:true }),
+      onPickPoint: ()=>this.setState({ point:'Z-BOX Praha 9 – Vysočany, Kolbenova 942/38' }),
+      onContinue: ()=>{
+        this.setState({ tried:true });
+        const id = !shipSel ? 'ck-ship' : (!paySel ? 'ck-pay' : null);
+        const el = id && document.getElementById(id);
+        if (el) { window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 104, behavior:'smooth' }); return; }
+        this.componentDidUpdate();
+        window.location.href = 'kosik-krok2.dc.html';
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

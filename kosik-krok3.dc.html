@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400..700&amp;display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0!important;padding:0!important;background:#F7F9FB;}
+  #dc-root{margin:0!important;padding:0!important;width:100%!important;max-width:none!important;border:0!important;}
+  #dc-root>.sc-host{margin:0!important;padding:0!important;width:100%!important;}
+  a{color:#1E5AA8;} a:hover{color:#1A4A8A;}
+  .vp-in{max-width:1560px;margin-left:auto;margin-right:auto;padding-left:32px;padding-right:32px;}
+  @media (max-width:819px){ .vp-in{padding-left:16px;padding-right:16px;} }
+  .ck-lnk{color:#15181C;text-decoration:none;transition:color .12s ease;}
+  .ck-lnk:hover{color:#1E5AA8;}
+  .ck-lnk:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;border-radius:4px;}
+  .ck-h1{font-size:36px;font-weight:700;line-height:1.15;letter-spacing:-0.02em;}
+  .ck-h2{font-size:22px;font-weight:700;line-height:1.25;}
+  @media (max-width:819px){ .ck-h1{font-size:26px;line-height:1.2;} .ck-h2{font-size:18px;line-height:1.3;} }
+  .ck-card{background:#FFFFFF;border-radius:8px;box-shadow:0 1px 3px rgba(20,47,86,.08), 0 1px 2px rgba(20,47,86,.04);}
+  .ck-steps{display:flex;align-items:center;gap:12px;list-style:none;margin:0;padding:0;}
+  .ck-step{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;line-height:1.5;white-space:nowrap;}
+  .ck-sep{width:48px;height:2px;border-radius:999px;background:#D5DAE0;flex:none;}
+  @media (max-width:1149px){ .ck-sep{width:24px;} }
+  @media (max-width:819px){ .ck-step[data-active="0"] .ck-steplbl{display:none;} .ck-steps{gap:8px;} .ck-sep{width:16px;} }
+  @media (max-width:419px){ .ck-steplbl{display:none;} .ck-logo{height:24px !important;} }
+  .ck-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px 32px;align-items:start;}
+  @media (min-width:1560px){ .ck-grid{grid-template-columns:minmax(0,1fr) 400px;} }
+  @media (max-width:1149px){ .ck-grid{grid-template-columns:minmax(0,1fr);} }
+  .ck-side{position:sticky;top:104px;}
+  @media (max-width:1149px){ .ck-side{position:static;} }
+  /* formulář */
+  .ck-sec{padding:28px 32px;display:flex;flex-direction:column;gap:20px;container-type:inline-size;}
+  @media (max-width:549px){ .ck-sec{padding:20px 16px;} }
+  .ck-num{width:32px;height:32px;border-radius:999px;background:#142F56;color:#FFFFFF;display:flex;align-items:center;justify-content:center;flex:none;font-size:16px;font-weight:700;}
+  .ck-row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px 24px;}
+  .ck-rowA{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:20px 24px;}
+  @container (max-width:559px){ .ck-row2,.ck-rowA{grid-template-columns:minmax(0,1fr);} }
+  .ck-lbl{display:block;font-size:16px;font-weight:700;line-height:1.35;color:#15181C;margin-bottom:8px;}
+  .ck-req{color:#C5232B;font-weight:700;}
+  .ck-inp{width:100%;min-width:0;height:44px;padding:0 14px;background:#F2F4F7;border:0;border-radius:6px;font-family:inherit;font-size:15px;font-weight:400;color:#15181C;transition:box-shadow .12s ease;}
+  .ck-ta{width:100%;min-width:0;min-height:120px;padding:12px 14px;background:#F2F4F7;border:0;border-radius:6px;font-family:inherit;font-size:15px;line-height:1.6;color:#15181C;resize:vertical;}
+  .ck-inp::placeholder,.ck-ta::placeholder{color:#666E78;}
+  .ck-inp:focus-visible,.ck-ta:focus-visible{outline:0;box-shadow:inset 0 0 0 2px #1E5AA8;}
+  .ck-inp[data-err="1"]{box-shadow:inset 0 0 0 2px #C5232B;}
+  @media (max-width:549px){ .ck-inp,.ck-ta{font-size:16px;} }
+  .ck-err{margin:6px 0 0;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;line-height:1.4;color:#C5232B;}
+  .ck-tel{display:flex;gap:12px;align-items:flex-start;}
+  .ck-telpfx{flex:none;width:136px;}
+  @media (max-width:549px){ .ck-tel{gap:8px;} .ck-telpfx{width:120px;} }
+  .ck-cb{display:inline-flex;align-items:center;gap:12px;min-height:44px;font-size:16px;font-weight:500;color:#15181C;cursor:pointer;}
+  .ck-cb input{appearance:none;margin:0;flex:none;width:22px;height:22px;border-radius:6px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #91959B;cursor:pointer;display:grid;place-content:center;transition:box-shadow .12s ease, background .12s ease;}
+  .ck-cb:hover input{box-shadow:inset 0 0 0 1px #5A626C;}
+  .ck-cb input:checked{background:#1E5AA8;box-shadow:none;}
+  .ck-cb input:checked::after{content:"";width:10px;height:6px;border-left:2px solid #FFFFFF;border-bottom:2px solid #FFFFFF;transform:translateY(-1px) rotate(-45deg);}
+  .ck-cb input:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .ck-firmbox{display:flex;flex-direction:column;gap:20px;padding:24px;border-radius:8px;background:#F7F9FB;}
+  .ck-firmbox .ck-inp{background:#FFFFFF;box-shadow:inset 0 0 0 1px #D5DAE0;}
+  .ck-firmbox .ck-inp:focus-visible{box-shadow:inset 0 0 0 2px #1E5AA8;}
+  .ck-firmbox .ck-inp[data-err="1"]{box-shadow:inset 0 0 0 2px #C5232B;}
+  .ck-firmbox .se-btn{background:#FFFFFF !important;box-shadow:inset 0 0 0 1px #D5DAE0 !important;}
+  .ck-firmbox .se-btn:focus-visible{box-shadow:inset 0 0 0 2px #1E5AA8 !important;}
+  .ck-firmbox .se-btn:not(:disabled):hover{background:#F2F4F7 !important;}
+  .ck-icrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:8px 24px;align-items:end;}
+  .ck-icrow>p{padding-bottom:10px;}
+  .ck-w2{max-width:66.666%;} .ck-w1{max-width:50%;}
+  @container (max-width:559px){ .ck-icrow{grid-template-columns:minmax(0,1fr);} .ck-icrow>p{padding-bottom:0;} .ck-w2,.ck-w1{max-width:none;} .ck-firmbox{padding:16px;} }
+  .ck-rv{display:grid;grid-template-columns:200px minmax(0,1fr) auto;gap:8px 24px;align-items:start;padding:20px 32px;}
+  .ck-rv + .ck-rv{border-top:1px solid #F2F4F7;}
+  @media (max-width:549px){ .ck-rv{grid-template-columns:minmax(0,1fr) auto;padding:16px;} .ck-rv>.ck-rvv{grid-column:1 / -1;grid-row:2;} }
+  .ck-gl + .ck-gl{border-top:1px solid #F2F4F7;}
+  .ck-rvh{margin:0;font-size:18px;font-weight:700;line-height:1.35;color:#142F56;}
+  .ck-rvv{display:flex;flex-direction:column;gap:2px;font-size:16px;line-height:1.6;color:#15181C;min-width:0;}
+  .ck-edit{font-size:16px;font-weight:700;color:#1E5AA8;text-decoration:none;transition:color .12s ease;white-space:nowrap;}
+  .ck-edit:hover{color:#1A4A8A;}
+  .ck-edit:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;border-radius:4px;}
+  .ck-cbd{display:grid;grid-template-columns:22px minmax(0,1fr);gap:4px 12px;align-items:start;cursor:pointer;}
+  .ck-cbd input{appearance:none;margin:0;width:22px;height:22px;border-radius:6px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #91959B;cursor:pointer;display:grid;place-content:center;transition:box-shadow .12s ease, background .12s ease;margin-top:1px;}
+  .ck-cbd:hover input{box-shadow:inset 0 0 0 1px #5A626C;}
+  .ck-cbd input:checked{background:#1E5AA8;box-shadow:none;}
+  .ck-cbd input:checked::after{content:"";width:10px;height:6px;border-left:2px solid #FFFFFF;border-bottom:2px solid #FFFFFF;transform:translateY(-1px) rotate(-45deg);}
+  .ck-cbd input:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;}
+  .ck-login{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#EFF4FB;box-shadow:inset 0 0 0 1px #B4CEEC;border-radius:8px;padding:16px 24px;}
+  .ck-loginlink{display:inline-flex;align-items:center;gap:4px;margin-left:auto;font-size:16px;font-weight:700;color:#1E5AA8;text-decoration:none;transition:color .12s ease;}
+  .ck-loginlink:hover{color:#1A4A8A;}
+  .ck-loginlink:focus-visible{outline:2px solid #1E5AA8;outline-offset:2px;border-radius:4px;}
+  .ck-foot a{color:#5A626C;text-decoration:none;transition:color .12s ease;}
+  .ck-foot a:hover{color:#1E5AA8;}
+  @keyframes ckIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .ck-in{animation:ckIn .3s ease both;}
+  @media (prefers-reduced-motion:reduce){ .ck-in{animation:none;} }
+</style>
+</helmet>
+<div data-screen-label="Košík — krok 3" lang="cs" style="font-family:'Exo 2','Helvetica Neue',Arial,sans-serif;color:#15181C;background:#F7F9FB;min-height:100vh;width:100%;margin:0;padding:0;display:flex;flex-direction:column;">
+
+  <header style="position:sticky;top:0;z-index:70;background:#FFFFFF;box-shadow:0 2px 8px rgba(20,47,86,.06);">
+    <div class="vp-in" style="display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:80px;padding-top:16px;padding-bottom:16px;">
+      <a class="ck-lnk" href="index.dc.html" aria-label="VAPP — domovská stránka" style="display:flex;flex:none;"><img class="ck-logo" src="./vapp-logo.svg" alt="VAPP" style="height:32px;width:auto;display:block;"></a>
+      <nav aria-label="Kroky objednávky">
+        <ol class="ck-steps">
+          <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+            <sc-if value="{{ s.notFirst }}" hint-placeholder-val="">
+              <li aria-hidden="true" class="ck-sep" style="{{ s.sepStyle }}"></li>
+            </sc-if>
+            <li class="ck-step" data-active="{{ s.activeFlag }}" aria-current="{{ s.current }}">
+              <sc-if value="{{ s.isDone }}" hint-placeholder-val="">
+                <a href="{{ s.href }}" class="ck-lnk" style="display:flex;align-items:center;gap:8px;color:#0B6937;">
+                  <span style="width:28px;height:28px;border-radius:999px;background:#0E7F43;color:#FFFFFF;display:flex;align-items:center;justify-content:center;flex:none;"><dc-import name="Ikony" icon-name="check" size="{{ 18 }}" hint-size="18px,18px"></dc-import></span>
+                  <span class="ck-steplbl">{{ s.label }}</span>
+                </a>
+              </sc-if>
+              <sc-if value="{{ s.isActive }}" hint-placeholder-val="{{ true }}">
+                <span style="width:28px;height:28px;border-radius:999px;background:#1E5AA8;color:#FFFFFF;display:flex;align-items:center;justify-content:center;flex:none;font-size:14px;">{{ s.num }}</span>
+                <span class="ck-steplbl" style="color:#15181C;">{{ s.label }}</span>
+              </sc-if>
+              <sc-if value="{{ s.isTodo }}" hint-placeholder-val="">
+                <span style="width:28px;height:28px;border-radius:999px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #91959B;color:#5A626C;display:flex;align-items:center;justify-content:center;flex:none;font-size:14px;">{{ s.num }}</span>
+                <span class="ck-steplbl" style="color:#5A626C;">{{ s.label }}</span>
+              </sc-if>
+            </li>
+          </sc-for>
+        </ol>
+      </nav>
+    </div>
+  </header>
+
+  <main class="vp-in" style="width:100%;padding-top:28px;padding-bottom:56px;flex:1;">
+    <h1 class="ck-h1" style="margin:0 0 24px;color:#142F56;">Kontrola údajů</h1>
+    <div class="ck-grid">
+      <div style="display:flex;flex-direction:column;gap:16px;min-width:0;">
+
+        <section class="ck-card" aria-labelledby="ck-h-goods" style="padding:24px 32px;display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
+            <h2 id="ck-h-goods" class="ck-h2" style="margin:0;color:#142F56;">Zboží</h2>
+            <a class="ck-edit" href="kosik-krok1.dc.html">Upravit</a>
+          </div>
+          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;">
+            <sc-for list="{{ items }}" as="it" hint-placeholder-count="3">
+              <li class="ck-gl" style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:10px 0;font-size:16px;line-height:1.6;">
+                <span style="min-width:0;text-wrap:pretty;">{{ it.qty }}× {{ it.name }}</span>
+                <span style="white-space:nowrap;font-weight:500;">{{ it.line }}</span>
+              </li>
+            </sc-for>
+          </ul>
+        </section>
+
+        <section class="ck-card" aria-label="Údaje objednávky">
+          <div class="ck-rv">
+            <h2 class="ck-rvh">Kontakt</h2>
+            <div class="ck-rvv">
+              <span>{{ name }}</span>
+              <span>{{ email }}</span>
+              <span>{{ phone }}</span>
+              <sc-if value="{{ isCompany }}" hint-placeholder-val="">
+                <span style="margin-top:8px;font-weight:700;">{{ firm }}</span>
+                <span>{{ firmIds }}</span>
+                <sc-if value="{{ hasOrdNo }}" hint-placeholder-val="">
+                  <span style="font-size:14px;color:#5A626C;">Vaše číslo objednávky: {{ ordno }}</span>
+                </sc-if>
+              </sc-if>
+            </div>
+            <a class="ck-edit" href="kosik-krok2.dc.html" aria-label="Změnit kontakt">Změnit</a>
+          </div>
+          <sc-if value="{{ isCompany }}" hint-placeholder-val="">
+            <div class="ck-rv">
+              <h2 class="ck-rvh">Fakturace</h2>
+              <div class="ck-rvv"><span>{{ billing }}</span></div>
+              <a class="ck-edit" href="kosik-krok2.dc.html" aria-label="Změnit fakturační adresu">Změnit</a>
+            </div>
+          </sc-if>
+          <div class="ck-rv">
+            <h2 class="ck-rvh">Doprava</h2>
+            <div class="ck-rvv">
+              <span>{{ shipText }}</span>
+              <span style="font-size:14px;color:#5A626C;">Země dodání: {{ countryName }}</span>
+            </div>
+            <a class="ck-edit" href="kosik-krok1.dc.html" aria-label="Změnit dopravu">Změnit</a>
+          </div>
+          <div class="ck-rv">
+            <h2 class="ck-rvh">{{ placeHead }}</h2>
+            <div class="ck-rvv">
+              <sc-for list="{{ placeLines }}" as="ln" hint-placeholder-count="2">
+                <span>{{ ln }}</span>
+              </sc-for>
+            </div>
+            <a class="ck-edit" href="{{ placeHref }}" aria-label="Změnit místo doručení">Změnit</a>
+          </div>
+          <div class="ck-rv">
+            <h2 class="ck-rvh">Platba</h2>
+            <div class="ck-rvv"><span>{{ payText }}</span></div>
+            <a class="ck-edit" href="kosik-krok1.dc.html" aria-label="Změnit platbu">Změnit</a>
+          </div>
+          <div class="ck-rv">
+            <h2 class="ck-rvh">Poznámka k objednávce</h2>
+            <div class="ck-rvv"><span style="{{ noteStyle }}">{{ noteText }}</span></div>
+            <a class="ck-edit" href="kosik-krok2.dc.html" aria-label="Změnit poznámku k objednávce">Změnit</a>
+          </div>
+        </section>
+
+        <div style="display:flex;flex-direction:column;gap:16px;padding:8px 0 0;">
+          <label class="ck-cbd">
+            <input type="checkbox" checked="{{ noReview }}" onChange="{{ onNoReview }}">
+            <span style="font-size:16px;font-weight:500;line-height:1.5;">Nesouhlasím s hodnocením mého nákupu.</span>
+            <span style="grid-column:2;font-size:14px;font-weight:400;line-height:1.5;color:#5A626C;text-wrap:pretty;">Nesouhlasím se zasláním dotazníku pro hodnocení zakoupených produktů, dotazníku spokojenosti Heureka ani dotazníku spokojenosti Zboží.cz.</span>
+          </label>
+          <label class="ck-cbd">
+            <input type="checkbox" checked="{{ noNews }}" onChange="{{ onNoNews }}">
+            <span style="font-size:16px;font-weight:500;line-height:1.5;">Nemám zájem o zasílání novinek</span>
+          </label>
+        </div>
+      </div>
+
+      <aside class="ck-side" aria-labelledby="ck-sum-h">
+        <div class="ck-card" style="padding:24px;display:flex;flex-direction:column;gap:12px;">
+          <h2 id="ck-sum-h" class="ck-h2" style="margin:0 0 4px;color:#142F56;">Souhrn</h2>
+          <sc-for list="{{ sumRows }}" as="r" hint-placeholder-count="4">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;font-size:16px;line-height:1.5;">
+              <span style="color:#5A626C;min-width:0;">{{ r.label }}</span>
+              <span style="{{ r.valStyle }}">{{ r.value }}</span>
+            </div>
+          </sc-for>
+          <div style="height:1px;background:#D5DAE0;margin:4px 0;"></div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-top:4px;">
+            <span style="font-size:18px;font-weight:700;line-height:1.35;">Celkem s DPH</span>
+            <span style="font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.01em;white-space:nowrap;">{{ totalText }}</span>
+          </div>
+          <p style="margin:8px 0 0;font-size:14px;font-weight:500;line-height:1.5;color:#5A626C;text-align:center;text-wrap:pretty;">Kliknutím na „Objednat s povinností platby“ souhlasíte s <a href="#" style="text-decoration:underline;">obchodními podmínkami</a> a berete na vědomí <a href="#" style="text-decoration:underline;">zásady ochrany osobních údajů</a>.</p>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <dc-import name="Tlacitko" variant="buy" size="large" label="Objednat s povinností platby" icon="check" full-width="{{ true }}" on-click="{{ onOrder }}" hint-size="100%,52px"></dc-import>
+            <div style="display:flex;justify-content:center;">
+              <dc-import name="Tlacitko" variant="ghost" size="standard" label="Zpět" icon="chevron-left" href="kosik-krok2.dc.html" hint-size="100px,36px"></dc-import>
+            </div>
+          </div>
+          <ul style="list-style:none;margin:4px 0 0;padding:16px 0 0;border-top:1px solid #F2F4F7;display:flex;flex-direction:column;gap:10px;">
+            <li style="display:flex;align-items:center;gap:12px;font-size:14px;font-weight:500;line-height:1.5;color:#5A626C;"><span style="color:#1E5AA8;display:flex;flex:none;"><dc-import name="Ikony" icon-name="truck-delivery" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>Skladové položky expedujeme do druhého dne</li>
+            <li style="display:flex;align-items:center;gap:12px;font-size:14px;font-weight:500;line-height:1.5;color:#5A626C;"><span style="color:#1E5AA8;display:flex;flex:none;"><dc-import name="Ikony" icon-name="lock" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span>Bezpečná platba kartou, Apple Pay i Google Pay</li>
+            <li style="display:flex;align-items:center;gap:12px;font-size:14px;font-weight:500;line-height:1.5;color:#5A626C;"><span style="color:#1E5AA8;display:flex;flex:none;"><dc-import name="Ikony" icon-name="help" size="{{ 24 }}" hint-size="24px,24px"></dc-import></span><span>Nevíte, jestli díl pasuje? <a class="ck-lnk" href="kontakty.dc.html" style="font-weight:700;">Poradíme.</a></span></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="ck-foot" style="background:#FFFFFF;border-top:1px solid #F2F4F7;">
+    <div class="vp-in" style="display:flex;align-items:center;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;padding-top:20px;padding-bottom:20px;font-size:13px;font-weight:500;line-height:1.4;color:#5A626C;">
+      <span>© 2026 VAPP</span>
+      <div style="display:flex;gap:8px 20px;flex-wrap:wrap;">
+        <a href="#">Obchodní podmínky</a>
+        <a href="#">Ochrana osobních údajů</a>
+        <a href="tel:+420323605314">Poradíme: 323 605 314 · Po–Pá 8:30–16:30</a>
+      </div>
+    </div>
+  </footer>
+  <dc-import name="DebugBar" visible="{{ debug }}" hint-size="0px,0px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;debug&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Debug&quot;}}">
+class Component extends DCLogic {
+  DEMO_SUM = { rows:[
+      { label:'Zboží (4 ks) bez DPH', value:'7 083\u00a0Kč' }, { label:'DPH 21 %', value:'1 487\u00a0Kč' },
+      { label:'Doprava · Osobní odběr Popovičky', value:'Zdarma', free:true }, { label:'Platba · Platba kartou online', value:'Zdarma', free:true } ],
+    total:'8 570\u00a0Kč', country:'CZ', shipId:'osobni', shipLabel:'Osobní odběr Popovičky', point:'', pickup:true,
+    items:[ { name:'Nájezdová brzda KNOTT KF13', qty:1, line:'5 900\u00a0Kč' }, { name:'Brzdové čelisti KNOTT 200×50 — malá sada na 2 kola', qty:2, line:'980\u00a0Kč' }, { name:'Náboj kola KNOTT 112×5', qty:1, line:'1 690\u00a0Kč' } ] };
+  DEMO_F = { email:'jan.novak@email.cz', first:'Jan', last:'Novák', prefix:'+420', phone:'602 123 456', company:false, note:'' };
+  state = { sum:null, f:null, noReview:false, noNews:false };
+  componentDidMount(){
+    let sum=null, f=null;
+    try { const d = JSON.parse(localStorage.getItem('vapp-kosik') || 'null'); if (d && d.summary) sum = d.summary; } catch(e){}
+    try { f = JSON.parse(localStorage.getItem('vapp-kosik-kontakt') || 'null'); } catch(e){}
+    this.setState({ sum, f });
+  }
+  renderVals(){
+    const S = this.state, P = this.props;
+    const sum = S.sum || this.DEMO_SUM;
+    const f = (S.f && S.f.email) ? S.f : this.DEMO_F;
+    const labels = ['Nákupní košík','Kontaktní údaje','Kontrola údajů'];
+    const step = 3;
+    const steps = labels.map((label,i)=>{
+      const n = i+1, active = n===step;
+      return { num:n, label, isDone:n<step, isActive:active, isTodo:false, notFirst:i>0,
+        activeFlag: active ? '1' : '0', current: active ? 'step' : undefined, href: n===1 ? 'kosik-krok1.dc.html' : 'kosik-krok2.dc.html',
+        sepStyle: 'background:#0E7F43;' };
+    });
+    const rows = sum.rows || [];
+    const shipRow = rows.find(r=>r.label.indexOf('Doprava')===0) || {};
+    const payRow = rows.find(r=>r.label.indexOf('Platba')===0) || {};
+    const after = (l)=> (l||'').split(' · ').slice(1).join(' · ');
+    const country = sum.country || 'CZ';
+    const countryName = country==='SK' ? 'Slovensko' : 'Česko';
+    const cn = (c)=> c==='SK' ? 'Slovensko' : 'Česko';
+    let placeHead, placeLines, placeHref = 'kosik-krok2.dc.html';
+    if (sum.pickup) { placeHead = 'Osobní odběr'; placeLines = ['VAPP Popovičky, Popovičky 38, 251 01 Praha-východ', 'Po–Pá 8:30–16:30']; placeHref = 'kosik-krok1.dc.html'; }
+    else if (sum.point) { placeHead = 'Výdejní místo'; placeLines = [sum.point]; placeHref = 'kosik-krok1.dc.html'; }
+    else { placeHead = 'Doručovací adresa'; placeLines = [ f.street || '', [f.zip, f.city].filter(Boolean).join(' '), countryName ].filter(Boolean); }
+    const rowVal = (free)=> 'white-space:nowrap;font-weight:500;color:' + (free ? '#0B6937' : '#15181C') + ';';
+    return {
+      debug: P.debug ?? true,
+      steps,
+      items: sum.items || this.DEMO_SUM.items,
+      name: [f.first, f.last].filter(Boolean).join(' '),
+      email: f.email, phone: (f.prefix || '+420') + ' ' + (f.phone || ''),
+      isCompany: !!f.company, firm: f.firm || '',
+      firmIds: ['IČ ' + (f.ico||''), f.vat && f.dic ? 'DIČ ' + f.dic : ''].filter(Boolean).join(' · '),
+      hasOrdNo: !!f.ordno, ordno: f.ordno || '',
+      billing: [f.bstreet, [f.bzip, f.bcity].filter(Boolean).join(' '), cn(f.bcountry)].filter(Boolean).join(', '),
+      shipText: (after(shipRow.label) || sum.shipLabel || '') + ', ' + (shipRow.value || ''),
+      countryName, placeHead, placeLines, placeHref,
+      payText: after(payRow.label) + (payRow.value && payRow.value !== 'Zdarma' ? ', ' + payRow.value : ''),
+      noteText: (f.note||'').trim() || 'Bez poznámky', noteStyle: (f.note||'').trim() ? 'white-space:pre-line;' : 'color:#666E78;',
+      sumRows: rows.map(r=>({ label: r.label.split(' · ')[0], value:r.value, valStyle:rowVal(!!r.free) })),
+      totalText: sum.total,
+      noReview: S.noReview, noNews: S.noNews,
+      onNoReview: (e)=>this.setState({ noReview: e.target.checked }),
+      onNoNews: (e)=>this.setState({ noNews: e.target.checked }),
+      onOrder: ()=>{ window.location.href = 'kosik-dekujeme.dc.html'; }
+    };
+  }
+}
+</script>
+</body>
+</html>
